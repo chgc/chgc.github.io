@@ -1,2 +1,2 @@
 # chgc.github.io
-[build-info](https://travis-ci.org/chgc/repoName.svg)
+[build-info](https://api.travis-ci.org/chgc/chgc.github.io.svg)
