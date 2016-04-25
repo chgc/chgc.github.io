@@ -51,7 +51,7 @@ export class CkBookPage {}
 注意到ViewEncapsulation.Native將ViewEncapsulation.None的和本身定義的Style都包含在Shadow DOM裡面，這表示該Componenet與外面已經分開了. 本身所定義的css樣式不會影響到別人了
 
 3.  ViewEncapsulation.Emulated為預設行為，會自動將每個Component給予一個名稱，然後在產生html時會將各Componet裡
-定義的style加上該名稱，讓css不會互相影響
+定義的style加上該名稱，讓css不會互相影響. 
 
 ```js
 @Component({
