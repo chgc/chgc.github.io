@@ -2,7 +2,7 @@ language: node_js
 sudo: false
 branches:
   only:
-  - master
+  - source
 before_install:
 - openssl aes-256-cbc -K $encrypted_ed974cb01d84_key -iv $encrypted_ed974cb01d84_iv
   -in id_rsa.enc -out ~\/.ssh/id_rsa -d
