@@ -79,3 +79,4 @@ export class CkBookPage {}
 ## 參考
 - [shadow-dom-strategies-in-angular2](http://blog.thoughtram.io/angular/2015/06/29/shadow-dom-strategies-in-angular2.html)
 - [Controlling how Styles are Shared with View Encapsulation](https://egghead.io/lessons/angular-2-controlling-how-styles-are-shared-with-view-encapsulation)
+

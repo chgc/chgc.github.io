@@ -7,12 +7,12 @@ title: CK's Notepad
 subtitle:
 description:
 author: KevinYang
-language: zh-TW
+language: zh-tw
 timezone: Asia/Taipei
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://chgc.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -60,22 +60,11 @@ time_format: HH:mm:ss
 per_page: 10
 pagination_dir: page
 
-# 在歸檔頁面顯示所有文章
-# 需要上面安裝的 hexo-generator-archive 插件支持
-archive_generator:
-  per_page: 0
-tag_generator:
-  per_page: 0
-category_generator:
-  per_page: 0  
-search:
-  path: search.xml
-  field: all
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: raytaylorism
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

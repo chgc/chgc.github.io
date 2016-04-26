@@ -6,7 +6,7 @@ comments: true
 categories: "Angular"
 tag: "Angular2"
 ---
-在Angular2的Form, 可以使用<% raw %>[(ngModel)]<% endraw %>的方式或是使用 ngFormModel的方式(如下)。 ngModel就不多描述，用法跟Angular1.x一樣
+在Angular2的Form, 可以使用[(ngModel)]的方式或是使用 ngFormModel的方式(如下)。 ngModel就不多描述，用法跟Angular1.x一樣
 
 ```html
 <form [ngFormModel]="form" (submit)="add($event)">
@@ -74,10 +74,10 @@ export class CkBookPage {
 ```
 
 有幾個新東西出現. ngFormModel, ngControl. 這些都包含在FORM_DIRECTIVES裡. 
-<% raw %>
+
 FormBuilder是用來組合東西給ngFormModel用, 是把Control包在一起 builder.group({ ... controls})
 Control是配合ngControl使用. 初始是 new Control('default value', validator, asyncValidator)
-<% endraw %>
+
 這樣的設定方式，可以讓Form上的動作都在javascript裡面設定。單純html的程式碼
 
 ### 小問題(till Verstion Beta15)
@@ -98,7 +98,7 @@ NumberValueAccessor.prototype.registerOnChange = function (fn) {
 
 [Github commit log](https://github.com/kara/angular/commit/54b45225ae7c23fd5cad12fb1412a6339f6f27fa)
 
-2. date format設定. 原本 <% raw %> book.date | date:"yyyy-MM-dd" <% endraw %>這樣子的寫法輸出的結果會是 2016-04-20. 但是現在的版本locale是被寫死的(en-US), 所以也是要進程式碼手動修改.
+2. date format設定. 原本 book.date | date:"yyyy-MM-dd"這樣子的寫法輸出的結果會是 2016-04-20. 但是現在的版本locale是被寫死的(en-US), 所以也是要進程式碼手動修改.
 檔案位置: angular2\src\common\pipes
 ```
 // var defaultLocale = 'en-US'; 修改這裡。參數可以參考moment.js網站
