@@ -1,5 +1,5 @@
 ---
-layout: "post"
+layout: post
 title: "[Coding4Fun] Build my own Markdown editor - Part I"
 comments: true
 date: 2016-05-03 09:06:36
