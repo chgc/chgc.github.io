@@ -135,7 +135,12 @@ var codeConfig = {
 可以利用editor.on('',function(){})來處理動作
 
 ```javascript
-
+editor.on("drop", function (editor, e) {
+    var files = e.dataTransfer.files;
+    for (var i = 0; i < files.length; ++i) {
+      ...
+    }
+  });
 ```
 
 這裡可以取得拖拉到editor裡的檔案有哪些
