@@ -1,10 +1,10 @@
 ---
-layout: post
-title: [Coding4Fun] Build my own Markdown editor - Part I
+layout: "post"
+title: "[Coding4Fun] Build my own Markdown editor - Part I"
 comments: true
 date: 2016-05-03 09:06:36
-categories: Coding4Fun
-tags: Coding4Fun
+categories: "Coding4Fun"
+tags: "Coding4Fun"
 ---
 
 因為找不到自己想要的Markdown編輯器，所以自己來寫一個.
