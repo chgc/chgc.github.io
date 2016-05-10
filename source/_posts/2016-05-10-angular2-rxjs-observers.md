@@ -65,3 +65,20 @@ this.http.get('xxx')
 
 
 
+## 多個Http Request時的處理方式
+
+如果想要同時間執行多個Http Request，但是又要等所有的Request都完成後再將資料對應到變數上，那要怎麼寫，這時候就需要使用 **Observable.forkJoin**，程式碼如下
+
+```javascript
+Observable.forkJoin(
+        this.http.get('/app/books.json').map((res:Response) => res.json()),
+        this.http.get('/app/movies.json').map((res:Response) => res.json())
+    ).subscribe(
+      data => {
+        this.books = data[0]
+        this.movies = data[1]
+      },
+      err => console.error(err)
+    );
+```
+
