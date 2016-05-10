@@ -60,7 +60,7 @@ ex: Webpack
 
 # 語法調整
 
-## *ngFor
+## *ngFor (change in 2.0.0-beta.17)
 
 ```javascript
 // 原本的ngFor用法為
@@ -69,7 +69,7 @@ ex: Webpack
 *ngFor="let item of items"
 ```
 
-## Pipe
+## Pipe (change in 2.0.0-beta.16)
 
 針對Argument的處理方式改變
 
