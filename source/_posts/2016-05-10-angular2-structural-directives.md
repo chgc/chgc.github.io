@@ -12,8 +12,8 @@ Angular2 Directives - Structural Directives : 改變DOM element的Directive。�
 
 <!-- more -->
 ```html
-<div *ngIf="hero">{% raw %}{{hero}}{% endraw %}</div>
-<div *ngFor="let hero of heroes">{% raw %}{{hero}}{% endraw %}</div>
+<div *ngIf="hero">{{ hero }}</div>
+<div *ngFor="let hero of heroes">{{ hero }}</div>
 <div [ngSwitch]="status">
   <template [ngSwitchWhen]="'in-mission'">In Mission</template>
   <template [ngSwitchWhen]="'ready'">Ready</template>
@@ -22,7 +22,8 @@ Angular2 Directives - Structural Directives : 改變DOM element的Directive。�
 ```
 
 
-## `<template>` Tag
+## `Template` Tag
+
 
 在Angular2外，`<template>`預設CSS是設定為display: none. 其內容是不會顯示，在Angular2內是會被移除然後被該位置會被置換成`<script></script>`
 
@@ -38,7 +39,7 @@ Angular2 Directives - Structural Directives : 改變DOM element的Directive。�
 </p>
 ```
 
-在ngIf前面的 ***** 是一個很神奇的東西，他可以讓我們少寫`<template>` tag，如果不要寫 `*` 的話，那程式碼就要寫成這樣
+在ngIf前面的 `*` 是一個很神奇的東西，他可以讓我們少寫`<template>` tag，如果不要寫 `*` 的話，那程式碼就要寫成這樣
 
 ```html
 <template [ngIf]="condition">
@@ -52,11 +53,11 @@ Angular2 Directives - Structural Directives : 改變DOM element的Directive。�
 <!-- Examples (A) and (B) are the same -->
 
 <!-- (A) *ngFor div -->
-<div *ngFor="let hero of heroes">{% raw %}{{hero}}{% endraw %}</div>
+<div *ngFor="let hero of heroes">{{ hero }}</div>
 
 <!-- (B) ngFor with template -->
 <template ngFor let-hero [ngForOf]="heroes">
-  <div>{% raw %}{{hero}}{% endraw %}</div>
+  <div>{{ hero }}</div>
 </template>
 ```
 
