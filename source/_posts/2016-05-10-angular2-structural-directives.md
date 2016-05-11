@@ -12,8 +12,8 @@ Angular2 Directives - Structural Directives : 改變DOM element的Directive。�
 
 <!-- more -->
 ```html
-<div *ngIf="hero">{{hero}}</div>
-<div *ngFor="let hero of heroes">{{hero}}</div>
+<div *ngIf="hero">{% raw %}{{hero}}{% endraw %}</div>
+<div *ngFor="let hero of heroes">{% raw %}{{hero}}{% endraw %}</div>
 <div [ngSwitch]="status">
   <template [ngSwitchWhen]="'in-mission'">In Mission</template>
   <template [ngSwitchWhen]="'ready'">Ready</template>
@@ -52,11 +52,11 @@ Angular2 Directives - Structural Directives : 改變DOM element的Directive。�
 <!-- Examples (A) and (B) are the same -->
 
 <!-- (A) *ngFor div -->
-<div *ngFor="let hero of heroes">{{ hero }}</div>
+<div *ngFor="let hero of heroes">{% raw %}{{hero}}{% endraw %}</div>
 
 <!-- (B) ngFor with template -->
 <template ngFor let-hero [ngForOf]="heroes">
-  <div>{{ hero }}</div>
+  <div>{% raw %}{{hero}}{% endraw %}</div>
 </template>
 ```
 
