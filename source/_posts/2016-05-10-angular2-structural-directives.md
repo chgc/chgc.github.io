@@ -8,7 +8,9 @@ tags: Angular2
 ---
 
 Angular2 Directives - Structural Directives : 改變DOM element的Directive。常見的structural directives有 ngIf, ngSwitch, ngFor
+用法如下.
 
+<!-- more -->
 ```html
 <div *ngIf="hero">{{hero}}</div>
 <div *ngFor="let hero of heroes">{{hero}}</div>
@@ -19,7 +21,7 @@ Angular2 Directives - Structural Directives : 改變DOM element的Directive。�
 </div>
 ```
 
-<!-- more -->
+
 ## `<template>` Tag
 
 在Angular2外，`<template>`預設CSS是設定為display: none. 其內容是不會顯示，在Angular2內是會被移除然後被該位置會被置換成`<script></script>`
