@@ -4,7 +4,7 @@ var exec = require('child_process').exec;
 hexo.on('new', function (path) {    
     switch (process.platform) {
         case "win32":
-            exec('"D:\\Program Files\\Typora\\Typora.exe" ' + path.path);
+            exec('"C:\Program Files (x86)\Typora\Typora.exe" ' + path.path);
             break;
         case "darwin":
             break;
