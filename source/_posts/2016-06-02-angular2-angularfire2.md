@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Angular2]AngularFire2
+title: "[Angular2] AngularFire2"
 comments: true
 date: 2016-06-02 15:44:30
 categories: Angular
@@ -34,7 +34,9 @@ Demo的專案都是以Angular CLI所產生出來的架構
 
 
 # 使用方式
-##一些程式碼
+
+## 一些程式碼
+
 ### main.js
 
 ```typescript
@@ -109,13 +111,9 @@ af.auth.login({
 
 在測試Facebook的Login功能時，一直將新後台所提供的Redirect Url設定到 Facebook裡，但是一直都不能正常的運作，最後才想到，新後台所提供的網址是給SDK V3所使用的，所以我必須要去找SDK V2的版本，更新成V2版本的Url就可以正常的使用了。
 
-
-
 # 結語
 
 AngularFire2在使用上非常的直覺，彈性也很大。先不論Firebase這個強大的後端服務，就前端可以搭配RxJS的操作，就讓人覺得很快樂。
-
-
 
 # 參考文件
 
