@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'angular2-service-EventEmitter'
+title: '[Angular2]Service&EventEmitter'
 comments: true
 date: 2016-06-04 22:06:25
 categories: angular
@@ -102,7 +102,7 @@ export class AuthService {
 
 
 
-但是，service Inject的位置要注意，根據實驗，如果Component各自DI service as provider. 當其一的service值有改變而且有廣播時，另外一個service是收不到的，看起來應該是不同的Instance造成的現象，所以必須在往上一層注入服務.
+但是，Provider Inject的位置要注意(請參考[Angular 2 Components and Providers: Classes, Factories & Values](https://www.sitepoint.com/angular-2-components-providers-classes-factories-values/))，根據實驗，如果Component各自DI service as provider. 當其一的service值有改變而且有廣播時，另外一個service是收不到的，看起來應該是不同的Instance造成的現象，所以必須在往上一層注入服務.
 
 
 
