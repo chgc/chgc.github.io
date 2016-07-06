@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Angular2] Angular CLI 手動加入Router"
+title: "[Angular2] Angular CLI (beta9) 手動加入Router"
 comments: true
 date: 2016-07-06 10:33:22
 categories:  Angular
