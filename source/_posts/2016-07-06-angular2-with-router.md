@@ -9,7 +9,6 @@ tags:  Angular2
 
 Angular2的Route的新版持續在開發中，目前已經到了beta階段了，可是Angular2的CLI只是單純的有更新@angular/router的版本而已，但是內建的樣版卻沒有更新，所以只好手動了。
 
-[參考文件](https://angular.io/docs/ts/latest/guide/router.html)
 
 <!-- more -->
 
@@ -62,6 +61,11 @@ Angular2的Route的新版持續在開發中，目前已經到了beta階段了，
 
 ![](https://farm8.staticflickr.com/7291/28040799221_43163b7050_o.png)
 
+# 相關連結
+
+* [官方文件](https://angular.io/docs/ts/latest/guide/router.html)
+* [CLI-package.json - beta9](https://github.com/angular/angular-cli/blob/v1.0.0-beta.9/addon/ng2/blueprints/ng2/files/package.json)
+* [@Agnular/Route - Changelog](https://github.com/angular/angular/blob/master/modules/%40angular/router/CHANGELOG.md)
 
 
 
