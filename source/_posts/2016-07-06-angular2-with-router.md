@@ -96,7 +96,7 @@ bootstrap(AppComponent,
 * [@Agnular/Route - Changelog](https://github.com/angular/angular/blob/master/modules/%40angular/router/CHANGELOG.md)
 * [API DOC- provide](https://angular.io/docs/ts/latest/api/core/index/provide-function.html)
 * [API DOC- PLATFORM_DIRECTIVES](https://angular.io/docs/ts/latest/api/core/index/PLATFORM_DIRECTIVES-let.html)
-
+* [github repo](https://github.com/chgc/demo-angular2-router)
 
 
 
