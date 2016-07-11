@@ -9,7 +9,9 @@ tags: Angular2
 
 Angular2也有一個給Firebase使用的Library, 必計是自家的服務，有相對的AngularFire也是正常的，
 
-目前AngularFire2只支援Firebase SDK V2版本，V3版本還在路上。所以在firebase所建立的專案必須要由舊介面建立後再轉至新Console介面，才可以使用。
+~~目前AngularFire2只支援Firebase SDK V2版本，V3版本還在路上。所以在firebase所建立的專案必須要由舊介面建立後再轉至新Console介面，才可以使用。~~
+
+AngularFire2現在支援Firebase SDK V3版本了，設定方式如下
 
 <!-- more -->
 
@@ -43,9 +45,20 @@ Demo的專案都是以Angular CLI所產生出來的架構
 bootstrap(KeepthingsAppComponent,
   [
     FIREBASE_PROVIDERS,
-    defaultFirebase('https://<project-name>.firebaseio.com'),    
+    defaultFirebase({
+    apiKey: "<your-key>",
+    authDomain: "<your-project-authdomain>",
+    databaseURL: "<your-database-URL>",
+    storageBucket: "<your-storage-bucket>",
+  }),    
   ]);
 ```
+
+這段設定碼可以透過新版的console畫面裡取得
+
+![](https://farm8.staticflickr.com/7452/27614778484_7de85115f2_o.png)
+
+![](https://farm8.staticflickr.com/7507/28126334652_1dbd045533_o.png)
 
 ### App.Component.js
 
@@ -64,6 +77,32 @@ class AppComponent{
 ```
 
 AngularFire所取回的list是Observable的物件，所以也可以套用RxJS的Operator. 基本上Firebase的運作方式是沒有改變的
+
+由於`this.items`屬Obserable，在畫面上要顯示時，可以透過 `async`幫忙來簡化程式碼
+
+```html
+<div *ngFor="let item in items | async">...</div>
+```
+
+如果不想要用`async`的話，那在程式碼裡面就需要加上`subscribe(....)`將AngularFire所取回的資料放到變數裡
+
+```typescript
+this.sub = af.database.list('/items');
+this.sub.subscribe(data=>{
+  this.items = data;
+},err=>{
+ ... 
+},()=>{
+  //when complete
+  ....
+})
+```
+
+```html
+<div *ngFor="let item in items">...</div>
+```
+
+
 
 ## API
 
@@ -109,7 +148,9 @@ af.auth.login({
 
 ### 注意
 
-在測試Facebook的Login功能時，一直將新後台所提供的Redirect Url設定到 Facebook裡，但是一直都不能正常的運作，最後才想到，新後台所提供的網址是給SDK V3所使用的，所以我必須要去找SDK V2的版本，更新成V2版本的Url就可以正常的使用了。
+~~在測試Facebook的Login功能時，一直將新後台所提供的Redirect Url設定到 Facebook裡，但是一直都不能正常的運作，最後才想到，新後台所提供的網址是給SDK V3所使用的，所以我必須要去找SDK V2的版本，更新成V2版本的Url就可以正常的使用了。~~
+
+可以直接使用新版Consolen所提供的Redirect Url即可
 
 # 結語
 
