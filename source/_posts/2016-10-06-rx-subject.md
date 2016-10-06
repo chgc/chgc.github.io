@@ -11,7 +11,8 @@ tags: Angular2, RxJS
 
 > A Subject is like an Observable, but can multicast to many Observers. Subjects are like EventEmitters: they maintain a registry of many listeners.
 
-這表示Subject是 Observable，也是Observer。但是這篇文章是在討論每種Subject的功用
+這表示Subject是 Observable，也是Observer。
+但是這篇文章是在整理每種類型的Subject
 
 <!-- more -->
 
