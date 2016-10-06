@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[RxJS] Subject
+title: '[RxJS] Subject'
 comments: true
 date: 2016-10-06 19:53:18
 categories: Angular
