@@ -34,7 +34,6 @@ setTimeout(function(){
   	source.subscribe(ObserveB);
 },2000);
 
-
 ```
 
 這樣子跑出來的結果如下
@@ -87,7 +86,7 @@ setTimeout(function(){
 
 ```javascript
 var source = Rx.Observable.interval(1000).take(5)
-               .multicast(new Rx.Subject.create())
+               .multicast(Rx.Subject.create())
 
 var ObserveA = {
   next: function(value){ console.log('A next '+ value);	},
@@ -107,16 +106,30 @@ var ObserveB = {
 setTimeout(function(){
   	source.subscribe(ObserveB);
 },2000);
-
 ```
 
 使用multicast這個operator, 必須使用 .connect() 來執行 Observable了，因為，這裡的 `source.subscribe` 是針對Subject做subscribe而非Observable本身.
 
-## publish & refCount
+## publish
 
-可是，這樣子寫又有點麻煩，有沒有自動開始結束的寫法. 其實是有的，那就是 publish() 與 refCount() 這兩個 operator.
+publish為mulitcast的變化型, 在mulitcast裡面需要給予一個Rx.Subject, 例如
 
-publish: new Rx.Subject()
+```javascript
+.multicast(new Rx.Subject())
+// 可以替換成
+.publish()
+
+// 或是
+.multicast(new Rx.ReplaySubject())
+// 可以替換成
+.publishReplay()
+```
+
+
+
+## refCount
+
+可是，這樣子寫又有點麻煩，有沒有自動開始結束的寫法. 其實是有的，那就是 `refCount`
 
 refCount: 啟動條件: subscribe的observe數量大於0時。停止條件: subscribe的observe數量等於0時
 
@@ -157,7 +170,6 @@ setTimeout(function(){
   subB.unsubscribe();
   console.log('unsubscribe B');
 },7000)
-
 ```
 
 執行結果如下
