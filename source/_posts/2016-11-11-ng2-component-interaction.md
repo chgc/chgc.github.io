@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular2]Component Interactioni'
+title: '[Angular2]Component Interaction'
 comments: true
 date: 2016-11-11 21:42:08
 categories: Angular
