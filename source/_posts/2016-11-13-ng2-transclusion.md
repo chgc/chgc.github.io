@@ -19,8 +19,8 @@ Angular1有Transclusion, 那Angular2該怎麼做呢?
 
 ```html
 <app-card> <= View    
-    <card-header></card-header> <= one of the Contents
-    <div class="card-footer"></div> <= one of the Contents
+    <card-header></card-header> <!-- one of the Contents -->
+    <div class="card-footer"></div> <!-- one of the Contents -->
 </app-card>
 ```
 
