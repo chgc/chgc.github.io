@@ -18,7 +18,7 @@ Angular1有Transclusion, 那Angular2該怎麼做呢?
 在介紹Angular2的Transclusion之前，有兩個名詞要介紹，就是 `View` 和 `Content`
 
 ```html
-<app-card> <= View    
+<app-card> <!-- View -->
     <card-header></card-header> <!-- one of the Contents -->
     <div class="card-footer"></div> <!-- one of the Contents -->
 </app-card>
