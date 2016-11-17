@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular2] 3rd Library的安裝筆記
+title: '[Angular2] 3rd Library的安裝筆記'
 comments: true
 date: 2016-11-17 22:16:54
 categories: Angular
