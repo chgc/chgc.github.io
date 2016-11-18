@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular2] Transclusion'
+title: '[Angular2] Projection'
 comments: true
 date: 2016-11-13 09:52:31
 categories: Angular
@@ -15,7 +15,7 @@ Angular1有Transclusion, 那Angular2該怎麼做呢?
 
 # View & Content
 
-在介紹Angular2的Transclusion之前，有兩個名詞要介紹，就是 `View` 和 `Content`
+在介紹Angular2的Projection之前，有兩個名詞要介紹，就是 `View` 和 `Content`
 
 ```html
 <app-card> <!-- View -->
