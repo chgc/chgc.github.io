@@ -4,7 +4,7 @@ title: '[RxJS] MultiCasting'
 comments: true
 date: 2016-10-06 15:25:12
 categories: Angular
-tags: Angular2, RxJS
+tags: RxJS
 ---
 
 我們都知道RxJS的Observeable會在subscribe的時候才會執行，所以每一次的subscribe都會執行一次，但是，某些情況下我們並不想要那樣子做，而在RxJS裡面有一個MultiCasting的觀念，主要是用來處理一個Observeable多個Observer的情況時，而不重複執行Observable.  這篇會整理一下關於MultiCasting的相關觀念
