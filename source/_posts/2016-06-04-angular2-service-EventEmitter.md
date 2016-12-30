@@ -3,8 +3,8 @@ layout: post
 title: '[Angular2]Service&EventEmitter'
 comments: true
 date: 2016-06-04 22:06:25
-categories: angular
-tags: angular2
+categories: Angular
+tags: Angular2
 ---
 
 在Angular2裡面如何做一個全域型的變數然後當其更新時，讓所有有用到的人都知道。這時候就要用EventEmitter了
