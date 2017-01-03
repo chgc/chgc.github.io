@@ -4,7 +4,7 @@ title: '[Angular] 與ASP.NET Core合體'
 comments: true
 date: 2017-01-03 16:13:00
 categories: Angular
-tags: Angular2, MVC Core
+tags: Angular2, 'MVC Core'
 ---
 
 Angular可以說是一個很稱職的前端Framework，那後端的架構又有什麼選擇呢? 其實ASP.NET MVC Core是一個不錯的選擇。架構很輕，在搭配無敵強大的Visual Studio與Azure超級無縫的接軌。可以說是不二人選，但是. Angular CLI的專案要怎麼跟MVC Core的專案結合呢? 以下使用Visual Studio 2017RC+ Core 1.1.0版來做Demo.
@@ -17,7 +17,7 @@ Angular可以說是一個很稱職的前端Framework，那後端的架構又有�
 
 ![](https://farm6.staticflickr.com/5793/31923537982_a7642c97dc_o.png)
 
-按下 OK 後就會是一個含有WebAPI範例的MVC Core的網站了，接下來就是要升級MVC Core的版本到1.1.0的版本了，這時候會發現project.json已經消失了，因為mac的Visual studio版本釋出後，又回歸到MSBuild的模式了.
+按下 OK 後就會是一個含有WebAPI範例的MVC Core的網站了，這時候會發現project.json已經消失了，因為我門是使用Visual Studio 2017建立的關係([Project.json for ASP.NET Core is going away](http://www.talkingdotnet.com/news-project-json-asp-net-core-going-away/))，接下來就是透過NuGet來升級MVC Core的版本到1.1.0的版本。
 
 ![](https://farm1.staticflickr.com/292/31696729150_c6080119be_o.png)
 
