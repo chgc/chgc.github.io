@@ -4,7 +4,11 @@ title: '[Angular] 與ASP.NET Core合體'
 comments: true
 date: 2017-01-03 16:13:00
 categories: Angular
-tags: Angular2, 'MVC Core'
+tags: 
+- Angular2
+- MVC Core
+
+
 ---
 
 Angular可以說是一個很稱職的前端Framework，那後端的架構又有什麼選擇呢? 其實ASP.NET MVC Core是一個不錯的選擇。架構很輕，在搭配無敵強大的Visual Studio與Azure超級無縫的接軌。可以說是不二人選，但是. Angular CLI的專案要怎麼跟MVC Core的專案結合呢? 以下使用Visual Studio 2017RC+ Core 1.1.0版來做Demo.
