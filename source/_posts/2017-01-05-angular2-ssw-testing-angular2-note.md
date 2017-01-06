@@ -15,7 +15,7 @@ tags: Angular2
 
 # 影片筆記
 
-## Tools
+## 工具
 
 * karma - test runner
 
@@ -46,25 +46,36 @@ tags: Angular2
 
 * protractor(e2e)
 
-## Why Test
+## 為什麼要測試
 
-more business logic is moving from backend to frontend. therefore. fronted test is becoming more important
+因為越來愈多的商業邏輯都往前端走，所以前端的測試就越來越重要了
 
-## Test Category
+
+
+## 測試的種類
 
 - Unit tests: Test certain functions, areas of units of code
+
 - e2e test: Runs the real application in the browser and simulateds user behavior
 
+  ​
 
 
-## Types of Unit Tests
 
-1. Isolated: No HTML template
+## Unit Tests的型態
+
+1. Isolated:
+
+   1.  No HTML template
+
 2. Shallow: 
    1. HTML template
    2. No Child components
+
 3. integrated
    1. Test the entire app
+
+      ​
 
 
 
@@ -171,7 +182,7 @@ let nativeButtonElement = fixture.debugElement.query(By.css('button')).nativeEle
 
 ```
 
-Demo Test Code
+範例程式
 
 ```typescript
 import { PaymentComponent } from './payment.component';
