@@ -1,10 +1,12 @@
 ---
 layout: post
-title: '[Angular] 影片筆記 - Techniques and practices for testing Angular 2'
+title: '[Angular] 學習筆記(1) - Techniques and practices for testing Angular 2'
 comments: true
 date: 2017-01-05 23:55:32
 categories: Angular
-tags: Angular2
+tags: 
+- Angular2
+- 學習筆記
 ---
 
 這是Youtube影片([Techniques and practices for testing Angular 2](https://youtu.be/RjrIK__PepU))的觀看筆記

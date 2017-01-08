@@ -3,7 +3,7 @@ layout: post
 title: '[ASP.NET MVC] ASP.NET MVC 開啟加速'
 date: 2013-11-01 01:46
 comments: true
-categories: "ASP.NET, MVC"
+categories: "ASP.NET MVC"
 tag: "MVC 4"
 ---
 # ASP.NET MVC有一個特性，就是如果第一次使用的時候，會經歷iis需要complie的窘境。
