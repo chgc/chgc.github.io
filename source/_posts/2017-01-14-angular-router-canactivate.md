@@ -14,7 +14,7 @@ tags: Angular2
 Angular的Router提供了一系列的方法，可以讓我們來決定是否允許使用者進入或是離開頁面
 
 - [CanActivate](https://angular.io/docs/ts/latest/guide/router.html#can-activate-guard) : 避免瀏覽到該網址
-- [CanActivateChild](https://angular.io/docs/ts/latest/guide/router.html#can-activate-child-guard) : 避免瀏覽到子網址
+- [CanActivateChild](https://angular.io/docs/ts/latest/guide/router.html#can-activate-child-guard) : 讓子路由套用`CanActivate`規則，避免瀏覽到該網址
 - [CanDeactivate](https://angular.io/docs/ts/latest/guide/router.html#can-deactivate-guard) : 避免離開目前的網址
 - [Resolve](https://angular.io/docs/ts/latest/guide/router.html#resolve-guard) : 在前往瀏覽網頁前先預載資料
 - [CanLoad](https://angular.io/docs/ts/latest/guide/router.html#can-load-guard) : 避免載入非同步的路由設定
