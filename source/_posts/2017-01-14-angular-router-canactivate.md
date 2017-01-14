@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular]Router - CanActivate`
+title: '[Angular]Router - CanActivate'
 comments: true
 date: 2017-01-14 10:23:04
 categories: Angular
