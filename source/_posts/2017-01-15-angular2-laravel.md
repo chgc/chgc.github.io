@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular]與Larvel 5.3邂逅'
+title: '[Angular]Laravel 5.3邂逅'
 comments: true
 date: 2017-01-15 16:04:06
 categories: Angular
