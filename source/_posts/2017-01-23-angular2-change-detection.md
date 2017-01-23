@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular]Change Detection'
+title: '[Angular] Change Detection'
 comments: true
 date: 2017-01-23 10:21:04
 categories: Angular
