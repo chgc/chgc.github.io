@@ -33,11 +33,9 @@ Angular在runtime的時候會為每一個component建立一個`Change Detector` 
 
 ![](https://farm1.staticflickr.com/689/31630339334_175106c15d_o.png)
 
-Change Detector的運行方向是 Top -> Down
+Change Detector的運行方向是 Top -> Down，在Default模式下，不論是否有改變，仍會繼續往下檢查
 
 ![](https://farm1.staticflickr.com/358/32095374120_6656c40dcf_o.png)
-
-當發現有改變時(目前是Default模式)
 
 ![](https://farm1.staticflickr.com/663/31662279353_4ac2e09719_o.png)
 
