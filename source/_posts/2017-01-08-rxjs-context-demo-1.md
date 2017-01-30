@@ -5,7 +5,7 @@ comments: true
 date: 2017-01-08 11:06:23
 categories: Angular
 tags:
-- Angular2
+- Angular
 - RxJS
 ---
 

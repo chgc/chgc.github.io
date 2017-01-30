@@ -5,7 +5,7 @@ comments: true
 date: 2017-01-07 11:53:07
 categories: Angular
 tags: 
-- Angular2
+- Angular
 - 學習筆記
 ---
 

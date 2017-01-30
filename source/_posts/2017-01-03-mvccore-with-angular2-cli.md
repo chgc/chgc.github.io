@@ -5,7 +5,7 @@ comments: true
 date: 2017-01-03 16:13:00
 categories: Angular
 tags: 
-- Angular2
+- Angular
 - MVC Core
 
 
