@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "[Angular2] Angular CLI (beta9) 手動加入Router"
+title: "[Angular] Angular CLI (beta9) 手動加入Router"
 comments: true
 date: 2016-07-06 10:33:22
 categories:  Angular
-tags:  Angular2
+tags:  Angular
 ---
 
 Angular2的Route的新版持續在開發中，目前已經到了beta階段了，可是Angular2的CLI只是單純的有更新@angular/router的版本而已，但是內建的樣版卻沒有更新，所以只好手動了。

@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular] 粗心的錯誤 Error: error:infdig'
+title: '[AngularJS] 粗心的錯誤 Error: error:infdig'
 date: 2014-10-09 06:18
 comments: true
-categories: "Angular"
-tag: "Angular"
+categories: "AngularJS"
+tag: "AngularJS"
 ---
 angular在寫ng-repeat的時後, 因為想要利用 filter的功能將過濾後的資料集拿到不同區塊使用, 把function 寫到ng-repeat裡面。 像是
 ```

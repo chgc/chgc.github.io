@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2]Component Interaction'
+title: '[Angular]Component Interaction'
 comments: true
 date: 2016-11-11 21:42:08
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Component在Angular2的世界裡是很多變也很重要的。在一個網站裡會存在很多Component，如何讓Component與Component之間做交流，當然也是一個很重要的課題

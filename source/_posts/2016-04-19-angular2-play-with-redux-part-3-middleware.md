@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular2] play with Redux part 3 - middleware'
+title: '[Angular] play with Redux part 3 - middleware'
 date: 2016-04-19 03:17
 comments: true
 categories: "Angular"

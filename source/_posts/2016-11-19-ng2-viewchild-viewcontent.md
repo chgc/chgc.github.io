@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2]ViewChild & ContentChild'
+title: '[Angular] ViewChild & ContentChild'
 comments: true
 date: 2016-11-19 10:12:55
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 ViewChild(ren) & ContenChild(ren) 可以讓Component取得template裡的其他Component，取得後就可以操作該component了，而這功能搭配使用，所產生出來的效果是非常強大的.

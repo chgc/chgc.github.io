@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular] ngOptions in 1.4'
+title: '[AngularJS] ngOptions in 1.4'
 date: 2015-11-08 14:53
 comments: true
-categories: "Angular"
-tag: "Angular"
+categories: "AngularJS"
+tag: "AngularJS"
 ---
 之前沒有特別留意ngOptions在1.4版裡面修正了一些東西，包含track by的用法
 先簡單的描述一下狀況

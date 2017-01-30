@@ -4,7 +4,7 @@ title: '[Angular] Change Detection'
 comments: true
 date: 2017-01-23 10:21:04
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 ![](https://farm1.staticflickr.com/740/32472149965_a7d79c9969_o.png)
@@ -81,7 +81,7 @@ Change Detector的運行方向是 Top -> Down，在Default模式下，不論是�
 
 # Change Detection Strategies
 
- `Default`和 `OnPush` 細節部份，可參考這篇[[Angular2] ChangeDetectionStrategy](http://blog.kevinyang.net/2016/06/05/angular2-ChangeDetectionStrategy/)
+ `Default`和 `OnPush` 細節部份，可參考這篇[[Angular] ChangeDetectionStrategy](http://blog.kevinyang.net/2016/06/05/angular2-ChangeDetectionStrategy/)
 
 根據上面的運作原理，我們可以針對個別的Change Detector做策略上的設定，例如下面的圖
 

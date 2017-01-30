@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "[Angular2]Rxjs的Observers"
+title: "[Angular]Rxjs的Observers"
 comments: true
 date: 2016-05-10 16:59:03
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Angular2裡面有用到[RxJS](https://github.com/Reactive-Extensions/RxJS)的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧

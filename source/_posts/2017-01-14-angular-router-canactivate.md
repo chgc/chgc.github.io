@@ -4,7 +4,7 @@ title: '[Angular]Router Guards'
 comments: true
 date: 2017-01-14 10:23:04
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 通常我們會希望限制某些網址只有某特定規則者才可以進入或離開，Angular的Router提供了一系列的個方法來幫助我們
@@ -134,7 +134,7 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
 
 # Resolve
 
-請參考[[Angular2] Router Resolve](http://blog.kevinyang.net/2016/12/11/ng2-router-resolve/)
+請參考[[Angular] Router Resolve](http://blog.kevinyang.net/2016/12/11/ng2-router-resolve/)
 
 # CanLoad
 

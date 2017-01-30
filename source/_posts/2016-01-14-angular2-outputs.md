@@ -1,12 +1,12 @@
 ---
 layout: post
-title: '[Angular2] Outputs & Inputs'
+title: '[Angular] Outputs & Inputs'
 date: 2016-01-14 15:15
 comments: true
 categories: "Angular"
-tag: "Angular2"
+tag: "Angular"
 ---
-Angular 2 在 Components之間的值得傳遞方式分割成Inputs和Outputs.
+Angular 在 Components之間的值得傳遞方式分割成Inputs和Outputs.
 寫法如下
 ```
 @Components({

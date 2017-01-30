@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  '[Angular2] Template Tag'
+title:  '[Angular] Template Tag'
 comments: true
 date: 2016-11-12 20:04:00
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Angular2裡面有提供一個 `*` 的語法糖, 這個語法糖是用來表示 `<template>` 標籤. 例如  `*ngIf` 、 `*ngFor` 等, 而這篇就來討論怎麼利用 `<template>`

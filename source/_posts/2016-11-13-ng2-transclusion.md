@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2] Projection'
+title: '[Angular] Projection'
 comments: true
 date: 2016-11-13 09:52:31
 categories: Angular
-tags: Angular2
+tags: Angular
 
 
 ---

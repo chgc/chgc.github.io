@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "[Angular2]What's Structural Directives"
+title: "[Angular]What's Structural Directives"
 comments: true
 date: 2016-05-10 20:10:18
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Angular2 Directives - Structural Directives : 改變DOM element的Directive。常見的structural directives有 ngIf, ngSwitch, ngFor

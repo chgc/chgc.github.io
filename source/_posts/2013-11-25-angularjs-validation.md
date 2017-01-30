@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[AngularJs] Validation'
+title: '[AngularJS] Validation'
 date: 2013-11-25 06:10
 comments: true
-categories: "Angular"
-tag: "Angular"
+categories: "AngularJS"
+tag: "AngularJS"
 ---
 #Form Validation with angularJs
 Basic:
