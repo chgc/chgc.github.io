@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular] ASP.NET MVC with angular Html5Mode'
+title: '[AngularJS] ASP.NET MVC with angular Html5Mode'
 date: 2015-03-29 09:30
 comments: true
-categories: "Angular"
-tag: "Angular"
+categories: "AngularJS"
+tag: "AngularJS"
 ---
 經過一段時間的實驗. 在別的framework找到可以讓backend的route支援angular html5mode了.
 基本方式是如果我路由規則沒有定義的，全部指向index頁面(有ng-view的)

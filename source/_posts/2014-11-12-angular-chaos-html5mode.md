@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular] 混亂的html5mode'
+title: '[AngularJS] 混亂的html5mode'
 date: 2014-11-12 02:32
 comments: true
-categories: "Angular"
-tag: "Angular"
+categories: "AngularJS"
+tag: "AngularJS"
 ---
 Angular裡面有一個方法可以把# (hash tag) 給拿掉，那就是將html5mode開啟
 

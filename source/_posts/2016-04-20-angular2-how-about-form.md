@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2] How about Form?'
+title: '[Angular] How about Form?'
 date: 2016-04-20 06:14
 comments: true
 categories: "Angular"
-tag: "Angular2"
+tag: "Angular"
 ---
 在Angular2的Form, 可以使用[(ngModel)]的方式或是使用 ngFormModel的方式(如下)。 ngModel就不多描述，用法跟Angular1.x一樣
 

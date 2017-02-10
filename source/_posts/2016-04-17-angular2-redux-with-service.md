@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2] play with Redux part 2'
+title: '[Angular] play with Redux part 2'
 date: 2016-04-17 12:15
 comments: true
 categories: "Angular"
-tag: "Angular2" 
+tag: "Angular" 
 ---
 在Part 1提到在aciton裡面，如果有需要呼叫api的行為，都會發生這個階段
 目前有發現有兩種方式可以處理api. 

@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2] play with Redux part 1'
+title: '[Angular] play with Redux part 1'
 date: 2016-04-15 07:09
 comments: true
 categories: "Angular"
-tag: "Angular2"
+tag: "Angular"
 ---
 Redux是根據Facebook的flux所產出的一個架構. 簡單介紹請參考[這裡](https://youtu.be/s9AC8KTcce8)
 

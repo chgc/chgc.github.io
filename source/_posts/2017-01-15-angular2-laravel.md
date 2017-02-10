@@ -5,7 +5,7 @@ comments: true
 date: 2017-01-15 16:04:06
 categories: Angular
 tags: 
-- Angular2
+- Angular
 - Laravel5
 ---
 

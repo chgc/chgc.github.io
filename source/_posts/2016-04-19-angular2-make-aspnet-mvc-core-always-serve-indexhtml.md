@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2] Make asp.net mvc core always serve index.html'
+title: '[Angular] Make asp.net mvc core always serve index.html'
 date: 2016-04-19 06:53
 comments: true
 categories: "Angular"
-tag: "Angular2"
+tag: "Angular"
 ---
 Angular2的預設route模式是html5，這個在跑到其他頁面後，在重新整理頁面後會出現空白頁面，這是因為找不到Index的入口了。所以解決方式就是要讓MVC Core可以每次都載入Index.html頁面(如果純靜態頁面的方式)
 

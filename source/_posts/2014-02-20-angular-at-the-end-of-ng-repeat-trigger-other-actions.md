@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular] ng-repeat 結束時觸發其他動作'
+title: '[AngularJS] ng-repeat 結束時觸發其他動作'
 date: 2014-02-20 06:26
 comments: true
-categories: "Angular"
-tag: "Angular"
+categories: "AngularJS"
+tag: "AngularJS"
 ---
 如果想要知道ng-repeat什麼時候結束，可以透過$last的值知道最後的值是什麼，但是如果要觸發另外一個method..就..需要另外寫directive來處理這類的事情
 

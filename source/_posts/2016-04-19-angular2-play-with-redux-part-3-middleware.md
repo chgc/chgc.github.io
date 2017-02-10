@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2] play with Redux part 3 - middleware'
+title: '[Angular] play with Redux part 3 - middleware'
 date: 2016-04-19 03:17
 comments: true
 categories: "Angular"
-tag: "Angular2"
+tag: "Angular"
 ---
 Redux2的middleware是介於action和reducer之間。例如: ReduxThunk.
 設定方式是在建立store時，將middleware指定給store即可

@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "[Angular2] ChangeDetectionStrategy"
+title: "[Angular] ChangeDetectionStrategy"
 comments: true
 date: 2016-06-05 10:30:35
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Angular2裡面偵測改變的方法有全新的方式，用來提升整體的效能，那針對Component對於偵測改變有一個屬性可以設定，那就是透過 `ChangeDetectionStrategy`

@@ -4,7 +4,7 @@ title: '[Angular] Preloading策略'
 comments: true
 date: 2017-01-21 10:21:13
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Angular有提供`loadChildren`的Lazy loading的模式，也有提供`preloadingStrategy`的策略模式可供設定，每種設定的方式會影響`loadChildren`的行為，當然也可以自訂preloading的規則

@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "[Angular2]升級到RC"
+title: "[Angular]升級到RC"
 comments: true
 date: 2016-05-04 08:39
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Angular發佈RC了，來升級吧

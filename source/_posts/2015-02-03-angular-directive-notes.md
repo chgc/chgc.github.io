@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular] Directive筆記一下'
+title: '[AngularJS] Directive筆記一下'
 date: 2015-02-03 02:03
 comments: true
-categories: "Angular"
-tag: "Angular"
+categories: "AngularJS"
+tag: "AngularJS"
 ---
 ## Scope
 

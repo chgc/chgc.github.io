@@ -1,10 +1,10 @@
 ---
 layout: post
-title: '[Angular2] Router Resolve'
+title: '[Angular] Router Resolve'
 comments: true
 date: 2016-12-11 22:10:39
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Angular 2的Router Config的地方，可以設定data跟resolve. 這篇就簡單的紀錄一下怎麼寫resolve的部分跟怎麼在component裡取得資料

@@ -1,12 +1,12 @@
 ---
 layout: post
-title: '[Angular2] css style '
+title: '[Angular] css style '
 date: 2016-04-25 01:40
 comments: true
 categories: "Angular"
-tag: "Angular2"
+tag: "Angular"
 ---
-Angular2 Component 處理styles有三種模式
+Angular Component 處理styles有三種模式
     1. ViewEncapsulation.None: 適用於全部頁面(No Shadow DOM)
     2. ViewEncapsulation.Native: 僅套用於Shadow DOM自己本身
     3. ViewEncapsulation.Emulated: 預設行為。 會自動將每個component給予一個名稱，讓各compoent裡面的style會各自獨立

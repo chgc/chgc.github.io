@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "[Angular2] AngularFire2"
+title: "[Angular] AngularFire2"
 comments: true
 date: 2016-06-02 15:44:30
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Angular2也有一個給Firebase使用的Library, 必計是自家的服務，有相對的AngularFire也是正常的，

@@ -4,7 +4,7 @@ title: '[Angular] Router Event'
 comments: true
 date: 2017-01-22 00:03:47
 categories: Angular
-tags: Angular2
+tags: Angular
 ---
 
 Router Event到底可以怎麼應用，來探討一下吧
