@@ -28,7 +28,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
       Observable.timer(0,5000), 
       this.subject, 
       (t, s) => s)
-      .concatMap(id => this.getData(id))
+      .switchMap(id => this.getData(id))
       .subscribe(x => this.data = x);
   }
 
