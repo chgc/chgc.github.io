@@ -98,9 +98,9 @@ export class EmailValidator {}
 selector 有寫了兩個東西，`[valiateEmail]`和`[ngModel]`，這表示要使用者個 directive 的條件式，element 裡需要同時擁有這兩個 attribute 才會生效
 
 ```html
-<form novalidate>
-  ...
-  <input type="email" name="email" ngModel validateEmail>
+<form #myForm="ngForm" novalidate>
+  <input type="email" name="email" ngModel validateEmail  #email="ngModel">
+  {{ email.errors | json }}
 </form>
 ```
 
@@ -165,10 +165,15 @@ export class EmailValidator implements Validator {
     ...
   }
 }
-
 ```
 
 以上就是一個自訂驗證的基本型的寫法
+
+# 顯示結果
+
+![](https://content.screencast.com/users/chgc/folders/Snagit/media/42deda5a-1d4e-4159-b2ac-4111afdedab5/03.10.2017-23.05.GIF)
+
+
 
 # 補充資訊
 
