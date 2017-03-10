@@ -26,7 +26,9 @@ Validator 是用來做資料驗證的，資料驗證的結果只會有兩種，`
 
 如果想自己自訂驗證規則呢? 那要怎麼寫呢? 以下就慢慢的來介紹
 
-# 自訂 Validator V1
+# 自訂 Validator
+
+##  Verson 1
 
 最簡單的 Validator 就是一個 function，但是這樣子的寫法，只能在 Reactive Form (model-driven) 下使用
 
@@ -51,7 +53,7 @@ ngOnInit() {
 
 如果要在 template-driven 下也可以使用這個驗證方法的話，又該怎麼寫呢?
 
-# 自訂 Validator V2
+##  Version 2
 
 我們可以透過 `directive`的方式將我們自訂的驗證規則給 template-driven 的表單使用，在需要被驗證的 FormControl 上，加上我們指定的屬性即可，所以我們需要來建立一個 directive，建立步驟如下
 
@@ -104,7 +106,7 @@ selector 有寫了兩個東西，`[valiateEmail]`和`[ngModel]`，這表示要�
 </form>
 ```
 
-# 自訂 Validator V3
+##  Version 3
 
 上面的寫法，雖然是可以跑，但是，程式碼看起來就有點散落在四處，有沒有可以把驗證的規則包在 `directive`的 class 裡面呢? 答案是有的，所以在來調整一下程式碼
 
@@ -147,7 +149,7 @@ export class EmailValidator implements Validator {
 
 到這個階段，template-driven的表單已經可以使用了，可是， model-driven的表單就不能直接在 template 上套用，原因是 selector 裡並沒有給予 `formControlName` 使用的條件，所以，再來將缺少的部分補上
 
-# 自訂 Validator V4
+## Verson 4
 
 ```typescirpt
 import { Directive } from '@angular/core';
