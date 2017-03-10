@@ -149,7 +149,7 @@ export class EmailValidator implements Validator {
 
 到這個階段，template-driven的表單已經可以使用了，可是， model-driven的表單就不能直接在 template 上套用，原因是 selector 裡並沒有給予 `formControlName` 使用的條件，所以，再來將缺少的部分補上
 
-## Verson 4
+## Version 4
 
 ```typescirpt
 import { Directive } from '@angular/core';
