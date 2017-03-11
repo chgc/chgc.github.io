@@ -9,8 +9,7 @@ tags: Angular
 
 Angular 內建的表單驗證項目其實不多，網路上雖然也有人寫好的驗證擴充套件可以使用。但是，真正強大的是 Angular 允許我們自訂驗證規則，且很容易的套用到系統內，當然也可以簡單的讓其他專案使用。
 
-這裡將會介紹 Custom Validator 的幾種實做方式
-
+這裡將會介紹 Custom Validator 的幾種實作方式
 <!-- more -->
 
 # 什麼是 Validator
@@ -147,7 +146,7 @@ export class EmailValidator implements Validator {
 4.  使用 multi 來擴充 `NG_VALIDTORS `的功能
 5.  將原本的驗證 function 的程式碼搬進  validate 裡面
 
-到這個階段，template-driven的表單已經可以使用了，可是， model-driven的表單就不能直接在樣版上使用，原因是 selector 裡並沒有給予 `formControlName` 使用的條件，所以，再來將缺少的部分補上
+到這個階段，template-driven 的表單已經可以使用了，可是， model-driven 的表單就不能直接在樣版上使用，原因是 selector 裡並沒有給予 `formControlName` 使用的條件，所以，再來將缺少的部分補上
 
 ## Version 4
 
@@ -179,7 +178,7 @@ export class EmailValidator implements Validator {
 
 # 補充資訊
 
-* provide 的部分有兩種可以設定 `NG_VALIDATORS` 和 `NG_ASYNC_VALIDATORS`，class 的 validator 的寫法是一樣的，唯一的差別是回傳的型別， `NG_ASYNC_VALIDATORS` 可以回傳 Promise/Observable 的型別。可參讀延伸閱讀的第一篇文章
+* provide 的部分有兩種可以設定 `NG_VALIDATORS` 和 `NG_ASYNC_VALIDATORS`，class 的 validator 的寫法是一樣的，唯一的差別是回傳的型別， `NG_ASYNC_VALIDATORS` 可以回傳 Promise/Observable 的型別。可參考延伸閱讀的第一篇文章
 
 # 延伸閱讀
 
