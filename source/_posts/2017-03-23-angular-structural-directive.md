@@ -13,7 +13,7 @@ Angular 的 `directive` 真的很厲害，幾乎什麼都能做，除了可以�
 
 > Structural directives—change the DOM layout by adding and removing DOM elements.
 
-我們可以透過這一款的 directive 來新增或移除 DOM element。但在這之前，需要重新介紹 `*` 這一個語法糖
+我們常用的  `ngIf` 就是其中之一，我們可以透過這一款的 directive 來新增或移除 DOM element。但在這之前，需要重新介紹 `*` 這一個語法糖
 
 # asterisk (*)
 
@@ -73,7 +73,7 @@ export class MyIfDirective {
 
 # 稍微進階版
 
-我們也可以將 service 注入到 directive 裡面，透過 RxJS 的幫助，可以讓 directive 處於自動監測的狀態，當全域某特定變數改變時，directive 也會跟著改變。聽起來很神奇，那時做起來會很困難嗎?
+我們也可以將 service 注入到 directive 裡面，透過 RxJS 的幫助，可以讓 directive 處於自動監測的狀態，當全域某特定變數改變時，directive 也會跟著改變。聽起來很神奇，那實作起來會很困難嗎?
 
 ```typescript
 @Directive({ selector: '[isAuth]'})
@@ -101,7 +101,9 @@ export class MyIfDirective {
 }
 ```
 
-打完收工，夠簡單了吧。這寫法跟我們在寫 Component 根本就沒有差別，這就是 Angular 的優點，程式碼格式的一致性很高。
+打完收工，其實還蠻簡單的。
+
+這寫法跟寫 Component 根本就沒有差別，這就是 Angular 的優點，程式碼格式的一致性很高。
 
 
 
