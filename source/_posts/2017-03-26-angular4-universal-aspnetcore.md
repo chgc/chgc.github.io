@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] Angular 4 - Universal with Asp.Net Core'
+title: '[Angular] Angular 4 - Universal with ASP.NET Core'
 comments: true
 date: 2017-03-26 14:51:07
 categories: Angular
