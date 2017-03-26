@@ -7,7 +7,7 @@ categories: Angular
 tags: Angular
 ---
 
-Angular 4 將 Universal 的功能整合到 `@angular/platform-server` 裡，而至目前(2017/3/26) dotnet cli 所提供的 SPA 樣板尚未更新至最新版，如果在這個時間點想要更新到最新版時，就需要手動更新部分的檔案內容，這篇文章就是這描述這些異動，或是在未來的時間，就不需要這麼麻煩了
+Angular 4 將 Universal 的功能整合到 `@angular/platform-server` 裡，目前(2017/3/26) dotnet cli 所提供的 SPA 樣板尚未更新至最新版，如果在這個時間點想要更新到最新版時，就需要手動更新部分的檔案內容，這篇文章就是這描述這些異動，或許在未來的某一個時間點後，就不需要這麼麻煩了
 
 <!-- more -->
 
