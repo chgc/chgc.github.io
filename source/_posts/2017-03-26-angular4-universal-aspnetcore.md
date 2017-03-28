@@ -394,7 +394,7 @@ export function ngAspnetCoreEngine(
 }
 ```
 
-### polyfills/browswer.polyfills.ts
+### polyfills/browser.polyfills.ts
 
 ```typescript
 import 'zone.js/dist/zone';
