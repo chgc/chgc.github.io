@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] 自訂Decoorators'
+title: '[Angular] 自訂Decorators'
 comments: true
 date: 2017-01-30 15:49:52
 categories: Angular
