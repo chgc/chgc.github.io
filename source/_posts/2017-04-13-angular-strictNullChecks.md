@@ -3,9 +3,7 @@ layout: post
 title: '[Angular] 啟用 strictNullChecks'
 comments: true
 date: 2017-04-13 13:58:03
-categories: 
- - Angular
- - Typescript
+categories: Angular
 tags: 
  - Angular
  - Typescript
