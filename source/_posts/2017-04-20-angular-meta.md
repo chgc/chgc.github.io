@@ -85,7 +85,7 @@ constructor(
   };
 ```
 
-這段程式碼我是放在 `app.module.ts`的地方，因為那邊只會被執行一次，所以放在那邊是最合適的。
+為了避免重複執行，這段程式碼我是放在 `app.component.ts`的地方，因為正常情況下，app.component 只會被執行一次。
 
 ```typescript
 this.router.events.filter(event => (event instanceof NavigationEnd))
