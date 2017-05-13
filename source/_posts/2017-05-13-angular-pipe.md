@@ -37,18 +37,18 @@ date_expression | date[:format]
 
 ### 說明
 
-* `date_expression` 必須是日期型別的物件或是數字(milliseconds) 或是 [ISO文字](https://www.w3.org/TR/NOTE-datetime)
+- `date_expression` 必須是日期型別的物件或是數字(milliseconds) 或是 [ISO文字](https://www.w3.org/TR/NOTE-datetime)
 
-* `format` 可以用來調整要顯示的日期格式，可以使用的格式說明如下
+- `format` 可以用來調整要顯示的日期格式，可以使用的格式說明如下
 
-  * `'medium'`: 相當於 `'yMMMdjms'` (例如 `Sep 3, 2010, 12:05:08 PM` for `en-US`)
-  * `'short'`: 相當於  `'yMdjm'` (例如  `9/3/2010, 12:05 PM` for `en-US`)
-  * `'fullDate'`: 相當於  `'yMMMMEEEEd'` (例如  `Friday, September 3, 2010` for `en-US`)
-  * `'longDate'`: 相當於  `'yMMMMd'` (例如  `September 3, 2010` for `en-US`)
-  * `'mediumDate'`: 相當於 `'yMMMd'` (例如  `Sep 3, 2010` for `en-US`)
-  * `'shortDate'`: 相當於  `'yMd'` (例如  `9/3/2010` for `en-US`)
-  * `'mediumTime'`: 相當於 'jms'` (例如  `12:05:08 PM` for `en-US`)
-  * `'shortTime'`: 相當於  `'jm'` (例如  `12:05 PM` for `en-US`)
+  - `'medium'`: 相當於 `'yMMMdjms'` (例如 `Sep 3, 2010, 12:05:08 PM` for `en-US`)
+  - `'short'`: 相當於  `'yMdjm'` (例如  `9/3/2010, 12:05 PM` for `en-US`)
+  - `'fullDate'`: 相當於  `'yMMMMEEEEd'` (例如  `Friday, September 3, 2010` for `en-US`)
+  - `'longDate'`: 相當於  `'yMMMMd'` (例如  `September 3, 2010` for `en-US`)
+  - `'mediumDate'`: 相當於 `'yMMMd'` (例如  `Sep 3, 2010` for `en-US`)
+  - `'shortDate'`: 相當於  `'yMd'` (例如  `9/3/2010` for `en-US`)
+  - `'mediumTime'`: 相當於 'jms'` (例如  `12:05:08 PM` for `en-US`)
+  - `'shortTime'`: 相當於  `'jm'` (例如  `12:05 PM` for `en-US`)
 
   | 描述       | 符號   | 短表示         | 長表示                            | 數值      | 2位數       |
   | -------- | ---- | ----------- | ------------------------------ | ------- | --------- |
@@ -117,7 +117,6 @@ import {Component} from '@angular/core';
 export class AppComponent {
   display = 'this is upperCase testcase';
 }
-
 ```
 
 顯示結果
@@ -182,7 +181,6 @@ import {Component} from '@angular/core';
 export class AppComponent {
   display = 'this is TILECASE testcase';
 }
-
 ```
 
 顯示結果
@@ -202,14 +200,10 @@ number_expression | currency[:currencyCode[:symbolDisplay[:digitInfo]]]
 ### 說明
 
 - 只接收數字型別的資料
-
 - `currencyCode` 是 [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) 貨幣代碼，例如  `USD` 代表美金， `TWD` 代表新台幣。
-
 - `symbolDisplay` 是布林值，用來決定是否顯示貨幣符號或是貨幣代碼
-
   - `true` 使用符號 (例如 `$`).
   - `false` (預設): 使用貨幣代碼 (e.g. `USD`).
-
 - `digitInfo` 請參閱[`DecimalPipe`](https://angular.io/docs/ts/latest/api/common/index/DecimalPipe-pipe.html) 的說明.
 
 ### 範例
@@ -234,7 +228,6 @@ export class AppComponent {
   c: number = 15000;
   d: number = 20000;
 }
-
 ```
 
 顯示結果
@@ -323,13 +316,11 @@ import {Component} from '@angular/core';
 export class AppComponent {
   pi: number = 3.141592;
   e: number = 2.718281828459045;
-}
-```
+}```
 
 顯示結果
 
 ![](https://farm5.staticflickr.com/4157/34461393612_3e66c3de42_o.png)
-
 
 
 
@@ -341,9 +332,8 @@ export class AppComponent {
 ng g p "pipeName"
 ```
 
-
-
 所產生出來的基本架構是
+
 
 ```typescript
 import { Pipe, PipeTransform } from '@angular/core';
@@ -360,9 +350,12 @@ export class ExponentialPipe implements PipeTransform {
 }
 ```
 
-* `transform` function 所回傳的值，會用來顯示在畫面上
-* 第一個參數 `value` 是所要轉換的資料來源
-* 第二個之後的參數可以用來接 Template 傳給 `pipe` 的參數值
+
+
+- `transform` function 所回傳的值，會用來顯示在畫面上
+- 第一個參數 `value` 是所要轉換的資料來源
+- 第二個之後的參數可以用來接 Template 傳給 `pipe` 的參數值
+
 
 如果要傳入多個參數的時後，transform 的地方值直接加上第3的參數或是使用 ...args 也是可以，而在 template 的使用方式則是 `{{ value | xxpipe: 1_arg: 2_arg: 3:arg }} `以此類推。
 
@@ -388,6 +381,8 @@ export class FlyingHeroesPipe implements PipeTransform {
   }
 }
 ```
+
+component
 
 ```typescript
 @Component({
@@ -433,7 +428,6 @@ export class AppComponent {
 # Pure and Impure Pipes
 
 Angular 的 Pipe 預設皆為 `Pure`，如果需要設定為 `Impure`的話，請這樣子設定
-
 ```typescript
 @Pipe({
   name: 'flyingHeroesImpure',
@@ -473,8 +467,9 @@ export class FlyingHeroesPipe implements PipeTransform {
 
 當這樣子設定為 `Impure`時，下面的 `push` 就可以使用而且畫面也會更新
 
+
 ```typescript
-...
+
 addHero(name: string) {
     name = name.trim();
     if (!name) {
@@ -484,25 +479,10 @@ addHero(name: string) {
 
     this.heroes.push(hero); // 這個不會更新畫面，因為不符合 OnPush 的條件   
   }
-...
-```
-
-
-
-## Impure AsyncPipe
-
-Angular 的 `AsyncPipe` 就是一個標準的 `Impure Pipe` ([程式碼](https://github.com/angular/angular/blob/4.0.0/packages/common/src/pipes/async_pipe.ts))
-
-```typescript
-@Pipe({name: 'async', pure: false})
-export class AsyncPipe implements OnDestroy, PipeTransform {  
-  ...
-}
+  
 ```
 
 # 參考資料
 
-[官方Guide文件](https://angular.io/docs/ts/latest/guide/pipes.html)
-
-[ngx-translate](https://github.com/ngx-translate/core)
-
+- [官方文件](https://angular.io/docs/ts/latest/guide/pipes.html)
+- [ngx-translate](http://www.ngx-translate.com/)
