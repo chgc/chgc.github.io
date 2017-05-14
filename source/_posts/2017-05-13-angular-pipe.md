@@ -477,7 +477,7 @@ addHero(name: string) {
     }
     let hero = {name, canFly: this.canFly};
 
-    this.heroes.push(hero); // 這個不會更新畫面，因為不符合 OnPush 的條件   
+    this.heroes.push(hero); 
   }
   
 ```
