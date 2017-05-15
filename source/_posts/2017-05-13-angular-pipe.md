@@ -323,19 +323,176 @@ export class AppComponent {
 ![](https://farm5.staticflickr.com/4157/34461393612_3e66c3de42_o.png)
 
 
+## JsonPipe
+
+### 功能
+
+將值轉換成 JSON 文字
+
+### 使用方式
+
+expression | json
+
+### 說明
+
+- 使用 `JSON.stringify` 的方法將值轉換成文字
+
+### 範例
+
+​```typescript
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+  <div>
+    <h1>JsonPipe</h1>
+    <p>Without JSON pipe:</p>
+    <pre>{{object}}</pre>
+    <p>With JSON pipe:</p>
+    <pre>{{object | json}}</pre>
+  </div>
+`,
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  object: Object = {
+    foo: 'bar',
+    baz: 'qux',
+    nested: {xyz: 3, numbers: [1, 2, 3, 4, 5]}
+  };
+}
+```
+
+顯示結果
+
+![](https://farm5.staticflickr.com/4180/34288536410_a1b29ab000_o.png)
+
+## SlicePipe
+
+### 功能
+
+建立新的清單或是切割後的部分文字
+
+### 使用方式
+
+array_or_string_expression | slice:start[:end]
+
+### 說明
+
+- 只接收陣列或是文字型的資料
+- `start` 是切割的開始位置
+  - 如果是 `正整數` 則會回傳該位置以後的資料或文字。
+  - 如果是 `負整數` 則會從資料或文字結尾往回計算開始位置，在回傳該位置之後的資料或文字。
+  - 如果是 `正整數` 而且該整數大於陣列或是文字長度時，則會回傳空的陣列或文字。
+  - 如果是 `負整數` 而且該整數大於陣列或是文字長度時，則會回傳整個陣列或文字。
+- `end` 是切割的結束位置
+  - 如果是沒有給予任何數字時，則回傳到結尾的所有資料。
+  - 如果是 `正整數` 則回傳結束位置前的所有資料或文字。
+  - 如果是 `負整數`  則會從資料或文字結尾往回計算結束位置，並回傳結束位置前的所有資料或文字。
+- 所有的行為都是基於 `Array.prototype.slice()` 和 `String.prototype.slice()` 的基礎上。
+- 如果操作的對象是一個陣列，每次都會回傳一個全新的陣列
+- 如果操作的資料是空值，Pipe 會回傳空值
+
+### 範例
+
+```typescript
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+  <div>
+    <h1>SlicePipe</h1>
+    <h2>操作陣列</h2>
+    <ul>
+      <li *ngFor="let i of collection | slice:1:3">{{i}}</li>
+    </ul>
+    <h2>操作文字</h2>
+    <p>{{str}}[0:4]: '{{str | slice:0:4}}' - 預期輸出為 'abcd'</p>
+    <p>{{str}}[4:0]: '{{str | slice:4:0}}' - 預期輸出為 ''</p>
+    <p>{{str}}[-4]: '{{str | slice:-4}}' - 預期輸出為 'ghij'</p>
+    <p>{{str}}[-4:-2]: '{{str | slice:-4:-2}}' - 預期輸出為 'gh'</p>
+    <p>{{str}}[-100]: '{{str | slice:-100}}' - 預期輸出為 'abcdefghij'</p>
+    <p>{{str}}[100]: '{{str | slice:100}}' - 預期輸出為 ''</p>
+  </div>
+`,
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  collection: string[] = ['a', 'b', 'c', 'd'];
+  str: string = 'abcdefghij';
+}
+```
+
+顯示結果
+
+![](https://farm5.staticflickr.com/4170/34512030522_8b45394b1e_o.png)
+
+## AsyncPipe
+
+### 功能
+
+從非同步動作 (Promise/Observable) 中取出資料
+
+### 使用方式
+
+observable_or_promise_expression | async
+
+### 說明
+
+`async` pipe 會訂閱一個 `Observable` 或是 `Promise` 物件，並獲取最後發生的資料。當有新的資料產生時，`async` pipe 會提示 `ChangeDetector` 要檢查 `Component` 的值。
+
+當 `Comoponent` 被摧毀時，通常是離開該 `Component`的時候，`async` 會自動取消訂閱 ( unsubscribe)，避免潛在的記憶體洩漏問題。
+
+### 範例
+
+```typescript
+import {Component} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Subscriber} from 'rxjs/Subscriber';
+
+@Component({
+  selector: 'app-root',
+  template: `
+  <div>
+    <h1>AsyncPipe</h1>
+    <div><code>observable|async</code>: Time: {{ time | async }}</div>
+  </div>
+`,
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  time = new Observable<string>((observer: Subscriber<string>) => {
+    setInterval(() => observer.next(new Date().toString()), 1000);
+  });
+}
+
+```
+
+顯示結果
+
+![](https://farm5.staticflickr.com/4191/34673947075_be9600bd26_o.png)
+
+## I18nPluralPipe & I18nSelectPipe
+
+由於這兩個 Pipe 跟多國語系功能有關係，且皆處於 `Experimental` 階段，故在次先不做說明。
+
+
+
 
 # 自訂 Pipe
 
 透過 CLI 產生 `Pipe` 是最快的，指令是
 
-```typescript
+​```typescript
 ng g p "pipeName"
 ```
 
 所產生出來的基本架構是
 
 
-```typescript
+​```typescript
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
