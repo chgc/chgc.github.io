@@ -3,7 +3,7 @@ layout: post
 title: '[.NET Core] DotNet Core 基本環境設定'
 comments: true
 date: 2017-05-14 13:49:51
-categories: '.NEt Core'
+categories: '.NET Core'
 tags: '.NET Core'
 ---
 

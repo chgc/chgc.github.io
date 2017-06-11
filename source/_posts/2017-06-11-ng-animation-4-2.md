@@ -30,7 +30,7 @@ export let flyIn = animation(
       group([
         animate(
             '0.3s 0.1s ease',
-            style({transform: 'translateX(0px)', width: '{% raw %}{{width}}{% endraw %}px'})),
+            style({transform: 'translateX(0px)', width: '{{width}}px'})),
         animate('0.3s ease', style({opacity: 1}))
       ])
     ],
