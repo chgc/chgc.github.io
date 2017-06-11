@@ -1,13 +1,13 @@
 ---
 layout: post
-title: '[.Net Core] 加入設定參數'
+title: '[.NET Core] 加入設定參數'
 comments: true
 date: 2017-06-11 20:20:05
-categories: '.Net Core'
-tags: '.Net Core'
+categories: '.NET Core'
+tags: '.NET Core'
 ---
 
-.NetCore 提供多種參數設定資料的來源，例如: Json 檔案、ini 檔案或使用 Azure 的 KeyValue 設定檔。雖然預設啟動的 web 環境，已經有載入  `appsetting.json` 及 `appsettings.[environment].json` 設定檔，但是如果要自行設定，或是其他 Controller 要使用參數設定，又該怎麼處理呢?
+.NET Core 提供多種參數設定資料的來源，例如: Json 檔案、ini 檔案或使用 Azure 的 KeyValue 設定檔。雖然預設啟動的 web 環境，已經有載入  `appsetting.json` 及 `appsettings.[environment].json` 設定檔，但是如果要自行設定，或是其他 Controller 要使用參數設定，又該怎麼處理呢?
 
 <!-- more -->
 
@@ -205,15 +205,19 @@ var builder = new ConfigurationBuilder()
 
 * windows
 
-  ```
+  {% raw %}
+
   C:\Users\<userName>\AppData\Roaming\Microsoft\UserSecrets\<UserSecretsId>
-  ```
+
+  {% endraw %}
 
 * 非windows
 
-  ```
+  {% raw %}
+
   ~/.microsoft/usersecrets/<userSecretsId>/secrets.json
-  ```
+
+  {% endraw %}
 
   ​
 

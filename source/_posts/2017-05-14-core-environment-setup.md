@@ -1,19 +1,19 @@
 ---
 layout: post
-title: '[.Net Core] DotNet Core 基本環境設定'
+title: '[.NET Core] DotNet Core 基本環境設定'
 comments: true
 date: 2017-05-14 13:49:51
-categories: '.Net Core'
-tags: '.Net Core'
+categories: '.NEt Core'
+tags: '.NET Core'
 ---
 
-.Net Core 在近期發布了 2.0 preview，看起來離 2.0 的正式發表也不遠了。是時候可以出手學習一下 .Net Core 這一新架構，但在正式學習之前，還是得把環境設定好。
+.NET Core 在近期發布了 2.0 preview，看起來離 2.0 的正式發表也不遠了。是時候可以出手學習一下 .NET Core 這一新架構，但在正式學習之前，還是得把環境設定好。
 
 <!-- more -->
 
-.Net Core 是一個可跨平台的架構，所以在 windows 或是 mac 甚至  Ubuntu 上都可以做開發，微軟講好久的跨平台的口號，終於實踐啦。
+.NET Core 是一個可跨平台的架構，所以在 windows 或是 mac 甚至  Ubuntu 上都可以做開發，微軟講好久的跨平台的口號，終於實踐啦。
 
-開發 .Net Core 的方式基本上有兩種
+開發 .NET Core 的方式基本上有兩種
 
 1. 使用 IDE 
    1. windows版本，直接上 [visual studio 2017](https://www.visualstudio.com/zh-hant/vs/whatsnew/)
@@ -90,7 +90,7 @@ namespace study_001
 
 ## 執行
 
-透過 CLI 將 .Net Core 的程式執行起來，可以下 `dotnet run` 就可以執行了。
+透過 CLI 將 .NET Core 的程式執行起來，可以下 `dotnet run` 就可以執行了。
 
 ![](https://farm5.staticflickr.com/4175/34483688792_7ff357d932_o.png)
 
