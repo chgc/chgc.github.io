@@ -205,19 +205,11 @@ var builder = new ConfigurationBuilder()
 
 * windows
 
-  {% raw %}
-
-  C:\Users\<userName>\AppData\Roaming\Microsoft\UserSecrets\<UserSecretsId>
-
-  {% endraw %}
+  >  C:\Users\<userName>\AppData\Roaming\Microsoft\UserSecrets\<UserSecretsId>
 
 * 非windows
 
-  {% raw %}
-
-  ~/.microsoft/usersecrets/<userSecretsId>/secrets.json
-
-  {% endraw %}
+  >  ~/.microsoft/usersecrets/<userSecretsId>/secrets.json
 
   ​
 
