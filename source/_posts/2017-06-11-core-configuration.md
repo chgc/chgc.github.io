@@ -121,7 +121,7 @@ public static Dictionary<string, string> GetSwitchMappings(
     }
 ```
 
-```
+```csharp
 dotnet run /Profile:MachineName=Bob /App:MainWindow:Left=1234
 ```
 
