@@ -13,6 +13,7 @@ Angular 有內建了一些 Pipe 像是 `DatePipe`、 `UpperCasePipe`、`LowerCas
 
 <!-- more -->
 
+
 先從內建的 Pipe 介紹起
 
 # 內建 Pipe
@@ -33,7 +34,7 @@ Angular 有內建了一些 Pipe 像是 `DatePipe`、 `UpperCasePipe`、`LowerCas
 
 ### 使用方式
 
-date_expression | date[:format]
+> date_expression | date[:format]
 
 ### 說明
 
@@ -98,8 +99,7 @@ export class AppComponent {
 將所有英文字轉換成大寫
 
 ### 使用方式
-
-string_expression | uppercase
+> string_expression | uppercase
 
 ### 範例
 
@@ -155,6 +155,8 @@ export class AppComponent {
 
 ![](https://farm5.staticflickr.com/4165/34623295465_458e50f4b6_o.png)
 
+
+
 ## TitleCasePipe
 
 ### 功能
@@ -194,8 +196,7 @@ export class AppComponent {
 將數字根據當地貨幣的顯示規則顯示
 
 ### 使用方式
-
-number_expression | currency[:currencyCode[:symbolDisplay[:digitInfo]]]
+> number_expression | currency[:currencyCode[:symbolDisplay[:digitInfo]]]
 
 ### 說明
 
@@ -234,6 +235,7 @@ export class AppComponent {
 
 ![](https://farm5.staticflickr.com/4178/34623423285_752310283f_o.png)
 
+
 ## PercentPipe
 
 ### 功能
@@ -241,8 +243,7 @@ export class AppComponent {
 將數字根據當地顯示規則顯示百分比
 
 ### 使用方式
-
-number_expression | percent[:digitInfo]
+> number_expression | percent[:digitInfo]
 
 ### 說明
 
@@ -273,6 +274,7 @@ export class AppComponent {
 
 ![](https://farm5.staticflickr.com/4175/34582068606_8f95ef28c1_o.png)
 
+
 ## DecimalPipe
 
 ### 功能
@@ -280,8 +282,7 @@ export class AppComponent {
 將數字根據當地顯示規則顯示
 
 ### 使用方式
-
-number_expression | number[:digitInfo]
+> number_expression | number[:digitInfo]
 
 ### 說明
 
@@ -316,7 +317,8 @@ import {Component} from '@angular/core';
 export class AppComponent {
   pi: number = 3.141592;
   e: number = 2.718281828459045;
-}```
+}
+```
 
 顯示結果
 
@@ -367,6 +369,7 @@ export class AppComponent {
 顯示結果
 
 ![](https://farm5.staticflickr.com/4180/34288536410_a1b29ab000_o.png)
+
 
 ## SlicePipe
 
@@ -429,6 +432,8 @@ export class AppComponent {
 
 ![](https://farm5.staticflickr.com/4170/34512030522_8b45394b1e_o.png)
 
+
+
 ## AsyncPipe
 
 ### 功能
@@ -479,8 +484,6 @@ export class AppComponent {
 由於這兩個 Pipe 跟多國語系功能有關係，且皆處於 `Experimental` 階段，故在次先不做說明。
 
 
-
-
 # 自訂 Pipe
 
 透過 CLI 產生 `Pipe` 是最快的，指令是
@@ -507,15 +510,11 @@ export class ExponentialPipe implements PipeTransform {
 }
 ```
 
-
-
 - `transform` function 所回傳的值，會用來顯示在畫面上
 - 第一個參數 `value` 是所要轉換的資料來源
 - 第二個之後的參數可以用來接 Template 傳給 `pipe` 的參數值
 
-
-如果要傳入多個參數的時後，transform 的地方值直接加上第3的參數或是使用 ...args 也是可以，而在 template 的使用方式則是 `{{ value | xxpipe: 1_arg: 2_arg: 3:arg }} `以此類推。
-
+如果要傳入多個參數的時後，transform 的地方值直接加上第3的參數或是使用 ...args 也是可以，而在 template 的使用方式則是 {% raw %}{{ value | xxpipe: 1_arg: 2_arg: 3:arg }}{% endraw %} 以此類推。
 
 
 # Pipe 與 ChangeDetection
@@ -643,3 +642,5 @@ addHero(name: string) {
 
 - [官方文件](https://angular.io/docs/ts/latest/guide/pipes.html)
 - [ngx-translate](http://www.ngx-translate.com/)
+
+

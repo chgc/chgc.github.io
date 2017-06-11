@@ -239,11 +239,12 @@ public HomeController(IOptions<MyOptions> options)
 {        
   this._myOptions = options.Value;
 }
+
 public IActionResult Index()
 {
   string option1 = this._myOptions.Option1;
   int Option2 = this._myOptions.Option2;
-  return View();
+  ...
 }
 
 ```
