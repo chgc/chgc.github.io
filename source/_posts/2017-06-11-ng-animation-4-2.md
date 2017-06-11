@@ -17,7 +17,7 @@ Animation在 4.2 版以後有增加了許多功能，以下一一的整理，如
 
 ## animation
 
-animation 方法讓我們可以使用傳入變數來修改動畫的參數。範例程式碼
+`animation` 方法讓我們可以使用包裝動畫效果，也可使用變數來當作動畫的參數範本。範例程式碼
 
 ```typescript
 export declare function animation(steps: AnimationMetadata | AnimationMetadata[], options?: AnimationOptions | null): AnimationReferenceMetadata;
@@ -37,21 +37,20 @@ export let flyIn = animation(
     {params: {width: 120}});
 ```
 
-透過上述的方式，可以將 animation單獨的抽離出來，也可以給予參數的能力，如果使用這個 animation並沒有帶入任何參數值時，就會使用預設值。
+透過上述的方式，可以將 `animation` 單獨的抽離至新檔案，也可以給予參數的能力，如果使用這個 `animation` 的當下如設定任何參數時，就會使用預設值。
+
+
 
 ## useAnimation
 
-如果要使用單獨抽離的 animation 時，可以使用 `useAnimation` ，第一個參數是要使用的 animation 名稱，如果使用的 animation 允使使用參數來改變內建的變數，那就可以設定於第二個參數位置
+如果要使用單獨抽離的 `animation` 時，可以使用 `useAnimation` ，第一個參數是要使用的 animation 名稱，如果使用的 `animation` 允使使用參數來改變內建的變數，那就可以設定於第二個參數位置
 
 ```typescript
 export declare function useAnimation(animation: AnimationReferenceMetadata, options?: AnimationOptions | null): AnimationAnimateRefMetadata;
 ```
 
 ```typescript
-export var easeOut = animation([
-  animate('100ms ease-out')
-]);
-
+import {flyIn} from './my-animation';
 ...  
 animations: [trigger(
       'heroState',
@@ -61,6 +60,8 @@ animations: [trigger(
         ...
       ])]
 ```
+
+
 
 ## query
 
@@ -93,9 +94,11 @@ animations: [trigger(
 
 ```
 
+
+
 ## animateChild
 
-`animateChild` 搭配 `query`的使用，可以觸發內層元件的動畫事件。
+`animateChild` 搭配 `query` 的使用，可以觸發內層元件的動畫事件。
 
 ```typescript
 @Component({
@@ -140,9 +143,11 @@ class ParentChildCmp {
 </div>
 ```
 
+
+
 ## stagger
 
-`stagger` 這個方法可以去設定再跑 ngFor 時，可以讓動畫一筆一筆的跑
+`stagger` 這個方法可以去設定再跑 ngFor 時，可以讓動畫一筆一筆的跑，這方法需要再 `query` 內使用
 
 ```typescript
 export declare function stagger(timings: string | number, animation: AnimationMetadata | AnimationMetadata[]): AnimationStaggerMetadata;
@@ -218,6 +223,8 @@ export class HeroListComponent {
   }
 }
 ```
+
+
 
 # 總結
 
