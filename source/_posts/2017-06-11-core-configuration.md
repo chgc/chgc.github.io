@@ -203,15 +203,7 @@ var builder = new ConfigurationBuilder()
 
 至於他的實際的存放位置是在哪裡，在 `專案.csproj` 裡會存放一組 `UserSecretsId` ，這組 ID 會是資料夾的名稱
 
-* windows
 
-  >  C:\Users\<userName>\AppData\Roaming\Microsoft\UserSecrets\<UserSecretsId>
-
-* 非windows
-
-  >  ~/.microsoft/usersecrets/<userSecretsId>/secrets.json
-
-  ​
 
 ## AddXmlFile
 
@@ -258,7 +250,7 @@ public IActionResult Index()
 
 # Recap
 
-dotnet Core 提供很多種方式可以取得或是設定設定檔，其他地方如果要使用，是透過注入的方式取得，這樣子的模式，在管理設定檔上，就變得非常有彈性了。
+.NET Core 提供很多種方式可以取得或是設定設定檔，其他地方如果要使用，是透過注入的方式取得，這樣子的模式，在管理設定檔上，就變得非常有彈性了。
 
 
 
