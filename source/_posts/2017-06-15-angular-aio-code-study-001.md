@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular]angular.io官網程式碼學習筆記001`
+title: '[Angular]angular.io官網程式碼學習筆記001'
 comments: true
 date: 2017-06-15 10:01:35
 categories: Angular
