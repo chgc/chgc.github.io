@@ -7,7 +7,7 @@ categories: Angular
 tags: Angular
 ---
 
-近期 [angular.io](https://angular.io) 換新版，使用 Angular 4 重新撰寫官方網站，速度非常的快，所以就想要從官方出手寫的程式碼學習 Angular 程式碼可以怎麼寫，所以接下來的一系列學習筆記將圍繞的這個主題，程式碼可以從 [github](https://github.com/angular/angular) 下載
+近期 [angular.io](https://angular.io) 換新版，使用 Angular 4 重新撰寫官方網站，網站開啟速度非常的快 (PWA)，所以就想要從官方出手寫的程式碼學習 Angular 程式碼可以怎麼寫，接下來的一系列學習筆記將圍繞的這個主題，程式碼可以從 [github](https://github.com/angular/angular) 下載
 
 <!-- more -->
 
