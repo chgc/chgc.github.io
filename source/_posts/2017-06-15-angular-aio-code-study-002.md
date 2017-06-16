@@ -99,9 +99,9 @@ private fetchNavigationInfo(): Observable<NavigationResponse> {
 export type NavigationResponse = {__versionInfo: VersionInfo } & { [name: string]: NavigationNode[]|VersionInfo };
 ```
 
-這種 `type` 的定義方式為 TypeScript 的 `Intersection Types`，意思是指，指定到這種型別的，就必須同時符合第一種型別及第二種型別。
+這種 `type` 的定義方式為 TypeScript 的 `Intersection Types`，意思是指當指定到這種型別時，需同時符合第一種及第二種型別。
 
-在這 function 內所取得的資料來源 (generated/navigation.json)，是符合這種格式的。
+而在這 function 內所取得的資料來源 (generated/navigation.json)，就是符合這種格式的。
 
 
 
