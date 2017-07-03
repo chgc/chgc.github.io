@@ -13,6 +13,10 @@ tags: Angular
 
 # 擴充
 
+* 情境：要讓文字有可以直接轉述字型的功能，不想自己在寫 `parseFloat` 了
+
+我目前想到的寫法有以下三種
+
 ## 寫法一 直接擴充 prototype
 
 ```typescript
