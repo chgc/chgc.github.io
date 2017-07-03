@@ -16,8 +16,7 @@ tags: Angular
 ## 寫法一 直接擴充 prototype
 
 ```typescript
-String.prototype.toNumber = function():
-    number {
+String.prototype.toNumber = function():number {
       return parseFloat(this);
     }
 ```
