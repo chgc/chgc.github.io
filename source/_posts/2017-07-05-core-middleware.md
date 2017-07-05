@@ -7,13 +7,13 @@ categories: .NET Core
 tags: .NET Core
 ---
 
-`Middleware`  在 `.NET Core` 裡也是一個很重要的機制，來學習吧
+`middleware`  在 .NET Core 裡也是一個很重要的機制，來學習吧
 
 <!-- more -->
 
 # 什麼是 middleware?
 
-`middleware` 就像逆滲透的濾水器，自來水 (Request) 要沿著管路m (pipeline) 經過多層的濾心 (middleware) 後，就能得到乾淨的水 (Response)。
+`middleware`  就像逆滲透的濾水器，自來水 (Request) 要沿著管路 (pipeline) 經過多層的濾心 (middleware) 後，就能得到乾淨的水 (Response)。
 
 ![](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/_static/request-delegate-pipeline.png)
 
@@ -34,7 +34,7 @@ public void Configure(IApplicationBuilder app)
 }
 ```
 
-這樣子系統就會依設定的順序，依序的執行
+這樣子系統就會依設定的順序，依序執行
 
 
 
@@ -58,7 +58,7 @@ public interface IApplicationBuilder
 }
 ```
 
-這裡跟 middleware 有關的，就是最後一個 `Use`，如果想要加入 `middleware` ，就是透過 `Use` 這方法加入(方法之一)，用以下簡的程式碼做個範例
+這裡跟 middleware 有關的，就是最後一個 `Use`，如果想要加入 `middleware` ，就是透過 `Use` 這方法加入(方法之一)，用以下簡單的程式碼做個說明
 
 ```csharp
 public void Configure(IApplicationBuilder app)
