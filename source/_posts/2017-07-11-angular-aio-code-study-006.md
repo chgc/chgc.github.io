@@ -52,7 +52,6 @@ export class DocumentService {
   }
   ...
 }
-
 ```
 
 * 這一個 service 有注入 3 個東西，`Logger`、`Http`、`LocationService` ，這些在測試程式碼內也是需要被處理的
@@ -205,7 +204,7 @@ describe('DocumentService', () => {
 
 # 重點回顧
 
-* 測試 `service` 不一定需要使用 `TestBed` 的方式來建立 `serivce` 實體，可以透過 `ReflectiveInjector.resolveAndCreate([])` 的方式建立 `Injector` ，進而使用 `injector.get`  的方式取的 `service` 實體
+* 測試 `service` 不一定需要使用 `TestBed` 的方式來建立 `serivce` 實體，可以透過 `ReflectiveInjector.resolveAndCreate([])` 的方式建立 `Injector` ，進而使用 `injector.get`  的方式取得 `service` 實體
 * 如果要測試 `HttpClient` ，可以透過 `MockBackend` 內建的模組來模擬回傳結果或錯誤結果
 * 利用 `mockBackend.connectionsArray` 的方式取得每次 `Http` 呼叫時所建立的連線，並給予相對應的模擬資料 ，須留意取得的順序
 
