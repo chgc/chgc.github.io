@@ -13,7 +13,7 @@ tags: Angular
 
 # 研究對象
 
-`document.service.spec.ts` 是這次研讀的對象，這是一個單純的 service，他的功能很簡單 (程式行數 100 杭內)，就是將文件顯示到畫面上。
+`document.service.spec.ts` 是這次研讀的對象，這是一個單純的 service，他的功能很簡單 (程式行數 100 行內)，就是將文件顯示到畫面上。
 
 `document.service.ts` 的程式碼
 
