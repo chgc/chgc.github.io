@@ -182,9 +182,6 @@ element(by.name('sel')).all(by.css('li'))
 我個人是比較喜歡第二種的寫法，比較清爽一點
 
 
-
-
-
 # 參考資料
 
 * [Protractor API](http://www.protractortest.org/#/api)
