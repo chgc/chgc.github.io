@@ -104,7 +104,7 @@ element 需要搭配 locator 使用，進而取得想要的 HTMLElement。常用
 
 ## 加快 E2E 的測試速度
 
-#### 關掉 serve
+### 關掉 serve
 
 預設的 E2E 是會先執行 `serve` 後在進行測試，可是這樣子的預設行為，都會因為 `server` 的建置時間而拖慢測試速度。所以可以將這兩個動作分別執行。 E2E 可以關掉 `serve`的動作，指令如下
 
@@ -112,7 +112,7 @@ element 需要搭配 locator 使用，進而取得想要的 HTMLElement。常用
 
 以上的設定方式，當執行 `ng e2e`時，就只會單純跑測試了。
 
-#### 使用 chrome headless
+### 使用 chrome headless
 
 修改 protractor.conf.js，新增 `chromeOptions` 區塊內容，這樣的設定在執行 e2e 時，就不會跳出瀏覽器了
 
