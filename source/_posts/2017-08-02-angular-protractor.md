@@ -1,6 +1,5 @@
 ---
-l
-ayout: post
+layout: post
 title: '[Angular] Protractor'
 comments: true
 date: 2017-08-02 09:07:47
@@ -36,7 +35,7 @@ E2E 是利用程式來模擬使用者操作網頁的動作，測試網頁程式�
 
 * [takeScreenshot](http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.takeScreenshot)：擷取網頁畫面，範例程式如下
 
-  ```typescript
+```typescript
   // at the top of the test spec:
   const fs = require('fs');
 
@@ -54,10 +53,10 @@ E2E 是利用程式來模擬使用者操作網頁的動作，測試網頁程式�
       writeScreenShot(png, 'exception.png');
     });    
   })
+```
 
-  ```
 
-  ​
+
 
 ## by
 
@@ -189,5 +188,5 @@ element(by.name('sel')).all(by.css('li'))
 # 參考資料
 
 * [Protractor API](http://www.protractortest.org/#/api)
-* [http://pageobject.io/](http://pageobject.io/)
+* [pageobject.io/](http://pageobject.io/)
 * [如何使 Protractor 跑 Headless Chrome?](http://oomusou.io/protractor/protractor-headless-chrome/)
