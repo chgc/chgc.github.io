@@ -21,6 +21,20 @@ Office 2016 的增益集，讓我們可以使用 javascript + html 來開發。�
 
 > npm install --save-dev @types/office-js
 
+
+
+## tsconfig.app.json
+
+在 `types` 的的區塊加上 `office-js`
+
+```json
+"types": [
+      "office-js"
+]
+```
+
+
+
 ## main.ts
 
 ```typescript
@@ -35,24 +49,27 @@ declare const Office: any;
 Office.initialize = function() {
   platformBrowserDynamic().bootstrapModule(AppModule);
 };
-
 ```
 
 `platformBrowser` 這段一定要包在 function() {..} 裡面。
+
+
 
 ## index.html
 
 ```html
 ... 
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
-  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
 
-  <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css">
-  <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css">
+<link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css">
+<link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css">
 ...
 ```
 
 新增這四行到 `<head>` 內
+
+
 
 ## app.component.ts
 
@@ -152,19 +169,48 @@ export class AppComponent {
 }
 ```
 
-###  loadData()
+### 程式碼解釋
+
+####  loadData()
 
 這個 method 主要是用來驗證 CORS 的情況下， 是否還可以在 Excel 裡正常的運作。
 
-### Excel.run
+#### Excel.run
 
 > Ｅxcel.run((ctx) => {　... }) 
 
 這段是準備要在Excel上顯示的資料
 
-### ctx.sync()
+#### ctx.sync()
 
 準備好的內容，更新同步到 Excel 的 activateSheet 上
+
+
+
+## polyfills.ts
+
+需要打開以下的檔案
+
+```typescript
+/** IE9, IE10 and IE11 requires all of the following polyfills. **/
+import 'core-js/es6/symbol';
+import 'core-js/es6/object';
+import 'core-js/es6/function';
+import 'core-js/es6/parse-int';
+import 'core-js/es6/parse-float';
+import 'core-js/es6/number';
+import 'core-js/es6/math';
+import 'core-js/es6/string';
+import 'core-js/es6/date';
+import 'core-js/es6/array';
+import 'core-js/es6/regexp';
+import 'core-js/es6/map';
+import 'core-js/es6/weak-map';
+import 'core-js/es6/set';
+
+```
+
+
 
 ------
 
@@ -241,6 +287,11 @@ Manifest 的進階說明，請參閱這篇[文件](https://dev.office.com/docs/a
 
 
 
+# Debug
+
+請參閱這篇[文章](https://dev.office.com/docs/add-ins/testing/debug-add-ins-using-f12-developer-tools-on-windows-10)，在 windows 內提供 F12 開發者工具可以做 Add In 的網頁除錯，但目前看起來是 Windows 10 限定
+
+
 
 # 參閱資料
 
@@ -249,4 +300,5 @@ Manifest 的進階說明，請參閱這篇[文件](https://dev.office.com/docs/a
 * [Excel JavaScript API programming overview](https://dev.office.com/docs/add-ins/excel/excel-add-ins-javascript-programming-overview)
 * [Build your first Excel add-in](https://dev.office.com/docs/add-ins/excel/build-your-first-excel-add-in)
 * [Office Add-ins XML manifest](https://dev.office.com/docs/add-ins/overview/add-in-manifests)
+* [Debug add-ins using F12 developer tools on Windows 10](https://dev.office.com/docs/add-ins/testing/debug-add-ins-using-f12-developer-tools-on-windows-10)
 
