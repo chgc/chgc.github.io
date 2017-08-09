@@ -63,10 +63,9 @@ export class AppComponent  {
     }, 2000);
   }  
 }
-
 ```
 
-這裡有簡單的程式碼，可以到[這裡](https://stackblitz.com/edit/markforcheck-settimeo)實際執行看看，取消註解後看看執行的結果。
+這裡有[簡單的程式碼](https://stackblitz.com/edit/markforcheck-settimeout) 可以實際執行看看，取消註解後看看執行的結果。
 
 ## Input as DataStream
 
@@ -96,7 +95,7 @@ export class VCardComponent implements OnInit {
 }
 ```
 
-這裡有簡單的程式碼，可以到[這裡](https://stackblitz.com/edit/markforcheck-datastream)實際執行看看，取消註解後看看執行的結果。
+這裡有[簡單的程式碼](https://stackblitz.com/edit/markforcheck-datastream) 可實際執行看看，取消註解後看看執行的結果。
 
 #  參考資料
 
