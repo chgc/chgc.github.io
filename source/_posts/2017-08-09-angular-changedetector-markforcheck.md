@@ -65,7 +65,7 @@ export class AppComponent  {
 }
 ```
 
-這裡有[簡單的程式碼](https://stackblitz.com/edit/markforcheck-settimeout) 可以實際執行看看，取消註解後看看執行的結果。
+這裡有[簡單的程式碼](https://stackblitz.com/edit/markforcheck-settimeout?embed=1&file=app/app.component.ts) 可以實際執行看看，取消註解後看看執行的結果。
 
 ## Input as DataStream
 
@@ -95,7 +95,7 @@ export class VCardComponent implements OnInit {
 }
 ```
 
-這裡有[簡單的程式碼](https://stackblitz.com/edit/markforcheck-datastream) 可實際執行看看，取消註解後看看執行的結果。
+這裡有[簡單的程式碼](https://stackblitz.com/edit/markforcheck-datastream?embed=1&file=app/v-card.component.ts) 可實際執行看看，取消註解後看看執行的結果。
 
 #  參考資料
 
