@@ -15,7 +15,21 @@ ChangeDetecotrRef 提供了一些方法，允許我們手動觸發檢查更新�
 
 # markForCheck
 
-`markForCheck` 的用途，當呼叫這個方法時，就是告訴 `ChangeDetector` ，請檢查我，因為我有資料異動了。當下次有事件觸發 `ChangeDetection`時，就會檢查並更新 Model 資料到 View 上。
+`markForCheck` 的用途，當呼叫這個方法時，就是告訴 `ChangeDetector` ，請檢查我本身及我上頭的 `Component`。更新的方向性是往 `Root`  向上移動
+
+`markForCheck`的程式碼
+
+```typescript
+let currView: ViewData|null = view;
+while (currView) {
+  if (currView.def.flags & ViewFlags.OnPush) {
+    currView.state |= ViewState.ChecksEnabled;
+  }
+  currView = currView.viewContainerParent || currView.parent;
+}
+```
+
+
 
 以下提供幾個可能使用情境
 
