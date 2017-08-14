@@ -87,13 +87,25 @@ private _setUpStandalone(): void {
 ```typescript
 export function setUpControl(control: FormControl, dir: NgControl): void {
   ...
-  dir.valueAccessor !.registerOnChange((newValue: any) => {
-    dir.viewToModelUpdate(newValue);
-    control.markAsDirty();
-    control.setValue(newValue, {emitModelToViewChange: false});
-  });
+  setUpViewChangePipeline(control, dir);
   ...
 }  
+  
+  
+function setUpViewChangePipeline(control: FormControl, dir: NgControl): void {
+  dir.valueAccessor !.registerOnChange((newValue: any) => {
+    control._pendingValue = newValue;
+    control._pendingDirty = true;
+
+    if (control.updateOn === 'change') updateControl(control, dir); // 觸發更新
+  });
+}
+  
+function updateControl(control: FormControl, dir: NgControl): void {
+  dir.viewToModelUpdate(control._pendingValue);
+  if (control._pendingDirty) control.markAsDirty();
+  control.setValue(control._pendingValue, {emitModelToViewChange: false});
+}
 ```
 
 4. 而當 Input 欄位有資料輸入時，就會觸發事件並將回傳值發送到到頁面上
@@ -137,7 +149,7 @@ export const DEFAULT_VALUE_ACCESSOR: any = {
   },
   providers: [DEFAULT_VALUE_ACCESSOR]
 })
-export class DefaultValueAccessor implements ControlValueAccessor {
+export class DefaultValueAccessor implements ControlValueAccessor {  
   onChange = (_: any) => {};
   onTouched = () => {};
 
