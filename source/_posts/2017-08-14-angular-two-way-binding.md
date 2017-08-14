@@ -51,6 +51,7 @@ Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同�
 
 第一次 Input Change 時，註冊 Control 等相關事件，註冊流程如下
 1. 檢查是否有註冊過，如果沒有，執行 `_setUpControl` 的方法
+
 ```typescript
 ngOnChanges(changes: SimpleChanges) {
     this._checkForErrors();
@@ -65,7 +66,9 @@ ngOnChanges(changes: SimpleChanges) {
     }
 }
 ```  
+
 2.  `setUpControl`是在 ./shared 內實作的，主要功能是設定 `Control` 的一些事件註冊，而其中的這段程式碼，會執行 `viewToModelUpdate`
+
 
 ```typescript
 private _setUpControl(): void {
@@ -83,9 +86,11 @@ private _setUpStandalone(): void {
     this._control.updateValueAndValidity({emitEvent: false});
 }
 ```
+
 3. 因為 `setUpControl` 內有註冊異動事件(`registerOnChange`) 時會觸發原本 `ngModel` 內的 `viewToModelUpdate` 方法
 
 `shared.ts`
+
 ```typescript
 export function setUpControl(control: FormControl, dir: NgControl): void {
   ...
@@ -97,15 +102,18 @@ export function setUpControl(control: FormControl, dir: NgControl): void {
   ...
 }  
 ```
+
 4. 所以當資料異動時，就會更新到 `ngModel` 所設定的變數
 
 `ng_model.ts` 
+
 ```typescript
 viewToModelUpdate(newValue: any): void {
     this.viewModel = newValue;
     this.update.emit(newValue);
 }
 ```
+
 ### NG_VALUE_ACCESSOR
 這個 provide 是讓 `ngModleChange` 所使用的 `$event` 不需要再寫成 `$event.target.value` 的魔法使，內部細節如下
 
