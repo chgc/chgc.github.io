@@ -103,7 +103,7 @@ export function setUpControl(control: FormControl, dir: NgControl): void {
 }  
 ```
 
-4. 所以當資料異動時，就會更新到 `ngModel` 所設定的變數
+4. 當資料異動時，就會 emit 到頁面上。
 
 `ng_model.ts` 
 
@@ -119,7 +119,9 @@ viewToModelUpdate(newValue: any): void {
 
 ![](http://i.imgur.com/Qsb228V.png)
 
-`NG_VALUE_ACCESSOR` 在各類型的 `Control` 都有一份 `value accessor` ，而針對 `ngModel` 我們需留意的是 `DEFAULT_VALUE_ACCESSOR`
+`NG_VALUE_ACCESSOR` 在各類型的 `Control` 都會有一份 `value accessor` ，而針對 `ngModel` 我們需留意的是 `DEFAULT_VALUE_ACCESSOR` 這一個 Directive
+
+`default_value_accessor.ts`
 
 ```typescript
 export const DEFAULT_VALUE_ACCESSOR: any = {
@@ -129,7 +131,6 @@ export const DEFAULT_VALUE_ACCESSOR: any = {
 };
 ```
 
-`DefaultValueAccessor`
 
 ```typescript
 @Directive({
@@ -178,9 +179,9 @@ export class DefaultValueAccessor implements ControlValueAccessor {
 }
 
 ```
-在 `DefaultValueAccessor` 的 `registerOnChange` 與 `onChange` 間關係是，`ngModel` 會經 `setUpControl` 的方法將自訂方法透過 `registerOnChange` 註冊到 `onChange` 上，
+`DefaultValueAccessor` 裡的 `registerOnChange` 與 `onChange` 間關係是，`ngModel` 會經 `setUpControl` 的方法將自訂方法透過 `registerOnChange` 註冊到 `onChange` 上，
 
-`DefaultValueAccessor` 的 `@Directive` 的宣告的地方，有註冊當 `(input)` 事件發生時，會觸發 `_handleInput($event.target.value)`
+`DefaultValueAccessor` 的 `@Directive` 的宣告的地方，有註冊 `(input)` 事件發生時會觸發的方法， `_handleInput($event.target.value)`
 
 ```typescript
 _handleInput(value: any): void {
@@ -190,7 +191,7 @@ _handleInput(value: any): void {
 }
 ```
 
-經過這一串的折騰，魔法就出現了，`ngModle` 的 `ngModelChange` 的 `EventEmiiter` 就會觸發回傳資料到頁面上，這也就是為什麼 `(ngModelChange)` 的 `$event` 不需要加上 target.value，又可以取道異動的資料
+經過這一串的折騰，魔法就出現了，`ngModle` 的 `@Output('ngModelChange')` 會收到並發送資料到頁面上，這也就是為什麼 `(ngModelChange)` 的 `$event` 不需要加上 target.value，又可以取得異動的資料
 
 ## Recap
 以下是雙向繫結相關的流程順序
@@ -201,5 +202,5 @@ _handleInput(value: any): void {
 5. 當 `(input)` 事件被觸發時，會執行 `_handleInput($event.target.value)` 的方法
 6. 將傳入 `_handleInput(value)` 的值傳給註冊在 `onChange` 的 callback function
 7. callback function 會執行 `ngModel` 裡的 `viewToModelUpdate(newValue)` 方法
-8. 最後將 `viewToModelUpdate` 所接受到的值，透過 `ngModelChange` 的 EventEmiiter emit 稻葉面上
+8. 最後將 `viewToModelUpdate` 所接受到的值，透過 `ngModelChange` 的 EventEmiiter emit 值到頁面上
 9. 完成整個雙向繫結的動作
