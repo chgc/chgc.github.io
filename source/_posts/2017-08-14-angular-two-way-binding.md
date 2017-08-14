@@ -193,7 +193,7 @@ _handleInput(value: any): void {
 
 經過這一串的折騰，魔法就出現了，`ngModle` 的 `@Output('ngModelChange')` 會收到並發送資料到頁面上，這也就是為什麼 `(ngModelChange)` 的 `$event` 不需要加上 target.value，又可以取得異動的資料
 
-## Recap
+# Recap
 以下是雙向繫結相關的流程順序
 1. `[ngModel]`時會觸發 `ngOnChanges` 事件
 2. 在 `ngOnChanges` 時，會執行 `setUpControl()` 方法
