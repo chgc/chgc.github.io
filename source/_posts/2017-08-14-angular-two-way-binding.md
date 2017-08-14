@@ -7,7 +7,7 @@ categories: Angular
 tags: Angular
 ---
 
-Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同的，所以就沒有 AngularJS 會遇到效能問題。所以 Angular 的雙向繫結到底是怎麼運作的呢?
+Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同的，目前看起來是沒有 AngularJS 會遇到效能問題。那 Angular 的雙向繫結到底是怎麼運作的呢?
 
 <!-- more -->
 
@@ -50,12 +50,12 @@ Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同�
 ### ngOnChanges
 
 第一次 Input Change 時，註冊 Control 等相關事件，註冊流程如下
-1. 檢查是否有註冊過，如果沒有，執行 `_setUpControl` 的方法
+1. 檢查是否有註冊過，如果沒有，執行 `_setUpControl` 的方法，`setUpControl`是在 `./shared.ts` 內實作的，主要功能是 `Control` 的事件註冊。
 
 ```typescript
 ngOnChanges(changes: SimpleChanges) {
     this._checkForErrors();
-    if (!this._registered) this._setUpControl(); // <== 關鍵方法
+    if (!this._registered) this._setUpControl();
     if ('isDisabled' in changes) {
         this._updateDisabled(changes);
     }
@@ -65,12 +65,7 @@ ngOnChanges(changes: SimpleChanges) {
         this.viewModel = this.model;
     }
 }
-```  
-
-2.  `setUpControl`是在 ./shared 內實作的，主要功能是設定 `Control` 的一些事件註冊，而其中的這段程式碼，會執行 `viewToModelUpdate`
-
-
-```typescript
+...
 private _setUpControl(): void {
     this._isStandalone() ? this._setUpStandalone() :
                         this.formDirective.addControl(this);
@@ -82,14 +77,12 @@ private _isStandalone(): boolean {
 }
 
 private _setUpStandalone(): void {
-    setUpControl(this._control, this); // <== 關鍵
+    setUpControl(this._control, this); 
     this._control.updateValueAndValidity({emitEvent: false});
 }
 ```
 
-3. 因為 `setUpControl` 內有註冊異動事件(`registerOnChange`) 時會觸發原本 `ngModel` 內的 `viewToModelUpdate` 方法
-
-`shared.ts`
+2.  `setUpControl` 內有許多事件註冊行為，而跟 two-way binding 有關的事件是 ` dir.valueAccessor!.registerOnChange`，這裡會傳入一個 callback function
 
 ```typescript
 export function setUpControl(control: FormControl, dir: NgControl): void {
@@ -103,7 +96,7 @@ export function setUpControl(control: FormControl, dir: NgControl): void {
 }  
 ```
 
-4. 當資料異動時，就會 emit 到頁面上。
+4. 而當 Input 欄位有資料輸入時，就會觸發事件並將回傳值發送到到頁面上
 
 `ng_model.ts` 
 
@@ -114,14 +107,14 @@ viewToModelUpdate(newValue: any): void {
 }
 ```
 
-### NG_VALUE_ACCESSOR
-這個 provide 是讓 `ngModleChange` 所使用的 `$event` 不需要再寫成 `$event.target.value` 的魔法使，內部細節如下
+# NG_VALUE_ACCESSOR
+這個 provider 是讓 `ngModleChange` 接受 `$event` 而不是 `$event.target.value` 的魔法使，內部細節如下
 
 ![](http://i.imgur.com/Qsb228V.png)
 
-`NG_VALUE_ACCESSOR` 在各類型的 `Control` 都會有一份 `value accessor` ，而針對 `ngModel` 我們需留意的是 `DEFAULT_VALUE_ACCESSOR` 這一個 Directive
+在各類型的 `Control` 都會有一份 `NG_VALUE_ACCESSOR` ，而針對 `ngModel` 我們需留意的是 `DEFAULT_VALUE_ACCESSOR` ，檔案是 `default_value_accessor.ts`
 
-`default_value_accessor.ts`
+(使用 multi 的 DI 設定方式並不是這篇文章的重點，只要知道這樣子設定，可以讓 Provider 使用同一個名稱但又可同時存在不互相影響)
 
 ```typescript
 export const DEFAULT_VALUE_ACCESSOR: any = {
@@ -177,9 +170,8 @@ export class DefaultValueAccessor implements ControlValueAccessor {
 
   ...
 }
-
 ```
-`DefaultValueAccessor` 裡的 `registerOnChange` 與 `onChange` 間關係是，`ngModel` 會經 `setUpControl` 的方法將自訂方法透過 `registerOnChange` 註冊到 `onChange` 上，
+`DefaultValueAccessor` 裡 `registerOnChange` 與 `onChange` 的關係是，`ngModel` 會經 `setUpControl` 的方法將自訂方法透過 `registerOnChange` 註冊到 `onChange` 上，
 
 `DefaultValueAccessor` 的 `@Directive` 的宣告的地方，有註冊 `(input)` 事件發生時會觸發的方法， `_handleInput($event.target.value)`
 
