@@ -105,7 +105,7 @@ Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同�
    ```
 
 
-2. 根據 `_parseAssigmentEvent` 就會將部分轉換成  ` (ngModelChange)="username = $event"` 的形式
+2. 根據 `_parseAssigmentEvent` 就會將部分`[(ngModel)]="username"` 轉換成  ` (ngModelChange)="username = $event"` 傳入 `bindingParser.parseEvent` 的方法內
 
    ```typescript
    private _parseAssignmentEvent(
