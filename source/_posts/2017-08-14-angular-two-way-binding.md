@@ -43,7 +43,103 @@ Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同�
 
 
 
+# [()] 的秘密
+
+我們知道 `[()]` 是 Angular 所提供給雙向繫結的語法糖，但是底層到底是怎麼運作的，為什麼會可以轉換成 [<name>] + (<name>Change) 呢? 以下簡單說明
+
+1.  `compiler/src/template_parser/template_parser.ts` 裡面會去分析 Element 的 attribute 是否有符合各種格式的內容
+
+   ```typescript
+   // 重點在此
+   const BIND_NAME_REGEXP =
+       /^(?:(?:(?:(bind-)|(let-)|(ref-|#)|(on-)|(bindon-)|(@))(.+))|\[\(([^\)]+)\)\]|\[([^\]]+)\]|\(([^\)]+)\))$/;
+
+   // Group 1 = "bind-"
+   const KW_BIND_IDX = 1;
+   // Group 2 = "let-"
+   const KW_LET_IDX = 2;
+   // Group 3 = "ref-/#"
+   const KW_REF_IDX = 3;
+   // Group 4 = "on-"
+   const KW_ON_IDX = 4;
+   // Group 5 = "bindon-"
+   const KW_BINDON_IDX = 5;
+   // Group 6 = "@"
+   const KW_AT_IDX = 6;
+   // Group 7 = the identifier after "bind-", "let-", "ref-/#", "on-", "bindon-" or "@"
+   const IDENT_KW_IDX = 7;
+   // Group 8 = identifier inside [()]
+   const IDENT_BANANA_BOX_IDX = 8;
+   // Group 9 = identifier inside []
+   const IDENT_PROPERTY_IDX = 9;
+   // Group 10 = identifier inside ()
+   const IDENT_EVENT_IDX = 10;
+   ```
+
+   ```typescript
+   private _parseAttr(
+         isTemplateElement: boolean, attr: html.Attribute, targetMatchableAttrs: string[][],
+         targetProps: BoundProperty[], targetEvents: BoundEventAst[],
+         targetRefs: ElementOrDirectiveRef[], targetVars: VariableAst[]): boolean {
+       const name = this._normalizeAttributeName(attr.name);
+       const value = attr.value;
+       const srcSpan = attr.sourceSpan;
+
+       const bindParts = name.match(BIND_NAME_REGEXP);
+       let hasBinding = false;
+
+       if (bindParts !== null) {
+         hasBinding = true;
+         ...
+         } else if (bindParts[IDENT_BANANA_BOX_IDX]) {
+           this._bindingParser.parsePropertyBinding(
+               bindParts[IDENT_BANANA_BOX_IDX], value, false, srcSpan, targetMatchableAttrs,
+               targetProps);
+           this._parseAssignmentEvent(
+               bindParts[IDENT_BANANA_BOX_IDX], value, srcSpan, targetMatchableAttrs, targetEvents);
+
+         }
+         ...
+       return hasBinding;
+     }
+   ```
+
+
+2. 根據 `_parseAssigmentEvent` 就會將部分轉換成  ` (ngModelChange)="username = $event"` 的形式
+
+   ```typescript
+   private _parseAssignmentEvent(
+         name: string, expression: string, sourceSpan: ParseSourceSpan,
+         targetMatchableAttrs: string[][], targetEvents: BoundEventAst[]) {
+       this._bindingParser.parseEvent(
+           `${name}Change`, `${expression}=$event`, sourceSpan, targetMatchableAttrs, targetEvents);
+   }
+   ```
+
+3. `this._bindingParse.parseEvent`，會更新 Element 的屬性值
+
+   ```typescript
+    private _parseEvent(
+         name: string, expression: string, sourceSpan: ParseSourceSpan,
+         targetMatchableAttrs: string[][], targetEvents: BoundEventAst[]) {
+       // long format: 'target: eventName'
+       const [target, eventName] = splitAtColon(name, [null !, name]);
+       const ast = this._parseAction(expression, sourceSpan);
+       targetMatchableAttrs.push([name !, ast.source !]);
+       targetEvents.push(new BoundEventAst(eventName, target, null, ast, sourceSpan));
+       // Don't detect directives for event names for now,
+       // so don't add the event name to the matchableAttrs
+    }
+   ```
+
+4. 這就是 `[()]` 語法糖的運作方式
+
+   ​
+
+   ​
+
 # ngModel
+
 `ngModel` 是 Angular 所提供的 Directive，主要用途是用來簡化雙向繫結的寫法，程式碼可以參閱[這裡](https://github.com/angular/angular/blob/master/packages/forms/src/directives/ng_model.ts)
 
 ## 程式碼說明
