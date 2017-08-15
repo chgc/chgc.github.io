@@ -49,7 +49,7 @@ export class CustomCounterComponent {
 
 在外部使用這個 Component 時
 
-```typescript
+```html
 <custom-counter [counter]="someValue"></custom-counter>
 ```
 
@@ -91,7 +91,7 @@ export class CustomCounterComponent {
 
 這樣子修正完後，`counter` 這個對外的屬性，就可以使用 `[()]` 來做到雙向繫結的效果
 
-```typescript
+```html
 <custom-counter [(counter)]="someValue"></custom-counter>
 <p>counterValue = {{ someValue }}</p>
 ```
