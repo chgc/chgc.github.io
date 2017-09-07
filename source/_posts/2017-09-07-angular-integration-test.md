@@ -1,10 +1,12 @@
 ---
 layout: post
-title: angular-integration-test
+title: '[Angular] 整合測試'
 comments: true
 date: 2017-09-07 22:30:58
-categories:
+categories: Angular
 tags:
+- Angular
+- 測試
 ---
 
 整合測試主要的目的，是要測試 Component 的 template 的動作是否能如我們所預期的方式運作，而這是單元測試無法涵的範圍
