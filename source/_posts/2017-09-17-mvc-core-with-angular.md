@@ -98,11 +98,9 @@ tags:
 
    ```typescript
    ngDoBootstrap(app: ApplicationRef) {
-       entryComponents.forEach((component: any) => {      
          if (document.querySelector('app-root')) {
            app.bootstrap(AppComponent);
          }
-       });
      }
    ```
 
@@ -163,6 +161,8 @@ tags:
 1. 啟動 app-root 後再由此產生對應的 component
 2. 直接使用 component
 
+
+
 ##啟動 app-root 後再由此產生對應的 component
 
 例如 ~/home/about 頁面內，在前端的路由檔內也有對應的設定
@@ -184,6 +184,8 @@ const routes: Routes = [
 這樣的設定方式，顯示結果如下
 
 ![](https://i.imgur.com/zgi1bJa.png)
+
+
 
 ##直接使用 component 
 
