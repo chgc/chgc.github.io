@@ -163,7 +163,7 @@ tags:
 
 
 
-##啟動 app-root 後再由此產生對應的 component
+## 啟動 app-root 後再由此產生對應的 component
 
 例如 ~/home/about 頁面內，在前端的路由檔內也有對應的設定
 
@@ -187,7 +187,7 @@ const routes: Routes = [
 
 
 
-##直接使用 component 
+## 直接使用 component 
 
 直接使用 component 時，就必須將該 component 註冊到 `entryComponents` 內，並於 `ngDoBootstrap` 時判斷是否有該 element的存在，假設在 Home/Index 頁面有一個 `<app-menu></app-menu>` 的 element，那就需要將 `MenuComponent` 註冊到 `entryComponents` 的區塊內
 
