@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] Angular 建立 Injector 的流程`
+title: '[Angular] Angular 建立 Injector 的流程'
 comments: true
 date: 2017-09-24 11:35:35
 categories: Angular
