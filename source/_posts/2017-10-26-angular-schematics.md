@@ -7,7 +7,7 @@ categories: Angular
 tags: Angular
 ---
 
-Angular CLI 1.4 版以後，樣板的產生器就改使用 `@angular/schematics` ，而在 10 月初，`Nrwl.io` 也推出 nx 版的 schematics 樣版集合，所以什麼是 `schematics` ，我們可以利用他來做什麼樣的事情呢?
+Angular CLI 1.4 版以後，樣板的產生器就改使用 `@angular-devkit/schematics` ，而在 10 月初，`Nrwl.io` 也推出 nx 版的 schematics 樣版集合，所以什麼是 `schematics` ，我們可以利用他來做什麼樣的事情呢?
 
 <!-- more -->
 
