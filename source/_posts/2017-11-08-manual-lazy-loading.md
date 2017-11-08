@@ -170,8 +170,11 @@ Angular 在 Multi Page Application 的應用情境下，可以利用這樣的模
    </app-root>
 ```
 
+
+
 # 參考資料
 
+* [stackblitz live demo](https://stackblitz.com/edit/angular-ndkgan)
 * [GitHub Repo](https://github.com/chgc/manual_load_module)
 * [ngComponentOutlet](https://angular.io/api/common/NgComponentOutlet)
 * [NgModuleFactoryLoader](https://angular.io/api/core/NgModuleFactoryLoader) 
