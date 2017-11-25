@@ -108,7 +108,7 @@ ng build --prod
 
 關於 `service worker` 相關的設定項目，都可以在 `ngsw-config.json` 內設定，包含 cacheing 的方式跟時間等
 
-```json
+```typescript
 
 /**
  * @license
