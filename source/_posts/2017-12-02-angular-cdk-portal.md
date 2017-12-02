@@ -22,7 +22,7 @@ CDK 這一系列的文章就會記錄探索 CDK 功能的筆記，今天會先�
 Angular CDK裡的 Portal 有兩個元素
 
 1. `Portal`  是用來包 template 或是 component 的
-2.  `PortalHost`  是顯示 portal 的地方，可以附加在網頁上的任何地方，例如 `document.body`
+2. `PortalHost`  是顯示 portal 的地方，可以附加在網頁上的任何地方，例如 `document.body`
 
 ![](https://i.imgur.com/hBGkmW7.png)
 
@@ -109,6 +109,7 @@ export class AppComponent {
 
 `cdk/portal`有提供另外一個方法叫做 PortalHost，可以透過這一個物件來將 Portal 顯示在我們所指定的位置上
 
+app.component.ts
 ```typescript
 ...
 private bodyPortalHost: DomPortalHost;
@@ -134,9 +135,15 @@ setDisplayPort(displayPortal) {
   this.bodyPortalHost.attach(displayPortal);
 }
 ```
-
+index.html
 ```html
+...
 <div id="display"></div>
+<app-root></app-root>
+...
+```
+app.component.html
+```html
 <button type="button" (click)="setDisplayPort(programmingJoke)">
   Programming joke
 </button>
