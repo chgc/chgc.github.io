@@ -108,10 +108,35 @@ tags:
 
 ## 修改 _layout.cshtml
 
-將在 `.angular-cli.json` 所設定輸出的 html 檔案加入到 `_layout.cshmtl` 內
+將在 `.angular-cli.json` 所設定輸出的 html 檔案內容加入到 `_layout.cshtml` 內，這裡要使用 `ViewComponent` 的方式來處理，不然當部屬到 Azure 時會壞掉
+
+```csharp
+public class ScriptHTMLViewComponent : ViewComponent
+{
+    private IHostingEnvironment _env;
+    public ScriptHTMLViewComponent(IHostingEnvironment env)
+    {
+       _env = env;
+    }
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+        var model = System.IO.File.ReadAllText(Path.Combine(_env.WebRootPath, "dist", "script.html"));
+        return View("Index", model);
+    }
+}
+```
+
+`Shared/Components/ScriptHTML/Index.cshtml`
 
 ```html
-@Html.Partial("~/wwwroot/dist/script.html")
+@model string
+@Html.Raw(Model)
+```
+
+`_layout.cshtml`
+
+```html
+   @await Component.InvokeAsync("ScriptHTML")
 ```
 
 ## 修改 Startup.cs
