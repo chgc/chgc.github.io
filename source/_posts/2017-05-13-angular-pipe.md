@@ -42,14 +42,19 @@ Angular 有內建了一些 Pipe 像是 `DatePipe`、 `UpperCasePipe`、`LowerCas
 
 - `format` 可以用來調整要顯示的日期格式，可以使用的格式說明如下
 
-  - `'medium'`: 相當於 `'yMMMdjms'` (例如 `Sep 3, 2010, 12:05:08 PM` for `en-US`)
   - `'short'`: 相當於  `'yMdjm'` (例如  `9/3/2010, 12:05 PM` for `en-US`)
+  - `'medium'`: 相當於 `'yMMMdjms'` (例如 `Sep 3, 2010, 12:05:08 PM` for `en-US`)
+  - `long`: 相當於 `MMMM d, y, h:mm:ss a z` (例如 `June 15, 2015 at 9:03:01 AM GMT+1`)
+  - `'full'`: 相當於 `'EEEE, MMMM d, y, h:mm:ss a zzzz'` (例如 `Monday, June 15, 2015 at 9:03:01 AM GMT+01:00`)
   - `'fullDate'`: 相當於  `'yMMMMEEEEd'` (例如  `Friday, September 3, 2010` for `en-US`)
+  - `'shortDate'`: 相當於  `'yMd'` (例如  `9/3/2010` for `en-US`)
   - `'longDate'`: 相當於  `'yMMMMd'` (例如  `September 3, 2010` for `en-US`)
   - `'mediumDate'`: 相當於 `'yMMMd'` (例如  `Sep 3, 2010` for `en-US`)
-  - `'shortDate'`: 相當於  `'yMd'` (例如  `9/3/2010` for `en-US`)
-  - `'mediumTime'`: 相當於 'jms'` (例如  `12:05:08 PM` for `en-US`)
+  - `'fullDate'`: 相當於  `'EEEE, MMMM d, y'` (例如   `Monday, June 15, 2015`)
   - `'shortTime'`: 相當於  `'jm'` (例如  `12:05 PM` for `en-US`)
+  - `'mediumTime'`: 相當於 `jms'` (例如  `12:05:08 PM` for `en-US`)
+  - `'longTime'`: 相當於  `'h:mm:ss a z'` (例如 `9:03:01 AM GMT+1`)
+  - `'fullTime'`: 相當於  `'h:mm:ss a zzzz'` (例如 `9:03:01 AM GMT+01:00`)
 
   | 描述       | 符號   | 短表示         | 長表示                            | 數值      | 2位數       |
   | -------- | ---- | ----------- | ------------------------------ | ------- | --------- |
@@ -399,7 +404,7 @@ array_or_string_expression | slice:start[:end]
 
 ### 範例
 
-```typescript
+​```typescript
 import {Component} from '@angular/core';
 
 @Component({
