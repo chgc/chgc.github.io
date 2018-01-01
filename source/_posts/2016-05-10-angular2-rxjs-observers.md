@@ -29,7 +29,7 @@ export class Http {
 
 ```
 
-所以在執行Http.get(...)所回傳的結果是 **Observable<Response>**，因為這樣子的關係，我們就可以使用RxJS Observers的方法 [參考網址](http://reactivex.io/documentation/observable.html)
+所以在執行Http.get(...)所回傳的結果是` Observable<Response>`，因為這樣子的關係，我們就可以使用RxJS Observers的方法 [參考網址](http://reactivex.io/documentation/observable.html)
 
 ## Subscribe Method
 

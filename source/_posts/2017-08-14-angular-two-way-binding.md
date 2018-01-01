@@ -45,7 +45,7 @@ Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同�
 
 # [()] 的秘密
 
-我們知道 `[()]` 是 Angular 所提供給雙向繫結的語法糖，但是底層到底是怎麼運作的，為什麼會可以轉換成 [<name>] + (<name>Change) 呢? 以下簡單說明
+我們知道 `[()]` 是 Angular 所提供給雙向繫結的語法糖，但是底層到底是怎麼運作的，為什麼會可以轉換成 `[<name>]` +` (<name>Change)` 呢? 以下簡單說明
 
 1.  `compiler/src/template_parser/template_parser.ts` 裡面會去分析 Element 的 attribute 是否有符合各種格式的內容
 
