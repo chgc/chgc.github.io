@@ -200,7 +200,7 @@ export class <%= classify(name) %> {
 
 # 自訂 schematics 集合 
 
-目前最快的方式，是直接複製 @schematics/angular 來改，但其實 @angular/dev-kit 有提供命令的方式來建立(還在研究中，等研究出來後在寫另外一篇文章分享)
+目前最快的方式，是直接複製 @schematics/angular 來改，但其實 @angular/dev-kit 有提供命令的方式來建立~~(還在研究中，等研究出來後在寫另外一篇文章分享)~~ 請參考下一段
 
 ```
 $ cd ~/n/lib/node_modules/@angular/cli/node_modules/ (angular cli 全域的安裝位置)
@@ -216,9 +216,33 @@ $ cp -R @schematics/angular/* @custom/myangular/
 ng new --collection=@custom/myangular myapp
 ```
 
+# 創建 schematic
 
+@angular/dev-kit 有提供建立的指令，在這之前需先安裝三個工具
+
+```
+npm i -g @angular-devkit/schematics
+npm i -g @schematics/schematics
+npm i -g rxjs
+```
+
+安裝完成後，即可透過 `schematics` 的指令建立範本集，預設有兩種範本 `blank` 和 `schematic` 。建立指令
+
+```
+// schematic template
+schematics @schematics/schematics:schematic --name <<collection name>>
+// blank template
+schematics @schematics/schematics:blank --name <<collection name>>
+```
+
+建立後的專案結構
+
+![](https://i.imgur.com/hN4xSJq.png)
+
+之後就可按上面所介紹的方式建立自己的範本，當然也可參考其他人的 schematics ，例如 `nx` 或是 `ngrx`，我相信之後會有更多各式各樣的範本出來
 
 # 參考資料
 
 * [ngAir 134 - Angular Schematics with Mike Brocchi](https://youtu.be/ZKyz0lb0GjA)
 * [angular/devkit](https://github.com/angular/devkit)
+* [ngrx schematic](https://github.com/ngrx/schematics-builds)
