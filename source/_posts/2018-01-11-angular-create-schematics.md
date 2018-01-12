@@ -232,3 +232,6 @@ tags: Angular
 5. 相關的程式碼請參閱 [GitHub Repo](https://github.com/chgc/demo-schematics)
 
 
+# 參考影片
+
+[ngHouston - CLI Schematics w/ Hans Larsen](https://youtu.be/MpjHW2_w83Q)
