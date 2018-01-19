@@ -97,6 +97,8 @@ export class AppModule { }
 
 ![](https://i.imgur.com/TDQ27YH.png)
 
+很清楚的，不論是 `ParentComponent` 或是 `ChildComponent` 都是存取註冊在 `NgModle` 的 `SimpleService`
+
 (圖片擷取至[codecraft.tv](https://codecraft.tv))
 
 # Component.providers
@@ -134,6 +136,8 @@ export class ParentComponent {
 ![](https://i.imgur.com/J3vmOVb.png)
 
 (圖片擷取至[codecraft.tv](https://codecraft.tv))
+
+在這個情境，不論 `ChildComponent` 是已哪一種方式顯示在 `ParentComponent` 都會存取到註冊在 `ParentComponent` 的 providers，而因為 `AppComponent` 有兩個 `ParentComponent` ，所以各自有各自的 `SimpleService` 互不干擾
 
 # Component.viewProviders
 
@@ -175,6 +179,8 @@ export class ParentComponent {
 ![](https://i.imgur.com/m3eu0oU.png)
 
 (圖片擷取至[codecraft.tv](https://codecraft.tv))
+
+`viewProviders` 比較特殊一點，透過 `<ng-content>` 呈現與不透過 `<ng-content>` 的結果不一樣，假設使用 `<ng-content>` 的方式將 `ChildComponent` 映射到 `ParentComponent` 時，兩者所讀取的 `SimpleService` 會是不同一個 (可參閱上圖)；但如果是直接在 `ParentComponent` 上使用 `ChildComponent` 時，所存取的 `SimpleService` 就會跟 `ParentComponent` 一樣，這部分就要留意了
 
 # Recap
 
