@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] @Attribute`
+title: '[Angular] @Attribute'
 comments: true
 date: 2018-01-31 10:15:05
 categories: Angular
