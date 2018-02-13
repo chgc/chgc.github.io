@@ -20,14 +20,14 @@ Nx 預設的專案架構有兩個空的資料夾，分別為 `apps` 與 `libs`
 而我們熟悉的 CLI 專案，則會透過建立 app 的指令產生再 apps 的資料夾下，指令如下
 
 ```
-ng g appp <<application name>>
+ng g app <<application name>>
 ```
 
 
 
 ![](https://i.imgur.com/9mJrRqD.png)
 
-當執行完指令，Nx 會產生一系列預設的檔案，及更新 `.angular-cli.json` 檔案，產生出來的檔案就是我們很熟悉的 CLI 專案有的相關檔案
+執行完指令，Nx 會產生一系列預設的檔案，及更新 `.angular-cli.json` 檔案，產生出來的檔案就是我們很熟悉的 CLI 專案有的相關檔案
 
 ![](https://i.imgur.com/JGVdgov.png)
 
@@ -126,7 +126,7 @@ ng g appp <<application name>>
 
 ## tsconfig.json
 
-在初始時，tsconfig.json 內會包含一個路徑別名的設定
+在初始時，`tsconfig.json` 內會包含一個路徑別名的設定，這一行的設定會讓我們在使用模組時，簡化注入時要標示的來源路徑
 
 ```json
  "paths": {
@@ -136,13 +136,11 @@ ng g appp <<application name>>
     }
 ```
 
-這一行的設定會讓我們在使用模組時，簡化注入時要標示的來源路徑
-
 
 
 ## tslint.json
 
-在 `tslint.json` 的最後面，也多加上了這一個檢查條件，來確保程式碼架構的正確性
+在 `tslint.json` 的最後也多加上了這一個檢查條件，細部的功能會在後面介紹
 
 ```json
 "nx-enforce-module-boundaries": [
