@@ -175,6 +175,22 @@ export interface DataGroup {
 2. performance: cache first mode
 
 
+# 其他備註
+
+[2018-01-19 更新] 在後來使用時，發現一個很神奇的現象，假如我有使用到 RxJS 的狀態時，單純使用 `ServiceWorkerModule.register('/ngsw-worker.js')` 是無法將 `service-worker` 成功註冊起來，必須在 `main.ts` 修正成這樣，才能成功註冊 service-worker
+
+```typescript
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .then(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/ngsw-worker.js');
+    }
+  })
+  .catch(err => console.log(err));
+```
+
+
 
 # Recap
 
