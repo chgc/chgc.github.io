@@ -1,6 +1,6 @@
 ---
 layout: post
-title: `[鑑識會計]學習筆記-舞弊罪犯與其犯罪理由`
+title: '[鑑識會計]學習筆記-舞弊罪犯與其犯罪理由'
 comments: true
 date: 2018-03-24 16:30:23
 categories: 會計
