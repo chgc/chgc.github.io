@@ -40,13 +40,13 @@ export class AppModule {}
 
 ```
 
-* 當遇到 lazy loading modules 時，在該 module 下會使用 `NgxsModule.forFeature([])`來註冊 state；即使所有的 module 都是 lazy load 的話，在 root module 下，還是得註冊 `NgxsModule.forRoot([])`
+* 當遇到 lazy loading modules 時，在該 module 下會使用 `NgxsModule.forFeature([])`來註冊 state；即使所有的 module 都是 lazy load 時，還是得在 root module 裡註冊 `NgxsModule.forRoot([])`
 
-到這個步驟時，NGXS 已經加入到 angular 專案裡了
+到這個步驟時，NGXS 已經加入到 Angular 專案裡了
 
 # 建立 State
 
-NGXS 的 State  是一個單純的 class  檔案，可以透過  `ng g cl <<state file name>>` 來產生，作者建議的檔案名稱是 `[stateName].state.ts` ，就此篇練習的目的，建立一個 `todos.state.ts` 檔案，Class 名稱為 `TodosState`
+NGXS 的 State  是一個單純的 class  檔案，可以透過  `ng g class <<state file name>>` 來產生，作者建議的檔案名稱是 `[stateName].state.ts` ，就此篇練習的目的，建立一個 `todos.state.ts` 檔案，Class 名稱為 `TodosState`
 
 ```typescript
 export class TodoItem {
@@ -92,7 +92,7 @@ export class AppModule {}
 
 # 建立 Action
 
-要設定可以 dispatch 的 action，在 NGXS 的架構下，是不需要額外新增檔案的，直接寫在 state class 下即可
+在 NGXS 的架構下，要設定可以被執行的 action 方法時，是不需要額外新增檔案的，直接寫在 state class 下即可
 
 ```typescript
 export class ADDTODO {
@@ -131,11 +131,11 @@ export class TodosState {
   * 第一個參數是取得可操作目前 state 的 context 物件，內有的方法有
     * `getState():T` 取得目前 state 的值
     * `setState(val:T):any` 重設目前 state 的值(重新建立一個新的state)
-    * `patchState(valu: Partial<T>)` 更新目前 state 的值
-    * `dispatch(actions)` 觸發 action
-  * 第二個參數是取得 Action 對應的 Class 實體，NGXS 是透過這樣子的方式傳遞資料的
+    * `patchState(valu: Partial<T>)` 更新目前 state 的值 (不會產生一個全新 state)
+    * `dispatch(actions)` 觸發 action，一個或是多個(用陣列包)
+  * 第二個參數是取得 Action 對應的 Class 實體，NGXS 是透過這樣子的模式傳遞資料
 
-* 由於 `State` 本身是活在 Angular 的 DI 機制下，所以也可以在 `constructor` 的注入其他 service，所以當要呼叫 api 時，也可以直接寫在 action function 就可以了，不需要額外在建立檔案
+* 由於 `State` 本身是活在 Angular 的 DI 機制下，所以也可以在 `constructor` 的注入其他 service，所以當要呼叫 API 時，也可以直接寫在 action function 就可以了，不需要額外在建立檔案
 
   ```typescript
   constructor(private service: ApiService) {}
@@ -161,7 +161,7 @@ export class TodosState {
   ```typescript
   import { Component } from '@angular/core';
   import { Store, Select } from '@ngxs/store';
-  import { Observable } from 'rxjs/observable';
+  import { Observable } from 'rxjs/Observable';
   import { TodoItem } from './todos.state';
 
   @Component({
