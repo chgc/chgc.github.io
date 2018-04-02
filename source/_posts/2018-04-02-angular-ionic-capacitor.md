@@ -32,7 +32,7 @@ tags: Angular
    1. 如果不知道 `npx` 是什麼的，請參閱這篇[文章](https://robin-front.github.io/2017/07/14/introducing-npx-an-npm-package-runner/)
    2. 輸入一些基本資料後，即完成設定動作，完成後的畫面如下
 
-   ![](https://c1.staticflickr.com/1/899/40473795284_eb2342f184_o.png)
+   ![](https://i.imgur.com/2apRkeu.png)
 
 4. 配合 Angular CLI 的建置輸出路徑修改 `capacitor.config.json` 檔案
 
@@ -54,7 +54,7 @@ tags: Angular
 
 7. 跑起來的畫面就跟預設的畫面是一樣的，只是網址變成 `http://localhost:3333`
 
-   ![](https://c1.staticflickr.com/1/900/39376323830_b4e5f7f622_o.png)
+   ![](https://i.imgur.com/ExGjmJY.png)
 
 # 使用套件(Plugin)
 
