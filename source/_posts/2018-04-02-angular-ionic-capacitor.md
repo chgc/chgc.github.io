@@ -70,7 +70,7 @@ import { Observable } from 'rxjs/Observable';
 import { bindCallback } from 'rxjs/observable/bindCallback';
 import { map } from 'rxjs/operators';
 
-const { Geolocation, Modals } = Plugins;
+const { Geolocation, Modals, App } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -82,6 +82,10 @@ const { Geolocation, Modals } = Plugins;
 export class AppComponent implements OnInit {
   coords: Coordinates;
   ngOnInit() {
+     App.addListener('backButton', () => {
+      Plugins.App.exitApp();
+    });
+      
     this.watchPosition().subscribe(coords => {
       this.coords = coords;
     });
@@ -92,10 +96,11 @@ export class AppComponent implements OnInit {
     return watch.pipe(map(pos => pos.coords));
   }
 
-  currentLocation() {
+  async currentLocation() {
+    const position = await Geolocation.getCurrentPosition();
     Modals.alert({
       title: '目前位置',
-      message: `lat: ${this.coords.latitude}, long: ${this.coords.longitude}`
+      message: `lat: ${position.coords.latitude}, long: ${position.coords.longitude}`
     });
   }
 }
@@ -104,6 +109,44 @@ export class AppComponent implements OnInit {
 
 * 利用 `bindCallback` 的方法將 api 轉換成 `Observable` 型別
 * Chrome 在版本 50 以後就不允許 http 跑 Geolocation 了，所以如果要測試這段，這部分可能就要自己摸索了
+
+# 部屬到 Android 設備上
+
+假設 Android 開發環境已經準備好了 ( 使用 Android Studio )，Capacitor 只需要透過幾個指令，就可以將 Android 部屬目標加上去，以下是相關的指令及對應的功能
+
+1. `npx cap add android` 將 `Android platform`  加入到目前的專案下 
+
+   ![](https://i.imgur.com/e8QpqT9.png)
+
+2. `npx cap sync` 同步 `dependency` 和 `web` 內容
+
+3. `npx cap copy` 複製 `web` 內容
+
+4. `npx cap open android` 開啟 `Android Studio` 並執行建置動作
+
+* 如果 `Android Studio` 不是安裝在預設路徑下時，可以在 `capacitor.config.json` 內設定實際的安裝位置
+
+  ```json
+  {
+   ...
+    "windowsAndroidStudioPath": "D:\\Program Files\\Android\\Android Studio\\bin\\studio64.exe"
+  }
+
+  ```
+
+## 實際測試/部屬到 Android 
+
+因為我們需要將網頁建置後的結果複製到 Android 的專案下，所以在執行 `npx cap sync` 之前，記得要做 `ng build --prod` 的動作
+
+基本流程如下
+
+1. `ng build --prod`  建置 web 專案
+2. `npca cap sync` 同步 web 專案及 dependency 元建至 Android 專案下
+3. `npx cap open android` 開啟 Android Studio 進行後續的測試部屬，如果 Android Studio 已經開啟時，就不需要執行這行指令
+
+## 執行結果
+
+
 
 # 總結
 
