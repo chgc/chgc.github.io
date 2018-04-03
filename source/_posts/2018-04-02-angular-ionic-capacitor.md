@@ -93,9 +93,10 @@ export class AppComponent implements OnInit {
   }
 
   currentLocation() {
-    window.alert(
-      `lat: ${this.coords.latitude}, long: ${this.coords.longitude}`
-    );
+    Modals.alert({
+      title: '目前位置',
+      message: `lat: ${this.coords.latitude}, long: ${this.coords.longitude}`
+    });
   }
 }
 
