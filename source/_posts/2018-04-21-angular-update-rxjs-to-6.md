@@ -45,8 +45,6 @@ RxJS 6 提供了更便利的 import 方式，而且套件檔案變小，也可�
 
 6. 修正 `tslint.json`，將 `rxjs` 從 `"import-blacklist"` 中移除
 
-7. 移除 `rxjs-compat`
+7. 建置整個專案確定升級成功
 
-8. 建置整個專案確定升級成功
-
-9. 完成整個升級 RxJS
+8. 完成整個升級 RxJS
