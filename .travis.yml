@@ -7,6 +7,7 @@ branches:
   - source
 before_install:
 - export TZ=Asia/Taipei
+- npm install -g npm@next
 - npm install -g hexo-cli
 before_script:
 - git config --global user.name 'Kevin Yang'
@@ -14,7 +15,6 @@ before_script:
 - sed -i'' "s~git@github.com:chgc/chgc.github.io.git~https://${DEPLOY_TOKEN}@github.com/chgc/chgc.github.io.git~"
   _config.yml
 install:
-- npm i -g npm@next
 - npm ci
 script:
 - hexo clean
