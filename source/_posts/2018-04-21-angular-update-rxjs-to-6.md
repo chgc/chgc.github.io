@@ -11,6 +11,8 @@ RxJS 6 提供了更便利的 import 方式，而且套件檔案變小，也可�
 
 <!-- more -->
 
+# 方法一
+
 1. 升級 RxJS 至 5.5,1 (最新版)
 
 2. 更新至 RxJS 6
@@ -41,10 +43,27 @@ RxJS 6 提供了更便利的 import 方式，而且套件檔案變小，也可�
     ```
     ./node_modules/.bin/tslint -c migrate.tslint.json --project src/tsconfig.app.json --fix`
     ```
-    
 
 6. 修正 `tslint.json`，將 `rxjs` 從 `"import-blacklist"` 中移除
 
 7. 建置整個專案確定升級成功
 
 8. 完成整個升級 RxJS
+
+# 方法二 (快速版)
+
+1. 安裝 `rxjs-tslint` 至全域
+
+   ```
+   npm install -g rxjs-tslint
+   ```
+
+2. 到要升級 RxJS 的專案下執行下列指令
+
+   ```
+   rxjs-5-to-6-migrate -p tsconfig.json
+   ```
+
+3. 建置整個專案確定升級成功
+
+4. 完成整個升級 RxJS
