@@ -14,14 +14,11 @@ RxJS 6 提供了更便利的 import 方式，而且套件檔案變小，也可�
 1. 升級 RxJS 至 5.5,1 (最新版)
 
 2. 更新至 RxJS 6
-
-   1. RxJS 6 正式版尚未釋出時
-      1. `npm install rxjs@rc`
-      2. `npm install rxjs-compat@rc` 這套件的功能是讓 RxJS 6 可以向下相容
-   2. RxJS 6 正式版釋出後
+  
+   1. RxJS 6 
       1. `npm install rxjs`
       2. `npm install rxjs-compat `
-   3. 使用 Angular CLI 6 1 
+   2. 使用 Angular CLI 6 1 
       1. `ng update rxjs`
 
 3. `npm install rxjs-tslint`
@@ -41,7 +38,10 @@ RxJS 6 提供了更便利的 import 方式，而且套件檔案變小，也可�
 
 5. 執行 tslint-fix (可能需要多跑幾次)
 
-    `./node_modules/.bin/tslint -c migrate.tslint.json --project src/tsconfig.app.json --fix`
+    ```
+    ./node_modules/.bin/tslint -c migrate.tslint.json --project src/tsconfig.app.json --fix`
+    ```
+    
 
 6. 修正 `tslint.json`，將 `rxjs` 從 `"import-blacklist"` 中移除
 
