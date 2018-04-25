@@ -13,7 +13,7 @@ RxJS 6 提供了更便利的 import 方式，而且套件檔案變小，也可�
 
 # 方法一
 
-1. 升級 RxJS 至 5.5,1 (最新版)
+1. 升級 RxJS 至 5.5.1 (最新版)
 
 2. 更新至 RxJS 6
   
@@ -52,13 +52,23 @@ RxJS 6 提供了更便利的 import 方式，而且套件檔案變小，也可�
 
 # 方法二 (快速版)
 
-1. 安裝 `rxjs-tslint` 至全域
+1. 全域安裝 `rxjs-tslint`
 
    ```
    npm install -g rxjs-tslint
    ```
 
-2. 到要升級 RxJS 的專案下執行下列指令
+2. 升級 RxJS 至 5.5.1 (最新版)
+
+3. 更新至 RxJS 6
+
+   1. RxJS 6 
+      1. `npm install rxjs`
+      2. `npm install rxjs-compat `
+   2. 使用 Angular CLI 6 1 
+      1. `ng update rxjs`
+
+4. 執行下列指令
 
    ```
    rxjs-5-to-6-migrate -p tsconfig.json
