@@ -432,7 +432,7 @@ afs.collection('items', ref => ref.where('size', '==', 'large')
 | `endAt`      | Results end at the provided document (inclusive).            |
 | `endBefore`  | Results end before the provided document (exclusive).        |
 
-##Hosting
+## Hosting
 
 透過 firebase tools 建立專案環境時，就會填入一些相關的資訊，例如，要上傳的網站檔案的資料夾位置，是否為 SPA 網站等資訊，當這些都設定完成後，可以透過一行指令即可完成網站部屬動作
 
