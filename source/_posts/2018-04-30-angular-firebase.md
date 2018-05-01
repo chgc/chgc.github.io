@@ -444,7 +444,7 @@ firebase deploy --only hosting
 
 ![](https://i.imgur.com/tT7HsTY.png)
 
-##Functions 
+## Functions 
 
 什麼是 Functions ? Firebase 的 Functions 可以針對 Firebase 服務行為而被觸發的小程序，例如我希望當 Cloud Firestore 有新增資料時，幫我將某些資料整理到另外一個 collection 裡面，這時候，就可以透過 `functions` 來幫忙處理，這裡就簡單地提供個範例做參考
 
