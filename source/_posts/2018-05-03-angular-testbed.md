@@ -27,7 +27,7 @@ Angular TestBed 是 Angular 團隊提供用來設定測試環境的方法，Test
 
 ## OverrideModule
 
-```
+```typescript
 @NgModule({
   declarations: [DemoComponent],
   providers: [
@@ -99,7 +99,7 @@ describe('DemoComponent', () => {
 
  但我們只想更換 `provider` 的部分，真的有需要寫的那麼複雜嗎? `TestBed` 有提供 `overrideProvider` 的方法可以使用，寫法如下
 
-```
+```typescript
 describe('DemoComponent', () => {
   let component: DemoComponent;
   let fixture: ComponentFixture<DemoComponent>;
@@ -158,7 +158,7 @@ describe('DemoComponent', () => {
 
 `overrideComponent` 也是另外一個很常見的測試技巧，尤其是在測試 `directive`的時候，這技巧就非常實用
 
-```
+```typescript
 @Component({
   selector: 'app-host-comp',
   template: ''
@@ -205,7 +205,7 @@ describe('HighlightDirective', () => {
 
 如果只是想要替換 template 的部分，有更簡便的寫法，可使用 `TestBed.OverrideTemplate(<Component>, <template string>)` 來達成一樣的效果
 
-```
+```typescript
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { DemoComponent } from './demo.component';
