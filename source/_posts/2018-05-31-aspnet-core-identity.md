@@ -200,6 +200,104 @@ ASP.NET Core 有提供身分認證的功能，叫做 `Identity`，有提供多�
 
 # Controller - View
 
+## View
+
+如果是使用 Razor 的方式要產生第三方登入選項的方式，其實很簡單，只要透過 `SignInManager.GetExternalAuthenticationSchemesAsync()` 的方式就可以取得有開啟的選項
+
+```csharp
+@using stream_tools.Models
+@inject SignInManager<ApplicationUser> SignInManager
+<form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+  <div>
+    <p>
+      @{
+        var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+      }
+
+      @foreach (var provider in loginProviders)
+      {
+        <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+      }
+    </p>
+  </div>
+</form>
+
+```
+
+* `loginProviders` 清單內的 provider ，內容如下
+
+  ![](https://i.imgur.com/yhPJD5V.png)
+
+* 所以當按下按鈕時，就會做 Form Post 的動作到 `Account/ExternalLogin` 的 Action
+
+## Controller (重點)
+
+```csharp
+[HttpPost]
+public IActionResult ExternalLogin(string provider, string returnUrl = null)
+{
+  // Request a redirect to the external login provider.
+  var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
+  var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+  return Challenge(properties, provider);
+}
+```
+* 當此 Action 接受到前面頁面 Post 動作時，就會先將登入成功後要轉址的位址轉成 Url 的方式，這裡就會回到 `Account/ExternalLoginCallback` 的地方
+* `signInManager.ConfigureExternalAuthenticationProperties` 再將額外的資訊包成一個 property 後再送給 `Challenge method` 最後續的行為
+* `signInManager` 是一個用來控制使用者登入的 API，文件連結已列在下面的參考文件中
+* `Challenge` 是 ControllerBase 裡的方法之一，會建立出一個 `ChallengeResult` ，ChellengerResult is an [ActionResult](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.actionresult?view=aspnetcore-2.1) that on execution invokes AuthenticationManager.ChallengeAsync.
+* `provider` 的值，就如上圖所顯示的，只是將 name 的值傳進來，而這裡是帶入 `Google` 
+* 當執行後就會跑到Google 登入帳號的畫面，當完成 Google 帳號登入後，就會回到 `Account/ExternalLoginCallback` 的地方
+
+```csharp
+ public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+    {      
+      if (remoteError != null)
+      {
+        ErrorMessage = $"Error from external provider: {remoteError}";
+        return RedirectToAction(nameof(Login));
+      }
+     
+      var info = await _signInManager.GetExternalLoginInfoAsync();
+      if (info == null)
+      {
+        return RedirectToAction(nameof(Login));
+      }
+
+      // Sign in the user with this external login provider if the user already has a login.
+      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+      if (result.Succeeded)
+      {
+        // 使用者帳號已存在，可以直接前往目的地
+        return RedirectToLocal(returnUrl);
+      }
+      if (result.IsLockedOut)
+      {
+        // 使用者帳號被鎖定
+        return RedirectToAction(nameof(Lockout));
+      }
+      else
+      {
+        // If the user does not have an account, then ask the user to create an account.
+        ViewData["ReturnUrl"] = returnUrl;
+        ViewData["LoginProvider"] = info.LoginProvider;
+        var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+        return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+      }
+    }
+```
+
+* 當登入動作完成後回到 `ExternalLoginCallback` Action 時會收到兩個資訊，一個是遠端授權的錯誤訊息，一個是登入成功後要轉址的位置
+* 取得第三方授權請求的附加資訊，可透過 ` var info = await _signInManager.GetExternalLoginInfoAsync();` 的方式取得更多的資訊
+  * 舉例，如果要取得 email，取得方法是 `info.Principal.FindFirstValue(ClaimTypes.Email);`
+  * `ClaimTypes` 的 Enum 還有更多其他的項目可以使用
+* `var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);`
+  * `ExternalLoginSignInAsync` 的方法是當透過外部驗證方式成功後，回到系統內時，執行內部的登入動作，而回傳的結果，可用來判斷該使用者的狀況是否能繼續往下走
+
+# 結論
+
+到這邊可以算是一個完整的第三方驗證的流程，我認為這裡的流程即使改成使用 web api 的方式，應該也是可以做到一樣的效果，這部分等我實作出來後，在分享出來
+
 
 
 # 參考資料
@@ -210,3 +308,9 @@ ASP.NET Core 有提供身分認證的功能，叫做 `Identity`，有提供多�
 * [Introduction to Identity on ASP.NET Core](https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x)
 * [identity-without-entity-framework](https://markjohnson.io/articles/asp-net-core-identity-without-entity-framework/)
 * [ASP.NET Core 中的 Facebook、Google 及外部提供者驗證](https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/social/?view=aspnetcore-2.1)
+* API DOC
+  * [SignInManager API Doc](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.signinmanager-1?view=aspnetcore-2.1)
+  * [ChallengeResult](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.challengeresult?view=aspnetcore-2.1)
+
+
+
