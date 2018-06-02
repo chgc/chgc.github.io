@@ -294,6 +294,30 @@ public IActionResult ExternalLogin(string provider, string returnUrl = null)
 * `var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);`
   * `ExternalLoginSignInAsync` 的方法是當透過外部驗證方式成功後，回到系統內時，執行內部的登入動作，而回傳的結果，可用來判斷該使用者的狀況是否能繼續往下走
 
+# 參數設定
+
+* CallbackPath: 這個參數的值是設定 Google API 在 **重新導向 URI** 的內容，預設是 `/signin-google`，如果想要改變時，可以修改這個設定
+
+  ```csharp
+  services.AddAuthentication().AddGoogle(googleOptions =>
+              {
+              	googleOptions.CallbackPath = new PathString("/someurl-you-want");
+                  ...
+              });
+  ```
+
+* Scope: 在登入 Google 帳號時，我們可以透過 Scope 設定要向登入者取得額外的資訊，設定方式是
+
+  ```
+  services.AddAuthentication().AddGoogle(googleOptions =>
+              {
+              	googleOptions.Scope.Add('..');
+                  ...
+              });
+  ```
+
+  
+
 # 結論
 
 到這邊可以算是一個完整的第三方驗證的流程，我認為這裡的流程即使改成使用 web api 的方式，應該也是可以做到一樣的效果，這部分等我實作出來後，在分享出來
@@ -309,6 +333,7 @@ public IActionResult ExternalLogin(string provider, string returnUrl = null)
 * [identity-without-entity-framework](https://markjohnson.io/articles/asp-net-core-identity-without-entity-framework/)
 * [ASP.NET Core 中的 Facebook、Google 及外部提供者驗證](https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/social/?view=aspnetcore-2.1)
 * API DOC
+  * [Source Code](https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNetCore.Authentication.Google)
   * [SignInManager API Doc](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.signinmanager-1?view=aspnetcore-2.1)
   * [ChallengeResult](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.challengeresult?view=aspnetcore-2.1)
 
