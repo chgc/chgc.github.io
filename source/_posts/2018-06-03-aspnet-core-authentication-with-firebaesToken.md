@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [ASP.NET Core] Identity - Part 2 整合 firebase 的登入驗證服務
+title: '[ASP.NET Core] Identity - Part 2 整合 firebase 的登入驗證服務'
 comments: true
 date: 2018-06-03 22:00:50
 categories: '.NET Core'
