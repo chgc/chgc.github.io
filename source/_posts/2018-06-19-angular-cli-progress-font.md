@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] CLI 進度顯示遇上字體檔的雷 (windows 限定)'
+title: '[Angular] CLI 進度顯示遇上字型的雷 (windows 限定)'
 comments: true
 date: 2018-06-19 23:17:44
 categories: Angular
