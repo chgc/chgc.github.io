@@ -9,7 +9,7 @@ tags:
  - Typescript
 ---
 
-Typescript 2.0 新增了一個功能 `strictNullChecks` ，這是一個避免使用或發生 `null` 的一個規則。在這個選項啟動時， Typescript 會去檢查所有有可能發生 `null` 的程式碼。這樣的嚴謹模式，可以大大的降低一些例外的發生
+Typescript 2.0 新增了一個功能 `strictNullChecks` ，這一功能的主要目的是將 `null` 與 `undefined` 視為不同的型別。在這個選項啟動時， Typescript 會去檢查所有有可能發生 `null` 的程式碼，在下面會看到當開啟時，需要調整的項目有哪些。這樣的嚴謹模式，可以大大的降低一些例外的發生
 
 而 Angular 所使用的 Typescript 版本也是 2.0 以後的版本，爾當然支援這樣的功能，以下我就拿一個手上練習的專案將該功能該起後，所遇到的一些狀況跟解決方式。
 
