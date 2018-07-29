@@ -26,7 +26,7 @@ ng new shell-demo --routing
 當建立完成時，在執行以下的指令來新增 app-shell 的功能
 
 ```
-ng g app-shell --client-project <project name> -universal-project server-app
+ng g app-shell --client-project <project name> --universal-project server-app
 ```
 
 * <project name> 需要換成自己要的專案名稱，已這裡的範例是 shell-demo
