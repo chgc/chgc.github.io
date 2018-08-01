@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[EF6] Oracle with Code First 設定`
+title: '[EF6] Oracle with Code First 設定'
 comments: true
 date: 2018-08-01 15:07:15
 categories: Entity Framework 
