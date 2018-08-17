@@ -3,8 +3,8 @@ layout: post
 title: '[TypeScript] Compiler API 第一次接觸'
 comments: true
 date: 2018-08-17 10:22:51
-categories:TypeScript
-tags: TypeScript
+categories: 'TypeScript'
+tags: 'TypeScript'
 ---
 
 TypeScript 提供了編譯 (compiler) 的 API 出來，可以讓我們用程式的方式建立或是編輯 ts 檔案。但為什麼要了解 TypeScript 的 Compiler API 呢? 主要原因是當在寫 Angular Schematics 時，加減都會碰到編輯 TypeScript 檔案的時候，這時候透過 TS Compiler API 來操作會比較保險一點，但這主題有點大，這一篇文章就稍微了解一下如何入門就好
