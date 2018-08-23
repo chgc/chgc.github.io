@@ -21,7 +21,7 @@ Angular CLI 6 版以後的設定檔大改版，現在終於有時間可以仔細
 
 * `newProjectRoot`： 設定新專案產生的路徑位置
 
-* `defaultProject`： CLI 指令預設值型的 project 名稱
+* `defaultProject`： CLI 指令預設執行的 project 名稱
 
 * `projects`：各專案的設定檔設定位置，會在下面章節詳細說明
 
