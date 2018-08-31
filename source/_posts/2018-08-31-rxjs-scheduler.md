@@ -65,7 +65,7 @@ RxJS 裡面的 Scheduler 有幾種，而我們可以透過改變 scheduler 來�
 * `asyncScheduler`：`Macro Task`，與 `setTimeout` 的相同。
 * `animationFrameScheduler`：`paint event` ，根據每一個 frame 做觸發
 
-讓我們直接來看 code 好了
+讓我們直接來看 code 
 
 ```typescript
 import { of, range, interval, asapScheduler, asyncScheduler, animationFrameScheduler, queueScheduler } from 'rxjs';
@@ -146,6 +146,16 @@ console.log('after subscription')
 
 整個執行順序大改變，十分有趣的結果。根據結果可以推測，當加上 delay 時，全部的 scheduler 都會轉變成 `asyncScheduler`的行為模式。
 
+其實從原始碼的地方可以看到，`AsapScheduler` 與 `QueueScheduler` 都是繼承 `AsyncScheduler` 來的，`AsapScheduler` 與 `AsyncScheduler` 的差異點在於 `flush` 的實作內容而已
+
+```typescript
+export class AsapScheduler extends AsyncScheduler {...}
+export class QueueScheduler extends AsyncScheduler {}
+export class AsyncScheduler extends Scheduler {...}
+```
+
+而真正觸發的動作都是一樣，在下面的小結會更進一步的探討 scheduler 的執行步驟。
+
 # Dive In
 
 底層 scheduler 到底是怎麼運作的，scheduler 會包含 4 個元素
@@ -196,6 +206,8 @@ sub.unsubscribe();
 
 * [observeOn](https://rxjs-dev.firebaseapp.com/api/operators/observeOn)
 * [subscribeOn](https://rxjs-dev.firebaseapp.com/api/operators/subscribeOn)
+* [AsyncScheduler.ts](https://github.com/ReactiveX/rxjs/blob/6.2.2/src/internal/scheduler/AsyncScheduler.ts)
+* [AsapScheduler.ts](https://github.com/ReactiveX/rxjs/blob/6.2.2/src/internal/scheduler/AsapScheduler.ts)
 
 
 
