@@ -149,7 +149,7 @@ Angular Material Table 可以操作的 selector 大概有以下這些
 
 * 繼承 `CdkHeaderRowDef`
 * columns：要顯示的欄位名稱
-* 'sticky': 是否要固定表頭
+* `sticky`:  是否要固定表頭
 
 # matRowDef
 
@@ -157,7 +157,7 @@ Angular Material Table 可以操作的 selector 大概有以下這些
 
 - columns：要顯示的欄位名稱
 
-- 'when': 設定要顯示 row 的條件
+- `when` : 設定要顯示 row 的條件
 
   - 如果 `multiTemplateDataRows` 為 false, `matRowDef` 只能有一個沒有設定 `when`
 
