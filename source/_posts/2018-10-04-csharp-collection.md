@@ -13,6 +13,18 @@ C# 的集合種類有很多種，每一種集合都有不同的特性，趁著�
 
 # 集合的種類
 
+## System.Collections 
+
+因為不指定型別，所以都會以 `Object` 的類型儲存，常用的類別有
+
+| 類別      | 描述                                                         |
+| --------- | ------------------------------------------------------------ |
+| ArrayList | 會視需要動態增加大小的物件陣列。(對應 List)                  |
+| Hashtable | 根據索引鍵的雜湊程式碼，所整理的索引鍵/值組集合 (對應 Dictionary) |
+| Queue     | 具有先進先出(FIFO)特性的清單                                 |
+| Stack     | 具有先進後出(LIFO)特性的清單                                 |
+
+
 ## System.Collections.Generic
 
 在這一個命名空間下的集合都屬泛型集合，常見的有
@@ -29,16 +41,6 @@ C# 的集合種類有很多種，每一種集合都有不同的特性，趁著�
 
 針對多執行緒情境所設計的集合，包含 `BlockingCollection<T>` 、`ConcurrentDictionary<TKey, TValue>` 、`ConcurrentQueue<T>` 和 `ConcurrentStack<T>`
 
-## System.Collections 
-
-因為不指定型別，所以都會以 `Object` 的類型儲存，常用的類別有
-
-| 類別      | 描述                                                         |
-| --------- | ------------------------------------------------------------ |
-| ArrayList | 會視需要動態增加大小的物件陣列。(對應 List)                  |
-| Hashtable | 根據索引鍵的雜湊程式碼，所整理的索引鍵/值組集合 (對應 Dictionary) |
-| Queue     | 具有先進先出(FIFO)特性的清單                                 |
-| Stack     | 具有先進後出(LIFO)特性的清單                                 |
 
 ## System.Collections.Immutable
 
