@@ -63,7 +63,7 @@ Angular 內有提供針對 Component 本體樣式描述的特別語法，分別�
 
 # 套用順序
 
-`:host` 與 `:host-context` 的套用順序，會依 css style 內所寫的順序，最後面所設定的會優先套用。
+`:host` 與 `:host-context` 的樣式會依 css 優先權規則套用。
 
 
 
