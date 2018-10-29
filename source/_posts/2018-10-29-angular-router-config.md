@@ -183,7 +183,15 @@ scrollOffset?: [number, number]|(() => [number, number]);
 * deferred 預設值，當路由事件跑完後才會更新瀏覽器網址
 * `eager` 在事前開始前更新瀏覽器網址
 
+## malformedUriErrorHandler
 
+當網址瀏覽發生錯誤時，可以自訂 redirect 網址
+
+```typescript
+ malformedUriErrorHandler:
+      // redirects the user to `/invalid-uri`
+      (error: URIError, urlSerializer: UrlSerializer, url: string) => urlSerializer.parse('/invalid-uri')
+```
 
 # 亮點設定
 
@@ -196,4 +204,7 @@ scrollOffset?: [number, number]|(() => [number, number]);
 
 # 參考資料
 
-範例程式碼: https://stackblitz.com/edit/angular-router-option
+* [範例程式碼](https://stackblitz.com/edit/angular-router-option)
+* [Angular Source Code](https://github.com/angular/angular/blob/master/packages/router/src/router_module.ts)
+
+* [What's new in Angular 6.1?](https://blog.ninja-squad.com/2018/07/26/what-is-new-angular-6.1/)
