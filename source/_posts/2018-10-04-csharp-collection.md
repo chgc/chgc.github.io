@@ -31,11 +31,11 @@ C# 的集合種類有很多種，每一種集合都有不同的特性，趁著�
 
 | 類別                     | 描述                                       |
 | ------------------------ | ------------------------------------------ |
-| Dictionary<TKey, TValue> | KeyValue Pair 集合                         |
-| List<T>                  | 依照索引存取的物件清單，可搜尋、排序、修改 |
-| Queue<T>                 | 具有先進先出(FIFO)特性的清單               |
-| SortedList<TKey, TValue> | 根據 Key 值排序的 KeyValue 集合            |
-| Stack<T>                 | 具有先進後出(LIFO)特性的清單               |
+| `Dictionary<TKey, TValue>` | KeyValue Pair 集合                         |
+| `List<T>`                  | 依照索引存取的物件清單，可搜尋、排序、修改 |
+| `Queue<T>`               | 具有先進先出(FIFO)特性的清單               |
+| `SortedList<TKey, TValue>` | 根據 Key 值排序的 KeyValue 集合            |
+| `Stack<T>`               | 具有先進後出(LIFO)特性的清單               |
 
 ## System.Collections.Concurrent
 
