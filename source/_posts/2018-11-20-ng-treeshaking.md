@@ -3,6 +3,8 @@ layout: post
 title: '[Angular] Tree Shaking 真的有作用嗎?'
 comments: true
 date: 2018-11-20 13:53:16
+typora-root-url: 2018-11-20-ng-treeshaking
+typora-copy-images-to: 2018-11-20-ng-treeshaking
 categories: Angular
 tags: Angular
 ---
@@ -88,11 +90,11 @@ export class AppRoutingModule {}
 
 為了方便辨識 Component 是否有被移出 bundle 檔案，所以在 Component 內都新增一個 name 屬性並給予 Component 名稱的文字值，經過 `ng build --prod` 後，產生了一下的檔案，並檢查了 `4.f4517b1f3405740b1d81.js` 檔案內容 (此為 lazy-loading module)
 
-![1542694311076](2018-11-20-ng-treeshaking/1542694311076.png)
+![1542694311076](1542694311076.png)
 
 `4.f4517b1f3405740b1d81.js` 檔案內並沒有包含 `DashComponent` 的文字
 
-![1542694407358](2018-11-20-ng-treeshaking/1542694407358.png)
+![1542694407358](1542694407358.png)
 
 這裡沒有看到 `DashComponent` 的原因是因為在 `Page1Module` 裡並沒有使用到 `DashComponent` 所以即使在 declartion 的地方有宣告，但仍會被包含到 bundle 檔案內
 
@@ -109,7 +111,7 @@ export class AppRoutingModule {}
 
 再次執行 `ng build --prod`，並檢視輸出內容
 
-![1542694738517](2018-11-20-ng-treeshaking/1542694738517.png)
+![1542694738517](1542694738517.png)
 
 如預期般的沒有被包含進來，因為連 `DashComponent` 都沒有，怎麼可能會有 `TitleComponent`
 
@@ -143,15 +145,15 @@ export class Page1Module {}
 
 檢視 ` 4.461b274d80afee68498a.js` 內容
 
-![1542694930339](2018-11-20-ng-treeshaking/1542694930339.png)
+![1542694930339](1542694930339.png)
 
-![1542694976256](2018-11-20-ng-treeshaking/1542694976256.png)
+![1542694976256](1542694976256.png)
 
 我們可以看到 `TitleComponent` 與 `DashComponent` 都被包含到輸出檔案內，也十分合理。這也表示如果我們將 `<app-title>` 從 `dash.component.html` 中移除，在輸出檔案裡會看不見 `TitleComponent` 地存在的
 
-![1542695151003](2018-11-20-ng-treeshaking/1542695151003.png)
+![1542695151003](1542695151003.png)
 
-![1542695171463](2018-11-20-ng-treeshaking/1542695171463.png)
+![1542695171463](1542695171463.png)
 
 ## 測試項目四
 
@@ -172,11 +174,11 @@ import { SharedModule } from '../shared/shared.module';
 export class Page1Module {}
 ```
 
-![1542695327617](2018-11-20-ng-treeshaking/1542695327617.png)
+![1542695327617](1542695327617.png)
 
 檢視輸出內容時，發現當 Component 註冊到 entryComponents 時，即使沒有任何人使用到該 Component，仍會被輸出
 
-![1542695408610](2018-11-20-ng-treeshaking/1542695408610.png)
+![1542695408610](1542695408610.png)
 
 測試項目五
 
@@ -184,11 +186,11 @@ export class Page1Module {}
 
 在這個測試裡，我將 `<app-title>` 同時在 `app.component.html` 與 `dash.component.html`  都有引用，根據輸出檔案的內容，只能在 `main.4a9a348ca69cdb67065f.js` 檔案內找到 `TitleComponent`
 
-![1542695635457](2018-11-20-ng-treeshaking/1542695635457.png)
+![1542695635457](1542695635457.png)
 
-![1542695691873](2018-11-20-ng-treeshaking/1542695691873.png)
+![1542695691873](1542695691873.png)
 
-![1542695715510](2018-11-20-ng-treeshaking/1542695715510.png)
+![1542695715510](1542695715510.png)
 
 ## 測試項目六
 
@@ -210,11 +212,11 @@ export class DataService {
 
 首先不在任何的 component 內注入 DataService，觀察輸出後的結果
 
-![1542696035595](2018-11-20-ng-treeshaking/1542696035595.png)
+![1542696035595](1542696035595.png)
 
-![1542696068072](2018-11-20-ng-treeshaking/1542696068072.png)
+![1542696068072](1542696068072.png)
 
-![1542696095017](2018-11-20-ng-treeshaking/1542696095017.png)
+![1542696095017](1542696095017.png)
 
 在這兩個檔案內都找不到 `DataService` 的影子，看起來真的被排除了。
 
@@ -241,11 +243,11 @@ export class DashComponent implements OnInit {
 }
 ```
 
-![1542696529718](2018-11-20-ng-treeshaking/1542696529718.png)
+![1542696529718](1542696529718.png)
 
-![1542696555362](2018-11-20-ng-treeshaking/1542696555362.png)
+![1542696555362](1542696555362.png)
 
-![1542696573709](2018-11-20-ng-treeshaking/1542696573709.png)
+![1542696573709](1542696573709.png)
 
 `DataService` 會被註冊在 Lazy-loading Module 裡。
 
@@ -255,15 +257,15 @@ export class DashComponent implements OnInit {
 
 如果在兩個不同的 lazy-loading 內都有使用到 `DataService` 時， DataService 會出現在哪裡呢? 答案是會出現在 `common` 裡
 
-![1542697090255](2018-11-20-ng-treeshaking/1542697090255.png)
+![1542697090255](1542697090255.png)
 
-![1542697114967](2018-11-20-ng-treeshaking/1542697114967.png)
+![1542697114967](1542697114967.png)
 
 可是當在 `app.component.ts` 注入 `DataService` 時，`DataService` 又會回到 `main` 的檔案中
 
-![1542697301193](2018-11-20-ng-treeshaking/1542697301193.png)
+![1542697301193](1542697301193.png)
 
-![1542697327260](2018-11-20-ng-treeshaking/1542697327260.png)
+![1542697327260](1542697327260.png)
 
 ## 測試項目九
 
@@ -301,9 +303,9 @@ export class DataService {
 
 建置輸出結果可以看出，不論是否有被使用，都會被輸出
 
-![1542697487067](2018-11-20-ng-treeshaking/1542697487067.png)
+![1542697487067](1542697487067.png)
 
-![1542697517027](2018-11-20-ng-treeshaking/1542697517027.png)
+![1542697517027](1542697517027.png)
 
 ## 測試項目十
 
@@ -335,9 +337,9 @@ export class AppComponent {
 
 建置後的結果為
 
-![1542698639343](2018-11-20-ng-treeshaking/1542698639343.png)
+![1542698639343](1542698639343.png)
 
-![1542698676495](2018-11-20-ng-treeshaking/1542698676495.png)
+![1542698676495](1542698676495.png)
 
 最終的輸出結果十分有趣，直接將 function 轉換到 Angular 內部了
 
