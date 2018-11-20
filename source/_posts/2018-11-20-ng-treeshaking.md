@@ -180,7 +180,7 @@ export class Page1Module {}
 
 ![1542695408610](1542695408610.png)
 
-測試項目五
+## 測試項目五
 
 當 `SharedModule` 內的 Component 在不同的 Module 中都被使用到，該 component 程式碼會輸出成幾份? 答案: 一份
 
@@ -220,7 +220,7 @@ export class DataService {
 
 在這兩個檔案內都找不到 `DataService` 的影子，看起來真的被排除了。
 
-測試項目七
+## 測試項目七
 
 這帶來另外一下一個問題，如果將 `DataSerivce` 在 `Page1Module` 時，`DataService` 會在哪裡出現呢?
 
