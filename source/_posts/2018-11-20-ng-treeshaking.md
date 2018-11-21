@@ -96,7 +96,7 @@ export class AppRoutingModule {}
 
 ![1542694407358](1542694407358.png)
 
-這裡沒有看到 `DashComponent` 的原因是因為在 `Page1Module` 裡並沒有使用到 `DashComponent` 所以即使在 declartion 的地方有宣告，但仍會被包含到 bundle 檔案內
+這裡沒有看到 `DashComponent` 的原因是因為在 `Page1Module` 裡並沒有使用到 `DashComponent` 所以即使在 declartion 的地方有宣告，仍不會被包含到 bundle 檔案內
 
 ## 測試項目二
 
