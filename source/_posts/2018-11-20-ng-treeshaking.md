@@ -192,6 +192,14 @@ export class Page1Module {}
 
 ![1542695715510](1542695715510.png)
 
+(2018/11/21 Updated) 有朋友在留言提到，如果是在兩個 lazy-loading module 裡使用 sharedModule 的 component 時 (沒有在 app.component.html 內使用到)，會被輸出至 common 的 bundle 檔案中，當然有圖有真相
+
+![1542761970966](1542761970966.png)
+
+![1542762028166](1542762028166.png)
+
+
+
 ## 測試項目六
 
 Service 新的註冊方式 `provideIn` 是否真的能被 tree-shake 掉呢?
@@ -345,7 +353,7 @@ export class AppComponent {
 
 # 結論
 
-這一篇文章所整理的結果，在效能調整上十分重要，我們知道 main.js 檔案算是一開始要載入的檔案，為了減少 main.js 檔案的大小，service 的註冊與使用就很小心，因為一個不小心就會增加 main.js 的檔案大小。
+這一篇文章所整理的結果，在效能調整上十分重要，我們知道 main.js 檔案算是一開始要載入的檔案，為了減少 main.js 檔案的大小，service 的註冊與使用就很小心，因為一個不小心就會增加 main.js 的檔案大小，同樣的在 app.component.html 內使用其他 component 時，也會造成 main.js 檔案變大。
 
 另外，我們也不用多擔心 sharedModule 過多的載入會造成檔案肥大，因為如果真的沒有使用到，是不會被輸出的，可以安心使用
 
