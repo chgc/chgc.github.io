@@ -96,7 +96,7 @@ export class AppRoutingModule {}
 
 ![1542694407358](1542694407358.png)
 
-這裡沒有看到 `DashComponent` 的原因是因為在 `Page1Module` 裡並沒有使用到 `DashComponent` 所以即使在 declartion 的地方有宣告，仍不會被包含到 bundle 檔案內
+這裡沒有看到 `DashComponent` 的原因是因為在 `Page1Module` 裡並沒有使用到 `DashComponent` 所以即使在 declarations 有宣告，程式碼仍不會被包含到 bundle 檔案內
 
 ## 測試項目二
 
@@ -155,6 +155,8 @@ export class Page1Module {}
 
 ![1542695171463](1542695171463.png)
 
+或許有人會很好奇，為什麼只要透過路由設定檔所定義的 Component，即使沒有在任何 template 使用，仍會被輸出到檔案中，這是因為路由設定的 component (routed entry component) 是另外一種定義成 entryComponent  的方法。([官方文件](https://angular.io/guide/entry-components#a-routed-entry-component))
+
 ## 測試項目四
 
 在這個測試項目中，我們將路由設定檔拿掉，但將 `DashComponent` 註冊在 `entryComponent` 的地方，來觀察一下結果
@@ -179,6 +181,8 @@ export class Page1Module {}
 檢視輸出內容時，發現當 Component 註冊到 entryComponents 時，即使沒有任何人使用到該 Component，仍會被輸出
 
 ![1542695408610](1542695408610.png)
+
+綜合測試項目一的結果與本項目的測試結果，我們可以發現 Component 註冊在 declarations 與 entryComponents 的差異，也可以驗證[官方文件](https://angular.io/guide/entry-components#entrycomponents-and-the-compiler)的描述
 
 ## 測試項目五
 
