@@ -31,7 +31,7 @@ ng add angular-playground
 
 
 
-![1545486266544](/1545486266544.png)
+![1545486266544](1545486266544.png)
 
 * `angular-playground.json` 為 Angular playground 的設定檔案
 
@@ -99,7 +99,7 @@ ng add angular-playground
 
 當這些都建立完成後，就可以第一次 playground 的啟動 `npm run playground` ，執行指令後，將會做 Angular 專案的建置並啟動一個 web server，且將 port 開在 4201，所以可以打開瀏覽器並輸入 `http://localhost:4201` 就可以看到 playground 的頁面了
 
-![1545486631103](/1545486631103.png)
+![1545486631103](1545486631103.png)
 
 畫面上有寫了一些基本的操作指令
 
@@ -166,7 +166,7 @@ export default sandboxOf(HelloWorldComponent)
 
 * 執行 `npm run playground`
 
-  ![1545488873488](/1545488873488.png)
+  ![1545488873488](1545488873488.png)
 
   ```typescript
   import { sandboxOf } from 'angular-playground';
@@ -190,7 +190,7 @@ export default sandboxOf(HelloWorldComponent)
 
   當設定兩組場景時，命令視窗的選擇就可以看到這兩個場景，之後就可以透過 `↑`  /  `↓`  來選擇
 
-  ![1545491052080](/1545491052080.png)
+  ![1545491052080](1545491052080.png)
 
 
 
