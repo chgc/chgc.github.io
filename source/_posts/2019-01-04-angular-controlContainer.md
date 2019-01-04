@@ -114,10 +114,13 @@ export const modelGroupProvider: any = {
 
 @Directive({selector: '[ngModelGroup]', providers: [modelGroupProvider], exportAs: 'ngModelGroup'})
 export class NgModelGroup extends AbstractFormGroupDirective implements OnInit, OnDestroy {
+     constructor(
+      @Host() @SkipSelf() parent: ControlContainer,
+      @Optional() @Self() @Inject(NG_VALIDATORS) validators: any[],
 ...
 ```
 
-根據原始碼，我們需要提供 `ControlContainer`，但這又要從那裡來呢? 當然是從上層的 `NgForm` 提供，所以需要在 `app-address.component.ts` 內加入這一行
+根據原始碼，我們需要提供 `ControlContainer`，但這又要從那裡來呢? 當然是從上層 (Host) 的 `NgForm` 提供，所以需要在 `app-address.component.ts` 內加入這一行
 
 ```typescript
 @Component({
