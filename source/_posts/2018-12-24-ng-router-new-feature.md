@@ -66,7 +66,7 @@ const routes: Route[] = [
 ];
 ```
 
-* `runGuardsAndResolvers: 'alwyas'` 可以與 RouterModule 的 ` onSameUrlNavigation: 'reload'` 搭配使用，即可做到同一網址瀏覽可以重跑 `Guards` 與 `Resolvers` 的動作
+* `runGuardsAndResolvers: 'always'` 可以與 RouterModule 的 ` onSameUrlNavigation: 'reload'` 搭配使用，即可做到同一網址瀏覽可以重跑 `Guards` 與 `Resolvers` 的動作
 * 版本 7.1 新增 `pathParamsChange` 模式
 * 版本 7.2 新增 `pathParamsOrQueryParamsChange` 模式
 * 版本 7.2 新增 `predicate function` 模式: 可以自訂觸發規則
