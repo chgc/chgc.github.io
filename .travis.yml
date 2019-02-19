@@ -1,26 +1,26 @@
 language: node_js
 node_js:
-  - "8"
+  - '10'
 sudo: false
 branches:
   only:
-  - source
+    - source
 before_install:
-- export TZ=Asia/Taipei
-- npm install -g npm@next
-- npm install -g hexo-cli
+  - export TZ=Asia/Taipei
+  - npm install -g npm@next
+  - npm install -g hexo-cli
 before_script:
-- git config --global user.name 'Kevin Yang'
-- git config --global user.email 'chgc_kevin@hotmail.com'
-- sed -i'' "s~git@github.com:chgc/chgc.github.io.git~https://${DEPLOY_TOKEN}@github.com/chgc/chgc.github.io.git~"
-  _config.yml
+  - git config --global user.name 'Kevin Yang'
+  - git config --global user.email 'chgc_kevin@hotmail.com'
+  - sed -i'' "s~git@github.com:chgc/chgc.github.io.git~https://${DEPLOY_TOKEN}@github.com/chgc/chgc.github.io.git~"
+    _config.yml
 install:
-- npm i
+  - npm i
 script:
-- hexo clean
-- hexo generate
+  - hexo clean
+  - hexo generate
 after_success:
-- hexo deploy
+  - hexo deploy
 cache:
   directories:
-  - node_modules   
+    - node_modules
