@@ -13,7 +13,7 @@ RxJS  裡面有許多 Operators 或是建立 Observable  的方法，而這篇�
 
 <!-- more -->
 
-根據官方文件的說明，Usuing 是
+根據官方文件的說明，`Using` 是
 
 > Creates an Observable that uses a resource which will be disposed at the same time as the Observable.
 
