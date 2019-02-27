@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] 如何取的所處的上層 Component ?'
+title: '[Angular] 如何取得所處上層的 Component 元件 ?'
 comments: true
 typora-root-url: '2019-02-27-ng-get-parent-component/'
 typora-copy-images-to: '2019-02-27-ng-get-parent-component/'
