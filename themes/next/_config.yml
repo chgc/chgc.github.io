@@ -231,7 +231,7 @@ post_copyright:
 # ---------------------------------------------------------------
 
 # Reduce padding / margin indents on devices with narrow width.
-mobile_layout_economy: false
+mobile_layout_economy: true
 
 # Android Chrome header panel color ($black-deep).
 android_chrome_color: '#222'
@@ -529,7 +529,7 @@ tabs:
 #! ---------------------------------------------------------------
 
 # Motion
-use_motion: true
+use_motion: false
 
 # Fancybox
 fancybox: true
@@ -581,7 +581,7 @@ vendors:
   _internal: lib
 
   # Internal version: 2.1.3
-  jquery:
+  jquery: https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js
 
   # Internal version: 2.1.5
   # See: http://fancyapps.com/fancybox/
@@ -598,19 +598,19 @@ vendors:
 
   # Internal version: 1.2.1
   # See: http://VelocityJS.org
-  velocity:
+  velocity: //cdn.jsdelivr.net/velocity/1.3.1/velocity.min.js
 
   # Internal version: 1.2.1
   # See: http://VelocityJS.org
-  velocity_ui:
+  velocity_ui: //cdn.jsdelivr.net/velocity/1.3.1/velocity.ui.min.js
 
   # Internal version: 0.7.9
   # See: https://faisalman.github.io/ua-parser-js/
-  ua_parser:
+  ua_parser: //cdn.bootcss.com/UAParser.js/0.7.12/ua-parser.min.js
 
   # Internal version: 4.6.2
   # See: http://fontawesome.io/
-  fontawesome:
+  fontawesome: //cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css
 
   # Internal version: 1
   # https://www.algolia.com
