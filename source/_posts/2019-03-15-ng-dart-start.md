@@ -156,15 +156,15 @@ dev_dependencies:
 
 6. 如果能看到畫面，恭喜，Angular Dart 的開發環境也設定完成了
 
-# 部屬
+# 部署
 
-如果想要將 Angular Dart 輸出成可以部屬的狀態時，又該如何處理，這部分也可以透過指令來完成
+如果想要將 Angular Dart 輸出成可以部署的狀態時，又該如何處理，這部分也可以透過指令來完成
 
 > webdev build --no-release --output web:build
 
 * --no-release : 會輸出成開發狀態的檔案， 檔案數量會很多且檔案很大。
 
-如果要輸出成 production mode 時，就將 `--no-release` 的參數拿掉即可，當拿掉參數時， webdev build 將使用 dart2js  的方式建置專案。如果想要額外設定 `dart2js` (dart2js 有自己的參數可以設定)，需要額外新增 `build.yaml` 檔案，並將相關設定檔案設定在裡面
+要輸出成 production mode ，將 `--no-release` 的參數拿掉即可，當拿掉參數時， webdev build 將使用 dart2js  的方式建置專案。如果想要額外設定 `dart2js` (dart2js 有自己的參數可以設定)，需要額外新增 `build.yaml` 檔案，並將相關設定檔案設定在裡面
 
 ```yaml
 targets:
