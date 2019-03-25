@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] Angular Dart 版本起手式'
+title: '[AngularDart] Angular Dart 版本起手式'
 comments: true
 typora-root-url: 2019-03-15-ng-dart-start/
 typora-copy-images-to: 2019-03-15-ng-dart-start/
@@ -130,7 +130,7 @@ dev_dependencies:
 
    目前這階段，編輯器會提示第二行的 import  找不到，這問題之後會被修正掉
 
-   * `import 'package:<pubspec 內設定的 name 值>/<檔案名稱>'
+   * `import 'package:<pubspec 內設定的 name 值>/<檔案名稱>'`
    * 預設會指到 `lib` 資料夾
 
 3. 新增 `lib` 資料夾並建立 `app_component.dart` 檔案
