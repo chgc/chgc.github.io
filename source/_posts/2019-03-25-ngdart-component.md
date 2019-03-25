@@ -79,18 +79,15 @@ AngularDart 版本的 Dependency Injection，基本運作原理與 Angular 版�
 | Use-Class Provider | [{provide: Logger, useClass: BetterLogger}]                  | ClassProvider(Logger, useClass: BetterLogger)    |
 | Exisiting Provider | [{provide, useExisting: BetterLogger}]                       | ExistingProvider(Logger, BetterLogger)           |
 | Value Provider     | [{ provide: Logger, useValue: silentLogger }]                | ValueProvider(Logger, silentLogger)              |
-| Factory Provider   | { provide: HeroService,useFactory: heroServiceFactory,
-deps: [Logger, UserService]
-} | FactoryProvider(HeroService, heroServiceFactory) |
+| Factory Provider   | { provide: HeroService,useFactory: heroServiceFactory, deps: [Logger, UserService]} | FactoryProvider(HeroService, heroServiceFactory) |
 
 ## Token 使用法
 
-| 使用方式 | Angular                                                      | AngularDart                                                  |
-| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Token    | export const APP_CONFIG = new InjectionToken<AppConfig>('app.config'); | const appTitleToken = OpaqueToken<String>('app.title');      |
-| 註冊     | [{ provide: APP_CONFIG, useValue: 'app config content'}]     | ValueProvider.forToken(appTitleToken, appTitle)              |
-| 取得     | constructor(@Inject(APP_CONFIG) config: AppConfig) { <br />this.title = config.title;
-} | AppComponent(@Inject(appTitleToken) this.title);<br /><br />AppComponent(@appTitleToken this.title); |
+| 使用方式 | Angular                                                      | AngularDart                                             |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------- |
+| Token    | export const APP_CONFIG = new InjectionToken<AppConfig>('app.config'); | const appTitleToken = OpaqueToken<String>('app.title'); |
+| 註冊     | [{ provide: APP_CONFIG, useValue: 'app config content'}]     | ValueProvider.forToken(appTitleToken, appTitle)         |
+| 取得     | constructor(@Inject(APP_CONFIG) config: AppConfig) { this.title = config.title; } | AppComponent(@Inject(appTitleToken) this.title); AppComponent(@appTitleToken this.title); |
 
 
 
