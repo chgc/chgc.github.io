@@ -9,10 +9,6 @@ categories: Angular
 tags: Angular
 ---
 
-AngularDart 需要呼叫 API 
-
-AngularDart 需要呼叫 API 
-
 當需要呼叫 API  時，該如何處理? Angular  有 HttpClient 可以使用，那 AngularDart 呢? 好家在的是 Dart 有 `http` 的 library 可以使用，只要在 `pubspec.yaml` 裡面加上 `http: ^0.11.0` 的 package，再調整一下程式碼，就可以呼叫 API 了
 
 <!-- more -->
