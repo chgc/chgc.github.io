@@ -135,22 +135,6 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-或是這樣子寫也是可以的
-
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-	...
-    services.AddMvc(
-        options =>
-        {
-            var policy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
-            options.Filters.Add(new AuthorizeFilter(policy));
-        }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-}    
-```
 
 當修改完成後，重新整理一次網頁，之前的錯誤訊息就會消失了，打開 `Networking` 的地方，就會看到兩次對後端的請求都是正常的
 
