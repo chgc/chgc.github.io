@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] 使用 Windows Authentication 的三兩事'
+title: '[Angular] 使用 Windows 驗證 (Windows Authentication)'
 comments: true
 typora-root-url: 2019-04-11-ng-windows-auth/
 typora-copy-images-to: 2019-04-11-ng-windows-auth/
