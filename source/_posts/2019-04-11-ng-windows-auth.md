@@ -15,7 +15,7 @@ Angular 使用 Windows Authentication，聽起來沒什麼，但是加上 CORS �
 
 <!-- more -->
 
-Angular 的 HttpClient 在發送請求時，如果在同一個網址下 (同一個網站)，自然會付上 cookie，但遇到不同站點下時又想要帶 cookie 時，該怎麼處理，這時候就必須將 `withCredentials` 開啟，這是 `XMLHttpRequest` 內的屬性，用途是指示了是否該使用類似cookies,authorization headers(頭部授權)或者TLS客戶端證書這一類資格證書來創建一個跨站點訪問控制（cross-site `Access-Control`）請求。這裡是基本用法，當然如果要全域套用時，就會寫成 Http interceptor
+Angular 的 HttpClient 在發送請求時，如果在同一個網址下 (同一個網站)，自然會付上 cookie，但遇到不同站點下時又想要帶 cookie 時，該怎麼處理，這時候就必須將 `withCredentials` 開啟，這是 `XMLHttpRequest` 內建屬性，用途為判斷是否該使用類似 cookies, authorization headers 或者 TLS 客戶端認證這一類資格證書來建立一個跨站點訪問控制（cross-site `Access-Control`）請求。這裡是基本用法，當然如果要全域套用時，就會寫成 Http interceptor
 
 ```typescript
 this.http.get('https://localhost:44369/api/values', {
