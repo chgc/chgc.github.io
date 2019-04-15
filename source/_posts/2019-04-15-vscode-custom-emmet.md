@@ -13,7 +13,7 @@ tags: VSCode
 
 <!-- more -->
 
-首先，先根據[這裡](https://code.visualstudio.com/docs/editor/emmet#_using-custom-emmet-snippets)的說明，將自訂的 `snippet.json` 檔案所處的資料夾位置，設定到 `settings` 的 `emmet.extensionsPath` 的地方
+首先，先根據[這裡](https://code.visualstudio.com/docs/editor/emmet#_using-custom-emmet-snippets)的說明，將自訂 `snippet.json` 檔案所處的資料夾位置，設定到 `settings` 裡 `emmet.extensionsPath` 的地方
 
 ![1555301445272](1555301445272.png)
 
