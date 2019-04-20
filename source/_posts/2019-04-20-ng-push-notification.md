@@ -9,7 +9,7 @@ categories: Angular
 tags: Angular
 ---
 
-自從 Angular 內建 Service Worker package 與 `@angular/pwa` 後，寫 PWA 就變得簡單很多了，但是在 Push Notification 的地方，一直找不到好的教學文章講如何與 firebase clouding message 整合在一起，大多數找到的文章都是直接使用 firebase.js 所提供的方法做操作，這樣子就浪費了內建的 `SwPush` 的功能了，而這篇文章就是講如何將兩者整合再一起
+自從 Angular 內建 Service Worker package 與 `@angular/pwa` 後，寫 PWA 就變得簡單很多了，但是在 Push Notification 的地方，一直找不到好的教學文章講如何與 Firebase Cloud Message 整合在一起，大多數找到的文章都是直接使用 firebase.js 所提供的方法做操作，這樣子就浪費了內建的 `SwPush` 的功能了，而這篇文章就是講如何將兩者整合再一起
 
 <!-- more -->
 
@@ -57,7 +57,7 @@ export class AppModule {
 
 # 設定 push notification
 
-Angular 內建的 `SwPush` 有實作與 Push Notifications 相關的方法，包含註冊訂閱，監聽訊息，處理訊息動作後續的行為等，在本次文章，會先著重於如何將 SwPush 與 Cloud messaging 整合在一起。
+Angular 內建的 `SwPush` 有實作與 Push Notifications 相關的方法，包含註冊訂閱，監聽訊息，處理訊息動作後續的行為等，在本次文章，會先著重於如何將 SwPush 與 Cloud Messaging 整合在一起。
 
 在網路上面可以搜尋到的文章，都是講利用 `firebase.messaging` 的功能來監聽推播訊息，但這樣子就不能使用 `SwPush` 與必須要自己另外寫一個處理推播訊息的 SW，所以接下的程式碼，就是讓 firebase.messaging 的後續動作，交給 SwPush 來處理，先看程式碼
 
@@ -183,4 +183,4 @@ export class AppComponent implements OnInit {
 
 # 總結
 
-網頁的 Push Notifications 可以做到很多事情，這留在後面再來研究，但至少利用 `@angular/pwa` 加上 `SwPush` 與 `firebase cloud messaging` 的串接，可以少寫很多程式碼了。在此分享給各位
+網頁的 Push Notifications 可以做到很多事情，這留在後面再來研究，但至少利用 `@angular/pwa` 加上 `SwPush` 與 `Firebase Cloud Messaging` 的串接，可以少寫很多程式碼了。在此分享給各位
