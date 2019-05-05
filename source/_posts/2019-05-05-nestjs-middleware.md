@@ -13,9 +13,9 @@ tags:
 
 什麼是 `Middleware`? `Middleware` 是介於 Client 端與後端路由中間的一層或是多層 Function，而該 Functions 能存取 `Request` 與 `Request` 資訊，也可以透過 `next()` 來控制流程。
 
-![Middlewares_1](Middlewares_1.png)
-
 <!-- more -->
+
+![Middlewares_1](Middlewares_1.png)
 
 `NestJS` 裡的 `Middleware` 基本概念與 `express` 的 `Middleware` 相同，所以相關的資訊也可以參考 [express middleware](http://expressjs.com/en/guide/using-middleware.html)。而以下的幾件事情是可以透過 `Middleware` 完成的
 
