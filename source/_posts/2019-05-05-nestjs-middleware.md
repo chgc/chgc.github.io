@@ -132,8 +132,9 @@ export class CheckMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: () => void) {
     if (req.query.name === 'Kevin') {
       res.status(HttpStatus.OK).send('哈，你被攔截了');
-    }
-    next();
+    }else{
+      next();   
+    }    
   }
 }
 ```
