@@ -16,7 +16,7 @@ tags:
 <!-- more -->
 
 根據官網的圖，`Pipe` 是落在這一個象限內。
-![Pipe_1](/Pipe_1.png)
+![Pipe_1](Pipe_1.png)
 
 而常見的使用情境有
 
