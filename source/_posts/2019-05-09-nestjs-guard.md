@@ -5,8 +5,10 @@ comments: true
 typora-root-url: 2019-05-09-nestjs-guard/
 typora-copy-images-to: 2019-05-09-nestjs-guard/
 date: 2019-05-09 00:23:12
-categories:
+categories: Angular
 tags:
+- Angular
+- NestJS
 ---
 
 Angular 有 Router Guard，是用來管制是否能進入 Component 的一道關卡，而在 NestJS 內也有一樣的機制，名字也叫做 Guard
