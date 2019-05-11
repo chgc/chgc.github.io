@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[NestJS] 進入 NestJS 的世界 - 第一天'
+title: '[NestJS] 進入 NestJS 的世界 - Day 01'
 comments: true
 typora-root-url: 2019-05-04-nestjs-getting-start/
 typora-copy-images-to: 2019-05-04-nestjs-getting-start/

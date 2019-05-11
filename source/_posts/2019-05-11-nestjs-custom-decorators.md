@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[NestJS] Custom Decorators'
+title: '[NestJS] Custom Decorators - Day 07'
 comments: true
 typora-root-url: 2019-05-11-nestjs-custom-decorators/
 typora-copy-images-to: 2019-05-11-nestjs-custom-decorators/
