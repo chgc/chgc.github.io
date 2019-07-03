@@ -7,7 +7,7 @@ title: CK's Notepad
 subtitle:
 description:
 author: KevinYang
-language: zh-tw
+language: zh-TW
 timezone: Asia/Taipei
 
 # URL
@@ -60,11 +60,10 @@ time_format: HH:mm:ss
 per_page: 10
 pagination_dir: page
 
-
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: next-latest
 
 # hexo sitemap网站地图
 sitemap:
@@ -82,7 +81,7 @@ markdown:
     - markdown-it-footnote
     - markdown-it-sup
     - markdown-it-sub
-    - markdown-it-abbr    
+    - markdown-it-abbr
   anchors:
     level: 1
     collisionSuffix: 'v'
@@ -93,17 +92,17 @@ markdown:
 # hexo-generator-amp
 # The following settings is the quick start options.
 generator_amp:
-  templateDir:  amp-template
+  templateDir: amp-template
   assetDistDir: amp-dist
   logo:
-    path:   sample/sample-logo.png
-    width:  600
+    path: sample/sample-logo.png
+    width: 600
     height: 60
   substituteTitleImage:
-    path:   sample/sample-substituteTitleImage.png
-    width:  1024
+    path: sample/sample-substituteTitleImage.png
+    width: 1024
     height: 800
-  warningLog: false   # To display warning, please set true.
+  warningLog: false # To display warning, please set true.
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -115,4 +114,4 @@ search:
   path: search.xml
   field: post
   format: html
-  limit: 10000  
+  limit: 10000
