@@ -5,10 +5,14 @@ sudo: false
 branches:
   only:
     - source
+git:
+  submodules: false
 before_install:
   - export TZ=Asia/Taipei
   - npm install -g npm@next
   - npm install -g hexo-cli
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
 before_script:
   - git config --global user.name 'Kevin Yang'
   - git config --global user.email 'chgc_kevin@hotmail.com'
