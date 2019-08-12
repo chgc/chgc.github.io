@@ -11,11 +11,11 @@ tags:
 - App Service
 ---
 
-部屬網站到 Azure App Service 的方式有很多種，而為了讓部屬的動作能連貫且步驟是最少的，就必須整合到 DevOps 之類的服務。App service 針對部屬也有提供幾個不錯的功能，這一篇文章會先從 `Deployement Center` (部署中心) 開始
+部署網站到 Azure App Service 的方式有很多種，而為了讓部署的動作能連貫且步驟是最少的，就必須整合到 DevOps 之類的服務。App service 針對部署也有提供幾個不錯的功能，這一篇文章會先從 `Deployement Center` (部署中心) 開始
 
 <!-- more -->
 
-Azure App Service 的部屬中心，支援多種版控服務，像是 Azure Repos、GitHub、Bitbucket、Local Git 還有一些檔案服務等，這篇文章，我們使用 GitHub 來作為持續部署的程式來源
+Azure App Service 的部署中心，支援多種版控服務，像是 Azure Repos、GitHub、Bitbucket、Local Git 還有一些檔案服務等，這篇文章，我們使用 GitHub 來作為持續部署的程式來源
 
 # 基本設定操作
 
@@ -25,7 +25,7 @@ Azure App Service 的部屬中心，支援多種版控服務，像是 Azure Repo
 
 3. 建立 Azure App Service
 
-4. 點選 部屬中心 (Deployement Center)
+4. 點選 部署中心 (Deployement Center)
 
    ![1565588656492](1565588656492.png)
 
@@ -59,7 +59,7 @@ Azure App Service 的部屬中心，支援多種版控服務，像是 Azure Repo
 
    4. 如果還沒有看到，重新整理畫面，並重新做一次 Deployment Center 的設定畫面，應可以看到相關資訊了
 
-8. 選擇要部屬的 Repo 來源
+8. 選擇要部署的 Repo 來源
 
    ![1565590741348](1565590741348.png)
 
@@ -71,7 +71,7 @@ Azure App Service 的部屬中心，支援多種版控服務，像是 Azure Repo
 
     ![1565590831627](1565590831627.png)
 
-11. 第一次部屬成功
+11. 第一次部署成功
 
     ![1565590951080](1565590951080.png)
 
@@ -81,9 +81,9 @@ Azure App Service 的部屬中心，支援多種版控服務，像是 Azure Repo
 
 ## 第二次  Commit
 
-嘗試修改一些文字並 commit 到 GitHub 上後，觀察看看部屬中心是否有做到自動建置部屬的動作
+嘗試修改一些文字並 commit 到 GitHub 上後，觀察看看部署中心是否有做到自動建置部署的動作
 
-當 commit push 到 GitHub 上，在部屬中心的頁面上，會發現第二次 Commit 的訊息
+當 commit push 到 GitHub 上，在部署中心的頁面上，會發現第二次 Commit 的訊息
 
 ![1565591206262](1565591206262.png)
 
@@ -97,7 +97,7 @@ Azure App Service 的部屬中心，支援多種版控服務，像是 Azure Repo
 
 # 退版
 
-有時候在 commit 時，發現上的版本有重大問題需要退版時，透過部屬中心可以快速做到退版，以下是操作步驟
+有時候在 commit 時，發現上的版本有重大問題需要退版時，透過部署中心可以快速做到退版，以下是操作步驟
 
 1. 選擇想要退版的 commit 紀錄
 
@@ -115,5 +115,5 @@ Azure App Service 的部屬中心，支援多種版控服務，像是 Azure Repo
 
 # 結論
 
-雖然 GitHub 是很常見好用的程式碼寄放的位置，但如果要跟 Azure App Service 整個的部屬整合更流暢，我相信使用 Azure DevOps 的服務會是最佳選擇
+雖然 GitHub 是很常見好用的程式碼寄放的位置，但如果要跟 Azure App Service 整個的部署整合更流暢，我相信使用 Azure DevOps 的服務會是最佳選擇
 
