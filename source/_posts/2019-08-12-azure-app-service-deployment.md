@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Azure] Deployement Center in App Service'
+title: '[Azure] Deployment Center in App Service'
 comments: true
 typora-root-url: 2019-08-12-azure-app-service-deployment
 typora-copy-images-to: 2019-08-12-azure-app-service-deployment
@@ -11,7 +11,7 @@ tags:
 - App Service
 ---
 
-部署網站到 Azure App Service 的方式有很多種，而為了讓部署的動作能連貫且步驟是最少的，就必須整合到 DevOps 之類的服務。App service 針對部署也有提供幾個不錯的功能，這一篇文章會先從 `Deployement Center` (部署中心) 開始
+部署網站到 Azure App Service 的方式有很多種，而為了讓部署的動作能連貫且步驟是最少的，就必須整合到 DevOps 之類的服務。App service 針對部署也有提供幾個不錯的功能，這一篇文章會先從 `Deployment Center` (部署中心) 開始
 
 <!-- more -->
 
@@ -25,7 +25,7 @@ Azure App Service 的部署中心，支援多種版控服務，像是 Azure Repo
 
 3. 建立 Azure App Service
 
-4. 點選 部署中心 (Deployement Center)
+4. 點選 部署中心 (Deployment Center)
 
    ![1565588656492](1565588656492.png)
 
