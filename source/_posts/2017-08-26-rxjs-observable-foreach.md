@@ -25,7 +25,7 @@ Observable.from([1,2,3]).subscribe(value=> console.log(value));
 
 # forEach
 
-仔細看 Observable 的原始碼，其實還又另外一個函式可以達到跟 `subscribe` 一樣的結果，`forEach` 只接受一個函式，這個函式只負責處理 `next` 階段的行為，且回傳的是一個 Promise<void>，而不是 `subscription`。`forEach` 的原始碼如下
+仔細看 Observable 的原始碼，其實還有另外一個函式可以達到跟 `subscribe` 一樣的結果，`forEach` 只接受一個函式，這個函式只負責處理 `next` 階段的行為，且回傳的是一個 Promise<void>，而不是 `subscription`。`forEach` 的原始碼如下
 
 ```typescript
 forEach(next: (value: T) => void, PromiseCtor?: typeof Promise): Promise<void> {
