@@ -255,7 +255,7 @@ curl -D - <url> -A <user-agent>
 範例
 
 ```
-curl -D - https://2019.angular.tw -D bingbot
+curl -D - https://2019.angular.tw -A bingbot
 ```
 
 
