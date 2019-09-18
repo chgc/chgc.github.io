@@ -98,12 +98,31 @@ it('should clear out meesages array after 3 sec', () => {
 有看到在 `cold` 裡面的文字，那個既是所謂的彈珠圖表示法，以下是符號的說明
 
 * `' '` 空白: 水平空白會被忽略，可用來與其他的彈珠圖對齊使用
+
 * `'-'` frame: 1 個frame 代表一個單位的虛擬時間的流逝，可設定每一個 frame 的時間長度.
+
 * `[0-9]+[ms|s|m]` 時間進行: 可利用數字搭配時間單位來表示一個長時間的虛擬時間的進行，時間單位有 `ms` (milliseconds), `s` (seconds), or `m` (minutes) ，數字與單位中間沒有任何空白 e.g. `a 10ms b`
+
 * `'|'` 完成(complete): 表示一個成功完成的事件，會觸發 `complete() ` 事件.
+
 * `'#'` 錯誤(error): 表示發生錯誤發生，會觸發 `error()` 事件.
+
 * `[a-z0-9]` e.g. `'a'`  任何英文數字符號，代表 next() 時會送出的值.
-* `'()'` 同步群組(sync groupings): 在同一個時間點需要呈現多個事件時，可利用 `()` 的方式包起來，在小括弧內的事件，都是發生在同一個時間點的
+
+* `'()'` 同步群組(sync groupings): 在同一個時間點需要呈現多個事件時，可利用 `()` 的方式包起來，在小括弧內的事件，都是發生在同一個時間點的，這裡要留意的是使用 `()` 的 frame 計算方式，即便 `()` 內的資料是發生在同一個 frame，但問題下一次的資料 frame 卻不是如現實世界的計算方式，而是需要將 `(...)` 的文字總長度計算進去，例如: `(abc).lenght == 5` ，而下一個 emit framer 就是 n+5 開始
+
+  ```typescript
+  testScheduler.run(({ hot, cold, expectObservable }) => {    
+      const expectedMarble = "(abc)(d)e";
+      const before$ = concat(of("a"), of("b"));
+      const fetch$ = cold("-----d--e");
+      const exp = hot("a").pipe(
+        switchMap(() => concat(before$, of("c"), fetch$))
+      );
+      expectObservable(exp).toBe(expectedMarble);
+    });
+  ```
+
 * `'^'` subscription point: (hot 限定)
 
 其他更細節的說明，可以參考下面的參考文件了
@@ -112,5 +131,6 @@ it('should clear out meesages array after 3 sec', () => {
 
 # 參考文件
 
-* [marble-testing](https://github.com/ReactiveX/rxjs/blob/master/doc/marble-testing.md)
+* [marble-testing](https://github.com/ReactiveX/rxjs/blob/master/docs_app/content/guide/testing/marble-testing.md)
 * [angular.io - testing](https://angular.io/guide/testing#component-marble-tests)
+* [demo - index.test.js](https://codesandbox.io/embed/jest-test-g9p9z)
