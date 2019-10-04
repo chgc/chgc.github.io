@@ -77,7 +77,7 @@ Flutter 是 Google 所提出用來開發跨平台的 UI Framework。我這裡會
 
 如果看到這一個畫面，就代表部屬執行成功
 
-![screenshot-1570153683833](screenshot-1570153683833.jpg)
+![screenshot-1570153683833](screenshot-1570153683833-1570154755283.jpg)
 
 可以點右下角的 `+` 看到中間數字的改變
 
