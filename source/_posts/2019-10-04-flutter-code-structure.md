@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Flutter] 專案程式基本架構`
+title: '[Flutter] 專案程式基本架構'
 comments: true
 typora-root-url: 2019-10-04-flutter-code-structure
 typora-copy-images-to: 2019-10-04-flutter-code-structure
