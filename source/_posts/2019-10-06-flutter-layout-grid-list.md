@@ -33,6 +33,22 @@ GridView 有兩種決定每一列能放多少項目的方式
 
 ![1570370406789](1570370406789.png)
 
+## 範例程式
+
+```dart
+Widget _buildGrid() => GridView.extent(
+    maxCrossAxisExtent: 150,
+    padding: const EdgeInsets.all(4),
+    mainAxisSpacing: 4,
+    crossAxisSpacing: 4,
+    children: _buildGridTileList(30));
+
+List<Container> _buildGridTileList(int count) => List.generate(
+    count, (i) => Container(child: Image.asset('images/pic$i.jpg')));
+```
+
+
+
 # ListView
 
 ListView 就很單純是清單列表
@@ -61,6 +77,43 @@ ListView.separated(
 ## Lifecycle
 
 ListView 有一個需要注意的地方是，他並不是所有的清單內的項目都會被建立，只有在顯示範圍內的才會變建立出來，而離開視線範圍的，就會被摧毀，細節說明可以參閱[此文件 的 Child elements' lifecycle section] (https://api.flutter.dev/flutter/widgets/ListView-class.html)
+
+## 範例程式
+
+```dart
+Widget _buildList() => ListView(
+      children: [
+        _tile('CineArts at the Empire', '85 W Portal Ave', Icons.theaters),
+        _tile('The Castro Theater', '429 Castro St', Icons.theaters),
+        _tile('Alamo Drafthouse Cinema', '2550 Mission St', Icons.theaters),
+        _tile('Roxie Theater', '3117 16th St', Icons.theaters),
+        _tile('United Artists Stonestown Twin', '501 Buckingham Way',
+            Icons.theaters),
+        _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
+        Divider(),
+        _tile('Kescaped_code#39;s Kitchen', '757 Monterey Blvd', Icons.restaurant),
+        _tile('Emmyescaped_code#39;s Restaurant', '1923 Ocean Ave', Icons.restaurant),
+        _tile(
+            'Chaiya Thai Restaurant', '272 Claremont Blvd', Icons.restaurant),
+        _tile('La Ciccia', '291 30th St', Icons.restaurant),
+      ],
+    );
+
+ListTile _tile(String title, String subtitle, IconData icon) => ListTile(
+      title: Text(title,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+          )),
+      subtitle: Text(subtitle),
+      leading: Icon(
+        icon,
+        color: Colors.blue[500],
+      ),
+    );
+```
+
+
 
 # 小結
 
