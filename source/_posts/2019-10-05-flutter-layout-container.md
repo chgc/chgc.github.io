@@ -23,7 +23,7 @@ Container 的設定項目有
 
   * Aligment 設定，九宮格 ，topLeft、topCenter、topRight、centerLeft、center、centerRight、bottomLeft、bottomCenter 及 bottomRight
 
-* constraints: 動態計算值後並設定到屬性內
+* constraints: 屬性限制
 
   ```dart
   Container(
