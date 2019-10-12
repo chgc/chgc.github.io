@@ -9,7 +9,7 @@ categories: Flutter
 tags: Flutter
 ---
 
-Flutter 內狀態管理的方法很多種，先從官方包裝好的 `provider` package 先研究起，[pub 網址]( https://pub.dev/packages/provider )
+Flutter 內狀態管理的方法很多種，先從包裝好的 `provider` package 先研究起，[pub 網址]( https://pub.dev/packages/provider )
 
 <!-- more -->
 
