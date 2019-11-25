@@ -286,31 +286,16 @@ func myswitch(v int) {
 ```go
 func myswitch(v int) {
 	switch {
-	case v > 10:
 	case v == 10:
-		fmt.Println("value 大於等於 10")
-	default:
-		fmt.Println("value 小於 10")
-	}
-}
-```
-![image-20191125180945573](image-20191125180945573.png)
-
-```go
-func myswitch(v int) {
-	switch {
-	case v > 10:
-	case v == 10:
-		fmt.Println("value 大於等於 10")
 		fallthrough
+	case v > 10:
+		fmt.Println("數字大於等於 10")
 	default:
-		fmt.Println("value 小於 10")
+		fmt.Println("其他數值")
 	}
 }
-
 ```
-
-![image-20191125180901656](image-20191125180901656.png)
+![image-20191125181816420](image-20191125181816420.png)
 
 
 * `fallthrough` : 執行完此 case 後，繼續往下走 switch case 判斷
