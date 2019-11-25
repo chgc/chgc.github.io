@@ -267,6 +267,71 @@ switch time.Saturday {
 }
 ```
 
+基本 switch case 都會附上 break (預設隱藏)，當然要寫也是可以的，而 case 的條件也可以是 expression，這樣就不局限必須為一個數值之類的，可以是條件、function 的，以下是一些 switch case 不同的寫法
+
+```go
+func myswitch(v int) {
+	switch {
+	case v > 10:
+		fmt.Println("value 大於 10")
+	case v == 10:
+		fmt.Println("value 等於 10")
+	default:
+		fmt.Println("value 小於 10")
+	}
+}
+```
+![image-20191125181044628](image-20191125181044628.png)
+
+```go
+func myswitch(v int) {
+	switch {
+	case v > 10:
+	case v == 10:
+		fmt.Println("value 大於等於 10")
+	default:
+		fmt.Println("value 小於 10")
+	}
+}
+```
+![image-20191125180945573](image-20191125180945573.png)
+
+```go
+func myswitch(v int) {
+	switch {
+	case v > 10:
+	case v == 10:
+		fmt.Println("value 大於等於 10")
+		fallthrough
+	default:
+		fmt.Println("value 小於 10")
+	}
+}
+
+```
+
+![image-20191125180901656](image-20191125180901656.png)
+
+
+* `fallthrough` : 執行完此 case 後，繼續往下走 switch case 判斷
+
+```go
+func myswitch(v int) {
+	switch v {
+	case 0, 1, 2, 3, 4, 5:
+		fmt.Println("介於 0 ~ 5 之間")
+	case 6, 7, 8, 9, 10:
+		fmt.Println("介於 6 ~ 10 之間")
+	default:
+		fmt.Println("其他數值")
+	}
+}
+```
+
+![image-20191125181317946](image-20191125181317946.png)
+
+
+
 ## defer
 
 `defer` 會等到周圍的 function 都執行完成後，再執行
