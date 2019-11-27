@@ -105,7 +105,7 @@ npm i -g yo gulp @pnp/generator-spfx
 
 11. 進入 SharePoint 專案的設定階段，基本上都是依文字說明選擇自己要的設定，但當第二個問題 Enter 下一步後，會停住
 
-     ![img](/SNAGHTML474593cc.PNG) 
+     ![img](SNAGHTML474593cc.PNG) 
 
      這邊理論上會問專案要建立在**目前的資料夾**呢，還是**建立新的資料夾**，不確定為什麼會空白，在多按一次 Enter 就會繼續往下走，而專案會建立在目前所在的資料夾內
 
@@ -208,6 +208,13 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<
   IHelloWorldWebPartProps
 > {
   public render(): void {
+      let ngElement = this.domElement.getElementsByTagName(
+      'app-hello-world-web-part'
+    )[0];
+
+    if (ngElement) {
+      this.domElement.removeChild(ngElement);
+    }
     const baseEl = customElements.get("app-hello-world-web-part");
     const element = new baseEl();
     element.description = this.properties.description;
