@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Go] Go 語言學習筆記 Part 3- Methods'
+title: '[Go] Go 語言學習筆記 Part 4- Methods'
 comments: true
 typora-root-url: 2019-12-02-go-note-4-method
 typora-copy-images-to: 2019-12-02-go-note-4-method
