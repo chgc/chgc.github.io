@@ -9,7 +9,7 @@ categories: Angular
 tags: Angular
 ---
 
-JAMStack 這名詞出來有一段時間了，JavaScript+API+Markdown = Static Site Generator，從早期的 Gatsby，到後起新秀 Hexo、Gridsome 等，但 Angular 卻一直都沒有對應的框架，直到去年年底(2019/12)，由 Aaron Frost、Sander Elias、Jorge Cano、Anderes Villanueva 等人開發出 Scully 後，Angular 正式有了第一套靜態網站產生器了
+JAMStack 這名詞出來有一段時間了，JavaScript+API+Markdown = Static Site Generator，從早期的 Hexo ，到後起新秀 Gatsby、Gridsome 等，但 Angular 卻一直都沒有對應的框架，直到去年年底(2019/12)，由 Aaron Frost、Sander Elias、Jorge Cano、Anderes Villanueva 等人開發出 Scully 後，Angular 正式有了第一套靜態網站產生器了
 
 <!-- more -->
 
