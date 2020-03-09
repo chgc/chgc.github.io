@@ -2,6 +2,8 @@
 layout: post
 title: '如何將 OBS 的畫面送到 ZOOM.US 軟體中?'
 comments: true
+typora-root-url: 2018-05-01-obs-streaming-zoom
+typora-copy-images-to: 2018-05-01-obs-streaming-zoom
 date: 2018-05-01 20:52:58
 categories: 其他
 tags: 其他
@@ -12,6 +14,14 @@ ZOOM 是一套很好用的線上開會工具，透過月租的服務，可享用
 有人問我說，能不能將 OBS 的直播畫面輸出給 ZOOM 使用，因為他想要利用 OBS 的畫面編排功能及背景去背，讓自己的視訊畫面能和桌面融為一體，所以才有這篇文章的產生
 
 <!-- more -->
+
+# 作法更新
+
+(2020/03/09 更新) 跟下面的概念是一樣的，OBS  本身有提供 `Fullscreen Projector(preview)` 的功能，當然這做法需要多顆螢幕，但延遲會相對的少很多，僅供參考。怎麼使用 `Fullscreen Projector` 呢，在預覽視窗上按滑鼠右鍵叫出選單，即可看到此選項，這時候就選擇要投影的螢幕是哪一個。而 Zoom 的部分就分享桌面即可
+
+![image-20200309125227847](image-20200309125227847.png)
+
+![image-20200309125243350](image-20200309125243350.png)
 
 # 前言
 
