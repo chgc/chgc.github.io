@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Blazor] 啟動自動重新整理的功能'
+title: '[Blazor] 自動重新整理 (auto reload)'
 comments: true
 typora-root-url: 2020-04-04-blazor-reload-after-save
 typora-copy-images-to: 2020-04-04-blazor-reload-after-save
