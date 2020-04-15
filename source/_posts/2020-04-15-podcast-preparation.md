@@ -76,7 +76,7 @@ FB 是一個還不錯的地方，除了自己的空間外，還有很多跟 podc
 * 編輯軟體: Audacity
 * 發佈平台: Anchor
 * FB 粉專: [三宅一聲](https://www.facebook.com/3Nerds)
-* 自架網站: [3 Nerds](https:/www.3nerds.tw)
+* 自架網站: [3 Nerds](https://www.3nerds.tw)
 
 # 希望入手的設備清單
 
