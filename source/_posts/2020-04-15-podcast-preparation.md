@@ -83,3 +83,7 @@ FB 是一個還不錯的地方，除了自己的空間外，還有很多跟 podc
 * Rode Caster Pro
 * Rode podcaster
 * Rode podmic
+
+# 參考資料
+
+* [八寶 - 新手上路]([http://blog.baabao.com/search/label/%E6%96%B0%E6%89%8B%E4%B8%8A%E8%B7%AF](http://blog.baabao.com/search/label/新手上路))
