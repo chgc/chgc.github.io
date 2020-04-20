@@ -84,7 +84,7 @@ updateValueAndValidity(opts: {onlySelf?: boolean, emitEvent?: boolean} = {}): vo
 
 * line 2: 取得目前物件的狀態，如果是 `disabled` 的話，則 `status` 將會是 `DISABLED` 不然就是 `VALID`
 
-* line 3: 只有在 `FormGroup` 和 `FormArray` 有實做，根據目前 Group/Array 內子物件的值更新本身的值
+* line 3: 只有在 `FormGroup` 和 `FormArray` 有實做，根據目前 `Group` / `Array` 內子物件的值更新本身的值
 
   ```typescript
     /** @internal */
@@ -103,7 +103,7 @@ updateValueAndValidity(opts: {onlySelf?: boolean, emitEvent?: boolean} = {}): vo
     }
   ```
 
-* line 5 ~ 13: 如果物件狀態是 enabled 才會進行驗證動作，驗證的順序為
+* line 5 ~ 13: 如果物件狀態是 `enabled` 才會進行驗證動作，驗證的順序為
 
   1. 同步驗證先執行，並更新狀態
   2. 如果狀態是 `VALID` 或是 `PENDING` 才會進行非同步驗證
@@ -182,11 +182,11 @@ this.formData.patchValue({
 為什麼呢? 來模擬一下執行的步驟
 
 1. `formGroup.patchValue` : 會根據傳進去的資料依序更新 `firstname` 與 `lastName` formControl 
-2. `firstName FormControl` 更新自身的值，但因為 FormGroup 傳入 onlySelf 為 true，所以不會更新 parent 的值
-3. `lastName FormControl` 更新自身的值，但因為 FormGroup 傳入 onlySelf 為 true，所以不會更新 parent 的值
+2. `firstName FormControl` 更新自身的值，但因為 `FormGroup` 傳入 `onlySelf` 為 `true`，所以不會更新 parent 的值
+3. `lastName FormControl` 更新自身的值，但因為 `FormGroup` 傳入 `onlySelf` 為 `true`，所以不會更新 parent 的值
 4.  `FormGroup` 執行 `updateValueAndValidity`
-5.  根據 children 更新自身的值
-6. 送出 valueChanges event
+5.  根據 `children` 更新自身的值
+6. 送出 `valueChanges event`
 7. 結束
 
 ## 情境 2
@@ -228,15 +228,15 @@ this.formData.patchValue({
 你想對了嗎? 我們來模擬一下執行的步驟
 
 1. `formGroup.patchValue` : 會根據傳進去的資料依序更新 `firstname` 與 `lastName` formControl 
-2. `firstName FormControl` 更新自身的值，但因為 FormGroup 傳入 onlySelf 為 true，所以不會更新 parent 的值
+2. `firstName FormControl` 更新自身的值，但因為 `FormGroup` 傳入 `onlySelf` 為 `true` ，所以不會更新 parent 的值
 3.  過程中去執行更新 `lastName FormControl` 的值 ，參數接為預設值，所以 `emitEvent: true,onlySelf:false`
 4.  觸發 `lastName FormControl` 的 `valueChanges`
 5.  觸發父層的 `updateValueAndValidity`
 6.  `firstName FormControl` 自身 `valueChanges` 流程跑玩
-7. `lastName FormControl` 更新自身的值，但因為 FormGroup 傳入 onlySelf 為 true，所以不會更新 parent 的值
+7. `lastName FormControl` 更新自身的值，但因為 `FormGroup` 傳入 `onlySelf` 為 `true`，所以不會更新父層的值
 8.  `FormGroup` 執行 `updateValueAndValidity`
-9.  根據 children 更新自身的值
-10. 送出 valueChanges event
+9.  根據 `children` 更新自身的值
+10. 送出 `valueChanges event`
 11. 結束
 
 ## 情境 3
