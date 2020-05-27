@@ -74,7 +74,7 @@ worker.onerror = (error)=>{
 ### 接受訊息
 
 ```typescript
-saddEventListener('message', ({ data }) => {
+addEventListener('message', ({ data }) => {
     // code here
 });
 ```
