@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] 幫 moment.js 套件瘦身`
+title: '[Angular] 幫 moment.js 套件瘦身'
 comments: true
 typora-root-url: 2020-07-25-angular-moment-localte-is-too-fat
 typora-copy-images-to: 2020-07-25-angular-moment-localte-is-too-fat
