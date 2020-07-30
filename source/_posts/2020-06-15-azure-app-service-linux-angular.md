@@ -6,7 +6,7 @@ typora-root-url: 2020-06-15-azure-app-service-linux-angular
 typora-copy-images-to: 2020-06-15-azure-app-service-linux-angular
 date: 2020-06-15 19:51:01
 categories: 
-- Angular
+- [Angular,]
 - Azure
 tags:
 - Angular

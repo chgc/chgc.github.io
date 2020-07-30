@@ -6,7 +6,7 @@ typora-root-url: 2020-06-22-azure-keyVault-sign-with-rsa/
 typora-copy-images-to: 2020-06-22-azure-keyVault-sign-with-rsa/
 date: 2020-06-22 21:16:41
 categories: 
-- ".NET Core"
+- [".NET Core",]
 - Azure
 tags: 
 - ".NET Core"
