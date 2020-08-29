@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] 如何寫具有非同步驗證的 Angular 自訂表單物件`
+title: '[Angular] 如何寫具有非同步驗證的 Angular 自訂表單物件'
 comments: true
 typora-root-url: 2020-08-29-angular-custom-form-control-with-async-valiator
 typora-copy-images-to: 2020-08-29-angular-custom-form-control-with-async-valiator
