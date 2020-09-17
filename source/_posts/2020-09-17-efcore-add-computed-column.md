@@ -50,9 +50,9 @@ tags: 'Entity Framework'
 
 # 額外補充
 
-如果想要透過 EF Migration 來新增 Store Procedure 的話，可以這樣子寫
+如果想要透過 EF Migration 來新增 Stored Procedure 的話，可以這樣子寫
 
-1. 將 store procedure 的 SQL 檔案放在某資料夾下，並將 SQL 檔案設定為 `內嵌資源 (EmbeddedResource)`
+1. 將 storeㄎ procedure 的 SQL 檔案放在某資料夾下，並將 SQL 檔案設定為 `內嵌資源 (EmbeddedResource)`
 
 2. 新增一個空的 migration 後加入以下的程式碼
 
