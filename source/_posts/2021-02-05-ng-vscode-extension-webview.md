@@ -126,7 +126,10 @@ tags: Angular
      private readonly builtAppFolder: string;
      private disposables: vscode.Disposable[] = [];
    
-     public static createOrShow(extensionPath: string) {
+     public static createOrShow(
+       extensionPath: string,
+       context: vscode.ExtensionContext
+     ) {
        const column = vscode.window.activeTextEditor
          ? vscode.window.activeTextEditor.viewColumn
          : undefined;
@@ -138,15 +141,20 @@ tags: Angular
        } else {
          WebPanel.currentPanel = new WebPanel(
            extensionPath,
-           column || vscode.ViewColumn.One
+           column || vscode.ViewColumn.One,
+           context
          );
        }
        return WebPanel.currentPanel;
      }
    
-     private constructor(extensionPath: string, column: vscode.ViewColumn) {
+     private constructor(
+       extensionPath: string,
+       column: vscode.ViewColumn,
+       context: vscode.ExtensionContext
+     ) {
        this.extensionPath = extensionPath;
-       this.builtAppFolder = 'dist';
+       this.builtAppFolder = 'dist/cklab';
    
        // Create and show a new webview panel
        this.panel = vscode.window.createWebviewPanel(
@@ -165,7 +173,7 @@ tags: Angular
        );
    
        // Set the webview's initial html content
-       this.panel.webview.html = this._getHtmlForWebview();
+       this.panel.webview.html = this._getHtmlForWebview(context);
    
        // Listen for when the panel is disposed
        // This happens when the user closes the panel or when the panel is closed programatically
@@ -202,13 +210,9 @@ tags: Angular
      /**
       * Returns html of the start page (index.html)
       */
-     private _getHtmlForWebview() {
+     private _getHtmlForWebview(context: vscode.ExtensionContext) {
        // path to dist folder
-       const appDistPath = path.join(this.extensionPath, 'dist/cklab');
-       const appDistPathUri = vscode.Uri.file(appDistPath);
-   
-       // path as uri
-       const baseUri = this.panel.webview.asWebviewUri(appDistPathUri);
+       const appDistPath = path.join(this.extensionPath, this.builtAppFolder);
    
        // get path to index.html file from dist folder
        const indexPath = path.join(appDistPath, 'index.html');
@@ -216,11 +220,22 @@ tags: Angular
        // read index file from file system
        let indexHtml = fs.readFileSync(indexPath, { encoding: 'utf8' });
    
+       // 1. Get all link prefixed by href or src
+       const matchLinks = /(href|src)="([^"]*)"/g;
+       // 2. Transform the result of the regex into a vscode's URI format
+       const toUri = (_: string, prefix: 'href' | 'src', link: string) => {
+         // For <base href="#" />
+         if (link === '#') {
+           return `${prefix}="${link}"`;
+         }
+         // For scripts & links
+         const _path = path.join(appDistPath, link);
+         const uri = vscode.Uri.file(_path);
+         return `${prefix}="${this.panel.webview['asWebviewUri'](uri)}"`;
+       };
+   
        // update the base URI tag
-       indexHtml = indexHtml.replace(
-         '<base href="/">',
-         `<base href="${String(baseUri)}/">`
-       );
+       indexHtml = indexHtml.replace(matchLinks, toUri);
    
        return indexHtml;
      }
@@ -229,7 +244,7 @@ tags: Angular
    export function activate(context: vscode.ExtensionContext) {
      context.subscriptions.push(
        vscode.commands.registerCommand('angular-webview.start', () => {
-         WebPanel.createOrShow(context.extensionPath);
+         WebPanel.createOrShow(context.extensionPath, context);
        })
      );
    }
@@ -239,8 +254,8 @@ tags: Angular
    
    ```
 
-   * line 99: 請根據自己 Angular 專案輸出資料夾路徑做調整
-   * line 123: 跟著 `package.json` 的指令註冊一起調整命令名稱
+   * line 49: 請根據自己 Angular 專案輸出資料夾路徑做調整
+   * line 138: 跟著 `package.json` 的指令註冊一起調整命令名稱
 
 6. 新增 `tsconfig.extension.json` 檔案
 
