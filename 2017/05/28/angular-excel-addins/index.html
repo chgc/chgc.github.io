@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-TW">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+     google_ad_client: "ca-pub-7997572949867824",
+     enable_page_level_ads: true
+   });
+ </script>
+
+
+  <meta name="description" content="Office 2016 的增益集，讓我們可以使用 javascript + html 來開發。既然可以使用 Jquery，那 Angular 應該是沒有問題的，這是使用 Angular 實作 Excel 增益集的筆記">
+<meta name="keywords" content="Angular,Office">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 開發 Excel 增益集">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/05/28/angular-excel-addins/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Office 2016 的增益集，讓我們可以使用 javascript + html 來開發。既然可以使用 Jquery，那 Angular 應該是沒有問題的，這是使用 Angular 實作 Excel 增益集的筆記">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://farm5.staticflickr.com/4220/34905439666_74bcded75e_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4222/34782185172_5d669b534e_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4222/34782226082_c62009d9e7_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4272/34905548796_0b4b678254_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4271/34813937441_7e6b889bf5_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4222/34905598216_6213f0269e_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4268/34135385293_2969d33e26_o.png">
+<meta property="og:updated_time" content="2021-02-05T17:10:14.976Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Angular] 開發 Excel 增益集">
+<meta name="twitter:description" content="Office 2016 的增益集，讓我們可以使用 javascript + html 來開發。既然可以使用 Jquery，那 Angular 應該是沒有問題的，這是使用 Angular 實作 Excel 增益集的筆記">
+<meta name="twitter:image" content="https://farm5.staticflickr.com/4220/34905439666_74bcded75e_o.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.kevinyang.net/2017/05/28/angular-excel-addins/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[Angular] 開發 Excel 增益集 | CK's Notepad</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-56711593-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CK's Notepad</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/05/28/angular-excel-addins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/4550568.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Angular] 開發 Excel 增益集
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2017-05-28 20:52:12" itemprop="dateCreated datePublished" datetime="2017-05-28T20:52:12+08:00">2017-05-28</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">評論數：</span>
+                <a href="/2017/05/28/angular-excel-addins/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/28/angular-excel-addins/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Office 2016 的增益集，讓我們可以使用 javascript + html 來開發。既然可以使用 Jquery，那 Angular 應該是沒有問題的，這是使用 Angular 實作 Excel 增益集的筆記</p>
+<a id="more"></a>
+<h1 id="建立-angular-專案"><a class="header-anchor" href="#建立-angular-專案"> </a>建立 Angular 專案</h1>
+<p>使用 Angular CLI 建立新專案，如果有需要使用路由的，記得要將 <code>LocationStrategy</code> 設定為 <code>HashLocationStrategy</code></p>
+<h2 id="安裝-types"><a class="header-anchor" href="#安裝-types"> </a>安裝 @types</h2>
+<blockquote>
+<p>npm install --save-dev @types/office-js</p>
+</blockquote>
+<h2 id="tsconfig-app-json"><a class="header-anchor" href="#tsconfig-app-json"> </a>tsconfig.app.json</h2>
+<p>在 <code>types</code> 的的區塊加上 <code>office-js</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"types": [</span><br><span class="line">      <span class="string">"office-js"</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="main-ts"><a class="header-anchor" href="#main-ts"> </a>main.ts</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;enableProdMode&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;platformBrowserDynamic&#125; <span class="keyword">from</span> <span class="string">'@angular/platform-browser-dynamic'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;AppModule&#125; <span class="keyword">from</span> <span class="string">'./app/app.module'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;environment&#125; <span class="keyword">from</span> <span class="string">'./environments/environment'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">const</span> Office: <span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line">Office.initialize = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  platformBrowserDynamic().bootstrapModule(AppModule);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>platformBrowser</code> 這段一定要包在 function() {…} 裡面。</p>
+<h2 id="index-html"><a class="header-anchor" href="#index-html"> </a>index.html</h2>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">... </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://appsforoffice.microsoft.com/lib/1/hosted/office.js"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css"</span>&gt;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>新增這四行到 <code>&lt;head&gt;</code> 內</p>
+<h2 id="app-component-ts"><a class="header-anchor" href="#app-component-ts"> </a>app.component.ts</h2>
+<p>這裡的程式，我是先用官方提供的範例翻寫的。詳細的 API 部分，請參閱官方文件</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/observable/from'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/map'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/mergeMap'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;ApplicationRef, Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Http, Response&#125; <span class="keyword">from</span> <span class="string">'@angular/http'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  title = <span class="string">'用Angular寫Excel Addin!!'</span>;</span><br><span class="line">  data = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> appRef: ApplicationRef, <span class="keyword">private</span> http: Http</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  loadData() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get(<span class="string">'https://jsonplaceholder.typicode.com/posts'</span>)</span><br><span class="line">        .map(<span class="function">(<span class="params">res: Response</span>) =&gt;</span> res.json());</span><br><span class="line">  &#125;</span><br><span class="line">  clickMe() &#123;</span><br><span class="line">    <span class="comment">// Run a batch operation against the Excel object model</span></span><br><span class="line">    <span class="keyword">this</span>.loadData()</span><br><span class="line">        .mergeMap(</span><br><span class="line">            (data: <span class="built_in">any</span>[]) =&gt; &#123;<span class="keyword">return</span> Observable.from(Excel.run(<span class="function">(<span class="params">ctx</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="comment">// Create a proxy object for the active worksheet</span></span><br><span class="line">              <span class="keyword">const</span> sheet: Excel.Worksheet =</span><br><span class="line">                  ctx.workbook.worksheets.getActiveWorksheet();</span><br><span class="line">              sheet.getRange().clear();</span><br><span class="line">              <span class="comment">// sheet.charts.items.forEach(c =&gt; c.delete());</span></span><br><span class="line"></span><br><span class="line">              <span class="keyword">if</span> (sheet) &#123;</span><br><span class="line">                <span class="comment">// Queue commands to set the report title in the worksheet</span></span><br><span class="line">                sheet.getRange(<span class="string">'A1'</span>).values = [[<span class="string">'Quarterly Sales Report'</span>]];</span><br><span class="line">                sheet.getRange(<span class="string">'A1'</span>).format.font.name = <span class="string">'Century'</span>;</span><br><span class="line">                sheet.getRange(<span class="string">'A1'</span>).format.font.size = <span class="number">26</span>;</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">              <span class="comment">// Create an array containing sample data</span></span><br><span class="line">              <span class="keyword">let</span> values = [</span><br><span class="line">                [<span class="string">'Product'</span>, <span class="string">'Qtr1'</span>, <span class="string">'Qtr2'</span>, <span class="string">'Qtr3'</span>, <span class="string">'Qtr4'</span>],</span><br><span class="line">                [<span class="string">'Frames'</span>, <span class="number">5000</span>, <span class="number">7000</span>, <span class="number">6544</span>, <span class="number">4377</span>],</span><br><span class="line">                [<span class="string">'Saddles'</span>, <span class="number">400</span>, <span class="number">323</span>, <span class="number">276</span>, <span class="number">651</span>],</span><br><span class="line">                [<span class="string">'Brake levers'</span>, <span class="number">12000</span>, <span class="number">8766</span>, <span class="number">8456</span>, <span class="number">9812</span>],</span><br><span class="line">                [<span class="string">'Chains'</span>, <span class="number">1550</span>, <span class="number">1088</span>, <span class="number">692</span>, <span class="number">853</span>],</span><br><span class="line">                [<span class="string">'Mirrors'</span>, <span class="number">225</span>, <span class="number">600</span>, <span class="number">923</span>, <span class="number">544</span>],</span><br><span class="line">                [<span class="string">'Spokes'</span>, <span class="number">6005</span>, <span class="number">7634</span>, <span class="number">4589</span>, <span class="number">8765</span>]</span><br><span class="line">              ];</span><br><span class="line"></span><br><span class="line">              <span class="comment">// Queue a command to write the sample data to the specified</span></span><br><span class="line">              <span class="comment">// range in the worksheet and bold the header row</span></span><br><span class="line">              <span class="keyword">const</span> range = sheet.getRange(<span class="string">'A2:E8'</span>);</span><br><span class="line">              range.values = values;</span><br><span class="line">              sheet.getRange(<span class="string">'A2:E2'</span>).format.font.bold = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">              <span class="comment">// Queue a command to add a new chart</span></span><br><span class="line">              <span class="keyword">const</span> chart = sheet.charts.add(<span class="string">'ColumnClustered'</span>, range, <span class="string">'auto'</span>);</span><br><span class="line">              <span class="comment">// Queue commands to set the properties and format the chart</span></span><br><span class="line">              chart.setPosition(<span class="string">'G1'</span>, <span class="string">'L10'</span>);</span><br><span class="line">              chart.title.text = <span class="string">'Quarterly sales chart'</span>;</span><br><span class="line">              chart.legend.position = <span class="string">'right'</span></span><br><span class="line">              chart.legend.format.fill.setSolidColor(<span class="string">'white'</span>);</span><br><span class="line">              chart.dataLabels.format.font.size = <span class="number">15</span>;</span><br><span class="line">              chart.dataLabels.format.font.color = <span class="string">'black'</span>;</span><br><span class="line">              <span class="keyword">const</span> points = chart.series.getItemAt(<span class="number">0</span>).points;</span><br><span class="line">              points.getItemAt(<span class="number">0</span>).format.fill.setSolidColor(<span class="string">'pink'</span>);</span><br><span class="line">              points.getItemAt(<span class="number">1</span>).format.fill.setSolidColor(<span class="string">'indigo'</span>);</span><br><span class="line"></span><br><span class="line">              <span class="keyword">const</span> i = <span class="number">12</span>;</span><br><span class="line">              <span class="keyword">this</span>.data = data;</span><br><span class="line">              values = data.reduce(<span class="function">(<span class="params">preValue, d</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> [...preValue, [d.userId, d.id, d.title, d.body]];</span><br><span class="line">              &#125;, []);</span><br><span class="line"></span><br><span class="line">              sheet.getRange(<span class="string">`A<span class="subst">$&#123;i + 1&#125;</span>:D<span class="subst">$&#123;i + data.length&#125;</span>`</span>).values = values;</span><br><span class="line">              <span class="comment">// Run the queued commands, and return a promise to indicate</span></span><br><span class="line">              <span class="comment">// task completion</span></span><br><span class="line">              <span class="keyword">return</span> ctx.sync();</span><br><span class="line">            &#125;))&#125;)</span><br><span class="line">        .subscribe(</span><br><span class="line">            () =&gt; &#123;</span><br><span class="line">              <span class="keyword">this</span>.appRef.tick();</span><br><span class="line">              <span class="built_in">console</span>.log(<span class="string">'Success!'</span>);</span><br><span class="line">            &#125;,</span><br><span class="line">            error =&gt; &#123;</span><br><span class="line"></span><br><span class="line">            &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="程式碼解釋"><a class="header-anchor" href="#程式碼解釋"> </a>程式碼解釋</h3>
+<h4 id="loaddata"><a class="header-anchor" href="#loaddata"> </a>loadData()</h4>
+<p>這個 method 主要是用來驗證 CORS 的情況下， 是否還可以在 Excel 裡正常的運作。</p>
+<h4 id="excel-run"><a class="header-anchor" href="#excel-run"> </a>Excel.run</h4>
+<blockquote>
+<p>Ｅxcel.run((ctx) =&gt; {　… })</p>
+</blockquote>
+<p>這段是準備要在Excel上顯示的資料</p>
+<h4 id="ctx-sync"><a class="header-anchor" href="#ctx-sync"> </a>ctx.sync()</h4>
+<p>準備好的內容，更新同步到 Excel 的 activateSheet 上</p>
+<h2 id="polyfills-ts"><a class="header-anchor" href="#polyfills-ts"> </a>polyfills.ts</h2>
+<p>需要打開以下的檔案</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** IE9, IE10 and IE11 requires all of the following polyfills. **/</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/symbol'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/object'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/function'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/parse-int'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/parse-float'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/number'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/math'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/string'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/date'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/array'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/regexp'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/map'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/weak-map'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'core-js/es6/set'</span>;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>到這邊為止，已經完成了 Angular 端最基本的環境設定</p>
+<h1 id="新增-manifest-xml"><a class="header-anchor" href="#新增-manifest-xml"> </a>新增 Manifest.xml</h1>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--Created:cb85b80c-f585-40ff-8bfc-12ff4d0e34a9--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">OfficeApp</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/office/appforoffice/1.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xsi:type</span>=<span class="string">"TaskPaneApp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Id</span>&gt;</span>534a9c82-e492-4b03-a0df-7e6e97815039<span class="tag">&lt;/<span class="name">Id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Version</span>&gt;</span>1.0.0.0<span class="tag">&lt;/<span class="name">Version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ProviderName</span>&gt;</span>Microsoft<span class="tag">&lt;/<span class="name">ProviderName</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DefaultLocale</span>&gt;</span>en-US<span class="tag">&lt;/<span class="name">DefaultLocale</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DisplayName</span> <span class="attr">DefaultValue</span>=<span class="string">"Angular App Sample"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Description</span> <span class="attr">DefaultValue</span>=<span class="string">"Angular App Sample"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">"Workbook"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DefaultSettings</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">SourceLocation</span> <span class="attr">DefaultValue</span>=<span class="string">"https://localhost:4200"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">DefaultSettings</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Permissions</span>&gt;</span>ReadWriteDocument<span class="tag">&lt;/<span class="name">Permissions</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">OfficeApp</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Manifest 的進階說明，請參閱這篇<a href="https://dev.office.com/docs/add-ins/overview/add-in-manifests" target="_blank" rel="noopener">文件</a></p>
+<h1 id="excel-的環境設定"><a class="header-anchor" href="#excel-的環境設定"> </a>Excel 的環境設定</h1>
+<p>要在 Excel 內新增我們自己開發的增益集，首先</p>
+<ol>
+<li>
+<p>建立一個分享資料夾</p>
+</li>
+<li>
+<p>將設定好的 Manifest.xml 搬進去，記得每一個增益集的 manifest 檔名都要不一樣</p>
+</li>
+<li>
+<p>將分享資料夾的位置新增到 Excel 裡面去</p>
+<ol>
+<li>
+<p>檔案 --&gt; 選項</p>
+<p><img src="https://farm5.staticflickr.com/4220/34905439666_74bcded75e_o.png" alt></p>
+</li>
+<li>
+<p>信任中心</p>
+<p><img src="https://farm5.staticflickr.com/4222/34782185172_5d669b534e_o.png" alt></p>
+</li>
+<li>
+<p>受信任的增益集目錄</p>
+<p><img src="https://farm5.staticflickr.com/4222/34782226082_c62009d9e7_o.png" alt></p>
+</li>
+<li>
+<p>確定完成</p>
+</li>
+</ol>
+</li>
+<li>
+<p>插入 -&gt; 我的增益集 -&gt; 共享資料夾</p>
+</li>
+<li>
+<p>可以看到自己寫的增益集了</p>
+<p><img src="https://farm5.staticflickr.com/4272/34905548796_0b4b678254_o.png" alt></p>
+</li>
+<li>
+<p>選擇要安裝的增益集</p>
+<p><img src="https://farm5.staticflickr.com/4271/34813937441_7e6b889bf5_o.png" alt></p>
+</li>
+<li>
+<p>安裝完成後，即可看到所建立的增益集畫面在螢幕的右側出現</p>
+<p><img src="https://farm5.staticflickr.com/4222/34905598216_6213f0269e_o.png" alt></p>
+<p>這時右側的操作，就可以直接反應在左側 Excel 工作表內了。</p>
+<p><img src="https://farm5.staticflickr.com/4268/34135385293_2969d33e26_o.png" alt></p>
+</li>
+</ol>
+<h1 id="debug"><a class="header-anchor" href="#debug"> </a>Debug</h1>
+<p>請參閱這篇<a href="https://dev.office.com/docs/add-ins/testing/debug-add-ins-using-f12-developer-tools-on-windows-10" target="_blank" rel="noopener">文章</a>，在 windows 內提供 F12 開發者工具可以做 Add In 的網頁除錯，但目前看起來是 Windows 10 限定</p>
+<h1 id="參閱資料"><a class="header-anchor" href="#參閱資料"> </a>參閱資料</h1>
+<ul>
+<li><a href>Manifest</a></li>
+<li><a href="https://dev.office.com/docs/add-ins/develop/add-ins-with-angular2" target="_blank" rel="noopener">Tips for creating Office Add-ins with Angular 2</a></li>
+<li><a href="https://dev.office.com/docs/add-ins/excel/excel-add-ins-javascript-programming-overview" target="_blank" rel="noopener">Excel JavaScript API programming overview</a></li>
+<li><a href="https://dev.office.com/docs/add-ins/excel/build-your-first-excel-add-in" target="_blank" rel="noopener">Build your first Excel add-in</a></li>
+<li><a href="https://dev.office.com/docs/add-ins/overview/add-in-manifests" target="_blank" rel="noopener">Office Add-ins XML manifest</a></li>
+<li><a href="https://dev.office.com/docs/add-ins/testing/debug-add-ins-using-f12-developer-tools-on-windows-10" target="_blank" rel="noopener">Debug add-ins using F12 developer tools on Windows 10</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Angular/" rel="tag"># Angular</a>
+          
+            <a href="/tags/Office/" rel="tag"># Office</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/15/core-web-mvc-001/" rel="next" title="[.NET Core] Web MVC 001 - program.cs">
+                <i class="fa fa-chevron-left"></i> [.NET Core] Web MVC 001 - program.cs
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/11/ng-animation-4-2/" rel="prev" title="[Angular] Animation 4.2版 = wow">
+                [Angular] Animation 4.2版 = wow <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    
+      <div>
+        <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
+            
+              <p class="site-author-name" itemprop="name">KevinYang</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">300</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情連結
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#建立-angular-專案"><span class="nav-number">1.</span> <span class="nav-text"> 建立 Angular 專案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-types"><span class="nav-number">1.1.</span> <span class="nav-text"> 安裝 @types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tsconfig-app-json"><span class="nav-number">1.2.</span> <span class="nav-text"> tsconfig.app.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main-ts"><span class="nav-number">1.3.</span> <span class="nav-text"> main.ts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#index-html"><span class="nav-number">1.4.</span> <span class="nav-text"> index.html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-component-ts"><span class="nav-number">1.5.</span> <span class="nav-text"> app.component.ts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程式碼解釋"><span class="nav-number">1.5.1.</span> <span class="nav-text"> 程式碼解釋</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#loaddata"><span class="nav-number">1.5.1.1.</span> <span class="nav-text"> loadData()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#excel-run"><span class="nav-number">1.5.1.2.</span> <span class="nav-text"> Excel.run</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ctx-sync"><span class="nav-number">1.5.1.3.</span> <span class="nav-text"> ctx.sync()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#polyfills-ts"><span class="nav-number">1.6.</span> <span class="nav-text"> polyfills.ts</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#新增-manifest-xml"><span class="nav-number">2.</span> <span class="nav-text"> 新增 Manifest.xml</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#excel-的環境設定"><span class="nav-number">3.</span> <span class="nav-text"> Excel 的環境設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug"><span class="nav-number">4.</span> <span class="nav-text"> Debug</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參閱資料"><span class="nav-number">5.</span> <span class="nav-text"> 參閱資料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div class="gooAd sidebar-inner" style="display: block;">
+        <!-- Google AdSense start -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog-sidebar -->
+<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+     </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2017/05/28/angular-excel-addins/";
+    this.page.identifier = "2017/05/28/angular-excel-addins/";
+    this.page.title = '[Angular] 開發 Excel 增益集';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-TW">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+     google_ad_client: "ca-pub-7997572949867824",
+     enable_page_level_ads: true
+   });
+ </script>
+
+
+  <meta name="description" content="整合測試主要的目的，是要測試 Component 的 template 的動作是否能如我們所預期的方式運作，而這是單元測試無法涵的範圍 Angular 也貼心準備小幫手，TestBed，來協助我們完成整合測試">
+<meta name="keywords" content="Angular,測試">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 整合測試">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/09/07/angular-integration-test/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="整合測試主要的目的，是要測試 Component 的 template 的動作是否能如我們所預期的方式運作，而這是單元測試無法涵的範圍 Angular 也貼心準備小幫手，TestBed，來協助我們完成整合測試">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2021-02-05T17:10:14.980Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Angular] 整合測試">
+<meta name="twitter:description" content="整合測試主要的目的，是要測試 Component 的 template 的動作是否能如我們所預期的方式運作，而這是單元測試無法涵的範圍 Angular 也貼心準備小幫手，TestBed，來協助我們完成整合測試">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.kevinyang.net/2017/09/07/angular-integration-test/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[Angular] 整合測試 | CK's Notepad</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-56711593-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CK's Notepad</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/09/07/angular-integration-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/4550568.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Angular] 整合測試
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2017-09-07 22:30:58" itemprop="dateCreated datePublished" datetime="2017-09-07T22:30:58+08:00">2017-09-07</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">評論數：</span>
+                <a href="/2017/09/07/angular-integration-test/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/07/angular-integration-test/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>整合測試主要的目的，是要測試 Component 的 template 的動作是否能如我們所預期的方式運作，而這是單元測試無法涵的範圍</p>
+<p>Angular 也貼心準備小幫手，<code>TestBed</code>，來協助我們完成整合測試</p>
+<a id="more"></a>
+<h1 id="testbed"><a class="header-anchor" href="#testbed"> </a>TestBed</h1>
+<p>TestBed 是 Angular 提供的小幫手來建立測試用的 Module 環境，基本的用法如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">async</span>, ComponentFixture, TestBed &#125; <span class="keyword">from</span> <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; By &#125; <span class="keyword">from</span> <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DebugElement &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">let</span> component: VoteComponent;</span><br><span class="line"><span class="keyword">let</span> fixture: ComponentFixture&lt;VoteComponent&gt;;</span><br><span class="line"><span class="keyword">let</span> de: DebugElement;</span><br><span class="line"><span class="keyword">let</span> el: HTMLElement;</span><br><span class="line">... </span><br><span class="line">beforeEach(<span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">   TestBed.configureTestingModule(&#123;</span><br><span class="line">     declarations: [ VoteComponent ]  <span class="comment">// declare the test component</span></span><br><span class="line">   &#125;)</span><br><span class="line">   .compileComponents(); <span class="comment">// compile template and css</span></span><br><span class="line"> &#125;));</span><br><span class="line"></span><br><span class="line">beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fixture = TestBed.createComponent(VoteComponent);</span><br><span class="line">    component = fixture.componentInstance; <span class="comment">// 取得 component instance</span></span><br><span class="line">    fixture.detectChanges(); <span class="comment">// 執行 CD，這行會觸發 ngOnInit()，僅限第一次執行</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// query for the title &lt;h1&gt; by CSS element selector</span></span><br><span class="line">    de = fixture.debugElement.query(By.css(<span class="string">'p'</span>)); <span class="comment">// 使用標轉的 CSS Selector 尋找並取得 debugElement</span></span><br><span class="line">    el = de.nativeElement;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p><code>configuratTestingModule</code> 內的物件結構，與設定 <code>@NgModule</code> 是一樣的，在 <code>beforeEach</code> 內設定，可以確保每個測試案例不會受到其他測試案例結果的影響，當 <code>TestingModule</code> 設定完成後，可以透過 <code>createComponent</code> 的方式建立相對於 component 的 <code>fixtureComponent</code>，這個 <code>fixtureComponent</code> 將提供完整的 component 本身與對應的 template 內容</p>
+<p>這裡有一個要留意的事情是，第一個 <code>beforeEach</code> 有使用 <code>async</code> 這個關鍵字讓包在裡面的函式變成非同步的處理方式，當 component 的 template 是單獨一個檔案時，因為有 IO 的非同步行為，所以需要 <code>async</code> 的幫忙讓非同步變成同步行為的處理方式，但是如果是使用 webpack 作為建置工具時，其實是不需要使用 <code>async</code> 的，因為 webpack 會將獨立的 html 檔案變成 inline template 的模式</p>
+<p><code>fixture.detectChanges()</code> 是手動觸發 changeDetector 的方法，任何變數異動後要更新到 template 上時，都必須執行 <code>detectChanges()</code>，當然，也可以設定自動偵測異動並執行更新動作，透過以下的設定即可達成</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ComponentFixtureAutoDetect &#125; <span class="keyword">from</span> <span class="string">'@angular/core/testing'</span>;</span><br><span class="line">...</span><br><span class="line">TestBed.configureTestingModule(&#123;</span><br><span class="line">  ...</span><br><span class="line">  providers: [</span><br><span class="line">    &#123; provide: ComponentFixtureAutoDetect, useValue: <span class="literal">true</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>當這樣子設定完成後，之後的測試案例內，就不需要執行 <code>fixture.detectChages()</code> 了，但是請注意，預設的 <code>detechChages()</code> 只為在非同步的事件觸發時才會被執行，例如 promise resolution、timers 或是 DOM Events，上述行為不包含直接修改變數值，因為這是屬於同步的行為，在這情況下，還是得自行執行 <code>fixture.detectChanges()</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should still see original title after comp.title change'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> oldTitle = comp.title;</span><br><span class="line">  comp.title = <span class="string">'Test Title'</span>;</span><br><span class="line">  <span class="comment">// 改變 title 內容並不會觸發 template 顯示的更新，因屬於同步行為</span></span><br><span class="line">  expect(el.textContent).toContain(oldTitle);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">it(<span class="string">'should display updated title after detectChanges'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  comp.title = <span class="string">'Test Title'</span>;</span><br><span class="line">  fixture.detectChanges(); <span class="comment">// 需手動觸發 detectChanges，更新 template 內容</span></span><br><span class="line">  expect(el.textContent).toContain(comp.title);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>所以，手動控制 detectChanges 會比開啟自動偵測機制來的好，我們就不需要去考慮什麼時候要自己執行 detectChanges，什麼時候不用，反正多執行也不會造成問題</p>
+<h1 id="測試範例"><a class="header-anchor" href="#測試範例"> </a>測試範例</h1>
+<h2 id="property-and-class-bindings"><a class="header-anchor" href="#property-and-class-bindings"> </a>property and class bindings</h2>
+<p>測試屬性 ( property ) 是一個很常見的測試情境，當一個變數值改變時，畫面上是否有正常顯示</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should render total votes'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">   component.otherVotes = <span class="number">20</span>;</span><br><span class="line">   component.myVote = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// totalValue = otherVotes + myVote;</span></span><br><span class="line">   fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">   de = fixture.debugElement.query(By.css(<span class="string">'.vote-count'</span>));</span><br><span class="line">   el = de.nativeElement;</span><br><span class="line">   expect(el.innerText).toContain(<span class="string">'21'</span>);</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"vote-count"</span>&gt;</span>&#123;&#123; totalVotes &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>寫法上要注意的還是 <code>fixture.detectChanges()</code>，記得要執行阿，不然測試會失敗</p>
+<p><code>debugElement</code> 本身有提供方法可以取得 <code>classes</code>、<code>style</code>、<code>attributes</code>、<code>properties</code> 等資訊，在這個測試案例，我們要測試當 <code>myVote == 1</code> 時，是否有 <code>hightlight</code> 的 css class 產生，而 debugElement.classes 是一個 keyValue 形式的物件，測試 Class 是否有正常的運作，測試案例可以這樣子寫</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"upVote"</span> [<span class="attr">class.highlight</span>]=<span class="string">"myVote==1"</span> (<span class="attr">click</span>)=<span class="string">"upVote()"</span>&gt;</span>+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should hightlight the upvote button is click'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  component.myVote = <span class="number">1</span>;</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  de = fixture.debugElement.query(By.css(<span class="string">'.upVote'</span>));    </span><br><span class="line">  expect(de.classes[<span class="string">'highlight'</span>]).toBeTruthy();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="event-bindings"><a class="header-anchor" href="#event-bindings"> </a>Event bindings</h2>
+<p>觸發事件的方法有兩種，一個是使用 debugElement 的 <code>triggerEventHandler</code> ，另外一種是使用 navtiveElement 轉型成 HTMLElement 後，操作 HTMLElement 的事件，這兩種方式都可以達到效果</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法1</span></span><br><span class="line">it(<span class="string">'should click upVote and totalValue is 1'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> button = fixture.debugElement.query(By.css(<span class="string">'.upVote'</span>));</span><br><span class="line">    button.triggerEventHandler(<span class="string">'click'</span>, <span class="literal">null</span>);</span><br><span class="line">    expect(component.totalVotes).toBe(<span class="number">1</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法2</span></span><br><span class="line">it(<span class="string">'should click upVote and totalValue is 1'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    de = fixture.debugElement.query(By.css(<span class="string">'.upVote'</span>));</span><br><span class="line">    el = de.nativeElement;</span><br><span class="line">    el.click();</span><br><span class="line">    expect(component.totalVotes).toBe(<span class="number">1</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>到這個階段，或許會有一個問題，這個跟直接觸發 <code>component.upVote()</code> 後在檢查 <code>totalVotes</code> 的結果有什麼差別呢? 整合測試是要確保 template 上的行為是可以正常執行的，有時候函式在單元測試內是測試成功的，但是 template 上會因為沒有正常實作而造成測試失敗，這也是單元測試與整合測試的差異了。</p>
+<h2 id="dependencies"><a class="header-anchor" href="#dependencies"> </a>Dependencies</h2>
+<h3 id="providing-the-dependencies"><a class="header-anchor" href="#providing-the-dependencies"> </a>Providing the dependencies</h3>
+<p>一個 Component 通常都會注入其他的 service，在測試時又該怎麼處理呢? 回想看看 <code>TestBed</code> 的功能是什麼，是設定一個測試用的 module，既然是 module，providers 和 imports 的動作就跟平常在設定 <code>@NgModules</code> 的方式是一模一樣的</p>
+<p>假設 TodosComponent 有注入 TodoService，TodoService 有注入 HttpClient 服務。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> TodosComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  todos = [];</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> service: TodoService</span>) &#123;&#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>測試檔案的內容於 <code>beforeEach</code> 的區塊，加上 imports 與 providers 兩個區塊，並將所需要的 service 與 modules 設定進去</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">beforeEach(</span><br><span class="line">    <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      TestBed.configureTestingModule(&#123;</span><br><span class="line">        imports: [HttpClientModule],</span><br><span class="line">        declarations: [TodosComponent],</span><br><span class="line">        providers: [TodoService]</span><br><span class="line">      &#125;).compileComponents();</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>當這樣子設定完成後，providing service 的部分就已經完成了</p>
+<h3 id="getting-the-dependencies"><a class="header-anchor" href="#getting-the-dependencies"> </a>Getting the dependencies</h3>
+<p>Angular 設定 provider 的地方有兩個，<code>@NgModule</code> 與 <code>@Component</code> 內都可以設定 providers，因為設定位置的不一樣，所以取得的方式也會有所不同</p>
+<p>如果 service 是設定在 <code>@NgModule</code> 內時，取得 service 的方式如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> service = TestBed.get(TodoService);</span><br></pre></td></tr></table></figure>
+<p>如果 service 是設定在 <code>@Component</code> 內時，取得 service 的方式如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> service = fixture.debugElement.injector.get(TodoService);</span><br></pre></td></tr></table></figure>
+<p>在整合測試時，我們還是不希望依賴外部引用的 service ，這裡的處理方式會跟單元測試的方式一樣，透過 <code>spyOn</code> 的方式控制 service 的行為</p>
+<h3 id="providing-stubs"><a class="header-anchor" href="#providing-stubs"> </a>providing stubs</h3>
+<p>有時候 component 所使用的 service 會遇到測試困難，例如路由。有時為了簡化測試的複雜度，會使用 <code>stubs</code> 的手法簡化，與其使用真的 service，不如自己建立一個簡單又符合目前所需的 service class 即可，也感謝 Angular 的 DI 機制，讓這一切變簡單了</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> TodosComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> router: Router, <span class="keyword">private</span> route: ActivatedRoute</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">     <span class="keyword">this</span>.route.params.subscribe(<span class="function"><span class="params">params</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (params[<span class="string">'id'</span>] === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.router.navigate([<span class="string">'not-found'</span>]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  save() &#123;</span><br><span class="line">    <span class="keyword">this</span>.router.navigate([<span class="string">'/dash'</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Router 本身的功能很複雜，要測試的項目又很多，所以簡化的方式就是建立一個 RouterStub class 替換真的 Router</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> RouterStub &#123;</span><br><span class="line">  navigate(params) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> ActivatedRouteStub &#123;</span><br><span class="line">  params: Observable&lt;<span class="built_in">any</span>&gt; = Observable.empty();</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">beforeEach(</span><br><span class="line">  <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      imports: [HttpClientModule],</span><br><span class="line">      declarations: [TodosComponent],</span><br><span class="line"> 	  providers: [          </span><br><span class="line">          &#123; provide: Router, useClass: RouterStub &#125;,</span><br><span class="line">          &#123; provide: ActivatedRoute, useClass: ActivatedRouteStub &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;).compileComponents();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>這樣子的手法就可以大大的簡化測試的難度，這手法適用於其他第三方套件情境</p>
+<h2 id="route"><a class="header-anchor" href="#route"> </a>Route</h2>
+<h3 id="navigation"><a class="header-anchor" href="#navigation"> </a>Navigation</h3>
+<p>由於在上一小節將 Router 與 ActivatedRoute 都用假的 class 替換掉了，所以這裡的測試就變簡單了</p>
+<p>測試當某動作完成後，是否有正確的呼叫 router.navigate 函式，可以使用 <code>toHaveBeenCalledWith</code> 的方法來檢查</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should redirect user to dash page'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="keyword">const</span> router = TestBed.get(Router);</span><br><span class="line">   <span class="keyword">const</span> spy = spyOn(router, <span class="string">'navigate'</span>);</span><br><span class="line"></span><br><span class="line">   component.save();</span><br><span class="line">   <span class="comment">// this.router.navigate(['dash']); </span></span><br><span class="line">   <span class="comment">// 測試傳入引數是否正確</span></span><br><span class="line">   expect(spy).toHaveBeenCalledWith([<span class="string">'dash'</span>]);</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="parameters"><a class="header-anchor" href="#parameters"> </a>Parameters</h3>
+<p>測試路由參數的方式跟測試路由轉換的方式很類似，但還是要稍微修改一下 ActiveatedRouteStub 的內容，我們必須建立一個方法可以讓外部使用者將要設定路由參數傳入，修改如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> ActivatedRouteStub &#123;</span><br><span class="line">  <span class="keyword">private</span> subject = <span class="keyword">new</span> Subject();</span><br><span class="line">  <span class="keyword">get</span> params() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.subject.asObservable();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  push(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.subject.next(value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>透過 RxJS Subject 的特性，可以很簡單的完成這個 <code>params.subscribe</code> 的功能，接下來就是測試在 <code>ngOnInit</code> 內的功能是否正常</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit() &#123;</span><br><span class="line">  <span class="keyword">this</span>.route.params.subscribe(<span class="function"><span class="params">params</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (params[<span class="string">'id'</span>] === <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.router.navigate([<span class="string">'not-found'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當路由參數  id 是 0 時，會轉址到 <code>not-found</code> 的頁面</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should redirect user to NotFound page'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> router = TestBed.get(Router);</span><br><span class="line">    <span class="keyword">const</span> spy = spyOn(router, <span class="string">'navigate'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> route: ActivatedRouteStub = TestBed.get(ActivatedRoute);</span><br><span class="line">    route.push(&#123; id: <span class="number">0</span> &#125;);</span><br><span class="line"></span><br><span class="line">    expect(spy).toHaveBeenCalledWith([<span class="string">'not-found'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="routeroutlet-components"><a class="header-anchor" href="#routeroutlet-components"> </a>RouterOutlet components</h2>
+<p><code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code> 是搭配路由設定顯示 Component 的標籤，一但沒有這個就無法正常地顯示 component 內容，那要怎麼確保這個標籤不會被誤刪呢? 就是寫個測試來保護他</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; RouterOutlet &#125; <span class="keyword">from</span> <span class="string">'@angular/router'</span>;</span><br><span class="line">...  </span><br><span class="line">it(<span class="string">'should have a route-outlet tag'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> de = fixture.debugElement.query(By.directive(RouterOutlet));</span><br><span class="line">    expect(de).not.toBeNull();</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>除了 <code>&lt;router-outlet&gt;</code> 外，也會有  <code>routerLink</code> 做頁面連結的入口，測試 <code>routerLink</code> 的方法有幾種，這裡用最簡單的方式作為範例，稍微複雜一點的是寫一個 <code>RouterLinkStubDirective</code> 來替換內建的 <code>RouterLinkDirective</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should have todos link'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> de = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));</span><br><span class="line">  <span class="comment">// &lt;a routerLink="/todos"&gt;todos&lt;/a&gt;</span></span><br><span class="line">  <span class="keyword">const</span> idx = de.findIndex(</span><br><span class="line">    element =&gt; element.properties[<span class="string">'href'</span>] === <span class="string">'/todos'</span></span><br><span class="line">  );</span><br><span class="line">  expect(idx).toBeGreaterThan(<span class="number">-1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="shallow-component"><a class="header-anchor" href="#shallow-component"> </a>Shallow component</h2>
+<p>當一個 Component 內有使用到其他的 component 時，因為其他的 component 並不是我們所在乎的重點，所以在 TestingModule 內的 declarations 不應該註冊其他的 component，但是，這樣子會發生錯誤，Angular 會抱怨說有些 tag element 他看不懂，這時候就需要在 TestingModule 內加上 <code>schemas: [NO_ERRORS_SCHEMA]</code> 來避免錯誤訊息</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">beforeEach(</span><br><span class="line">  <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      imports: [RouterTestingModule],</span><br><span class="line">      declarations: [AppComponent],</span><br><span class="line">      schemas: [NO_ERRORS_SCHEMA] <span class="comment">// 重點</span></span><br><span class="line">    &#125;).compileComponents();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="attribute-directives"><a class="header-anchor" href="#attribute-directives"> </a>Attribute directives</h2>
+<p>測試 attribute directive 時，建立一個空的 host component 用來測試 directive</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-host-comp'</span>,</span><br><span class="line">  template: <span class="string">''</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">class</span> HostComponent &#123;&#125;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'HighlightDirective'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> fixture: ComponentFixture&lt;HostComponent&gt;;</span><br><span class="line"></span><br><span class="line">  beforeEach(</span><br><span class="line">    <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      TestBed.configureTestingModule(&#123;</span><br><span class="line">        declarations: [HostComponent, HighlightDirective]</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">createComponent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fixture = TestBed.createComponent(HostComponent);</span><br><span class="line">    fixture.detectChanges();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should highlight with cyan'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.overrideComponent(HostComponent, &#123;</span><br><span class="line">      <span class="keyword">set</span>: &#123; template: <span class="string">`&lt;p highlight="cyan"&gt;empty&lt;/p&gt;`</span> &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    createComponent();</span><br><span class="line">    <span class="keyword">const</span> de = fixture.debugElement.query(By.css(<span class="string">'p'</span>));</span><br><span class="line">    expect(de.nativeElement.style.backgroundColor).toBe(<span class="string">'cyan'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should highlight with yellow'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.overrideComponent(HostComponent, &#123;</span><br><span class="line">      <span class="keyword">set</span>: &#123; template: <span class="string">`&lt;p highlight&gt;empty&lt;/p&gt;`</span> &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    createComponent();</span><br><span class="line">    <span class="keyword">const</span> de = fixture.debugElement.query(By.css(<span class="string">'p'</span>));</span><br><span class="line">    expect(de.nativeElement.style.backgroundColor).toBe(<span class="string">'yellow'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>利用 <code>overrideComponent</code> 的方法來改變 TestBed 內某 component template 的設定，利用這樣子的方式就可以測試 attribute directive 了</p>
+<h2 id="asynchronous-operations"><a class="header-anchor" href="#asynchronous-operations"> </a>Asynchronous operations</h2>
+<p>遇到 promise 的非同步行為時，又該怎麼測試呢? Angular 有兩種方式測試非同步行為</p>
+<p>這個是用來做測試範例的 component</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; QuoteService &#125; <span class="keyword">from</span> <span class="string">'./quote.service'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'my-quote'</span>,</span><br><span class="line">  template: <span class="string">'&lt;h3&gt;Random Quote&lt;/h3&gt; &lt;div&gt;&#123;&#123;quote&#125;&#125;&lt;/div&gt;'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> QuoteComponent &#123;</span><br><span class="line">  quote: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> quoteService: QuoteService</span>)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">  getQuote() &#123;</span><br><span class="line">    <span class="keyword">this</span>.quoteService.getQuote().then(<span class="function">(<span class="params">quote</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.quote = quote;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="async-whenstable"><a class="header-anchor" href="#async-whenstable"> </a>async + whenStable</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; QuoteService &#125; <span class="keyword">from</span> <span class="string">'./quote.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; QuoteComponent &#125; <span class="keyword">from</span> <span class="string">'./quote.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; provide &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">async</span>, TestBed, fakeAsync, tick &#125; <span class="keyword">from</span> <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MockQuoteService &#123;</span><br><span class="line">  <span class="keyword">public</span> quote: <span class="built_in">string</span> = <span class="string">'Test quote'</span>;</span><br><span class="line"></span><br><span class="line">  getQuote() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(<span class="keyword">this</span>.quote);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Testing Quote Component'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> fixture;</span><br><span class="line"></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'Should get quote'</span>, <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fixture.componentInstance.getQuote();    </span><br><span class="line">    fixture.detectChanges();</span><br><span class="line">    fixture.whenStable().then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> compiled = fixture.debugElement.nativeElement;</span><br><span class="line">      expect(compiled.querySelector(<span class="string">'div'</span>).innerText).toEqual(<span class="string">'Test quote'</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="fakeasync-tick"><a class="header-anchor" href="#fakeasync-tick"> </a>fakeAsync + tick</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; QuoteService &#125; <span class="keyword">from</span> <span class="string">'./quote.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; QuoteComponent &#125; <span class="keyword">from</span> <span class="string">'./quote.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; provide &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">async</span>, TestBed, fakeAsync, tick &#125; <span class="keyword">from</span> <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MockQuoteService &#123;</span><br><span class="line">  <span class="keyword">public</span> quote: <span class="built_in">string</span> = <span class="string">'Test quote'</span>;</span><br><span class="line"></span><br><span class="line">  getQuote() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(<span class="keyword">this</span>.quote);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Testing Quote Component'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> fixture;</span><br><span class="line"></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'Should get quote'</span>, fakeAsync(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fixture.componentInstance.getQuote();</span><br><span class="line">    tick();</span><br><span class="line">    fixture.detectChanges();</span><br><span class="line">    <span class="keyword">const</span> compiled = fixture.debugElement.nativeElement;</span><br><span class="line">    expect(compiled.querySelector(<span class="string">'div'</span>).innerText).toEqual(<span class="string">'Test quote'</span>);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>fakeAsync</code> 搭配 <code>tick()</code> 方法使用，我們可以控制時間的變化，將非同步的行為轉換成同步行為進行測試。</p>
+<p>延伸測試應用，當我們有一個函式的功能是每分鐘會觸發一次動作，在測試的過程中，當然不可能等 1 分鐘後才知道測試結果，使用 <code>tick(ms)</code> 就可以讓時間快轉了</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'this test'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  it(<span class="string">'looks async but is synchronous'</span>, &lt;<span class="built_in">any</span>&gt;fakeAsync((): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">       <span class="keyword">let</span> flag = <span class="literal">false</span>;</span><br><span class="line">       setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; flag = <span class="literal">true</span>; &#125;, <span class="number">100</span>);</span><br><span class="line">       expect(flag).toBe(<span class="literal">false</span>);</span><br><span class="line">       tick(<span class="number">50</span>);</span><br><span class="line">       expect(flag).toBe(<span class="literal">false</span>);</span><br><span class="line">       tick(<span class="number">50</span>);</span><br><span class="line">       expect(flag).toBe(<span class="literal">true</span>);</span><br><span class="line">     &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
+<p>單元測試與整合測試是互相支援的，不能只單獨測試一種，因為某些情況下，還是得依靠整合測試才能覆蓋所有的可能性，但至於哪些要寫單元測試，哪些要補整合測試，因為每個人測試的手感不同，很難有一個統一的規則在，至少我是這樣子認為的，每人有自己一套對於測試的理解方式，這就留給各位去探索了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Angular/" rel="tag"># Angular</a>
+          
+            <a href="/tags/測試/" rel="tag"># 測試</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/01/rxjs-practice-1/" rel="next" title="[RxJS] 練習曲(1) - pull to refresh">
+                <i class="fa fa-chevron-left"></i> [RxJS] 練習曲(1) - pull to refresh
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/17/mvc-core-with-angular/" rel="prev" title="[Angular]與DOTNET MVC CORE 整合">
+                [Angular]與DOTNET MVC CORE 整合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    
+      <div>
+        <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
+            
+              <p class="site-author-name" itemprop="name">KevinYang</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">300</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情連結
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#testbed"><span class="nav-number">1.</span> <span class="nav-text"> TestBed</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#測試範例"><span class="nav-number">2.</span> <span class="nav-text"> 測試範例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#property-and-class-bindings"><span class="nav-number">2.1.</span> <span class="nav-text"> property and class bindings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event-bindings"><span class="nav-number">2.2.</span> <span class="nav-text"> Event bindings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dependencies"><span class="nav-number">2.3.</span> <span class="nav-text"> Dependencies</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#providing-the-dependencies"><span class="nav-number">2.3.1.</span> <span class="nav-text"> Providing the dependencies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getting-the-dependencies"><span class="nav-number">2.3.2.</span> <span class="nav-text"> Getting the dependencies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#providing-stubs"><span class="nav-number">2.3.3.</span> <span class="nav-text"> providing stubs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#route"><span class="nav-number">2.4.</span> <span class="nav-text"> Route</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#navigation"><span class="nav-number">2.4.1.</span> <span class="nav-text"> Navigation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parameters"><span class="nav-number">2.4.2.</span> <span class="nav-text"> Parameters</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#routeroutlet-components"><span class="nav-number">2.5.</span> <span class="nav-text"> RouterOutlet components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shallow-component"><span class="nav-number">2.6.</span> <span class="nav-text"> Shallow component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attribute-directives"><span class="nav-number">2.7.</span> <span class="nav-text"> Attribute directives</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#asynchronous-operations"><span class="nav-number">2.8.</span> <span class="nav-text"> Asynchronous operations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#async-whenstable"><span class="nav-number">2.8.1.</span> <span class="nav-text"> async + whenStable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fakeasync-tick"><span class="nav-number">2.8.2.</span> <span class="nav-text"> fakeAsync + tick</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text"> 總結</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div class="gooAd sidebar-inner" style="display: block;">
+        <!-- Google AdSense start -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog-sidebar -->
+<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+     </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2017/09/07/angular-integration-test/";
+    this.page.identifier = "2017/09/07/angular-integration-test/";
+    this.page.title = '[Angular] 整合測試';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
