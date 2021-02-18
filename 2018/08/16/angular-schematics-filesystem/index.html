@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-TW">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+     google_ad_client: "ca-pub-7997572949867824",
+     enable_page_level_ads: true
+   });
+ </script>
+
+
+  <meta name="description" content="Schematics 跟檔案操作的元素有三種，分別是 Tree、Rule、Source ，但這三個元素到底是什麼? 又各自有哪些方法可以使用呢?">
+<meta name="keywords" content="Angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Schematics 內檔案系統基本操作 ">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Schematics 跟檔案操作的元素有三種，分別是 Tree、Rule、Source ，但這三個元素到底是什麼? 又各自有哪些方法可以使用呢?">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://i.imgur.com/RJOiBYL.png">
+<meta property="og:image" content="https://i.imgur.com/dYhIUIM.png">
+<meta property="og:updated_time" content="2021-02-18T02:39:29.012Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Angular] Schematics 內檔案系統基本操作 ">
+<meta name="twitter:description" content="Schematics 跟檔案操作的元素有三種，分別是 Tree、Rule、Source ，但這三個元素到底是什麼? 又各自有哪些方法可以使用呢?">
+<meta name="twitter:image" content="https://i.imgur.com/RJOiBYL.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[Angular] Schematics 內檔案系統基本操作  | CK's Notepad</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-56711593-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CK's Notepad</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/4550568.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Angular] Schematics 內檔案系統基本操作 
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-08-16 09:02:11" itemprop="dateCreated datePublished" datetime="2018-08-16T09:02:11+08:00">2018-08-16</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">評論數：</span>
+                <a href="/2018/08/16/angular-schematics-filesystem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/16/angular-schematics-filesystem/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Schematics 跟檔案操作的元素有三種，分別是 <code>Tree</code>、<code>Rule</code>、<code>Source</code> ，但這三個元素到底是什麼? 又各自有哪些方法可以使用呢?</p>
+<a id="more"></a>
+<h1 id="基本簡介"><a class="header-anchor" href="#基本簡介"> </a>基本簡介</h1>
+<p>檔案系統的操作可以算是 Schematics 內核心的功能之一，也是大部分我們希望 schematics 幫我們處理的事情。所以熟悉 schematics 的檔案操作方式，在寫自己的 schematics 會輕鬆很多。</p>
+<h1 id="檔案系統操作"><a class="header-anchor" href="#檔案系統操作"> </a>檔案系統操作</h1>
+<h2 id="型別"><a class="header-anchor" href="#型別"> </a>型別</h2>
+<ul>
+<li>Tree： 是檔案系統的結構描述，包含檔案的狀態與改變檔案的規則 (<code>Rule</code>)</li>
+<li>Source： 是一個建立空的新 <code>Tree</code>，常見的方法有 <code>Url(path)</code></li>
+<li>Rule： 是描述要如何改變 <code>Tree</code>，所以 <code>Rule</code> 會回傳一個包含改變規則的 <code>Tree</code></li>
+</ul>
+<h2 id="方法"><a class="header-anchor" href="#方法"> </a>方法</h2>
+<h3 id="tree"><a class="header-anchor" href="#tree"> </a>Tree</h3>
+<p>當第一次建立空的 schematics 時，會看到這一段程式碼</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, _context: SchematicContext</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡取得的 <code>Tree</code> 會是當下的檔案系統，所以會包含目前目錄下的所有檔案與資料夾，當然也可以針對那些檔案去做操作，可使用的方法有</p>
+<ul>
+<li><code>branch(): Tree</code> ：複製一份目前 <code>Tree</code> 狀態的 Tree 物件</li>
+<li><code>merge(other: Tree, strategy?: MergeStrategy): void</code> ：合併兩個 <code>Tree</code> 物件，可決定合併衝突時的解決方式
+<ul>
+<li><code>MergeStrategy</code> 有以下選項
+<ul>
+<li><code>AllowOverwriteConflict</code></li>
+<li><code>AllowCreationConflict</code></li>
+<li><code>AllowDeleteConflict</code></li>
+<li><code>Default</code></li>
+<li><code>Error</code>：如果2個檔案存在於相同的位置就會丟出錯誤訊息</li>
+<li><code>ContentOnly</code>：只有內容衝突時才可以被覆寫</li>
+<li><code>Overwrite</code>：包含 <code>AllowOverwriteConflict</code>、<code>AllowCreationConflict</code>、<code>AllowDeleteConflict</code>，根據最後的異動做覆蓋</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>root: DirEntry</code> (唯讀)：取得目前的資料夾資訊 (<code>FileSystemDirEntry</code> 型別)</li>
+<li><code>read(path: string): Buffer | null</code>：讀取檔案並用 binary  的方式呈現</li>
+<li><code>exists(path: string): boolean</code>：檢查檔案是否存在</li>
+<li><code>get(path: string): FileEntry | null</code>：取得檔案 ( <code>FileEntry</code> 型別)</li>
+<li><code>getDir(path: string): DirEntry</code> ：取得某資料夾的資訊 (<code>FileSystemDirEntry</code> 型別)</li>
+<li><code>visit(visitor: FileVisitor): void</code>：拜訪目前 Tree 下的所有檔案 (list through folders)</li>
+<li><code>overwrite(path: string, content: Buffer | string): void</code>：複寫特定位置的檔案內容</li>
+<li><code>beginUpdate(path: string): UpdateRecorder</code>：開始修改某個檔案</li>
+<li><code>commitUpdate(record: UpdateRecorder): void</code>：確認修改內容，需與 <code>beginUpate</code> 配合使用</li>
+<li><code>create(path: string, content: Buffer | string): void</code>：建立檔案並給予檔案內容</li>
+<li><code>delete(path: string): void</code>：刪除檔案</li>
+<li><code>rename(from: string, to: string): void</code>：重新命名檔案</li>
+<li><code>apply(action: Action, strategy?: MergeStrategy): void</code>：套用規則，但無法在 <code>HostTree</code> 使用</li>
+<li><code>actions: Action[] (readonly)</code>：列出該 <code>Tree</code> 目前所有的 actions，每一個 action 會有以下資訊
+<ul>
+<li><code>kind</code>：動作種類
+<ul>
+<li><code>c</code>：建立</li>
+<li><code>d</code>：刪除</li>
+<li><code>o</code>：複寫</li>
+<li><code>r</code>：重新命名</li>
+</ul>
+</li>
+<li><code>path</code> ：路徑(from)</li>
+<li><code>to</code>：路徑 (to)</li>
+<li><code>content</code>：異動內容</li>
+</ul>
+</li>
+</ul>
+<p>基本上，屬於 <code>Tree</code> 型別的資料，都有上述的方法可以使用。在操作檔案系統時，<code>Tree</code> 是一個很重要的觀念，可以想像程他跟 Git 的 commit history 有雷同的運作方式。而所有的異動與規則，最終都得回到 Tree 上</p>
+<h3 id="source"><a class="header-anchor" href="#source"> </a>Source</h3>
+<p>Source 如上頭所介紹的，是用來建立一個全新空的檔案系統，有以下的方法可以產生 Source</p>
+<ul>
+<li>
+<p><code>url(path: String)</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/blogdemo/index.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 根據 index.ts 的位置為出發點</span></span><br><span class="line">    <span class="keyword">const</span> files = url(<span class="string">'./'</span>)(context) <span class="keyword">as</span> Tree;</span><br><span class="line">    <span class="comment">// 列出該 Tree 下的所有檔案    </span></span><br><span class="line">    files.visit(<span class="function"><span class="params">v</span> =&gt;</span> <span class="built_in">console</span>.log(v));</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://i.imgur.com/RJOiBYL.png" alt></p>
+</li>
+<li>
+<p><code>apply(source: Source, rules: Rule[])</code>：套用規則到 <code>Source</code> 上，並回傳經處理後的 <code>Source</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> filterRule = filter(<span class="function"><span class="params">x</span> =&gt;</span> x.endsWith(<span class="string">'ts'</span>));</span><br><span class="line">    <span class="keyword">const</span> files = apply(url(<span class="string">'./'</span>), [filterRule])(context) <span class="keyword">as</span> Observable&lt;Tree&gt;;</span><br><span class="line">    files.subscribe(<span class="function"><span class="params">tree</span> =&gt;</span> &#123;</span><br><span class="line">      tree.visit(<span class="function"><span class="params">f</span> =&gt;</span> <span class="built_in">console</span>.log(f));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/dYhIUIM.png" alt></p>
+</li>
+<li>
+<p><code>source(tree: Tree)</code>：將 <code>Tree</code> 轉換成 <code>Source</code> 型別</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> filterRule = filter(<span class="function"><span class="params">x</span> =&gt;</span> x.endsWith(<span class="string">'ts'</span>));</span><br><span class="line">    <span class="keyword">const</span> files = apply(source(tree), [filterRule])(context) <span class="keyword">as</span> Observable&lt;</span><br><span class="line">      Tree</span><br><span class="line">    &gt;;</span><br><span class="line">    files.subscribe(<span class="function"><span class="params">tree</span> =&gt;</span> &#123;</span><br><span class="line">      tree.visit(<span class="function"><span class="params">f</span> =&gt;</span> <span class="built_in">console</span>.log(f));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>empty()</code>： 回傳一個空的 <code>Tree</code></p>
+</li>
+<li>
+<p><code>asSource (rule: Rule)</code> 將規則轉換成 <code>source</code></p>
+</li>
+</ul>
+<p>這邊會發現我在 <code>source</code> 物件後面加上 <code>(context)</code> ，這個動作是將 <code>source</code> 型別進行處理並會回傳 <code>Tree | Observable&lt;Tree&gt;</code> 型別的資料，之後的操作就跟操作 <code>Tree</code> 是一模一樣的</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Source = <span class="function">(<span class="params">context: SchematicContext</span>) =&gt;</span> Tree | Observable&lt;Tree&gt;;</span><br></pre></td></tr></table></figure>
+<h3 id="rule"><a class="header-anchor" href="#rule"> </a>Rule</h3>
+<ul>
+<li><code>chain(rules: Rule[]): Rule</code> ： 將 Rule 串接在一起</li>
+<li><code>mergeWith(source: Source, strategy: MergeStrategy = MergeStrategy.Default): Rule</code> 將 <code>source</code> 與 <code>Tree</code> 做合併 (直接修改)</li>
+<li><code>noop() : Rule</code>：回傳沒有任何動作的 <code>Rule</code></li>
+<li><code>filter(predicate: FilePredicate&lt;boolean&gt;): Rule</code>：過濾規則</li>
+<li><code>branchAndMerge(rule: Rule, strategy = MergeStrategy.Default): Rule</code>：與目前的 Tree (複製) 合併並回傳一份新的 Tree</li>
+<li><code>partitionApplyMerge(predicate: FilePredicate&lt;boolean&gt;, ruleYes: Rule , ruleNo?: Rule): Rule</code>：根據條件執行對應的 <code>Rule</code></li>
+<li><code>forEach(operator: FileOperator): Rule</code>：批次直型傳進的 <code>FileOperator</code></li>
+<li><code>move(from: string, to?: string): Rule</code>：移動檔案至資料夾</li>
+<li><code>rename(match: FilePredicate&lt;boolean&gt;, to: FilePredicate&lt;string&gt;): Rule</code>：將符合條件的檔案更換名稱</li>
+<li><code>externalSchematic&lt;OptionT extends object&gt;(collectionName: string, schematicName: string, options: OptionT): Rule</code>：執行第三方 schematics 的命令</li>
+<li><code>schematic&lt;OptionT extends object&gt;(schematicName: string, options: OptionT): Rule</code>：執行其他的 schematics 命令</li>
+<li><code>template&lt;T&gt;(options: T): Rule</code>：樣板套用，包含檔案內容與檔名路徑的部分轉換</li>
+<li><code>pathTemplate&lt;T extends PathTemplateData&gt;(options: T): Rule</code>：轉換檔名路徑至對應的內容</li>
+<li><code>contentTemplate&lt;T&gt;(options: T): Rule</code>：轉換檔名內容的變數至對應的內容</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Rule = <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> Tree | Observable&lt;Tree&gt; | Rule | <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
+<p><code>Tree</code>、<code>source</code> 與 <code>Rule</code> 間的關係其實很密切，將這三者的控制弄熟之後，就可以寫出功能很強大的 schematics，而不是單純的從別人的 schematics 複製貼上，卻不懂每一個動作的意義。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://github.com/angular/angular-cli/blob/master/packages/angular_devkit/schematics/README.md" target="_blank" rel="noopener">Schematics</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Angular/" rel="tag"># Angular</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/01/ef-oracle-code-first/" rel="next" title="[EF6] Oracle with Code First 設定">
+                <i class="fa fa-chevron-left"></i> [EF6] Oracle with Code First 設定
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/17/typescript-compiler/" rel="prev" title="[TypeScript] Compiler API 第一次接觸">
+                [TypeScript] Compiler API 第一次接觸 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    
+      <div>
+        <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
+            
+              <p class="site-author-name" itemprop="name">KevinYang</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">300</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情連結
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本簡介"><span class="nav-number">1.</span> <span class="nav-text"> 基本簡介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#檔案系統操作"><span class="nav-number">2.</span> <span class="nav-text"> 檔案系統操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#型別"><span class="nav-number">2.1.</span> <span class="nav-text"> 型別</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.2.</span> <span class="nav-text"> 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tree"><span class="nav-number">2.2.1.</span> <span class="nav-text"> Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source"><span class="nav-number">2.2.2.</span> <span class="nav-text"> Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rule"><span class="nav-number">2.2.3.</span> <span class="nav-text"> Rule</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text"> 總結</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">4.</span> <span class="nav-text"> 參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div class="gooAd sidebar-inner" style="display: block;">
+        <!-- Google AdSense start -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog-sidebar -->
+<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+     </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/";
+    this.page.identifier = "2018/08/16/angular-schematics-filesystem/";
+    this.page.title = '[Angular] Schematics 內檔案系統基本操作 ';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

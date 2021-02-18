@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-TW">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+     google_ad_client: "ca-pub-7997572949867824",
+     enable_page_level_ads: true
+   });
+ </script>
+
+
+  <meta name="description" content="Angular CLI 8 提供建立 web worker 的指令，這一個指令能幫助我們建立相關的檔案及修正相關要調整的設定，剩下的就是功能實作及在何處使用 web worker 了。 Web worker 是什麼?  我們都知道 JavaScript 基本上是一個單執行緒的語言，web worker 可以讓我們多開一條執行緒，這樣子的好處就是可以將高計算的工作放到 worker 內運算，善用現代">
+<meta name="keywords" content="Angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Web worker">
+<meta property="og:url" content="http://blog.kevinyang.net/2019/06/07/angular-web-worker/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Angular CLI 8 提供建立 web worker 的指令，這一個指令能幫助我們建立相關的檔案及修正相關要調整的設定，剩下的就是功能實作及在何處使用 web worker 了。 Web worker 是什麼?  我們都知道 JavaScript 基本上是一個單執行緒的語言，web worker 可以讓我們多開一條執行緒，這樣子的好處就是可以將高計算的工作放到 worker 內運算，善用現代">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/06/07/angular-web-worker/web-worker.jpg">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/06/07/angular-web-worker/service-worker.jpg">
+<meta property="og:updated_time" content="2021-02-18T02:39:29.056Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Angular] Web worker">
+<meta name="twitter:description" content="Angular CLI 8 提供建立 web worker 的指令，這一個指令能幫助我們建立相關的檔案及修正相關要調整的設定，剩下的就是功能實作及在何處使用 web worker 了。 Web worker 是什麼?  我們都知道 JavaScript 基本上是一個單執行緒的語言，web worker 可以讓我們多開一條執行緒，這樣子的好處就是可以將高計算的工作放到 worker 內運算，善用現代">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2019/06/07/angular-web-worker/web-worker.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.kevinyang.net/2019/06/07/angular-web-worker/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[Angular] Web worker | CK's Notepad</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-56711593-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CK's Notepad</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/06/07/angular-web-worker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/4550568.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Angular] Web worker
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2019-06-07 10:18:40" itemprop="dateCreated datePublished" datetime="2019-06-07T10:18:40+08:00">2019-06-07</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">評論數：</span>
+                <a href="/2019/06/07/angular-web-worker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/07/angular-web-worker/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Angular CLI 8 提供建立 web worker 的指令，這一個指令能幫助我們建立相關的檔案及修正相關要調整的設定，剩下的就是功能實作及在何處使用 web worker 了。</p>
+<p>Web worker 是什麼?  我們都知道 JavaScript 基本上是一個單執行緒的語言，web worker 可以讓我們多開一條執行緒，這樣子的好處就是可以將高計算的工作放到 worker 內運算，善用現代電腦的強大硬體。</p>
+<a id="more"></a>
+<h1 id="概述"><a class="header-anchor" href="#概述"> </a>概述</h1>
+<p>Web Worker 一旦被建立起來後，就會一直運行，所以在使用上要留意關閉的時機點，避免資源浪費，Web Worker 可以讓我們多開戰場，但還是有其使用上的限制，有以下幾點需要留意的</p>
+<ol>
+<li><strong>必須來至相同的網址</strong>:  web worker 的程式不能跨網域的讀取</li>
+<li><strong>DOM操作限制</strong>:
+<ol>
+<li>不能使用:  <code>doucment</code>、<code>window</code>、<code>parent</code>  物件</li>
+<li>可以使用: <code>navigator</code> 、<code>location</code></li>
+</ol>
+</li>
+<li><strong>溝通</strong>: <code>Worker</code> 與 <code>Main Thread</code> 不能直接溝通，必須透過 <code>Message</code> 來溝通</li>
+<li><strong>腳本限制</strong>: 不能使用 <code>alert()</code> 和 <code>confirm()</code> 但可以使用 <code>XMLHttpRequest</code></li>
+<li><strong>檔案限制</strong>: 不能讀取本機檔案 (<code>file://</code>)，但可以讀取網路上的</li>
+</ol>
+<h1 id="基本用法"><a class="header-anchor" href="#基本用法"> </a>基本用法</h1>
+<h2 id="main-thread"><a class="header-anchor" href="#main-thread"> </a>Main Thread</h2>
+<h3 id="建立"><a class="header-anchor" href="#建立"> </a>建立</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> worker = <span class="keyword">new</span> Worker(<span class="string">'worker.js'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="傳遞訊息"><a class="header-anchor" href="#傳遞訊息"> </a>傳遞訊息</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">worker.postMessage(data);</span><br></pre></td></tr></table></figure>
+<p><code>postMessage</code> 就是 <code>Main Thread</code> 與 <code>Worker</code> 間傳遞訊息的方法</p>
+<h3 id="接受訊息"><a class="header-anchor" href="#接受訊息"> </a>接受訊息</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">worker.onmessage = <span class="function">(<span class="params">event</span>)=&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// code here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="關閉"><a class="header-anchor" href="#關閉"> </a>關閉</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">worker.terminate();</span><br></pre></td></tr></table></figure>
+<h3 id="worker-例外狀況處理"><a class="header-anchor" href="#worker-例外狀況處理"> </a>Worker 例外狀況處理</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">worker.onerror = <span class="function">(<span class="params">error</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// handle exception here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="worker"><a class="header-anchor" href="#worker"> </a>Worker</h2>
+<h3 id="接受訊息-v2"><a class="header-anchor" href="#接受訊息-v2"> </a>接受訊息</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">addEventListener(<span class="string">'message'</span>, <span class="function">(<span class="params">&#123; data &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// code here</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="傳送訊息"><a class="header-anchor" href="#傳送訊息"> </a>傳送訊息</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postMessage(data);</span><br></pre></td></tr></table></figure>
+<p>透過 <code>postMessage</code> 的方法可以從 <code>worker</code> 傳送訊息到 <code>Main Thread</code></p>
+<h3 id="引用-library"><a class="header-anchor" href="#引用-library"> </a>引用 Library</h3>
+<p>在 worker 內一樣可以使用 JavaScript Library, 引用方式如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">importScripts(<span class="string">'script.js'</span>);</span><br><span class="line"></span><br><span class="line">importScripts(<span class="string">'script1.js'</span>, <span class="string">'script2.js'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="錯誤處理"><a class="header-anchor" href="#錯誤處理"> </a>錯誤處理</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">addEventListener(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// handle exception here</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="關閉-v2"><a class="header-anchor" href="#關閉-v2"> </a>關閉</h3>
+<p>Worker 也可以自我關閉</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">close();</span><br></pre></td></tr></table></figure>
+<h1 id="angular-用法"><a class="header-anchor" href="#angular-用法"> </a>Angular 用法</h1>
+<h2 id="建立-worker-檔案"><a class="header-anchor" href="#建立-worker-檔案"> </a>建立 worker 檔案</h2>
+<p>透過 Angular CLI 可以快速的建立及設定相關的環境，指令是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g webWorker &lt;worker-name&gt;</span><br></pre></td></tr></table></figure>
+<p>該指令會做以下的幾件事情</p>
+<ol>
+<li>新增 <code>&lt;worker-name&gt;.worker.ts</code> 檔案</li>
+<li>新增 <code>tsconfig.worker.json</code> 檔案</li>
+<li>更新  <code>tsconfig.app.json</code> 檔案，排除 <code>worker.ts</code> 檔案</li>
+<li>更新 <code>angular.json</code> 檔案，新增讀取 worker 相關的設定</li>
+</ol>
+<h2 id="使用-web-worker"><a class="header-anchor" href="#使用-web-worker"> </a>使用 Web Worker</h2>
+<p>在 Angular 內不論是 component 或是 service 都可以使用，基本使用方式為</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> Worker !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">     <span class="keyword">const</span> worker = <span class="keyword">new</span> Worker(<span class="string">'./my-worker.worker'</span>, &#123; <span class="keyword">type</span>: <span class="string">'module'</span> &#125;);</span><br><span class="line"> <span class="comment">// 監聽訊息</span></span><br><span class="line">    <span class="comment">// 不使用 rxjs</span></span><br><span class="line">     worker.onmessage = <span class="function">(<span class="params">&#123; data &#125;</span>) =&gt;</span> &#123;        </span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">'got message back:'</span>, data);</span><br><span class="line">     &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 rxjs</span></span><br><span class="line">     fromEvent&lt;<span class="built_in">any</span>&gt;<span class="function">(<span class="params">worker, 'message'</span>).<span class="params">subscribe</span>(<span class="params">(<span class="params">&#123; data &#125;</span>) =&gt; &#123;</span></span></span><br><span class="line"><span class="function"><span class="params">       <span class="built_in">console</span>.log(<span class="params">'rxjs version:', data</span>);</span></span></span><br><span class="line"><span class="function"><span class="params">     &#125;</span>);</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">     </span></span><br><span class="line"><span class="function">     <span class="params">worker</span>.<span class="params">postMessage</span>(<span class="params">'Hello'</span>);</span></span><br><span class="line"><span class="function">   &#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 2: 建立 worker，第二個參數可以設定以下的項目 (Optional)
+<ul>
+<li><strong>type</strong>: 指定建立的類型， 預設為 <code>classic</code> ，可設定的選項是 <code>classic</code> 和 <code>module</code>
+<ul>
+<li>設定為 <code>module</code> 類型時 ，可以使用 <code>import {} from xxx</code> 語法</li>
+</ul>
+</li>
+<li><strong>credentials</strong>: 指定 <code>credentials</code> 類型，可設定的選項有 <code>omit</code> 、<code>same-origin</code>、<code>include</code>，如果 <code>type</code> 的設定為 <code>classic</code> 時，此設定為 <code>omit</code> (不需要 credentials)</li>
+<li><strong>name</strong>: 設定 workder 名稱，通常使用於 Debugging 時期 (IE、Safari 不支援)</li>
+</ul>
+</li>
+<li>line 5~12: 兩種監聽 <code>Worker</code> 傳回訊息的方式
+<ul>
+<li>基本寫法</li>
+<li>使用 rxjs 的方式</li>
+</ul>
+</li>
+<li>line 15: 送訊息到 worker</li>
+</ul>
+<h1 id="應用範例"><a class="header-anchor" href="#應用範例"> </a>應用範例</h1>
+<p>假設我想要做一個定期撈資料的功能，這一個功能雖然可以在 service 內寫 timer 定期去完成。如果想要放到 web worker 內，又該如何完成了，又不能再 web worker 內使用 <code>httpClient</code> 的物件。</p>
+<p>這裡有幾個選擇，既然可以使用 <code>import</code> 的方式載入第三方的套件，這裡就用 rxjs 內的 ajax 物件來做示範</p>
+<ul>
+<li>my.worker.ts</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// &lt;reference lib="webworker" /&gt;</span></span><br><span class="line"><span class="keyword">import</span> &#123; takeUntil, concatMap &#125; <span class="keyword">from</span> <span class="string">'rxjs/operators'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; timer, Subject &#125; <span class="keyword">from</span> <span class="string">'rxjs'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ajax &#125; <span class="keyword">from</span> <span class="string">'rxjs/ajax'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> destory$ = <span class="keyword">new</span> Subject();</span><br><span class="line"><span class="keyword">const</span> queryGithub = <span class="function"><span class="params">()</span> =&gt;</span></span><br><span class="line">  ajax.getJSON(<span class="string">'https://api.github.com/users?per_page=5'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> longPolling = <span class="function"><span class="params">()</span> =&gt;</span></span><br><span class="line">  timer(<span class="number">1000</span>, <span class="number">1000</span>).pipe(</span><br><span class="line">    concatMap(<span class="function"><span class="params">()</span> =&gt;</span> queryGithub()),</span><br><span class="line">    takeUntil(destory$)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">addEventListener(<span class="string">'message'</span>, <span class="function">(<span class="params">&#123; data &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (data) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'start'</span>:</span><br><span class="line">      longPolling().subscribe(<span class="function"><span class="params">value</span> =&gt;</span> postMessage(value));</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'stop'</span>:</span><br><span class="line">      destory$.next();</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>app-component.ts</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, OnInit &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;button (click)="start()"&gt;start&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;button (click)="stop()"&gt;stop&lt;/button&gt;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  title = <span class="string">'ngWorker'</span>;</span><br><span class="line">  <span class="keyword">private</span> worker: Worker;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> Worker !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.worker = <span class="keyword">new</span> Worker(<span class="string">'./my.worker'</span>, &#123; <span class="keyword">type</span>: <span class="string">'module'</span> &#125;);</span><br><span class="line">      <span class="comment">// 監聽訊息</span></span><br><span class="line">      <span class="keyword">this</span>.worker.onmessage = <span class="function">(<span class="params">&#123; data &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Data:'</span>, data);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  start() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.worker) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.worker.postMessage(<span class="string">'start'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  stop() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.worker) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.worker.postMessage(<span class="string">'stop'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="web-worker-與-service-worker-的差異"><a class="header-anchor" href="#web-worker-與-service-worker-的差異"> </a>Web Worker 與 Service Worker 的差異</h1>
+<p>以下兩張圖快速解釋 Web Worker 與 Service Worker 各自負責的事情</p>
+<h2 id="web-worker"><a class="header-anchor" href="#web-worker"> </a>Web Worker</h2>
+<p><img src="web-worker.jpg" alt="web-worker"></p>
+<h2 id="service-worker"><a class="header-anchor" href="#service-worker"> </a>Service Worker</h2>
+<p><img src="service-worker.jpg" alt="service-worker"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Angular/" rel="tag"># Angular</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/29/angular-static-viewchild/" rel="next" title="[Angular] Static Query 是什麼?">
+                <i class="fa fa-chevron-left"></i> [Angular] Static Query 是什麼?
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/01/rxjs-notification/" rel="prev" title="[RxJS] Notification ">
+                [RxJS] Notification  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    
+      <div>
+        <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
+            
+              <p class="site-author-name" itemprop="name">KevinYang</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">300</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情連結
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本用法"><span class="nav-number">2.</span> <span class="nav-text"> 基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#main-thread"><span class="nav-number">2.1.</span> <span class="nav-text"> Main Thread</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立"><span class="nav-number">2.1.1.</span> <span class="nav-text"> 建立</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#傳遞訊息"><span class="nav-number">2.1.2.</span> <span class="nav-text"> 傳遞訊息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接受訊息"><span class="nav-number">2.1.3.</span> <span class="nav-text"> 接受訊息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#關閉"><span class="nav-number">2.1.4.</span> <span class="nav-text"> 關閉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#worker-例外狀況處理"><span class="nav-number">2.1.5.</span> <span class="nav-text"> Worker 例外狀況處理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#worker"><span class="nav-number">2.2.</span> <span class="nav-text"> Worker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接受訊息-v2"><span class="nav-number">2.2.1.</span> <span class="nav-text"> 接受訊息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#傳送訊息"><span class="nav-number">2.2.2.</span> <span class="nav-text"> 傳送訊息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用-library"><span class="nav-number">2.2.3.</span> <span class="nav-text"> 引用 Library</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#錯誤處理"><span class="nav-number">2.2.4.</span> <span class="nav-text"> 錯誤處理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#關閉-v2"><span class="nav-number">2.2.5.</span> <span class="nav-text"> 關閉</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#angular-用法"><span class="nav-number">3.</span> <span class="nav-text"> Angular 用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立-worker-檔案"><span class="nav-number">3.1.</span> <span class="nav-text"> 建立 worker 檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-web-worker"><span class="nav-number">3.2.</span> <span class="nav-text"> 使用 Web Worker</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#應用範例"><span class="nav-number">4.</span> <span class="nav-text"> 應用範例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#web-worker-與-service-worker-的差異"><span class="nav-number">5.</span> <span class="nav-text"> Web Worker 與 Service Worker 的差異</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#web-worker"><span class="nav-number">5.1.</span> <span class="nav-text"> Web Worker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service-worker"><span class="nav-number">5.2.</span> <span class="nav-text"> Service Worker</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div class="gooAd sidebar-inner" style="display: block;">
+        <!-- Google AdSense start -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog-sidebar -->
+<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+     </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2019/06/07/angular-web-worker/";
+    this.page.identifier = "2019/06/07/angular-web-worker/";
+    this.page.title = '[Angular] Web worker';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

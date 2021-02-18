@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-TW">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+     google_ad_client: "ca-pub-7997572949867824",
+     enable_page_level_ads: true
+   });
+ </script>
+
+
+  <meta name="description" content="跟著 Ben Lesh 在 Google 分享範例，從頭練習一次。這個範例是利用 RxJS 來實做 Pull To Refresh 的功能。">
+<meta name="keywords" content="Angular,RxJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[RxJS] 練習曲(1) - pull to refresh">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/09/01/rxjs-practice-1/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="跟著 Ben Lesh 在 Google 分享範例，從頭練習一次。這個範例是利用 RxJS 來實做 Pull To Refresh 的功能。">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="http://i.imgur.com/SEPYv2G.gif">
+<meta property="og:image" content="http://i.imgur.com/vjL13RV.png">
+<meta property="og:updated_time" content="2021-02-18T02:39:29.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[RxJS] 練習曲(1) - pull to refresh">
+<meta name="twitter:description" content="跟著 Ben Lesh 在 Google 分享範例，從頭練習一次。這個範例是利用 RxJS 來實做 Pull To Refresh 的功能。">
+<meta name="twitter:image" content="http://i.imgur.com/SEPYv2G.gif">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.kevinyang.net/2017/09/01/rxjs-practice-1/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[RxJS] 練習曲(1) - pull to refresh | CK's Notepad</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-56711593-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CK's Notepad</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/09/01/rxjs-practice-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/4550568.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[RxJS] 練習曲(1) - pull to refresh
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2017-09-01 09:54:30" itemprop="dateCreated datePublished" datetime="2017-09-01T09:54:30+08:00">2017-09-01</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">評論數：</span>
+                <a href="/2017/09/01/rxjs-practice-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/01/rxjs-practice-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>跟著 <a href="https://twitter.com/BenLesh" target="_blank" rel="noopener">Ben Lesh</a> 在 Google <a href="https://www.youtube.com/watch?v=DBai5EEFioI" target="_blank" rel="noopener">分享範例</a>，從頭練習一次。這個範例是利用 RxJS 來實做 <strong>Pull To Refresh</strong> 的功能。</p>
+<a id="more"></a>
+<p>Pull To Refresh 這個效果在很多的手機 App 上面常看到，例如 FB、Twitter 等</p>
+<p><img src="http://i.imgur.com/SEPYv2G.gif" alt></p>
+<p>這一個練習，就是要透過 RxJS 來實作這一個功能出來</p>
+<h1 id="實作步驟"><a class="header-anchor" href="#實作步驟"> </a>實作步驟</h1>
+<h2 id="1-先建立讀取使用者資料的-service"><a class="header-anchor" href="#1-先建立讀取使用者資料的-service"> </a>1.先建立讀取使用者資料的 service</h2>
+<p>假的使用者資料 API 可以從我架設的 RandomAPI 位置取得</p>
+<blockquote>
+<p>API 網址 : <a href="https://randomapi.azurewebsites.net/api/users" target="_blank" rel="noopener">https://randomapi.azurewebsites.net/api/users</a></p>
+</blockquote>
+<p>建立 <code>UserFeedService</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/map'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/observable/empty'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/catch'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;HttpClient&#125; <span class="keyword">from</span> <span class="string">'@angular/common/http'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> api = <span class="string">'https://randomapi.azurewebsites.net/api/users'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UserFeedService &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> http: HttpClient</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  getUsers(): Observable&lt;<span class="built_in">any</span>[]|&#123;&#125;&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get&lt;<span class="built_in">any</span>[]&gt;(api)</span><br><span class="line">        .map(<span class="function"><span class="params">users</span> =&gt;</span> users.slice(<span class="number">0</span>, <span class="number">10</span>))</span><br><span class="line">        .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'an error occured'</span>, err);</span><br><span class="line">          <span class="keyword">return</span> Observable.empty();</span><br><span class="line">        &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡我們使用  <code>HttpClient</code> ，記得在 <code>AppModule</code> 載入 <code>HttpClientModule</code></p>
+<h2 id="2-建立新的-component-用來顯示使用者資料"><a class="header-anchor" href="#2-建立新的-component-用來顯示使用者資料"> </a>2.建立新的 Component 用來顯示使用者資料</h2>
+<p>建立 <code>LatestUsersComponent</code>，並將 component 加到 app.component.html 裡</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;UserFeedService&#125; <span class="keyword">from</span> <span class="string">'../user-feed.service'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-latest-users'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;h3&gt;Latest Users&lt;/h3&gt;</span></span><br><span class="line"><span class="string">  &lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;article *ngFor="let user of (users$ | async)"&gt;</span></span><br><span class="line"><span class="string">      &lt;h4&gt;&#123;&#123; user.first &#125;&#125; &#123;&#123; user.last &#125;&#125;&lt;/h4&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;Joined: &#123;&#123; user.created | date: 'yyyy/MM/dd' &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;Balance: &#123;&#123; user.balance | currency: 'USD': true &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;Contact: &#123;&#123; user.address &#125;&#125;, &#123;&#123; user.email &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/article&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styles: []</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LatestUsersComponent &#123;</span><br><span class="line">  users$ = <span class="keyword">this</span>.userFeedService.getUsers();</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> userFeedService: UserFeedService</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-定時重新讀取使用者資料"><a class="header-anchor" href="#3-定時重新讀取使用者資料"> </a>3.定時重新讀取使用者資料</h2>
+<blockquote>
+<p>希望每 10 秒鐘，重新撈一次資料</p>
+</blockquote>
+<p>在 <code>LatestUsersComponent</code> 裡面在多一個 Observable 用來觸發 <code>getUsers()</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LatestUsersComponent &#123;</span><br><span class="line">  updateUsersTrigger$ = Observable.timer(<span class="number">0</span>, <span class="number">10000</span>);</span><br><span class="line">  users$ = <span class="keyword">this</span>.updateUsersTrigger$</span><br><span class="line">               .switchMap(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.userFeedService.getUsers());</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣的改寫，當註冊當下 ( async piple ) 會先呼叫一次 <code>getUsers()</code>，在之後每 10 秒會觸發 <code>getUsers()</code></p>
+<h2 id="4-建立-loadnotifyservice"><a class="header-anchor" href="#4-建立-loadnotifyservice"> </a>4.建立 LoadNotifyService</h2>
+<p>接下來要準備實作 <code>pull to refresh</code> 的功能，我們需要兩個通知器，一個負責<strong>請求讀取資料</strong>，另一個是**回傳資料讀取完成 **，這個通知器可以使用 <code>Subject</code> 來實作即可</p>
+<p>建立 <code>LoadNotifyService</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Subject&#125; <span class="keyword">from</span> <span class="string">'rxjs/Subject'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LoadNotifyService &#123;</span><br><span class="line">  requestLoad$ = <span class="keyword">new</span> Subject&lt;<span class="built_in">any</span>&gt;();</span><br><span class="line">  loadComplete$ = <span class="keyword">new</span> Subject&lt;<span class="built_in">any</span>&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-將通知功能加入到-latestuserscomponent"><a class="header-anchor" href="#5-將通知功能加入到-latestuserscomponent"> </a>5. 將通知功能加入到 LatestUsersComponent</h2>
+<p><code>updateUsersTrigger$</code> 現在除了每 10 秒會發出一次資料，當有人請求更新資料時，也會發出一筆資料。當 <code>getUsers()</code> 完成讀取資料時，會發出 <code>loadComplete$</code> 的通知</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LatestUsersComponent &#123;</span><br><span class="line">  updateUsersTrigger$ =</span><br><span class="line">      Observable.timer(<span class="number">0</span>, <span class="number">10000</span>).merge(<span class="keyword">this</span>.loadNotifyService.requestLoad$);</span><br><span class="line">  users$ =</span><br><span class="line">      <span class="keyword">this</span>.updateUsersTrigger$.switchMap(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.userFeedService.getUsers())</span><br><span class="line">          .do(<span class="keyword">this</span>.loadNotifyService.loadComplete$);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">      <span class="keyword">private</span> userFeedService: UserFeedService,</span></span><br><span class="line"><span class="params">      <span class="keyword">private</span> loadNotifyService: LoadNotifyService</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-建立新的-component-來負責-pull-to-refresh-的功能"><a class="header-anchor" href="#6-建立新的-component-來負責-pull-to-refresh-的功能"> </a>6.建立新的 Component 來負責 <strong>pull to refresh</strong> 的功能</h2>
+<p>建立 <code>PullToRefreshComponent</code> 並加到 <code>LatestUsersComponent</code> 裡</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-pull-to-refresh'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;div style="position: absolute; top: 0; left: 50%"&gt;</span></span><br><span class="line"><span class="string">    &lt;div style="margin-left: -35px"&gt;</span></span><br><span class="line"><span class="string">      &lt;svg width="70px" height="70"&gt;</span></span><br><span class="line"><span class="string">        &lt;circle cy="35" cx="35" r="35" fill="lightgrey"&gt;&lt;/circle&gt;</span></span><br><span class="line"><span class="string">        &lt;circle cy="15" cx="35" r="10" fill="black"&gt;&lt;/circle&gt;</span></span><br><span class="line"><span class="string">      &lt;/svg&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styles: []</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PullToRefreshComponent &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="7-實作往-pull-to-refresh-動作"><a class="header-anchor" href="#7-實作往-pull-to-refresh-動作"> </a>7.實作往 Pull To Refresh 動作</h2>
+<p>先來分析一下要實作功能會有哪些動作</p>
+<ol>
+<li><code>touchstart</code></li>
+<li><code>tocuhmove</code></li>
+<li>計算移動的距離，決定是否出發撈資料的請求</li>
+<li>如果符合條件，則發出請求</li>
+<li><code>touchend</code></li>
+<li>如果有發出撈資料的請求時，等待完成讀取資料動作，並恢復初始狀態</li>
+<li>如果沒有發出撈資料的請求，恢復初始狀態</li>
+</ol>
+<p>步驟1，需要先將 <code>touchstart</code>、<code>touchmove</code> 和 <code>touchend</code> 事件轉換成 Observable</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">touchstart$ = Observable.fromEvent&lt;TouchEvent&gt;(<span class="built_in">document</span>, <span class="string">'touchstart'</span>);</span><br><span class="line">touchend$ = Observable.fromEvent&lt;TouchEvent&gt;(<span class="built_in">document</span>, <span class="string">'touchend'</span>);</span><br><span class="line">touchmove$ = Observable.fromEvent&lt;TouchEvent&gt;(<span class="built_in">document</span>, <span class="string">'touchmove'</span>);</span><br></pre></td></tr></table></figure>
+<p>步驟2，計算開始後手指滑動的距離</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">drag$ = <span class="keyword">this</span>.touchstart$.switchMap(<span class="function"><span class="params">start</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="keyword">let</span> pos = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">this</span>.touchmove$</span><br><span class="line">       .map(<span class="function"><span class="params">move</span> =&gt;</span> move.touches[<span class="number">0</span>].pageY - start.touches[<span class="number">0</span>].pageY)</span><br><span class="line">       .do(<span class="function"><span class="params">p</span> =&gt;</span> pos = p)</span><br><span class="line">       .takeUntil(<span class="keyword">this</span>.touchend$);</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<p>步驟3，判斷是否要發出通知，如果已經發出請求通知，停止 Observable</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">drag$ = <span class="keyword">this</span>.touchstart$ </span><br><span class="line">    .switchMap(<span class="function"><span class="params">start</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> pos = <span class="number">0</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.touchmove$</span><br><span class="line">        .map(<span class="function"><span class="params">move</span> =&gt;</span> move.touches[<span class="number">0</span>].pageY - start.touches[<span class="number">0</span>].pageY)</span><br><span class="line">        .do(<span class="function"><span class="params">p</span> =&gt;</span> pos = p)</span><br><span class="line">        .takeUntil(<span class="keyword">this</span>.touchend$)</span><br><span class="line">        .concat(Observable.defer(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.tweenObservable(pos, <span class="number">0</span>, <span class="number">200</span>)))</span><br><span class="line">    &#125;)</span><br><span class="line">    .do(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (p &gt;= <span class="built_in">window</span>.innerHeight / <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.loadNotification.requestLoad$.next()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .takeWhile(<span class="function"><span class="params">p</span> =&gt;</span> p &lt; <span class="built_in">window</span>.innerHeight / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>步驟4，當上述動作完成時，Observable 本身會停止，可透過 <code>repeat()</code> 重新啟動</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">drag$ = <span class="keyword">this</span>.touchstart$</span><br><span class="line">            .switchMap(<span class="function"><span class="params">start</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> pos = <span class="number">0</span>;</span><br><span class="line">              <span class="keyword">return</span> <span class="keyword">this</span>.touchmove$</span><br><span class="line">                  .map(<span class="function"><span class="params">move</span> =&gt;</span> move.touches[<span class="number">0</span>].pageY - start.touches[<span class="number">0</span>].pageY)</span><br><span class="line">                  .do(<span class="function"><span class="params">p</span> =&gt;</span> pos = p)</span><br><span class="line">                  .takeUntil(<span class="keyword">this</span>.touchend$);</span><br><span class="line">            &#125;)</span><br><span class="line">            .do(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">if</span> (p &gt;= <span class="built_in">window</span>.innerHeight / <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">this</span>.loadNotification.requestLoad$.next();</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            .takeWhile(<span class="function"><span class="params">p</span> =&gt;</span> p &lt; <span class="built_in">window</span>.innerHeight / <span class="number">2</span>)</span><br><span class="line">            .repeat();</span><br></pre></td></tr></table></figure>
+<p>步驟5，記錄目前所在位置，加上動畫功能，將該 Observable  綁定到 template 上</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">currentPos = <span class="number">0</span>;</span><br><span class="line">position$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.drag$</span><br><span class="line">    .merge(<span class="keyword">this</span>.completeAnimation$)</span><br><span class="line">    .startWith(<span class="number">0</span>)</span><br><span class="line">    .do(<span class="function"><span class="params">pos</span> =&gt;</span> <span class="keyword">this</span>.currentPos = pos)</span><br><span class="line"></span><br><span class="line">positionTranslate3d$: Observable&lt;<span class="built_in">string</span>&gt; = <span class="keyword">this</span>.position$.map(<span class="function"><span class="params">p</span> =&gt;</span> <span class="string">`translate3d(0, <span class="subst">$&#123;p - <span class="number">70</span>&#125;</span>px, 0)`</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"position: absolute; top: 0; left: 50%"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"margin-left: -35px"</span> [<span class="attr">style.transform</span>]=<span class="string">"positionTranslate3d$ | async"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">"70px"</span> <span class="attr">height</span>=<span class="string">"70"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cy</span>=<span class="string">"35"</span> <span class="attr">cx</span>=<span class="string">"35"</span> <span class="attr">r</span>=<span class="string">"35"</span> <span class="attr">fill</span>=<span class="string">"lightgrey"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cy</span>=<span class="string">"15"</span> <span class="attr">cx</span>=<span class="string">"35"</span> <span class="attr">r</span>=<span class="string">"10"</span> <span class="attr">fill</span>=<span class="string">"black"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>到這個步驟時，畫面已經可以往下拉的效果，而且也可以送出重新讀取資料的請求了</p>
+<p><img src="http://i.imgur.com/vjL13RV.png" alt></p>
+<p>步驟6: 當放掉或當資料讀取完成後，要恢復至初始狀態</p>
+<p>先處理資料讀取完成後，恢復至初始狀態</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">completeAnimation$ = <span class="keyword">this</span>.loadNotification.loadComplete$</span><br><span class="line">    .map(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.currentPos)</span><br><span class="line">    .switchMap(<span class="function"><span class="params">currentPos</span> =&gt;</span> <span class="keyword">this</span>.tweenObservable(currentPos, <span class="number">0</span> , <span class="number">200</span>));</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">position$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.drag$</span><br><span class="line">    .merge(<span class="keyword">this</span>.completeAnimation$)</span><br><span class="line">    .startWith(<span class="number">0</span>)</span><br><span class="line">    .do(<span class="function"><span class="params">pos</span> =&gt;</span> <span class="keyword">this</span>.currentPos = pos);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> tweenObservable(start, end, time) &#123;</span><br><span class="line">  <span class="keyword">const</span> emissions = time / <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">const</span> step = (start - end) / emissions;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> Observable.timer(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">      .map(<span class="function"><span class="params">x</span> =&gt;</span> start - step * (x + <span class="number">1</span>))</span><br><span class="line">      .take(emissions);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在來處理未觸發資料讀取請求時，當手指頭離開畫面時，也需要恢復初始狀態</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">drag$ = <span class="keyword">this</span>.touchstart$ </span><br><span class="line">    .switchMap(<span class="function"><span class="params">start</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> pos = <span class="number">0</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.touchmove$</span><br><span class="line">        .map(<span class="function"><span class="params">move</span> =&gt;</span> move.touches[<span class="number">0</span>].pageY - start.touches[<span class="number">0</span>].pageY)</span><br><span class="line">        .do(<span class="function"><span class="params">p</span> =&gt;</span> pos = p)</span><br><span class="line">        .takeUntil(<span class="keyword">this</span>.touchend$)</span><br><span class="line">        .concat(Observable.defer(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.tweenObservable(pos, <span class="number">0</span>, <span class="number">200</span>))) <span class="comment">// 恢復初始狀態</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .do(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (p &gt;= <span class="built_in">window</span>.innerHeight / <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.loadNotification.requestLoad$.next()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .takeWhile(<span class="function"><span class="params">p</span> =&gt;</span> p &lt; <span class="built_in">window</span>.innerHeight / <span class="number">2</span>)</span><br><span class="line">    .repeat()</span><br></pre></td></tr></table></figure>
+<h2 id="8-實作轉圈圈的動作"><a class="header-anchor" href="#8-實作轉圈圈的動作"> </a>8.實作轉圈圈的動作</h2>
+<p>其實到階段 7 時，Pull To Refresh 的功能已經完成了，在多一點讀取時的 loading 效果，讓圈圈旋轉吧</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Start rotating when a request is made and spin until it completes</span></span><br><span class="line">rotate$: Observable&lt;<span class="built_in">number</span>&gt; =</span><br><span class="line">    <span class="keyword">this</span>.loadNotification.requestLoad$.switchMap(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> rot = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.tweenObservable(<span class="number">0</span>, <span class="number">360</span>, <span class="number">500</span>)</span><br><span class="line">          .repeat()</span><br><span class="line">          .do(<span class="function"><span class="params">r</span> =&gt;</span> rot = r)</span><br><span class="line">          .takeUntil(<span class="keyword">this</span>.loadNotification.loadComplete$)</span><br><span class="line">          .concat(Observable.defer(</span><br><span class="line">              () =&gt; <span class="keyword">this</span>.tweenObservable(rot, <span class="number">360</span>, <span class="number">360</span> - rot)));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">rotateTransform$: Observable&lt;<span class="built_in">string</span>&gt; =</span><br><span class="line">    <span class="keyword">this</span>.rotate$.map(<span class="function"><span class="params">r</span> =&gt;</span> <span class="string">`rotate(<span class="subst">$&#123;r&#125;</span>deg)`</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"position: absolute; top: 0; left: 50%"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"margin-left: -35px"</span> [<span class="attr">style.transform</span>]=<span class="string">"positionTranslate3d$ | async"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">"70px"</span> <span class="attr">height</span>=<span class="string">"70"</span> [<span class="attr">style.transform</span>]=<span class="string">"rotateTransform$ | async"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cy</span>=<span class="string">"35"</span> <span class="attr">cx</span>=<span class="string">"35"</span> <span class="attr">r</span>=<span class="string">"35"</span> <span class="attr">fill</span>=<span class="string">"lightgrey"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cy</span>=<span class="string">"15"</span> <span class="attr">cx</span>=<span class="string">"35"</span> <span class="attr">r</span>=<span class="string">"10"</span> <span class="attr">fill</span>=<span class="string">"black"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="完整程式碼"><a class="header-anchor" href="#完整程式碼"> </a>完整程式碼</h1>
+<h2 id="pull-to-refresh-component-ts"><a class="header-anchor" href="#pull-to-refresh-component-ts"> </a>pull-to-refresh.component.ts</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/observable/fromEvent'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/observable/defer'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/takeUntil'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/takeWhile'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/repeat'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/startWith'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/take'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/concat'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;LoadNotifyService&#125; <span class="keyword">from</span> <span class="string">'../load-notify.service'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-pull-to-refresh'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;div style="position: absolute; top: 0; left: 50%"&gt;</span></span><br><span class="line"><span class="string">    &lt;div style="margin-left: -35px" [style.transform]="positionTranslate3d$ | async"&gt;</span></span><br><span class="line"><span class="string">      &lt;svg width="70px" height="70" [style.transform]="rotateTransform$ | async"&gt;</span></span><br><span class="line"><span class="string">        &lt;circle cy="35" cx="35" r="35" fill="lightgrey"&gt;&lt;/circle&gt;</span></span><br><span class="line"><span class="string">        &lt;circle cy="15" cx="35" r="10" fill="black"&gt;&lt;/circle&gt;</span></span><br><span class="line"><span class="string">      &lt;/svg&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styles: []</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PullToRefreshComponent &#123;</span><br><span class="line">  currentPos = <span class="number">0</span>;</span><br><span class="line">  touchstart$ = Observable.fromEvent&lt;TouchEvent&gt;(<span class="built_in">document</span>, <span class="string">'touchstart'</span>);</span><br><span class="line">  touchend$ = Observable.fromEvent&lt;TouchEvent&gt;(<span class="built_in">document</span>, <span class="string">'touchend'</span>);</span><br><span class="line">  touchmove$ = Observable.fromEvent&lt;TouchEvent&gt;(<span class="built_in">document</span>, <span class="string">'touchmove'</span>);</span><br><span class="line"></span><br><span class="line">  completeAnimation$ =</span><br><span class="line">      <span class="keyword">this</span>.loadNotification.loadComplete$.map(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.currentPos)</span><br><span class="line">          .switchMap(<span class="function"><span class="params">currentPos</span> =&gt;</span> <span class="keyword">this</span>.tweenObservable(currentPos, <span class="number">0</span>, <span class="number">200</span>))</span><br><span class="line"></span><br><span class="line">  drag$ = <span class="keyword">this</span>.touchstart$</span><br><span class="line">              .switchMap(<span class="function"><span class="params">start</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> pos = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.touchmove$</span><br><span class="line">                    .map(<span class="function"><span class="params">move</span> =&gt;</span> move.touches[<span class="number">0</span>].pageY - start.touches[<span class="number">0</span>].pageY)</span><br><span class="line">                    .do(<span class="function"><span class="params">p</span> =&gt;</span> pos = p)</span><br><span class="line">                    .takeUntil(<span class="keyword">this</span>.touchend$)</span><br><span class="line">                    .concat(Observable.defer(</span><br><span class="line">                        () =&gt; <span class="keyword">this</span>.tweenObservable(pos, <span class="number">0</span>, <span class="number">200</span>)));</span><br><span class="line">              &#125;)</span><br><span class="line">              .do(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (p &gt;= <span class="built_in">window</span>.innerHeight / <span class="number">2</span>) &#123;</span><br><span class="line">                  <span class="keyword">this</span>.loadNotification.requestLoad$.next();</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;)</span><br><span class="line">              .takeWhile(<span class="function"><span class="params">p</span> =&gt;</span> p &lt; <span class="built_in">window</span>.innerHeight / <span class="number">2</span>)</span><br><span class="line">              .repeat();</span><br><span class="line">  position$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.drag$.merge(<span class="keyword">this</span>.completeAnimation$)</span><br><span class="line">                                      .startWith(<span class="number">0</span>)</span><br><span class="line">                                      .do(<span class="function"><span class="params">pos</span> =&gt;</span> <span class="keyword">this</span>.currentPos = pos);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  positionTranslate3d$: Observable&lt;<span class="built_in">string</span>&gt; =</span><br><span class="line">      <span class="keyword">this</span>.position$.map(<span class="function"><span class="params">p</span> =&gt;</span> <span class="string">`translate3d(0, <span class="subst">$&#123;p - <span class="number">70</span>&#125;</span>px, 0)`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 開始轉圈圈直到資料讀取完成</span></span><br><span class="line">  rotate$: Observable&lt;<span class="built_in">number</span>&gt; =</span><br><span class="line">      <span class="keyword">this</span>.loadNotification.requestLoad$.switchMap(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> rot = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.tweenObservable(<span class="number">0</span>, <span class="number">360</span>, <span class="number">500</span>)</span><br><span class="line">            .repeat()</span><br><span class="line">            .do(<span class="function"><span class="params">r</span> =&gt;</span> rot = r)</span><br><span class="line">            .takeUntil(<span class="keyword">this</span>.loadNotification.loadComplete$)</span><br><span class="line">            .concat(Observable.defer(</span><br><span class="line">                () =&gt; <span class="keyword">this</span>.tweenObservable(rot, <span class="number">360</span>, <span class="number">360</span> - rot)));</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">  rotateTransform$: Observable&lt;<span class="built_in">string</span>&gt; =</span><br><span class="line">      <span class="keyword">this</span>.rotate$.map(<span class="function"><span class="params">r</span> =&gt;</span> <span class="string">`rotate(<span class="subst">$&#123;r&#125;</span>deg)`</span>);</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> loadNotification: LoadNotifyService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> tweenObservable(start, end, time) &#123;</span><br><span class="line">    <span class="keyword">const</span> emissions = time / <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">const</span> step = (start - end) / emissions;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Observable.timer(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">        .map(<span class="function"><span class="params">x</span> =&gt;</span> start - step * (x + <span class="number">1</span>))</span><br><span class="line">        .take(emissions);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="latest-users-component-ts"><a class="header-anchor" href="#latest-users-component-ts"> </a>latest-users.component.ts</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/observable/timer'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/switchMap'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/merge'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/do'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;LoadNotifyService&#125; <span class="keyword">from</span> <span class="string">'../load-notify.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;UserFeedService&#125; <span class="keyword">from</span> <span class="string">'../user-feed.service'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-latest-users'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;app-pull-to-refresh&gt;&lt;/app-pull-to-refresh&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  &lt;h3&gt;Latest Users&lt;/h3&gt;</span></span><br><span class="line"><span class="string">  &lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;article *ngFor="let user of (users$ | async)"&gt;</span></span><br><span class="line"><span class="string">      &lt;h4&gt;&#123;&#123; user.first &#125;&#125; &#123;&#123; user.last &#125;&#125;&lt;/h4&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;Joined: &#123;&#123; user.created | date: 'yyyy/MM/dd' &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;Balance: &#123;&#123; user.balance | currency: 'USD': true &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;Contact: &#123;&#123; user.address &#125;&#125;, &#123;&#123; user.email &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/article&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styles: []</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LatestUsersComponent &#123;</span><br><span class="line">  updateUsersTrigger$ =</span><br><span class="line">      Observable.timer(<span class="number">0</span>, <span class="number">10000</span>).merge(<span class="keyword">this</span>.loadNotifyService.requestLoad$);</span><br><span class="line">  users$ =</span><br><span class="line">      <span class="keyword">this</span>.updateUsersTrigger$.switchMap(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.userFeedService.getUsers())</span><br><span class="line">          .do(<span class="keyword">this</span>.loadNotifyService.loadComplete$);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">      <span class="keyword">private</span> userFeedService: UserFeedService,</span></span><br><span class="line"><span class="params">      <span class="keyword">private</span> loadNotifyService: LoadNotifyService</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="user-feed-service-ts"><a class="header-anchor" href="#user-feed-service-ts"> </a>user-feed.service.ts</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/map'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/observable/empty'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/catch'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;HttpClient&#125; <span class="keyword">from</span> <span class="string">'@angular/common/http'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> api = <span class="string">'https://randomapi.azurewebsites.net/api/users'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UserFeedService &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> http: HttpClient</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  getUsers(): Observable&lt;<span class="built_in">any</span>[]|&#123;&#125;&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get&lt;<span class="built_in">any</span>[]&gt;(api)</span><br><span class="line">        .map(<span class="function"><span class="params">users</span> =&gt;</span> users.slice(<span class="number">0</span>, <span class="number">10</span>))</span><br><span class="line">        .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'an error occured'</span>, err);</span><br><span class="line">          <span class="keyword">return</span> Observable.empty();</span><br><span class="line">        &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="load-notify-service-ts"><a class="header-anchor" href="#load-notify-service-ts"> </a>load-notify.service.ts</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Subject&#125; <span class="keyword">from</span> <span class="string">'rxjs/Subject'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LoadNotifyService &#123;</span><br><span class="line">  requestLoad$ = <span class="keyword">new</span> Subject&lt;<span class="built_in">any</span>&gt;();</span><br><span class="line">  loadComplete$ = <span class="keyword">new</span> Subject&lt;<span class="built_in">any</span>&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="app-component-html"><a class="header-anchor" href="#app-component-html"> </a>app.component.html</h2>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Super Cool App<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">app-latest-users</span>&gt;</span><span class="tag">&lt;/<span class="name">app-latest-users</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://stackblitz.com/edit/angular-rxjs-pull-to-refresh?embed=1&amp;file=main.ts" target="_blank" rel="noopener">stackblitz demo</a></li>
+<li><a href="https://github.com/chgc/rxjs-practice1-pull-to-refresh" target="_blank" rel="noopener">GitHub Repo</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Angular/" rel="tag"># Angular</a>
+          
+            <a href="/tags/RxJS/" rel="tag"># RxJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/26/rxjs-observable-foreach/" rel="next" title="[RxJS]Observable 的 subscribe 與 forEach">
+                <i class="fa fa-chevron-left"></i> [RxJS]Observable 的 subscribe 與 forEach
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/07/angular-integration-test/" rel="prev" title="[Angular] 整合測試">
+                [Angular] 整合測試 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    
+      <div>
+        <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
+            
+              <p class="site-author-name" itemprop="name">KevinYang</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">300</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情連結
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#實作步驟"><span class="nav-number">1.</span> <span class="nav-text"> 實作步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-先建立讀取使用者資料的-service"><span class="nav-number">1.1.</span> <span class="nav-text"> 1.先建立讀取使用者資料的 service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-建立新的-component-用來顯示使用者資料"><span class="nav-number">1.2.</span> <span class="nav-text"> 2.建立新的 Component 用來顯示使用者資料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-定時重新讀取使用者資料"><span class="nav-number">1.3.</span> <span class="nav-text"> 3.定時重新讀取使用者資料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-建立-loadnotifyservice"><span class="nav-number">1.4.</span> <span class="nav-text"> 4.建立 LoadNotifyService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-將通知功能加入到-latestuserscomponent"><span class="nav-number">1.5.</span> <span class="nav-text"> 5. 將通知功能加入到 LatestUsersComponent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-建立新的-component-來負責-pull-to-refresh-的功能"><span class="nav-number">1.6.</span> <span class="nav-text"> 6.建立新的 Component 來負責 pull to refresh 的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-實作往-pull-to-refresh-動作"><span class="nav-number">1.7.</span> <span class="nav-text"> 7.實作往 Pull To Refresh 動作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-實作轉圈圈的動作"><span class="nav-number">1.8.</span> <span class="nav-text"> 8.實作轉圈圈的動作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#完整程式碼"><span class="nav-number">2.</span> <span class="nav-text"> 完整程式碼</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pull-to-refresh-component-ts"><span class="nav-number">2.1.</span> <span class="nav-text"> pull-to-refresh.component.ts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#latest-users-component-ts"><span class="nav-number">2.2.</span> <span class="nav-text"> latest-users.component.ts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#user-feed-service-ts"><span class="nav-number">2.3.</span> <span class="nav-text"> user-feed.service.ts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#load-notify-service-ts"><span class="nav-number">2.4.</span> <span class="nav-text"> load-notify.service.ts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-component-html"><span class="nav-number">2.5.</span> <span class="nav-text"> app.component.html</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">3.</span> <span class="nav-text"> 參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div class="gooAd sidebar-inner" style="display: block;">
+        <!-- Google AdSense start -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog-sidebar -->
+<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+     </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2017/09/01/rxjs-practice-1/";
+    this.page.identifier = "2017/09/01/rxjs-practice-1/";
+    this.page.title = '[RxJS] 練習曲(1) - pull to refresh';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

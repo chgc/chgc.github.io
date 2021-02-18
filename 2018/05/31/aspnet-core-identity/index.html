@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-TW">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+     google_ad_client: "ca-pub-7997572949867824",
+     enable_page_level_ads: true
+   });
+ </script>
+
+
+  <meta name="description" content="ASP.NET Core 有提供身分認證 管理的功能，叫做 Identity，此外也有提供多種的驗證方式，但許多時候因為建立專案時就已經有包含進去了，通常很容易忽略如何從無到有的新增步驟，此篇文章特意整理相關的資訊">
+<meta name="keywords" content=".NET Core">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ASP.NET Core] Identity - Part 1 使用 Google 登入">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/05/31/aspnet-core-identity/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="ASP.NET Core 有提供身分認證 管理的功能，叫做 Identity，此外也有提供多種的驗證方式，但許多時候因為建立專案時就已經有包含進去了，通常很容易忽略如何從無到有的新增步驟，此篇文章特意整理相關的資訊">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://i.imgur.com/J5m4r9Y.png">
+<meta property="og:image" content="https://i.imgur.com/3d6hj5L.png">
+<meta property="og:image" content="https://i.imgur.com/iMtIhKO.png">
+<meta property="og:image" content="https://i.imgur.com/QbelfRd.png">
+<meta property="og:image" content="https://i.imgur.com/TopW4ty.png">
+<meta property="og:image" content="https://i.imgur.com/JEuLonQ.png">
+<meta property="og:image" content="https://i.imgur.com/yhPJD5V.png">
+<meta property="og:updated_time" content="2021-02-18T02:39:29.012Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ASP.NET Core] Identity - Part 1 使用 Google 登入">
+<meta name="twitter:description" content="ASP.NET Core 有提供身分認證 管理的功能，叫做 Identity，此外也有提供多種的驗證方式，但許多時候因為建立專案時就已經有包含進去了，通常很容易忽略如何從無到有的新增步驟，此篇文章特意整理相關的資訊">
+<meta name="twitter:image" content="https://i.imgur.com/J5m4r9Y.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.kevinyang.net/2018/05/31/aspnet-core-identity/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[ASP.NET Core] Identity - Part 1 使用 Google 登入 | CK's Notepad</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-56711593-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CK's Notepad</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/05/31/aspnet-core-identity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/4550568.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ASP.NET Core] Identity - Part 1 使用 Google 登入
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-31 11:03:19" itemprop="dateCreated datePublished" datetime="2018-05-31T11:03:19+08:00">2018-05-31</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NET-Core/" itemprop="url" rel="index"><span itemprop="name">.NET Core</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">評論數：</span>
+                <a href="/2018/05/31/aspnet-core-identity/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/31/aspnet-core-identity/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core 有提供身分<s>認證</s> 管理的功能，叫做 <code>Identity</code>，此外也有提供多種的驗證方式，但許多時候因為建立專案時就已經有包含進去了，通常很容易忽略如何從無到有的新增步驟，此篇文章特意整理相關的資訊</p>
+<a id="more"></a>
+<p>這篇會分兩部分，一是建立 Identity 的環境，二是如何使用 Google OAuth 的方式登入</p>
+<h1 id="前置環境設定"><a class="header-anchor" href="#前置環境設定"> </a>前置環境設定</h1>
+<p>要新增 <code>Identity</code> 的功能到 <a href="http://asp.net" target="_blank" rel="noopener">asp.net</a> core 的程式裡，需要在 <code>Startup.cs</code> 先做以下的設定</p>
+<ol>
+<li>
+<p>預設前置條件，設定 Entity Framework，因為 Identity 預設需要  EF 的支援</p>
+<p>a. EF Core 預設已經包含在 <code>Microsoft.AspNetCore.All</code> 的套件包內，所以不需要另外安裝</p>
+<p>b. 設定連線字串，儲存參數的方式有很多種，這裡先用最簡單(但不推薦)的方式處理，細節請參閱。建立一個 <code>appsettings.json</code> 檔案，並將資料庫連線字串存放在此</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"ConnectionStrings"</span>: &#123;</span><br><span class="line">    <span class="attr">"DefaultConnection"</span>: <span class="string">"Data Source=&lt;DB_IPAddress&gt;;DataBase=&lt;DBName&gt;;Persist Security Info=True;User ID=&lt;UserName&gt;;Password=&lt;UserPassword&gt;"</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>c. service 加入 EF 服務</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">      <span class="comment">// Add framework services.</span></span><br><span class="line">      services.AddDbContext&lt;StreamDbContext&gt;(options =&gt;</span><br><span class="line">          options.UseSqlServer(Configuration.GetConnectionString(<span class="string">"DefaultConnection"</span>)));</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>d. 建立 <code>StreamDbContext</code> ，並繼承 <code>IdentityDbContext&lt;TUser&gt;</code></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Identity.EntityFrameworkCore;</span><br><span class="line"><span class="keyword">using</span> Microsoft.EntityFrameworkCore;</span><br><span class="line"><span class="keyword">using</span> stream_tools.Models;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">stream_tools</span></span><br><span class="line">&#123;</span><br><span class="line">  public class StreamDbContext : IdentityDbContext&lt;ApplicationUser&gt;</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StreamDbContext</span>(<span class="params">DbContextOptions&lt;StreamDbContext&gt; options</span>) : <span class="title">base</span>(<span class="params">options</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>e. 使用 EF migration 更新資料表結構</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 建立 Identity Store 所需要的資料表</span><br><span class="line">dotnet ef migrations add &lt;migration-name&gt;</span><br><span class="line">// 更新至資料庫</span><br><span class="line">dotnet ef database update</span><br></pre></td></tr></table></figure>
+<p>f. 更新完成後，會多出以下的資料表</p>
+<p><img src="https://i.imgur.com/J5m4r9Y.png" alt></p>
+</li>
+<li>
+<p>在 <code>ConfigureServices</code> 的地方加入 <code>Identity</code> 的服務</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Identity;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 可取得設定檔內容</span></span><br><span class="line">    <span class="keyword">public</span> IConfiguration Configuration &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Startup</span>(<span class="params">IConfiguration configuration</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Configuration = configuration;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>     &#123;</span><br><span class="line">         ...</span><br><span class="line">         services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;()</span><br><span class="line">            .AddEntityFrameworkStores&lt;StreamDbContext&gt;()</span><br><span class="line">            .AddDefaultTokenProviders();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>建立 <code>ApplicationUser</code> Class</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Identity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">stream_tools.Models</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ApplicationUser</span> : <span class="title">IdentityUser</span></span><br><span class="line">  &#123;</span><br><span class="line">	<span class="comment">// 資訊擴充使用</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在 Configure 的地方啟動服務</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">      ...</span><br><span class="line">      app.UseAuthentication();</span><br><span class="line">	  ...</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>因為需要 MVC 來提供頁面，所以也順便加入 MVC 的功能</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span> &#123;</span><br><span class="line">     ...</span><br><span class="line">     services.AddMvc();</span><br><span class="line">&#125;    </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">      ...</span><br><span class="line">      app.UseMvc();</span><br><span class="line">	  ...</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="設定-google-api"><a class="header-anchor" href="#設定-google-api"> </a>設定 Google API</h1>
+<ol>
+<li>
+<p>首先前往 <a href="https://console.developers.google.com/projectselector/apis/library" target="_blank" rel="noopener">https://console.developers.google.com/projectselector/apis/library</a> ，開立新專案或選取舊專案</p>
+<p><img src="https://i.imgur.com/3d6hj5L.png" alt></p>
+</li>
+<li>
+<p>開啟 <code>Google+ API</code> 供登入使用</p>
+<p><img src="https://i.imgur.com/iMtIhKO.png" alt></p>
+</li>
+<li>
+<p>點選憑證，並新增 OAuth</p>
+<p><img src="https://i.imgur.com/QbelfRd.png" alt></p>
+</li>
+<li>
+<p>選擇 <strong>網路應用程式</strong>，並填入以下資訊</p>
+<p><img src="https://i.imgur.com/TopW4ty.png" alt></p>
+</li>
+<li>
+<p>這裡須留意的是 已授權的重新導向 URI，Identity 預設的路由是 <code>signin-google</code> ，所以只需要替換前面的 port 號碼即可</p>
+</li>
+<li>
+<p>確定後會取得一份 client_id 和 secret 的資訊，我們需要將這資訊儲存到上面所建立的 <code>appsetting.json</code> 檔案內</p>
+<p><img src="https://i.imgur.com/JEuLonQ.png" alt></p>
+</li>
+</ol>
+<h1 id="設定-google-登入"><a class="header-anchor" href="#設定-google-登入"> </a>設定 Google 登入</h1>
+<ol>
+<li>
+<p>在官網的文件中，文件將 <strong>用戶端 ID</strong> 與 <strong>用戶端密碼</strong>，分別使用 <code>Authentication:Google:ClientId</code> 與 <code>Authentication:Google:ClientSecret</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "Authentication:Google:ClientId": "用戶端 ID",</span><br><span class="line">  "Authentication:Google:ClientSecret": "用戶端密碼"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>加入新的 Authentication 方式</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;      </span><br><span class="line">    services.AddAuthentication().AddGoogle(googleOptions =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        googleOptions.ClientId = Configuration[<span class="string">"Authentication:Google:ClientId"</span>];</span><br><span class="line">        googleOptions.ClientSecret = Configuration[<span class="string">"Authentication:Google:ClientSecret"</span>];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當然除了 google 之外，還有其他的服務可以使用，其他資訊補充在下面的參考資料內</p>
+</li>
+</ol>
+<p>到這邊為止，基礎設定已經完成了。現在是在頁面上要怎麼使用，Controller 的動作又是如何呢?</p>
+<h1 id="controller-view"><a class="header-anchor" href="#controller-view"> </a>Controller - View</h1>
+<h2 id="view"><a class="header-anchor" href="#view"> </a>View</h2>
+<p>如果是使用 Razor 的方式要產生第三方登入選項的方式，其實很簡單，只要透過 <code>SignInManager.GetExternalAuthenticationSchemesAsync()</code> 的方式就可以取得有開啟的選項</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">using</span> stream_tools.Models</span><br><span class="line">@inject SignInManager&lt;ApplicationUser&gt; SignInManager</span><br><span class="line">&lt;form asp-action=<span class="string">"ExternalLogin"</span> asp-route-returnurl=<span class="string">"@ViewData["</span>ReturnUrl<span class="string">"]"</span> method=<span class="string">"post"</span> <span class="keyword">class</span>=<span class="string">"form-horizontal"</span>&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">      @&#123;</span><br><span class="line">        <span class="keyword">var</span> loginProviders = (<span class="keyword">await</span> SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      @<span class="keyword">foreach</span> (<span class="keyword">var</span> provider <span class="keyword">in</span> loginProviders)</span><br><span class="line">      &#123;</span><br><span class="line">        &lt;button type=<span class="string">"submit"</span> <span class="keyword">class</span>=<span class="string">"btn btn-default"</span> name=<span class="string">"provider"</span> <span class="keyword">value</span>=<span class="string">"@provider.Name"</span> title=<span class="string">"Log in using your @provider.DisplayName account"</span>&gt;@provider.Name&lt;/button&gt;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>loginProviders</code> 清單內的 provider ，內容如下</p>
+<p><img src="https://i.imgur.com/yhPJD5V.png" alt></p>
+</li>
+<li>
+<p>所以當按下按鈕時，就會做 Form Post 的動作到 <code>Account/ExternalLogin</code> 的 Action</p>
+</li>
+</ul>
+<h2 id="controller-重點"><a class="header-anchor" href="#controller-重點"> </a>Controller (重點)</h2>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">HttpPost</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> IActionResult <span class="title">ExternalLogin</span>(<span class="params"><span class="keyword">string</span> provider, <span class="keyword">string</span> returnUrl = <span class="literal">null</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// Request a redirect to the external login provider.</span></span><br><span class="line">  <span class="keyword">var</span> redirectUrl = Url.Action(<span class="keyword">nameof</span>(ExternalLoginCallback), <span class="string">"Account"</span>, <span class="keyword">new</span> &#123; returnUrl &#125;);</span><br><span class="line">  <span class="keyword">var</span> properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);</span><br><span class="line">  <span class="keyword">return</span> Challenge(properties, provider);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>當此 Action 接受到前面頁面 Post 動作時，就會先將登入成功後要轉址的位址轉成 Url 的方式，這裡就會回到 <code>Account/ExternalLoginCallback</code> 的地方</li>
+<li><code>signInManager.ConfigureExternalAuthenticationProperties</code> 再將額外的資訊包成一個 property 後再送給 <code>Challenge method</code> 最後續的行為</li>
+<li><code>signInManager</code> 是一個用來控制使用者登入的 API，文件連結已列在下面的參考文件中</li>
+<li><code>Challenge</code> 是 ControllerBase 裡的方法之一，會建立出一個 <code>ChallengeResult</code> ，ChellengerResult is an <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.actionresult?view=aspnetcore-2.1" target="_blank" rel="noopener">ActionResult</a> that on execution invokes AuthenticationManager.ChallengeAsync.</li>
+<li><code>provider</code> 的值，就如上圖所顯示的，只是將 name 的值傳進來，而這裡是帶入 <code>Google</code></li>
+<li>當執行後就會跑到Google 登入帳號的畫面，當完成 Google 帳號登入後，就會回到 <code>Account/ExternalLoginCallback</code> 的地方</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;IActionResult&gt; <span class="title">ExternalLoginCallback</span>(<span class="params"><span class="keyword">string</span> returnUrl = <span class="literal">null</span>, <span class="keyword">string</span> remoteError = <span class="literal">null</span></span>)</span></span><br><span class="line"><span class="function"></span>   &#123;      </span><br><span class="line">     <span class="keyword">if</span> (remoteError != <span class="literal">null</span>)</span><br><span class="line">     &#123;</span><br><span class="line">       ErrorMessage = <span class="string">$"Error from external provider: <span class="subst">&#123;remoteError&#125;</span>"</span>;</span><br><span class="line">       <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(Login));</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">var</span> info = <span class="keyword">await</span> _signInManager.GetExternalLoginInfoAsync();</span><br><span class="line">     <span class="keyword">if</span> (info == <span class="literal">null</span>)</span><br><span class="line">     &#123;</span><br><span class="line">       <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(Login));</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Sign in the user with this external login provider if the user already has a login.</span></span><br><span class="line">     <span class="keyword">var</span> result = <span class="keyword">await</span> _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: <span class="literal">false</span>, bypassTwoFactor: <span class="literal">true</span>);</span><br><span class="line">     <span class="keyword">if</span> (result.Succeeded)</span><br><span class="line">     &#123;</span><br><span class="line">       <span class="comment">// 使用者帳號已存在，可以直接前往目的地</span></span><br><span class="line">       <span class="keyword">return</span> RedirectToLocal(returnUrl);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span> (result.IsLockedOut)</span><br><span class="line">     &#123;</span><br><span class="line">       <span class="comment">// 使用者帳號被鎖定</span></span><br><span class="line">       <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(Lockout));</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">     &#123;</span><br><span class="line">       <span class="comment">// If the user does not have an account, then ask the user to create an account.</span></span><br><span class="line">       ViewData[<span class="string">"ReturnUrl"</span>] = returnUrl;</span><br><span class="line">       ViewData[<span class="string">"LoginProvider"</span>] = info.LoginProvider;</span><br><span class="line">       <span class="keyword">var</span> email = info.Principal.FindFirstValue(ClaimTypes.Email);</span><br><span class="line">       <span class="keyword">return</span> View(<span class="string">"ExternalLogin"</span>, <span class="keyword">new</span> ExternalLoginViewModel &#123; Email = email &#125;);</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>當登入動作完成後回到 <code>ExternalLoginCallback</code> Action 時會收到兩個資訊，一個是遠端授權的錯誤訊息，一個是登入成功後要轉址的位置</li>
+<li>取得第三方授權請求的附加資訊，可透過 <code>var info = await _signInManager.GetExternalLoginInfoAsync();</code> 的方式取得更多的資訊
+<ul>
+<li>舉例，如果要取得 email，取得方法是 <code>info.Principal.FindFirstValue(ClaimTypes.Email);</code></li>
+<li><code>ClaimTypes</code> 的 Enum 還有更多其他的項目可以使用</li>
+</ul>
+</li>
+<li><code>var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);</code>
+<ul>
+<li><code>ExternalLoginSignInAsync</code> 的方法是當透過外部驗證方式成功後，回到系統內時，執行內部的登入動作，而回傳的結果，可用來判斷該使用者的狀況是否能繼續往下走</li>
+</ul>
+</li>
+</ul>
+<h1 id="參數設定"><a class="header-anchor" href="#參數設定"> </a>參數設定</h1>
+<ul>
+<li>
+<p>CallbackPath: 這個參數的值是設定 Google API 在 <strong>重新導向 URI</strong> 的內容，預設是 <code>/signin-google</code>，如果想要改變時，可以修改這個設定</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services.AddAuthentication().AddGoogle(googleOptions =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">            	googleOptions.CallbackPath = <span class="keyword">new</span> PathString(<span class="string">"/someurl-you-want"</span>);</span><br><span class="line">                ...</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Scope: 在登入 Google 帳號時，我們可以透過 Scope 設定要向登入者取得額外的資訊，設定方式是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services.AddAuthentication().AddGoogle(googleOptions =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">            	googleOptions.Scope.Add(&apos;..&apos;);</span><br><span class="line">                ...</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>到這邊可以算是一個完整的第三方驗證的流程，我認為這裡的流程即使改成使用 web api 的方式，應該也是可以做到一樣的效果，這部分等我實作出來後，在分享出來</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://blog.kevinyang.net/2017/05/15/core-web-mvc-001/">[.NET Core] Web MVC 001 - program.cs</a></li>
+<li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-2.1&amp;tabs=windows" target="_blank" rel="noopener">安全存放裝置的開發工作中 ASP.NET Core 應用程式密碼</a></li>
+<li><a href="https://docs.microsoft.com/zh-tw/ef/core/miscellaneous/cli/dotnet" target="_blank" rel="noopener">EF Core .NET Command-line Tools</a></li>
+<li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&amp;tabs=visual-studio%2Caspnetcore2x" target="_blank" rel="noopener">Introduction to Identity on ASP.NET Core</a></li>
+<li><a href="https://markjohnson.io/articles/asp-net-core-identity-without-entity-framework/" target="_blank" rel="noopener">identity-without-entity-framework</a></li>
+<li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/social/?view=aspnetcore-2.1" target="_blank" rel="noopener">ASP.NET Core 中的 Facebook、Google 及外部提供者驗證</a></li>
+<li>API DOC
+<ul>
+<li><a href="https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNetCore.Authentication.Google" target="_blank" rel="noopener">Source Code</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.signinmanager-1?view=aspnetcore-2.1" target="_blank" rel="noopener">SignInManager API Doc</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.challengeresult?view=aspnetcore-2.1" target="_blank" rel="noopener">ChallengeResult</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/18/angualr-testing-delay/" rel="next" title="[Angular] 如何測試含有 delay 的 observable?">
+                <i class="fa fa-chevron-left"></i> [Angular] 如何測試含有 delay 的 observable?
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/03/aspnet-core-authentication-with-firebaesToken/" rel="prev" title="[ASP.NET Core] Identity - Part 2 整合 firebase 的登入驗證服務">
+                [ASP.NET Core] Identity - Part 2 整合 firebase 的登入驗證服務 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    
+      <div>
+        <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
+            
+              <p class="site-author-name" itemprop="name">KevinYang</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">300</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情連結
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前置環境設定"><span class="nav-number">1.</span> <span class="nav-text"> 前置環境設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#設定-google-api"><span class="nav-number">2.</span> <span class="nav-text"> 設定 Google API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#設定-google-登入"><span class="nav-number">3.</span> <span class="nav-text"> 設定 Google 登入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#controller-view"><span class="nav-number">4.</span> <span class="nav-text"> Controller - View</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#view"><span class="nav-number">4.1.</span> <span class="nav-text"> View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#controller-重點"><span class="nav-number">4.2.</span> <span class="nav-text"> Controller (重點)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參數設定"><span class="nav-number">5.</span> <span class="nav-text"> 參數設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結論"><span class="nav-number">6.</span> <span class="nav-text"> 結論</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">7.</span> <span class="nav-text"> 參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div class="gooAd sidebar-inner" style="display: block;">
+        <!-- Google AdSense start -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog-sidebar -->
+<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+     </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2018/05/31/aspnet-core-identity/";
+    this.page.identifier = "2018/05/31/aspnet-core-identity/";
+    this.page.title = '[ASP.NET Core] Identity - Part 1 使用 Google 登入';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
