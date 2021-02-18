@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/08/03/docker-101-note-3/"
 			},
 			"datePublished": "2020-08-03T05:36:31.000Z",
-			"dateModified": "2021-02-18T02:25:04.971Z",
+			"dateModified": "2021-02-18T02:32:11.703Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1857,60 +1857,60 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x524D;&#x9762;&#x5169;&#x7BC7;&#x7B46;&#x8A18;&#x90FD;&#x5728;&#x6574;&#x7406;&#x5982;&#x4F55;&#x64CD;&#x4F5C; docker container&#xFF0C;&#x8981;&#x600E;&#x9EBC;&#x88FD;&#x4F5C;&#x6700;&#x91CD;&#x8981;&#x7684; Image &#x5462;? &#x6211;&#x6703;&#x5728;&#x9019;&#x7BC7;&#x6574;&#x7406;&#x51FA;&#x4F86;</p>
+			  		<p>前面兩篇筆記都在整理如何操作 docker container，要怎麼製作最重要的 Image 呢? 我會在這篇整理出來</p>
 <a id="more"></a>
-<p>&#x8981;&#x5EFA;&#x7ACB;&#x51FA;&#x4E00;&#x500B;&#x53EF;&#x4EE5;&#x7528;&#x4F86;&#x57F7;&#x884C;&#x7684; Image&#xFF0C;&#x5C31;&#x5FC5;&#x9808;&#x900F;&#x904E; <code>Dockerfile</code> &#x4F86;&#x8A2D;&#x5B9A;&#xFF0C;<code>Dockerfile</code> &#x662F;&#x4E00;&#x500B;&#x985E;&#x4F3C;&#x6587;&#x5B57;&#x6A94;&#x7684;&#x8A2D;&#x5B9A;&#x6A94;&#xFF0C;docker &#x6703;&#x4F9D; <code>Dockerfile</code> &#x5167;&#x7684;&#x8A2D;&#x5B9A;&#x5EFA;&#x7ACB;&#x51FA;&#x4E00;&#x500B;&#x53EF;&#x4EE5;&#x90E8;&#x5C6C;&#x5230; Registry &#x7684; Image&#xFF0C;&#x5176;&#x8A2D;&#x5B9A;&#x5167;&#x5BB9;&#x5176;&#x5BE6;&#x4E0D;&#x8907;&#x96DC;&#xFF0C;&#x4EE5;&#x4E0B;&#x70BA;&#x7C21;&#x55AE;&#x8A9E;&#x6CD5;&#x4ECB;&#x7D39;</p>
-<h1 id="dockerfile-&#x7D50;&#x69CB;&#x8207;&#x4F7F;&#x7528;&#x8A9E;&#x6CD5;"><a class="header-anchor" href="#dockerfile-&#x7D50;&#x69CB;&#x8207;&#x4F7F;&#x7528;&#x8A9E;&#x6CD5;"> </a>Dockerfile &#x7D50;&#x69CB;&#x8207;&#x4F7F;&#x7528;&#x8A9E;&#x6CD5;</h1>
-<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8AAA;&#xFF0C;Image &#x6240;&#x80FD;&#x57F7;&#x884C;&#x7684; OS &#x5FC5;&#x9808;&#x8DDF;&#x5E95;&#x5C64; docker server &#x8DD1;&#x7684; OS &#x4E00;&#x6A23;&#x6216;&#x662F;&#x4F7F;&#x7528;&#x540C;&#x7A2E; Kernel&#xFF0C;&#x6240;&#x4EE5;&#x7576; docker server &#x662F;&#x8DD1;&#x5728; Linux base &#x4E0A;&#xFF0C;&#x90A3; Dockerfile &#x80FD;&#x8DD1;&#x7684;&#x74B0;&#x5883;&#x4E5F;&#x53EA;&#x80FD;&#x662F; Linux base&#x3002;&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x500B;&#x7C21;&#x55AE;&#x7684;&#x7BC4;&#x4F8B;</p>
+<p>要建立出一個可以用來執行的 Image，就必須透過 <code>Dockerfile</code> 來設定，<code>Dockerfile</code> 是一個類似文字檔的設定檔，docker 會依 <code>Dockerfile</code> 內的設定建立出一個可以部屬到 Registry 的 Image，其設定內容其實不複雜，以下為簡單語法介紹</p>
+<h1 id="dockerfile-結構與使用語法"><a class="header-anchor" href="#dockerfile-結構與使用語法"> </a>Dockerfile 結構與使用語法</h1>
+<p>如之前所說，Image 所能執行的 OS 必須跟底層 docker server 跑的 OS 一樣或是使用同種 Kernel，所以當 docker server 是跑在 Linux base 上，那 Dockerfile 能跑的環境也只能是 Linux base。下面是一個簡單的範例</p>
 <figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">18.04</span></span><br><span class="line"><span class="keyword">COPY</span> . /app</span><br><span class="line"><span class="keyword">RUN</span> make /app</span><br><span class="line"><span class="keyword">CMD</span> python /app/app.py</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li><code>FROM</code> Image &#x5C07;&#x57F7;&#x884C;&#x7684;&#x74B0;&#x5883;&#xFF0C;&#x9019;&#x908A;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5225;&#x4EBA;&#x5EFA;&#x7ACB;&#x597D;&#x7684; Base Image&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x4F5C;&#x696D;&#x7CFB;&#x7D71;&#xFF0C;&#x4F8B;&#x5982; ubuntu, centos &#x6216;&#x662F; <code>core/aspnet</code> &#x7684;&#x57F7;&#x884C;&#x74B0;&#x5883;</li>
-<li><code>COPY</code> &#x8907;&#x88FD;&#x672C;&#x6A5F;&#x6A94;&#x6848;&#x5230; Image &#x88E1;&#xFF0C;&#x672C;&#x6A5F;&#x6839;&#x76EE;&#x9304;&#x7684;&#x8A8D;&#x5B9A;&#x70BA; <code>Dockerfile</code> &#x6240;&#x8655;&#x7684;&#x76EE;&#x9304;</li>
-<li><code>RUN</code> &#x57F7;&#x884C; Linux &#x6307;&#x4EE4;</li>
-<li><code>CMD</code> &#x7576;&#x57F7;&#x884C; <code>docker run</code> &#x6642;&#x6703;&#x57F7;&#x884C;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x500B; <code>CMD</code> &#x53EA;&#x6709;&#x6700;&#x5F8C;&#x4E00;&#x884C;&#x6703;&#x751F;&#x6548;</li>
+<li><code>FROM</code> Image 將執行的環境，這邊可以使用別人建立好的 Base Image，通常是作業系統，例如 ubuntu, centos 或是 <code>core/aspnet</code> 的執行環境</li>
+<li><code>COPY</code> 複製本機檔案到 Image 裡，本機根目錄的認定為 <code>Dockerfile</code> 所處的目錄</li>
+<li><code>RUN</code> 執行 Linux 指令</li>
+<li><code>CMD</code> 當執行 <code>docker run</code> 時會執行的指令，如果有個 <code>CMD</code> 只有最後一行會生效</li>
 </ul>
-<p>&#x5982;&#x679C;&#x80FD;&#x770B;&#x61C2;&#x8DDF;&#x7406;&#x89E3;&#x4E0A;&#x9762;&#x7684; <code>Dockerfile</code>&#xFF0C;&#x90A3;&#x57FA;&#x672C;&#x4E0A;&#x5C31;&#x53EA;&#x662F; <code>Dockerfile</code> &#x8A9E;&#x6CD5;&#x53CA;&#x74B0;&#x5883;&#x8A2D;&#x5B9A;&#x7684;&#x719F;&#x6089;&#x5EA6;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x518D;&#x5217;&#x51FA;&#x5E7E;&#x500B;&#x5E38;&#x7528;&#x7684;&#x6307;&#x4EE4;</p>
+<p>如果能看懂跟理解上面的 <code>Dockerfile</code>，那基本上就只是 <code>Dockerfile</code> 語法及環境設定的熟悉度了，下面再列出幾個常用的指令</p>
 <ul>
 <li>
-<p><code>WORKDIR</code> &#x8A2D;&#x5B9A;&#x7576;&#x524D;&#x7684;&#x5DE5;&#x4F5C;&#x76EE;&#x9304;</p>
+<p><code>WORKDIR</code> 設定當前的工作目錄</p>
 <figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WORKDIR</span> /app</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <ul>
 <li>
-<p><code>LABEL</code> Image &#x7684; Metadata &#x8CC7;&#x8A0A;</p>
-<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span> description=&quot;&#x9019;&#x662F;LABEL&#x7684;&#x7BC4;&#x4F8B;&quot; version=&quot;1.0&quot; owner=&quot;CK&apos;s Notepad&quot;</span><br></pre></td></tr></tbody></table></figure>
+<p><code>LABEL</code> Image 的 Metadata 資訊</p>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span> description="這是LABEL的範例" version="1.0" owner="CK's Notepad"</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p><code>ENV</code> &#x8A2D;&#x5B9A;&#x74B0;&#x5883;&#x8B8A;&#x6578;</p>
+<p><code>ENV</code> 設定環境變數</p>
 <figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> &lt;KEY&gt; &lt;Value&gt;</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p><code>ENTRYPOINT</code> &#x4F5C;&#x7528;&#x8DDF; <code>CMD</code> &#x4E00;&#x6A23;&#xFF0C;&#x5DEE;&#x7570;&#x5728;&#x4ED6;&#x4E0D;&#x6703;&#x88AB; <code>docker run &lt;image&gt; &lt;command&gt;</code> &#x7D66;&#x8986;&#x84CB;&#x6389;</p>
+<p><code>ENTRYPOINT</code> 作用跟 <code>CMD</code> 一樣，差異在他不會被 <code>docker run &lt;image&gt; &lt;command&gt;</code> 給覆蓋掉</p>
 </li>
 <li>
-<p><code>EXPOSE</code> &#x5BA3;&#x544A; Container &#x904B;&#x884C;&#x6642;&#x5C0D;&#x5916;&#x6709;&#x54EA;&#x4E9B; Port &#x53EF;&#x4EE5;&#x4F7F;&#x7528; (&#x5BA3;&#x544A;&#x800C;&#x5DF2;)</p>
+<p><code>EXPOSE</code> 宣告 Container 運行時對外有哪些 Port 可以使用 (宣告而已)</p>
 </li>
 </ul>
-<h1 id="&#x5BE6;&#x969B;-dockerfile-&#x7BC4;&#x4F8B;"><a class="header-anchor" href="#&#x5BE6;&#x969B;-dockerfile-&#x7BC4;&#x4F8B;"> </a>&#x5BE6;&#x969B; Dockerfile &#x7BC4;&#x4F8B;</h1>
+<h1 id="實際-dockerfile-範例"><a class="header-anchor" href="#實際-dockerfile-範例"> </a>實際 Dockerfile 範例</h1>
 <h2 id="asp-net-core"><a class="header-anchor" href="#asp-net-core"> </a><a href="http://asp.net" target="_blank" rel="noopener">asp.net</a> core</h2>
-<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/core/sdk:<span class="number">3.0</span> AS build</span><br><span class="line"><span class="keyword">WORKDIR</span> /app</span><br><span class="line"></span><br><span class="line"><span class="comment"># copy csproj and restore as distinct layers</span></span><br><span class="line"><span class="keyword">COPY</span> *.sln .</span><br><span class="line"><span class="keyword">COPY</span> aspnetapp/*.csproj ./aspnetapp/</span><br><span class="line"><span class="keyword">RUN</span> dotnet restore</span><br><span class="line"></span><br><span class="line"><span class="comment"># copy everything else and build app</span></span><br><span class="line"><span class="keyword">COPY</span> aspnetapp/. ./aspnetapp/</span><br><span class="line"><span class="keyword">WORKDIR</span> /app/aspnetapp</span><br><span class="line"><span class="keyword">RUN</span> dotnet publish -c Release -o out</span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/core/aspnet:<span class="number">3.0</span> AS runtime</span><br><span class="line"><span class="keyword">WORKDIR</span> /app</span><br><span class="line"><span class="keyword">COPY</span> --from=build /app/aspnetapp/out ./</span><br><span class="line"><span class="keyword">ENTRYPOINT</span> [&quot;dotnet&quot;, &quot;aspnetapp.dll&quot;]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/core/sdk:<span class="number">3.0</span> AS build</span><br><span class="line"><span class="keyword">WORKDIR</span> /app</span><br><span class="line"></span><br><span class="line"><span class="comment"># copy csproj and restore as distinct layers</span></span><br><span class="line"><span class="keyword">COPY</span> *.sln .</span><br><span class="line"><span class="keyword">COPY</span> aspnetapp/*.csproj ./aspnetapp/</span><br><span class="line"><span class="keyword">RUN</span> dotnet restore</span><br><span class="line"></span><br><span class="line"><span class="comment"># copy everything else and build app</span></span><br><span class="line"><span class="keyword">COPY</span> aspnetapp/. ./aspnetapp/</span><br><span class="line"><span class="keyword">WORKDIR</span> /app/aspnetapp</span><br><span class="line"><span class="keyword">RUN</span> dotnet publish -c Release -o out</span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/core/aspnet:<span class="number">3.0</span> AS runtime</span><br><span class="line"><span class="keyword">WORKDIR</span> /app</span><br><span class="line"><span class="keyword">COPY</span> --from=build /app/aspnetapp/out ./</span><br><span class="line"><span class="keyword">ENTRYPOINT</span> ["dotnet", "aspnetapp.dll"]</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="angular"><a class="header-anchor" href="#angular"> </a>Angular</h2>
 <ul>
 <li>
-<p>&#x55AE;&#x7D14;&#x53EF;&#x4EE5;&#x57F7;&#x884C;&#x7684;</p>
+<p>單純可以執行的</p>
 <figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> nginx:alpine</span><br><span class="line"><span class="keyword">COPY</span> /dist/app-to-run-inside-docker /usr/share/nginx/html</span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x5728; docker &#x74B0;&#x5883;&#x5167;&#x5EFA;&#x7F6E;&#x90E8;&#x5C6C; (multiple-stage)</p>
+<p>在 docker 環境內建置部屬 (multiple-stage)</p>
 <figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># stage 1</span></span><br><span class="line"><span class="keyword">FROM</span> node:alpine AS my-app-build</span><br><span class="line"><span class="keyword">WORKDIR</span> /app</span><br><span class="line"><span class="keyword">COPY</span> . .</span><br><span class="line"><span class="keyword">RUN</span> npm install &amp;&amp; npm run build</span><br><span class="line"></span><br><span class="line"><span class="comment"># stage 2</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:alpine</span><br><span class="line"><span class="keyword">COPY</span> --from=my-app-build /app/dist/app-to-run-inside-docker /usr/share/nginx/html</span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
-<h1 id="&#x5EFA;&#x7F6E;-dockerfile"><a class="header-anchor" href="#&#x5EFA;&#x7F6E;-dockerfile"> </a>&#x5EFA;&#x7F6E; Dockerfile</h1>
-<p>&#x8981;&#x5EFA;&#x7F6E; Image &#x900F;&#x904E;&#x6307;&#x4EE4;&#x5C31;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x4E86;</p>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build [OPTIONS] PATH | URL | -</span><br><span class="line">// &#x7BC4;&#x4F8B;</span><br><span class="line">docker build -t angular-app .</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="建置-dockerfile"><a class="header-anchor" href="#建置-dockerfile"> </a>建置 Dockerfile</h1>
+<p>要建置 Image 透過指令就可以完成了</p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build [OPTIONS] PATH | URL | -</span><br><span class="line">// 範例</span><br><span class="line">docker build -t angular-app .</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li><code>-t</code> : &#x4E0A; Tag</li>
+<li><code>-t</code> : 上 Tag</li>
 </ul>
 
 			  		

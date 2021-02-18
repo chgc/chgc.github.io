@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/03/01/iis-parallels-win8-mactxt/"
 			},
 			"datePublished": "2014-03-01T08:56:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.563Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1844,7 +1844,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<ol>
 <li>
-<p>In your Windows 8 VM, go to Control Panel &gt; System &gt; Advanced system settings &gt; Computer Name and click Change.  Name this whatever you like, e.g. &#x300C;windows&#x300D;.  Restart your VM.</p>
+<p>In your Windows 8 VM, go to Control Panel &gt; System &gt; Advanced system settings &gt; Computer Name and click Change.  Name this whatever you like, e.g. 「windows」.  Restart your VM.</p>
 </li>
 <li>
 <p>Open CMD or Powershell as administrator.  Add a URL ACL entry for your new name on the port of your choice, e.g.
@@ -1852,7 +1852,7 @@ netsh http add urlacl url=http://windows:8080/ user=everyone</p>
 </li>
 <li>
 <p>Open CMD or Powershell as administrator.  Add an inbound firewall rule for this new port.  In Windows 8, the syntax is:
-netsh advfirewall firewall add rule name=&#x300C;IISExpressWeb&#x300D; dir=in action=allow protocol=TCP localport=8080</p>
+netsh advfirewall firewall add rule name=「IISExpressWeb」 dir=in action=allow protocol=TCP localport=8080</p>
 </li>
 </ol>
 <p>In Windows 7, the syntax is:

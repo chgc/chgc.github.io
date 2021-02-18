@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/10/30/excel-dynamic-array-unique/"
 			},
 			"datePublished": "2018-10-30T05:52:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.859Z",
+			"dateModified": "2021-02-18T02:32:11.575Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,53 +1848,53 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4F7F;&#x7528; O365 &#x7684;&#x597D;&#x8655;&#x662F;&#xFF0C;&#x6240;&#x4F7F;&#x7528;&#x7684; Excel &#x7B49;&#x76F8;&#x95DC;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#xFF0C; &#x90FD;&#x662F;&#x8655;&#x65BC;&#x6700;&#x65B0;&#x7684;&#x529F;&#x80FD;&#x72C0;&#x614B;&#x3002;&#x5982;&#x679C;&#x5FC3;&#x81DF;&#x5920;&#x5927;&#x9846;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x52A0;&#x5165; Insider &#x8A08;&#x756B;&#x53D6;&#x5F97;&#x66F4;&#x65B0;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4F8B;&#x5982;&#x9019;&#x7BC7;&#x6587;&#x7AE0;&#x8981;&#x4ECB;&#x7D39;&#x7684; Dynamic Array Function&#x3002;</p>
+			  		<p>使用 O365 的好處是，所使用的 Excel 等相關應用程式， 都是處於最新的功能狀態。如果心臟夠大顆，也可以加入 Insider 計畫取得更新的功能，例如這篇文章要介紹的 Dynamic Array Function。</p>
 <a id="more"></a>
-<p>&#x4ECB;&#x7D39;&#x5E7E;&#x500B;&#x8DDF; Dynamic Array &#x76F8;&#x95DC;&#x7684;&#x65B0;&#x51FD;&#x6578; &#xFF0C;&#x9019;&#x4E9B;&#x65B0;&#x51FD;&#x6578;&#x80FD;&#x5728;&#x7BE9;&#x9078;&#x8CC7;&#x6599;&#x4E0A;&#x53EF;&#x4EE5;&#x7C21;&#x5316;&#x4EE5;&#x5F80;&#x8981;&#x7528;&#x5F88;&#x8907;&#x96DC;&#x7684;&#x516C;&#x5F0F;&#x624D;&#x80FD;&#x5B8C;&#x6210;&#x7684;&#x529F;&#x80FD;</p>
+<p>介紹幾個跟 Dynamic Array 相關的新函數 ，這些新函數能在篩選資料上可以簡化以往要用很複雜的公式才能完成的功能</p>
 <h1 id="unique"><a class="header-anchor" href="#unique"> </a>UNIQUE</h1>
-<p>&#x9867;&#x540D;&#x601D;&#x7FA9;&#xFF0C;&#x6839;&#x64DA;&#x6E05;&#x55AE;&#x6392;&#x9664;&#x91CD;&#x8907;&#x51FA;&#x73FE;&#x7684;&#x8CC7;&#x6599;&#xFF0C;&#x7559;&#x4E0B;&#x6C92;&#x6709;&#x91CD;&#x8907;&#x7684;&#x6E05;&#x55AE;</p>
-<p>&#x51FD;&#x793A;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</p>
+<p>顧名思義，根據清單排除重複出現的資料，留下沒有重複的清單</p>
+<p>函示的使用方法</p>
 <p><code>=UNIQUE(array,[by_col],[occurs_once])</code></p>
 <ul>
-<li>array &#x6307;&#x5B9A;&#x5957;&#x7528;&#x7684;&#x6E05;&#x55AE;&#x7BC4;&#x570D;</li>
-<li>by_col: &#x8A2D;&#x5B9A;&#x6BD4;&#x8F03;&#x689D;&#x4EF6;&#xFF0C;&#x6839;&#x64DA; row &#x6642;&#x70BA; FALSE&#xFF0C;&#x6839;&#x64DA; col &#x6642;&#x70BA; TRUE</li>
-<li>occurs_once: &#x8A2D;&#x5B9A; True &#x6642;&#xFF0C;&#x53EA;&#x6703;&#x986F;&#x793A;&#x51FA;&#x73FE;&#x4E00;&#x6B21;&#x7684;&#x9805;&#x76EE;&#xFF0C;&#x8A2D;&#x5B9A; False &#x6642;&#xFF0C;&#x986F;&#x793A;&#x4E0D;&#x91CD;&#x8907;&#x6E05;&#x55AE;</li>
+<li>array 指定套用的清單範圍</li>
+<li>by_col: 設定比較條件，根據 row 時為 FALSE，根據 col 時為 TRUE</li>
+<li>occurs_once: 設定 True 時，只會顯示出現一次的項目，設定 False 時，顯示不重複清單</li>
 </ul>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/uTpOG9B.png" width="800" height="507" layout="responsive"></amp-img></div>
-<p>&#x5982;&#x679C;&#x5728;&#x7BE9;&#x9078;&#x5F8C;&#x7684;&#x6E05;&#x55AE;&#x4E2D;&#xFF0C;&#x8AA4;&#x8F38;&#x5165;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x9805;&#x76EE;&#x6642;&#xFF0C;&#x6703;&#x51FA;&#x73FE; <code>#SPILL!</code> &#x7684;&#x932F;&#x8AA4;&#x8A0A;&#x606F;</p>
+<p>如果在篩選後的清單中，誤輸入不存在的項目時，會出現 <code>#SPILL!</code> 的錯誤訊息</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/5FuoosW.png" width="259" height="194" layout="responsive"></amp-img></div>
-<p>&#x6392;&#x9664;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x5C07;&#x986F;&#x793A;&#x7684;&#x6587;&#x5B57;&#x522A;&#x9664;&#x5F8C;&#x5373;&#x53EF;&#x6062;&#x5FA9;&#x6B63;&#x5E38;</p>
+<p>排除的方法是將顯示的文字刪除後即可恢復正常</p>
 <h1 id="sort"><a class="header-anchor" href="#sort"> </a>SORT</h1>
 <p><code>=SORT(array, [sort_index], [sort_order],[by_col])</code></p>
 <ul>
-<li>array: &#x8A2D;&#x5B9A;&#x8981;&#x6392;&#x5E8F;&#x7684;&#x6E05;&#x55AE;</li>
-<li>[sort_order]: &#x6392;&#x5E8F;&#x6B04;&#x4F4D;&#x7684; index (&#x8D77;&#x65BC; index 1)</li>
-<li>[sort_order]: &#x6392;&#x5E8F;&#x65B9;&#x6CD5;&#xFF0C;1 : &#x905E;&#x589E;; -1: &#x905E;&#x6E1B;</li>
-<li>[by-col]: &#x8A2D;&#x5B9A;&#x6BD4;&#x8F03;&#x689D;&#x4EF6;&#xFF0C;&#x6839;&#x64DA; row &#x6642;&#x70BA; FALSE&#xFF0C;&#x6839;&#x64DA; col &#x6642;&#x70BA; TRUE</li>
+<li>array: 設定要排序的清單</li>
+<li>[sort_order]: 排序欄位的 index (起於 index 1)</li>
+<li>[sort_order]: 排序方法，1 : 遞增; -1: 遞減</li>
+<li>[by-col]: 設定比較條件，根據 row 時為 FALSE，根據 col 時為 TRUE</li>
 </ul>
-<p>&#x5982;&#x679C; Array &#x662F;&#x52D5;&#x614B;&#x7522;&#x751F;&#x51FA;&#x4F86;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x642D;&#x914D; <code>#</code> &#x4F7F;&#x7528; (Dynamic Array Reference)&#xFF0C;&#x9019;&#x6A23;&#x5B50;&#x7576;&#x52D5;&#x614B;&#x6E05;&#x55AE;&#x9577;&#x5EA6;&#x6539;&#x8B8A;&#x6642;&#xFF0C;&#x51FD;&#x793A;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x6E05;&#x55AE;&#x7BC4;&#x570D;&#x4E5F;&#x6703;&#x8DDF;&#x8457;&#x6539;&#x8B8A;</p>
+<p>如果 Array 是動態產生出來的，可以搭配 <code>#</code> 使用 (Dynamic Array Reference)，這樣子當動態清單長度改變時，函示所使用的清單範圍也會跟著改變</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/pkXYNfE.png" width="392" height="215" layout="responsive"></amp-img></div>
 <h1 id="filter"><a class="header-anchor" href="#filter"> </a>FILTER</h1>
-<p>FILTER &#x63D0;&#x4F9B;&#x52D5;&#x614B;&#x904E;&#x6FFE;&#x8CC7;&#x6599;&#x4F86;&#x6E90;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x904E;&#x6FFE;&#x7684;&#x6E05;&#x55AE;&#x7684;&#x6B04;&#x4F4D;&#x6703;&#x8DDF;&#x8CC7;&#x6599;&#x4F86;&#x6E90;&#x4E00;&#x6A23;&#xFF0C;&#x800C;&#x4E14;&#x662F;&#x52D5;&#x614B;&#x7684;&#x5217;&#x51FA;&#x6E05;&#x55AE;&#x3002;</p>
-<p><code>=FILTER(&#x8CC7;&#x6599;&#x4F86;&#x6E90;&#xFF0C;&#x8CC7;&#x6599;&#x4F86;&#x6E90;&#x5167;&#x8981;&#x6BD4;&#x8F03;&#x7684;&#x6B04;&#x4F4D;)</code></p>
+<p>FILTER 提供動態過濾資料來源的功能，過濾的清單的欄位會跟資料來源一樣，而且是動態的列出清單。</p>
+<p><code>=FILTER(資料來源，資料來源內要比較的欄位)</code></p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KCzXifB.png" width="1003" height="204" layout="responsive"></amp-img></div>
 <h1 id="randarray"><a class="header-anchor" href="#randarray"> </a>RANDARRAY</h1>
 <p><code>=RANDARRAY([row],[col])</code></p>
-<p>&#x56DE;&#x50B3;&#x8A2D;&#x5B9A;&#x4ECB;&#x65BC; 0 &#x548C; 1 &#x4E4B;&#x9593;&#x7684;&#x4E82;&#x6578;&#x9663;&#x5217;&#x6E05;&#x55AE;</p>
+<p>回傳設定介於 0 和 1 之間的亂數陣列清單</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/mNms3ZU.png" width="441" height="165" layout="responsive"></amp-img></div>
 <h1 id="sequence"><a class="header-anchor" href="#sequence"> </a>SEQUENCE</h1>
 <p><code>=SEQUENCE(row,[col],[start],[step])</code></p>
-<p>&#x6839;&#x64DA;&#x8A2D;&#x5B9A;&#x7522;&#x751F;&#x6578;&#x5B57;&#x5E8F;&#x5217;&#x8868;</p>
+<p>根據設定產生數字序列表</p>
 <ul>
-<li>row: &#x5217;&#x6578;</li>
-<li>col: &#x884C;&#x6578;</li>
-<li>start: &#x8D77;&#x59CB;&#x6578;&#x5B57;</li>
-<li>step: &#x9593;&#x9694;&#x6578;&#x5B57;</li>
+<li>row: 列數</li>
+<li>col: 行數</li>
+<li>start: 起始數字</li>
+<li>step: 間隔數字</li>
 </ul>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/uxPbrqn.png" width="217" height="321" layout="responsive"></amp-img></div>
-<p>&#x9084;&#x6709;&#x53E6;&#x5916;&#x5169;&#x500B; <code>SINGLE</code> &#x8207; <code>SORTBY</code> &#x6709;&#x8208;&#x8DA3;&#x7684;&#x4E5F;&#x53EF;&#x4EE5;&#x53C3;&#x95B1;&#x5B98;&#x65B9;&#x6587;&#x4EF6;&#xFF0C;</p>
-<p>&#x8981;&#x8ACB;&#x7559;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x6240;&#x4ECB;&#x7D39;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x5728;&#x9019;&#x500B;&#x6642;&#x9593;&#x9EDE;(2018/10/30) &#x90FD;&#x9084;&#x662F;&#x5C6C;&#x65BC; insider &#x7684;&#x7BC4;&#x570D;&#x5167;&#xFF0C;&#x5C1A;&#x672A;&#x6B63;&#x5F0F;&#x91CB;&#x51FA;&#x5230;&#x6B63;&#x5F0F;&#x7248;&#x4E2D;</p>
-<h1 id="&#x53C3;&#x8003;&#x6587;&#x4EF6;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x6587;&#x4EF6;"> </a>&#x53C3;&#x8003;&#x6587;&#x4EF6;</h1>
+<p>還有另外兩個 <code>SINGLE</code> 與 <code>SORTBY</code> 有興趣的也可以參閱官方文件，</p>
+<p>要請留意的是，本篇文章所介紹的功能，在這個時間點(2018/10/30) 都還是屬於 insider 的範圍內，尚未正式釋出到正式版中</p>
+<h1 id="參考文件"><a class="header-anchor" href="#參考文件"> </a>參考文件</h1>
 <ul>
 <li><a href="https://support.office.com/zh-tw/article/sortby-%E5%87%BD%E6%95%B8-cd2d7a62-1b93-435c-b561-d6a35134f28f?NS=EXCEL&amp;Version=90&amp;SysLcid=1028&amp;UiLcid=1028&amp;AppVer=ZXL900&amp;HelpId=xlmain11.chm60678&amp;ui=zh-TW&amp;rs=zh-TW&amp;ad=TW" target="_blank" rel="noopener">SORTBY</a></li>
 <li><a href="https://support.office.com/zh-tw/article/%E5%96%AE%E4%B8%80%E5%87%BD%E6%95%B8-7ca229ca-13ae-420b-928e-2ef52a3805ff?NS=EXCEL&amp;Version=90&amp;SysLcid=1028&amp;UiLcid=1028&amp;AppVer=ZXL900&amp;HelpId=xlmain11.chm60657&amp;ui=zh-TW&amp;rs=zh-TW&amp;ad=TW" target="_blank" rel="noopener">SINGLE</a></li>

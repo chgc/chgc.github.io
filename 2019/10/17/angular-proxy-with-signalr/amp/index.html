@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/17/angular-proxy-with-signalr/"
 			},
 			"datePublished": "2019-10-17T02:13:35.000Z",
-			"dateModified": "2021-02-18T02:25:04.927Z",
+			"dateModified": "2021-02-18T02:32:11.655Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,14 +1848,14 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular &#x5728;&#x958B;&#x767C;&#x6642;&#x671F;&#x6709;&#x63D0;&#x4F9B; <code>proxy</code> &#x7684;&#x6A94;&#x6848;&#x4F9B;&#x6211;&#x5011;&#x8A2D;&#x5B9A; <code>reverse proxy</code> &#xFF0C;&#x4EE5;&#x907F;&#x514D; CORS &#x6240;&#x7522;&#x751F;&#x7684;&#x554F;&#x984C;&#xFF0C;&#x800C; API &#x7684;&#x8A2D;&#x5B9A;&#x4E0A;&#x662F;&#x6C92;&#x6709;&#x554F;&#x984C;&#x7684;&#xFF0C;&#x90A3;&#x9047;&#x5230; <code>SignalR</code> &#x53C8;&#x8A72;&#x600E;&#x9EBC;&#x8FA6;&#x5462;?</p>
+			  		<p>Angular 在開發時期有提供 <code>proxy</code> 的檔案供我們設定 <code>reverse proxy</code> ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 <code>SignalR</code> 又該怎麼辦呢?</p>
 <a id="more"></a>
-<p>&#x9996;&#x5148;&#x8981;&#x5148;&#x4E86;&#x89E3; <code>SignalR</code> &#x662F;&#x8DD1;&#x5728;&#x4EC0;&#x9EBC;&#x5354;&#x5B9A;&#x4E0A;&#xFF0C;<code>SignalR</code> (&#x9019;&#x88E1;&#x63D0;&#x7684; <code>SignalR</code> &#x662F;&#x7528;&#x6700;&#x65B0;&#x7248;&#x7684; <code>@microsoft/signalr</code>) &#x9810;&#x8A2D;&#x662F;&#x8DD1;&#x5728; <code>websocket</code> &#x4E0A;&#xFF0C;&#x65E2;&#x7136;&#x77E5;&#x9053;&#x662F;&#x8DD1;&#x5728; <code>websocket</code> &#x4E0A;&#xFF0C;proxy &#x8A2D;&#x5B9A;&#x6A94;&#x5C31;&#x8B8A;&#x7C21;&#x55AE;&#x4E86;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x57FA;&#x672C;&#x7BC4;&#x4F8B;</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  ...</span><br><span class="line">  &quot;/messageHub&quot;: {</span><br><span class="line">    &quot;target&quot;: &quot;&lt;your url&gt;&quot;,  </span><br><span class="line">    &quot;ws&quot;: true // &#x9019;&#x662F;&#x95DC;&#x9375;&#x8A2D;&#x5B9A;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x52A0;&#x4E0A; line:5 &#x5F8C;&#xFF0C;&#x4E00;&#x5207;&#x554F;&#x984C;&#x5C31;&#x89E3;&#x6C7A;&#x4E86;&#x3002;</p>
-<h1 id="&#x9032;&#x968E;&#x8A2D;&#x5B9A;"><a class="header-anchor" href="#&#x9032;&#x968E;&#x8A2D;&#x5B9A;"> </a>&#x9032;&#x968E;&#x8A2D;&#x5B9A;</h1>
-<p>&#x7576;&#x8981;&#x8A2D;&#x5B9A;&#x7684;&#x7DB2;&#x5740;&#x5F88;&#x591A;&#x6642;&#xFF0C;&#x53EF;&#x4EE5;&#x600E;&#x6A23;&#x8A2D;&#x5B9A;&#x5462;? &#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>context</code> &#x4F86;&#x8A2D;&#x5B9A;&#xFF0C;&#x7BC4;&#x4F8B;&#x5982;&#x4E0B;</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;context&quot;</span>: [<span class="string">&quot;/messageHub&quot;</span>, <span class="string">&quot;/api&quot;</span>],</span><br><span class="line">  <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;&lt;your url&gt;&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;secure&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;changeOrigin&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;ws&quot;</span>: <span class="literal">true</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>首先要先了解 <code>SignalR</code> 是跑在什麼協定上，<code>SignalR</code> (這裡提的 <code>SignalR</code> 是用最新版的 <code>@microsoft/signalr</code>) 預設是跑在 <code>websocket</code> 上，既然知道是跑在 <code>websocket</code> 上，proxy 設定檔就變簡單了，以下是基本範例</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  ...</span><br><span class="line">  "/messageHub": {</span><br><span class="line">    "target": "&lt;your url&gt;",  </span><br><span class="line">    "ws": true // 這是關鍵設定</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>當加上 line:5 後，一切問題就解決了。</p>
+<h1 id="進階設定"><a class="header-anchor" href="#進階設定"> </a>進階設定</h1>
+<p>當要設定的網址很多時，可以怎樣設定呢? 可以使用 <code>context</code> 來設定，範例如下</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"context"</span>: [<span class="string">"/messageHub"</span>, <span class="string">"/api"</span>],</span><br><span class="line">  <span class="attr">"target"</span>: <span class="string">"&lt;your url&gt;"</span>,</span><br><span class="line">  <span class="attr">"secure"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"changeOrigin"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"ws"</span>: <span class="literal">true</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

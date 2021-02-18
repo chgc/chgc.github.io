@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/05/flutter-layout-container/"
 			},
 			"datePublished": "2019-10-05T09:34:39.000Z",
-			"dateModified": "2021-02-18T02:25:04.927Z",
+			"dateModified": "2021-02-18T02:32:11.651Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,38 +1848,38 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Flutter &#x6709;&#x5E7E;&#x500B;&#x57FA;&#x672C;&#x7684; Layout Widget &#xFF0C;&#x4F8B;&#x5982; <code>Container</code>&#x3001;<code>GridView</code>&#x3001;<code>ListView</code>&#x3001;<code>Stack</code>&#xFF0C;Material Wdigets &#x4E5F;&#x6709; <code>Card</code> &#x548C; <code>ListTile</code> &#x9019;&#x5E7E;&#x7A2E;&#xFF0C;&#x9019;&#x4E00;&#x7BC7;&#x5148;&#x63A2;&#x7D22; <code>Container</code>&#xFF0C;<code>Container</code> &#x7B97;&#x662F;&#x6700;&#x5E38;&#x4F7F;&#x7528;&#x7684; layout widget&#xFF0C;&#x56E0;&#x70BA;&#x50CF;&#x662F; padding&#x3001;margins&#x3001;borders &#x7B49;&#x6548;&#x679C;&#x90FD;&#x662F;&#x7531;&#x9019;&#x4E00;&#x500B; widget &#x4F86;&#x8A2D;&#x5B9A;&#x7684;</p>
+			  		<p>Flutter 有幾個基本的 Layout Widget ，例如 <code>Container</code>、<code>GridView</code>、<code>ListView</code>、<code>Stack</code>，Material Wdigets 也有 <code>Card</code> 和 <code>ListTile</code> 這幾種，這一篇先探索 <code>Container</code>，<code>Container</code> 算是最常使用的 layout widget，因為像是 padding、margins、borders 等效果都是由這一個 widget 來設定的</p>
 <a id="more"></a>
 <h1 id="container"><a class="header-anchor" href="#container"> </a>Container</h1>
-<p>Container &#x7684;&#x8A2D;&#x5B9A;&#x9805;&#x76EE;&#x6709;</p>
+<p>Container 的設定項目有</p>
 <ul>
 <li>
-<p>child: &#x6307;&#x5B9A;&#x4E00;&#x500B; widget</p>
+<p>child: 指定一個 widget</p>
 </li>
 <li>
 <p>alignment:</p>
 <ul>
-<li>Aligment &#x8A2D;&#x5B9A;&#xFF0C;&#x4E5D;&#x5BAE;&#x683C; &#xFF0C;topLeft&#x3001;topCenter&#x3001;topRight&#x3001;centerLeft&#x3001;center&#x3001;centerRight&#x3001;bottomLeft&#x3001;bottomCenter &#x53CA; bottomRight</li>
+<li>Aligment 設定，九宮格 ，topLeft、topCenter、topRight、centerLeft、center、centerRight、bottomLeft、bottomCenter 及 bottomRight</li>
 </ul>
 </li>
 <li>
-<p>constraints: &#x5C6C;&#x6027;&#x9650;&#x5236;</p>
+<p>constraints: 屬性限制</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Container(</span><br><span class="line">  constraints: BoxConstraints.expand(</span><br><span class="line">    height: Theme.of(context).textTheme.display1.fontSize * <span class="number">1.1</span> + <span class="number">200.0</span>,</span><br><span class="line">  ),</span><br><span class="line"> ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <ul>
 <li>
-<p>width: &#x5BEC;&#x5EA6;</p>
+<p>width: 寬度</p>
 </li>
 <li>
-<p>height: &#x9AD8;&#x5EA6;</p>
+<p>height: 高度</p>
 </li>
 <li>
-<p>decoration: &#x4F7F;&#x7528; BoxDecoration &#x4F86;&#x505A;&#x8A2D;&#x5B9A;&#x80CC;&#x666F;</p>
+<p>decoration: 使用 BoxDecoration 來做設定背景</p>
 <ul>
-<li>BoxDecooration &#x53EF;&#x8A2D;&#x5B9A;&#x4EE5;&#x4E0B;&#x5C6C;&#x6027;
+<li>BoxDecooration 可設定以下屬性
 <ul>
-<li>color: &#x8A2D;&#x5B9A;&#x984F;&#x8272;</li>
+<li>color: 設定顏色</li>
 <li>image: DecorationImage class</li>
 <li>border: Border class</li>
 </ul>
@@ -1887,24 +1887,24 @@ h6.categories {
 </ul>
 </li>
 <li>
-<p>foregroundDecoration: &#x524D;&#x666F;&#x984F;&#x8272;&#xFF0C;&#x586B;&#x6EFF;  padding &#x5167;&#x7684;&#x5340;&#x584A;</p>
+<p>foregroundDecoration: 前景顏色，填滿  padding 內的區塊</p>
 </li>
 <li>
 <p>margin &amp; padding</p>
 <ul>
-<li>&#x53EF;&#x4F7F;&#x7528; <code>EdgeInsets</code> class &#x8A2D;&#x5B9A;</li>
+<li>可使用 <code>EdgeInsets</code> class 設定</li>
 </ul>
 </li>
 <li>
-<p>transform: &#x53EF;&#x4F7F;&#x7528; <code>Matrix4</code> &#x4F86;&#x505A;&#x8F49;&#x63DB;&#x6548;&#x679C;</p>
+<p>transform: 可使用 <code>Matrix4</code> 來做轉換效果</p>
 </li>
 </ul>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Container(</span><br><span class="line">       color: Colors.pink[<span class="number">100</span>],</span><br><span class="line">       child: Container(</span><br><span class="line">         alignment: Alignment.bottomRight, <span class="comment">// &#x53F3;&#x4E0B;&#x5C0D;&#x9F4A;</span></span><br><span class="line">         decoration: BoxDecoration(</span><br><span class="line">           color: Colors.blue, <span class="comment">// &#x80CC;&#x666F;&#x984F;&#x8272;</span></span><br><span class="line">           image: DecorationImage(</span><br><span class="line">             image: NetworkImage(<span class="string">&apos;https://picsum.photos/300&apos;</span>), <span class="comment">// &#x80CC;&#x666F;&#x5716;</span></span><br><span class="line">           ),</span><br><span class="line">           border: Border.all(color: Colors.yellow, width: <span class="number">5</span>), <span class="comment">// &#x908A;&#x6846;&#x7DDA;</span></span><br><span class="line">           borderRadius: BorderRadius.all(Radius.circular(<span class="number">10</span>)), <span class="comment">// &#x908A;&#x6846;&#x5713;&#x89D2;</span></span><br><span class="line">         ),</span><br><span class="line">         foregroundDecoration: BoxDecoration(</span><br><span class="line">           color: Colors.green[<span class="number">50</span>].withOpacity(<span class="number">0.5</span>) <span class="comment">// &#x524D;&#x666F;&#x84CB;&#x4E86;&#x4E00;&#x5C64;&#x7DA0;&#x8272;&#x534A;&#x900F;&#x660E;</span></span><br><span class="line">         ),</span><br><span class="line">         height: <span class="number">400</span>, <span class="comment">// &#x9AD8;&#x5EA6;</span></span><br><span class="line">         width: <span class="number">400</span>, <span class="comment">// &#x5BEC;&#x5EA6;</span></span><br><span class="line">         padding: EdgeInsets.all(<span class="number">50</span>), <span class="comment">// &#x4E0A;&#x4E0B;&#x5DE6;&#x53F3;&#x5404; padding 50</span></span><br><span class="line">         margin: EdgeInsets.fromLTRB(<span class="number">50</span>, <span class="number">40</span>, <span class="number">30</span>, <span class="number">20</span>), <span class="comment">// Margin &#x908A;&#x6846;&#x8A2D;&#x5B9A;</span></span><br><span class="line">         child: Image.network(<span class="string">&apos;https://picsum.photos/150&apos;</span>), <span class="comment">// context widget</span></span><br><span class="line">         transform: Matrix4.rotationZ(<span class="number">0.1</span>), <span class="comment">// &#x8F49;&#x63DB;&#x6548;&#x679C;</span></span><br><span class="line">       ),</span><br><span class="line">     );</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x986F;&#x793A;&#x6548;&#x679C;</p>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Container(</span><br><span class="line">       color: Colors.pink[<span class="number">100</span>],</span><br><span class="line">       child: Container(</span><br><span class="line">         alignment: Alignment.bottomRight, <span class="comment">// 右下對齊</span></span><br><span class="line">         decoration: BoxDecoration(</span><br><span class="line">           color: Colors.blue, <span class="comment">// 背景顏色</span></span><br><span class="line">           image: DecorationImage(</span><br><span class="line">             image: NetworkImage(<span class="string">'https://picsum.photos/300'</span>), <span class="comment">// 背景圖</span></span><br><span class="line">           ),</span><br><span class="line">           border: Border.all(color: Colors.yellow, width: <span class="number">5</span>), <span class="comment">// 邊框線</span></span><br><span class="line">           borderRadius: BorderRadius.all(Radius.circular(<span class="number">10</span>)), <span class="comment">// 邊框圓角</span></span><br><span class="line">         ),</span><br><span class="line">         foregroundDecoration: BoxDecoration(</span><br><span class="line">           color: Colors.green[<span class="number">50</span>].withOpacity(<span class="number">0.5</span>) <span class="comment">// 前景蓋了一層綠色半透明</span></span><br><span class="line">         ),</span><br><span class="line">         height: <span class="number">400</span>, <span class="comment">// 高度</span></span><br><span class="line">         width: <span class="number">400</span>, <span class="comment">// 寬度</span></span><br><span class="line">         padding: EdgeInsets.all(<span class="number">50</span>), <span class="comment">// 上下左右各 padding 50</span></span><br><span class="line">         margin: EdgeInsets.fromLTRB(<span class="number">50</span>, <span class="number">40</span>, <span class="number">30</span>, <span class="number">20</span>), <span class="comment">// Margin 邊框設定</span></span><br><span class="line">         child: Image.network(<span class="string">'https://picsum.photos/150'</span>), <span class="comment">// context widget</span></span><br><span class="line">         transform: Matrix4.rotationZ(<span class="number">0.1</span>), <span class="comment">// 轉換效果</span></span><br><span class="line">       ),</span><br><span class="line">     );</span><br></pre></td></tr></tbody></table></figure>
+<p>顯示效果</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-container/1570274905690.png" width="503" height="669" layout="responsive"></amp-img></div>
-<h2 id="margin-padding-border-&#x95DC;&#x4FC2;&#x5716;"><a class="header-anchor" href="#margin-padding-border-&#x95DC;&#x4FC2;&#x5716;"> </a>Margin Padding Border &#x95DC;&#x4FC2;&#x5716;</h2>
+<h2 id="margin-padding-border-關係圖"><a class="header-anchor" href="#margin-padding-border-關係圖"> </a>Margin Padding Border 關係圖</h2>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-container/1570272641129.png" width="242" height="171" layout="responsive"></amp-img></div>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://api.flutter.dev/flutter/widgets/Container-class.html" target="_blank" rel="noopener">Container Class</a></li>
 <li><a href="https://api.flutter.dev/flutter/painting/BoxDecoration-class.html" target="_blank" rel="noopener">BoxDecoration</a></li>

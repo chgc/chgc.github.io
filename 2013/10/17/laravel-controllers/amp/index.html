@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/10/17/laravel-controllers/"
 			},
 			"datePublished": "2013-10-17T00:31:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.563Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1843,18 +1843,18 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<h2 id="controller"><a class="header-anchor" href="#controller"> </a>Controller</h2>
-<p>Controllers&#x662F;&#x7528;&#x4F86;&#x8655;&#x7406;&#x5546;&#x696D;&#x908F;&#x8F2F;&#x53CA;&#x8CC7;&#x6599;&#x8207;view&#x4E4B;&#x9593;&#x7684;&#x4ECB;&#x9762;(&#x8CA0;&#x8CAC;&#x5C07;&#x8CC7;&#x6599;input//output &#x7D66;model&#xFF0C;&#x8207;&#x8CC7;&#x6599;&#x5EAB;&#x7684;&#x6E9D;&#x901A;&#x5C31;&#x4EA4;&#x7D66;model&#x53BB;&#x8655;&#x7406;&#x4E86;)</p>
-<p>controller&#x9700;&#x8981;&#x914D;&#x5408;route&#x7684;&#x8A2D;&#x5B9A;&#x624D;&#x53EF;&#x88AB;view&#x547C;&#x53EB;&#x4F7F;&#x7528;&#x3002;</p>
-<p>&#x4F8B;&#x5982;:
-route::get(&#x300E;something&#x300F;,&#x300E;someController@someaction&#x300F;)</p>
-<p>&#x7576;&#x4F7F;&#x7528;&#x8005;&#x8DD1;&#x5230; <a href="http://website/something%E6%99%82" target="_blank" rel="noopener">http://website/something&#x6642;</a>, &#x5C31;&#x6703;&#x547C;&#x53EB;route&#x5167;&#x6240;&#x5C0D;&#x61C9;&#x7684;controller&#x53CA;action.</p>
-<p>&#x767C;&#x73FE;&#xFF0C;&#x9019;&#x7A2E;&#x6307;&#x5B9A;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x7576;&#x9801;&#x9762;&#x5F88;&#x591A;&#x7684;&#x6642;&#x5019;&#x5C31;&#x6703;&#x8B8A;&#x5F97;&#x5F88;&#x9EBB;&#x7169;&#x3002; &#x6240;&#x4EE5;laravel&#x7684;route&#x63D0;&#x4F9B;&#x53E6;&#x5916;&#x4E00;&#x7A2E;&#x6307;&#x5B9A;&#x7684;&#x65B9;&#x5F0F;</p>
-<p>route::controller(&#x300E;something&#x300F;,&#x300E;someController&#x300F;)</p>
-<p>&#x6B64;&#x7A2E;&#x8A2D;&#x5B9A;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x9069;&#x7528;&#x65BC;restFUL&#x7684;controller, (get,post,put,delete)&#x56DB;&#x7A2E;&#x4EA4;&#x63DB;&#x6A21;&#x5F0F;&#x7684;&#x76F8;&#x95DC;&#x52D5;&#x4F5C;&#x3002;</p>
-<p>&#x4E00;&#x822C;&#x800C;&#x8A00;&#xFF0C;&#x53EA;&#x662F;&#x8B80;&#x53D6;&#x4E00;&#x500B;&#x9801;&#x9762;&#x7684;&#x6642;&#x5019;&#xFF0C;&#x90FD;&#x662F;&#x900F;&#x904E; get&#x7684;method&#x53D6;&#x5F97;&#x56DE;&#x61C9;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x5728;controller&#x5167;action&#x7684;&#x547D;&#x540D;&#xFF0C;
-&#x5C31;&#x662F;&#x7528;getSomection()&#x70BA;&#x547D;&#x540D;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x7DB2;&#x5740;&#x5C31;&#x662F;http://website/something/someaction (&#x5C0F;&#x5BEB;, Controller&#x5167;&#x7684;action name &#x662F;&#x5927;&#x5BEB;). &#x5982;&#x679C;action&#x7684;&#x540D;&#x7A31;&#x662F;SomeAction&#x6642;&#xFF0C;<strong>&#x6CE8;&#x610F; &#x662F;&#x5169;&#x500B;&#x5927;&#x5BEB;&#x5B57;&#x6BCD;</strong> &#x7DB2;&#x5740;&#x5C31;&#x6703;&#x8B8A;&#x6210; <a href="http://website/something/some-action" target="_blank" rel="noopener">http://website/something/some-action</a> (&#x7834;&#x6298;&#x865F;&#x4F5C;&#x70BA;&#x9023;&#x7D50;&#x7684;&#x7B26;&#x865F;)</p>
-<p>&#x540C;&#x7406;: &#x5982;&#x679C;&#x9047;&#x5230;form post&#x6642;, &#x5C31;&#x662F;&#x547C;&#x53EB;postSomeaction()</p>
-<p>&#x4EE5;&#x4E0A;&#x70BA;controller&#x7684;&#x57FA;&#x672C;&#x547C;&#x53EB;&#x65B9;&#x5F0F;&#x3002;</p>
+<p>Controllers是用來處理商業邏輯及資料與view之間的介面(負責將資料input//output 給model，與資料庫的溝通就交給model去處理了)</p>
+<p>controller需要配合route的設定才可被view呼叫使用。</p>
+<p>例如:
+route::get(『something』,『someController@someaction』)</p>
+<p>當使用者跑到 <a href="http://website/something%E6%99%82" target="_blank" rel="noopener">http://website/something時</a>, 就會呼叫route內所對應的controller及action.</p>
+<p>發現，這種指定的方式，當頁面很多的時候就會變得很麻煩。 所以laravel的route提供另外一種指定的方式</p>
+<p>route::controller(『something』,『someController』)</p>
+<p>此種設定的方式，適用於restFUL的controller, (get,post,put,delete)四種交換模式的相關動作。</p>
+<p>一般而言，只是讀取一個頁面的時候，都是透過 get的method取得回應的。所以在controller內action的命名，
+就是用getSomection()為命名的方式，網址就是http://website/something/someaction (小寫, Controller內的action name 是大寫). 如果action的名稱是SomeAction時，<strong>注意 是兩個大寫字母</strong> 網址就會變成 <a href="http://website/something/some-action" target="_blank" rel="noopener">http://website/something/some-action</a> (破折號作為連結的符號)</p>
+<p>同理: 如果遇到form post時, 就是呼叫postSomeaction()</p>
+<p>以上為controller的基本呼叫方式。</p>
 
 			  		
 			  		<!-- google Adsense -->

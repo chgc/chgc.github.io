@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/"
 			},
 			"datePublished": "2019-08-12T02:30:36.000Z",
-			"dateModified": "2021-02-18T02:25:04.899Z",
+			"dateModified": "2021-02-18T02:32:11.623Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,103 +1848,103 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x90E8;&#x7F72;&#x7DB2;&#x7AD9;&#x5230; Azure App Service &#x7684;&#x65B9;&#x5F0F;&#x6709;&#x5F88;&#x591A;&#x7A2E;&#xFF0C;&#x800C;&#x70BA;&#x4E86;&#x8B93;&#x90E8;&#x7F72;&#x7684;&#x52D5;&#x4F5C;&#x80FD;&#x9023;&#x8CAB;&#x4E14;&#x6B65;&#x9A5F;&#x662F;&#x6700;&#x5C11;&#x7684;&#xFF0C;&#x5C31;&#x5FC5;&#x9808;&#x6574;&#x5408;&#x5230; DevOps &#x4E4B;&#x985E;&#x7684;&#x670D;&#x52D9;&#x3002;App service &#x91DD;&#x5C0D;&#x90E8;&#x7F72;&#x4E5F;&#x6709;&#x63D0;&#x4F9B;&#x5E7E;&#x500B;&#x4E0D;&#x932F;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x9019;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x6703;&#x5148;&#x5F9E; <code>Deployment Center</code> (&#x90E8;&#x7F72;&#x4E2D;&#x5FC3;) &#x958B;&#x59CB;</p>
+			  		<p>部署網站到 Azure App Service 的方式有很多種，而為了讓部署的動作能連貫且步驟是最少的，就必須整合到 DevOps 之類的服務。App service 針對部署也有提供幾個不錯的功能，這一篇文章會先從 <code>Deployment Center</code> (部署中心) 開始</p>
 <a id="more"></a>
-<p>Azure App Service &#x7684;&#x90E8;&#x7F72;&#x4E2D;&#x5FC3;&#xFF0C;&#x652F;&#x63F4;&#x591A;&#x7A2E;&#x7248;&#x63A7;&#x670D;&#x52D9;&#xFF0C;&#x50CF;&#x662F; Azure Repos&#x3001;GitHub&#x3001;Bitbucket&#x3001;Local Git &#x9084;&#x6709;&#x4E00;&#x4E9B;&#x6A94;&#x6848;&#x670D;&#x52D9;&#x7B49;&#xFF0C;&#x9019;&#x7BC7;&#x6587;&#x7AE0;&#xFF0C;&#x6211;&#x5011;&#x4F7F;&#x7528; GitHub &#x4F86;&#x4F5C;&#x70BA;&#x6301;&#x7E8C;&#x90E8;&#x7F72;&#x7684;&#x7A0B;&#x5F0F;&#x4F86;&#x6E90;</p>
-<h1 id="&#x57FA;&#x672C;&#x8A2D;&#x5B9A;&#x64CD;&#x4F5C;"><a class="header-anchor" href="#&#x57FA;&#x672C;&#x8A2D;&#x5B9A;&#x64CD;&#x4F5C;"> </a>&#x57FA;&#x672C;&#x8A2D;&#x5B9A;&#x64CD;&#x4F5C;</h1>
+<p>Azure App Service 的部署中心，支援多種版控服務，像是 Azure Repos、GitHub、Bitbucket、Local Git 還有一些檔案服務等，這篇文章，我們使用 GitHub 來作為持續部署的程式來源</p>
+<h1 id="基本設定操作"><a class="header-anchor" href="#基本設定操作"> </a>基本設定操作</h1>
 <ol>
 <li>
-<p>&#x5EFA;&#x7ACB; GitHub Repo</p>
+<p>建立 GitHub Repo</p>
 </li>
 <li>
-<p>&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x7C21;&#x55AE;&#x7684; Razor Page &#x7DB2;&#x7AD9;&#xFF0C;&#x4E26;&#x5C07;&#x5176;&#x63A8;&#x9001;&#x5230;  GitHub Repo &#x4E0A;</p>
+<p>建立一個簡單的 Razor Page 網站，並將其推送到  GitHub Repo 上</p>
 </li>
 <li>
-<p>&#x5EFA;&#x7ACB; Azure App Service</p>
+<p>建立 Azure App Service</p>
 </li>
 <li>
-<p>&#x9EDE;&#x9078; &#x90E8;&#x7F72;&#x4E2D;&#x5FC3; (Deployment Center)</p>
+<p>點選 部署中心 (Deployment Center)</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565588656492.png" width="1291" height="552" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9078;&#x64C7;&#x539F;&#x59CB;&#x6A94;&#x63A7;&#x5236;&#xFF0C;&#x6211;&#x9019;&#x88E1;&#x9078;&#x64C7; GitHub&#xFF0C;&#x7531;&#x65BC;&#x7B2C;&#x4E00;&#x6B21;&#x5C1A;&#x672A;&#x6388;&#x6B0A;&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x5148;&#x9032;&#x884C;&#x6388;&#x6B0A;</p>
+<p>選擇原始檔控制，我這裡選擇 GitHub，由於第一次尚未授權，所以要先進行授權</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/SNAGHTML1572a0a5.PNG" width="880" height="724" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565589007381.png" width="800" height="603" layout="responsive"></amp-img></div>
-<p>&#x5B8C;&#x6210;&#x6388;&#x6B0A;&#xFF0C;&#x9EDE;&#x9078;&#x3010;&#x7E7C;&#x7E8C;&#x3011;</p>
+<p>完成授權，點選【繼續】</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565589189698.png" width="884" height="699" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9078;&#x64C7;&#x3010;&#x7D44;&#x4EF6;&#x63D0;&#x4F9B;&#x8005;&#x3011;&#xFF0C;&#x9019;&#x908A;&#x9078;&#x64C7; <strong>App Service &#x7D44;&#x4EF6;&#x670D;&#x52D9;</strong> &#x5F8C;&#xFF0C;&#x7E7C;&#x7E8C;&#x4E0B;&#x4E00;&#x6B65;</p>
+<p>選擇【組件提供者】，這邊選擇 <strong>App Service 組件服務</strong> 後，繼續下一步</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565589252725.png" width="870" height="761" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9032;&#x5165;&#x8A2D;&#x5B9A;&#x9801;&#x9762;&#xFF0C;&#x5982;&#x679C;&#x9078;&#x64C7;&#x4E0D;&#x5230; Repo &#x7684;&#x8A71;&#xFF0C;&#x90A3;&#x8868;&#x793A;&#x5728; GitHub &#x9019;&#x908A;&#x9084;&#x9700;&#x8981;&#x5728;&#x8A2D;&#x5B9A;&#x4E00;&#x4E9B;&#x6771;&#x897F;</p>
+<p>進入設定頁面，如果選擇不到 Repo 的話，那表示在 GitHub 這邊還需要在設定一些東西</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565589356437.png" width="728" height="364" layout="responsive"></amp-img></div>
 <ol>
 <li>
-<p>&#x524D;&#x5F80; GitHub &#xFF0C;&#x9032;&#x5165; &#x3010;Setting&#x3011;&#x9801;&#x9762;</p>
+<p>前往 GitHub ，進入 【Setting】頁面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565589970877.png" width="241" height="399" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9032;&#x5165; &#x3010;Application&#x3011; &#x4E26;&#x9078;&#x64C7; &#x3010;Authorized OAuth Apps&#x3011;&#xFF0C;&#x627E;&#x5230; Azure App Service</p>
+<p>進入 【Application】 並選擇 【Authorized OAuth Apps】，找到 Azure App Service</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565590071114.png" width="984" height="484" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5C07;&#x5C1A;&#x672A;&#x6388;&#x6B0A;&#x7684; Orgranization &#xFF0C;&#x958B;&#x653E;&#x6B0A;&#x9650; (Grant)</p>
+<p>將尚未授權的 Orgranization ，開放權限 (Grant)</p>
 </li>
 <li>
-<p>&#x5982;&#x679C;&#x9084;&#x6C92;&#x6709;&#x770B;&#x5230;&#xFF0C;&#x91CD;&#x65B0;&#x6574;&#x7406;&#x756B;&#x9762;&#xFF0C;&#x4E26;&#x91CD;&#x65B0;&#x505A;&#x4E00;&#x6B21; Deployment Center &#x7684;&#x8A2D;&#x5B9A;&#x756B;&#x9762;&#xFF0C;&#x61C9;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x76F8;&#x95DC;&#x8CC7;&#x8A0A;&#x4E86;</p>
+<p>如果還沒有看到，重新整理畫面，並重新做一次 Deployment Center 的設定畫面，應可以看到相關資訊了</p>
 </li>
 </ol>
 </li>
 <li>
-<p>&#x9078;&#x64C7;&#x8981;&#x90E8;&#x7F72;&#x7684; Repo &#x4F86;&#x6E90;</p>
+<p>選擇要部署的 Repo 來源</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565590741348.png" width="866" height="444" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x7E7C;&#x7E8C;&#x9032;&#x5165;&#x6700;&#x7D42;&#x6B65;&#x9A5F;&#xFF0C;&#x78BA;&#x8A8D;&#x5B8C;&#x6210;&#x3002;</p>
+<p>繼續進入最終步驟，確認完成。</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565590787555.png" width="830" height="773" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5B8C;&#x6210;&#x8A2D;&#x5B9A;</p>
+<p>完成設定</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565590831627.png" width="1161" height="535" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x7B2C;&#x4E00;&#x6B21;&#x90E8;&#x7F72;&#x6210;&#x529F;</p>
+<p>第一次部署成功</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565590951080.png" width="1158" height="372" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x57F7;&#x884C;&#x7D50;&#x679C;&#x3002;&#x592A;&#x68D2;&#x4E86;&#xFF0C;&#x770B;&#x5230;&#x756B;&#x9762;</p>
+<p>執行結果。太棒了，看到畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565591008327.png" width="1264" height="508" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<h2 id="&#x7B2C;&#x4E8C;&#x6B21;-commit"><a class="header-anchor" href="#&#x7B2C;&#x4E8C;&#x6B21;-commit"> </a>&#x7B2C;&#x4E8C;&#x6B21;  Commit</h2>
-<p>&#x5617;&#x8A66;&#x4FEE;&#x6539;&#x4E00;&#x4E9B;&#x6587;&#x5B57;&#x4E26; commit &#x5230; GitHub &#x4E0A;&#x5F8C;&#xFF0C;&#x89C0;&#x5BDF;&#x770B;&#x770B;&#x90E8;&#x7F72;&#x4E2D;&#x5FC3;&#x662F;&#x5426;&#x6709;&#x505A;&#x5230;&#x81EA;&#x52D5;&#x5EFA;&#x7F6E;&#x90E8;&#x7F72;&#x7684;&#x52D5;&#x4F5C;</p>
-<p>&#x7576; commit push &#x5230; GitHub &#x4E0A;&#xFF0C;&#x5728;&#x90E8;&#x7F72;&#x4E2D;&#x5FC3;&#x7684;&#x9801;&#x9762;&#x4E0A;&#xFF0C;&#x6703;&#x767C;&#x73FE;&#x7B2C;&#x4E8C;&#x6B21; Commit &#x7684;&#x8A0A;&#x606F;</p>
+<h2 id="第二次-commit"><a class="header-anchor" href="#第二次-commit"> </a>第二次  Commit</h2>
+<p>嘗試修改一些文字並 commit 到 GitHub 上後，觀察看看部署中心是否有做到自動建置部署的動作</p>
+<p>當 commit push 到 GitHub 上，在部署中心的頁面上，會發現第二次 Commit 的訊息</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565591206262.png" width="1164" height="433" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565591388557.png" width="1118" height="187" layout="responsive"></amp-img></div>
-<p>&#x4FEE;&#x6539;&#x5F8C;&#x7684;&#x756B;&#x9762;</p>
+<p>修改後的畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565591414880.png" width="1160" height="264" layout="responsive"></amp-img></div>
-<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x9806;&#x5229;&#x4FEE;&#x6539;&#x5F8C;&#x7684;&#x7D50;&#x679C;&#xFF0C;&#x9019;&#x4EE3;&#x8868;&#x6574;&#x500B;&#x6D41;&#x7A0B;&#x5DF2;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x904B;&#x4F5C;&#x4E86;</p>
-<h1 id="&#x9000;&#x7248;"><a class="header-anchor" href="#&#x9000;&#x7248;"> </a>&#x9000;&#x7248;</h1>
-<p>&#x6709;&#x6642;&#x5019;&#x5728; commit &#x6642;&#xFF0C;&#x767C;&#x73FE;&#x4E0A;&#x7684;&#x7248;&#x672C;&#x6709;&#x91CD;&#x5927;&#x554F;&#x984C;&#x9700;&#x8981;&#x9000;&#x7248;&#x6642;&#xFF0C;&#x900F;&#x904E;&#x90E8;&#x7F72;&#x4E2D;&#x5FC3;&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x505A;&#x5230;&#x9000;&#x7248;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x64CD;&#x4F5C;&#x6B65;&#x9A5F;</p>
+<p>可以看到順利修改後的結果，這代表整個流程已可以正常運作了</p>
+<h1 id="退版"><a class="header-anchor" href="#退版"> </a>退版</h1>
+<p>有時候在 commit 時，發現上的版本有重大問題需要退版時，透過部署中心可以快速做到退版，以下是操作步驟</p>
 <ol>
 <li>
-<p>&#x9078;&#x64C7;&#x60F3;&#x8981;&#x9000;&#x7248;&#x7684; commit &#x7D00;&#x9304;</p>
+<p>選擇想要退版的 commit 紀錄</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565591661549.png" width="1111" height="210" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9EDE;&#x9078;&#x3010;&#x91CD;&#x65B0;&#x4F48;&#x7F72;&#x3011;</p>
+<p>點選【重新佈署】</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565591693288.png" width="599" height="353" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9000;&#x7248;&#x6210;&#x529F;</p>
+<p>退版成功</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/12/azure-app-service-deployment/1565591759740.png" width="1090" height="185" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<p>&#x5C31;&#x662F;&#x9019;&#x9EBC;&#x7C21;&#x55AE;</p>
-<h1 id="&#x7D50;&#x8AD6;"><a class="header-anchor" href="#&#x7D50;&#x8AD6;"> </a>&#x7D50;&#x8AD6;</h1>
-<p>&#x96D6;&#x7136; GitHub &#x662F;&#x5F88;&#x5E38;&#x898B;&#x597D;&#x7528;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#x5BC4;&#x653E;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x4F46;&#x5982;&#x679C;&#x8981;&#x8DDF; Azure App Service &#x6574;&#x500B;&#x7684;&#x90E8;&#x7F72;&#x6574;&#x5408;&#x66F4;&#x6D41;&#x66A2;&#xFF0C;&#x6211;&#x76F8;&#x4FE1;&#x4F7F;&#x7528; Azure DevOps &#x7684;&#x670D;&#x52D9;&#x6703;&#x662F;&#x6700;&#x4F73;&#x9078;&#x64C7;</p>
+<p>就是這麼簡單</p>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>雖然 GitHub 是很常見好用的程式碼寄放的位置，但如果要跟 Azure App Service 整個的部署整合更流暢，我相信使用 Azure DevOps 的服務會是最佳選擇</p>
 
 			  		
 			  		<!-- google Adsense -->

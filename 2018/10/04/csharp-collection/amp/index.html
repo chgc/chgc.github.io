@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/10/04/csharp-collection/"
 			},
 			"datePublished": "2018-10-04T00:40:56.000Z",
-			"dateModified": "2021-02-18T02:25:04.859Z",
+			"dateModified": "2021-02-18T02:32:11.575Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,171 +1848,171 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>C# &#x7684;&#x96C6;&#x5408;&#x7A2E;&#x985E;&#x6709;&#x5F88;&#x591A;&#x7A2E;&#xFF0C;&#x6BCF;&#x4E00;&#x7A2E;&#x96C6;&#x5408;&#x90FD;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x8D81;&#x8457;&#x5728;&#x770B; <code>ImmutableList</code> &#x5C07;&#x9019;&#x500B;&#x5340;&#x584A;&#x7684;&#x8CC7;&#x8A0A;&#x6574;&#x7406;&#x4E00;&#x4E0B;&#x3002;C# &#x8DDF;&#x53CA;&#x4F55;&#x6709;&#x95DC;&#x7684;&#x547D;&#x540D;&#x7A7A;&#x9593;&#xFF0C;&#x90FD;&#x6703;&#x653E;&#x5728; <code>System.Collections</code> &#x4E0B;</p>
+			  		<p>C# 的集合種類有很多種，每一種集合都有不同的特性，趁著在看 <code>ImmutableList</code> 將這個區塊的資訊整理一下。C# 跟及何有關的命名空間，都會放在 <code>System.Collections</code> 下</p>
 <a id="more"></a>
-<h1 id="&#x96C6;&#x5408;&#x7684;&#x7A2E;&#x985E;"><a class="header-anchor" href="#&#x96C6;&#x5408;&#x7684;&#x7A2E;&#x985E;"> </a>&#x96C6;&#x5408;&#x7684;&#x7A2E;&#x985E;</h1>
+<h1 id="集合的種類"><a class="header-anchor" href="#集合的種類"> </a>集合的種類</h1>
 <h2 id="system-collections"><a class="header-anchor" href="#system-collections"> </a>System.Collections</h2>
-<p>&#x56E0;&#x70BA;&#x4E0D;&#x6307;&#x5B9A;&#x578B;&#x5225;&#xFF0C;&#x6240;&#x4EE5;&#x90FD;&#x6703;&#x4EE5; <code>Object</code> &#x7684;&#x985E;&#x578B;&#x5132;&#x5B58;&#xFF0C;&#x5E38;&#x7528;&#x7684;&#x985E;&#x5225;&#x6709;</p>
+<p>因為不指定型別，所以都會以 <code>Object</code> 的類型儲存，常用的類別有</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th>&#x985E;&#x5225;</th>
-<th>&#x63CF;&#x8FF0;</th>
+<th>類別</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>ArrayList</td>
-<td>&#x6703;&#x8996;&#x9700;&#x8981;&#x52D5;&#x614B;&#x589E;&#x52A0;&#x5927;&#x5C0F;&#x7684;&#x7269;&#x4EF6;&#x9663;&#x5217;&#x3002;(&#x5C0D;&#x61C9; List)</td>
+<td>會視需要動態增加大小的物件陣列。(對應 List)</td>
 </tr>
 <tr>
 <td>Hashtable</td>
-<td>&#x6839;&#x64DA;&#x7D22;&#x5F15;&#x9375;&#x7684;&#x96DC;&#x6E4A;&#x7A0B;&#x5F0F;&#x78BC;&#xFF0C;&#x6240;&#x6574;&#x7406;&#x7684;&#x7D22;&#x5F15;&#x9375;/&#x503C;&#x7D44;&#x96C6;&#x5408; (&#x5C0D;&#x61C9; Dictionary)</td>
+<td>根據索引鍵的雜湊程式碼，所整理的索引鍵/值組集合 (對應 Dictionary)</td>
 </tr>
 <tr>
 <td>Queue</td>
-<td>&#x5177;&#x6709;&#x5148;&#x9032;&#x5148;&#x51FA;(FIFO)&#x7279;&#x6027;&#x7684;&#x6E05;&#x55AE;</td>
+<td>具有先進先出(FIFO)特性的清單</td>
 </tr>
 <tr>
 <td>Stack</td>
-<td>&#x5177;&#x6709;&#x5148;&#x9032;&#x5F8C;&#x51FA;(LIFO)&#x7279;&#x6027;&#x7684;&#x6E05;&#x55AE;</td>
+<td>具有先進後出(LIFO)特性的清單</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="system-collections-generic"><a class="header-anchor" href="#system-collections-generic"> </a>System.Collections.Generic</h2>
-<p>&#x5728;&#x9019;&#x4E00;&#x500B;&#x547D;&#x540D;&#x7A7A;&#x9593;&#x4E0B;&#x7684;&#x96C6;&#x5408;&#x90FD;&#x5C6C;&#x6CDB;&#x578B;&#x96C6;&#x5408;&#xFF0C;&#x5E38;&#x898B;&#x7684;&#x6709;</p>
+<p>在這一個命名空間下的集合都屬泛型集合，常見的有</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th>&#x985E;&#x5225;</th>
-<th>&#x63CF;&#x8FF0;</th>
+<th>類別</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>Dictionary&lt;TKey, TValue&gt;</code></td>
-<td>KeyValue Pair &#x96C6;&#x5408;</td>
+<td>KeyValue Pair 集合</td>
 </tr>
 <tr>
 <td><code>List&lt;T&gt;</code></td>
-<td>&#x4F9D;&#x7167;&#x7D22;&#x5F15;&#x5B58;&#x53D6;&#x7684;&#x7269;&#x4EF6;&#x6E05;&#x55AE;&#xFF0C;&#x53EF;&#x641C;&#x5C0B;&#x3001;&#x6392;&#x5E8F;&#x3001;&#x4FEE;&#x6539;</td>
+<td>依照索引存取的物件清單，可搜尋、排序、修改</td>
 </tr>
 <tr>
 <td><code>Queue&lt;T&gt;</code></td>
-<td>&#x5177;&#x6709;&#x5148;&#x9032;&#x5148;&#x51FA;(FIFO)&#x7279;&#x6027;&#x7684;&#x6E05;&#x55AE;</td>
+<td>具有先進先出(FIFO)特性的清單</td>
 </tr>
 <tr>
 <td><code>SortedList&lt;TKey, TValue&gt;</code></td>
-<td>&#x6839;&#x64DA; Key &#x503C;&#x6392;&#x5E8F;&#x7684; KeyValue &#x96C6;&#x5408;</td>
+<td>根據 Key 值排序的 KeyValue 集合</td>
 </tr>
 <tr>
 <td><code>Stack&lt;T&gt;</code></td>
-<td>&#x5177;&#x6709;&#x5148;&#x9032;&#x5F8C;&#x51FA;(LIFO)&#x7279;&#x6027;&#x7684;&#x6E05;&#x55AE;</td>
+<td>具有先進後出(LIFO)特性的清單</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="system-collections-concurrent"><a class="header-anchor" href="#system-collections-concurrent"> </a>System.Collections.Concurrent</h2>
-<p>&#x91DD;&#x5C0D;&#x591A;&#x57F7;&#x884C;&#x7DD2;&#x60C5;&#x5883;&#x6240;&#x8A2D;&#x8A08;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x5305;&#x542B; <code>BlockingCollection&lt;T&gt;</code> &#x3001;<code>ConcurrentDictionary&lt;TKey, TValue&gt;</code> &#x3001;<code>ConcurrentQueue&lt;T&gt;</code> &#x548C; <code>ConcurrentStack&lt;T&gt;</code></p>
+<p>針對多執行緒情境所設計的集合，包含 <code>BlockingCollection&lt;T&gt;</code> 、<code>ConcurrentDictionary&lt;TKey, TValue&gt;</code> 、<code>ConcurrentQueue&lt;T&gt;</code> 和 <code>ConcurrentStack&lt;T&gt;</code></p>
 <h2 id="system-collections-immutable"><a class="header-anchor" href="#system-collections-immutable"> </a>System.Collections.Immutable</h2>
 <blockquote>
-<p>&#x6D89;&#x53CA;&#x591A;&#x500B;&#x57F7;&#x884C;&#x7DD2;&#x6642;&#xFF0C;&#x8981;&#x63A7;&#x5236;&#x597D;&#x53EF;&#x8B8A;&#x72C0;&#x614B;&#x6703;&#x662F;&#x500B;&#x6311;&#x6230;&#x3002; &#x4E00;&#x822C;&#x4F5C;&#x6CD5;&#x662F;&#x5229;&#x7528;&#x53EF;&#x5728;&#x4E0D;&#x540C;&#x57F7;&#x884C;&#x7DD2;&#x4E4B;&#x9593;&#x81EA;&#x7531;&#x50B3;&#x905E;&#x7684;&#x4E0D;&#x53EF;&#x8B8A;&#x72C0;&#x614B;&#x3002; &#x4E0D;&#x53EF;&#x8B8A;&#x7684;&#x96C6;&#x5408;&#x4E0D;&#x540C;&#x65BC;&#x552F;&#x8B80;&#x96C6;&#x5408;&#xFF0C;&#x56E0;&#x70BA;&#x96C6;&#x5408;&#x7684;&#x63D0;&#x4F9B;&#x8005;&#x6216;&#x6D88;&#x8CBB;&#x8005;&#x7121;&#x6CD5;&#x8B8A;&#x66F4;&#x4E0D;&#x53EF;&#x8B8A;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x9019;&#x9EDE;&#x548C;&#x552F;&#x8B80;&#x96C6;&#x5408;&#x4E26;&#x4E0D;&#x76F8;&#x540C;&#x3002; &#x4F8B;&#x5982;&#xFF0C;&#x5982;&#x679C;&#x60A8;&#x8981;&#x5217;&#x8209;&#x552F;&#x8B80;&#x96C6;&#x5408;&#xFF0C;&#x8A72;&#x96C6;&#x5408;&#x6709;&#x53EF;&#x80FD;&#x6703;&#x5728;&#x5176;&#x4ED6;&#x57F7;&#x884C;&#x7DD2;&#x4E0A;&#x8B8A;&#x66F4;&#xFF0C;&#x800C;&#x5C0E;&#x81F4;&#x8CC7;&#x6599;&#x640D;&#x6BC0;&#x3002; &#x5982;&#x679C;&#x60A8;&#x662F;&#x4F7F;&#x7528;&#x4E0D;&#x53EF;&#x8B8A;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x5C31;&#x4E0D;&#x6703;&#x767C;&#x751F;&#x9019;&#x7A2E;&#x60C5;&#x5F62;&#x3002;</p>
+<p>涉及多個執行緒時，要控制好可變狀態會是個挑戰。 一般作法是利用可在不同執行緒之間自由傳遞的不可變狀態。 不可變的集合不同於唯讀集合，因為集合的提供者或消費者無法變更不可變的集合，這點和唯讀集合並不相同。 例如，如果您要列舉唯讀集合，該集合有可能會在其他執行緒上變更，而導致資料損毀。 如果您是使用不可變的集合，就不會發生這種情形。</p>
 </blockquote>
-<p>&#x6839;&#x64DA; MSDN &#x7684;&#x8AAA;&#x660E;&#xFF0C;&#x4F7F;&#x7528;&#x4E0D;&#x53EF;&#x8B8A;&#x7684;&#x96C6;&#x5408;&#x6709;&#x4EE5;&#x4E0B;&#x7684;&#x512A;&#x9EDE;</p>
+<p>根據 MSDN 的說明，使用不可變的集合有以下的優點</p>
 <ul>
-<li>&#x5B89;&#x5FC3;&#x5171;&#x7528;&#x96C6;&#x5408;&#xFF0C;&#x6D88;&#x8CBB;&#x8005;&#x53EF;&#x4EE5;&#x78BA;&#x4FDD;&#x96C6;&#x5408;&#x6C38;&#x9060;&#x4E0D;&#x6703;&#x8B8A;&#x66F4;&#x3002;</li>
-<li>&#x5728;&#x591A;&#x57F7;&#x884C;&#x7DD2;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x4E2D;&#x63D0;&#x4F9B;&#x96B1;&#x542B;&#x7684;&#x57F7;&#x884C;&#x7DD2;&#x5B89;&#x5168;&#x6027; (&#x4E0D;&#x9700;&#x8981;&#x9396;&#x5B9A;&#xFF0C;&#x5373;&#x53EF;&#x5B58;&#x53D6;&#x96C6;&#x5408;)&#x3002;</li>
-<li>&#x4F9D;&#x7167;&#x51FD;&#x5F0F;&#x7A0B;&#x5F0F;&#x8A2D;&#x8A08;&#x4F5C;&#x6CD5;&#x9032;&#x884C;&#x3002;</li>
-<li>&#x5728;&#x5217;&#x8209;&#x671F;&#x9593;&#x4FEE;&#x6539;&#x96C6;&#x5408;&#xFF0C;&#x4E26;&#x53EF;&#x78BA;&#x4FDD;&#x539F;&#x59CB;&#x96C6;&#x5408;&#x4E0D;&#x6703;&#x8B8A;&#x66F4;&#x3002;</li>
+<li>安心共用集合，消費者可以確保集合永遠不會變更。</li>
+<li>在多執行緒應用程式中提供隱含的執行緒安全性 (不需要鎖定，即可存取集合)。</li>
+<li>依照函式程式設計作法進行。</li>
+<li>在列舉期間修改集合，並可確保原始集合不會變更。</li>
 </ul>
-<p>&#x4E00;&#x6A23;&#x6709;&#x4E0A;&#x8FF0;&#x7684; <code>List</code>&#x3001;<code>Dictionary</code>&#x3001;<code>HashSet</code> &#x7B49;&#x96C6;&#x5408;&#xFF0C;&#x53EA;&#x662F;&#x8B8A;&#x6210; <code>ImmutableList&lt;T&gt;</code>&#x3001;<code>ImmutableDictionary&lt;TKey, TValue&gt;</code>&#x3001;<code>ImmutableHashSet&lt;T&gt;</code>&#x3002;</p>
-<h1 id="&#x5404;&#x96C6;&#x5408;&#x7684;&#x8A73;&#x7D30;&#x8AAA;&#x660E;"><a class="header-anchor" href="#&#x5404;&#x96C6;&#x5408;&#x7684;&#x8A73;&#x7D30;&#x8AAA;&#x660E;"> </a>&#x5404;&#x96C6;&#x5408;&#x7684;&#x8A73;&#x7D30;&#x8AAA;&#x660E;</h1>
+<p>一樣有上述的 <code>List</code>、<code>Dictionary</code>、<code>HashSet</code> 等集合，只是變成 <code>ImmutableList&lt;T&gt;</code>、<code>ImmutableDictionary&lt;TKey, TValue&gt;</code>、<code>ImmutableHashSet&lt;T&gt;</code>。</p>
+<h1 id="各集合的詳細說明"><a class="header-anchor" href="#各集合的詳細說明"> </a>各集合的詳細說明</h1>
 <h2 id="arraylist"><a class="header-anchor" href="#arraylist"> </a>ArrayList</h2>
-<p>&#x900F;&#x904E;&#x65B0;&#x589E;&#x3001;&#x79FB;&#x9664;&#xFF0C;&#x53EF;&#x4EE5;&#x52D5;&#x614B;&#x6539;&#x8B8A;&#x9663;&#x5217;&#x5927;&#x5C0F;&#x3002;&#x5BE6;&#x4F5C; <code>IList</code> &#x754C;&#x9762;</p>
-<p>&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;&#x78BC;</p>
-<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// Creates and initializes a new ArrayList.</span></span><br><span class="line">ArrayList myAL = <span class="keyword">new</span> ArrayList();</span><br><span class="line">myAL.Add(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">myAL.Add(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">myAL.Add(<span class="string">&quot;!&quot;</span>);</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x95DC;&#x65BC; <code>ArrayList</code>&#xFF0C;&#x6709;&#x4E9B;&#x4E8B;&#x60C5;&#x662F;&#x9700;&#x8981;&#x77E5;&#x9053;&#x7684;</p>
+<p>透過新增、移除，可以動態改變陣列大小。實作 <code>IList</code> 界面</p>
+<p>範例程式碼</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// Creates and initializes a new ArrayList.</span></span><br><span class="line">ArrayList myAL = <span class="keyword">new</span> ArrayList();</span><br><span class="line">myAL.Add(<span class="string">"Hello"</span>);</span><br><span class="line">myAL.Add(<span class="string">"World"</span>);</span><br><span class="line">myAL.Add(<span class="string">"!"</span>);</span><br></pre></td></tr></tbody></table></figure>
+<p>關於 <code>ArrayList</code>，有些事情是需要知道的</p>
 <ul>
 <li>
-<p>&#x8A2D;&#x8A08;&#x7528;&#x4F86;&#x4FDD;&#x5B58;&#x7269;&#x4EF6;&#x7684;&#x7570;&#x8CEA;&#x96C6;&#x5408;&#xFF0C;&#x4E0D;&#x4FDD;&#x8B49;&#x6700;&#x4F73;&#x6548;&#x80FD;&#xFF0C;&#x5B98;&#x65B9;&#x5EFA;&#x8B70;&#x4F7F;&#x7528; <code>List&lt;Object&gt;</code></p>
+<p>設計用來保存物件的異質集合，不保證最佳效能，官方建議使用 <code>List&lt;Object&gt;</code></p>
 <ul>
-<li>&#x6548;&#x80FD;&#x8A0E;&#x8AD6;&#xFF0C;&#x53EF;&#x53C3;&#x95B1; <a href="https://docs.microsoft.com/zh-tw/dotnet/api/system.collections.generic.list-1?view=netframework-4.7.2" target="_blank" rel="noopener">List<t></t></a> &#x4E3B;&#x984C;</li>
+<li>效能討論，可參閱 <a href="https://docs.microsoft.com/zh-tw/dotnet/api/system.collections.generic.list-1?view=netframework-4.7.2" target="_blank" rel="noopener">List<t></t></a> 主題</li>
 </ul>
 </li>
 <li>
-<p>&#x4E0D;&#x4FDD;&#x8B49;&#x6392;&#x5E8F;&#xFF0C;&#x9700;&#x900F;&#x904E; <code>Sort</code> &#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x9032;&#x884C;&#x6392;&#x5E8F;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x78BA;&#x4FDD;&#x9806;&#x5E8F;&#xFF0C;&#x4F7F;&#x7528; <code>SortedSet&lt;T&gt;</code> &#x985E;&#x5225;</p>
+<p>不保證排序，需透過 <code>Sort</code> 的方式來進行排序，如果要確保順序，使用 <code>SortedSet&lt;T&gt;</code> 類別</p>
 </li>
 <li>
-<p>&#x7531;&#x65BC;&#x662F;&#x52D5;&#x614B;&#x7522;&#x751F;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x4E00;&#x6B21;&#x589E;&#x52A0; <code>ArrayList</code> &#x6578;&#x91CF;&#x90FD;&#x6703;&#x91CD;&#x65B0;&#x914D;&#x7F6E;(&#x6307;&#x589E;&#x4E0D;&#x6E1B;)&#xFF0C;&#x70BA;&#x4E86;&#x6E1B;&#x5C11;&#x4F7F;&#x7528;&#x7A7A;&#x9593;&#xFF0C;&#x4F7F;&#x7528; <code>TrimToSize</code> &#x6216;&#x662F;&#x660E;&#x78BA;&#x6307;&#x5B9A;&#x9663;&#x5217;&#x5927;&#x5C0F;&#xFF0C;&#x53EF;&#x4EE5;&#x89E3;&#x6C7A;&#x7A7A;&#x9593;&#x6D6A;&#x8CBB;&#x7684;&#x554F;&#x984C;</p>
+<p>由於是動態產生，所以每一次增加 <code>ArrayList</code> 數量都會重新配置(指增不減)，為了減少使用空間，使用 <code>TrimToSize</code> 或是明確指定陣列大小，可以解決空間浪費的問題</p>
 </li>
 <li>
-<p>&#x53EF;&#x900F;&#x904E;&#x6574;&#x6578;&#x7D22;&#x5F15;&#x53D6;&#x503C;&#xFF0C;&#x5F9E; <code>0</code> &#x958B;&#x59CB;</p>
+<p>可透過整數索引取值，從 <code>0</code> 開始</p>
 </li>
 <li>
-<p>&#x63A5;&#x53D7; <code>null</code> &#x4E26;&#x53EF;&#x4EE5;&#x91CD;&#x8907;</p>
+<p>接受 <code>null</code> 並可以重複</p>
 </li>
 <li>
-<p>&#x4E0D;&#x652F;&#x63F4;&#x591A;&#x7DAD;</p>
+<p>不支援多維</p>
 </li>
 <li>
-<p>&#x9700;&#x900F;&#x904E; <code>Cast&lt;T&gt;</code> &#x624D;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; Linq</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myAL.Cast&lt;string&gt;().FirstOrDefault(x =&gt; x == &quot;!&quot;);</span><br></pre></td></tr></tbody></table></figure>
+<p>需透過 <code>Cast&lt;T&gt;</code> 才可以使用 Linq</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myAL.Cast&lt;string&gt;().FirstOrDefault(x =&gt; x == "!");</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h2 id="hashtable"><a class="header-anchor" href="#hashtable"> </a>Hashtable</h2>
-<p>&#x6839;&#x64DA;&#x7D22;&#x5F15;&#x9375;&#x7684;&#x96DC;&#x6E4A;&#x7A0B;&#x5F0F;&#x78BC;&#xFF0C;&#x6240;&#x6574;&#x7406;&#x7684;&#x7D22;&#x5F15;&#x9375;/&#x503C;&#x7D44;&#x96C6;&#x5408;</p>
-<p>&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;</p>
-<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Hashtable openWith = <span class="keyword">new</span> Hashtable();</span><br><span class="line">openWith.Add(<span class="string">&quot;txt&quot;</span>, <span class="string">&quot;notepad.exe&quot;</span>);</span><br><span class="line">openWith.Add(<span class="string">&quot;bmp&quot;</span>, <span class="string">&quot;paint.exe&quot;</span>);</span><br><span class="line">openWith.Add(<span class="string">&quot;dib&quot;</span>, <span class="string">&quot;paint.exe&quot;</span>);</span><br><span class="line">openWith.Add(<span class="string">&quot;rtf&quot;</span>, <span class="string">&quot;wordpad.exe&quot;</span>);</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x95DC;&#x65BC; <code>Hashtbale</code>&#xFF0C;&#x6709;&#x4E9B;&#x4E8B;&#x60C5;&#x662F;&#x9700;&#x8981;&#x77E5;&#x9053;&#x7684;</p>
+<p>根據索引鍵的雜湊程式碼，所整理的索引鍵/值組集合</p>
+<p>範例程式</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Hashtable openWith = <span class="keyword">new</span> Hashtable();</span><br><span class="line">openWith.Add(<span class="string">"txt"</span>, <span class="string">"notepad.exe"</span>);</span><br><span class="line">openWith.Add(<span class="string">"bmp"</span>, <span class="string">"paint.exe"</span>);</span><br><span class="line">openWith.Add(<span class="string">"dib"</span>, <span class="string">"paint.exe"</span>);</span><br><span class="line">openWith.Add(<span class="string">"rtf"</span>, <span class="string">"wordpad.exe"</span>);</span><br></pre></td></tr></tbody></table></figure>
+<p>關於 <code>Hashtbale</code>，有些事情是需要知道的</p>
 <ul>
 <li>
-<p>Key &#x4E0D;&#x80FD;&#x662F; <code>null</code></p>
+<p>Key 不能是 <code>null</code></p>
 </li>
 <li>
-<p>Key &#x503C;&#x7269;&#x4EF6;&#x5FC5;&#x9808;&#x662F;&#x4E0D;&#x53EF;&#x8B8A;&#x7684;</p>
+<p>Key 值物件必須是不可變的</p>
 </li>
 <li>
-<p><code>foreach</code> &#x53D6;&#x7684;&#x503C;&#x662F; <code>DictionaryEntry</code> &#x578B;&#x5225;&#xFF0C;&#x53EA;&#x5141;&#x8A31;&#x8B80;&#x53D6; (read only)</p>
+<p><code>foreach</code> 取的值是 <code>DictionaryEntry</code> 型別，只允許讀取 (read only)</p>
 <figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(DictionaryEntry de <span class="keyword">in</span> myHashtable)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h2 id="queue"><a class="header-anchor" href="#queue"> </a>Queue</h2>
-<p>&#x5148;&#x9032;&#x5148;&#x51FA; (FIFO) &#x96C6;&#x5408;</p>
-<p>&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;</p>
-<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Queue myQ = <span class="keyword">new</span> Queue();</span><br><span class="line">myQ.Enqueue(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">myQ.Enqueue(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">myQ.Enqueue(<span class="string">&quot;!&quot;</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// Hello</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// &#x79FB;&#x9664; Hello</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// World</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// &#x79FB;&#x9664; World</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// !</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// &#x79FB;&#x9664; !</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// &#x51FA;&#x73FE;&#x932F;&#x8AA4;&#xFF0C;&#x56E0;&#x70BA; Queue &#x5DF2;&#x7D93;&#x662F; Empty &#x4E86;</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x95DC;&#x65BC; <code>Queue</code>&#xFF0C;&#x6709;&#x4E9B;&#x4E8B;&#x60C5;&#x662F;&#x9700;&#x8981;&#x77E5;&#x9053;&#x7684;</p>
+<p>先進先出 (FIFO) 集合</p>
+<p>範例程式</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Queue myQ = <span class="keyword">new</span> Queue();</span><br><span class="line">myQ.Enqueue(<span class="string">"Hello"</span>);</span><br><span class="line">myQ.Enqueue(<span class="string">"World"</span>);</span><br><span class="line">myQ.Enqueue(<span class="string">"!"</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// Hello</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// 移除 Hello</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// World</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// 移除 World</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// !</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// 移除 !</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// 出現錯誤，因為 Queue 已經是 Empty 了</span></span><br></pre></td></tr></tbody></table></figure>
+<p>關於 <code>Queue</code>，有些事情是需要知道的</p>
 <ul>
-<li>&#x4E09;&#x500B;&#x4E3B;&#x8981;&#x4F5C;&#x696D;
+<li>三個主要作業
 <ul>
-<li><code>Enqueue</code> : &#x65B0;&#x589E;&#x81F3;&#x7D50;&#x5C3E;</li>
-<li><code>Dequeue</code>: &#x79FB;&#x9664;&#x6700;&#x820A;&#x7684;&#x9805;&#x76EE;</li>
-<li><code>Peek</code>: &#x50B3;&#x56DE;&#x6700;&#x820A;&#x7684;&#x9805;&#x76EE;</li>
+<li><code>Enqueue</code> : 新增至結尾</li>
+<li><code>Dequeue</code>: 移除最舊的項目</li>
+<li><code>Peek</code>: 傳回最舊的項目</li>
 </ul>
 </li>
-<li>&#x53EF;&#x900F;&#x904E; <code>TrimToSize</code> &#x4F86;&#x7BC0;&#x7701;&#x6C92;&#x5728;&#x4F7F;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x7A7A;&#x9593;</li>
-<li>&#x5141;&#x8A31; <code>null</code> &#x4E26;&#x5141;&#x8A31;&#x91CD;&#x8907;&#x9805;&#x76EE;</li>
+<li>可透過 <code>TrimToSize</code> 來節省沒在使用的配置空間</li>
+<li>允許 <code>null</code> 並允許重複項目</li>
 </ul>
 <h2 id="stack"><a class="header-anchor" href="#stack"> </a>Stack</h2>
-<p>&#x5F8C;&#x9032;&#x5148;&#x51FA; (LIFO) &#x975E;&#x6CDB;&#x578B;&#x96C6;&#x5408;</p>
-<p>&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;</p>
-<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Creates and initializes a new Stack.</span></span><br><span class="line">Stack myStack = <span class="keyword">new</span> Stack();</span><br><span class="line">myStack.Push(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">myStack.Push(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">myStack.Push(<span class="string">&quot;!&quot;</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(myStack.Pop()); <span class="comment">// !</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(myStack.Peek());<span class="comment">// World</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(myStack.Pop()); <span class="comment">// World</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 1</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x95DC;&#x65BC; <code>Stack</code>&#xFF0C;&#x6709;&#x4E9B;&#x4E8B;&#x60C5;&#x662F;&#x9700;&#x8981;&#x77E5;&#x9053;&#x7684;</p>
+<p>後進先出 (LIFO) 非泛型集合</p>
+<p>範例程式</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Creates and initializes a new Stack.</span></span><br><span class="line">Stack myStack = <span class="keyword">new</span> Stack();</span><br><span class="line">myStack.Push(<span class="string">"Hello"</span>);</span><br><span class="line">myStack.Push(<span class="string">"World"</span>);</span><br><span class="line">myStack.Push(<span class="string">"!"</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(myStack.Pop()); <span class="comment">// !</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(myStack.Peek());<span class="comment">// World</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(myStack.Pop()); <span class="comment">// World</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 1</span></span><br></pre></td></tr></tbody></table></figure>
+<p>關於 <code>Stack</code>，有些事情是需要知道的</p>
 <ul>
-<li>&#x4E09;&#x500B;&#x4E3B;&#x8981;&#x4F5C;&#x696D;
+<li>三個主要作業
 <ul>
-<li><code>Push</code> : &#x5C07;&#x7269;&#x4EF6;&#x63D2;&#x5165; <code>Stack</code> &#x7684;&#x9802;&#x7AEF;&#x3002;</li>
-<li><code>Pop</code>: &#x79FB;&#x9664;&#x4E26;&#x50B3;&#x56DE;&#x5728;  <code>Stack</code>  &#x9802;&#x7AEF;&#x7684;&#x7269;&#x4EF6;</li>
-<li><code>Peek</code>: &#x50B3;&#x56DE;  <code>Stack</code>  &#x9802;&#x7AEF;&#x7684;&#x7269;&#x4EF6;&#x800C;&#x4E0D;&#x9700;&#x79FB;&#x9664;&#x5B83;</li>
+<li><code>Push</code> : 將物件插入 <code>Stack</code> 的頂端。</li>
+<li><code>Pop</code>: 移除並傳回在  <code>Stack</code>  頂端的物件</li>
+<li><code>Peek</code>: 傳回  <code>Stack</code>  頂端的物件而不需移除它</li>
 </ul>
 </li>
 </ul>
-<h1 id="list-t-&#x7684;&#x5EF6;&#x4F38;"><a class="header-anchor" href="#list-t-&#x7684;&#x5EF6;&#x4F38;"> </a>List&lt;<code>T</code>&gt;&#x7684;&#x5EF6;&#x4F38;</h1>
-<p>List<t> &#x53EF;&#x4EE5;&#x900F;&#x904E;&#x65B9;&#x6CD5;&#x4F86;&#x8F49;&#x63DB;&#x6210;&#x4E0D;&#x540C;&#x7684;&#x96C6;&#x5408;&#x985E;&#x578B;&#xFF0C;&#x800C;&#x5176;&#x4E2D;&#x7684; <code>ReadOnlyCollection</code> &#x8207; <code>ImmutableList</code> &#x6211;&#x6BD4;&#x8F03;&#x60F3;&#x62FF;&#x51FA;&#x4F86;&#x6BD4;&#x8F03;</t></p>
-<p>&#x9019;&#x5169;&#x8457;&#x5728;&#x672C;&#x8CEA;&#x4E0A;&#x9084;&#x662F;&#x6709;&#x5DEE;&#x7570;&#x7684;&#xFF0C;&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;</p>
-<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;() { <span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span> };</span><br><span class="line"><span class="keyword">var</span> readonlyList = list.AsReadOnly();</span><br><span class="line"><span class="keyword">var</span> immutableList = list.ToImmutableList();</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">&quot;List Count: &quot;</span> + list.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(<span class="string">&quot;ReadonlyList Count: &quot;</span> + readonlyList.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(<span class="string">&quot;ImmutableList Count: &quot;</span> + immutableList.Count); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">list.Add(<span class="string">&quot;c&quot;</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">&quot;List Count: &quot;</span> + list.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">&quot;ReadonlyList Count: &quot;</span> + readonlyList.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">&quot;ImmutableList Count: &quot;</span> + immutableList.Count); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">immutableList = immutableList.Add(<span class="string">&quot;3&quot;</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">&quot;List Count: &quot;</span> + list.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">&quot;ReadonlyList Count: &quot;</span> + readonlyList.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">&quot;ImmutableList Count: &quot;</span> + immutableList.Count); <span class="comment">// 3</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x6839;&#x64DA;&#x4E0A;&#x9762;&#x7684;&#x57F7;&#x884C;&#x7D50;&#x679C;&#xFF0C;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x5F97;&#x77E5;&#xFF0C;&#x4E00;&#x4F46;&#x8F49;&#x63DB;&#x6210; <code>ImmutableList</code> &#x6642;&#xFF0C;&#x5C31;&#x8207;&#x539F;&#x672C;&#x7684; List &#x662F;&#x812B;&#x96E2;&#x95DC;&#x4FC2;&#x7684;&#xFF0C;&#x4E0D;&#x8AD6;&#x539F;&#x672C;&#x7684;&#x96C6;&#x5408;&#x505A;&#x600E;&#x6A23;&#x7684;&#x8B8A;&#x66F4;&#xFF0C;<code>ImmutableList</code> &#x90FD;&#x4E0D;&#x6703;&#x6539;&#x8B8A;&#x3002;&#x4F46; <code>ReadonlyCollection</code> &#x537B;&#x4E0D;&#x662F;&#x9019;&#x6A23;&#xFF0C;<code>ReadonlyCollection</code> &#x6703;&#x8DDF; <code>List</code> &#x4E00;&#x8D77;&#x9023;&#x52D5;&#x3002;&#x53EA;&#x662F;&#x4ED6;&#x4E0D;&#x80FD;&#x88AB;&#x4FEE;&#x6539;&#x800C;&#x5DF2;&#x3002;</p>
-<p>&#x90A3;&#x4EC0;&#x9EBC;&#x6642;&#x5019;&#x8981;&#x7528; <code>ReadonlyCollection</code> &#x4EC0;&#x9EBC;&#x6642;&#x5019;&#x8981;&#x7528; <code>ImmutableList</code> ? &#x5176;&#x5BE6;&#x53EF;&#x4EE5;&#x770B; <code>ImmutableList</code> &#x7684;&#x662F;&#x7528;&#x60C5;&#x5883;&#xFF0C;&#x5C31;&#x5927;&#x6982;&#x77E5;&#x9053;&#x54EA;&#x4E9B;&#x72C0;&#x6CC1;&#x4E0B;&#x8981;&#x4F7F;&#x7528; <code>ImmutableList</code>&#x4E86;</p>
-<h1 id="&#x7D50;&#x8AD6;"><a class="header-anchor" href="#&#x7D50;&#x8AD6;"> </a>&#x7D50;&#x8AD6;</h1>
-<p>C# &#x5167;&#x7684;&#x96C6;&#x5408;&#x985E;&#x5225;&#x5F88;&#x591A;&#x7A2E;&#xFF0C;&#x4E5F;&#x6709;&#x91DD;&#x5C0D;&#x4E0D;&#x540C;&#x7684;&#x60C5;&#x5883;&#x8A2D;&#x8A08;&#x5BE6;&#x4F5C;&#x96C6;&#x5408;&#x985E;&#x5225;&#xFF0C;&#x6709;&#x7A7A;&#x7684;&#x6642;&#x5019;&#xFF0C;&#x662F;&#x53EF;&#x4EE5;&#x82B1;&#x9EDE;&#x6642;&#x9593;&#x8B80;&#x4E00;&#x4E0B;&#x5B98;&#x65B9;&#x6587;&#x4EF6;&#xFF0C;&#x4E26;&#x719F;&#x6089; LINQ &#x7684;&#x64CD;&#x4F5C;&#xFF0C;LINQ &#x5C0D;&#x65BC;&#x96C6;&#x5408;&#x7684;&#x64CD;&#x4F5C;&#x80FD;&#x529B;&#x53EF;&#x662F;&#x5F88;&#x53B2;&#x5BB3;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x5C11;&#x5C11;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#x5B8C;&#x6210;&#x5F88;&#x591A;&#x5DE5;&#x4F5C;&#xFF0C;&#x800C;&#x4E14;&#x95B1;&#x8B80;&#x6027;&#x4E5F;&#x4E0D;&#x6703;&#x592A;&#x5DEE;&#x3002;</p>
+<h1 id="list-t-的延伸"><a class="header-anchor" href="#list-t-的延伸"> </a>List&lt;<code>T</code>&gt;的延伸</h1>
+<p>List<t> 可以透過方法來轉換成不同的集合類型，而其中的 <code>ReadOnlyCollection</code> 與 <code>ImmutableList</code> 我比較想拿出來比較</t></p>
+<p>這兩著在本質上還是有差異的，範例程式</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;() { <span class="string">"a"</span>, <span class="string">"b"</span> };</span><br><span class="line"><span class="keyword">var</span> readonlyList = list.AsReadOnly();</span><br><span class="line"><span class="keyword">var</span> immutableList = list.ToImmutableList();</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">"List Count: "</span> + list.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(<span class="string">"ReadonlyList Count: "</span> + readonlyList.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(<span class="string">"ImmutableList Count: "</span> + immutableList.Count); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">list.Add(<span class="string">"c"</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">"List Count: "</span> + list.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">"ReadonlyList Count: "</span> + readonlyList.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">"ImmutableList Count: "</span> + immutableList.Count); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">immutableList = immutableList.Add(<span class="string">"3"</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">"List Count: "</span> + list.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">"ReadonlyList Count: "</span> + readonlyList.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">"ImmutableList Count: "</span> + immutableList.Count); <span class="comment">// 3</span></span><br></pre></td></tr></tbody></table></figure>
+<p>根據上面的執行結果，我們可以得知，一但轉換成 <code>ImmutableList</code> 時，就與原本的 List 是脫離關係的，不論原本的集合做怎樣的變更，<code>ImmutableList</code> 都不會改變。但 <code>ReadonlyCollection</code> 卻不是這樣，<code>ReadonlyCollection</code> 會跟 <code>List</code> 一起連動。只是他不能被修改而已。</p>
+<p>那什麼時候要用 <code>ReadonlyCollection</code> 什麼時候要用 <code>ImmutableList</code> ? 其實可以看 <code>ImmutableList</code> 的是用情境，就大概知道哪些狀況下要使用 <code>ImmutableList</code>了</p>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>C# 內的集合類別很多種，也有針對不同的情境設計實作集合類別，有空的時候，是可以花點時間讀一下官方文件，並熟悉 LINQ 的操作，LINQ 對於集合的操作能力可是很厲害的，可以用少少的程式碼完成很多工作，而且閱讀性也不會太差。</p>
 
 			  		
 			  		<!-- google Adsense -->

@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/05/01/obs-streaming-zoom/"
 			},
 			"datePublished": "2018-05-01T12:52:58.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,82 +1851,82 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>ZOOM &#x662F;&#x4E00;&#x5957;&#x5F88;&#x597D;&#x7528;&#x7684;&#x7DDA;&#x4E0A;&#x958B;&#x6703;&#x5DE5;&#x5177;&#xFF0C;&#x900F;&#x904E;&#x6708;&#x79DF;&#x7684;&#x670D;&#x52D9;&#xFF0C;&#x53EF;&#x4EAB;&#x7528;&#x4E00;&#x5834; 100 &#x4EBA;&#x53EF;&#x4EE5;&#x540C;&#x6642;&#x9593;&#x7DDA;&#x4E0A;&#x958B;&#x6703;&#xFF0C;&#x9019;&#x4E5F;&#x662F;&#x6211;&#x6BCF;&#x5468;&#x4E09;&#x4E3B;&#x6301; Angular &#x7DDA;&#x4E0A;&#x8B80;&#x66F8;&#x6703;&#x7684;&#x4E3B;&#x8981;&#x5DE5;&#x5177;</p>
-<p>&#x6709;&#x4EBA;&#x554F;&#x6211;&#x8AAA;&#xFF0C;&#x80FD;&#x4E0D;&#x80FD;&#x5C07; OBS &#x7684;&#x76F4;&#x64AD;&#x756B;&#x9762;&#x8F38;&#x51FA;&#x7D66; ZOOM &#x4F7F;&#x7528;&#xFF0C;&#x56E0;&#x70BA;&#x4ED6;&#x60F3;&#x8981;&#x5229;&#x7528; OBS &#x7684;&#x756B;&#x9762;&#x7DE8;&#x6392;&#x529F;&#x80FD;&#x53CA;&#x80CC;&#x666F;&#x53BB;&#x80CC;&#xFF0C;&#x8B93;&#x81EA;&#x5DF1;&#x7684;&#x8996;&#x8A0A;&#x756B;&#x9762;&#x80FD;&#x548C;&#x684C;&#x9762;&#x878D;&#x70BA;&#x4E00;&#x9AD4;&#xFF0C;&#x6240;&#x4EE5;&#x624D;&#x6709;&#x9019;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x7522;&#x751F;</p>
+			  		<p>ZOOM 是一套很好用的線上開會工具，透過月租的服務，可享用一場 100 人可以同時間線上開會，這也是我每周三主持 Angular 線上讀書會的主要工具</p>
+<p>有人問我說，能不能將 OBS 的直播畫面輸出給 ZOOM 使用，因為他想要利用 OBS 的畫面編排功能及背景去背，讓自己的視訊畫面能和桌面融為一體，所以才有這篇文章的產生</p>
 <a id="more"></a>
-<h1 id="&#x4F5C;&#x6CD5;&#x66F4;&#x65B0;"><a class="header-anchor" href="#&#x4F5C;&#x6CD5;&#x66F4;&#x65B0;"> </a>&#x4F5C;&#x6CD5;&#x66F4;&#x65B0;</h1>
-<p>(2020/03/09 &#x66F4;&#x65B0;) &#x8DDF;&#x4E0B;&#x9762;&#x7684;&#x6982;&#x5FF5;&#x662F;&#x4E00;&#x6A23;&#x7684;&#xFF0C;OBS  &#x672C;&#x8EAB;&#x6709;&#x63D0;&#x4F9B; <code>Fullscreen Projector(preview)</code> &#x7684;&#x529F;&#x80FD;&#xFF0C;&#x7576;&#x7136;&#x9019;&#x505A;&#x6CD5;&#x9700;&#x8981;&#x591A;&#x9846;&#x87A2;&#x5E55;&#xFF0C;&#x4F46;&#x5EF6;&#x9072;&#x6703;&#x76F8;&#x5C0D;&#x7684;&#x5C11;&#x5F88;&#x591A;&#xFF0C;&#x50C5;&#x4F9B;&#x53C3;&#x8003;&#x3002;&#x600E;&#x9EBC;&#x4F7F;&#x7528; <code>Fullscreen Projector</code> &#x5462;&#xFF0C;&#x5728;&#x9810;&#x89BD;&#x8996;&#x7A97;&#x4E0A;&#x6309;&#x6ED1;&#x9F20;&#x53F3;&#x9375;&#x53EB;&#x51FA;&#x9078;&#x55AE;&#xFF0C;&#x5373;&#x53EF;&#x770B;&#x5230;&#x6B64;&#x9078;&#x9805;&#xFF0C;&#x9019;&#x6642;&#x5019;&#x5C31;&#x9078;&#x64C7;&#x8981;&#x6295;&#x5F71;&#x7684;&#x87A2;&#x5E55;&#x662F;&#x54EA;&#x4E00;&#x500B;&#x3002;&#x800C; Zoom &#x7684;&#x90E8;&#x5206;&#x5C31;&#x5206;&#x4EAB;&#x684C;&#x9762;&#x5373;&#x53EF;</p>
+<h1 id="作法更新"><a class="header-anchor" href="#作法更新"> </a>作法更新</h1>
+<p>(2020/03/09 更新) 跟下面的概念是一樣的，OBS  本身有提供 <code>Fullscreen Projector(preview)</code> 的功能，當然這做法需要多顆螢幕，但延遲會相對的少很多，僅供參考。怎麼使用 <code>Fullscreen Projector</code> 呢，在預覽視窗上按滑鼠右鍵叫出選單，即可看到此選項，這時候就選擇要投影的螢幕是哪一個。而 Zoom 的部分就分享桌面即可</p>
 <div class="amp-img-wrapper"><amp-img src="/2018/05/01/obs-streaming-zoom/image-20200309125227847.png" width="1113" height="754" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2018/05/01/obs-streaming-zoom/image-20200309125243350.png" width="1087" height="750" layout="responsive"></amp-img></div>
-<h1 id="&#x524D;&#x8A00;"><a class="header-anchor" href="#&#x524D;&#x8A00;"> </a>&#x524D;&#x8A00;</h1>
-<p>&#x5728;&#x9019;&#x4E4B;&#x524D;&#xFF0C;&#x8981;&#x5148;&#x4ECB;&#x7D39; NewTek &#x9019;&#x9593;&#x516C;&#x53F8;&#x6240;&#x63D0;&#x51FA;&#x7684;&#x65B0;&#x6280;&#x8853; NDI&#xFF0C;&#x9019;&#x4E00;&#x9580;&#x9ED1;&#x79D1;&#x6280;&#x8B93;&#x76F4;&#x64AD;&#x80FD;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x5230;&#x9054;&#x53E6;&#x5916;&#x4E00;&#x500B;&#x4E0D;&#x53EF;&#x601D;&#x8B70;&#x7684;&#x5883;&#x754C;&#xFF0C;&#x4EE5;&#x5F80;&#x5728;&#x651D;&#x5F71;&#x6A5F;&#x8207;&#x4E3B;&#x63A7;&#x53F0;&#x9593;&#x9700;&#x8981;&#x900F;&#x904E;&#x62C9; SDI &#x7684;&#x7DDA;&#x4F86;&#x50B3;&#x905E;&#x8A0A;&#x865F;&#xFF0C;&#x800C; SDI &#x7684;&#x7DDA;&#x6750;&#x53C8;&#x5F88;&#x8CB4;&#x3002;&#x9019;&#x9084;&#x4E0D;&#x542B;&#x5668;&#x6750;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x7E3D;&#x4E4B;&#x505A;&#x4E00;&#x5834;&#x76F4;&#x64AD;&#x662F;&#x5F88;&#x8CB4;&#x7684;</p>
+<h1 id="前言"><a class="header-anchor" href="#前言"> </a>前言</h1>
+<p>在這之前，要先介紹 NewTek 這間公司所提出的新技術 NDI，這一門黑科技讓直播能做的事情到達另外一個不可思議的境界，以往在攝影機與主控台間需要透過拉 SDI 的線來傳遞訊號，而 SDI 的線材又很貴。這還不含器材的部分，總之做一場直播是很貴的</p>
 <ul>
-<li>&#x4E0D;&#x4F7F;&#x7528; HDMI &#x7684;&#x539F;&#x56E0;&#x662F; HDMI &#x7684;&#x7DDA;&#x6750;&#x5728;&#x4E00;&#x5B9A;&#x9577;&#x5EA6;&#x5F8C;&#xFF0C;&#x8A0A;&#x5F8C;&#x6703;&#x8870;&#x6E1B;&#xFF0C;&#x4E26;&#x4E0D;&#x9069;&#x5408;&#x5927;&#x5834;&#x5730;&#x4F7F;&#x7528;</li>
+<li>不使用 HDMI 的原因是 HDMI 的線材在一定長度後，訊後會衰減，並不適合大場地使用</li>
 </ul>
-<p>NDI &#x9019;&#x6280;&#x8853;&#x53EF;&#x4EE5;&#x8B93;&#x6211;&#x5011;&#x4F7F;&#x7528;&#x7DB2;&#x8DEF;&#x7DDA;&#x4F86;&#x505A;&#x5230; SDI &#x7684;&#x6548;&#x679C;&#xFF0C;&#x4E14;&#x5EF6;&#x9072;&#x662F;&#x975E;&#x5E38;&#x4F4E;&#x7684;&#x3002;NewTek &#x4E5F;&#x597D;&#x5FC3;&#x5730;&#x5C07;&#x9019;&#x500B;&#x6280;&#x8853;&#x514D;&#x8CBB;&#x91CB;&#x51FA;&#xFF0C;&#x8B93;&#x5176;&#x4ED6;&#x786C;&#x9AD4;/&#x8EDF;&#x9AD4;&#x5EE0;&#x5546;&#x53EF;&#x4EE5;&#x5C07;&#x9019;&#x500B;&#x5354;&#x5B9A;&#x5BE6;&#x4F5C;&#x5728;&#x81EA;&#x5BB6;&#x7684;&#x7522;&#x54C1;&#x4E0A;&#xFF0C;&#x9019;&#x88E1;&#x6709;&#x5E7E;&#x500B;&#x6BD4;&#x8F03;&#x6709;&#x540D;&#x7684;</p>
+<p>NDI 這技術可以讓我們使用網路線來做到 SDI 的效果，且延遲是非常低的。NewTek 也好心地將這個技術免費釋出，讓其他硬體/軟體廠商可以將這個協定實作在自家的產品上，這裡有幾個比較有名的</p>
 <ol>
 <li><a href="https://www.vmix.com/" target="_blank" rel="noopener">vMix</a></li>
 <li><a href="https://www.xsplit.com/zh_tw/" target="_blank" rel="noopener">xSplit</a></li>
-<li><a href="https://obsproject.com/" target="_blank" rel="noopener">OBS</a> (&#x9700;&#x5B89;&#x88DD;&#x5957;&#x4EF6; <a href="https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/" target="_blank" rel="noopener">obs-ndi</a>)</li>
+<li><a href="https://obsproject.com/" target="_blank" rel="noopener">OBS</a> (需安裝套件 <a href="https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/" target="_blank" rel="noopener">obs-ndi</a>)</li>
 <li><a href="https://ptzoptics.com/" target="_blank" rel="noopener">PTZOptics</a></li>
 <li><a href="https://www.newtek.com/connect/spark/" target="_blank" rel="noopener">NewTek Connect Spark</a></li>
 </ol>
-<p>&#x9019;&#x88E1;&#x6211;&#x5011;&#x5C31;&#x7528;&#x514D;&#x8CBB;&#x7684; OBS &#x4F86;&#x505A;&#x793A;&#x7BC4;</p>
-<h1 id="&#x74B0;&#x5883;&#x8A2D;&#x5B9A;"><a class="header-anchor" href="#&#x74B0;&#x5883;&#x8A2D;&#x5B9A;"> </a>&#x74B0;&#x5883;&#x8A2D;&#x5B9A;</h1>
+<p>這裡我們就用免費的 OBS 來做示範</p>
+<h1 id="環境設定"><a class="header-anchor" href="#環境設定"> </a>環境設定</h1>
 <ol>
-<li>&#x5B89;&#x88DD; OBS</li>
-<li>&#x5B89;&#x88DD; OBS-NDI
+<li>安裝 OBS</li>
+<li>安裝 OBS-NDI
 <ol>
-<li>&#x6703;&#x8981;&#x6C42;&#x5B89;&#x88DD; <a href="http://new.tk/NDIRedistV3" target="_blank" rel="noopener">&#xA0;NDI 3.0 Runtime</a></li>
+<li>會要求安裝 <a href="http://new.tk/NDIRedistV3" target="_blank" rel="noopener">&nbsp;NDI 3.0 Runtime</a></li>
 </ol>
 </li>
-<li>&#x5B89;&#x88DD; <a href="https://www.newtek.com/ndi/tools/" target="_blank" rel="noopener">NewTek Tools</a> &#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5B89;&#x88DD; portable &#x7248;&#x672C;&#x5373;&#x53EF;&#xFF0C;&#x6211;&#x5011;&#x53EA;&#x9700;&#x8981; NDI Studio Monitor</li>
+<li>安裝 <a href="https://www.newtek.com/ndi/tools/" target="_blank" rel="noopener">NewTek Tools</a> ，只需要安裝 portable 版本即可，我們只需要 NDI Studio Monitor</li>
 </ol>
-<p>&#x7576;&#x5B89;&#x88DD;&#x5B8C;&#x4EE5;&#x4E0A;&#x7684;&#x6771;&#x897F;&#x5F8C;&#xFF0C;&#x61C9;&#x8A72;&#x6703;&#x88AB;&#x8981;&#x6C42;&#x91CD;&#x555F;&#x96FB;&#x8166;&#x3002;&#x96FB;&#x8166;&#x91CD;&#x65B0;&#x555F;&#x52D5;&#x5F8C;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6253;&#x958B; OBS &#x7684;&#x7A0B;&#x5F0F;</p>
+<p>當安裝完以上的東西後，應該會被要求重啟電腦。電腦重新啟動後，就可以打開 OBS 的程式</p>
 <ol>
-<li>&#x5728; Tools &#x7684;&#x5730;&#x65B9;&#xFF0C;&#x9EDE;&#x9078; NDI Output settings</li>
+<li>在 Tools 的地方，點選 NDI Output settings</li>
 </ol>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/cjOOe7P.png" width="568" height="237" layout="responsive"></amp-img></div>
 <ol start="2">
-<li>&#x52FE;&#x9078; &#x3010;Enable NDI Output&#x3011;</li>
+<li>勾選 【Enable NDI Output】</li>
 </ol>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/07VTll2.png" width="370" height="147" layout="responsive"></amp-img></div>
 <ol start="3">
 <li>
-<p>&#x9019;&#x6A23; OBS &#x5C31;&#x6703;&#x5C07;&#x4F60;&#x7684;&#x8A0A;&#x865F;&#xFF0C;&#x7528; NDI &#x7684;&#x6A21;&#x5F0F;&#x767C;&#x9001;&#x51FA;&#x53BB;&#xFF0C;&#x53EA;&#x8981;&#x5728;&#x4F60;&#x7684;<strong>&#x5340;&#x57DF;&#x7DB2;&#x57DF;</strong>&#x5167;&#xFF0C;&#x652F;&#x63F4; NDI Input &#x7684;&#x8EDF;&#x9AD4;&#x6216;&#x5C0E;&#x64AD;&#x6A5F;&#xFF0C;&#x90FD;&#x53EF;&#x4EE5;&#x641C;&#x5C0B;&#x7684;&#x5230;</p>
+<p>這樣 OBS 就會將你的訊號，用 NDI 的模式發送出去，只要在你的<strong>區域網域</strong>內，支援 NDI Input 的軟體或導播機，都可以搜尋的到</p>
 </li>
 <li>
-<p>&#x958B;&#x555F;&#x3010;NewTek NDI Studio Montiro&#x3011;</p>
+<p>開啟【NewTek NDI Studio Montiro】</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/EocvMNA.png" width="1426" height="752" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9078;&#x64C7;&#x8A0A;&#x865F;&#x4F86;&#x6E90;</p>
+<p>選擇訊號來源</p>
 </li>
 </ol>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/QLTueoJ.png" width="390" height="252" layout="responsive"></amp-img></div>
 <ol start="6">
 <li>
-<p>&#x6AA2;&#x8996; OBS NDI &#x8A0A;&#x865F;&#x8F38;&#x51FA;&#x7D50;&#x679C;</p>
+<p>檢視 OBS NDI 訊號輸出結果</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/PvcqWiC.png" width="1426" height="752" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x7531;&#x65BC;&#x6211;&#x5011;&#x8981;&#x5C07;&#x9019;&#x4E00;&#x500B;&#x8996;&#x7A97;&#x900F;&#x904E; ZOOM &#x5206;&#x4EAB;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x986F;&#x793A;&#x7D66;&#x5176;&#x4ED6;&#x8207;&#x6703;&#x8005;&#x770B;&#x3002;&#x6240;&#x4EE5;&#x9084;&#x6709;&#x5169;&#x500B;&#x5730;&#x65B9;&#x8981;&#x505A;&#x8ABF;&#x6574;</p>
+<p>由於我們要將這一個視窗透過 ZOOM 分享的方式，顯示給其他與會者看。所以還有兩個地方要做調整</p>
 <ol>
 <li>
-<p>&#x8996;&#x7A97;&#x7684; border &#x8981;&#x96B1;&#x85CF;</p>
+<p>視窗的 border 要隱藏</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/uZsxSas.png" width="629" height="251" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x8072;&#x97F3;&#x97F3;&#x91CF;&#x7684;&#x986F;&#x793A;&#xFF0C;&#x8981;&#x5C07; VU Meter &#x95DC;&#x6389;</p>
+<p>聲音音量的顯示，要將 VU Meter 關掉</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/8PASrQp.png" width="624" height="350" layout="responsive"></amp-img></div>
 </li>
 </ol>
 </li>
 <li>
-<p>&#x5B8C;&#x6210;&#x8A2D;&#x5B9A;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x5C31;&#x662F;&#x7528; Zoom &#x5206;&#x4EAB;&#x9019;&#x4E00;&#x500B;&#x8996;&#x7A97;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;</p>
+<p>完成設定，剩下的就是用 Zoom 分享這一個視窗應用程式</p>
 </li>
 </ol>
-<p>&#x9019;&#x88E1;&#x8981;&#x6CE8;&#x610F;&#x4E00;&#x9EDE;&#xFF0C;&#x7576;&#x4F60;&#x9EDE;&#x9078; Hide Window &#x6642;&#xFF0C;&#x8A72;&#x8996;&#x7A97;&#x5C31;&#x7121;&#x6CD5;&#x518D;&#x79FB;&#x52D5;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x6709;&#x7B2C;&#x4E8C;&#x9846;&#x87A2;&#x5E55;&#x6216;&#x662F;&#x7B2C;&#x4E8C;&#x53F0;&#x96FB;&#x8166;&#x6642;&#xFF0C;&#x9019;&#x4E00;&#x500B;&#x5206;&#x4EAB;&#x7684;&#x52D5;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x53E6;&#x5916;&#x4E00;&#x500B;&#x5730;&#x65B9;&#x9032;&#x884C;&#x3002;</p>
+<p>這裡要注意一點，當你點選 Hide Window 時，該視窗就無法再移動了，所以如果有第二顆螢幕或是第二台電腦時，這一個分享的動作，可以在另外一個地方進行。</p>
 
 			  		
 			  		<!-- google Adsense -->

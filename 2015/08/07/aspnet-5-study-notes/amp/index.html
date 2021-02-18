@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/08/07/aspnet-5-study-notes/"
 			},
 			"datePublished": "2015-08-07T06:33:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,42 +1842,42 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>##&#x9700;&#x6C42;</p>
+			  		<p>##需求</p>
 <ul>
 <li>Visual Studio 2015</li>
 </ul>
 <p>##Note</p>
-<h4 id="&#x6240;&#x6709;&#x7684;&#x53C3;&#x8003;&#x90FD;&#x9700;&#x8981;&#x624B;&#x52D5;&#x52A0;&#x5165;-&#x6240;&#x4EE5;&#x65B0;&#x529F;&#x8AB2;&#x6703;&#x662F;&#x4E86;&#x89E3;&#x6BCF;&#x4E00;&#x500B;&#x53C3;&#x8003;&#x88E1;&#x9762;&#x6709;&#x7684;&#x529F;&#x80FD;&#x662F;&#x4EC0;&#x9EBC;"><a class="header-anchor" href="#&#x6240;&#x6709;&#x7684;&#x53C3;&#x8003;&#x90FD;&#x9700;&#x8981;&#x624B;&#x52D5;&#x52A0;&#x5165;-&#x6240;&#x4EE5;&#x65B0;&#x529F;&#x8AB2;&#x6703;&#x662F;&#x4E86;&#x89E3;&#x6BCF;&#x4E00;&#x500B;&#x53C3;&#x8003;&#x88E1;&#x9762;&#x6709;&#x7684;&#x529F;&#x80FD;&#x662F;&#x4EC0;&#x9EBC;"> </a>&#x6240;&#x6709;&#x7684;&#x53C3;&#x8003;&#x90FD;&#x9700;&#x8981;&#x624B;&#x52D5;&#x52A0;&#x5165;, &#x6240;&#x4EE5;&#x65B0;&#x529F;&#x8AB2;&#x6703;&#x662F;&#x4E86;&#x89E3;&#x6BCF;&#x4E00;&#x500B;&#x53C3;&#x8003;&#x88E1;&#x9762;&#x6709;&#x7684;&#x529F;&#x80FD;&#x662F;&#x4EC0;&#x9EBC;</h4>
+<h4 id="所有的參考都需要手動加入-所以新功課會是了解每一個參考裡面有的功能是什麼"><a class="header-anchor" href="#所有的參考都需要手動加入-所以新功課會是了解每一個參考裡面有的功能是什麼"> </a>所有的參考都需要手動加入, 所以新功課會是了解每一個參考裡面有的功能是什麼</h4>
 <pre><code>1. Microsoft.AspNet.Diagnostics =&gt; MiddleWare to handle request(ex: welcomepage, errorpage)
-2. Microsoft.AspNet.StaticFiles =&gt; &#x986F;&#x793A;&#x975C;&#x614B;&#x7DB2;&#x9801;
+2. Microsoft.AspNet.StaticFiles =&gt; 顯示靜態網頁
 </code></pre>
 <p>Microsoft.AspNet.Diagnostics Example</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// app.useXXXXX</span><br><span class="line">      app.UseWelcomePage();</span><br><span class="line">      app.UseErrorPage();</span><br></pre></td></tr></tbody></table></figure>
 <h4 id="project-json"><a class="header-anchor" href="#project-json"> </a>project.json</h4>
-<p>&#x7DB2;&#x7AD9;&#x6240;&#x6709;&#x7684;&#x8A2D;&#x5B9A;&#x90FD;&#x6703;&#x5728;&#x9019;&#x500B;&#x6A94;&#x6848;&#x88CF;&#x9762;&#x505A;&#x8A2D;&#x5B9A;, &#x5305;&#x542B;dependencies, webroot, exclude, frameworks, etc.</p>
+<p>網站所有的設定都會在這個檔案裏面做設定, 包含dependencies, webroot, exclude, frameworks, etc.</p>
 <h5 id="commands"><a class="header-anchor" href="#commands"> </a>Commands</h5>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/260/20362531726_fc27690c27_o.png" width="1153" height="266" layout="responsive"></amp-img></div>
-<h4 id="&#x65B0;&#x589E;mvc&#x529F;&#x80FD;"><a class="header-anchor" href="#&#x65B0;&#x589E;mvc&#x529F;&#x80FD;"> </a>&#x65B0;&#x589E;MVC&#x529F;&#x80FD;</h4>
+<h4 id="新增mvc功能"><a class="header-anchor" href="#新增mvc功能"> </a>新增MVC功能</h4>
 <ul>
 <li>project.json
-add &#x300C;Microsoft.AspNet.Mvc&#x300D; to dependencies</li>
+add 「Microsoft.AspNet.Mvc」 to dependencies</li>
 <li>startup.cs</li>
 </ul>
 <figure class="highlight cs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	services.AddMvc();</span><br><span class="line">	services.Configure&lt;MvcOptions&gt;(options =&gt; { });</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app</span>)</span></span><br><span class="line"><span class="function"></span>{   </span><br><span class="line">	app.UseMvc();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x5982;&#x679C;&#x8981;&#x8A2D;&#x5B9A;mvc route&#x6642;, &#x5728;startup.cs&#x7684;configure&#x88E1;(in c# 6 syntax)</p>
-<figure class="highlight cs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.UseMvc(routes=&gt;</span><br><span class="line">           {</span><br><span class="line">               routes.MapRoute(</span><br><span class="line">                   name: <span class="string">&quot;Default&quot;</span>,</span><br><span class="line">                   template: <span class="string">&quot;{controller=Home}/{action=Index}/{id?}&quot;</span>);</span><br><span class="line">           });</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="&#x5EFA;&#x7ACB;configuration"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;configuration"> </a>&#x5EFA;&#x7ACB;Configuration</h4>
+<p>如果要設定mvc route時, 在startup.cs的configure裡(in c# 6 syntax)</p>
+<figure class="highlight cs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.UseMvc(routes=&gt;</span><br><span class="line">           {</span><br><span class="line">               routes.MapRoute(</span><br><span class="line">                   name: <span class="string">"Default"</span>,</span><br><span class="line">                   template: <span class="string">"{controller=Home}/{action=Index}/{id?}"</span>);</span><br><span class="line">           });</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="建立configuration"><a class="header-anchor" href="#建立configuration"> </a>建立Configuration</h4>
 <ul>
 <li>dependence:
-&#x300C;Microsoft.Framework.Configuration.UserSecrets&#x300D;</li>
+「Microsoft.Framework.Configuration.UserSecrets」</li>
 <li>Useage:</li>
 </ul>
-<figure class="highlight cs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Startup</span>(<span class="params">IHostingEnvironment env, IApplicationEnvironment appEnv</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">   <span class="comment">// &#x8A2D;&#x5B9A;ConfiurationBuilder</span></span><br><span class="line"> <span class="keyword">var</span> configurationBuilder = <span class="keyword">new</span> ConfigurationBuilder(appEnv.ApplicationBasePath);</span><br><span class="line">  configurationBuilder.AddJsonFile(<span class="string">&quot;config.json&quot;</span>);</span><br><span class="line">  configurationBuilder.AddEnvironmentVariables();</span><br><span class="line">  <span class="comment">// &#x5FC5;&#x9808;&#x57F7;&#x884C;Build&#x624D;&#x80FD;&#x5EFA;&#x7ACB;Configuration&#x7269;&#x4EF6;</span></span><br><span class="line">  <span class="keyword">var</span> config = configurationBuilder.Build(); </span><br><span class="line">  <span class="comment">// Build&#x5F8C;</span></span><br><span class="line">  <span class="keyword">var</span> <span class="keyword">value</span> = config.<span class="keyword">get</span>(<span class="string">&quot;key&quot;</span>);	      </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="&#x4F7F;&#x7528;taghelpers"><a class="header-anchor" href="#&#x4F7F;&#x7528;taghelpers"> </a>&#x4F7F;&#x7528;TagHelpers</h4>
-<p>&#x5982;&#x679C;&#x60F3;&#x8981;&#x4F7F;&#x7528;MVC&#x5167;&#x5EFA;&#x7684;TagHelper, &#x5E7E;&#x500B;&#x9700;&#x8981;&#x52A0;&#x5165;&#x7684;dependencies</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;Microsoft.AspNet.Mvc.TagHelpers&quot;: &quot;6.0.0-rc1-final&quot;,</span><br><span class="line">&quot;Microsoft.AspNet.Tooling.Razor&quot;: &quot;1.0.0-rc1-final&quot; &lt;= &#x5728;vs&#x7DE8;&#x8F2F;&#x6642;&#x6703;&#x5C07;tag&#x7684;&#x90E8;&#x5206;&#x986F;&#x793A;&#x6210;&#x4E0D;&#x540C;&#x7684;&#x984F;&#x8272;&#x53CA;&#x5176;&#x4ED6;&#x529F;&#x80FD;</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7136;&#x5F8C;&#x5728;_ViewImports.cshtml&#x52A0;&#x5165;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@addTagHelper &quot;*, Microsoft.AspNet.Mvc.TagHelpers&quot;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight cs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Startup</span>(<span class="params">IHostingEnvironment env, IApplicationEnvironment appEnv</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">   <span class="comment">// 設定ConfiurationBuilder</span></span><br><span class="line"> <span class="keyword">var</span> configurationBuilder = <span class="keyword">new</span> ConfigurationBuilder(appEnv.ApplicationBasePath);</span><br><span class="line">  configurationBuilder.AddJsonFile(<span class="string">"config.json"</span>);</span><br><span class="line">  configurationBuilder.AddEnvironmentVariables();</span><br><span class="line">  <span class="comment">// 必須執行Build才能建立Configuration物件</span></span><br><span class="line">  <span class="keyword">var</span> config = configurationBuilder.Build(); </span><br><span class="line">  <span class="comment">// Build後</span></span><br><span class="line">  <span class="keyword">var</span> <span class="keyword">value</span> = config.<span class="keyword">get</span>(<span class="string">"key"</span>);	      </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="使用taghelpers"><a class="header-anchor" href="#使用taghelpers"> </a>使用TagHelpers</h4>
+<p>如果想要使用MVC內建的TagHelper, 幾個需要加入的dependencies</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">"Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",</span><br><span class="line">"Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final" &lt;= 在vs編輯時會將tag的部分顯示成不同的顏色及其他功能</span><br></pre></td></tr></tbody></table></figure>
+<p>然後在_ViewImports.cshtml加入</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

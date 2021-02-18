@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/11/28/angular-element-with-sharepoint-part2/"
 			},
 			"datePublished": "2019-11-28T00:30:56.000Z",
-			"dateModified": "2021-02-18T02:25:04.935Z",
+			"dateModified": "2021-02-18T02:32:11.667Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,98 +1848,98 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p><a href="https://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/">&#x4E0A;&#x4E00;&#x7BC7;</a> &#x4ECB;&#x7D39;&#x4E86;&#x5982;&#x4F55;&#x4F7F;&#x7528; Angular Element &#x5EFA;&#x7ACB; SharePoint &#x7684; WebPart&#xFF0C;&#x4F46;&#x5982;&#x679C;&#x4E0D;&#x4E32;&#x63A5;&#x8CC7;&#x6599;&#xFF0C;&#x9019;&#x529F;&#x80FD;&#x5C31;&#x592A;&#x5F31;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x9019;&#x7BC7;&#x5C31;&#x4F86;&#x8A18;&#x9304;&#x4E00;&#x4E0B;&#xFF0C;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x5167;&#x5EFA;&#x7684;&#x65B9;&#x6CD5;&#x4F86;&#x53D6;&#x5F97; SharePoint &#x6216;&#x662F; MS Graph &#x7684;&#x8CC7;&#x6599;</p>
+			  		<p><a href="https://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/">上一篇</a> 介紹了如何使用 Angular Element 建立 SharePoint 的 WebPart，但如果不串接資料，這功能就太弱了，所以這篇就來記錄一下，如何使用內建的方法來取得 SharePoint 或是 MS Graph 的資料</p>
 <a id="more"></a>
-<p>&#x4F46;&#x7531;&#x65BC;&#x4F7F;&#x7528; Graph API &#x9700;&#x8981;&#x5728;&#x74B0;&#x5883;&#x8A2D;&#x5B9A;&#x6B0A;&#x9650;&#x7B49;&#xFF0C;<s>&#x9019;&#x7BC7;&#x5C31;&#x4E0D;&#x505A;&#x9019;&#x90E8;&#x5206;&#x7684;&#x7BC4;&#x4F8B; (&#x4E5F;&#x627E;&#x4E0D;&#x5230;&#x76F8;&#x95DC;&#x7684;&#x8CC7;&#x6599;.QQ)</s> &#x627E;&#x5230;&#x65B9;&#x6CD5;&#xFF0C;&#x88DC;&#x5145;&#x5728;&#x5F8C;&#x9762;</p>
-<p>&#x8981;&#x9023;&#x63A5; SharePoint &#x7684;&#x8CC7;&#x6599;&#xFF0C;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x900F;&#x904E; <code>@pnp</code> &#x7684;&#x5957;&#x4EF6;&#x4F86;&#x5B8C;&#x6210;&#xFF0C;<a href="https://pnp.github.io/pnpjs/documentation/getting-started/" target="_blank" rel="noopener">&#x5B98;&#x65B9;&#x8AAA;&#x660E;&#x6587;&#x4EF6;</a></p>
-<h1 id="&#x5B89;&#x88DD;"><a class="header-anchor" href="#&#x5B89;&#x88DD;"> </a>&#x5B89;&#x88DD;</h1>
-<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7684;&#x5957;&#x4EF6;&#x6709;&#x9019;&#x4E9B;&#xFF0C;&#x53EF;&#x4EE5;&#x9078;&#x64C7;&#x5B89;&#x88DD;&#x81EA;&#x5DF1;&#x9700;&#x8981;&#x7684;&#x90E8;&#x5206;&#x5373;&#x53EF;</p>
+<p>但由於使用 Graph API 需要在環境設定權限等，<s>這篇就不做這部分的範例 (也找不到相關的資料.QQ)</s> 找到方法，補充在後面</p>
+<p>要連接 SharePoint 的資料，我們可以透過 <code>@pnp</code> 的套件來完成，<a href="https://pnp.github.io/pnpjs/documentation/getting-started/" target="_blank" rel="noopener">官方說明文件</a></p>
+<h1 id="安裝"><a class="header-anchor" href="#安裝"> </a>安裝</h1>
+<p>可以使用的套件有這些，可以選擇安裝自己需要的部分即可</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @pnp/logging @pnp/common @pnp/odata @pnp/sp @pnp/graph --save</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="&#x521D;&#x59CB;&#x555F;&#x52D5;"><a class="header-anchor" href="#&#x521D;&#x59CB;&#x555F;&#x52D5;"> </a>&#x521D;&#x59CB;&#x555F;&#x52D5;</h1>
-<p>&#x6587;&#x4EF6;&#x4E0A;&#x6709;&#x63D0;&#x4F9B;&#x4E09;&#x7A2E;&#x555F;&#x52D5;&#x65B9;&#x5F0F;&#xFF0C;&#x9019;&#x88E1;&#x6211;&#x5C31;&#x8209;&#x5176;&#x4E2D;&#x4E00;&#x7A2E;&#x65B9;&#x6CD5;&#xFF0C;&#x5728; WebPart &#x7684;&#x7A0B;&#x5F0F;&#x88E1;&#xFF0C;&#x52A0;&#x5165;&#x9019;&#x4E9B;&#x7A0B;&#x5F0F;&#x78BC;</p>
+<h1 id="初始啟動"><a class="header-anchor" href="#初始啟動"> </a>初始啟動</h1>
+<p>文件上有提供三種啟動方式，這裡我就舉其中一種方法，在 WebPart 的程式裡，加入這些程式碼</p>
 <figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public onInit(): <span class="built_in">Promise</span>&lt;<span class="keyword">void</span>&gt; {</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">super</span>.onInit().then(<span class="function"><span class="params">_</span> =&gt;</span> {</span><br><span class="line">    <span class="comment">// other init code may be present</span></span><br><span class="line">    sp.setup({</span><br><span class="line">      spfxContext: <span class="keyword">this</span>.context</span><br><span class="line">    });</span><br><span class="line">  });</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="&#x53D6;-sharepoint-&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53D6;-sharepoint-&#x8CC7;&#x6599;"> </a>&#x53D6; SharePoint &#x8CC7;&#x6599;</h1>
-<p>&#x5728; Angular Element Component &#x55AE;&#x7D14;&#x4F7F;&#x7528; <code>@pnp/sp</code> &#x5305;&#x88DD;&#x597D;&#x7684; api&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5F88;&#x8F15;&#x9B06;&#x5730;&#x53D6;&#x5F97;&#x76F8;&#x95DC;&#x7684;&#x8CC7;&#x8A0A;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { sp } <span class="keyword">from</span> <span class="string">&apos;@pnp/sp&apos;</span>;</span><br><span class="line">...</span><br><span class="line">ngOnInit() {</span><br><span class="line">    <span class="keyword">this</span>.webLists = sp.web.lists.get();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of webLists | async&quot;</span>&gt;</span></span><br><span class="line">    {{ item.Title }}</span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x66F4;&#x591A; <code>@pnp/sp</code> Library API &#x53EF;&#x4EE5;&#x95B1;&#x8B80;<a href="https://pnp.github.io/pnpjs/sp/docs/" target="_blank" rel="noopener">&#x6B64;&#x6587;&#x4EF6;</a></p>
-<h1 id="&#x6E2C;&#x8A66;"><a class="header-anchor" href="#&#x6E2C;&#x8A66;"> </a>&#x6E2C;&#x8A66;</h1>
-<p>&#x7531;&#x65BC; <code>@pnp/sp</code> &#x5167;&#x6709;&#x5305; <code>context</code> &#x9019;&#x7269;&#x4EF6;&#xFF0C;&#x800C;&#x9019;&#x7269;&#x4EF6;&#x53EA;&#x6709;&#x5728;&#x771F;&#x6B63;&#x7684; <code>SharePoint</code> &#x74B0;&#x5883;&#x624D;&#x6703;&#x5B58;&#x5728;&#xFF0C;&#x90A3;&#x6211;&#x5011;&#x4E5F;&#x4E0D;&#x53EF;&#x80FD;&#x6BCF;&#x6B21;&#x90FD;&#x8981;&#x6253;&#x5305;&#x4E0A;&#x50B3;&#x5230;&#x6B63;&#x5F0F;&#x74B0;&#x5883;&#xFF0C;&#x57FA;&#x65BC;&#x9019;&#x88E1;&#x7531;&#x3002;&#x5176;&#x5BE6;&#x5728;&#x7576;&#x57F7;&#x884C; <code>gulp serve</code> &#x6642;&#xFF0C;&#x9664;&#x4E86;&#x672C;&#x6A5F;&#x6703;&#x555F;&#x52D5;&#x4E00;&#x500B;&#x6E2C;&#x8A66;&#x7528;&#x7684;&#x74B0;&#x5883;&#x5916;&#xFF0C;&#x4E5F;&#x6703;&#x8A66;&#x8457;&#x9060;&#x7AEF;&#x9023;&#x7DDA;&#x5230; SharePoint Server (&#x4E0D;&#x78BA;&#x5B9A;&#x9019;&#x908A;&#x7684;&#x539F;&#x7406;&#x662F;&#x4EC0;&#x9EBC;)&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x900F;&#x904E;&#x958B;&#x555F; <code>https://{sharepoint-site-name}.sharepoint.com/_layouts/15/workbench.aspx</code> &#x4F86;&#x9032;&#x884C;&#x9060;&#x7AEF;&#x6E2C;&#x8A66;</p>
+<h1 id="取-sharepoint-資料"><a class="header-anchor" href="#取-sharepoint-資料"> </a>取 SharePoint 資料</h1>
+<p>在 Angular Element Component 單純使用 <code>@pnp/sp</code> 包裝好的 api，就可以很輕鬆地取得相關的資訊</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { sp } <span class="keyword">from</span> <span class="string">'@pnp/sp'</span>;</span><br><span class="line">...</span><br><span class="line">ngOnInit() {</span><br><span class="line">    <span class="keyword">this</span>.webLists = sp.web.lists.get();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> *<span class="attr">ngFor</span>=<span class="string">"let item of webLists | async"</span>&gt;</span></span><br><span class="line">    {{ item.Title }}</span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>更多 <code>@pnp/sp</code> Library API 可以閱讀<a href="https://pnp.github.io/pnpjs/sp/docs/" target="_blank" rel="noopener">此文件</a></p>
+<h1 id="測試"><a class="header-anchor" href="#測試"> </a>測試</h1>
+<p>由於 <code>@pnp/sp</code> 內有包 <code>context</code> 這物件，而這物件只有在真正的 <code>SharePoint</code> 環境才會存在，那我們也不可能每次都要打包上傳到正式環境，基於這裡由。其實在當執行 <code>gulp serve</code> 時，除了本機會啟動一個測試用的環境外，也會試著遠端連線到 SharePoint Server (不確定這邊的原理是什麼)，但可以透過開啟 <code>https://{sharepoint-site-name}.sharepoint.com/_layouts/15/workbench.aspx</code> 來進行遠端測試</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/11/28/angular-element-with-sharepoint-part2/image-20191128111304460.png" width="772" height="608" layout="responsive"></amp-img></div>
-<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6B63;&#x5F0F;&#x74B0;&#x5883;&#x64C1;&#x6709;&#x7684; App&#xFF0C;&#x7576;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x6211;&#x5011;&#x6B63;&#x5728;&#x5BEB;&#x7684; WebPart&#xFF0C;&#x627E;&#x5230;&#x5F8C;&#x52A0;&#x5165;&#x5230;&#x9801;&#x9762;&#x4E0A;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6488;&#x51FA;&#x4F86;&#x7684;&#x8CC7;&#x6599;&#x6709;&#x6B63;&#x5E38;&#x7684;&#x986F;&#x793A;&#x5230;&#x756B;&#x9762;&#x4E0A;&#x4E86;</p>
+<p>可以看到正式環境擁有的 App，當然也可以找到我們正在寫的 WebPart，找到後加入到頁面上，就可以看到撈出來的資料有正常的顯示到畫面上了</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/11/28/angular-element-with-sharepoint-part2/image-20191128111415289.png" width="638" height="617" layout="responsive"></amp-img></div>
-<h1 id="&#x4F7F;&#x7528;-graph-api"><a class="header-anchor" href="#&#x4F7F;&#x7528;-graph-api"> </a>&#x4F7F;&#x7528; Graph API</h1>
-<h2 id="&#x7A0B;&#x5F0F;&#x78BC;"><a class="header-anchor" href="#&#x7A0B;&#x5F0F;&#x78BC;"> </a>&#x7A0B;&#x5F0F;&#x78BC;</h2>
-<p>&#x547C;&#x53EB; graph &#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#x4E0D;&#x56F0;&#x96E3;&#xFF0C;&#x4F46;&#x4E00;&#x6A23;&#x76F8;&#x4F9D; <code>context</code> &#x9019;&#x4E00;&#x500B;&#x7269;&#x4EF6;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C; Angular Element  component &#x8981;&#x4F7F;&#x7528;&#xFF0C;&#x5C31;&#x8981;&#x88AB;&#x50B3;&#x9032; component</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> HelloWorldWebPartComponent <span class="keyword">implements</span> OnInit, AfterViewInit {  </span><br><span class="line">  <span class="meta">@Input</span>() context: WebPartContext;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  </span><br><span class="line">  ngOnInit(){</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.context) {</span><br><span class="line">          <span class="keyword">this</span>.context.msGraphClientFactory.getClient().then((client): <span class="function"><span class="params">void</span> =&gt;</span> {            </span><br><span class="line">            client.api(<span class="string">&apos;/me&apos;</span>).get(<span class="function">(<span class="params">error, user, rawResponse?: <span class="built_in">any</span></span>) =&gt;</span> {</span><br><span class="line">              <span class="keyword">this</span>.user = user;</span><br><span class="line">            });</span><br><span class="line">          });</span><br><span class="line">   	 }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x800C; <code>WebPart</code>&#x7684;&#x90E8;&#x5206;&#x5C31;&#x8981;&#x5C07; context &#x50B3;&#x9032;&#x53BB;</p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public render(): <span class="keyword">void</span> {</span><br><span class="line">    <span class="keyword">let</span> ngElement = <span class="keyword">this</span>.domElement.getElementsByTagName(</span><br><span class="line">      <span class="string">&quot;app-hello-world-web-part&quot;</span></span><br><span class="line">    )[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ngElement) {</span><br><span class="line">      <span class="keyword">this</span>.domElement.removeChild(ngElement);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">const</span> baseEl = customElements.get(<span class="string">&quot;app-hello-world-web-part&quot;</span>);</span><br><span class="line">    <span class="keyword">const</span> element = <span class="keyword">new</span> baseEl();</span><br><span class="line">    element.description = <span class="keyword">this</span>.properties.description;</span><br><span class="line">    element.context = <span class="keyword">this</span>.context; <span class="comment">// &#x5C07; content &#x50B3;&#x7D66; Angular Element</span></span><br><span class="line">    <span class="keyword">this</span>.domElement.appendChild(element);    </span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="&#x6B0A;&#x9650;&#x8A2D;&#x5B9A;"><a class="header-anchor" href="#&#x6B0A;&#x9650;&#x8A2D;&#x5B9A;"> </a>&#x6B0A;&#x9650;&#x8A2D;&#x5B9A;</h2>
-<p>&#x7576;&#x8981;&#x4F7F;&#x7528; graphAPI &#x6642;&#xFF0C;&#x9700;&#x8981;&#x5728; SPFx &#x5C08;&#x6848;&#x4E0B;&#x7684; <code>config/package-solution.json</code> &#x5167;&#x7684; <code>solution</code> &#x5340;&#x584A;&#x65B0;&#x589E; <code>webApiPermissionRequests</code> &#x7684;&#x6B0A;&#x9650;&#x8ACB;&#x6C42;</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;webApiPermissionRequests&quot;: [</span><br><span class="line">     {</span><br><span class="line">       <span class="attr">&quot;resource&quot;</span>: <span class="string">&quot;Microsoft Graph&quot;</span>,</span><br><span class="line">       <span class="attr">&quot;scope&quot;</span>: <span class="string">&quot;User.ReadBasic.All&quot;</span></span><br><span class="line">     }</span><br><span class="line">   ]</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x70BA;&#x4E86;&#x8981;&#x5C07;&#x6B0A;&#x9650;&#x8ACB;&#x6C42;&#x9650;&#x5236;&#x5728;&#x6B64; WebPart&#xFF0C;&#x9700;&#x8981;&#x591A;&#x958B;&#x555F;&#x4E00;&#x500B;&#x8A2D;&#x5B9A;</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;isDomainIsolated&quot;: true,</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x9019;&#x4E9B;&#x90FD;&#x8A2D;&#x5B9A;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x4E0A;&#x50B3;&#x5230; SharePoint &#x505A; API &#x6B0A;&#x9650;&#x8ACB;&#x6C42;&#x6838;&#x51C6;&#x7684;&#x52D5;&#x4F5C;&#xFF0C;&#x5148;&#x4F86;&#x6253;&#x5305;&#x4E00;&#x4E0B;&#xFF0C;&#x4F9D;&#x5E8F;&#x57F7;&#x884C;&#x52D5;&#x4F5C;</p>
+<h1 id="使用-graph-api"><a class="header-anchor" href="#使用-graph-api"> </a>使用 Graph API</h1>
+<h2 id="程式碼"><a class="header-anchor" href="#程式碼"> </a>程式碼</h2>
+<p>呼叫 graph 的程式碼不困難，但一樣相依 <code>context</code> 這一個物件，所以如果 Angular Element  component 要使用，就要被傳進 component</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> HelloWorldWebPartComponent <span class="keyword">implements</span> OnInit, AfterViewInit {  </span><br><span class="line">  <span class="meta">@Input</span>() context: WebPartContext;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  </span><br><span class="line">  ngOnInit(){</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.context) {</span><br><span class="line">          <span class="keyword">this</span>.context.msGraphClientFactory.getClient().then((client): <span class="function"><span class="params">void</span> =&gt;</span> {            </span><br><span class="line">            client.api(<span class="string">'/me'</span>).get(<span class="function">(<span class="params">error, user, rawResponse?: <span class="built_in">any</span></span>) =&gt;</span> {</span><br><span class="line">              <span class="keyword">this</span>.user = user;</span><br><span class="line">            });</span><br><span class="line">          });</span><br><span class="line">   	 }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>而 <code>WebPart</code>的部分就要將 context 傳進去</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public render(): <span class="keyword">void</span> {</span><br><span class="line">    <span class="keyword">let</span> ngElement = <span class="keyword">this</span>.domElement.getElementsByTagName(</span><br><span class="line">      <span class="string">"app-hello-world-web-part"</span></span><br><span class="line">    )[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ngElement) {</span><br><span class="line">      <span class="keyword">this</span>.domElement.removeChild(ngElement);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">const</span> baseEl = customElements.get(<span class="string">"app-hello-world-web-part"</span>);</span><br><span class="line">    <span class="keyword">const</span> element = <span class="keyword">new</span> baseEl();</span><br><span class="line">    element.description = <span class="keyword">this</span>.properties.description;</span><br><span class="line">    element.context = <span class="keyword">this</span>.context; <span class="comment">// 將 content 傳給 Angular Element</span></span><br><span class="line">    <span class="keyword">this</span>.domElement.appendChild(element);    </span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="權限設定"><a class="header-anchor" href="#權限設定"> </a>權限設定</h2>
+<p>當要使用 graphAPI 時，需要在 SPFx 專案下的 <code>config/package-solution.json</code> 內的 <code>solution</code> 區塊新增 <code>webApiPermissionRequests</code> 的權限請求</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">"webApiPermissionRequests": [</span><br><span class="line">     {</span><br><span class="line">       <span class="attr">"resource"</span>: <span class="string">"Microsoft Graph"</span>,</span><br><span class="line">       <span class="attr">"scope"</span>: <span class="string">"User.ReadBasic.All"</span></span><br><span class="line">     }</span><br><span class="line">   ]</span><br></pre></td></tr></tbody></table></figure>
+<p>為了要將權限請求限制在此 WebPart，需要多開啟一個設定</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"isDomainIsolated": true,</span><br></pre></td></tr></tbody></table></figure>
+<p>當這些都設定完成後，就需要上傳到 SharePoint 做 API 權限請求核准的動作，先來打包一下，依序執行動作</p>
 <ol>
 <li>
-<p>&#x7DE8;&#x8B6F;&#x6253;&#x5305; Angular Element&#xFF0C;&#x5728; Angular &#x5C08;&#x6848;&#x5167;&#x57F7;&#x884C; <code>npm run bundle</code></p>
+<p>編譯打包 Angular Element，在 Angular 專案內執行 <code>npm run bundle</code></p>
 </li>
 <li>
-<p>&#x5728; SPFx &#x5C08;&#x6848;&#x4E0B;&#xFF0C;&#x57F7;&#x884C;&#x4EE5;&#x4E0B;&#x6307;&#x4EE4;</p>
+<p>在 SPFx 專案下，執行以下指令</p>
 <ol>
 <li><code>gulp bundle --ship</code></li>
-<li><code>gulp package-solution --ship</code> : &#x6703;&#x7522;&#x751F;&#x4E00;&#x500B; <code>.sppkg</code> &#x6A94;&#x6848;&#x5728; <code>sharepoint/solution</code> &#x7684;&#x8CC7;&#x6599;&#x593E;&#x4E0B;</li>
+<li><code>gulp package-solution --ship</code> : 會產生一個 <code>.sppkg</code> 檔案在 <code>sharepoint/solution</code> 的資料夾下</li>
 </ol>
 </li>
 <li>
-<p>&#x6253;&#x958B; SharePoint &#x7DB2;&#x7AD9;&#xFF0C;&#x9032;&#x5165; <code>&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x76EE;&#x9304;&#x7DB2;&#x7AD9;</code> &#x7684;&#x7DB2;&#x7AD9;&#x5167;&#x9032;&#x884C; App &#x4E0A;&#x8239;&#x52D5;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x6C92;&#x6709; <code>&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x76EE;&#x9304;&#x7DB2;&#x7AD9;</code>&#x7684;&#xFF0C;&#x5247;&#x9808;&#x8981;&#x5148;&#x5EFA;&#x7ACB;&#x3002;&#x5EFA;&#x7ACB;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;</p>
+<p>打開 SharePoint 網站，進入 <code>應用程式目錄網站</code> 的網站內進行 App 上船動作，如果沒有 <code>應用程式目錄網站</code>的，則須要先建立。建立方法如下</p>
 <ol>
 <li>
-<p>&#x9032;&#x5165; SharePoint &#x7CFB;&#x7D71;&#x7BA1;&#x7406;&#x4E2D;&#x5FC3;&#xFF0C;&#x7DB2;&#x5740;: <code>https://&lt;org&gt;-admin.sharepoint.com</code></p>
+<p>進入 SharePoint 系統管理中心，網址: <code>https://&lt;org&gt;-admin.sharepoint.com</code></p>
 </li>
 <li>
-<p>&#x9EDE;&#x9078; <code>&#x66F4;&#x591A;&#x529F;&#x80FD;</code>&#xFF0C;&#x4E26;&#x958B;&#x555F; <code>App</code></p>
+<p>點選 <code>更多功能</code>，並開啟 <code>App</code></p>
 <div class="amp-img-wrapper"><amp-img src="/2019/11/28/angular-element-with-sharepoint-part2/image-20191128153715984.png" width="695" height="616" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9032;&#x5165; <code>&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x76EE;&#x9304;</code>&#xFF0C;&#x4F9D;&#x4E0A;&#x9762;&#x6587;&#x5B57;&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x76EE;&#x9304;</p>
+<p>進入 <code>應用程式目錄</code>，依上面文字建立一個應用程式目錄</p>
 </li>
 <li>
-<p>&#x5EFA;&#x7ACB;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x7A0D;&#x5F8C;&#x4E00;&#x4E0B;&#xFF0C;&#x61C9;&#x53EF;&#x4EE5;&#x5728;&#x3010;&#x7DB2;&#x7AD9;&#x3011;-&gt; &#x3010;&#x4F7F;&#x7528;&#x4E2D;&#x7DB2;&#x7AD9;&#x3011;&#x7684;&#x6E05;&#x55AE;&#x4E2D;&#x770B;&#x5230;&#x525B;&#x525B;&#x5EFA;&#x7ACB;&#x7684;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x76EE;&#x9304;&#x7DB2;&#x7AD9;</p>
+<p>建立完成後，稍後一下，應可以在【網站】-&gt; 【使用中網站】的清單中看到剛剛建立的應用程式目錄網站</p>
 </li>
 </ol>
 </li>
 <li>
-<p>&#x9032;&#x5165;&#x3010;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x76EE;&#x9304;&#x7DB2;&#x7AD9;&#x3011;</p>
+<p>進入【應用程式目錄網站】</p>
 </li>
 <li>
-<p>&#x9EDE;&#x9078;&#x3010;SharePoint &#x9069;&#x7528;&#x7684;&#x5206;&#x6563;&#x5F0F;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x3011;</p>
+<p>點選【SharePoint 適用的分散式應用程式】</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/11/28/angular-element-with-sharepoint-part2/image-20191128154036607.png" width="817" height="494" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9EDE;&#x9078;&#x3010;&#x65B0;&#x589E;&#x3011;&#x6216;&#x3010;&#x4E0A;&#x50B3;&#x3011;&#xFF0C;&#x5C07;&#x525B;&#x525B;&#x7684; <code>ssppkg</code> &#x6A94;&#x6848;&#x4E0A;&#x50B3;</p>
+<p>點選【新增】或【上傳】，將剛剛的 <code>ssppkg</code> 檔案上傳</p>
 </li>
 <li>
-<p>&#x4E0A;&#x50B3;&#x6210;&#x529F;&#x61C9;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x9019;&#x500B;&#x756B;&#x9762;&#xFF0C;&#x9EDE;&#x9078;&#x3010;&#x90E8;&#x5C6C;&#x3011;</p>
+<p>上傳成功應可以看到這個畫面，點選【部屬】</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/11/28/angular-element-with-sharepoint-part2/image-20191128154241885.png" width="694" height="384" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x7531;&#x65BC;&#x6211;&#x5011;&#x6709;&#x8ACB;&#x6C42;&#x6388;&#x6B0A;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5728;&#x5230; <code>SharePoint &#x7CFB;&#x7D71;&#x7BA1;&#x7406;&#x4E2D;&#x5FC3;</code> &#x7684; &#x3010;API &#x7BA1;&#x7406;&#x3011;&#x9801;&#x9762;&#x53BB;&#x6388;&#x6B0A;&#xFF0C;&#x9019;&#x500B;&#x9078;&#x9805;&#x5982;&#x679C;&#x4E00;&#x958B;&#x59CB;&#x6C92;&#x6709;&#x4EFB;&#x4F55;&#x7684;&#x8ACB;&#x6C42;&#x6642;&#x662F;&#x4E0D;&#x6703;&#x51FA;&#x73FE;&#x7684;&#xFF0C;&#x4E00;&#x65E6;&#x6709;&#x7B2C;&#x4E00;&#x6B21;&#x8ACB;&#x6C42;&#x6642;&#x5C31;&#x6703;&#x81EA;&#x5DF1;&#x8DD1;&#x51FA;&#x4F86;&#x4E86;</p>
+<p>由於我們有請求授權，所以需要在到 <code>SharePoint 系統管理中心</code> 的 【API 管理】頁面去授權，這個選項如果一開始沒有任何的請求時是不會出現的，一旦有第一次請求時就會自己跑出來了</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/11/28/angular-element-with-sharepoint-part2/image-20191128154526210.png" width="1141" height="371" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9EDE;&#x9078;&#x7B49;&#x5F85;&#x6838;&#x51C6;&#x7684;&#x9805;&#x76EE;&#xFF0C;&#x9032;&#x884C;&#x6838;&#x51C6;</p>
+<p>點選等待核准的項目，進行核准</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/11/28/angular-element-with-sharepoint-part2/image-20191128154602942.png" width="650" height="395" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2019/11/28/angular-element-with-sharepoint-part2/image-20191128154615500.png" width="350" height="384" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x4E00;&#x65E6;&#x6838;&#x51C6;&#x6210;&#x529F;&#x5F8C;&#xFF0C;&#x6211;&#x5011;&#x5C31;&#x53EF;&#x4EE5;&#x900F;&#x904E;&#x524D;&#x9762;&#x4ECB;&#x7D39;&#x7684; <code>gulp server --nobrowser</code> &#x7684;&#x65B9;&#x5F0F;&#x5230;&#x7DDA;&#x4E0A;&#x6E2C;&#x8A66; webpart &#x7684;&#x529F;&#x80FD;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x4E86;</p>
+<p>一旦核准成功後，我們就可以透過前面介紹的 <code>gulp server --nobrowser</code> 的方式到線上測試 webpart 的功能是否正常了</p>
 </li>
 </ol>
-<h1 id="&#x5C0F;-&#x7D50;"><a class="header-anchor" href="#&#x5C0F;-&#x7D50;"> </a>&#x5C0F; &#x7D50;</h1>
-<p>&#x9019;&#x6BB5;&#x6211;&#x5176;&#x5BE6;&#x5361;&#x5F88;&#x4E45;&#xFF0C;&#x90FD;&#x5361;&#x5728; context &#x70BA;&#x4EC0;&#x9EBC;&#x90FD;&#x53D6;&#x4E0D;&#x5230;&#xFF0C;&#x7D50;&#x679C;&#x5F8C;&#x4F86;&#x767C;&#x73FE;&#x8981;&#x4F7F;&#x7528;&#x9060;&#x7AEF;&#x7684;&#x6E2C;&#x8A66;&#x74B0;&#x5883;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x5730;&#x505A;&#x5230;&#x6E2C;&#x8A66;&#x4E86;&#x3002;</p>
-<p>&#x53E6;&#x5916;&#x9084;&#x662F;&#x60F3;&#x8981;&#x89E3;&#x6C7A;&#x7684;&#x662F;&#x4F7F;&#x7528; Graph API &#x9019;&#x6BB5;&#xFF0C;&#x56E0;&#x70BA;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x900F;&#x904E; MS Graph API &#x53D6;&#x5230;&#x66F4;&#x591A; O365 &#x4E0A;&#x6709;&#x7684;&#x8CC7;&#x8A0A;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="小-結"><a class="header-anchor" href="#小-結"> </a>小 結</h1>
+<p>這段我其實卡很久，都卡在 context 為什麼都取不到，結果後來發現要使用遠端的測試環境，就可以正常地做到測試了。</p>
+<p>另外還是想要解決的是使用 Graph API 這段，因為我們可以透過 MS Graph API 取到更多 O365 上有的資訊</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <p><a href="https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/connect-to-sharepoint" target="_blank" rel="noopener">Connect your client-side web part to SharePoint (Hello World part 2)</a></p>
 
 			  		

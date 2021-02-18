@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/15/flutter-assets/"
 			},
 			"datePublished": "2019-10-15T05:58:43.000Z",
-			"dateModified": "2021-02-18T02:25:04.927Z",
+			"dateModified": "2021-02-18T02:32:11.655Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,41 +1848,41 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Flutter &#x8655;&#x7406;&#x975C;&#x614B;&#x6A94;&#x6848;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x7279;&#x5225;&#x91DD;&#x5C0D;&#x5716;&#x6A94;&#x7684;&#x8655;&#x7406;&#x7B97;&#x662F;&#x5F88;&#x5B8C;&#x6574;&#x53C8;&#x7C21;&#x55AE;&#xFF0C;&#x7B46;&#x8A18;&#x5982;&#x4E0B;</p>
+			  		<p>Flutter 處理靜態檔案的方法，特別針對圖檔的處理算是很完整又簡單，筆記如下</p>
 <a id="more"></a>
-<h1 id="&#x975C;&#x614B;&#x6A94;&#x6848;"><a class="header-anchor" href="#&#x975C;&#x614B;&#x6A94;&#x6848;"> </a>&#x975C;&#x614B;&#x6A94;&#x6848;</h1>
-<p>Flutter &#x662F;&#x900F;&#x904E;&#x8A2D;&#x5B9A; <code>pubspec.yaml</code> &#x7684; <code>assets</code> &#x5340;&#x584A;&#x4F86;&#x6C7A;&#x5B9A;&#x54EA;&#x4E9B;&#x975C;&#x614B;&#x6A94;&#x6848;&#x6216;&#x662F;&#x8CC7;&#x6599;&#x593E;&#x4E0B;&#x7684;&#x975C;&#x614B;&#x6A94;&#x6848;&#x8981;&#x88AB;&#x5305;&#x5230; Flutter &#x5C08;&#x6848;&#x5167;</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">flutter:</span></span><br><span class="line"><span class="attr">  assets:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">assets/my_icon.png</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">assets/background.png</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">assets/docs/</span></span><br></pre></td></tr></tbody></table></figure>
+<h1 id="靜態檔案"><a class="header-anchor" href="#靜態檔案"> </a>靜態檔案</h1>
+<p>Flutter 是透過設定 <code>pubspec.yaml</code> 的 <code>assets</code> 區塊來決定哪些靜態檔案或是資料夾下的靜態檔案要被包到 Flutter 專案內</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">flutter:</span></span><br><span class="line">  <span class="attr">assets:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">assets/my_icon.png</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">assets/background.png</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">assets/docs/</span></span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8A2D;&#x5B9A;&#x975C;&#x614B;&#x6A94;&#x6848;&#x540D;&#x7A31;</li>
-<li>&#x8A2D;&#x5B9A;&#x8CC7;&#x6599;&#x593E;&#x540D;&#x7A31; (&#x7D50;&#x5C3E;&#x8981;&#x6709; <code>/</code>)&#xFF0C;&#x5247;&#x6703;&#x5305;&#x542B;&#x7B2C;&#x4E00;&#x5C64;&#x5167;&#x7684;&#x6240;&#x6709;&#x975C;&#x614B;&#x6A94;&#x6848;</li>
+<li>可以直接設定靜態檔案名稱</li>
+<li>設定資料夾名稱 (結尾要有 <code>/</code>)，則會包含第一層內的所有靜態檔案</li>
 </ul>
-<p>&#x55AE;&#x91DD;&#x5C0D;&#x5F71;&#x50CF;&#x6A94;&#x7684;&#x8655;&#x7406;&#x65B9;&#x5F0F;&#x6709;&#x66F4;&#x5F48;&#x6027;&#x7684;&#x4F5C;&#x6CD5;&#xFF0C;&#x7531;&#x65BC;&#x624B;&#x6A5F;&#x8A2D;&#x5099;&#x7684;&#x87A2;&#x5E55;&#x5927;&#x5C0F;&#x90FD;&#x4E0D;&#x592A;&#x4E00;&#x6A23;&#xFF0C;&#x70BA;&#x4E86;&#x8B93;&#x5716;&#x7247;&#x986F;&#x793A;&#x5F97;&#x66F4;&#x6E05;&#x695A;&#xFF0C;&#x90FD;&#x6703;&#x91DD;&#x5C0D;&#x4E0D;&#x540C;&#x7684;&#x89E3;&#x6790;&#x5EA6;&#x800C;&#x8F38;&#x51FA;&#x76F8;&#x5C0D;&#x61C9;&#x7684;&#x5716;&#x6A94;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x63A1;&#x7528;&#x4E0A;&#x8FF0;&#x7684;&#x6253;&#x5305;&#x898F;&#x5247;&#xFF0C;&#x8A2D;&#x5B9A;&#x898F;&#x5247;&#x6703;&#x8D85;&#x7D1A;&#x56C9;&#x55E6;&#x3002;</p>
-<p>&#x91DD;&#x5C0D;&#x9019;&#x4E00;&#x584A;&#xFF0C;Flutter &#x7684;&#x5F48;&#x6027;&#x8655;&#x7406;&#x65B9;&#x5F0F;&#x662F;&#xFF0C;&#x4ED6;&#x6703;&#x6839;&#x64DA;&#x5716;&#x6A94;&#x7684;&#x6A94;&#x540D;&#xFF0C;&#x5F80;&#x4E0B;&#x627E;&#x4E00;&#x6A23;&#x6A94;&#x540D;&#x7684;&#x6A94;&#x6848;&#x4E26;&#x4E00;&#x8D77;&#x6253;&#x5305;&#x9032;&#x4F86;&#xFF0C;&#x5047;&#x8A2D;&#x5716;&#x6A94;&#x7684;&#x5B58;&#x653E;&#x7D50;&#x69CB;&#x5982;&#x4E0B;</p>
+<p>單針對影像檔的處理方式有更彈性的作法，由於手機設備的螢幕大小都不太一樣，為了讓圖片顯示得更清楚，都會針對不同的解析度而輸出相對應的圖檔，所以如果採用上述的打包規則，設定規則會超級囉嗦。</p>
+<p>針對這一塊，Flutter 的彈性處理方式是，他會根據圖檔的檔名，往下找一樣檔名的檔案並一起打包進來，假設圖檔的存放結構如下</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.../assets/images/background.png</span><br><span class="line">.../assets/images/dark/background.png</span><br><span class="line">.../assets/images/my_icon.png</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x9019;&#x6642;&#x5019;&#x6211;&#x7684; <code>pubspec.yaml</code>  &#x662F;&#x9019;&#x6A23;&#x5B50;&#x8A2D;&#x5B9A;</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">flutter:</span></span><br><span class="line"><span class="attr">  assets:</span></span><br><span class="line">  	<span class="bullet">-</span> <span class="string">assets/images/background.png</span></span><br></pre></td></tr></tbody></table></figure>
-<p>Flutter &#x6703;&#x9023;&#x540C; <code>assets/images/dark/background.png</code> &#x6A94;&#x6848;&#x4E00;&#x8D77;&#x6253;&#x5305;&#x9032;&#x4F86;&#xFF0C;&#x540C;&#x7406;&#x5957;&#x7528;&#x5728;&#x8CC7;&#x6599;&#x593E;&#x6A21;&#x5F0F;&#xFF0C;&#x771F;&#x7684;&#x5F88;&#x5F48;&#x6027;&#x3002;</p>
-<p>&#x900F;&#x904E;&#x9019;&#x6A23;&#x7684;&#x6A5F;&#x5236;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5F88;&#x8F15;&#x9B06;&#x7684;&#x8655;&#x7406;&#x591A;&#x5C3A;&#x5BF8;&#x5716;&#x7247;&#x7684;&#x554F;&#x984C;&#x4E86;&#xFF0C;&#x8CC7;&#x6599;&#x593E;&#x7684;&#x547D;&#x540D;&#x4F9D;&#x653E;&#x5927;&#x6BD4;&#x4F8B;&#x547D;&#x540D; (ex: <code>/2.0x/image.png</code>&#xFF0C;<code>/3.0x/image</code>)&#xFF0C;&#x6C92;&#x653E;&#x5728;&#x8CC7;&#x6599;&#x593E;&#x5167;&#x7684;&#x5716;&#x6A94;&#x70BA; base ration (1&#x500D;)</p>
-<h2 id="&#x8B80;&#x53D6;&#x975C;&#x614B;&#x6A94;&#x6848;"><a class="header-anchor" href="#&#x8B80;&#x53D6;&#x975C;&#x614B;&#x6A94;&#x6848;"> </a>&#x8B80;&#x53D6;&#x975C;&#x614B;&#x6A94;&#x6848;</h2>
+<p>這時候我的 <code>pubspec.yaml</code>  是這樣子設定</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">flutter:</span></span><br><span class="line">  <span class="attr">assets:</span></span><br><span class="line">  	<span class="bullet">-</span> <span class="string">assets/images/background.png</span></span><br></pre></td></tr></tbody></table></figure>
+<p>Flutter 會連同 <code>assets/images/dark/background.png</code> 檔案一起打包進來，同理套用在資料夾模式，真的很彈性。</p>
+<p>透過這樣的機制，就可以很輕鬆的處理多尺寸圖片的問題了，資料夾的命名依放大比例命名 (ex: <code>/2.0x/image.png</code>，<code>/3.0x/image</code>)，沒放在資料夾內的圖檔為 base ration (1倍)</p>
+<h2 id="讀取靜態檔案"><a class="header-anchor" href="#讀取靜態檔案"> </a>讀取靜態檔案</h2>
 <ul>
 <li>
-<p>&#x8B80;&#x53D6;&#x6587;&#x5B57;</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&apos;dart:async&apos;</span> show Future;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&apos;package:flutter/services.dart&apos;</span> show rootBundle;</span><br><span class="line"></span><br><span class="line">Future&lt;<span class="built_in">String</span>&gt; loadAsset() <span class="keyword">async</span> {</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> rootBundle.loadString(<span class="string">&apos;assets/config.json&apos;</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>讀取文字</p>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'dart:async'</span> <span class="keyword">show</span> Future;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/services.dart'</span> <span class="keyword">show</span> rootBundle;</span><br><span class="line"></span><br><span class="line">Future&lt;<span class="built_in">String</span>&gt; loadAsset() <span class="keyword">async</span> {</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> rootBundle.loadString(<span class="string">'assets/config.json'</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x8B80;&#x53D6;&#x5716;&#x6A94;</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> imageData = <span class="keyword">await</span> rootBundle.load(<span class="string">&apos;assets/images/ReceiptRaw_1.jpg&apos;</span>); <span class="comment">// Future&lt;ByteData&gt;</span></span><br><span class="line"><span class="keyword">var</span> image = Image.memory(imageData);</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x66F4;&#x7C21;&#x55AE;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x4F7F;&#x7528; widget &#x8B80;&#x53D6;&#xFF0C;&#x7576;&#x4F7F;&#x7528;&#x6703;&#x91DD;&#x5C0D;&#x89E3;&#x6790;&#x5EA6;&#x6539;&#x8B8A;&#x6703;&#x8655;&#x7406;&#x7684; widget&#xFF0C;&#x6703;&#x81EA;&#x5DF1;&#x8F09;&#x5165;&#x5408;&#x9069;&#x7684;&#x5716;&#x6A94;</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AssetImage(<span class="string">&apos;graphics/background.png&apos;</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>讀取圖檔</p>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> imageData = <span class="keyword">await</span> rootBundle.load(<span class="string">'assets/images/ReceiptRaw_1.jpg'</span>); <span class="comment">// Future&lt;ByteData&gt;</span></span><br><span class="line"><span class="keyword">var</span> image = Image.memory(imageData);</span><br></pre></td></tr></tbody></table></figure>
+<p>更簡單的方式是使用 widget 讀取，當使用會針對解析度改變會處理的 widget，會自己載入合適的圖檔</p>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AssetImage(<span class="string">'graphics/background.png'</span>)</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
-<h2 id="&#x6253;&#x5305;-package-&#x7684;&#x975C;&#x614B;&#x6A94;&#x6848;"><a class="header-anchor" href="#&#x6253;&#x5305;-package-&#x7684;&#x975C;&#x614B;&#x6A94;&#x6848;"> </a>&#x6253;&#x5305; package &#x7684;&#x975C;&#x614B;&#x6A94;&#x6848;</h2>
-<p>&#x7576;&#x8981;&#x4F7F;&#x7528; package &#x7684;&#x5716;&#x6A94;&#x6642;&#xFF0C;&#x5247;&#x9700;&#x8981;&#x9019;&#x6A23;&#x5B50;&#x8A2D;&#x5B9A;</p>
+<h2 id="打包-package-的靜態檔案"><a class="header-anchor" href="#打包-package-的靜態檔案"> </a>打包 package 的靜態檔案</h2>
+<p>當要使用 package 的圖檔時，則需要這樣子設定</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flutter:</span><br><span class="line">  assets:</span><br><span class="line">  	- backgrounds/background1.png</span><br><span class="line">    - packages/fancy_backgrounds/backgrounds/background1.png</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x4F7F;&#x7528; <code>AssetImage</code> &#x6642;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x8981;&#x8F09;&#x5165;&#x54EA;&#x4E00;&#x500B; <code>package</code></p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AssetImage(<span class="string">&apos;backgrounds/background1.png&apos;</span>, package: <span class="string">&apos;fancy_backgrounds&apos;</span>)</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<p>當使用 <code>AssetImage</code> 時，就可以指定要載入哪一個 <code>package</code></p>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AssetImage(<span class="string">'backgrounds/background1.png'</span>, package: <span class="string">'fancy_backgrounds'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://flutter.dev/docs/development/ui/assets-and-images" target="_blank" rel="noopener">Assets and images</a></li>
 </ul>

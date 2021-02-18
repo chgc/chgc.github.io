@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/08/01/ef-oracle-code-first/"
 			},
 			"datePublished": "2018-08-01T07:07:15.000Z",
-			"dateModified": "2021-02-18T02:25:04.859Z",
+			"dateModified": "2021-02-18T02:32:11.575Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,164 +1851,164 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x8FD1;&#x671F;&#x6709;&#x4E00;&#x500B;&#x6848;&#x5B50;&#x6709;&#x53EF;&#x80FD;&#x6703;&#x7528;&#x5230; Oracle&#xFF0C; &#x6240;&#x4EE5;&#x5728;&#x9084;&#x6C92;&#x6709;&#x6B63;&#x5F0F;&#x958B;&#x8DD1;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x4F86;&#x7814;&#x7A76;&#x4E00;&#x4E0B;&#x5982;&#x4F55;&#x8207; Entity Framework &#x642D;&#x914D;&#x4F7F;&#x7528;&#x3002;&#x4F46;&#x7531;&#x65BC; EF Core &#x5C0D; Oracle &#x7684;&#x652F;&#x63F4;&#x5FC5;&#x9808;&#x8981;&#x7B49;&#x5230;&#x4E0B;&#x534A;&#x5E74;&#x5EA6;&#x624D;&#x53EF;&#x80FD;&#x6703;&#x6709; Oracle &#x5B98;&#x65B9;&#x91CB;&#x51FA;&#x7684; drive&#xFF0C;&#x6240;&#x4EE5;&#x9019;&#x908A;&#x9084;&#x662F;&#x5148;&#x4E56;&#x4E56;&#x5730;&#x4F7F;&#x7528; EF6 &#x4E86;&#x3002;</p>
-<p>&#x81F3;&#x65BC;&#x5982;&#x4F55;&#x67B6;&#x8A2D;&#x81EA;&#x5DF1;&#x7684; Oracle 11g Express &#x8CC7;&#x6599;&#x5EAB;&#xFF0C;&#x5C31;&#x8981;&#x5148;&#x5F9E;&#x7DB2;&#x8DEF;&#x4E0A;&#x9762;&#x67E5;&#x8A62;&#x600E;&#x9EBC;&#x67B6;&#x8A2D;&#x4E86;&#x3002;&#x9019;&#x6587;&#x7AE0;&#x6211;&#x4E4B;&#x5F8C;&#x518D;&#x88DC;</p>
+			  		<p>近期有一個案子有可能會用到 Oracle， 所以在還沒有正式開跑之前，先來研究一下如何與 Entity Framework 搭配使用。但由於 EF Core 對 Oracle 的支援必須要等到下半年度才可能會有 Oracle 官方釋出的 drive，所以這邊還是先乖乖地使用 EF6 了。</p>
+<p>至於如何架設自己的 Oracle 11g Express 資料庫，就要先從網路上面查詢怎麼架設了。這文章我之後再補</p>
 <a id="more"></a>
-<h1 id="&#x4E8B;&#x524D;&#x6E96;&#x5099;"><a class="header-anchor" href="#&#x4E8B;&#x524D;&#x6E96;&#x5099;"> </a>&#x4E8B;&#x524D;&#x6E96;&#x5099;</h1>
-<p>&#x5728;&#x958B;&#x59CB;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x5047;&#x8A2D; Oracle &#x7684;&#x74B0;&#x5883;&#x662F;&#x975E;&#x5E38;&#x4E7E;&#x6DE8;&#x7684;&#xFF0C;&#x5C31;&#x53EA;&#x80FD;&#x7528; system &#x5E33;&#x865F;&#x505A;&#x9023;&#x7DDA;&#xFF0C;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x5148;&#x7528; <code>Oracle SQL Developer</code> &#x5DE5;&#x5177;&#x4F86;&#x6E2C;&#x8A66;&#x9023;&#x7DDA;&#xFF0C;&#x4F7F;&#x7528; system &#x7684;&#x5E33;&#x865F;&#x767B;&#x5165;&#x5F8C;&#xFF0C;&#x6211;&#x5011;&#x8981;&#x5148;&#x65B0;&#x589E;&#x4F7F;&#x7528;&#x8005;</p>
-<h2 id="&#x5EFA;&#x7ACB;-tablespace"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;-tablespace"> </a>&#x5EFA;&#x7ACB; TableSpace</h2>
-<p>&#x7531;&#x65BC; Oracle &#x53EA;&#x80FD;&#x6709;&#x4E00;&#x500B;&#x8CC7;&#x6599;&#x5EAB; (Database)&#xFF0C;&#x7576;&#x60F3;&#x8981;&#x505A;&#x5230;&#x591A;&#x8CC7;&#x6599;&#x5EAB;&#x7684;&#x683C;&#x5F0F;&#xFF0C;&#x5C31;&#x5F97;&#x900F;&#x904E; Tablespace &#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x5B8C;&#x6210;&#x3002;Tablespace &#x53EF;&#x4EE5;&#x60F3;&#x7A0B;&#x5F0F;&#x4E00;&#x500B;&#x8CC7;&#x6599;&#x8868;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x800C;&#x4F7F;&#x7528;&#x8005;&#x4E5F;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x4F7F;&#x7528;&#x7279;&#x5B9A;&#x7684; Tablespace&#xFF0C;&#x9019;&#x8868;&#x793A;&#x4E00;&#x500B;&#x4F7F;&#x7528;&#x8005;&#x5E33;&#x865F;&#x5C31;&#x53EF;&#x4EE5;&#x4EE3;&#x8868;&#x662F;&#x4E00;&#x500B;&#x8CC7;&#x6599;&#x5EAB;</p>
-<p>&#x5EFA;&#x7ACB; tablespace &#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x4F7F;&#x7528; <code>Oracle SQL Developer</code> &#x8005;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x900F;&#x904E;&#x6307;&#x4EE4;&#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x5EFA;&#x7ACB;&#xFF0C;&#x5EFA;&#x7ACB;&#x5F8C;&#xFF0C;&#x4F3C;&#x4E4E;&#x6C92;&#x6709;&#x8FA6;&#x6CD5;&#x518D;&#x6539;&#x540D;&#x7A31;&#x4E86;&#x3002;&#x6240;&#x4EE5;&#x8981;&#x5C0F;&#x5FC3;</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span>  <span class="keyword">TABLESPACE</span> <span class="string">&quot;NewTableSpace&quot;</span> </span><br><span class="line"><span class="keyword">DATAFILE</span> <span class="string">&apos;C:\ORACLEXE\APP\ORACLE\ORADATA\XE\Northwind&apos;</span> <span class="keyword">SIZE</span> <span class="number">100</span> M <span class="comment">-- &#x5B58;&#x653E;&#x4F4D;&#x7F6E;&#x8207;&#x9810;&#x8A2D;&#x521D;&#x59CB;&#x6A94;&#x6848;&#x5927;&#x5C0F;</span></span><br><span class="line"><span class="keyword">AUTOEXTEND</span> <span class="keyword">ON</span> <span class="keyword">NEXT</span> <span class="number">10</span> M <span class="comment">-- &#x7576;&#x8CC7;&#x6599;&#x5927;&#x5C0F;&#x5DF2;&#x7D93;&#x589E;&#x52A0;&#x5230;&#x539F;&#x5148;&#x8A2D;&#x5B9A;&#x5BB9;&#x91CF;&#x6642;&#xFF0C;&#x662F;&#x5426;&#x6703;&#x81EA;&#x52D5;&#x4F9D;&#x64DA;&#x8A2D;&#x5B9A;&#x589E;&#x52A0;&#x5BB9;&#x91CF;</span></span><br><span class="line"><span class="keyword">MAXSIZE</span> <span class="keyword">UNLIMITED</span> ; <span class="comment">-- &#x6A94;&#x6848;&#x7121;&#x5927;&#x5C0F;&#x4E0A;&#x9650;</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 id="&#x5EFA;&#x7ACB;&#x4F7F;&#x7528;&#x8005;"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;&#x4F7F;&#x7528;&#x8005;"> </a>&#x5EFA;&#x7ACB;&#x4F7F;&#x7528;&#x8005;</h2>
-<p>&#x4F86;&#x65B0;&#x589E;&#x4E00;&#x500B;&#x4F7F;&#x7528;&#x8005;&#xFF0C;&#x7B49;&#x4E00;&#x4E0B;&#x505A; EF &#x6642;&#x53EF;&#x4EE5;&#x7528;&#xFF0C;&#x65B0;&#x589E;&#x6B65;&#x9A5F;&#x5982;&#x4E0B;</p>
-<p>(&#x4F7F;&#x7528; Oracle SQL Developer Tool)</p>
+<h1 id="事前準備"><a class="header-anchor" href="#事前準備"> </a>事前準備</h1>
+<p>在開始之前，先假設 Oracle 的環境是非常乾淨的，就只能用 system 帳號做連線，我們可以先用 <code>Oracle SQL Developer</code> 工具來測試連線，使用 system 的帳號登入後，我們要先新增使用者</p>
+<h2 id="建立-tablespace"><a class="header-anchor" href="#建立-tablespace"> </a>建立 TableSpace</h2>
+<p>由於 Oracle 只能有一個資料庫 (Database)，當想要做到多資料庫的格式，就得透過 Tablespace 的方式來完成。Tablespace 可以想程式一個資料表的集合，而使用者也可以指定使用特定的 Tablespace，這表示一個使用者帳號就可以代表是一個資料庫</p>
+<p>建立 tablespace 的方法，如果是使用 <code>Oracle SQL Developer</code> 者，就需要透過指令的方式來建立，建立後，似乎沒有辦法再改名稱了。所以要小心</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span>  <span class="keyword">TABLESPACE</span> <span class="string">"NewTableSpace"</span> </span><br><span class="line"><span class="keyword">DATAFILE</span> <span class="string">'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\Northwind'</span> <span class="keyword">SIZE</span> <span class="number">100</span> M <span class="comment">-- 存放位置與預設初始檔案大小</span></span><br><span class="line"><span class="keyword">AUTOEXTEND</span> <span class="keyword">ON</span> <span class="keyword">NEXT</span> <span class="number">10</span> M <span class="comment">-- 當資料大小已經增加到原先設定容量時，是否會自動依據設定增加容量</span></span><br><span class="line"><span class="keyword">MAXSIZE</span> <span class="keyword">UNLIMITED</span> ; <span class="comment">-- 檔案無大小上限</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="建立使用者"><a class="header-anchor" href="#建立使用者"> </a>建立使用者</h2>
+<p>來新增一個使用者，等一下做 EF 時可以用，新增步驟如下</p>
+<p>(使用 Oracle SQL Developer Tool)</p>
 <ol>
 <li>
-<p>&#x9023;&#x7DDA;&#x81F3; Oracle DB</p>
+<p>連線至 Oracle DB</p>
 </li>
 <li>
-<p>&#x5176;&#x4ED6;&#x4F7F;&#x7528;&#x8005;&#xFF0C;&#x6ED1;&#x9F20;&#x53F3;&#x9375;&#x958B;&#x555F;&#x9078;&#x55AE;&#xFF0C;&#x9078;&#x64C7;&#x5EFA;&#x7ACB;&#x4F7F;&#x7528;&#x8005;</p>
+<p>其他使用者，滑鼠右鍵開啟選單，選擇建立使用者</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/r6k6eiy.png" width="300" height="335" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x8F38;&#x5165;&#x60F3;&#x8981;&#x65B0;&#x589E;&#x7684;&#x4F7F;&#x7528;&#x8005;&#x540D;&#x7A31;&#x8207;&#x5BC6;&#x78BC;</p>
+<p>輸入想要新增的使用者名稱與密碼</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/2CXF9Il.png" width="588" height="487" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9078;&#x64C7;&#x525B;&#x525B;&#x6240;&#x65B0;&#x589E;&#x7684; TableSpace</p>
+<p>選擇剛剛所新增的 TableSpace</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/YVfbsqK.png" width="588" height="487" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x6388;&#x6B0A;&#x89D2;&#x8272;&#x8A2D;&#x5B9A;: (&#x4F9D;&#x81EA;&#x5DF1;&#x7684;&#x9700;&#x8981;&#x8A2D;&#x5B9A;)</p>
+<p>授權角色設定: (依自己的需要設定)</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/dWXidrD.png" width="588" height="487" layout="responsive"></amp-img></div>
 <ol>
-<li>CONNECT&#xFF1A;&#x6388;&#x8207;&#x4F7F;&#x7528;&#x8005;&#x53EF;&#x4EE5;&#x9023;&#x7DDA;&#x8CC7;&#x6599;&#x5EAB;&#x4E26;&#x57F7;&#x884C;&#x57FA;&#x672C;&#x7684;&#x8CC7;&#x6599;&#x5EAB;&#x64CD;&#x4F5C;</li>
-<li>RESOURCE&#xFF1A;&#x53EF;&#x4EE5;&#x8B93;&#x4F7F;&#x7528;&#x8005;&#x53BB;&#x5EFA;&#x7ACB;&#x8CC7;&#x6599;&#x5EAB;&#x7684;&#x7269;&#x4EF6;&#xFF0C;&#x5982;TABLE. TRIGGER, PROCEDURE</li>
-<li>DBA&#xFF1A;&#x53EF;&#x4EE5;&#x8B93;&#x4F7F;&#x7528;&#x8005;&#x5B58;&#x53D6;&#x6240;&#x6709;&#x5176;&#x4ED6;&#x4F7F;&#x7528;&#x8005;&#x7684;&#x8CC7;&#x6599;&#x5EAB;&#x7269;&#x4EF6;&#x8207;&#x7BA1;&#x7406;&#x8CC7;&#x6599;&#x5EAB;</li>
+<li>CONNECT：授與使用者可以連線資料庫並執行基本的資料庫操作</li>
+<li>RESOURCE：可以讓使用者去建立資料庫的物件，如TABLE. TRIGGER, PROCEDURE</li>
+<li>DBA：可以讓使用者存取所有其他使用者的資料庫物件與管理資料庫</li>
 </ol>
 </li>
 <li>
-<p>&#x7CFB;&#x7D71;&#x6B0A;&#x9650;&#x8A2D;&#x5B9A;: &#x6211;&#x9019;&#x908A;&#x57FA;&#x672C;&#x4E0A;&#x5148;&#x5168;&#x90E8;&#x958B;&#x653E;&#xFF0C;(&#x4E00;&#x6A23;&#x4F9D;&#x81EA;&#x5DF1;&#x7684;&#x9700;&#x6C42;&#x505A;&#x8A2D;&#x5B9A;)</p>
+<p>系統權限設定: 我這邊基本上先全部開放，(一樣依自己的需求做設定)</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/X0psghQ.png" width="588" height="487" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5B8C;&#x6210;&#x8A2D;&#x5B9A;&#x5F8C;&#x5C31;&#x6309;&#x4E0B;&#x3010;&#x5957;&#x7528;&#x3011;&#x57F7;&#x884C;&#xFF0C;&#x5B8C;&#x6210;&#x4F7F;&#x7528;&#x8005;&#x5EFA;&#x7ACB;</p>
+<p>完成設定後就按下【套用】執行，完成使用者建立</p>
 </li>
 </ol>
-<h1 id="&#x5EFA;&#x7ACB;-net-&#x5C08;&#x6848;"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;-net-&#x5C08;&#x6848;"> </a>&#x5EFA;&#x7ACB; .NET &#x5C08;&#x6848;</h1>
+<h1 id="建立-net-專案"><a class="header-anchor" href="#建立-net-專案"> </a>建立 .NET 專案</h1>
 <ol>
 <li>
-<p>&#x5148;&#x5EFA;&#x7ACB;&#x4E00;&#x500B; Console &#x5C08;&#x6848;</p>
+<p>先建立一個 Console 專案</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KECe5OQ.png" width="941" height="653" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<h2 id="&#x5B89;&#x88DD;-oracle-entityframework-&#x5957;&#x4EF6;"><a class="header-anchor" href="#&#x5B89;&#x88DD;-oracle-entityframework-&#x5957;&#x4EF6;"> </a>&#x5B89;&#x88DD; Oracle EntityFramework &#x5957;&#x4EF6;</h2>
+<h2 id="安裝-oracle-entityframework-套件"><a class="header-anchor" href="#安裝-oracle-entityframework-套件"> </a>安裝 Oracle EntityFramework 套件</h2>
 <ol>
 <li>
-<p>&#x6253;&#x958B; Nuget &#x7BA1;&#x7406;&#x5DE5;&#x5177;</p>
+<p>打開 Nuget 管理工具</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/rzZNSEF.png" width="506" height="470" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x641C;&#x5C0B; <code>Oracle.ManagedDataAccess.EntityFramework</code></p>
+<p>搜尋 <code>Oracle.ManagedDataAccess.EntityFramework</code></p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/H2oycF1.png" width="856" height="261" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5B89;&#x88DD; <code>Oracle.ManagedDataAccess.EntityFramework</code>&#xFF0C;&#x6AA2;&#x67E5; Reference &#x662F;&#x5426;&#x6709;&#x5B89;&#x88DD;&#x6210;&#x529F;</p>
+<p>安裝 <code>Oracle.ManagedDataAccess.EntityFramework</code>，檢查 Reference 是否有安裝成功</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/rcdePlT.png" width="364" height="308" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<p>&#x203B; &#x5728; readme.txt &#x7684;&#x5167;&#x5BB9;&#x8981;&#x7A0D;&#x5FAE;&#x770B;&#x4E00;&#x4E0B;</p>
+<p>※ 在 readme.txt 的內容要稍微看一下</p>
 <blockquote>
-<p>Note: The 32-bit &#x300C;Oracle Developer Tools for Visual Studio&#x300D; download from <a href="http://otn.oracle.com/dotnet" target="_blank" rel="noopener">http://otn.oracle.com/dotnet</a> is
+<p>Note: The 32-bit 「Oracle Developer Tools for Visual Studio」 download from <a href="http://otn.oracle.com/dotnet" target="_blank" rel="noopener">http://otn.oracle.com/dotnet</a> is
 required for Entity Framework design-time features. This NuGet download does not enable design-time tools; it
 only provides run-time support. This version of <a href="http://ODP.NET" target="_blank" rel="noopener">ODP.NET</a> for Entity Framework supports Oracle Database version
 10.2 and higher.</p>
 </blockquote>
-<h2 id="&#x8A2D;&#x5B9A;&#x9023;&#x7DDA;"><a class="header-anchor" href="#&#x8A2D;&#x5B9A;&#x9023;&#x7DDA;"> </a>&#x8A2D;&#x5B9A;&#x9023;&#x7DDA;</h2>
+<h2 id="設定連線"><a class="header-anchor" href="#設定連線"> </a>設定連線</h2>
 <ol>
 <li>
-<p>&#x6253;&#x958B; app.config&#xFF0C;&#x5728;&#x6700;&#x5F8C;&#x9762;&#x53EF;&#x4EE5;&#x770B; oracle &#x9023;&#x7DDA;&#x7684;&#x76F8;&#x95DC;&#x8CC7;&#x8A0A;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;oracle.manageddataaccess.client&gt;</span><br><span class="line">  &lt;version number=&quot;*&quot;&gt;</span><br><span class="line">    &lt;dataSources&gt;</span><br><span class="line">      &lt;dataSource alias=&quot;SampleDataSource&quot; descriptor=&quot;(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL))) &quot;/&gt;</span><br><span class="line">    &lt;/dataSources&gt;</span><br><span class="line">  &lt;/version&gt;</span><br><span class="line">&lt;/oracle.manageddataaccess.client&gt;</span><br><span class="line">&lt;connectionStrings&gt;</span><br><span class="line">  &lt;add name=&quot;OracleDbContext&quot; providerName=&quot;Oracle.ManagedDataAccess.Client&quot;</span><br><span class="line">connectionString=&quot;User Id=oracle_user;Password=oracle_user_password;Data Source=oracle&quot;/&gt;</span><br><span class="line">&lt;/connectionStrings&gt;</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x8ACB;&#x4F9D;&#x81EA;&#x5DF1;&#x7684;&#x74B0;&#x5883;&#x505A;&#x8A2D;&#x5B9A;&#x8ABF;&#x6574;&#xFF0C;&#x4F8B;&#x5982; HOST &#x4F4D;&#x7F6E;&#x3001;SERVICE_NAME&#x3001;User ID &#x3001;password &#x7B49;</p>
+<p>打開 app.config，在最後面可以看 oracle 連線的相關資訊</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;oracle.manageddataaccess.client&gt;</span><br><span class="line">  &lt;version number="*"&gt;</span><br><span class="line">    &lt;dataSources&gt;</span><br><span class="line">      &lt;dataSource alias="SampleDataSource" descriptor="(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL))) "/&gt;</span><br><span class="line">    &lt;/dataSources&gt;</span><br><span class="line">  &lt;/version&gt;</span><br><span class="line">&lt;/oracle.manageddataaccess.client&gt;</span><br><span class="line">&lt;connectionStrings&gt;</span><br><span class="line">  &lt;add name="OracleDbContext" providerName="Oracle.ManagedDataAccess.Client"</span><br><span class="line">connectionString="User Id=oracle_user;Password=oracle_user_password;Data Source=oracle"/&gt;</span><br><span class="line">&lt;/connectionStrings&gt;</span><br></pre></td></tr></tbody></table></figure>
+<p>請依自己的環境做設定調整，例如 HOST 位置、SERVICE_NAME、User ID 、password 等</p>
 </li>
 <li>
-<p>&#x5728; <code>connectionString</code> &#x5167;&#x63D0;&#x5230;&#x7684; <code>Data Source</code> &#x662F;&#x6307;&#x4E0A;&#x65B9;&#x7684; <code>&lt;dataSource&gt;</code> &#x540D;&#x7A31;</p>
+<p>在 <code>connectionString</code> 內提到的 <code>Data Source</code> 是指上方的 <code>&lt;dataSource&gt;</code> 名稱</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/6qI3wMa.png" width="1231" height="376" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<h2 id="&#x5EFA;&#x7ACB;-dbcontext"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;-dbcontext"> </a>&#x5EFA;&#x7ACB; DbContext</h2>
-<p>&#x9019;&#x88E1;&#x7684;&#x52D5;&#x4F5C;&#x8207;&#x4E00;&#x822C;&#x64CD;&#x4F5C; Entity Framework &#x662F;&#x4E00;&#x6A23;&#x7684;</p>
+<h2 id="建立-dbcontext"><a class="header-anchor" href="#建立-dbcontext"> </a>建立 DbContext</h2>
+<p>這裡的動作與一般操作 Entity Framework 是一樣的</p>
 <ul>
 <li>
 <p><code>OracleDbContext.cs</code></p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OracleDbContext</span> : <span class="title">DbContext</span></span><br><span class="line">  {</span><br><span class="line">    <span class="keyword">public</span> DbSet&lt;Employee&gt; Employees { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnModelCreating</span>(<span class="params">DbModelBuilder modelBuilder</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">      <span class="comment">// &#x8CC7;&#x6599;&#x8868;&#x96B8;&#x5C6C;&#x4F4D;&#x7F6E;&#xFF0C;Oracle &#x5167;&#x662F;&#x4EE5;&#x4F7F;&#x7528;&#x8005;&#x5E33;&#x865F;&#x4F5C;&#x70BA; table schema &#x7684;&#x958B;&#x982D;      </span></span><br><span class="line">      <span class="comment">// &#x4F8B;&#x5982;: BLOG_DEMO.Employees</span></span><br><span class="line">      <span class="comment">// Schema&#x540D;&#x7A31;&#x4E00;&#x5B9A;&#x8981;&#x5927;&#x5BEB;</span></span><br><span class="line">      modelBuilder.HasDefaultSchema(<span class="string">&quot;BLOG_DEMO&quot;</span>); </span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OracleDbContext</span> : <span class="title">DbContext</span></span><br><span class="line">  {</span><br><span class="line">    <span class="keyword">public</span> DbSet&lt;Employee&gt; Employees { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnModelCreating</span>(<span class="params">DbModelBuilder modelBuilder</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">      <span class="comment">// 資料表隸屬位置，Oracle 內是以使用者帳號作為 table schema 的開頭      </span></span><br><span class="line">      <span class="comment">// 例如: BLOG_DEMO.Employees</span></span><br><span class="line">      <span class="comment">// Schema名稱一定要大寫</span></span><br><span class="line">      modelBuilder.HasDefaultSchema(<span class="string">"BLOG_DEMO"</span>); </span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x5EFA;&#x7ACB; <code>Employee.cs</code> &#x6A94;&#x6848;</p>
+<p>建立 <code>Employee.cs</code> 檔案</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Employee</span></span><br><span class="line">  {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x8A2D;&#x5B9A; <code>program.cs</code> &#xFF0C;&#x555F;&#x52D5; EF &#x4E26;&#x585E;&#x5165;&#x4E00;&#x7B46;&#x8CC7;&#x6599;</p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">  {</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">      Database.SetInitializer(<span class="keyword">new</span> DropCreateDatabaseAlways&lt;OracleDbContext&gt;());</span><br><span class="line"></span><br><span class="line">      <span class="keyword">using</span> (OracleDbContext ctx = <span class="keyword">new</span> OracleDbContext())</span><br><span class="line">      {</span><br><span class="line">        Employee emp = <span class="keyword">new</span> Employee()</span><br><span class="line">        {</span><br><span class="line">          Name = <span class="string">&quot;Kevin&quot;</span></span><br><span class="line">        };</span><br><span class="line"></span><br><span class="line">        ctx.Employees.Add(emp);</span><br><span class="line">        ctx.SaveChanges();</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>設定 <code>program.cs</code> ，啟動 EF 並塞入一筆資料</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">  {</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">      Database.SetInitializer(<span class="keyword">new</span> DropCreateDatabaseAlways&lt;OracleDbContext&gt;());</span><br><span class="line"></span><br><span class="line">      <span class="keyword">using</span> (OracleDbContext ctx = <span class="keyword">new</span> OracleDbContext())</span><br><span class="line">      {</span><br><span class="line">        Employee emp = <span class="keyword">new</span> Employee()</span><br><span class="line">        {</span><br><span class="line">          Name = <span class="string">"Kevin"</span></span><br><span class="line">        };</span><br><span class="line"></span><br><span class="line">        ctx.Employees.Add(emp);</span><br><span class="line">        ctx.SaveChanges();</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x7B2C;&#x4E00;&#x6B21;&#x57F7;&#x884C;&#xFF0C;&#x56E0;&#x70BA; <code>DropCreateDatabaseAlways</code> &#x7684;&#x95DC;&#x4FC2;&#xFF0C;&#x6240;&#x4EE5;&#x6703;&#x5EFA;&#x7ACB;&#x8CC7;&#x6599;&#x8868;&#xFF0C;<strong>&#x9019;&#x6A21;&#x5F0F;&#x4E0D;&#x9069;&#x5408;&#x4EE5;&#x5728;&#x958B;&#x767C;&#x7684;&#x7CFB;&#x7D71;</strong>&#xFF0C;&#x8ACB;&#x7559;&#x610F;!!</p>
+<p>第一次執行，因為 <code>DropCreateDatabaseAlways</code> 的關係，所以會建立資料表，<strong>這模式不適合以在開發的系統</strong>，請留意!!</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/OFkgEE4.png" width="294" height="132" layout="responsive"></amp-img></div>
 <ul>
 <li>
-<p>&#x5176;&#x4ED6;&#x76F8;&#x95DC;&#x8A2D;&#x5B9A;</p>
-<p><strong>1. CreateDatabaseIfNotExists</strong> :    &#x9810;&#x8A2D;&#x898F;&#x5247;&#xFF0C;DB&#x4E0D;&#x5B58;&#x5728;&#x6642;&#x624D;&#x5EFA;&#x7ACB;&#xFF0C;&#x82E5;Model&#x8207;&#x76EE;&#x524D;&#x5B58;&#x5728;DB&#x4E0D;&#x76F8;&#x7B26;&#x6703;&#x62CB;&#x51FA;&#x4F8B;&#x5916;&#x932F;&#x8AA4;</p>
-<p><strong>2. DropCreateDatabaseIfModelChanges</strong> :  DB&#x4E0D;&#x5B58;&#x5728;&#x6642;&#x5EFA;&#x7ACB;&#xFF0C;&#x82E5;Model&#x8207;&#x76EE;&#x524D;&#x5B58;&#x5728;DB&#x4E0D;&#x76F8;&#x7B26;&#x6642;&#x6703;&#x81EA;&#x52D5;&#x79FB;&#x9664;&#x73FE;&#x6709;DB&#x5F8C;&#x518D;&#x5EFA;&#x7ACB;&#x65B0;DB</p>
-<p><strong>3. DropCreateDatabaseAlways</strong> : &#xA0;&#x7121;&#x8AD6;&#x5982;&#x4F55;&#xFF0C;&#x7E3D;&#x662F;&#x79FB;&#x9664;&#x73FE;&#x6709;DB(&#x5982;&#x679C;&#x5B58;&#x5728;&#x7684;&#x8A71;)&#xFF0C;&#x518D;&#x5EFA;&#x7ACB;&#x65B0;DB</p>
+<p>其他相關設定</p>
+<p><strong>1. CreateDatabaseIfNotExists</strong> :    預設規則，DB不存在時才建立，若Model與目前存在DB不相符會拋出例外錯誤</p>
+<p><strong>2. DropCreateDatabaseIfModelChanges</strong> :  DB不存在時建立，若Model與目前存在DB不相符時會自動移除現有DB後再建立新DB</p>
+<p><strong>3. DropCreateDatabaseAlways</strong> : &nbsp;無論如何，總是移除現有DB(如果存在的話)，再建立新DB</p>
 </li>
 </ul>
 </li>
 </ul>
-<h2 id="&#x555F;&#x52D5;-migration"><a class="header-anchor" href="#&#x555F;&#x52D5;-migration"> </a>&#x555F;&#x52D5; migration</h2>
+<h2 id="啟動-migration"><a class="header-anchor" href="#啟動-migration"> </a>啟動 migration</h2>
 <ol>
 <li>
-<p>&#x958B;&#x555F; package Manager Console</p>
+<p>開啟 package Manager Console</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/qYRkDD9.png" width="786" height="479" layout="responsive"></amp-img></div>
 <ol start="2">
 <li>
-<p>&#x8F38;&#x5165; <code>Enable-Migrations</code>&#xFF0C;&#x9019;&#x6703;&#x555F;&#x52D5; <code>code first</code> &#x6A21;&#x5F0F;</p>
+<p>輸入 <code>Enable-Migrations</code>，這會啟動 <code>code first</code> 模式</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/L7CJlJW.png" width="686" height="101" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x4FEE;&#x6539; <code>Employee</code> &#x8CC7;&#x6599;&#x8868;&#x5167;&#x5BB9;&#xFF0C;&#x65B0;&#x589E; <code>address</code> &#x6B04;&#x4F4D;</p>
+<p>修改 <code>Employee</code> 資料表內容，新增 <code>address</code> 欄位</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Employee</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Address { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x65B0;&#x589E; <code>migrations</code> &#x6A94;&#x6848;&#xFF0C;<code>add-migration &lt;filename&gt;</code></p>
+<p>新增 <code>migrations</code> 檔案，<code>add-migration &lt;filename&gt;</code></p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/6rjlh5z.png" width="594" height="90" layout="responsive"></amp-img></div>
 <ul>
 <li>
 <p><code>201808010850326_table_employee_add_address_field.cs</code></p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">table_employee_add_address_field</span> : <span class="title">DbMigration</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Up</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        AddColumn(<span class="string">&quot;BLOG_DEMO.Employees&quot;</span>, <span class="string">&quot;Address&quot;</span>, c =&gt; c.String());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Down</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        DropColumn(<span class="string">&quot;BLOG_DEMO.Employees&quot;</span>, <span class="string">&quot;Address&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">table_employee_add_address_field</span> : <span class="title">DbMigration</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Up</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        AddColumn(<span class="string">"BLOG_DEMO.Employees"</span>, <span class="string">"Address"</span>, c =&gt; c.String());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Down</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        DropColumn(<span class="string">"BLOG_DEMO.Employees"</span>, <span class="string">"Address"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 </li>
 <li>
-<p>&#x57F7;&#x884C; <code>Update-Database</code> &#xFF0C;&#x5C07;&#x7570;&#x52D5;&#x90E8;&#x5206;&#x66F4;&#x65B0;&#x5230;&#x8CC7;&#x6599;&#x5EAB;</p>
+<p>執行 <code>Update-Database</code> ，將異動部分更新到資料庫</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Wjyvyjm.png" width="668" height="133" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/OBShcGB.png" width="297" height="177" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5B8C;&#x6210;&#x7B2C;&#x4E00;&#x6B21;&#x9077;&#x79FB;(migration)&#x66F4;&#x65B0;</p>
+<p>完成第一次遷移(migration)更新</p>
 </li>
 </ol>
 </li>
 </ol>
-<h1 id="&#x7D50;&#x8AD6;"><a class="header-anchor" href="#&#x7D50;&#x8AD6;"> </a>&#x7D50;&#x8AD6;</h1>
-<p>&#x95DC;&#x65BC; EF &#x76F8;&#x95DC;&#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#xFF0C;&#x8ACB;&#x53C3;&#x95B1; Entity Framework &#x7684;&#x76F8;&#x95DC;&#x6587;&#x4EF6;&#xFF0C;&#x9019;&#x908A;&#x53EA;&#x91DD;&#x5C0D; Oracle Entity Framework &#x8981;&#x600E;&#x9EBC;&#x9023;&#x7DDA;&#x53CA;&#x76F8;&#x95DC;&#x8A2D;&#x5B9A;&#x7684;&#x8AAA;&#x660E;&#x3002;&#x7562;&#x7ADF;&#x6709;&#x4E9B;&#x7D30;&#x7BC0;&#x7684;&#x90E8;&#x5206;&#x8207; MSSQL &#x7684;&#x9023;&#x7DDA;&#x662F;&#x4E0D;&#x4E00;&#x6A23;&#x7684;&#x3002;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>關於 EF 相關的操作方式，請參閱 Entity Framework 的相關文件，這邊只針對 Oracle Entity Framework 要怎麼連線及相關設定的說明。畢竟有些細節的部分與 MSSQL 的連線是不一樣的。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/db/dotnet/CodeFirst/index.html#overview" target="_blank" rel="noopener">Entity Framework Code First and Code First Migrations for Oracle Database</a></li>
 <li><a href="http://kevintsengtw.blogspot.com/2011/11/aspnet-mvc-oracle-11g-xe-entity_13.html" target="_blank" rel="noopener">ASP.NET MVC + Oracle 11g XE + Entity Framework. Part 2</a></li>
-<li><a href="https://dotblogs.com.tw/vitochiang/2016/01/19/oracle-manageddataaccess-entityframework" target="_blank" rel="noopener">&#x3010;EF-Oracle-01&#x3011;&#x4F7F;&#x7528; Entity Framework &#x9023;&#x7D50; Oracle &#x8CC7;&#x6599;&#x5EAB;</a></li>
+<li><a href="https://dotblogs.com.tw/vitochiang/2016/01/19/oracle-manageddataaccess-entityframework" target="_blank" rel="noopener">【EF-Oracle-01】使用 Entity Framework 連結 Oracle 資料庫</a></li>
 </ul>
-<p>&#x200B;</p>
+<p>​</p>
 
 			  		
 			  		<!-- google Adsense -->

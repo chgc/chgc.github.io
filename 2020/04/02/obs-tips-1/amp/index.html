@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/02/obs-tips-1/"
 			},
 			"datePublished": "2020-04-02T01:51:18.000Z",
-			"dateModified": "2021-02-18T02:25:04.943Z",
+			"dateModified": "2021-02-18T02:32:11.675Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,47 +1851,47 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>OBS &#x662F;&#x4E00;&#x5957;&#x529F;&#x80FD;&#x5F37;&#x5927;&#x800C;&#x4E14;&#x514D;&#x8CBB;&#x7684;&#x76F4;&#x64AD;&#x8EDF;&#x9AD4;&#xFF0C;&#x6211;&#x6703;&#x5C07;&#x4E00;&#x4E9B;&#x6211;&#x89BA;&#x5F97;&#x4E0D;&#x932F;&#x7684;&#x529F;&#x80FD;&#x5BEB;&#x6210;&#x7B46;&#x8A18;&#x5206;&#x4EAB;&#x51FA;&#x4F86;&#xFF0C;&#x4ECA;&#x5929;&#x5148;&#x4ECB;&#x7D39; OBS-NDI &#x9019;&#x500B;&#x64F4;&#x5145;&#x529F;&#x80FD;&#x3002;</p>
-<p>NDI &#x662F; NewTek &#x9019;&#x9593;&#x516C;&#x53F8;&#x767C;&#x5C55;&#x51FA;&#x4F86;&#x7684;&#x4E00;&#x500B;&#x7DB2;&#x8DEF;&#x5354;&#x5B9A;&#xFF0C;&#x5168;&#x540D;&#x662F; Network Device Interface&#xFF0C;&#x8A73;&#x7D30;&#x529F;&#x80FD;&#x5C31;&#x8B93;&#x5404;&#x4F4D;&#x53BB;&#x67E5;&#x4E86;&#xFF0C;&#x7C21;&#x55AE;&#x7684;&#x8AAA;&#xFF0C;&#x4ED6;&#x53EF;&#x4EE5;&#x5C07;&#x5F71;&#x50CF;&#x8A0A;&#x865F;&#x900F;&#x904E;&#x7DB2;&#x8DEF;&#x7684;&#x65B9;&#x5F0F;&#x50B3;&#x905E;&#xFF0C;&#x800C;&#x4E14;&#x4E2D;&#x9593;&#x7684;&#x5EF6;&#x9072;&#x975E;&#x5E38;&#x7684;&#x4F4E;</p>
+			  		<p>OBS 是一套功能強大而且免費的直播軟體，我會將一些我覺得不錯的功能寫成筆記分享出來，今天先介紹 OBS-NDI 這個擴充功能。</p>
+<p>NDI 是 NewTek 這間公司發展出來的一個網路協定，全名是 Network Device Interface，詳細功能就讓各位去查了，簡單的說，他可以將影像訊號透過網路的方式傳遞，而且中間的延遲非常的低</p>
 <a id="more"></a>
-<p>&#x800C; OBS &#x7576;&#x7136;&#x4E5F;&#x6709;&#x4EBA;&#x5BEB;&#x64F4;&#x5145;&#x5957;&#x4EF6;&#xFF0C;&#x8B93; OBS &#x4E5F;&#x80FD;&#x652F;&#x63F4; NDI &#x9019;&#x500B;&#x529F;&#x80FD;&#xFF0C;&#x5957;&#x4EF6;&#x540D;&#x7A31;&#x662F; <a href="https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/" target="_blank" rel="noopener">obs-ndi</a>&#xFF0C;&#x9084;&#x6C92;&#x6709;&#x5B89;&#x88DD;&#x7684;&#xFF0C;&#x5C31;&#x5148;&#x6309;&#x7DB2;&#x7AD9;&#x7684;&#x6B65;&#x9A5F;&#x5B89;&#x88DD;&#x4E0B;&#x8F09;&#x5427;&#xFF0C;windows/mac &#x90FD;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;</p>
-<p>&#x7576;&#x5B89;&#x88DD;&#x5B8C; OBS-NDI &#x5F8C;&#xFF0C;OBS &#x5C31;&#x652F;&#x63F4; Input/Output NDI Source &#x7684;&#x529F;&#x80FD;&#x4E86;</p>
+<p>而 OBS 當然也有人寫擴充套件，讓 OBS 也能支援 NDI 這個功能，套件名稱是 <a href="https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/" target="_blank" rel="noopener">obs-ndi</a>，還沒有安裝的，就先按網站的步驟安裝下載吧，windows/mac 都可以使用</p>
+<p>當安裝完 OBS-NDI 後，OBS 就支援 Input/Output NDI Source 的功能了</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402100903559.png" width="605" height="263" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402100925719.png" width="427" height="558" layout="responsive"></amp-img></div>
 <h1 id="input"><a class="header-anchor" href="#input"> </a>Input</h1>
-<p>&#x7576;&#x8981;&#x5C07;&#x5916;&#x90E8;&#x7684; NDI Source &#x52A0;&#x5230; OBS &#x5167;&#xFF0C;&#x53EF;&#x4EE5;&#x900F;&#x904E; add NDI Source &#x7684;&#x65B9;&#x5F0F;&#x5B8C;&#x6210;</p>
+<p>當要將外部的 NDI Source 加到 OBS 內，可以透過 add NDI Source 的方式完成</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402102452683.png" width="722" height="612" layout="responsive"></amp-img></div>
-<p>&#x7576;&#x5340;&#x57DF;&#x7DB2;&#x8DEF;&#x5167;&#x6709; NDI Source &#x5B58;&#x5728;&#x6642;&#xFF0C;Source name &#x7684;&#x4E0B;&#x62C9;&#x9078;&#x55AE;&#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8A72;&#x4F86;&#x6E90;&#x7684;&#x540D;&#x7A31;</p>
+<p>當區域網路內有 NDI Source 存在時，Source name 的下拉選單就可以看到該來源的名稱</p>
 <ul>
-<li>Bandwidth: &#x983B;&#x5BEC;&#x4F7F;&#x7528;&#x91CF;&#xFF0C;&#x5728;&#x4E0D;&#x4F7F;&#x7528; NDI|HX &#x7684;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x9078;&#x64C7; Highest &#x7684;&#x53EF;&#x4EE5;&#x53D6;&#x7684;&#x9AD8;&#x756B;&#x8CEA;&#x4F4E;&#x5EF6;&#x9072;&#x7684;&#x5F71;&#x50CF;&#xFF0C;&#x9019;&#x88E1;&#x6307;&#x7684;&#x4F4E;&#x5EF6;&#x9072;&#xFF0C;&#x5927;&#x6982;&#x5C31;&#x4E00;&#x500B; frame &#x7684;&#x5EF6;&#x9072;&#xFF0C;&#x4F46;&#x983B;&#x5BEC;&#x4F7F;&#x7528;&#x5C31;&#x5F88;&#x9AD8;&#xFF0C;&#x9019;&#x4E5F;&#x662F;&#x70BA;&#x4EC0;&#x9EBC;&#x4E00;&#x5B9A;&#x8981;&#x5728;&#x4F7F;&#x7528;&#x6709;&#x7DDA;&#x7DB2;&#x8DEF;&#x7684;&#x74B0;&#x5883;&#x4E0B;&#x8DD1;</li>
-<li>&#x5176;&#x4ED6;&#x7684;&#x8A2D;&#x5B9A;&#x57FA;&#x672C;&#x4E0A;&#x9810;&#x8A2D;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;</li>
+<li>Bandwidth: 頻寬使用量，在不使用 NDI|HX 的模式下，選擇 Highest 的可以取的高畫質低延遲的影像，這裡指的低延遲，大概就一個 frame 的延遲，但頻寬使用就很高，這也是為什麼一定要在使用有線網路的環境下跑</li>
+<li>其他的設定基本上預設就可以了</li>
 </ul>
-<p>&#x6309;&#x4E0B; Ok &#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x64CD;&#x4F5C;&#x5C31;&#x8DDF;&#x5176;&#x4ED6; OBS &#x7684;&#x64CD;&#x4F5C;&#x4E00;&#x6A23;&#xFF0C;&#x5F88;&#x7C21;&#x55AE;&#x7684;</p>
+<p>按下 Ok 完成後，剩下的操作就跟其他 OBS 的操作一樣，很簡單的</p>
 <h1 id="output"><a class="header-anchor" href="#output"> </a>Output</h1>
-<p>&#x5982;&#x679C;&#x60F3;&#x8981;&#x8B93; OBS &#x6240;&#x8A2D;&#x5B9A;&#x597D;&#x7684;&#x756B;&#x9762;&#x8F38;&#x51FA;&#x7D66;&#x5176;&#x4ED6;&#x652F;&#x63F4; NDI &#x7684;&#x8EDF;&#x9AD4;&#x6216;&#x4ECB;&#x9762;&#x4F7F;&#x7528;&#x7684;&#x8A71;&#xFF0C;&#x53EF;&#x4EE5;&#x958B;&#x555F; output &#x7684;&#x529F;&#x80FD;</p>
+<p>如果想要讓 OBS 所設定好的畫面輸出給其他支援 NDI 的軟體或介面使用的話，可以開啟 output 的功能</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402101053363.png" width="472" height="219" layout="responsive"></amp-img></div>
-<p>&#x7576;&#x958B;&#x555F; Output &#x6642;&#xFF0C;OBS &#x4E5F;&#x6703;&#x8A8D;&#x5B9A;&#x76EE;&#x524D;&#x8655;&#x65BC;&#x76F4;&#x64AD;&#x7684;&#x72C0;&#x614B;&#xFF0C;&#x6240;&#x4EE5;&#x76F8;&#x95DC;&#x7684;&#x8A2D;&#x5B9A;&#x4E5F;&#x6703;&#x88AB;&#x95DC;&#x8D77;&#x4F86;&#x4E0D;&#x80FD;&#x88AB;&#x4FEE;&#x6539;&#x3002;&#x4EE5;&#x4E0B;&#x70BA;&#x4E00;&#x4E9B;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7684;&#x60C5;&#x5883;</p>
+<p>當開啟 Output 時，OBS 也會認定目前處於直播的狀態，所以相關的設定也會被關起來不能被修改。以下為一些可以使用的情境</p>
 <ol>
-<li>NDI Virtual Input: &#x5C07; NDI Source &#x6A21;&#x64EC;&#x6210; Webcam&#xFF0C;&#x8B93;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; webcam &#x7684;&#x8EDF;&#x9AD4;&#x770B;&#x5230;&#x6B64;&#x8A0A;&#x865F;</li>
-<li>&#x7B2C;&#x4E8C;&#x53F0;&#x96FB;&#x8166;&#x7684;&#x76F4;&#x64AD;&#x8A0A;&#x865F;&#x4F86;&#x6E90;&#xFF0C;&#x56E0;&#x70BA;&#x76F4;&#x64AD;&#x9700;&#x8981;&#x6D88;&#x8017;&#x4E3B;&#x6A5F;&#x652F;&#x63F4;&#xFF0C;&#x53EF;&#x4EE5;&#x900F;&#x904E;&#x4F7F;&#x7528;&#x7B2C;&#x4E8C;&#x53F0;&#x96FB;&#x8166;&#x4F86;&#x6E1B;&#x5C11;&#x4E3B;&#x96FB;&#x8166;&#x7684;&#x8CC7;&#x8A0A;&#x640D;&#x8017;&#xFF0C;&#x9019;&#x6642;&#x5019;&#x900F;&#x904E; NDI &#x5C31;&#x53EF;&#x4EE5;&#x5F88;&#x7C21;&#x55AE;&#x7684;&#x5C07;&#x8A0A;&#x865F;&#x50B3;&#x7D66;&#x7B2C;&#x4E8C;&#x53F0;&#x96FB;&#x8166;</li>
-<li>&#x64F7;&#x53D6;&#x684C;&#x9762;&#x3002;&#x7D66;&#x76F4;&#x64AD;&#x4E3B;&#x6A5F;&#x4F7F;&#x7528;&#xFF0C;&#x9664;&#x4E86;&#x4F7F;&#x7528; OBS &#x64F7;&#x53D6;&#x684C;&#x9762;&#x5916;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x9019;&#x4E00;&#x500B;&#x8EDF;&#x9AD4;
+<li>NDI Virtual Input: 將 NDI Source 模擬成 Webcam，讓可以使用 webcam 的軟體看到此訊號</li>
+<li>第二台電腦的直播訊號來源，因為直播需要消耗主機支援，可以透過使用第二台電腦來減少主電腦的資訊損耗，這時候透過 NDI 就可以很簡單的將訊號傳給第二台電腦</li>
+<li>擷取桌面。給直播主機使用，除了使用 OBS 擷取桌面外，也可以使用這一個軟體
 <ul>
-<li>VMIX Desktop capture &#x8EDF;&#x9AD4; (<a href="https://www.vmix.com/software/download.aspx" target="_blank" rel="noopener">&#x4E0B;&#x8F09;&#x4F4D;&#x7F6E;</a>)&#xFF0C;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x5F88;&#x7C21;&#x55AE;&#xFF0C;&#x4E0B;&#x8F09;&#x958B;&#x555F;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E86;</li>
-<li>&#x5982;&#x679C; NDI Source &#x6293;&#x4E0D;&#x5230;&#xFF0C;&#x53EF;&#x80FD;&#x662F;&#x9632;&#x706B;&#x7246;&#x7684;&#x554F;&#x984C;</li>
+<li>VMIX Desktop capture 軟體 (<a href="https://www.vmix.com/software/download.aspx" target="_blank" rel="noopener">下載位置</a>)，使用方式很簡單，下載開啟就可以使用了</li>
+<li>如果 NDI Source 抓不到，可能是防火牆的問題</li>
 </ul>
 </li>
 </ol>
 <h2 id="filter"><a class="header-anchor" href="#filter"> </a>Filter</h2>
-<p>OBS-NDI &#x9084;&#x6709;&#x53E6;&#x5916;&#x4E00;&#x500B;&#x5F88;&#x5BE6;&#x7528;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x5C31;&#x662F;&#x53EF;&#x4EE5;&#x5C07;&#x67D0; Source &#x8A2D;&#x5B9A;&#x70BA;&#x55AE;&#x7368;&#x8F38;&#x51FA;&#x7684; NDI Source&#xFF0C;&#x4F46;&#x9019;&#x908A;&#x5C31;&#x9700;&#x8981;&#x4F7F;&#x7528; Filter &#x7684;&#x529F;&#x80FD;</p>
+<p>OBS-NDI 還有另外一個很實用的功能，就是可以將某 Source 設定為單獨輸出的 NDI Source，但這邊就需要使用 Filter 的功能</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402103321321.png" width="862" height="1046" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402103422148.png" width="863" height="758" layout="responsive"></amp-img></div>
 <ul>
-<li>NDI Name &#x7684;&#x5730;&#x65B9;&#x5C31;&#x662F;&#x8F38;&#x51FA;&#x51FA;&#x53BB;&#x7684;&#x540D;&#x7A31;&#xFF0C;&#x9019;&#x6A23;&#x5B50;&#x9664;&#x4E86; Main/Preview &#x7684;&#x8A0A;&#x865F;&#x5916;&#xFF0C;&#x9084;&#x53EF;&#x984D;&#x5916;&#x53D6;&#x5F97;&#x67D0; Source &#x7684; NDI &#x8A0A;&#x865F;</li>
+<li>NDI Name 的地方就是輸出出去的名稱，這樣子除了 Main/Preview 的訊號外，還可額外取得某 Source 的 NDI 訊號</li>
 </ul>
-<p>&#x9019;&#x529F;&#x80FD;&#x5C31;&#x53EF;&#x4EE5;&#x8B93;&#x8A2D;&#x5B9A;&#x76F4;&#x64AD;&#x756B;&#x9762;&#x66F4;&#x52A0;&#x6709;&#x5F48;&#x6027;&#xFF0C;&#x7576;&#x7136;&#x9664;&#x4E86;&#x5F71;&#x50CF;&#x5916;&#xFF0C;&#x8072;&#x97F3;&#x4E5F;&#x53EF;&#x4EE5;&#x8A2D;&#x5B9A;&#x4E00;&#x6A23;&#x7684; Filter&#xFF0C;&#x4F46;&#x5C31;&#x53EA;&#x6709;&#x8072;&#x97F3;&#x8A0A;&#x865F;</p>
+<p>這功能就可以讓設定直播畫面更加有彈性，當然除了影像外，聲音也可以設定一樣的 Filter，但就只有聲音訊號</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402103640401.png" width="618" height="432" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402103703529.png" width="351" height="299" layout="responsive"></amp-img></div>
-<h1 id="&#x5EF6;&#x9072;&#x6E2C;&#x8A66;"><a class="header-anchor" href="#&#x5EF6;&#x9072;&#x6E2C;&#x8A66;"> </a>&#x5EF6;&#x9072;&#x6E2C;&#x8A66;</h1>
+<h1 id="延遲測試"><a class="header-anchor" href="#延遲測試"> </a>延遲測試</h1>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402105240662.png" width="1280" height="960" layout="responsive"></amp-img></div>
 
 			  		

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/06/15/azure-app-service-linux-angular/"
 			},
 			"datePublished": "2020-06-15T11:51:01.000Z",
-			"dateModified": "2021-02-18T02:25:04.951Z",
+			"dateModified": "2021-02-18T02:32:11.683Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1857,13 +1857,13 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x8981;&#x5C07; Angular &#x653E;&#x5728; Azure &#x4E0A;&#x9762;&#x7684;&#x65B9;&#x6CD5;&#x6709;&#x5F88;&#x591A;&#x7A2E;&#xFF0C;&#x800C;&#x4ECA;&#x5929;&#x8981;&#x4ECB;&#x7D39;&#x7684;&#x662F;&#x5176;&#x4E2D;&#x4E00;&#x7A2E;&#xFF0C;App Service(Linux Version)</p>
+			  		<p>要將 Angular 放在 Azure 上面的方法有很多種，而今天要介紹的是其中一種，App Service(Linux Version)</p>
 <a id="more"></a>
-<p>&#x5728; Azure &#x4E0A;&#x9762;&#xFF0C;&#x4F7F;&#x7528; Linux &#x7248;&#x672C;&#x7684;&#x50F9;&#x9322;&#x53EF;&#x4EE5;&#x6BD4; Windows &#x7248;&#x672C;&#x4FBF;&#x5B9C;&#x8A31;&#x591A;&#xFF0C;&#x4F46;&#x5982;&#x679C;&#x60F3;&#x8981;&#x653E;&#x975C;&#x614B;&#x7DB2;&#x7AD9;&#x6642;&#x53C8;&#x8A72;&#x600E;&#x9EBC;&#x5462;? &#x5176;&#x5BE6;&#x53EF;&#x4EE5;&#x7C21;&#x55AE;&#x900F;&#x904E; npm &#x4E0A;&#x9762;&#x7684;&#x4E00;&#x500B;&#x5957;&#x4EF6; <a href="https://www.npmjs.com/package/serve" target="_blank" rel="noopener">serve</a> &#x4F86;&#x5B8C;&#x6210;&#xFF0C;&#x9019;&#x6A23;&#x5C31;&#x4E0D;&#x7528;&#x81EA;&#x5DF1;&#x5BEB;&#x4E00;&#x500B; Http Server&#x3002;&#x4F46;&#x5982;&#x679C;&#x662F;&#x8981;&#x7D66; Production &#x74B0;&#x5883;&#x4F7F;&#x7528;&#xFF0C;&#x9084;&#x662F;&#x5EFA;&#x8B70;&#x4F7F;&#x7528;&#x6B63;&#x7D71;&#x7684; http server &#x5BEB;&#x6CD5;</p>
-<p>&#x5728; App Service &#x4E0A;&#x9762;&#x53EF;&#x4EE5;&#x9019;&#x6A23;&#x5B50;&#x8A2D;&#x5B9A;</p>
+<p>在 Azure 上面，使用 Linux 版本的價錢可以比 Windows 版本便宜許多，但如果想要放靜態網站時又該怎麼呢? 其實可以簡單透過 npm 上面的一個套件 <a href="https://www.npmjs.com/package/serve" target="_blank" rel="noopener">serve</a> 來完成，這樣就不用自己寫一個 Http Server。但如果是要給 Production 環境使用，還是建議使用正統的 http server 寫法</p>
+<p>在 App Service 上面可以這樣子設定</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/06/15/azure-app-service-linux-angular/image-20200615211052044.png" width="1163" height="664" layout="responsive"></amp-img></div>
-<p>&#x53EF;&#x4EE5;&#x900F;&#x904E;&#x555F;&#x52D5;&#x6307;&#x4EE4;&#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x555F;&#x52D5;&#x6211;&#x5011;&#x60F3;&#x8981;&#x57F7;&#x884C;&#x7684;&#x7A0B;&#x5F0F;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x662F; node epxress &#x7684;&#x60C5;&#x6CC1;&#x4E0B;&#xFF0C;&#x5C31;&#x6703;&#x662F; <code>node ./index.js</code> &#x4E4B;&#x985E;&#x7684;</p>
-<p>&#x800C;&#x90E8;&#x5C6C;&#x7684;&#x52D5;&#x4F5C;&#x5C31;&#x5C07; Angular build &#x51FA;&#x7684;&#x5C08;&#x6848;&#x8CC7;&#x6599;&#x593E;&#x5167;&#x7684;&#x6A94;&#x6848;&#x4E0A;&#x50B3;&#x5230; App Service &#x5373;&#x53EF;</p>
+<p>可以透過啟動指令的方式來啟動我們想要執行的程式，所以如果是 node epxress 的情況下，就會是 <code>node ./index.js</code> 之類的</p>
+<p>而部屬的動作就將 Angular build 出的專案資料夾內的檔案上傳到 App Service 即可</p>
 
 			  		
 			  		<!-- google Adsense -->

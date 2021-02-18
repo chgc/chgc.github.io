@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/04/blazor-basic-component-page/"
 			},
 			"datePublished": "2020-04-04T05:01:50.000Z",
-			"dateModified": "2021-02-18T02:25:04.951Z",
+			"dateModified": "2021-02-18T02:32:11.683Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,102 +1848,102 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Blazor &#x756B;&#x9762;&#x57FA;&#x672C;&#x7D44;&#x6210;&#x662F; Razor Component &#x7269;&#x4EF6;&#xFF0C;&#x4ED6;&#x53EF;&#x4EE5;&#x662F;&#x986F;&#x793A;&#x5143;&#x4EF6;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x9801;&#x9762;&#x4E4B;&#x4E00;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x8A2D;&#x5B9A;&#x90FD;&#x5728; .razor &#x7684;&#x6A94;&#x6848;&#x5167;&#x505A;&#x8A2D;&#x5B9A;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x4E00;&#x4E9B;&#x5728;&#x958B;&#x767C;&#x904E;&#x7A0B;&#x4E2D;&#xFF0C;&#x89BA;&#x5F97;&#x6BD4;&#x8F03;&#x91CD;&#x8981;&#x7684;&#x7B46;&#x8A18;&#x5167;&#x5BB9;</p>
+			  		<p>Blazor 畫面基本組成是 Razor Component 物件，他可以是顯示元件，也可以是頁面之一，所有的設定都在 .razor 的檔案內做設定，以下是一些在開發過程中，覺得比較重要的筆記內容</p>
 <a id="more"></a>
-<h1 id="&#x7B46;&#x8A18;"><a class="header-anchor" href="#&#x7B46;&#x8A18;"> </a>&#x7B46;&#x8A18;</h1>
+<h1 id="筆記"><a class="header-anchor" href="#筆記"> </a>筆記</h1>
 <h2 id="code-behind"><a class="header-anchor" href="#code-behind"> </a>Code Behind</h2>
-<p>&#x9810;&#x8A2D; Blazor Component &#x7684;&#x5BEB;&#x6CD5;&#x662F;&#x5C07; HTML &#x8207; Code &#x5BEB;&#x5728;&#x540C;&#x4E00;&#x500B;&#x6A94;&#x6848;&#x5167;&#xFF0C;&#x4F46;&#x7576;&#x7A0B;&#x5F0F;&#x78BC;&#x6BD4;&#x8F03;&#x8907;&#x96DC;&#x7684;&#x6642;&#x5019;&#xFF0C;&#x5BEB;&#x5728;&#x540C;&#x4E00;&#x500B;&#x756B;&#x9762;&#x5C31;&#x6703;&#x8B8A;&#x5F97;&#x6BD4;&#x8F03;&#x9EBB;&#x7169;&#xFF0C;&#x6216;&#x662F;&#x7FD2;&#x6163;&#x5C07; HTML &#x548C; Code &#x5206;&#x958B;&#x5BEB;&#x7684;&#x670B;&#x53CB;&#xFF0C;&#x9019;&#x500B;&#x662F; Code Behinde &#x7684;&#x5BEB;&#x6CD5;</p>
+<p>預設 Blazor Component 的寫法是將 HTML 與 Code 寫在同一個檔案內，但當程式碼比較複雜的時候，寫在同一個畫面就會變得比較麻煩，或是習慣將 HTML 和 Code 分開寫的朋友，這個是 Code Behinde 的寫法</p>
 <ol>
 <li>
-<p>&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x8207; blazor &#x7269;&#x4EF6;&#x540D;&#x7A31;&#x4E00;&#x6A23;&#x4F46;&#x9644;&#x6A94;&#x540D;&#x70BA; .cs &#x7684;&#x6A94;&#x6848;&#xFF0C;&#x4F8B;&#x5982; <code>Episode.razor.cs</code>&#xFF0C;&#x9019;&#x6A23;&#x5B50;&#x547D;&#x540D; Visual Studio &#x5C31;&#x6703;&#x81EA;&#x52D5;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x986F;&#x793A;</p>
+<p>建立一個與 blazor 物件名稱一樣但附檔名為 .cs 的檔案，例如 <code>Episode.razor.cs</code>，這樣子命名 Visual Studio 就會自動合在一起顯示</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/04/blazor-basic-component-page/image-20200404143437838.png" width="218" height="85" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5728; <code>editor.razor.cs</code> &#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#x5167;&#xFF0C;&#x7E7C;&#x627F; <code>ComponentBase</code></p>
+<p>在 <code>editor.razor.cs</code> 的程式碼內，繼承 <code>ComponentBase</code></p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Components;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EpisodeBase</span>: <span class="title">ComponentBase</span></span><br><span class="line">{</span><br><span class="line">    </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x5728; <code>Episode.razor</code> &#x6A94;&#x6848;&#x7E7C;&#x627F;&#x4E0A;&#x5217;&#x7684; class</p>
+<p>在 <code>Episode.razor</code> 檔案繼承上列的 class</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@inherits EpisodeBase</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
-<p>&#x9019;&#x6A23;&#x5C31;&#x53EF;&#x4EE5;&#x505A;&#x5230; Code Behind &#x7684;&#x6548;&#x679C;</p>
-<h3 id="&#x6CE8;&#x5165;"><a class="header-anchor" href="#&#x6CE8;&#x5165;"> </a>&#x6CE8;&#x5165;</h3>
-<p>&#x539F;&#x672C;&#x7684;&#x5BEB;&#x6CD5;&#x662F;</p>
+<p>這樣就可以做到 Code Behind 的效果</p>
+<h3 id="注入"><a class="header-anchor" href="#注入"> </a>注入</h3>
+<p>原本的寫法是</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@inject SampleSerivce samepleService</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x55AE;&#x7368;&#x5BEB;&#x4E00;&#x500B; class &#x6642;&#xFF0C;&#x5247;&#x8981;&#x9019;&#x6A23;&#x5B50;&#x5BEB;</p>
+<p>當單獨寫一個 class 時，則要這樣子寫</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EpisodeBase</span>: <span class="title">ComponentBase</span></span><br><span class="line">{</span><br><span class="line">   [<span class="meta">Inject</span>]</span><br><span class="line">    <span class="keyword">public</span> SampleService sampleService {<span class="keyword">get</span>; <span class="keyword">set</span>;}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="&#x591A;&#x91CD;&#x8DEF;&#x7531;&#x898F;&#x5247;"><a class="header-anchor" href="#&#x591A;&#x91CD;&#x8DEF;&#x7531;&#x898F;&#x5247;"> </a>&#x591A;&#x91CD;&#x8DEF;&#x7531;&#x898F;&#x5247;</h2>
-<p>&#x4E00;&#x500B; Blazor component &#x53EF;&#x4EE5;&#x64C1;&#x6709;&#x591A;&#x500B;&#x8DEF;&#x7531;&#x898F;&#x5247;&#xFF0C;&#x8A2D;&#x5B9A;&#x65B9;&#x5F0F;&#x5C31;&#x662F;&#x5BEB;&#x591A;&#x500B; <code>@page</code> &#x5C31;&#x53EF;&#x4EE5;&#x4E86;</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@page &quot;/manage/new&quot;</span><br><span class="line">@page &quot;/manage/{id:int}&quot;</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x6709;&#x4F7F;&#x7528;&#x5230;&#x8B8A;&#x6578;&#x6642;&#xFF0C;&#x5247;&#x9808;&#x540C;&#x6642;&#x5BA3;&#x544A; <code>parameter</code></p>
+<h2 id="多重路由規則"><a class="header-anchor" href="#多重路由規則"> </a>多重路由規則</h2>
+<p>一個 Blazor component 可以擁有多個路由規則，設定方式就是寫多個 <code>@page</code> 就可以了</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@page "/manage/new"</span><br><span class="line">@page "/manage/{id:int}"</span><br></pre></td></tr></tbody></table></figure>
+<p>當有使用到變數時，則須同時宣告 <code>parameter</code></p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Parameter</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="markdown-editor"><a class="header-anchor" href="#markdown-editor"> </a>Markdown Editor</h2>
-<p>&#x5957;&#x4EF6;&#x9078;&#x64C7;: <a href="https://github.com/lunet-io/markdig" target="_blank" rel="noopener">Markdig</a></p>
+<p>套件選擇: <a href="https://github.com/lunet-io/markdig" target="_blank" rel="noopener">Markdig</a></p>
 <ul>
 <li>
 <p>html</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group col-6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;description&quot;</span>&gt;</span>&#x63CF;&#x8FF0;<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span> <span class="attr">id</span>=<span class="string">&quot;description&quot;</span> <span class="attr">rows</span>=<span class="string">&quot;10&quot;</span></span></span><br><span class="line"><span class="tag">                      @<span class="attr">bind</span>=<span class="string">&quot;formData.Description&quot;</span></span></span><br><span class="line"><span class="tag">                      @<span class="attr">bind:event</span>=<span class="string">&quot;oninput&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>Preivew<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                @((MarkupString) Preview)</span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group col-6"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"description"</span>&gt;</span>描述<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"description"</span> <span class="attr">rows</span>=<span class="string">"10"</span></span></span><br><span class="line"><span class="tag">                      @<span class="attr">bind</span>=<span class="string">"formData.Description"</span></span></span><br><span class="line"><span class="tag">                      @<span class="attr">bind:event</span>=<span class="string">"oninput"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-6"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>Preivew<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                @((MarkupString) Preview)</span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>code</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> FormData formData = <span class="keyword">new</span> FormData();</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> Preview =&gt; Markdown.ToHtml(formData.Description);</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
-<h2 id="&#x6587;&#x5B57;&#x7D50;&#x5408;&#x8B8A;&#x6578;"><a class="header-anchor" href="#&#x6587;&#x5B57;&#x7D50;&#x5408;&#x8B8A;&#x6578;"> </a>&#x6587;&#x5B57;&#x7D50;&#x5408;&#x8B8A;&#x6578;</h2>
-<p>&#x5728; blazor component &#x986F;&#x793A;&#x4E0B;&#xFF0C;&#x5982;&#x679C;&#x5BEB; <code>somepage/@data.Id</code> &#xFF0C;&#x7DE8;&#x8B6F;&#x6642;&#x6703;&#x62B1;&#x6028;&#x4FBF;&#x986F;&#x793A;&#x9019;&#x500B;&#x932F;&#x8AA4;</p>
+<h2 id="文字結合變數"><a class="header-anchor" href="#文字結合變數"> </a>文字結合變數</h2>
+<p>在 blazor component 顯示下，如果寫 <code>somepage/@data.Id</code> ，編譯時會抱怨便顯示這個錯誤</p>
 <blockquote>
-<p>Blazor RZ9986 &#x2014; Component attributes do not support complex content (mixed C# and markup)</p>
+<p>Blazor RZ9986 — Component attributes do not support complex content (mixed C# and markup)</p>
 </blockquote>
-<p>&#x7C21;&#x55AE;&#x7684;&#x89E3;&#x6CD5;&#x662F;&#x6307;&#x7528; string template formate &#x7684;&#x65B9;&#x5F0F;&#x6539;&#x5BEB;&#xFF0C;&#x7576;&#x6539;&#x6210; <code>@($&quot;somepage/{data.Id}&quot;)</code>&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6210;&#x529F;&#x7DE8;&#x8B6F;</p>
-<h2 id="&#x751F;&#x547D;&#x9031;&#x671F;"><a class="header-anchor" href="#&#x751F;&#x547D;&#x9031;&#x671F;"> </a>&#x751F;&#x547D;&#x9031;&#x671F;</h2>
-<p>Blazor &#x7684;&#x751F;&#x547D;&#x9031;&#x671F;&#x6709;&#x5E7E;&#x500B;&#xFF0C;&#x4E14;&#x6709;&#x5206;&#x540C;&#x6B65;&#x8207;&#x975E;&#x540C;&#x6B65;&#xFF0C;&#x9019;&#x90E8;&#x5206;&#x8981;&#x7559;&#x610F;</p>
+<p>簡單的解法是指用 string template formate 的方式改寫，當改成 <code>@($"somepage/{data.Id}")</code>，就可以成功編譯</p>
+<h2 id="生命週期"><a class="header-anchor" href="#生命週期"> </a>生命週期</h2>
+<p>Blazor 的生命週期有幾個，且有分同步與非同步，這部分要留意</p>
 <ul>
 <li>
-<p>&#x521D;&#x59CB;&#x5316;</p>
+<p>初始化</p>
 <ul>
 <li>
-<p>&#x540C;&#x6B65;: OnInitialized</p>
+<p>同步: OnInitialized</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnInitialized</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x975E;&#x540C;&#x6B65;: OnInitializedAsync</p>
+<p>非同步: OnInitializedAsync</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">OnInitializedAsync</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">await</span> ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 </li>
 <li>
-<p>&#x8A2D;&#x5B9A;&#x53C3;&#x6578;</p>
+<p>設定參數</p>
 <ul>
 <li>
-<p>&#x4E4B;&#x524D;</p>
+<p>之前</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">SetParametersAsync</span>(<span class="params">ParameterView parameters</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">await</span> ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">base</span>.SetParametersAsync(parameters);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x4E4B;&#x5F8C;</p>
+<p>之後</p>
 <ul>
-<li>&#x975E;&#x540C;&#x6B65;</li>
+<li>非同步</li>
 </ul>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">OnParametersSetAsync</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">await</span> ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>&#x540C;&#x6B65;</li>
+<li>同步</li>
 </ul>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnParametersSet</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 </li>
 </ul>
-<p>&#x5269;&#x9918;&#x5176;&#x4ED6;&#x7684;&#xFF0C;&#x8ACB;&#x53C3;&#x95B1;<a href="https://docs.microsoft.com/zh-tw/aspnet/core/blazor/lifecycle?view=aspnetcore-3.1" target="_blank" rel="noopener">&#x751F;&#x547D;&#x9031;&#x671F;</a>&#x7AE0;&#x7BC0;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<p>剩餘其他的，請參閱<a href="https://docs.microsoft.com/zh-tw/aspnet/core/blazor/lifecycle?view=aspnetcore-3.1" target="_blank" rel="noopener">生命週期</a>章節</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li>
-<p><a href="https://docs.microsoft.com/zh-tw/aspnet/core/blazor/dependency-injection?view=aspnetcore-3.1#request-a-service-in-a-component" target="_blank" rel="noopener">&#x8981;&#x6C42;&#x5143;&#x4EF6;&#x4E2D;&#x7684;&#x670D;&#x52D9;</a></p>
+<p><a href="https://docs.microsoft.com/zh-tw/aspnet/core/blazor/dependency-injection?view=aspnetcore-3.1#request-a-service-in-a-component" target="_blank" rel="noopener">要求元件中的服務</a></p>
 </li>
 <li>
-<p><a href="https://docs.microsoft.com/zh-tw/aspnet/core/blazor/routing?view=aspnetcore-3.1#route-templates" target="_blank" rel="noopener">&#x8DEF;&#x7531;&#x7BC4;&#x672C;</a></p>
+<p><a href="https://docs.microsoft.com/zh-tw/aspnet/core/blazor/routing?view=aspnetcore-3.1#route-templates" target="_blank" rel="noopener">路由範本</a></p>
 </li>
 <li>
-<p><a href="https://docs.microsoft.com/zh-tw/aspnet/core/blazor/lifecycle?view=aspnetcore-3.1" target="_blank" rel="noopener">&#x751F;&#x547D;&#x9031;&#x671F;</a></p>
+<p><a href="https://docs.microsoft.com/zh-tw/aspnet/core/blazor/lifecycle?view=aspnetcore-3.1" target="_blank" rel="noopener">生命週期</a></p>
 </li>
 </ul>
 

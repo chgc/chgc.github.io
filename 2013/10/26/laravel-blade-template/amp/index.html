@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/10/26/laravel-blade-template/"
 			},
 			"datePublished": "2013-10-26T00:42:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.563Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1845,20 +1845,20 @@ h6.categories {
 			  		<p>two ways to use it</p>
 <p>#1 use blade on controller</p>
 <p>in controller, you need to assign a template for controller.</p>
-<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> $layout = <span class="string">&apos;layouts.master&apos;</span>;</span><br></pre></td></tr></tbody></table></figure>
-<p>and then in each function action. assign whatever need to assign for show content on template. like in blade template. I have a content section. Therefore, i need to set a value or view to &#x300C;Content&#x300D;</p>
-<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;layout-&gt;content = something <span class="keyword">or</span> View::make(<span class="string">&apos;something&apos;</span>);</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> $layout = <span class="string">'layouts.master'</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>and then in each function action. assign whatever need to assign for show content on template. like in blade template. I have a content section. Therefore, i need to set a value or view to 「Content」</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;layout-&gt;content = something <span class="keyword">or</span> View::make(<span class="string">'something'</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>in blade template. there are 2 ways to define var.</p>
 <ol>
 <li>
-<p>@yield(&#x300E;something&#x300F;)</p>
+<p>@yield(『something』)</p>
 </li>
 <li>
 
 </li>
 </ol>
 <p>if use first method; then in view, it needs to create a section something. ex</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@section(&apos;content&apos;)</span><br><span class="line">xxxx</span><br><span class="line">@endsction</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@section('content')</span><br><span class="line">xxxx</span><br><span class="line">@endsction</span><br></pre></td></tr></tbody></table></figure>
 <p>for method 2. no need to create a section to contain page content.</p>
 
 			  		

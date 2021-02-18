@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/06/22/mvc-core-with-sqlserver/"
 			},
 			"datePublished": "2016-06-22T11:34:01.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,23 +1848,23 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>.Net Core &#x7D42;&#x65BC;&#x652F;&#x63F4;&#x4F7F;&#x7528;SqlClien&#x7684;&#x7269;&#x4EF6;&#x4E86;(&#x4F46;&#x4E0D;&#x78BA;&#x5B9A;&#x662F;&#x5F9E;&#x4EC0;&#x9EBC;&#x6642;&#x5019;&#x958B;&#x59CB;&#x7684;), &#x90A3;&#x5C31;&#x4F86;&#x8A66;&#x8A66;&#x770B;&#x600E;&#x9EBC;&#x5728;mac&#x7684;&#x74B0;&#x5883;&#x4E0A;&#x9023;&#x5230;sql server&#x6488;&#x8CC7;&#x6599;&#x4E86;</p>
+			  		<p>.Net Core 終於支援使用SqlClien的物件了(但不確定是從什麼時候開始的), 那就來試試看怎麼在mac的環境上連到sql server撈資料了</p>
 <a id="more"></a>
-<h1 id="&#x4F7F;&#x7528;library"><a class="header-anchor" href="#&#x4F7F;&#x7528;library"> </a>&#x4F7F;&#x7528;Library</h1>
+<h1 id="使用library"><a class="header-anchor" href="#使用library"> </a>使用Library</h1>
 <ul>
-<li>&#x300C;System.Data.SqlClient&#x300D;: &#x300C;4.1.0-rc2-24027&#x300D;</li>
-<li>&#x300C;Dapper&#x300D;: &#x300C;1.50.0-rc2b&#x300D;</li>
+<li>「System.Data.SqlClient」: 「4.1.0-rc2-24027」</li>
+<li>「Dapper」: 「1.50.0-rc2b」</li>
 </ul>
-<p>Yes. Dapper&#x4E5F;&#x652F;&#x63F4;CoreClr&#x4E86;&#xFF0C;&#x53EF;&#x559C;&#x53EF;&#x8CC0;</p>
-<h1 id="&#x4F7F;&#x7528;&#x65B9;&#x5F0F;"><a class="header-anchor" href="#&#x4F7F;&#x7528;&#x65B9;&#x5F0F;"> </a>&#x4F7F;&#x7528;&#x65B9;&#x5F0F;</h1>
-<p>&#x540C;&#x539F;&#x672C;&#x5728;.Net4.x&#x7684;&#x7528;&#x6CD5; with Dapper</p>
-<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (SqlConnection cn = <span class="keyword">new</span> SqlConnection(_config.Default))</span><br><span class="line">{</span><br><span class="line">  <span class="keyword">var</span> data = <span class="keyword">await</span> cn.QueryAsync&lt;Supplier&gt;(<span class="string">&quot;select top 10 * from Suppliers&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> View(data);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="&#x6240;&#x9047;&#x5230;&#x7684;&#x554F;&#x984C;"><a class="header-anchor" href="#&#x6240;&#x9047;&#x5230;&#x7684;&#x554F;&#x984C;"> </a>&#x6240;&#x9047;&#x5230;&#x7684;&#x554F;&#x984C;</h1>
-<h2 id="&#x7121;&#x6CD5;&#x9023;&#x7DDA;&#x5230;sqlserver"><a class="header-anchor" href="#&#x7121;&#x6CD5;&#x9023;&#x7DDA;&#x5230;sqlserver"> </a>&#x7121;&#x6CD5;&#x9023;&#x7DDA;&#x5230;SqlServer</h2>
+<p>Yes. Dapper也支援CoreClr了，可喜可賀</p>
+<h1 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h1>
+<p>同原本在.Net4.x的用法 with Dapper</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (SqlConnection cn = <span class="keyword">new</span> SqlConnection(_config.Default))</span><br><span class="line">{</span><br><span class="line">  <span class="keyword">var</span> data = <span class="keyword">await</span> cn.QueryAsync&lt;Supplier&gt;(<span class="string">"select top 10 * from Suppliers"</span>);</span><br><span class="line">  <span class="keyword">return</span> View(data);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="所遇到的問題"><a class="header-anchor" href="#所遇到的問題"> </a>所遇到的問題</h1>
+<h2 id="無法連線到sqlserver"><a class="header-anchor" href="#無法連線到sqlserver"> </a>無法連線到SqlServer</h2>
 <div class="amp-img-wrapper"><amp-img src="https://c2.staticflickr.com/8/7676/27223659083_0af2217275_o.png" width="1279" height="276" layout="responsive"></amp-img></div>
-<p><strong>&#x554F;&#x984C;&#x63CF;&#x8FF0;</strong> : &#x767C;&#x751F;&#x9023;&#x7DDA;&#x5B57;&#x4E32;&#x6B63;&#x78BA;&#xFF0C;&#x537B;&#x6C92;&#x6709;&#x8FA6;&#x6CD5;&#x9023;&#x7DDA;&#x5230;sql server, &#x4F46;&#x662F;&#x900F;&#x904E;navicat&#x537B;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x7684;&#x700F;&#x89BD;&#x8A72;&#x8CC7;&#x6599;&#x5EAB;&#x7684;&#x5167;&#x5BB9;</p>
-<p><strong>&#x4E3B;&#x6A5F;&#x74B0;&#x5883;:</strong> SQL Server R2 2008 Express&#xFF0C;&#x6C92;&#x6709;&#x66F4;&#x65B0;&#x5230;&#x6700;&#x65B0;&#x7684;SP</p>
-<p><strong>&#x89E3;&#x6C7A;&#x65B9;&#x5F0F;:</strong>  &#x5C07;SQL Server R2 2008 &#x66F4;&#x65B0;&#x5230;SP3&#x5373;&#x53EF;&#x4FEE;&#x6B63;&#x554F;&#x984C;&#xFF0C;&#x53C3;&#x8003;&#x8CC7;&#x6599;<a href="https://github.com/dotnet/corefx/issues/6467" target="_blank" rel="noopener">github issue</a></p>
+<p><strong>問題描述</strong> : 發生連線字串正確，卻沒有辦法連線到sql server, 但是透過navicat卻可以正常的瀏覽該資料庫的內容</p>
+<p><strong>主機環境:</strong> SQL Server R2 2008 Express，沒有更新到最新的SP</p>
+<p><strong>解決方式:</strong>  將SQL Server R2 2008 更新到SP3即可修正問題，參考資料<a href="https://github.com/dotnet/corefx/issues/6467" target="_blank" rel="noopener">github issue</a></p>
 
 			  		
 			  		<!-- google Adsense -->

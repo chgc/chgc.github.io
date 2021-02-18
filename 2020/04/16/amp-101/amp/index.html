@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/16/amp-101/"
 			},
 			"datePublished": "2020-04-16T01:07:55.000Z",
-			"dateModified": "2021-02-18T02:25:04.951Z",
+			"dateModified": "2021-02-18T02:32:11.683Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,66 +1848,66 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>AMP = Accelerated Mobile Pages&#xFF0C;Google&#x5E36;&#x9818;&#x958B;&#x767C;&#x7684;&#x958B;&#x6E90;&#x5C08;&#x6848;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x70BA;&#x63D0;&#x5347;&#x884C;&#x52D5;&#x88DD;&#x7F6E;&#x5C0D;&#x7DB2;&#x7AD9;&#x7684;&#x5B58;&#x53D6;&#x901F;&#x5EA6;&#x3002;&#x6C92;&#x5BEB;&#x904E;&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x4F86;&#x5B78;&#xFF0C;&#x9019;&#x4E00;&#x7BC7;&#x5C31;&#x662F;&#x5B78;&#x7FD2;&#x904E;&#x7A0B;&#x4E2D;&#x7684;&#x7B46;&#x8A18;</p>
+			  		<p>AMP = Accelerated Mobile Pages，Google帶領開發的開源專案，目的是為提升行動裝置對網站的存取速度。沒寫過，所以要來學，這一篇就是學習過程中的筆記</p>
 <a id="more"></a>
-<h1 id="amp-&#x57FA;&#x672C;&#x7D44;&#x6210;"><a class="header-anchor" href="#amp-&#x57FA;&#x672C;&#x7D44;&#x6210;"> </a>AMP &#x57FA;&#x672C;&#x7D44;&#x6210;</h1>
-<p>&#x4E00;&#x500B;&#x5408;&#x683C;&#x7684; AMP &#x4E00;&#x5B9A;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x7684;&#x5143;&#x7D20;</p>
+<h1 id="amp-基本組成"><a class="header-anchor" href="#amp-基本組成"> </a>AMP 基本組成</h1>
+<p>一個合格的 AMP 一定要有以下的元素</p>
 <ol>
 <li>
-<p>&#x7B2C;&#x4E00;&#x884C;&#x4E00;&#x5B9A;&#x662F; <code>&lt;!doctype html&gt;</code></p>
+<p>第一行一定是 <code>&lt;!doctype html&gt;</code></p>
 </li>
 <li>
-<p>&#x4E00;&#x5B9A;&#x6709; <code>&lt;head&gt;&lt;/head&gt;</code> &#x548C; <code>&lt;body&gt;&lt;/body&gt;</code> &#x5169;&#x500B;&#x5340;&#x584A;</p>
+<p>一定有 <code>&lt;head&gt;&lt;/head&gt;</code> 和 <code>&lt;body&gt;&lt;/body&gt;</code> 兩個區塊</p>
 </li>
 <li>
-<p><code>&lt;html&gt;</code> &#x6A19;&#x7C64;&#x5167;&#x8981;&#x6A19;&#x793A;&#x9583;&#x96FB;&#x7B26;&#x865F; (<code>&lt;html &#x26A1;&gt;</code>&#xFF0C;&#x6216;&#x662F; <code>amp</code> &#x6587;&#x5B57; (<code>&lt;html amp&gt;</code>)</p>
+<p><code>&lt;html&gt;</code> 標籤內要標示閃電符號 (<code>&lt;html ⚡&gt;</code>，或是 <code>amp</code> 文字 (<code>&lt;html amp&gt;</code>)</p>
 </li>
 <li>
-<p><code>&lt;head&gt;</code> &#x7684;&#x7B2C;&#x4E00;&#x500B;&#x5143;&#x7D20;&#x4E00;&#x5B9A;&#x662F; <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code></p>
+<p><code>&lt;head&gt;</code> 的第一個元素一定是 <code>&lt;meta charset="utf-8"&gt;</code></p>
 </li>
 <li>
-<p><code>&lt;head&gt;</code> &#x5167;&#x6703;&#x6709; <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,minimum-scale=1,initial-scale=1&quot;&gt;</code></p>
+<p><code>&lt;head&gt;</code> 內會有 <code>&lt;meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"&gt;</code></p>
 </li>
 <li>
-<p><code>&lt;head&gt;</code> &#x5167;&#x8981;&#x6709; <code>&lt;script async src=&quot;https://cdn.ampproject.org/v0.js&quot;&gt;&lt;/script&gt;</code>&#xFF0C;&#x9019;&#x4E00;&#x884C;&#x8D8A;&#x65E9;&#x5BEB;&#x8D8A;&#x597D;</p>
+<p><code>&lt;head&gt;</code> 內要有 <code>&lt;script async src="https://cdn.ampproject.org/v0.js"&gt;&lt;/script&gt;</code>，這一行越早寫越好</p>
 </li>
 <li>
-<p><code>&lt;head&gt;</code> &#x5167;&#x8981;&#x6709; <code>&lt;link rel=&quot;canonical&quot; href=&quot;<amp-mathml layout="container" inline data-formula="\[SOME_URL&quot;&gt;&lt;/code&gt;&#xFF0C;&lt;code&gt;\]"></amp-mathml>SOME_URL</code> &#x8981;&#x66FF;&#x63DB;&#x6210;&#x76EE;&#x524D;&#x9801;&#x9762;&#x7684;&#x7DB2;&#x5740;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x8981;&#x9023;&#x7D50;&#x76EE;&#x524D;&#x7684; AMP &#x9801;&#x9762;&#x5230;&#x975E; AMP &#x9801;&#x9762;&#x6216;&#x662F;&#x7DB2;&#x7AD9;</p>
+<p><code>&lt;head&gt;</code> 內要有 <code>&lt;link rel="canonical" href="<amp-mathml layout="container" inline="" data-formula="\[SOME_URL&quot;></code>，<code>\]"></amp-mathml>SOME_URL</code> 要替換成目前頁面的網址，目的是要連結目前的 AMP 頁面到非 AMP 頁面或是網站</p>
 </li>
 <li>
-<p>&#x5305;&#x542B; AMP-Style: &#x9019;&#x6BB5;&#x7A0B;&#x5F0F;&#x78BC;&#x6703;&#x5728; AMP Script &#x8F09;&#x5165;&#x524D;&#x5C07;&#x756B;&#x9762;&#x96B1;&#x85CF;</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-boilerplate</span>&gt;</span><span class="css"><span class="selector-tag">body</span>{<span class="attribute">-webkit-animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(1,end) <span class="number">0s</span> <span class="number">1</span> normal both;<span class="attribute">-moz-animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(1,end) <span class="number">0s</span> <span class="number">1</span> normal both;<span class="attribute">-ms-animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(1,end) <span class="number">0s</span> <span class="number">1</span> normal both;<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(1,end) <span class="number">0s</span> <span class="number">1</span> normal both}@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}@-<span class="keyword">moz</span>-<span class="keyword">keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}@-<span class="keyword">ms</span>-<span class="keyword">keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}@-<span class="keyword">o</span>-<span class="keyword">keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}@<span class="keyword">keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;<span class="name">noscript</span>&gt;</span><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-boilerplate</span>&gt;</span><span class="css"><span class="selector-tag">body</span>{<span class="attribute">-webkit-animation</span>:none;<span class="attribute">-moz-animation</span>:none;<span class="attribute">-ms-animation</span>:none;<span class="attribute">animation</span>:none}</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>包含 AMP-Style: 這段程式碼會在 AMP Script 載入前將畫面隱藏</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-boilerplate</span>&gt;</span><span class="css"><span class="selector-tag">body</span>{<span class="attribute">-webkit-animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;<span class="attribute">-moz-animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;<span class="attribute">-ms-animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both}<span class="keyword">@-webkit-keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}<span class="keyword">@-moz-keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}<span class="keyword">@-ms-keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}<span class="keyword">@-o-keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}<span class="keyword">@keyframes</span> -amp-start{<span class="selector-tag">from</span>{<span class="attribute">visibility</span>:hidden}<span class="selector-tag">to</span>{<span class="attribute">visibility</span>:visible}}</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;<span class="name">noscript</span>&gt;</span><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-boilerplate</span>&gt;</span><span class="css"><span class="selector-tag">body</span>{<span class="attribute">-webkit-animation</span>:none;<span class="attribute">-moz-animation</span>:none;<span class="attribute">-ms-animation</span>:none;<span class="attribute">animation</span>:none}</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
-<h1 id="amp-&#x9650;&#x5236;"><a class="header-anchor" href="#amp-&#x9650;&#x5236;"> </a>AMP &#x9650;&#x5236;</h1>
+<h1 id="amp-限制"><a class="header-anchor" href="#amp-限制"> </a>AMP 限制</h1>
 <h2 id="css"><a class="header-anchor" href="#css"> </a>CSS</h2>
-<p>&#x5728; AMP &#x4E0A;&#x9762;&#x8981;&#x4F7F;&#x7528;&#x81EA;&#x8A02; CSS &#x6709;&#x4EE5;&#x4E0B;&#x7684;&#x8A2D;&#x5B9A;</p>
+<p>在 AMP 上面要使用自訂 CSS 有以下的設定</p>
 <ol>
-<li>&#x81EA;&#x8A02; CSS &#x5FC5;&#x9808;&#x5B9A;&#x7FA9;&#x5728; <code>&lt;style amp-custom&gt;&lt;/style&gt;</code> &#x5167;&#x4E14;&#x53EA;&#x80FD;&#x6709;&#x4E00;&#x500B;&#x6216;&#x662F; <code>inline-style</code>&#xFF0C;&#x70BA;&#x4E86;&#x7BC0;&#x7701;&#x7DB2;&#x8DEF;&#x50B3;&#x8F38;&#xFF0C;&#x4E0D;&#x80FD;&#x6709;&#x5916;&#x90E8; style &#x9023;&#x7D50;</li>
-<li>CSS &#x5167;&#x5BB9;&#x7684;&#x90E8;&#x5206;&#x5927;&#x5C0F;&#x4E0D;&#x80FD;&#x5927;&#x65BC; 75 K</li>
-<li>&#x4E0D;&#x80FD;&#x4F7F;&#x7528; <code>!important</code></li>
-<li>&#x4E0D;&#x80FD;&#x5BEB; <code>i-amphtml-</code> class &#x548C; tag &#x540D;&#x7A31;&#xFF0C;&#x7C21;&#x55AE;&#x8AAA;&#x4E0D;&#x80FD;&#x4F7F;&#x7528; AMP Component &#x8981;&#x7528;&#x7684;&#x540D;&#x7A31;</li>
-<li>&#x5176;&#x5B83;&#x80FD;&#x7528;&#x4E0D;&#x80FD;&#x7528;&#x7684; CSS Style &#x8ACB;&#x53C3;&#x95B1; <a href="https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/?format=websites" target="_blank" rel="noopener">Suppored CSS</a></li>
+<li>自訂 CSS 必須定義在 <code>&lt;style amp-custom&gt;&lt;/style&gt;</code> 內且只能有一個或是 <code>inline-style</code>，為了節省網路傳輸，不能有外部 style 連結</li>
+<li>CSS 內容的部分大小不能大於 75 K</li>
+<li>不能使用 <code>!important</code></li>
+<li>不能寫 <code>i-amphtml-</code> class 和 tag 名稱，簡單說不能使用 AMP Component 要用的名稱</li>
+<li>其它能用不能用的 CSS Style 請參閱 <a href="https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/?format=websites" target="_blank" rel="noopener">Suppored CSS</a></li>
 </ol>
 <h2 id="html"><a class="header-anchor" href="#html"> </a>HTML</h2>
-<p>&#x9664;&#x4E86; CSS &#x6709;&#x9650;&#x5236;&#x5916;&#xFF0C;HTML &#x4E5F;&#x6709;&#x5141;&#x8A31;&#x8DDF;&#x4E0D;&#x5141;&#x8A31;&#x4F7F;&#x7528;&#x7684;&#x5217;&#x8868; &#xFF0C;<a href="https://github.com/ampproject/amphtml/blob/master/spec/amp-tag-addendum.md#html5-tag-whitelist" target="_blank" rel="noopener">HTML5 Tag &#x767D;&#x540D;&#x55AE;</a></p>
-<p>&#x66F4;&#x591A;&#x8A73;&#x7D30;&#x8CC7;&#x8A0A;&#x53EF;&#x4EE5;&#x95B1;&#x8B80;&#x6B64;&#x6587;&#xFF0C;<a href="https://amp.dev/documentation/guides-and-tutorials/learn/spec/amphtml/?format=websites" target="_blank" rel="noopener">AMP HTML Specification</a></p>
-<h1 id="&#x958B;&#x767C;&#x601D;&#x7DAD;"><a class="header-anchor" href="#&#x958B;&#x767C;&#x601D;&#x7DAD;"> </a>&#x958B;&#x767C;&#x601D;&#x7DAD;</h1>
-<p>AMP &#x7684;&#x958B;&#x767C;&#x65B9;&#x5F0F;&#xFF0C;&#x57FA;&#x672C;&#x4E0A;&#x662F;&#x4F7F;&#x7528;&#x5B98;&#x65B9;&#x63D0;&#x4F9B;&#x7684; Component &#x53BB;&#x7D44;&#x51FA;&#x756B;&#x9762;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x5167;&#x5BB9;&#x5448;&#x73FE;&#x4E0A;&#x5C31;&#x662F;&#x8981;&#x627E;&#x5230;&#x5C0D;&#x7684; Component &#x7136;&#x5F8C;&#x5C07;&#x5167;&#x5BB9;&#x5957;&#x9032;&#x53BB;&#xFF0C;&#x4F8B;&#x5982; <code>&lt;img&gt;</code>&#xFF0C;&#x5C31;&#x6703;&#x7528; <code>&lt;amp-img&gt;</code> &#x66FF;&#x4EE3;</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">amp-img</span> <span class="attr">src</span>=<span class="string">&quot;IMG-URL&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;responsive&quot;</span> <span class="attr">width</span>=<span class="string">&quot;640&quot;</span> <span class="attr">height</span>=<span class="string">&quot;480&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">amp-img</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x6240;&#x6709;&#x7684;&#x52D5;&#x4F5C;&#x5C31;&#x4EA4;&#x7D66; component &#x4F86;&#x8655;&#x7406;&#xFF0C;&#x50CF;&#x662F; RWD &#x7684;&#x6548;&#x679C;&#xFF0C;&#x9664;&#x4E86; <code>responsive</code> &#x7684;&#x6548;&#x679C;&#x5916;&#xFF0C;&#x7576;&#x7136;&#x9084;&#x6709;&#x5176;&#x4ED6;&#x7684;&#x8A2D;&#x5B9A;&#xFF0C;&#x8A2D;&#x5B9A;&#x65B9;&#x5F0F;&#x8ACB;&#x53C3;&#x95B1;&#x5B98;&#x65B9;&#x6587;&#x4EF6; <a href="https://amp.dev/documentation/guides-and-tutorials/learn/amp-html-layout/?format=websites" target="_blank" rel="noopener">AMPHTML Layout System</a> &#x7AE0;&#x7BC0;</p>
-<h2 id="&#x4F7F;&#x7528;-amp-components"><a class="header-anchor" href="#&#x4F7F;&#x7528;-amp-components"> </a>&#x4F7F;&#x7528; AMP Components</h2>
-<p>&#x6BCF;&#x4E00;&#x500B; AMP Component &#x5728;&#x81EA;&#x5DF1;&#x7684; API &#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x90FD;&#x6709; <code>Required Scripts</code> &#x7684;&#x8CC7;&#x8A0A;&#xFF0C;&#x800C;&#x9019;&#x4E00;&#x500B;&#x8CC7;&#x8A0A;&#x5C31;&#x662F;&#x8981;&#x52A0;&#x5230;&#x9801;&#x9762;&#x4E2D;&#xFF0C;&#x4F8B;&#x5982; <code>amp-youtube</code> &#x5143;&#x4EF6;</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">custom-element</span>=<span class="string">&quot;amp-youtube&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.ampproject.org/v0/amp-youtube-0.1.js&quot;</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x57FA;&#x65BC;&#x9019;&#x7A2E;&#x67B6;&#x69CB;&#xFF0C;&#x5BEB; AMP  &#x7684;&#x7B2C;&#x4E00;&#x500B;&#x9580;&#x6ABB;&#x662F;&#x8981;&#x4F7F;&#x7528;&#x54EA;&#x4E00;&#x500B; component&#x3002;(&#x600E;&#x9EBC;&#x8DDF; Flutter &#x597D;&#x50CF;)&#xFF0C;&#x66F4;&#x591A;&#x95DC;&#x65BC; Component &#x7684;&#x53EF;&#x4EE5;&#x53C3;&#x95B1; <a href="https://amp.dev/documentation/components/" target="_blank" rel="noopener">Components &#x6587;&#x4EF6;</a></p>
-<h1 id="&#x9A57;&#x8B49;&#x5DE5;&#x5177;"><a class="header-anchor" href="#&#x9A57;&#x8B49;&#x5DE5;&#x5177;"> </a>&#x9A57;&#x8B49;&#x5DE5;&#x5177;</h1>
-<p>Chrome &#x6709;&#x51FA; AMP &#x9A57;&#x8B49;&#x5DE5;&#x5177;&#xFF0C;&#x5B89;&#x88DD;&#x5F8C;&#x5373;&#x53EF;&#x4F7F;&#x7528;&#xFF0C;<a href="https://chrome.google.com/webstore/detail/amp-validator/nmoffdblmcmgeicmolmhobpoocbbmknc/related?hl=en" target="_blank" rel="noopener">&#x5B89;&#x88DD;&#x4F4D;&#x7F6E;</a></p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<p>除了 CSS 有限制外，HTML 也有允許跟不允許使用的列表 ，<a href="https://github.com/ampproject/amphtml/blob/master/spec/amp-tag-addendum.md#html5-tag-whitelist" target="_blank" rel="noopener">HTML5 Tag 白名單</a></p>
+<p>更多詳細資訊可以閱讀此文，<a href="https://amp.dev/documentation/guides-and-tutorials/learn/spec/amphtml/?format=websites" target="_blank" rel="noopener">AMP HTML Specification</a></p>
+<h1 id="開發思維"><a class="header-anchor" href="#開發思維"> </a>開發思維</h1>
+<p>AMP 的開發方式，基本上是使用官方提供的 Component 去組出畫面，所以在內容呈現上就是要找到對的 Component 然後將內容套進去，例如 <code>&lt;img&gt;</code>，就會用 <code>&lt;amp-img&gt;</code> 替代</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">amp-img</span> <span class="attr">src</span>=<span class="string">"IMG-URL"</span> <span class="attr">layout</span>=<span class="string">"responsive"</span> <span class="attr">width</span>=<span class="string">"640"</span> <span class="attr">height</span>=<span class="string">"480"</span>&gt;</span><span class="tag">&lt;/<span class="name">amp-img</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>所有的動作就交給 component 來處理，像是 RWD 的效果，除了 <code>responsive</code> 的效果外，當然還有其他的設定，設定方式請參閱官方文件 <a href="https://amp.dev/documentation/guides-and-tutorials/learn/amp-html-layout/?format=websites" target="_blank" rel="noopener">AMPHTML Layout System</a> 章節</p>
+<h2 id="使用-amp-components"><a class="header-anchor" href="#使用-amp-components"> </a>使用 AMP Components</h2>
+<p>每一個 AMP Component 在自己的 API 文件中，大部分都有 <code>Required Scripts</code> 的資訊，而這一個資訊就是要加到頁面中，例如 <code>amp-youtube</code> 元件</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">custom-element</span>=<span class="string">"amp-youtube"</span> <span class="attr">src</span>=<span class="string">"https://cdn.ampproject.org/v0/amp-youtube-0.1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>基於這種架構，寫 AMP  的第一個門檻是要使用哪一個 component。(怎麼跟 Flutter 好像)，更多關於 Component 的可以參閱 <a href="https://amp.dev/documentation/components/" target="_blank" rel="noopener">Components 文件</a></p>
+<h1 id="驗證工具"><a class="header-anchor" href="#驗證工具"> </a>驗證工具</h1>
+<p>Chrome 有出 AMP 驗證工具，安裝後即可使用，<a href="https://chrome.google.com/webstore/detail/amp-validator/nmoffdblmcmgeicmolmhobpoocbbmknc/related?hl=en" target="_blank" rel="noopener">安裝位置</a></p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://amp.dev/documentation/courses/beginning-course" target="_blank" rel="noopener">AMP Beginning Free Course</a></li>
-<li><a href="https://support.google.com/webmasters/answer/139066?hl=zh-Hant" target="_blank" rel="noopener">&#x6574;&#x5408;&#x91CD;&#x8907;&#x7684;&#x7DB2;&#x5740; canonical</a></li>
+<li><a href="https://support.google.com/webmasters/answer/139066?hl=zh-Hant" target="_blank" rel="noopener">整合重複的網址 canonical</a></li>
 <li><a href="https://amp.dev/documentation/guides-and-tutorials/learn/amp-html-layout/?format=websites" target="_blank" rel="noopener">AMPHTML Layout System</a></li>
-<li><a href="https://amp.dev/documentation/components/" target="_blank" rel="noopener">Components &#x6587;&#x4EF6;</a></li>
+<li><a href="https://amp.dev/documentation/components/" target="_blank" rel="noopener">Components 文件</a></li>
 </ul>
 
 			  		

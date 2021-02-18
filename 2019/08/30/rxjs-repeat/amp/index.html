@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/08/30/rxjs-repeat/"
 			},
 			"datePublished": "2019-08-30T01:40:57.000Z",
-			"dateModified": "2021-02-18T02:25:04.911Z",
+			"dateModified": "2021-02-18T02:32:11.635Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,45 +1848,45 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4F86;&#x63A2;&#x8A0E;&#x4E00;&#x4E0B; RxJS &#x7684; <code>repeat</code> &#x9019;&#x500B; operator</p>
+			  		<p>來探討一下 RxJS 的 <code>repeat</code> 這個 operator</p>
 <a id="more"></a>
-<h1 id="repeat-&#x7684;&#x529F;&#x80FD;"><a class="header-anchor" href="#repeat-&#x7684;&#x529F;&#x80FD;"> </a>repeat &#x7684;&#x529F;&#x80FD;</h1>
+<h1 id="repeat-的功能"><a class="header-anchor" href="#repeat-的功能"> </a>repeat 的功能</h1>
 <blockquote>
-<p><code>repeat</code> &#x7684;&#x529F;&#x80FD;&#x662F;&#x7576;&#x4E00;&#x500B; <code>Observable</code> &#x5B8C;&#x6210;&#x6642;&#xFF0C;&#x6703;&#x91CD;&#x65B0;&#x518D; <code>subscribe</code> <code>n</code> &#x6B21;</p>
+<p><code>repeat</code> 的功能是當一個 <code>Observable</code> 完成時，會重新再 <code>subscribe</code> <code>n</code> 次</p>
 </blockquote>
-<p>&#x4F7F;&#x7528;&#x7684;&#x65B9;&#x5F0F;&#x662F;</p>
+<p>使用的方式是</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obs.pipe(retry()).subscribe();</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li><code>repeat(count: number: -1)</code> &#x7576;&#x4E0D;&#x7D66;&#x91CD;&#x8907;&#x7684;&#x6B21;&#x6578;&#x6642;&#xFF0C;&#x5C07;&#x6703;&#x4E00;&#x76F4;&#x6709;&#x4F5C;&#x7528;</li>
+<li><code>repeat(count: number: -1)</code> 當不給重複的次數時，將會一直有作用</li>
 </ul>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/30/rxjs-repeat/repeat.png" width="1280" height="540" layout="responsive"></amp-img></div>
-<h1 id="&#x57FA;&#x672C;&#x7BC4;&#x4F8B;"><a class="header-anchor" href="#&#x57FA;&#x672C;&#x7BC4;&#x4F8B;"> </a>&#x57FA;&#x672C;&#x7BC4;&#x4F8B;</h1>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { of } <span class="keyword">from</span> <span class="string">&apos;rxjs&apos;</span>;</span><br><span class="line"><span class="keyword">import</span> { repeat, delay } <span class="keyword">from</span> <span class="string">&apos;rxjs/operators&apos;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> source = of(<span class="string">&apos;Repeat message&apos;</span>);</span><br><span class="line"><span class="keyword">const</span> example = source.pipe(repeat(<span class="number">3</span>));</span><br><span class="line">example.subscribe(<span class="function"><span class="params">x</span> =&gt;</span> <span class="built_in">console</span>.log(x));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Results</span></span><br><span class="line"><span class="comment">// Repeat message</span></span><br><span class="line"><span class="comment">// Repeat message</span></span><br><span class="line"><span class="comment">// Repeat message</span></span><br></pre></td></tr></tbody></table></figure>
-<h1 id="&#x63A2;&#x8A0E;"><a class="header-anchor" href="#&#x63A2;&#x8A0E;"> </a>&#x63A2;&#x8A0E;</h1>
-<p>&#x6839;&#x64DA;&#x4E0A;&#x9762;&#x7684;&#x7C21;&#x55AE;&#x4ECB;&#x7D39;&#xFF0C;&#x53EF;&#x4EE5;&#x77E5;&#x9053; <code>repeat</code> &#x7684;&#x7528;&#x6CD5;&#x3002;&#x5EF6;&#x4F38;&#x601D;&#x8003;&#xFF0C;<code>repeat</code> &#x7684;&#x4F5C;&#x7528;&#x7BC4;&#x570D;&#x662F;&#x5982;&#x4F55;&#x5B9A;&#x7FA9;&#xFF0C;&#x800C; Observable &#x6240;&#x50B3;&#x51FA;&#x7684;&#x503C;&#x662F;&#x5426;&#x5982;&#x679C;&#x6211;&#x5011;&#x6240;&#x9810;&#x671F;&#x7684;&#x5462;? &#x5982;&#x679C;&#x642D;&#x914D;&#x5176;&#x4ED6;&#x7684; operator &#x662F;&#x5426;&#x6709;&#x5148;&#x5F8C;&#x9806;&#x5E8F;&#x7684;&#x554F;&#x984C;?</p>
-<p>&#x5148;&#x4F86;&#x4E00;&#x500B;&#x7C21;&#x55AE;&#x7684;&#x554F;&#x984C;&#xFF0C;&#x91CD;&#x8907;&#x53D6;&#x5341;&#x6B21;&#x503C;</p>
+<h1 id="基本範例"><a class="header-anchor" href="#基本範例"> </a>基本範例</h1>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { of } <span class="keyword">from</span> <span class="string">'rxjs'</span>;</span><br><span class="line"><span class="keyword">import</span> { repeat, delay } <span class="keyword">from</span> <span class="string">'rxjs/operators'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> source = of(<span class="string">'Repeat message'</span>);</span><br><span class="line"><span class="keyword">const</span> example = source.pipe(repeat(<span class="number">3</span>));</span><br><span class="line">example.subscribe(<span class="function"><span class="params">x</span> =&gt;</span> <span class="built_in">console</span>.log(x));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Results</span></span><br><span class="line"><span class="comment">// Repeat message</span></span><br><span class="line"><span class="comment">// Repeat message</span></span><br><span class="line"><span class="comment">// Repeat message</span></span><br></pre></td></tr></tbody></table></figure>
+<h1 id="探討"><a class="header-anchor" href="#探討"> </a>探討</h1>
+<p>根據上面的簡單介紹，可以知道 <code>repeat</code> 的用法。延伸思考，<code>repeat</code> 的作用範圍是如何定義，而 Observable 所傳出的值是否如果我們所預期的呢? 如果搭配其他的 operator 是否有先後順序的問題?</p>
+<p>先來一個簡單的問題，重複取十次值</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>)=&gt;</span> resolve(<span class="built_in">Math</span>.random()*<span class="number">10</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span>(source())</span><br><span class="line">.pipe(</span><br><span class="line">  repeat(<span class="number">10</span>)</span><br><span class="line">)</span><br><span class="line">.subscribe({</span><br><span class="line">  next: <span class="function"><span class="params">value</span>=&gt;</span> <span class="built_in">console</span>.log(value)</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="&#x9806;&#x5E8F;&#x91CD;&#x8981;&#x55CE;"><a class="header-anchor" href="#&#x9806;&#x5E8F;&#x91CD;&#x8981;&#x55CE;"> </a>&#x9806;&#x5E8F;&#x91CD;&#x8981;&#x55CE;?</h2>
-<p>&#x6839;&#x64DA;&#x5BE6;&#x9A57;&#xFF0C;&#x9806;&#x5E8F;&#x5176;&#x5BE6;&#x4E0D;&#x91CD;&#x8981;&#xFF0C;&#x90FD;&#x6703;&#x88AB;&#x91CD;&#x65B0; subscribe</p>
-<h2 id="observable-&#x7684;&#x503C;&#x5462;"><a class="header-anchor" href="#observable-&#x7684;&#x503C;&#x5462;"> </a>Observable &#x7684;&#x503C;&#x5462;</h2>
-<p>&#x6839;&#x64DA;&#x5BE6;&#x9A57;&#xFF0C;repeat &#x6240;&#x4F7F;&#x7528;&#x7684; observable &#x503C;&#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x767C;&#x751F;&#x7684;&#x7D50;&#x679C;&#xFF0C;&#x9019;&#x8868;&#x793A;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x8981;&#x505A;&#x5230;&#x6BCF;&#x4E00;&#x6B21;&#x91CD;&#x65B0;&#x555F;&#x52D5;&#x90FD;&#x8981;&#x89F8;&#x767C; source observable &#x6642;&#xFF0C;&#x5C31;&#x5FC5;&#x9808;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x5BEB;&#x6CD5;</p>
+<h2 id="順序重要嗎"><a class="header-anchor" href="#順序重要嗎"> </a>順序重要嗎?</h2>
+<p>根據實驗，順序其實不重要，都會被重新 subscribe</p>
+<h2 id="observable-的值呢"><a class="header-anchor" href="#observable-的值呢"> </a>Observable 的值呢</h2>
+<p>根據實驗，repeat 所使用的 observable 值是第一次發生的結果，這表示，如果想要做到每一次重新啟動都要觸發 source observable 時，就必須使用不同的寫法</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/30/rxjs-repeat/1567137814105.png" width="951" height="540" layout="responsive"></amp-img></div>
 <ul>
 <li>
-<p>&#x89E3;&#x6CD5;1: &#x5982;&#x679C;&#x60F3;&#x8981;&#x7684;&#x6548;&#x679C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; interval &#x5B8C;&#x6210;&#xFF0C;&#x6539;&#x7528; interval + mergeMap(or other map) + take &#x4F86;&#x5B8C;&#x6210;</p>
+<p>解法1: 如果想要的效果可以使用 interval 完成，改用 interval + mergeMap(or other map) + take 來完成</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/30/rxjs-repeat/1567137918853.png" width="964" height="541" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x89E3;&#x6CD5;2: &#x4F7F;&#x7528; <code>defer</code> &#x4F86;&#x5305; Observable/Promise</p>
+<p>解法2: 使用 <code>defer</code> 來包 Observable/Promise</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> resolve(<span class="built_in">Math</span>.random() * <span class="number">10</span>));</span><br><span class="line"></span><br><span class="line">defer(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">from</span>(source()))</span><br><span class="line">  .pipe(</span><br><span class="line">    repeat(<span class="number">10</span>)</span><br><span class="line">  )</span><br><span class="line">  .subscribe({</span><br><span class="line">    next: <span class="function"><span class="params">value</span> =&gt;</span> <span class="built_in">console</span>.log(value)</span><br><span class="line">  });</span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/30/rxjs-repeat/1567137859126.png" width="986" height="576" layout="responsive"></amp-img></div>
 </li>
 </ul>
-<h2 id="&#x555F;&#x52D5;&#x7BC4;&#x570D;"><a class="header-anchor" href="#&#x555F;&#x52D5;&#x7BC4;&#x570D;"> </a>&#x555F;&#x52D5;&#x7BC4;&#x570D;</h2>
-<p><code>repeat</code> &#x6703;&#x91CD;&#x65B0; subscribe &#x6240;&#x6B78;&#x5C6C;&#x7684; Observable</p>
+<h2 id="啟動範圍"><a class="header-anchor" href="#啟動範圍"> </a>啟動範圍</h2>
+<p><code>repeat</code> 會重新 subscribe 所歸屬的 Observable</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/30/rxjs-repeat/1567138639858.png" width="1005" height="672" layout="responsive"></amp-img></div>
-<h1 id="&#x5C0F;&#x7D50;"><a class="header-anchor" href="#&#x5C0F;&#x7D50;"> </a>&#x5C0F;&#x7D50;</h1>
-<p>&#x6BCF;&#x4E00;&#x500B; operator &#x90FD;&#x6709;&#x53EF;&#x4EE5;&#x7D30;&#x7D30;&#x54C1;&#x5617;&#x7684;&#x7D30;&#x7BC0;&#xFF0C;&#x8DDF; repeat &#x985E;&#x4F3C;&#x7684; operator &#x6709; <code>repeatWhen</code> &#x3001;<code>retry</code>&#x3001;<code>retryWhen</code> &#xFF0C;&#x4E5F;&#x90FD;&#x53EF;&#x4EE5;&#x53BB;&#x770B;&#x770B;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;</p>
+<h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
+<p>每一個 operator 都有可以細細品嘗的細節，跟 repeat 類似的 operator 有 <code>repeatWhen</code> 、<code>retry</code>、<code>retryWhen</code> ，也都可以去看看了解一下</p>
 
 			  		
 			  		<!-- google Adsense -->

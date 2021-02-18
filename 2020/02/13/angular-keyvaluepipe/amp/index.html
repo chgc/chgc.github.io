@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/02/13/angular-keyvaluepipe/"
 			},
 			"datePublished": "2020-02-13T00:32:18.000Z",
-			"dateModified": "2021-02-18T02:25:04.939Z",
+			"dateModified": "2021-02-18T02:32:11.671Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,43 +1848,43 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular 6 &#x7248;&#x63A8;&#x51FA;&#x4E86; KeyValue Pipe&#xFF0C;&#x53EF;&#x4EE5;&#x8B93;&#x6211;&#x5011;&#x5728; HTML &#x4E0A;&#x4F7F;&#x7528; ngFor &#x8DD1; Object &#x6216;&#x662F; Map &#x578B;&#x614B;&#x7684;&#x8CC7;&#x6599;&#xFF0C;&#x4F46;&#x662F;&#xFF0C;&#x9019;&#x88E1;&#x9762;&#x6709;&#x4E00;&#x500B;&#x5C0F;&#x96F7;&#xFF0C;&#x4E00;&#x500B;&#x4E0D;&#x6CE8;&#x610F;&#x5C31;&#x6703;&#x8E29;&#x9032;&#x53BB;&#xFF0C;&#x90A3;&#x5C31;&#x662F;<strong>&#x6392;&#x5E8F;</strong></p>
+			  		<p>Angular 6 版推出了 KeyValue Pipe，可以讓我們在 HTML 上使用 ngFor 跑 Object 或是 Map 型態的資料，但是，這裡面有一個小雷，一個不注意就會踩進去，那就是<strong>排序</strong></p>
 <a id="more"></a>
-<p>&#x4F46;&#x9019;&#x4E00;&#x500B;&#x96F7;&#x5728;&#x5B98;&#x7DB2;&#x7684; API &#x6587;&#x4EF6;&#x4E2D;&#x6709;&#x63D0;&#x5230;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x8AAA;&#x660E;</p>
+<p>但這一個雷在官網的 API 文件中有提到，以下是說明</p>
 <blockquote>
 <p>The output array will be ordered by keys. By default the comparator will be by Unicode point value. You can optionally pass a compareFn if your keys are complex types.</p>
 </blockquote>
-<p>&#x5728;&#x4E0D;&#x8B80;&#x6587;&#x4EF6;&#x5C31;&#x4F7F;&#x7528;&#xFF0C;&#x6703;&#x8B93;&#x4F60; debug &#x5230;&#x5929;&#x8352;&#x5730;&#x8001;&#x3002;&#x4F46;&#x9019;&#x8868;&#x793A;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x50B3;&#x5165;&#x6392;&#x5E8F;&#x7684;&#x6BD4;&#x8F03;&#x51FD;&#x5F0F;&#x4E86;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;</p>
+<p>在不讀文件就使用，會讓你 debug 到天荒地老。但這表示我們可以傳入排序的比較函式了，以下是使用方式</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{{ input_expression | keyvalue [: compareFn] }}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>input &#x503C;&#x9808;&#x70BA; { [key: string | number] : V } | Map</li>
+<li>input 值須為 { [key: string | number] : V } | Map</li>
 <li>compareFn: (a:keyValue, b: keyValue) =&gt; number</li>
 </ul>
-<h1 id="&#x7BC4;&#x4F8B;"><a class="header-anchor" href="#&#x7BC4;&#x4F8B;"> </a>&#x7BC4;&#x4F8B;</h1>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import { Component } from &quot;@angular/core&quot;;</span><br><span class="line"></span><br><span class="line">@Component({</span><br><span class="line">  selector: &quot;my-app&quot;,</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Display Object Value<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pre</span>&gt;</span>      </span><br><span class="line">      {{ data | json }}</span><br><span class="line">    <span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of (data | keyvalue)&quot;</span>&gt;</span></span><br><span class="line">        {{ item.key }}</span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  `</span><br><span class="line">})</span><br><span class="line">export class AppComponent {</span><br><span class="line">  name = &quot;Angular&quot;;</span><br><span class="line">  data = {</span><br><span class="line">    userId: 1,</span><br><span class="line">    id: 1,</span><br><span class="line">    title: &quot;delectus aut autem&quot;,</span><br><span class="line">    completed: false</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x57F7;&#x884C;&#x7D50;&#x679C;</p>
+<h1 id="範例"><a class="header-anchor" href="#範例"> </a>範例</h1>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import { Component } from "@angular/core";</span><br><span class="line"></span><br><span class="line">@Component({</span><br><span class="line">  selector: "my-app",</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Display Object Value<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pre</span>&gt;</span>      </span><br><span class="line">      {{ data | json }}</span><br><span class="line">    <span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> *<span class="attr">ngFor</span>=<span class="string">"let item of (data | keyvalue)"</span>&gt;</span></span><br><span class="line">        {{ item.key }}</span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  `</span><br><span class="line">})</span><br><span class="line">export class AppComponent {</span><br><span class="line">  name = "Angular";</span><br><span class="line">  data = {</span><br><span class="line">    userId: 1,</span><br><span class="line">    id: 1,</span><br><span class="line">    title: "delectus aut autem",</span><br><span class="line">    completed: false</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>執行結果</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/02/13/angular-keyvaluepipe/image-20200213085812920.png" width="369" height="355" layout="responsive"></amp-img></div>
-<p>&#x53EF;&#x4EE5;&#x767C;&#x73FE;&#x7269;&#x4EF6;&#x7684;&#x986F;&#x793A;&#x9806;&#x5E8F;&#x5DF2;&#x7D93;&#x4F9D; key &#x503C;&#x7684;&#x5B57;&#x6BCD;&#x505A;&#x6392;&#x5E8F;&#x4E86;</p>
-<p>&#x9019;&#x6642;&#x5019;&#x52A0;&#x5165; compareFn &#x770B;&#x770B;&#xFF0C;&#x53EF;&#x4EE5;&#x53D6;&#x5230;&#x54EA;&#x4E9B;&#x8CC7;&#x8A0A;</p>
+<p>可以發現物件的顯示順序已經依 key 值的字母做排序了</p>
+<p>這時候加入 compareFn 看看，可以取到哪些資訊</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> compareFn(a, b) {</span><br><span class="line">    <span class="built_in">console</span>.log(a, b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>template &#x7684;&#x5730;&#x65B9;&#x4E5F;&#x5C07; compareFn &#x52A0;&#x4E0A;</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of (data | keyvalue: compareFn)&quot;</span>&gt;</span></span><br><span class="line">        {{ item.key }}</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<p>console.log &#x51FA;&#x4F86;&#x7684;&#x7D50;&#x679C;&#x662F;</p>
+<p>template 的地方也將 compareFn 加上</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> *<span class="attr">ngFor</span>=<span class="string">"let item of (data | keyvalue: compareFn)"</span>&gt;</span></span><br><span class="line">        {{ item.key }}</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>console.log 出來的結果是</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/02/13/angular-keyvaluepipe/image-20200213090105707.png" width="490" height="119" layout="responsive"></amp-img></div>
-<p>&#x5F9E;&#x9019;&#x88E1;&#x53EF;&#x4EE5;&#x5F97;&#x77E5; a &#x70BA;&#x65B0;&#x503C;&#xFF0C;&#x800C; b &#x70BA;&#x820A;&#x503C;&#xFF0C;&#x9019;&#x88E1;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6211;&#x5011;&#x5BEB;&#x9663;&#x5217;&#x6392;&#x9700;&#x898F;&#x5247;&#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x5BEB;&#xFF0C;&#x7A0D;&#x5FAE;&#x8907;&#x7FD2;&#x9663;&#x5217;&#x6392;&#x5E8F;&#x7684;&#x5BEB;&#x6CD5;&#x898F;&#x5247;</p>
+<p>從這裡可以得知 a 為新值，而 b 為舊值，這裡就可以使用我們寫陣列排需規則的方式來寫，稍微複習陣列排序的寫法規則</p>
 <ol>
-<li>&#x7576; compareFunction &#x56DE;&#x50B3;&#x7684;&#x503C;&#x5C0F;&#x65BC; 0 &#xFF0C;&#x5247; a &#x6703;&#x6392;&#x5728; b &#x4E4B;&#x524D;</li>
-<li>&#x7576; compareFunction &#x56DE;&#x50B3;&#x7684;&#x503C;&#x5927;&#x65BC; 0 &#xFF0C;&#x5247; a &#x6703;&#x6392;&#x5728; b &#x4E4B;&#x5F8C;</li>
-<li>&#x7576; compareFunction &#x56DE;&#x50B3;&#x7684;&#x503C;&#x7B49;&#x65BC; 0 &#xFF0C;&#x5247; a &#x8207; b &#x7684;&#x9806;&#x5E8F;&#x4E0D;&#x6703;&#x6539;&#x8B8A;</li>
+<li>當 compareFunction 回傳的值小於 0 ，則 a 會排在 b 之前</li>
+<li>當 compareFunction 回傳的值大於 0 ，則 a 會排在 b 之後</li>
+<li>當 compareFunction 回傳的值等於 0 ，則 a 與 b 的順序不會改變</li>
 </ol>
-<h1 id="&#x5C0F;&#x7D50;"><a class="header-anchor" href="#&#x5C0F;&#x7D50;"> </a>&#x5C0F;&#x7D50;</h1>
-<p>&#x4F7F;&#x7528;&#x4E4B;&#x524D;&#x8A73;&#x8B80;&#x4F7F;&#x7528;&#x8AAA;&#x660E;&#x66F8;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
+<p>使用之前詳讀使用說明書</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/sort" target="_blank" rel="noopener">Arrary.prototype.sort</a></li>
 <li><a href="https://angular.io/api/common/KeyValue" target="_blank" rel="noopener">KeyValue</a></li>
 <li><a href="https://angular.io/api/common/KeyValuePipe" target="_blank" rel="noopener">KeyValuePipe</a></li>
-<li><a href="https://stackblitz.com/edit/angular-94dxtk?file=src%2Fapp%2Fapp.component.ts" target="_blank" rel="noopener">&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;&#x78BC;</a></li>
+<li><a href="https://stackblitz.com/edit/angular-94dxtk?file=src%2Fapp%2Fapp.component.ts" target="_blank" rel="noopener">範例程式碼</a></li>
 </ul>
 
 			  		

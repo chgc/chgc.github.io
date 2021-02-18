@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/11/14/python-20131114/"
 			},
 			"datePublished": "2013-11-14T05:53:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.563Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1843,35 +1843,35 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<h1 id="tuples"><a class="header-anchor" href="#tuples"> </a>Tuples</h1>
-<p>&#x5F88;&#x50CF;list,&#x4F46;&#x662F;&#x4E00;&#x65E6;&#x5EFA;&#x7ACB;&#x5F8C;&#x503C;&#x5C31;&#x6C92;&#x6709;&#x8FA6;&#x6CD5;&#x88AB;&#x66F4;&#x6539; (ex. list[1]= &#x300E;b&#x300F; &lt;=&#x6703;&#x51FA;&#x932F;)
-&#x7528;&#x9014;: &#x7528;&#x4F86;&#x5132;&#x5B58;&#x4E00;&#x4E9B;&#x5E38;&#x7528;(const)&#x8B8A;&#x6578;</p>
+<p>很像list,但是一旦建立後值就沒有辦法被更改 (ex. list[1]= 『b』 &lt;=會出錯)
+用途: 用來儲存一些常用(const)變數</p>
 <h1 id="set"><a class="header-anchor" href="#set"> </a>Set</h1>
-<p>set&#x6703;&#x5C07;&#x91CD;&#x8907;&#x5F97;&#x503C;&#x7D66;&#x6392;&#x9664;&#x6389;(&#x6709;distinct&#x7684;&#x5473;&#x9053;)
-&#x5EFA;&#x7ACB;set&#x7684;&#x65B9;&#x5F0F;&#x6709;set() &#x6216; a= {&#x300E;something&#x300F;,&#x300E;something&#x300F;}
-&#x5982;&#x679C;&#x8981;&#x5EFA;&#x7ACB;&#x7A7A;&#x7684;set&#xFF0C;&#x53EA;&#x80FD;&#x900F;&#x904E;set()&#x7684;&#x65B9;&#x5F0F;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = set(&apos;abracadabra&apos;)</span><br><span class="line">&gt;&gt;&gt; b = set(&apos;alacazam&apos;)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">{&apos;d&apos;, &apos;r&apos;, &apos;a&apos;, &apos;c&apos;, &apos;b&apos;}</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">{&apos;m&apos;, &apos;l&apos;, &apos;a&apos;, &apos;c&apos;, &apos;z&apos;}</span><br><span class="line">&gt;&gt;&gt; a^b  # value in a or b not in both, &#x4E0D;&#x542B;&#x5169;&#x908A;&#x90FD;&#x6709;&#x503C;</span><br><span class="line">{&apos;r&apos;, &apos;z&apos;, &apos;d&apos;, &apos;b&apos;, &apos;m&apos;, &apos;l&apos;}</span><br><span class="line">&gt;&gt;&gt; a-b # value in a not b</span><br><span class="line">{&apos;d&apos;, &apos;b&apos;, &apos;r&apos;}</span><br><span class="line">&gt;&gt;&gt; a|b # value in a or b</span><br><span class="line">{&apos;r&apos;, &apos;z&apos;, &apos;d&apos;, &apos;a&apos;, &apos;c&apos;, &apos;b&apos;, &apos;m&apos;, &apos;l&apos;}</span><br><span class="line">&gt;&gt;&gt; a&amp;b # value in a and b</span><br><span class="line">{&apos;a&apos;, &apos;c&apos;}</span><br></pre></td></tr></tbody></table></figure>
+<p>set會將重複得值給排除掉(有distinct的味道)
+建立set的方式有set() 或 a= {『something』,『something』}
+如果要建立空的set，只能透過set()的方式</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = set('abracadabra')</span><br><span class="line">&gt;&gt;&gt; b = set('alacazam')</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">{'d', 'r', 'a', 'c', 'b'}</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">{'m', 'l', 'a', 'c', 'z'}</span><br><span class="line">&gt;&gt;&gt; a^b  # value in a or b not in both, 不含兩邊都有值</span><br><span class="line">{'r', 'z', 'd', 'b', 'm', 'l'}</span><br><span class="line">&gt;&gt;&gt; a-b # value in a not b</span><br><span class="line">{'d', 'b', 'r'}</span><br><span class="line">&gt;&gt;&gt; a|b # value in a or b</span><br><span class="line">{'r', 'z', 'd', 'a', 'c', 'b', 'm', 'l'}</span><br><span class="line">&gt;&gt;&gt; a&amp;b # value in a and b</span><br><span class="line">{'a', 'c'}</span><br></pre></td></tr></tbody></table></figure>
 <p>#Dictionaries
 as c# Dictionary&lt;string, string&gt;
-&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;</p>
+操作方式</p>
 <ul>
-<li>&#x6307;&#x5B9A;: dict[key]= value</li>
-<li>&#x522A;&#x9664;: del dict[key]</li>
-<li>&#x5217;&#x8868;: list(dict.key())</li>
-<li>&#x6392;&#x5E8F;: sorted(dict.key())</li>
+<li>指定: dict[key]= value</li>
+<li>刪除: del dict[key]</li>
+<li>列表: list(dict.key())</li>
+<li>排序: sorted(dict.key())</li>
 </ul>
-<p>&#x5EFA;&#x7ACB;&#x7684;&#x65B9;&#x5F0F;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dict([(&apos;sape&apos;, 4139), (&apos;guido&apos;, 4127), (&apos;jack&apos;, 4098)])</span><br><span class="line">{&apos;sape&apos;: 4139, &apos;jack&apos;: 4098, &apos;guido&apos;: 4127}</span><br><span class="line">&gt;&gt;&gt; dict(sape=4139, guido=4127, jack=4098)</span><br><span class="line">{&apos;sape&apos;: 4139, &apos;jack&apos;: 4098, &apos;guido&apos;: 4127}</span><br></pre></td></tr></tbody></table></figure>
+<p>建立的方式</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dict([('sape', 4139), ('guido', 4127), ('jack', 4098)])</span><br><span class="line">{'sape': 4139, 'jack': 4098, 'guido': 4127}</span><br><span class="line">&gt;&gt;&gt; dict(sape=4139, guido=4127, jack=4098)</span><br><span class="line">{'sape': 4139, 'jack': 4098, 'guido': 4127}</span><br></pre></td></tr></tbody></table></figure>
 <p>##looping</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; knights = {&apos;gallahad&apos;: &apos;the pure&apos;, &apos;robin&apos;: &apos;the brave&apos;}</span><br><span class="line">&gt;&gt;&gt; for k, v in knights.items():</span><br><span class="line">...     print(k, v)</span><br><span class="line">...</span><br><span class="line">gallahad the pure</span><br><span class="line">robin the brave</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; knights = {'gallahad': 'the pure', 'robin': 'the brave'}</span><br><span class="line">&gt;&gt;&gt; for k, v in knights.items():</span><br><span class="line">...     print(k, v)</span><br><span class="line">...</span><br><span class="line">gallahad the pure</span><br><span class="line">robin the brave</span><br></pre></td></tr></tbody></table></figure>
 <p>#More on Conditions
-&#x6BD4;&#x8F03;&#x7684;&#x65B9;&#x6CD5;:</p>
+比較的方法:</p>
 <ul>
 <li>in, not in</li>
 <li>is, is not</li>
-<li>and, or : &#x7576;&#x9047;&#x5230;&#x7B2C;&#x4E00;&#x500B;&#x6210;&#x7ACB;&#x689D;&#x4EF6;&#x6642;&#xFF0C;&#x5C31;&#x8DF3;&#x51FA;&#x4E86;</li>
+<li>and, or : 當遇到第一個成立條件時，就跳出了</li>
 </ul>
-<p>&#x6BD4;&#x8F03;&#x53EF;&#x4EE5;&#x9023;&#x7E8C;&#x4E32;&#x63A5;: eg: a&lt;b==c tests whether a is thess then b and moreover b equals c</p>
-<p>&#x6BD4;&#x8F03;&#x7684;&#x9806;&#x5E8F;: &#x5DE6;&#x5230;&#x53F3;</p>
+<p>比較可以連續串接: eg: a&lt;b==c tests whether a is thess then b and moreover b equals c</p>
+<p>比較的順序: 左到右</p>
 
 			  		
 			  		<!-- google Adsense -->

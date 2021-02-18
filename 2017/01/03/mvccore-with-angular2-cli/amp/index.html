@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/01/03/mvccore-with-angular2-cli/"
 			},
 			"datePublished": "2017-01-03T08:13:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,57 +1848,57 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular&#x53EF;&#x4EE5;&#x8AAA;&#x662F;&#x4E00;&#x500B;&#x5F88;&#x7A31;&#x8077;&#x7684;&#x524D;&#x7AEF;Framework&#xFF0C;&#x90A3;&#x5F8C;&#x7AEF;&#x7684;&#x67B6;&#x69CB;&#x53C8;&#x6709;&#x4EC0;&#x9EBC;&#x9078;&#x64C7;&#x5462;? <a href="http://xn--ASP-yx1e609b.NET" target="_blank" rel="noopener">&#x5176;&#x5BE6;ASP.NET</a> MVC Core&#x662F;&#x4E00;&#x500B;&#x4E0D;&#x932F;&#x7684;&#x9078;&#x64C7;&#x3002;&#x67B6;&#x69CB;&#x5F88;&#x8F15;&#xFF0C;&#x5728;&#x642D;&#x914D;&#x7121;&#x6575;&#x5F37;&#x5927;&#x7684;Visual Studio&#x8207;Azure&#x8D85;&#x7D1A;&#x7121;&#x7E2B;&#x7684;&#x63A5;&#x8ECC;&#x3002;&#x53EF;&#x4EE5;&#x8AAA;&#x662F;&#x4E0D;&#x4E8C;&#x4EBA;&#x9078;&#xFF0C;&#x4F46;&#x662F;. Angular CLI&#x7684;&#x5C08;&#x6848;&#x8981;&#x600E;&#x9EBC;&#x8DDF;MVC Core&#x7684;&#x5C08;&#x6848;&#x7D50;&#x5408;&#x5462;? &#x4EE5;&#x4E0B;&#x4F7F;&#x7528;Visual Studio 2017RC+ Core 1.1.0&#x7248;&#x4F86;&#x505A;Demo.</p>
+			  		<p>Angular可以說是一個很稱職的前端Framework，那後端的架構又有什麼選擇呢? <a href="http://xn--ASP-yx1e609b.NET" target="_blank" rel="noopener">其實ASP.NET</a> MVC Core是一個不錯的選擇。架構很輕，在搭配無敵強大的Visual Studio與Azure超級無縫的接軌。可以說是不二人選，但是. Angular CLI的專案要怎麼跟MVC Core的專案結合呢? 以下使用Visual Studio 2017RC+ Core 1.1.0版來做Demo.</p>
 <a id="more"></a>
-<h1 id="&#x4F7F;&#x7528;-webapi-&#x7684;&#x5C08;&#x6848;&#x7BC4;&#x672C;&#x5EFA;&#x7ACB;&#x65B0;&#x5C08;&#x6848;"><a class="header-anchor" href="#&#x4F7F;&#x7528;-webapi-&#x7684;&#x5C08;&#x6848;&#x7BC4;&#x672C;&#x5EFA;&#x7ACB;&#x65B0;&#x5C08;&#x6848;"> </a>&#x4F7F;&#x7528; WebAPI &#x7684;&#x5C08;&#x6848;&#x7BC4;&#x672C;&#x5EFA;&#x7ACB;&#x65B0;&#x5C08;&#x6848;</h1>
+<h1 id="使用-webapi-的專案範本建立新專案"><a class="header-anchor" href="#使用-webapi-的專案範本建立新專案"> </a>使用 WebAPI 的專案範本建立新專案</h1>
 <div class="amp-img-wrapper"><amp-img src="https://farm6.staticflickr.com/5547/31953873981_b8b9152a9a_o.png" width="1680" height="1010" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://farm6.staticflickr.com/5793/31923537982_a7642c97dc_o.png" width="786" height="513" layout="responsive"></amp-img></div>
-<p>&#x6309;&#x4E0B; OK &#x5F8C;&#x5C31;&#x6703;&#x662F;&#x4E00;&#x500B;&#x542B;&#x6709;WebAPI&#x7BC4;&#x4F8B;&#x7684;MVC Core&#x7684;&#x7DB2;&#x7AD9;&#x4E86;&#xFF0C;&#x9019;&#x6642;&#x5019;&#x6703;&#x767C;&#x73FE;project.json&#x5DF2;&#x7D93;&#x6D88;&#x5931;&#x4E86;&#xFF0C;&#x56E0;&#x70BA;&#x6211;&#x9580;&#x662F;&#x4F7F;&#x7528;Visual Studio 2017&#x5EFA;&#x7ACB;&#x7684;&#x95DC;&#x4FC2;(<a href="http://www.talkingdotnet.com/news-project-json-asp-net-core-going-away/" target="_blank" rel="noopener">Project.json for ASP.NET Core is going away</a>)&#xFF0C;&#x63A5;&#x4E0B;&#x4F86;&#x5C31;&#x662F;&#x900F;&#x904E;NuGet&#x4F86;&#x5347;&#x7D1A;MVC Core&#x7684;&#x7248;&#x672C;&#x5230;1.1.0&#x7684;&#x7248;&#x672C;&#x3002;</p>
+<p>按下 OK 後就會是一個含有WebAPI範例的MVC Core的網站了，這時候會發現project.json已經消失了，因為我門是使用Visual Studio 2017建立的關係(<a href="http://www.talkingdotnet.com/news-project-json-asp-net-core-going-away/" target="_blank" rel="noopener">Project.json for ASP.NET Core is going away</a>)，接下來就是透過NuGet來升級MVC Core的版本到1.1.0的版本。</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/292/31696729150_c6080119be_o.png" width="523" height="509" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/283/32071852495_c4451bf851_o.png" width="1584" height="733" layout="responsive"></amp-img></div>
-<h2 id="502&#x7684;&#x932F;&#x8AA4;&#x6392;&#x9664;"><a class="header-anchor" href="#502&#x7684;&#x932F;&#x8AA4;&#x6392;&#x9664;"> </a>502&#x7684;&#x932F;&#x8AA4;&#x6392;&#x9664;</h2>
-<p>&#x5982;&#x679C;&#x7B2C;&#x4E00;&#x6B21;&#x57F7;&#x884C;&#x5F8C;&#xFF0C;&#x51FA;&#x73FE;502&#x7684;&#x932F;&#x8AA4;&#xFF0C;<a href="http://xn--3qr74hn2cr0pg5ab16c1ogo08a5fdxra.NET" target="_blank" rel="noopener">&#x8ACB;&#x78BA;&#x8A8D;&#x74B0;&#x5883;&#x662F;&#x5426;&#x6709;&#x5B89;&#x88DD;.NET</a> Core 1.1&#x7684;Library&#xFF0C;&#x5B89;&#x88DD;&#x5F8C;&#x61C9;&#x53EF;&#x6392;&#x9664;&#x554F;&#x984C;</p>
-<p><a href="https://www.microsoft.com/net/download/core#/current/runtime" target="_blank" rel="noopener">&#x4E0B;&#x8F09;&#x4F4D;&#x7F6E;</a></p>
-<h2 id="&#x8A2D;&#x5B9A;&#x8DEF;&#x7531;"><a class="header-anchor" href="#&#x8A2D;&#x5B9A;&#x8DEF;&#x7531;"> </a>&#x8A2D;&#x5B9A;&#x8DEF;&#x7531;</h2>
-<p>&#x5728;startup.cs&#x88E1;&#xFF0C;&#x4FEE;&#x6539;<code>Configure</code>&#x7684;&#x90E8;&#x5206;</p>
-<p>&#x53EF;&#x80FD;&#x9700;&#x8981;&#x591A;&#x5B89;&#x88DD;  <code>Microsoft.AspNetCore.StaticFiles</code>&#x5957;&#x4EF6;</p>
-<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    app.Use(<span class="keyword">async</span> (context, next)=&gt;{</span><br><span class="line">        <span class="keyword">await</span> next();</span><br><span class="line">        <span class="keyword">if</span> (context.Response.StatusCode == <span class="number">404</span> &amp;&amp;</span><br><span class="line">        !Path.HasExtension(context.Request.Path.Value) &amp;&amp;</span><br><span class="line">        !context.Request.Path.Value.StartsWith(<span class="string">&quot;/api/&quot;</span>))</span><br><span class="line">        {</span><br><span class="line">            context.Request.Path = <span class="string">&quot;/index.html&quot;</span>;</span><br><span class="line">            <span class="keyword">await</span> next();</span><br><span class="line">        }</span><br><span class="line">    });</span><br><span class="line"></span><br><span class="line">    app.UseMvc();</span><br><span class="line">    app.UseStaticFiles();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x7A7A;&#x7684;&#x5C08;&#x6848;-&#x7576;angular-cli&#x7684;&#x5BB6;"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x7A7A;&#x7684;&#x5C08;&#x6848;-&#x7576;angular-cli&#x7684;&#x5BB6;"> </a>&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x7A7A;&#x7684;&#x5C08;&#x6848;&#xFF0C;&#x7576;Angular CLI&#x7684;&#x5BB6;</h1>
+<h2 id="502的錯誤排除"><a class="header-anchor" href="#502的錯誤排除"> </a>502的錯誤排除</h2>
+<p>如果第一次執行後，出現502的錯誤，<a href="http://xn--3qr74hn2cr0pg5ab16c1ogo08a5fdxra.NET" target="_blank" rel="noopener">請確認環境是否有安裝.NET</a> Core 1.1的Library，安裝後應可排除問題</p>
+<p><a href="https://www.microsoft.com/net/download/core#/current/runtime" target="_blank" rel="noopener">下載位置</a></p>
+<h2 id="設定路由"><a class="header-anchor" href="#設定路由"> </a>設定路由</h2>
+<p>在startup.cs裡，修改<code>Configure</code>的部分</p>
+<p>可能需要多安裝  <code>Microsoft.AspNetCore.StaticFiles</code>套件</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    app.Use(<span class="keyword">async</span> (context, next)=&gt;{</span><br><span class="line">        <span class="keyword">await</span> next();</span><br><span class="line">        <span class="keyword">if</span> (context.Response.StatusCode == <span class="number">404</span> &amp;&amp;</span><br><span class="line">        !Path.HasExtension(context.Request.Path.Value) &amp;&amp;</span><br><span class="line">        !context.Request.Path.Value.StartsWith(<span class="string">"/api/"</span>))</span><br><span class="line">        {</span><br><span class="line">            context.Request.Path = <span class="string">"/index.html"</span>;</span><br><span class="line">            <span class="keyword">await</span> next();</span><br><span class="line">        }</span><br><span class="line">    });</span><br><span class="line"></span><br><span class="line">    app.UseMvc();</span><br><span class="line">    app.UseStaticFiles();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="建立一個空的專案-當angular-cli的家"><a class="header-anchor" href="#建立一個空的專案-當angular-cli的家"> </a>建立一個空的專案，當Angular CLI的家</h1>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/365/32072006795_56248d7537_o.png" width="520" height="446" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/262/31954080811_d36ea416b5_o.png" width="941" height="653" layout="responsive"></amp-img></div>
-<p>&#x7136;&#x5F8C;&#x5C07;&#x4E00;&#x4E9B;&#x7528;&#x4E0D;&#x5230;&#x7684;&#x6A94;&#x6848;&#xFF0C;&#x4F8B;&#x5982;: program.cs&#x7D66;&#x522A;&#x9664;&#x6389;&#xFF0C;&#x4E5F;&#x53EF;&#x9032;&#x5165;&#x5230;nuget&#x770B;&#x770B;&#x6709;&#x6C92;&#x6709;&#x5B89;&#x88DD;&#x4EC0;&#x9EBC;Library</p>
-<p>&#x4E00;&#x5207;&#x6E05;&#x4E7E;&#x6DE8;&#x5F8C;&#xFF0C;&#x5C31;&#x8981;&#x4F86;&#x5EFA;&#x7ACB;Angular CLI&#x5C08;&#x6848;&#x4E86;</p>
-<h2 id="&#x5EFA;&#x7ACB;angular&#x5C08;&#x6848;"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;angular&#x5C08;&#x6848;"> </a>&#x5EFA;&#x7ACB;Angular&#x5C08;&#x6848;</h2>
-<p>&#x958B;&#x555F;&#x547D;&#x4EE4;&#x8996;&#x7A97;&#xFF0C;&#x57F7;&#x884C;ng init --name <code>&lt;projectName&gt;</code></p>
+<p>然後將一些用不到的檔案，例如: program.cs給刪除掉，也可進入到nuget看看有沒有安裝什麼Library</p>
+<p>一切清乾淨後，就要來建立Angular CLI專案了</p>
+<h2 id="建立angular專案"><a class="header-anchor" href="#建立angular專案"> </a>建立Angular專案</h2>
+<p>開啟命令視窗，執行ng init --name <code>&lt;projectName&gt;</code></p>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/538/31697154630_57a67af0fa_o.png" width="979" height="512" layout="responsive"></amp-img></div>
-<p>&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x6709;&#x5E7E;&#x500B;&#x8A2D;&#x5B9A;&#x6A94;&#x7684;&#x5730;&#x65B9;&#x8981;&#x505A;&#x8ABF;&#x6574;</p>
+<p>完成後，有幾個設定檔的地方要做調整</p>
 <ol>
 <li>
-<p>angular-cli.json&#x7684; outDir&#x8981;&#x4FEE;&#x6539;&#x5230; mvc core project&#x7684;wwwroot&#x8CC7;&#x6599;&#x593E;&#x7684;&#x4F4D;&#x7F6E;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;outDir&quot;: &quot;../WebApplication1/wwwroot&quot;</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x200B;</p>
+<p>angular-cli.json的 outDir要修改到 mvc core project的wwwroot資料夾的位置</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"outDir": "../WebApplication1/wwwroot"</span><br></pre></td></tr></tbody></table></figure>
+<p>​</p>
 </li>
 <li>
-<p>&#x65B0;&#x589E; proxy.conf.json&#x6A94;&#x6848;&#xFF0C;&#x5B9A;&#x7FA9;&#x5F8C;&#x7AEF;Api server&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x7C21;&#x5316;Angular&#x547C;&#x53EB;API&#x7684;&#x7DB2;&#x5740;&#x7684;&#x8907;&#x96DC;&#x5EA6;</p>
-<p>&#x200B;</p>
+<p>新增 proxy.conf.json檔案，定義後端Api server的位置，簡化Angular呼叫API的網址的複雜度</p>
+<p>​</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm6.staticflickr.com/5758/32033512876_4887ce08f3_o.png" width="421" height="174" layout="responsive"></amp-img></div>
-<p>&#x200B;</p>
+<p>​</p>
 </li>
 </ol>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;/api&quot;</span>: {</span><br><span class="line">    <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;http://localhost:22846&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;secure&quot;</span>: <span class="literal">false</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>3 &#x4FEE;&#x6539; package.json&#x7684;Scripts&#x7684;&#x90E8;&#x5206;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;start&quot;: &quot;ng serve --proxy-config proxy.conf.json&quot;,</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"/api"</span>: {</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"http://localhost:22846"</span>,</span><br><span class="line">    <span class="attr">"secure"</span>: <span class="literal">false</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>3 修改 package.json的Scripts的部分</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start": "ng serve --proxy-config proxy.conf.json",</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="none"><a class="header-anchor" href="#none"> </a></h2>
-<h1 id="&#x958B;&#x767C;&#x6642;&#x671F;&#x7684;&#x57F7;&#x884C;&#x65B9;&#x5F0F;"><a class="header-anchor" href="#&#x958B;&#x767C;&#x6642;&#x671F;&#x7684;&#x57F7;&#x884C;&#x65B9;&#x5F0F;"> </a>&#x958B;&#x767C;&#x6642;&#x671F;&#x7684;&#x57F7;&#x884C;&#x65B9;&#x5F0F;</h1>
-<p>&#x57F7;&#x884C;&#x7684;&#x65B9;&#x5F0F;. &#x524D;&#x7AEF;&#x5982;&#x679C;&#x8981;&#x958B;&#x59CB;&#x958B;&#x767C;&#x7684;&#x8A71;&#xFF0C;&#x4E0B;&#x6307;&#x4EE4; <code>npm start</code>&#xFF0C;&#x958B;&#x767C;&#x6642;&#x671F;&#x7DB2;&#x9801;&#x7684;&#x7DB2;&#x5740;&#x8981;&#x4EE5;Angular CLI&#x7684;&#x7DB2;&#x5740;&#x70BA;&#x4E3B;</p>
-<p>&#x800C;&#x5F8C;&#x7AEF;&#x5C31;&#x9760;Visual Studio&#x4F86;&#x5E6B;&#x5FD9;&#x56C9;</p>
-<h1 id="&#x90E8;&#x5C6C;"><a class="header-anchor" href="#&#x90E8;&#x5C6C;"> </a>&#x90E8;&#x5C6C;</h1>
-<p>&#x900F;&#x904E; Angualr CLI&#x7684;build&#x6307;&#x4EE4;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5C07;Angualr&#x7684;&#x5C08;&#x6848;&#xFF0C;&#x6839;&#x64DA;angular-cli.json&#x7684;&#x8F38;&#x51FA;&#x8DEF;&#x5F91;&#x7684;&#x8A2D;&#x5B9A;&#xFF0C;&#x5C07;&#x6240;&#x6709;&#x7684;ts&#x7A0B;&#x5F0F;&#x78BC;&#x8F49;&#x8B6F;&#x5F8C;bundle&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x8F38;&#x51FA;&#x5230;wwwroot&#x7684;&#x8DEF;&#x5F91;&#x4E0B;&#xFF0C;&#x7531;&#x65BC;&#x4E00;&#x958B;&#x59CB;&#x5728;Startup.cs&#x88E1;&#x9762;&#x5C31;&#x6709;&#x8A2D;&#x5B9A;&#xFF0C;&#x5982;&#x679C;&#x8DEF;&#x5F91;&#x4E0D;&#x662F;api&#x958B;&#x982D;&#x7684;&#xFF0C;&#x5C31;&#x5168;&#x90E8;&#x8F49;&#x5740;&#x5230;index.html&#x53BB;&#xFF0C;&#x4E5F;&#x662F;Angular App&#x7684;&#x958B;&#x59CB;&#x9801;&#x9762;.</p>
+<h1 id="開發時期的執行方式"><a class="header-anchor" href="#開發時期的執行方式"> </a>開發時期的執行方式</h1>
+<p>執行的方式. 前端如果要開始開發的話，下指令 <code>npm start</code>，開發時期網頁的網址要以Angular CLI的網址為主</p>
+<p>而後端就靠Visual Studio來幫忙囉</p>
+<h1 id="部屬"><a class="header-anchor" href="#部屬"> </a>部屬</h1>
+<p>透過 Angualr CLI的build指令，就可以將Angualr的專案，根據angular-cli.json的輸出路徑的設定，將所有的ts程式碼轉譯後bundle在一起，輸出到wwwroot的路徑下，由於一開始在Startup.cs裡面就有設定，如果路徑不是api開頭的，就全部轉址到index.html去，也是Angular App的開始頁面.</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/512/32033977686_c7b0087e91_o.png" width="976" height="257" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://farm6.staticflickr.com/5582/31262432143_968c8efb66_o.png" width="697" height="445" layout="responsive"></amp-img></div>
-<p>ng build&#x5F8C;&#xFF0C;&#x55AE;&#x7368;&#x57F7;&#x884C;MVC Core&#x7684;&#x7DB2;&#x7AD9;&#xFF0C;&#x6700;&#x5F8C;&#x7684;&#x5448;&#x73FE;&#x7D50;&#x679C;</p>
+<p>ng build後，單獨執行MVC Core的網站，最後的呈現結果</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm6.staticflickr.com/5685/31954954071_d96d2508ae_o.png" width="1076" height="371" layout="responsive"></amp-img></div>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <p><a href="https://devblog.dymel.pl/2016/10/25/angular2-cli-with-aspnet-core-application-tutorial/" target="_blank" rel="noopener">Angular2 CLI with ASP.NET Core application - tutorial</a></p>
 
 			  		

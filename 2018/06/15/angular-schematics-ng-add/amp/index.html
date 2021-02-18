@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/06/15/angular-schematics-ng-add/"
 			},
 			"datePublished": "2018-06-15T02:09:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.859Z",
+			"dateModified": "2021-02-18T02:32:11.575Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,72 +1848,72 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular CLI 6 &#x65B0;&#x589E;&#x4E86;&#x4E00;&#x500B;&#x6307;&#x4EE4; <code>ng add &lt;library&gt;</code> &#xFF0C;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x900F;&#x904E;&#x9019;&#x500B;&#x6307;&#x4EE4;&#x4F86;&#x5B89;&#x88DD;&#x5404;&#x5F0F;&#x5404;&#x6A23;&#x7684; schematics &#x5957;&#x4EF6;&#xFF0C;&#x9032;&#x800C;&#x64F4;&#x5145; Angular CLI &#x7684;&#x529F;&#x80FD;&#x3002;&#x5982;&#x679C;&#x60F3;&#x8981;&#x5BEB;&#x4E00;&#x500B;&#x81EA;&#x5DF1;&#x7684; schematics &#x53C8;&#x53EF;&#x4EE5;&#x900F;&#x904E; <code>ng add</code> &#x4F86;&#x5B89;&#x88DD;&#x3002;&#x9019;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x5167;&#x5BB9;&#x6216;&#x8A31;&#x662F;&#x4E00;&#x500B;&#x958B;&#x59CB;</p>
+			  		<p>Angular CLI 6 新增了一個指令 <code>ng add &lt;library&gt;</code> ，我們可以透過這個指令來安裝各式各樣的 schematics 套件，進而擴充 Angular CLI 的功能。如果想要寫一個自己的 schematics 又可以透過 <code>ng add</code> 來安裝。這一篇文章的內容或許是一個開始</p>
 <a id="more"></a>
 <h1 id="angular-cli"><a class="header-anchor" href="#angular-cli"> </a>Angular CLI</h1>
-<p><code>schematics</code> &#x53EF;&#x4EE5;&#x8996;&#x70BA;&#x4E00;&#x500B;&#x6307;&#x4EE4;&#x7522;&#x751F;&#x7BC4;&#x672C;&#x7684;&#x4EFB;&#x52D9;&#x96C6;&#x5408;&#xFF0C;&#x6240;&#x4EE5; Angular CLI &#x4E5F;&#x662F;&#x900F;&#x904E;&#x6307;&#x4EE4;&#x7684;&#x65B9;&#x5F0F;&#x53BB;&#x57F7;&#x884C;&#x67D0;&#x4E00;&#x500B; schematics &#x88E1;&#x9762;&#x7684;&#x67D0;&#x4E00;&#x500B;&#x52D5;&#x4F5C;&#x3002;&#x6240;&#x4EE5;&#x5728;&#x958B;&#x59CB;&#x5BEB;&#x4E4B;&#x524D;&#xFF0C;&#x9808;&#x4E86;&#x89E3; Angular CLI &#x7684; ng add &#x5230;&#x5E95;&#x505A;&#x4E86;&#x54EA;&#x4E9B;&#x52D5;&#x4F5C;</p>
-<p>&#x9810;&#x8A2D; CLI &#x6240;&#x4F7F;&#x7528;&#x7684;&#x547D;&#x4EE4;&#x6E05;&#x55AE;&#x4E2D;&#xFF0C;&#x6709;&#x4E00;&#x500B; <code>add.ts</code> &#xFF0C;&#x9019;&#x500B;&#x547D;&#x4EE4;&#x5C31;&#x662F;&#x9019;&#x6B21;&#x7684;&#x4E3B;&#x89D2;&#xFF0C;&#x4ED6;&#x7684;&#x57F7;&#x884C;&#x6B65;&#x9A5F;&#x6709;</p>
+<p><code>schematics</code> 可以視為一個指令產生範本的任務集合，所以 Angular CLI 也是透過指令的方式去執行某一個 schematics 裡面的某一個動作。所以在開始寫之前，須了解 Angular CLI 的 ng add 到底做了哪些動作</p>
+<p>預設 CLI 所使用的命令清單中，有一個 <code>add.ts</code> ，這個命令就是這次的主角，他的執行步驟有</p>
 <ol>
 <li>
-<p>&#x6AA2;&#x67E5; ng add &#x5F8C;&#x9762;&#x4F7F;&#x5426;&#x6709;&#x8F38;&#x5165;&#x5F15;&#x8FF0;&#xFF0C;&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x8981;&#x5B89;&#x88DD;&#x7684;&#x5957;&#x4EF6;&#x540D;&#x7A31;</p>
+<p>檢查 ng add 後面使否有輸入引述，需要提供要安裝的套件名稱</p>
 </li>
 <li>
-<p>npm install &#x5957;&#x4EF6;</p>
+<p>npm install 套件</p>
 </li>
 <li>
-<p>&#x89E3;&#x6790;&#x662F;&#x5426;&#x6709;&#x76F8;&#x95DC;&#x8A2D;&#x5B9A;&#x5F15;&#x6578;&#x662F;&#x8981;&#x7D66; schematics &#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x7684;</p>
+<p>解析是否有相關設定引數是要給 schematics 命令使用的</p>
 </li>
 <li>
-<p>&#x5EFA;&#x7ACB;&#x57F7;&#x884C;&#x547D;&#x4EE4;&#x8A2D;&#x5B9A;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> runOptions = {</span><br><span class="line">   schematicOptions: options, </span><br><span class="line">   workingDir: <span class="keyword">this</span>.project.root,</span><br><span class="line">   collectionName, <span class="comment">// &#x96C6;&#x5408;&#x540D;&#x7A31;</span></span><br><span class="line">   schematicName: <span class="string">&apos;ng-add&apos;</span>, <span class="comment">// &#x57F7;&#x884C;&#x547D;&#x4EE4;</span></span><br><span class="line">   allowPrivate: <span class="literal">true</span>,</span><br><span class="line">   dryRun: <span class="literal">false</span>, <span class="comment">// &#x5BE6;&#x969B;&#x7522;&#x751F;&#x6A94;&#x6848;</span></span><br><span class="line">   force: <span class="literal">false</span>,</span><br><span class="line"> };</span><br></pre></td></tr></tbody></table></figure>
+<p>建立執行命令設定</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> runOptions = {</span><br><span class="line">   schematicOptions: options, </span><br><span class="line">   workingDir: <span class="keyword">this</span>.project.root,</span><br><span class="line">   collectionName, <span class="comment">// 集合名稱</span></span><br><span class="line">   schematicName: <span class="string">'ng-add'</span>, <span class="comment">// 執行命令</span></span><br><span class="line">   allowPrivate: <span class="literal">true</span>,</span><br><span class="line">   dryRun: <span class="literal">false</span>, <span class="comment">// 實際產生檔案</span></span><br><span class="line">   force: <span class="literal">false</span>,</span><br><span class="line"> };</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x57F7;&#x884C; schematics &#x547D;&#x4EE4;</p>
+<p>執行 schematics 命令</p>
 </li>
 </ol>
-<h1 id="&#x81EA;&#x8A02;-schematics"><a class="header-anchor" href="#&#x81EA;&#x8A02;-schematics"> </a>&#x81EA;&#x8A02; Schematics</h1>
-<p>&#x6839;&#x64DA;&#x4E0A;&#x9762;&#x7684;&#x57F7;&#x884C;&#x547D;&#x4EE4;&#xFF0C;&#x53EF;&#x4EE5;&#x5F97;&#x77E5; CLI &#x7684; ng add &#x662F;&#x6703;&#x57F7;&#x884C; <code>ng-add</code> &#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x8981;&#x5728;&#x81EA;&#x5DF1;&#x7684; schematics collection &#x5167;&#x65B0;&#x589E; ng-add &#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF0C;&#x4F46;&#x5728;&#x54EA;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x5168;&#x65B0;&#x7A7A;&#x7684; schematics &#x5427;</p>
+<h1 id="自訂-schematics"><a class="header-anchor" href="#自訂-schematics"> </a>自訂 Schematics</h1>
+<p>根據上面的執行命令，可以得知 CLI 的 ng add 是會執行 <code>ng-add</code> 的指令，所以只要在自己的 schematics collection 內新增 ng-add 就可以了，但在哪之前，先建立一個全新空的 schematics 吧</p>
 <ol>
 <li>
-<p>&#x5982;&#x679C;&#x6C92;&#x6709;&#x5B89;&#x88DD; schematics CLI &#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x900F;&#x904E;&#x9019;&#x6307;&#x4EE4;&#x5B89;&#x88DD;</p>
+<p>如果沒有安裝 schematics CLI 的，可以透過這指令安裝</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @angular-devkit/schematics</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x5B89;&#x88DD;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x53EF;&#x4EE5;&#x57F7;&#x884C; <code>schematics --help</code> &#x770B;&#x770B;&#x6709;&#x6C92;&#x6709;&#x5B89;&#x88DD;&#x6210;&#x529F;</p>
+<p>安裝完成後，可以執行 <code>schematics --help</code> 看看有沒有安裝成功</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/88xzjTx.png" width="762" height="328" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5EFA;&#x7ACB;&#x7A7A;&#x7684; schematics</p>
+<p>建立空的 schematics</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schematics blank &lt;yourSchematicsName&gt;</span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/FD8AtPV.png" width="845" height="180" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9032;&#x5165;&#x525B;&#x525B;&#x5EFA;&#x7ACB;&#x597D;&#x7684;&#x8CC7;&#x6599;&#x593E;&#x5167;&#xFF0C;eg <code>/postDemo</code></p>
+<p>進入剛剛建立好的資料夾內，eg <code>/postDemo</code></p>
 </li>
 <li>
-<p>&#x6253;&#x958B;&#x719F;&#x6089;&#x7684;&#x7DE8;&#x8F2F;&#x5668;&#xFF0C;&#x4E26;&#x4FEE;&#x6539;&#x4EE5;&#x4E0B;&#x5167;&#x5BB9;</p>
+<p>打開熟悉的編輯器，並修改以下內容</p>
 <ol>
 <li>
-<p><code>collection.json</code>&#xFF0C;&#x5C07;&#x539F;&#x672C;&#x7684;&#x6307;&#x4EE4;&#x8208;&#x6539;&#x6210; <code>ng-add</code></p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;$schema&quot;</span>: <span class="string">&quot;../node_modules/@angular-devkit/schematics/collection-schema.json&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;schematics&quot;</span>: {</span><br><span class="line">    <span class="attr">&quot;post-demo&quot;</span>: {</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;A blank schematic.&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;factory&quot;</span>: <span class="string">&quot;./post-demo/index#postDemo&quot;</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">// &#x4FEE;&#x6539;&#x6210;</span><br><span class="line">{</span><br><span class="line">  <span class="attr">&quot;$schema&quot;</span>: <span class="string">&quot;../node_modules/@angular-devkit/schematics/collection-schema.json&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;schematics&quot;</span>: {</span><br><span class="line">    <span class="attr">&quot;ng-add&quot;</span>: {</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;A blank schematic.&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;factory&quot;</span>: <span class="string">&quot;./ng-add/index#ngAdd&quot;</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><code>collection.json</code>，將原本的指令興改成 <code>ng-add</code></p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"$schema"</span>: <span class="string">"../node_modules/@angular-devkit/schematics/collection-schema.json"</span>,</span><br><span class="line">  <span class="attr">"schematics"</span>: {</span><br><span class="line">    <span class="attr">"post-demo"</span>: {</span><br><span class="line">      <span class="attr">"description"</span>: <span class="string">"A blank schematic."</span>,</span><br><span class="line">      <span class="attr">"factory"</span>: <span class="string">"./post-demo/index#postDemo"</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="comment">// 修改成</span></span><br><span class="line">{</span><br><span class="line">  <span class="attr">"$schema"</span>: <span class="string">"../node_modules/@angular-devkit/schematics/collection-schema.json"</span>,</span><br><span class="line">  <span class="attr">"schematics"</span>: {</span><br><span class="line">    <span class="attr">"ng-add"</span>: {</span><br><span class="line">      <span class="attr">"description"</span>: <span class="string">"A blank schematic."</span>,</span><br><span class="line">      <span class="attr">"factory"</span>: <span class="string">"./ng-add/index#ngAdd"</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>factory &#x5F8C;&#x9762;&#x5167;&#x5BB9;&#x7684; <code>#ngAdd</code> &#x662F;&#x6307;&#x8981;&#x57F7;&#x884C;&#x7684; function</li>
+<li>factory 後面內容的 <code>#ngAdd</code> 是指要執行的 function</li>
 </ul>
 </li>
 <li>
-<p>&#x5C07;&#x539F;&#x672C;&#x7684; <code>post-demo</code> &#x8CC7;&#x6599;&#x593E;&#x540D;&#x7A31;&#x4FEE;&#x6539;&#x6210; <code>ng-add</code></p>
+<p>將原本的 <code>post-demo</code> 資料夾名稱修改成 <code>ng-add</code></p>
 </li>
 <li>
-<p>&#x5C07; <code>ng-add/index.ts</code> &#x6A94;&#x6848;&#x88E1;&#x7684; function &#x540D;&#x7A31;&#x4FEE;&#x6539;&#x6210; <code>ngAdd</code></p>
+<p>將 <code>ng-add/index.ts</code> 檔案裡的 function 名稱修改成 <code>ngAdd</code></p>
 </li>
 </ol>
-<p>&#x5230;&#x9019;&#x88E1;&#x5DF2;&#x7D93;&#x5B8C;&#x6210; CLI &#x57F7;&#x884C; ng-add &#x7684;&#x57FA;&#x672C;&#x578B;&#xFF0C;&#x518D;&#x4F86;&#x5C31;&#x662F;&#x53EF;&#x4EE5;&#x628A;&#x60F3;&#x8981;&#x5728; <code>ng add</code> &#x6642;&#x8981;&#x505A;&#x7684;&#x5DE5;&#x4F5C;&#x5BEB;&#x5728;&#x9019;&#x908A;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;</p>
+<p>到這裡已經完成 CLI 執行 ng-add 的基本型，再來就是可以把想要在 <code>ng add</code> 時要做的工作寫在這邊就可以了</p>
 </li>
 </ol>
-<h1 id="&#x52A0;&#x78BC;&#x88DC;&#x5145;"><a class="header-anchor" href="#&#x52A0;&#x78BC;&#x88DC;&#x5145;"> </a>&#x52A0;&#x78BC;&#x88DC;&#x5145;</h1>
-<p>Angular CLI &#x7684;&#x53E6;&#x5916;&#x4E00;&#x500B;&#x6307;&#x4EE4; <code>ng update</code> &#xFF0C;&#x505A;&#x6CD5;&#x985E;&#x4F3C;&#xFF0C;&#x8A73;&#x7D30;&#x7684;&#x8A2D;&#x8A08;&#x53EF;&#x4EE5;&#x53C3;&#x8003; Angular Material 2 &#x7684; schematics update&#xFF0C;<a href="https://github.com/angular/material2/blob/master/src/lib/schematics/update/update.ts" target="_blank" rel="noopener">source code</a></p>
+<h1 id="加碼補充"><a class="header-anchor" href="#加碼補充"> </a>加碼補充</h1>
+<p>Angular CLI 的另外一個指令 <code>ng update</code> ，做法類似，詳細的設計可以參考 Angular Material 2 的 schematics update，<a href="https://github.com/angular/material2/blob/master/src/lib/schematics/update/update.ts" target="_blank" rel="noopener">source code</a></p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/e0hmtRV.png" width="331" height="735" layout="responsive"></amp-img></div>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://github.com/chgc/ngcli-wallaby" target="_blank" rel="noopener">ngcli-wallaby</a></li>
 <li><a href="https://github.com/angular/material2/blob/master/src/lib/schematics/update/update.ts" target="_blank" rel="noopener">Angular Material 2</a></li>

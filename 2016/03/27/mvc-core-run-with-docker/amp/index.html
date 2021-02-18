@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/03/27/mvc-core-run-with-docker/"
 			},
 			"datePublished": "2016-03-27T06:43:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,17 +1842,17 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x57FA;&#x65BC;Docker&#x5B89;&#x88DD;&#x6B65;&#x9A5F;&#x8B8A;&#x7C21;&#x55AE;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x662F;&#x6642;&#x5019;&#x4F86;&#x73A9;Docker&#x4E86;.
-&#x5728;MVC Core&#x7684;&#x76EE;&#x9304;&#x4E0B;&#xFF0C;&#x65B0;&#x589E;&#x4E00;&#x500B;&#x6A94;&#x6848;Dockfile, &#x5167;&#x5BB9;&#x5982;&#x4E0B;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM microsoft/aspnet:1.0.0-rc1-update1</span><br><span class="line"></span><br><span class="line">COPY . /app</span><br><span class="line">WORKDIR /app</span><br><span class="line">RUN [&quot;dnu&quot;, &quot;restore&quot;]</span><br><span class="line"></span><br><span class="line">EXPOSE 5000/tcp</span><br><span class="line">ENTRYPOINT [&quot;dnx&quot;, &quot;-p&quot;, &quot;project.json&quot;, &quot;web&quot;,&quot;--server.urls&quot;, &quot;http://0.0.0.0:5000&quot;]</span><br></pre></td></tr></tbody></table></figure>
-<p>**server.urls &#x9700;&#x8981;&#x6307;&#x5B9A;&#x5230;0.0.0.0:port, &#x4E0D;&#x7136;&#x5728;docker run&#x8D77;&#x4F86;&#x7684;&#x6642;&#x5019;&#xFF0C;&#x7DB2;&#x9801;&#x6703;&#x8AAA;Refused to Connect
-server.urls&#x7684;&#x8A2D;&#x5B9A;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x53C3;&#x8003;<a href="http://docs.asp.net/en/latest/fundamentals/servers.html" target="_blank" rel="noopener">&#x9019;&#x88E1;</a></p>
-<p>&#x958B;&#x555F;&#x547D;&#x4EE4;&#x8996;&#x7A97;&#xFF0C;&#x5230;&#x6709;Dockerfile&#x6A94;&#x6848;&#x7684;&#x8CC7;&#x6599;&#x593E;&#x4E26;&#x57F7;&#x884C;&#x4E0B;&#x5217;&#x6307;&#x4EE4;</p>
+			  		<p>基於Docker安裝步驟變簡單了，所以是時候來玩Docker了.
+在MVC Core的目錄下，新增一個檔案Dockfile, 內容如下</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM microsoft/aspnet:1.0.0-rc1-update1</span><br><span class="line"></span><br><span class="line">COPY . /app</span><br><span class="line">WORKDIR /app</span><br><span class="line">RUN ["dnu", "restore"]</span><br><span class="line"></span><br><span class="line">EXPOSE 5000/tcp</span><br><span class="line">ENTRYPOINT ["dnx", "-p", "project.json", "web","--server.urls", "http://0.0.0.0:5000"]</span><br></pre></td></tr></tbody></table></figure>
+<p>**server.urls 需要指定到0.0.0.0:port, 不然在docker run起來的時候，網頁會說Refused to Connect
+server.urls的設定方式可以參考<a href="http://docs.asp.net/en/latest/fundamentals/servers.html" target="_blank" rel="noopener">這裡</a></p>
+<p>開啟命令視窗，到有Dockerfile檔案的資料夾並執行下列指令</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t &lt;imageName&gt; .</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x4E0A;&#x5217;&#x6307;&#x4EE4;&#x9019;&#x6703;&#x5EFA;&#x7ACB;&#x4E00;&#x500B;docker image file
-&#x63A5;&#x4E0B;&#x4F86;&#x5C31;&#x8981;&#x8B93;&#x6240;&#x5EFA;&#x7ACB;&#x51FA;&#x4F86;&#x7684;Image&#x57F7;&#x884C;&#x8D77;&#x4F86;, &#x57F7;&#x884C;&#x4E0B;&#x5217;&#x6307;&#x4EE4;</p>
+<p>上列指令這會建立一個docker image file
+接下來就要讓所建立出來的Image執行起來, 執行下列指令</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -t -d -p 5000:5000 &lt;imageName&gt;</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x8A73;&#x7D30;&#x7684;Docker&#x6307;&#x4EE4;&#x7528;&#x6CD5;&#xFF0C;&#x8ACB;&#x53C3;&#x95B1;&#x5B98;&#x65B9;&#x7DB2;&#x7AD9;</p>
+<p>詳細的Docker指令用法，請參閱官方網站</p>
 
 			  		
 			  		<!-- google Adsense -->

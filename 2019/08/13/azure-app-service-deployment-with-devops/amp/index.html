@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/"
 			},
 			"datePublished": "2019-08-13T01:40:46.000Z",
-			"dateModified": "2021-02-18T02:25:04.903Z",
+			"dateModified": "2021-02-18T02:32:11.627Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,142 +1848,142 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4E0A;&#x4E00;&#x7BC7;&#x63D0;&#x5230;&#x4F7F;&#x7528; Deployment with GitHub&#xFF0C;Azure &#x7576;&#x7136;&#x8981;&#x6574;&#x5408;&#x81EA;&#x5BB6;&#x7684; DevOps &#x624D;&#x80FD;&#x5C07;&#x6548;&#x76CA;&#x6700;&#x5927;&#x5316;&#xFF0C;&#x9019;&#x4E00;&#x7BC7;&#x5C31;&#x4F86;&#x770B;&#x770B;&#x6574;&#x5408; DevOps &#x5F8C;&#x80FD;&#x505A;&#x5230;&#x90A3;&#x4E9B;&#x4E8B;&#x60C5;</p>
+			  		<p>上一篇提到使用 Deployment with GitHub，Azure 當然要整合自家的 DevOps 才能將效益最大化，這一篇就來看看整合 DevOps 後能做到那些事情</p>
 <a id="more"></a>
-<h1 id="&#x4E32;&#x63A5;-devops"><a class="header-anchor" href="#&#x4E32;&#x63A5;-devops"> </a>&#x4E32;&#x63A5; DevOps</h1>
-<p>&#x5047;&#x8A2D;&#x5927;&#x5BB6;&#x90FD;&#x77E5;&#x9053;&#x5982;&#x4F55;&#x5728; Azure DevOps &#x4E0A;&#x9762;&#x958B;&#x5C08;&#x6848;&#x8DDF;&#x5C07;&#x7A0B;&#x5F0F; Push &#x5230;&#x4E0A;&#x9762;&#xFF0C;&#x9019;&#x6642; App Service &#x8981;&#x4E32;&#x63A5;&#x6B65;&#x9A5F;&#x5C31;&#x5F88;&#x7C21;&#x55AE;</p>
+<h1 id="串接-devops"><a class="header-anchor" href="#串接-devops"> </a>串接 DevOps</h1>
+<p>假設大家都知道如何在 Azure DevOps 上面開專案跟將程式 Push 到上面，這時 App Service 要串接步驟就很簡單</p>
 <ol>
 <li>
-<p>&#x3010;&#x90E8;&#x5C6C;&#x4E2D;&#x5FC3;&#x3011;&#x9078;&#x64C7; Azure Repos</p>
+<p>【部屬中心】選擇 Azure Repos</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565660910292.png" width="782" height="478" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x6B65;&#x9A5F;&#x4E8C;&#x3001;&#x4E0D;&#x9078;&#x64C7; Azure Pipelines &#x5C31;&#x8AAA;&#x4E0D;&#x904E;&#x53BB;&#x4E86;</p>
+<p>步驟二、不選擇 Azure Pipelines 就說不過去了</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565660962720.png" width="802" height="376" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9078;&#x64C7;&#x5C08;&#x6848;&#x653E;&#x7F6E;&#x7684;&#x4F4D;&#x7F6E;</p>
+<p>選擇專案放置的位置</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565660990160.png" width="904" height="471" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x6B65;&#x9A5F;&#x56DB;&#xFF0C;&#x78BA;&#x8A8D;&#x7121;&#x8AA4;&#x5F8C;&#x5373;&#x53EF;&#x5B8C;&#x6210;&#x6574;&#x500B;&#x52D5;&#x4F5C;</p>
+<p>步驟四，確認無誤後即可完成整個動作</p>
 </li>
 </ol>
-<p>&#x7576;&#x4E0A;&#x8FF0;&#x52D5;&#x4F5C;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x6211;&#x5011;&#x56DE;&#x5230; Azure Devops &#x7684;&#x756B;&#x9762;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5728; PipleLines &#x7684; Build &#x9801;&#x9762;&#xFF0C;&#x770B;&#x5230;&#x4E00;&#x500B;&#x81EA;&#x52D5;&#x7522;&#x751F;&#x7684; Build Pipeline&#xFF0C;&#x66F4;&#x597D;&#x7684;&#x662F;&#xFF0C;&#x9023; Release Piple &#x4E5F;&#x4E00;&#x4F75;&#x5B8C;&#x6210;&#x4E86;&#x3002;</p>
+<p>當上述動作完成後，我們回到 Azure Devops 的畫面，可以看到在 PipleLines 的 Build 頁面，看到一個自動產生的 Build Pipeline，更好的是，連 Release Piple 也一併完成了。</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565661238520.png" width="963" height="527" layout="responsive"></amp-img></div>
-<p>&#x90E8;&#x5C6C;&#x4E2D;&#x5FC3;&#x986F;&#x793A;&#x7684;&#x6B77;&#x53F2;&#x7D00;&#x9304;</p>
+<p>部屬中心顯示的歷史紀錄</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565661290482.png" width="1278" height="587" layout="responsive"></amp-img></div>
-<h1 id="&#x9000;&#x7248;"><a class="header-anchor" href="#&#x9000;&#x7248;"> </a>&#x9000;&#x7248;</h1>
-<p>&#x7576; App Service &#x90E8;&#x7F72;&#x4E2D;&#x5FC3;&#x9023;&#x7D50;&#x5230; DevOps &#x53C8;&#x9078;&#x64C7; pipelines &#x6642;&#xFF0C;&#x9000;&#x7248;&#x7684;&#x52D5;&#x4F5C;&#x5C31;&#x4E0D;&#x4E00;&#x6A23;&#x4E86;&#xFF0C;&#x5C07;&#x6703;&#x662F;&#x900F;&#x904E; release pipeline &#x7684; redeploy &#x4F86;&#x5B8C;&#x6210;</p>
+<h1 id="退版"><a class="header-anchor" href="#退版"> </a>退版</h1>
+<p>當 App Service 部署中心連結到 DevOps 又選擇 pipelines 時，退版的動作就不一樣了，將會是透過 release pipeline 的 redeploy 來完成</p>
 <ol>
 <li>
-<p>&#x9078;&#x64C7;&#x8981;&#x9000;&#x7248;&#x7684;&#x7D00;&#x9304;&#xFF0C;&#x4E26;&#x9EDE;&#x9078; <code>release x</code></p>
+<p>選擇要退版的紀錄，並點選 <code>release x</code></p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565662278833.png" width="1139" height="311" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x9019;&#x6642;&#x5019;&#x6703;&#x958B;&#x555F;&#x8A72; Release pipeline &#x7684;&#x64CD;&#x4F5C;&#x756B;&#x9762;</p>
+<p>這時候會開啟該 Release pipeline 的操作畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565662349092.png" width="745" height="469" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5C07;&#x6ED1;&#x9F20;&#x79FB;&#x5230; stages production &#x7684;&#x6587;&#x5B57;&#x65B9;&#x6846;&#x4E0A;&#xFF0C;&#x5E95;&#x4E0B;&#x6703;&#x51FA;&#x73FE; <code>Redeploy</code> &#x7684;&#x6309;&#x9215;</p>
+<p>將滑鼠移到 stages production 的文字方框上，底下會出現 <code>Redeploy</code> 的按鈕</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565662399975.png" width="459" height="406" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x7576;&#x6309;&#x4E0B; <code>Redeploy</code> &#x7684;&#x6309;&#x9215;&#x6642;&#xFF0C;&#x6703;&#x8DF3;&#x51FA;&#x4E00;&#x500B;&#x8996;&#x7A97;&#x505A;&#x6700;&#x5F8C;&#x7684;&#x78BA;&#x8A8D;&#xFF0C;&#x5982;&#x679C;&#x78BA;&#x5B9A;&#xFF0C;&#x5C31;&#x6309;&#x4E0B; Deploy</p>
+<p>當按下 <code>Redeploy</code> 的按鈕時，會跳出一個視窗做最後的確認，如果確定，就按下 Deploy</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565662445276.png" width="759" height="632" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<h2 id="&#x5982;&#x4F55;&#x5206;&#x8FA8;&#x76EE;&#x524D;&#x6240;&#x5728;&#x7248;&#x672C;"><a class="header-anchor" href="#&#x5982;&#x4F55;&#x5206;&#x8FA8;&#x76EE;&#x524D;&#x6240;&#x5728;&#x7248;&#x672C;"> </a>&#x5982;&#x4F55;&#x5206;&#x8FA8;&#x76EE;&#x524D;&#x6240;&#x5728;&#x7248;&#x672C;</h2>
-<p>&#x5728; Pipelines -&gt; Releases &#x7684;&#x7B2C;&#x4E00;&#x500B;&#x756B;&#x9762;&#xFF0C;&#x53EF;&#x4EE5;&#x900F;&#x904E; <code>Stages</code> &#x7684;&#x986F;&#x793A;&#x65B9;&#x5F0F;&#x4F86;&#x5F97;&#x77E5;&#x76EE;&#x524D;&#x7684;&#x7248;&#x672C;</p>
+<h2 id="如何分辨目前所在版本"><a class="header-anchor" href="#如何分辨目前所在版本"> </a>如何分辨目前所在版本</h2>
+<p>在 Pipelines -&gt; Releases 的第一個畫面，可以透過 <code>Stages</code> 的顯示方式來得知目前的版本</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565662562904.png" width="1220" height="419" layout="responsive"></amp-img></div>
-<p>&#x76EE;&#x524D;&#x6240;&#x5728;&#x7248;&#x672C;&#x6703;&#x7528;&#x6709;&#x80CC;&#x666F;&#x8272;&#x505A;&#x6A19;&#x793A;</p>
-<h1 id="&#x591A;-stage-&#x8A2D;&#x5B9A;"><a class="header-anchor" href="#&#x591A;-stage-&#x8A2D;&#x5B9A;"> </a>&#x591A; Stage &#x8A2D;&#x5B9A;</h1>
-<p>&#x5982;&#x679C;&#x6211;&#x5011;&#x60F3;&#x8981;&#x505A;&#x591A; Stage &#x7684; release &#x8A2D;&#x5B9A;&#x53C8;&#x8981;&#x642D;&#x914D; App Services &#x6642;&#xFF0C;&#x57FA;&#x672C;&#x8981;&#x6C42;&#x65B9;&#x6848;&#x662F;&#x57FA;&#x672C;&#x4EE5;&#x4E0A;(Standard)&#xFF0C;&#x5148;&#x4F86;&#x5C07; App Service &#x4F7F;&#x7528;&#x7684;&#x65B9;&#x6848;&#x5347;&#x7D1A;&#x4E00;&#x4E0B;</p>
-<h2 id="app-service-&#x90E8;&#x5206;"><a class="header-anchor" href="#app-service-&#x90E8;&#x5206;"> </a>App Service &#x90E8;&#x5206;</h2>
+<p>目前所在版本會用有背景色做標示</p>
+<h1 id="多-stage-設定"><a class="header-anchor" href="#多-stage-設定"> </a>多 Stage 設定</h1>
+<p>如果我們想要做多 Stage 的 release 設定又要搭配 App Services 時，基本要求方案是基本以上(Standard)，先來將 App Service 使用的方案升級一下</p>
+<h2 id="app-service-部分"><a class="header-anchor" href="#app-service-部分"> </a>App Service 部分</h2>
 <ol>
-<li>&#x5347;&#x7D1A;&#x65B9;&#x6848; (&#x5982;&#x679C;&#x539F;&#x672C;&#x65B9;&#x6848;&#x4E0D;&#x652F;&#x63F4;&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#x529F;&#x80FD;)</li>
+<li>升級方案 (如果原本方案不支援部署位置功能)</li>
 </ol>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565662994053.png" width="1141" height="514" layout="responsive"></amp-img></div>
 <ul>
-<li>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#x7684;&#x6700;&#x4F4E;&#x65B9;&#x6848;&#x70BA; S1</li>
+<li>可以使用部署位置的最低方案為 S1</li>
 </ul>
-<p>&#x5347;&#x7D1A;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x5373;&#x53EF;&#x770B;&#x5230;&#x9019;&#x4E00;&#x756B;&#x9762;</p>
+<p>升級完成後，即可看到這一畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663087327.png" width="1362" height="476" layout="responsive"></amp-img></div>
 <ol start="2">
-<li>&#x63A5;&#x4E0B;&#x4F86;&#x662F;&#x591A;&#x52A0;&#x5165;&#x4E00;&#x500B;&#x4F4D;&#x7F6E; (Slot)</li>
+<li>接下來是多加入一個位置 (Slot)</li>
 </ol>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/SNAGHTML19df8ca9.PNG" width="594" height="394" layout="responsive"></amp-img></div>
 <ul>
 <li>
-<p>&#x540D;&#x7A31;: &#x4F4D;&#x7F6E;&#x540D;&#x7A31;&#xFF0C;&#x53EF;&#x81EA;&#x5DF1;&#x8A2D;&#x5B9A;</p>
+<p>名稱: 位置名稱，可自己設定</p>
 </li>
 <li>
-<p>&#x8907;&#x88FD;&#x8A2D;&#x5B9A;: &#x5047;&#x8A2D;&#x539F;&#x672C;&#x5DF2;&#x6709;&#x8A2D;&#x5B9A;&#x4E00;&#x5806;&#x53C3;&#x6578;&#x8A2D;&#x5B9A;&#xFF0C;&#x9019;&#x6642;&#x5019;&#x70BA;&#x4E86;&#x5C07;&#x8A2D;&#x5B9A;&#x4E00;&#x81F4;&#x6027;&#x6216;&#x662F;&#x56E0;&#x70BA;&#x7A0B;&#x5F0F;&#x67D0;&#x4E9B;&#x8A2D;&#x5B9A;&#x662F;&#x5403;&#x74B0;&#x5883;&#x53C3;&#x6578;&#x8A2D;&#x5B9A;&#x6642;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x9078;&#x64C7;&#x8981;&#x8907;&#x88FD;&#x7684;&#x7AD9;&#x53F0;</p>
+<p>複製設定: 假設原本已有設定一堆參數設定，這時候為了將設定一致性或是因為程式某些設定是吃環境參數設定時，就可以選擇要複製的站台</p>
 </li>
 <li>
-<p>&#x78BA;&#x8A8D;&#x5F8C;&#x5373;&#x53EF;&#x6309;&#x4E0B;&#x3010;&#x65B0;&#x589E;&#x3011;&#x6309;&#x9215;</p>
+<p>確認後即可按下【新增】按鈕</p>
 </li>
 <li>
-<p>&#x5728;&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#x9801;&#x9762;&#x7BC0;&#x53EF;&#x770B;&#x5230;&#x5169;&#x500B;&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#xFF0C;&#x5206;&#x5225;&#x70BA;&#x7368;&#x7ACB;&#x7684;&#x7AD9;&#x53F0; (&#x5404;&#x81EA;&#x64C1;&#x6709;&#x700F;&#x89BD;&#x7DB2;&#x5740;)</p>
+<p>在部署位置頁面節可看到兩個部署位置，分別為獨立的站台 (各自擁有瀏覽網址)</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663386683.png" width="799" height="386" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663434551.png" width="1335" height="311" layout="responsive"></amp-img></div>
 </li>
 </ul>
-<h2 id="devops-&#x90E8;&#x5206;"><a class="header-anchor" href="#devops-&#x90E8;&#x5206;"> </a>DevOps &#x90E8;&#x5206;</h2>
-<p>&#x7576; App Service &#x74B0;&#x7BC0;&#x8A2D;&#x5B9A;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x5373;&#x53EF;&#x5230; Azure DevOps &#x7DE8;&#x8F2F; release pipeline</p>
+<h2 id="devops-部分"><a class="header-anchor" href="#devops-部分"> </a>DevOps 部分</h2>
+<p>當 App Service 環節設定完成後，即可到 Azure DevOps 編輯 release pipeline</p>
 <ol>
 <li>
-<p>&#x9078;&#x64C7; release pipeline &#x4E26;&#x9032;&#x884C;&#x7DE8;&#x8F2F;&#x52D5;&#x4F5C;\</p>
+<p>選擇 release pipeline 並進行編輯動作\</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663612034.png" width="684" height="465" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x6309;&#x4E0B;&#x5728; Stages &#x7684; Add &#xFF0C;&#x4E26;&#x9078;&#x64C7; <code>New Stage</code></p>
+<p>按下在 Stages 的 Add ，並選擇 <code>New Stage</code></p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663661713.png" width="322" height="168" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x7BC4;&#x672C;&#x9078;&#x64C7;: Azure App Service deployment with Slot</p>
+<p>範本選擇: Azure App Service deployment with Slot</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663707173.png" width="601" height="300" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x8A2D;&#x5B9A;&#x5B8C; Stage &#x540D;&#x7A31;&#x5F8C;&#x5373;&#x53EF;&#x95DC;&#x6389;&#x8A72;&#x756B;&#x9762;</p>
+<p>設定完 Stage 名稱後即可關掉該畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663765749.png" width="599" height="334" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x8A2D;&#x5B9A;&#x525B;&#x65B0;&#x589E;&#x7684; Stage</p>
+<p>設定剛新增的 Stage</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663831850.png" width="779" height="645" layout="responsive"></amp-img></div>
 <ul>
-<li>Slot: &#x9078;&#x64C7;&#x525B;&#x525B;&#x5728; App Service &#x6240;&#x65B0;&#x589E;&#x7684;&#x65B0;&#x4F4D;&#x7F6E;</li>
+<li>Slot: 選擇剛剛在 App Service 所新增的新位置</li>
 </ul>
 </li>
 <li>
-<p>&#x5982;&#x679C;&#x4E0D;&#x60F3;&#x8981;&#x81EA;&#x52D5;&#x9032;&#x884C; Swap &#x52D5;&#x4F5C;&#x6642;&#xFF0C;&#x5247;&#x53EF;&#x4EE5; <code>Manage Azure App Service - Slow Swap</code> &#x7D66;&#x62FF;&#x6389;</p>
+<p>如果不想要自動進行 Swap 動作時，則可以 <code>Manage Azure App Service - Slow Swap</code> 給拿掉</p>
 </li>
 <li>
-<p>&#x8A2D;&#x5B9A;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x53EF;&#x4EE5;&#x5148;&#x5C07;&#x9810;&#x8A2D;&#x7684; <code>Production</code> &#x5207;&#x63DB;&#x6210;&#x624B;&#x52D5;</p>
+<p>設定完成後，可以先將預設的 <code>Production</code> 切換成手動</p>
 </li>
 <li>
-<p>&#x8A18;&#x5F97;&#x5132;&#x5B58;&#x8A2D;&#x5B9A;</p>
+<p>記得儲存設定</p>
 </li>
 </ol>
-<h2 id="&#x6E2C;&#x8A66;"><a class="header-anchor" href="#&#x6E2C;&#x8A66;"> </a>&#x6E2C;&#x8A66;</h2>
-<p>&#x7576;&#x65B0;&#x958B;&#x7684;&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#xFF0C;&#x8A72;&#x4F4D;&#x7F6E;&#x662F;&#x4E0D;&#x6703;&#x6709;&#x4EFB;&#x4F55;&#x7A0B;&#x5F0F;&#x78BC;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x958B;&#x555F;&#x8A72;&#x7DB2;&#x5740;&#x61C9;&#x8A72;&#x6703;&#x770B;&#x5230;&#x9019;&#x500B;&#x756B;&#x9762;</p>
+<h2 id="測試"><a class="header-anchor" href="#測試"> </a>測試</h2>
+<p>當新開的部署位置，該位置是不會有任何程式碼的，所以開啟該網址應該會看到這個畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565664281182.png" width="1355" height="560" layout="responsive"></amp-img></div>
-<p>&#x5148; push &#x4E00;&#x500B;&#x65B0;&#x7684; commit &#x5230; devOps Repo&#xFF0C;&#x91CD;&#x65B0;&#x89F8;&#x767C;&#x6574;&#x500B;&#x90E8;&#x7F72;&#x6D41;&#x7A0B;</p>
+<p>先 push 一個新的 commit 到 devOps Repo，重新觸發整個部署流程</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565664378225.png" width="736" height="242" layout="responsive"></amp-img></div>
-<p>&#x7576;&#x4E00;&#x5207;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x525B;&#x65B0;&#x589E;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4FEE;&#x6539;&#x5F8C;&#x7684;&#x7D50;&#x679C;&#xFF0C;&#x800C;&#x539F;&#x672C;&#x6B63;&#x5F0F;&#x7684;&#x7DB2;&#x7AD9;&#x9084;&#x662F;&#x4FDD;&#x7559;&#x539F;&#x672C;&#x820A;&#x7248;&#x7684;&#x756B;&#x9762;</p>
+<p>當一切完成後，剛新增的位置，就可以看到修改後的結果，而原本正式的網站還是保留原本舊版的畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565664526914.png" width="1342" height="763" layout="responsive"></amp-img></div>
-<p>&#x5982;&#x679C;&#x80FD;&#x6B63;&#x78BA;&#x5730;&#x770B;&#x5230;&#x9019;&#x500B;&#x756B;&#x9762;&#xFF0C;&#x8868;&#x793A;&#x525B;&#x525B;&#x8A2D;&#x5B9A;&#x7684; release pipeline &#x662F;&#x6B63;&#x78BA;&#x7684;</p>
-<h2 id="&#x4EA4;&#x63DB;"><a class="header-anchor" href="#&#x4EA4;&#x63DB;"> </a>&#x4EA4;&#x63DB;</h2>
-<p>&#x7576;&#x6211;&#x5011;&#x78BA;&#x8A8D;&#x4E00;&#x5207;&#x7684;&#x4FEE;&#x6539;&#x90FD;&#x662F;&#x6B63;&#x78BA;&#x7684;&#xFF0C;&#x60F3;&#x8981;&#x5C07; QA Stage  &#x7684;&#x5167;&#x5BB9;&#x66F4;&#x65B0;&#x5230;&#x6B63;&#x5F0F;&#x74B0;&#x5883;&#x6642;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x900F;&#x904E;&#x3010;&#x4EA4;&#x63DB;&#x3011;&#x7684;&#x65B9;&#x5F0F;&#x5373;&#x53EF;&#x5B8C;&#x6210;</p>
+<p>如果能正確地看到這個畫面，表示剛剛設定的 release pipeline 是正確的</p>
+<h2 id="交換"><a class="header-anchor" href="#交換"> </a>交換</h2>
+<p>當我們確認一切的修改都是正確的，想要將 QA Stage  的內容更新到正式環境時，只需要透過【交換】的方式即可完成</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565664649872.png" width="759" height="396" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/SNAGHTML19f6c676.PNG" width="574" height="600" layout="responsive"></amp-img></div>
-<p>&#x8CC7;&#x8A0A;&#x78BA;&#x8A8D;&#x5F8C;&#x5373;&#x53EF;&#x9032;&#x884C;&#x4EA4;&#x63DB;&#x7684;&#x52D5;&#x4F5C;&#xFF0C;&#x6210;&#x529F;&#x6703;&#x51FA;&#x73FE;&#x7684;&#x8A0A;&#x606F;</p>
+<p>資訊確認後即可進行交換的動作，成功會出現的訊息</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565664841103.png" width="444" height="168" layout="responsive"></amp-img></div>
-<p>&#x91CD;&#x65B0;&#x6AA2;&#x8996;&#x5169;&#x500B;&#x7DB2;&#x7AD9;&#x7684;&#x5167;&#x5BB9;&#xFF0C;&#x6703;&#x767C;&#x73FE;&#x986F;&#x793A;&#x7684;&#x5167;&#x5BB9;&#x7684;&#x78BA;&#x6709;&#x88AB;&#x4EA4;&#x63DB;</p>
+<p>重新檢視兩個網站的內容，會發現顯示的內容的確有被交換</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565664908995.png" width="1394" height="817" layout="responsive"></amp-img></div>
-<h1 id="&#x5C0F;&#x7D50;"><a class="header-anchor" href="#&#x5C0F;&#x7D50;"> </a>&#x5C0F;&#x7D50;</h1>
-<p>Multi-stage &#x7684;&#x8A2D;&#x5B9A;&#x7576;&#x7136;&#x6C92;&#x6709;&#x90A3;&#x9EBC;&#x7C21;&#x55AE;&#xFF0C;&#x800C; App Service &#x7684;&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#x4E5F;&#x53EF;&#x4EE5;&#x73A9;&#x4E00;&#x4E9B;&#x4E0D;&#x540C;&#x7684;&#x6771;&#x897F;&#xFF0C;&#x4F46;&#x9019;&#x4E00;&#x5207;&#x5C31;&#x7559;&#x5728;&#x5F8C;&#x9762;&#x5728;&#x73A9;&#x5427;&#x3002;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
+<p>Multi-stage 的設定當然沒有那麼簡單，而 App Service 的部署位置也可以玩一些不同的東西，但這一切就留在後面在玩吧。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/release/define-multistage-release-process?view=azure-devops" target="_blank" rel="noopener">Define your multi-stage continuous deployment (CD) pipeline</a></li>
 </ul>

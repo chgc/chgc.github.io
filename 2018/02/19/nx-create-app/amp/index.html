@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/02/19/nx-create-app/"
 			},
 			"datePublished": "2018-02-19T01:01:44.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,50 +1848,50 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Nx &#x5DE5;&#x5177;&#x63D0;&#x4F9B;&#x5169;&#x500B;&#x5EFA;&#x7ACB;&#x65B0;&#x7BC4;&#x672C;&#x7684;&#x6307;&#x4EE4;&#x3001;<code>ng g app &lt;&lt;name&gt;&gt;</code> &#x548C; <code>ng g lib &lt;&lt;name&gt;&gt;</code>&#xFF0C;&#x9019;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x4F86;&#x770B;&#x5EFA;&#x7ACB; application &#x7684;&#x547D;&#x4EE4;</p>
+			  		<p>Nx 工具提供兩個建立新範本的指令、<code>ng g app &lt;&lt;name&gt;&gt;</code> 和 <code>ng g lib &lt;&lt;name&gt;&gt;</code>，這一篇文章來看建立 application 的命令</p>
 <a id="more"></a>
 <h1 id="create-app"><a class="header-anchor" href="#create-app"> </a>Create App</h1>
-<p>&#x5728;&#x5EFA;&#x7ACB; Application &#x6642;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x4EE5;&#x4E0B;&#x7684;&#x53C3;&#x6578;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;</p>
-<p>(&#x6CE8;&#x610F;&#xFF1A;&#x900F;&#x904E; <code>ng g app -h</code> &#x53D6;&#x5F97;&#x8AAA;&#x660E;&#xFF0C;&#x5176;&#x4E2D;&#x6709;&#x4E9B;&#x53C3;&#x6578;&#x662F;&#x7121;&#x6CD5;&#x4F7F;&#x7528;&#x7684;)</p>
+<p>在建立 Application 時，可以有以下的參數可以使用</p>
+<p>(注意：透過 <code>ng g app -h</code> 取得說明，其中有些參數是無法使用的)</p>
 <ul>
-<li>name (&#x5FC5;&#x586B;)&#xFF1A;&#x8981;&#x5EFA;&#x7ACB;&#x7684; Application &#x540D;&#x7A31;</li>
+<li>name (必填)：要建立的 Application 名稱</li>
 <li>npmScope</li>
-<li>directory&#xFF1A;&#x5982;&#x679C;&#x6709;&#x8A2D;&#x5B9A; directory&#xFF0C;application&#x7684;&#x5EFA;&#x7ACB;&#x8DEF;&#x5F91;&#x70BA; <code>/</code> &#x5982;&#x679C;&#x6C92;&#x6709;&#x8A2D;&#x5B9A;&#xFF0C;&#x5EFA;&#x7ACB;&#x8DEF;&#x5F91;&#x5247;&#x662F; <code></code></li>
-<li>sourceDir&#xFF1A;&#x9810;&#x8A2D;&#x503C;&#x70BA; <code>src</code>&#xFF0C;&#x7A0B;&#x5F0F;&#x78BC;&#x7522;&#x751F;&#x4F4D;&#x7F6E;&#xFF0C;&#x4F8B;&#x5982;: <code>apps//src</code></li>
-<li>inlineStyle&#xFF1A;&#x8A2D;&#x5B9A;&#x4F7F;&#x7528; <code>inlineStyle</code></li>
-<li>inlineTemplate&#xFF1A;&#x8A2D;&#x5B9A;&#x4F7F;&#x7528; <code>inlineTemplate</code></li>
-<li>viewEncapsulation&#xFF1A;&#x8A2D;&#x5B9A; <code>viewEncapsulation</code>&#xFF0C;&#x53EF;&#x8A2D;&#x5B9A; <code>Emulated</code>&#x3001;<code>Native</code> &#x548C; <code>None</code></li>
-<li>changeDetection&#xFF1A;&#x8A2D;&#x5B9A; <code>changeDetection</code>&#xFF0C;&#x53EF;&#x8A2D;&#x5B9A; <code>Default</code> &#x53CA; <code>onPush</code> &#xFF0C;&#x9810;&#x8A2D;&#x503C;&#x70BA; <code>Default</code></li>
-<li>routing&#xFF1A;&#x7522;&#x751F; Routing &#x5340;&#x6BB5;&#x7A0B;&#x5F0F;&#x78BC;&#xFF0C;&#x4F8B;&#x5982; <code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code></li>
-<li>skipTests&#xFF1A;&#x53D6;&#x6D88;&#x7522;&#x751F;&#x6E2C;&#x8A66;&#x6A94;&#x6848;</li>
-<li>prefix&#xFF1A;&#x8A2D;&#x5B9A; prefix &#x6587;&#x5B57;&#xFF0C;&#x9810;&#x8A2D;&#x503C;&#x70BA; <code>app</code></li>
-<li>style&#xFF1A;&#x8A2D;&#x5B9A; css &#x7684;&#x6A94;&#x6848;&#x985E;&#x578B;&#xFF0C;&#x9810;&#x8A2D;&#x503C;&#x70BA; <code>css</code></li>
+<li>directory：如果有設定 directory，application的建立路徑為 <code>/</code> 如果沒有設定，建立路徑則是 <code></code></li>
+<li>sourceDir：預設值為 <code>src</code>，程式碼產生位置，例如: <code>apps//src</code></li>
+<li>inlineStyle：設定使用 <code>inlineStyle</code></li>
+<li>inlineTemplate：設定使用 <code>inlineTemplate</code></li>
+<li>viewEncapsulation：設定 <code>viewEncapsulation</code>，可設定 <code>Emulated</code>、<code>Native</code> 和 <code>None</code></li>
+<li>changeDetection：設定 <code>changeDetection</code>，可設定 <code>Default</code> 及 <code>onPush</code> ，預設值為 <code>Default</code></li>
+<li>routing：產生 Routing 區段程式碼，例如 <code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code></li>
+<li>skipTests：取消產生測試檔案</li>
+<li>prefix：設定 prefix 文字，預設值為 <code>app</code></li>
+<li>style：設定 css 的檔案類型，預設值為 <code>css</code></li>
 </ul>
-<p>&#x7576;&#x5EFA;&#x7ACB; application &#x6642;&#xFF0C;&#x9664;&#x4E86;&#x65B0;&#x589E;&#x6A94;&#x6848;&#x5916;&#xFF0C;&#x9084;&#x6703;&#x7570;&#x52D5; <code>.angular-cli.json</code> &#x6A94;&#x6848;&#xFF0C;&#x7570;&#x52D5;&#x5340;&#x584A;&#x6709; <code>lint</code> &#x53CA; <code>apps</code> &#xFF0C;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5EFA;&#x7ACB;&#x7BC4;&#x4F8B;&#x6642;&#x6240;&#x57F7;&#x884C;&#x6307;&#x4EE4;&#x70BA;</p>
+<p>當建立 application 時，除了新增檔案外，還會異動 <code>.angular-cli.json</code> 檔案，異動區塊有 <code>lint</code> 及 <code>apps</code> ，本篇文章建立範例時所執行指令為</p>
 <blockquote>
 <p>ng g app dashboard --directory=client</p>
 </blockquote>
 <ul>
 <li>
 <p>lint section</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      <span class="attr">&quot;project&quot;</span>: <span class="string">&quot;apps/client/dashboard/src/tsconfig.app.json&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;exclude&quot;</span>: <span class="string">&quot;**/node_modules/**&quot;</span></span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">&quot;project&quot;</span>: <span class="string">&quot;apps/client/dashboard/e2e/tsconfig.e2e.json&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;exclude&quot;</span>: <span class="string">&quot;**/node_modules/**&quot;</span></span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      <span class="attr">"project"</span>: <span class="string">"apps/client/dashboard/src/tsconfig.app.json"</span>,</span><br><span class="line">      <span class="attr">"exclude"</span>: <span class="string">"**/node_modules/**"</span></span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"project"</span>: <span class="string">"apps/client/dashboard/e2e/tsconfig.e2e.json"</span>,</span><br><span class="line">      <span class="attr">"exclude"</span>: <span class="string">"**/node_modules/**"</span></span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>apps section</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;client/dashboard&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;root&quot;</span>: <span class="string">&quot;apps/client/dashboard/src&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;outDir&quot;</span>: <span class="string">&quot;dist/apps/client/dashboard&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;assets&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;assets&quot;</span>,</span><br><span class="line">        <span class="string">&quot;favicon.ico&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;index.html&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;main&quot;</span>: <span class="string">&quot;main.ts&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;polyfills&quot;</span>: <span class="string">&quot;polyfills.ts&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;test&quot;</span>: <span class="string">&quot;../../../../test.js&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;tsconfig&quot;</span>: <span class="string">&quot;tsconfig.app.json&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;testTsconfig&quot;</span>: <span class="string">&quot;../../../../tsconfig.spec.json&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;prefix&quot;</span>: <span class="string">&quot;app&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;styles&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;styles.css&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;scripts&quot;</span>: [],</span><br><span class="line">      <span class="attr">&quot;environmentSource&quot;</span>: <span class="string">&quot;environments/environment.ts&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;environments&quot;</span>: {</span><br><span class="line">        <span class="attr">&quot;dev&quot;</span>: <span class="string">&quot;environments/environment.ts&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;prod&quot;</span>: <span class="string">&quot;environments/environment.prod.ts&quot;</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"client/dashboard"</span>,</span><br><span class="line">      <span class="attr">"root"</span>: <span class="string">"apps/client/dashboard/src"</span>,</span><br><span class="line">      <span class="attr">"outDir"</span>: <span class="string">"dist/apps/client/dashboard"</span>,</span><br><span class="line">      <span class="attr">"assets"</span>: [</span><br><span class="line">        <span class="string">"assets"</span>,</span><br><span class="line">        <span class="string">"favicon.ico"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"index"</span>: <span class="string">"index.html"</span>,</span><br><span class="line">      <span class="attr">"main"</span>: <span class="string">"main.ts"</span>,</span><br><span class="line">      <span class="attr">"polyfills"</span>: <span class="string">"polyfills.ts"</span>,</span><br><span class="line">      <span class="attr">"test"</span>: <span class="string">"../../../../test.js"</span>,</span><br><span class="line">      <span class="attr">"tsconfig"</span>: <span class="string">"tsconfig.app.json"</span>,</span><br><span class="line">      <span class="attr">"testTsconfig"</span>: <span class="string">"../../../../tsconfig.spec.json"</span>,</span><br><span class="line">      <span class="attr">"prefix"</span>: <span class="string">"app"</span>,</span><br><span class="line">      <span class="attr">"styles"</span>: [</span><br><span class="line">        <span class="string">"styles.css"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"scripts"</span>: [],</span><br><span class="line">      <span class="attr">"environmentSource"</span>: <span class="string">"environments/environment.ts"</span>,</span><br><span class="line">      <span class="attr">"environments"</span>: {</span><br><span class="line">        <span class="attr">"dev"</span>: <span class="string">"environments/environment.ts"</span>,</span><br><span class="line">        <span class="attr">"prod"</span>: <span class="string">"environments/environment.prod.ts"</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x65B0;&#x589E;&#x6A94;&#x6848;&#x6E05;&#x55AE;</p>
+<p>新增檔案清單</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Ffwh3Wt.png" width="906" height="586" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/xTJeuDQ.png" width="376" height="517" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>app.module.ts&#xFF1A;&#x9810;&#x8A2D;&#x8F09;&#x5165; <code>NxModule.forRoot()</code>&#xFF0C;&#x9810;&#x8A2D;&#x6CE8;&#x5165; <code>DataPersistence</code> provider</p>
+<p>app.module.ts：預設載入 <code>NxModule.forRoot()</code>，預設注入 <code>DataPersistence</code> provider</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>({})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NxModule {</span><br><span class="line">  <span class="keyword">static</span> forRoot(): ModuleWithProviders {</span><br><span class="line">    <span class="keyword">return</span> { ngModule: NxModule, providers: [DataPersistence] };</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x200B;</p>
+<p>​</p>
 </li>
 </ul>
-<h1 id="&#x5EF6;&#x4F38;&#x95B1;&#x8B80;"><a class="header-anchor" href="#&#x5EF6;&#x4F38;&#x95B1;&#x8B80;"> </a>&#x5EF6;&#x4F38;&#x95B1;&#x8B80;</h1>
+<h1 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h1>
 <ul>
 <li><a href="https://nrwl.io/nx/guide-data-persistence" target="_blank" rel="noopener">DataPersistence</a></li>
 </ul>

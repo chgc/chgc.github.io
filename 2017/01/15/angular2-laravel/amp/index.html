@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/01/15/angular2-laravel/"
 			},
 			"datePublished": "2017-01-15T08:04:06.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,39 +1851,39 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Laravel 5.x&#x7248;&#x4EE5;&#x5F8C;&#x6A23;&#x677F;&#x7684;&#x90E8;&#x5206;&#x5C31;&#x5167;&#x5EFA;&#x4F7F;&#x7528;Vue.js&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
-<p>&#x5047;&#x8A2D;&#x4ECA;&#x5929;&#x6211;&#x60F3;&#x8981;&#x4F7F;&#x7528;Angular CLI&#x65B9;&#x5F0F;&#x642D;&#x914D;Laravel&#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x958B;&#x767C;&#xFF0C;&#x90A3;&#x53C8;&#x61C9;&#x8A72;&#x600E;&#x9EBC;&#x505A;&#x5462;&#xFF0C;&#x4EE5;&#x4E0B;&#x63D0;&#x4F9B;&#x4E00;&#x500B;&#x65B9;&#x5F0F;&#xFF0C;&#x6B61;&#x8FCE;&#x8A0E;&#x8AD6;</p>
+			  		<p>Laravel 5.x版以後樣板的部分就內建使用Vue.js的方法。</p>
+<p>假設今天我想要使用Angular CLI方式搭配Laravel的方式來開發，那又應該怎麼做呢，以下提供一個方式，歡迎討論</p>
 <a id="more"></a>
-<h1 id="&#x5EFA;&#x7ACB;laravel&#x5C08;&#x6848;"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;laravel&#x5C08;&#x6848;"> </a>&#x5EFA;&#x7ACB;Laravel&#x5C08;&#x6848;</h1>
+<h1 id="建立laravel專案"><a class="header-anchor" href="#建立laravel專案"> </a>建立Laravel專案</h1>
 <ul>
 <li>
-<p>&#x4FEE;&#x6539;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;&#xFF0C;routes/web.php</p>
-<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the &quot;web&quot; middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// put all your REST routes inside api-group</span></span><br><span class="line">Route::group([<span class="string">&apos;prefix&apos;</span> =&gt; <span class="string">&apos;api&apos;</span>], <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</span><br><span class="line">  </span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">Auth::routes();</span><br><span class="line"><span class="comment">// this route is for Angular and it should be placed after all other back end routes</span></span><br><span class="line"><span class="comment">// just keep it at the bottom</span></span><br><span class="line">Route::get(<span class="string">&apos;/{any}&apos;</span>, <span class="function"><span class="keyword">function</span> <span class="params">($any)</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">&apos;welcome&apos;</span>);</span><br><span class="line">})-&gt;where(<span class="string">&apos;any&apos;</span>, <span class="string">&apos;.*&apos;</span>);</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x200B;</p>
+<p>修改路由設定檔，routes/web.php</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the "web" middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// put all your REST routes inside api-group</span></span><br><span class="line">Route::group([<span class="string">'prefix'</span> =&gt; <span class="string">'api'</span>], <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</span><br><span class="line">  </span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">Auth::routes();</span><br><span class="line"><span class="comment">// this route is for Angular and it should be placed after all other back end routes</span></span><br><span class="line"><span class="comment">// just keep it at the bottom</span></span><br><span class="line">Route::get(<span class="string">'/{any}'</span>, <span class="function"><span class="keyword">function</span> <span class="params">($any)</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">'welcome'</span>);</span><br><span class="line">})-&gt;where(<span class="string">'any'</span>, <span class="string">'.*'</span>);</span><br></pre></td></tr></tbody></table></figure>
+<p>​</p>
 </li>
 </ul>
-<h1 id="&#x5EFA;&#x7ACB;angular&#x5C08;&#x6848;"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;angular&#x5C08;&#x6848;"> </a>&#x5EFA;&#x7ACB;Angular&#x5C08;&#x6848;</h1>
-<h2 id="&#x4F7F;&#x7528;cli&#x4F86;&#x5EFA;&#x7ACB;&#x5C08;&#x6848;"><a class="header-anchor" href="#&#x4F7F;&#x7528;cli&#x4F86;&#x5EFA;&#x7ACB;&#x5C08;&#x6848;"> </a>&#x4F7F;&#x7528;CLI&#x4F86;&#x5EFA;&#x7ACB;&#x5C08;&#x6848;</h2>
-<p>&#x5728;laravel&#x7684;&#x6839;&#x76EE;&#x9304;&#x4E0B;&#xFF0C;&#x57F7;&#x884C;&#x4EE5;&#x4E0B;&#x6307;&#x4EE4;</p>
+<h1 id="建立angular專案"><a class="header-anchor" href="#建立angular專案"> </a>建立Angular專案</h1>
+<h2 id="使用cli來建立專案"><a class="header-anchor" href="#使用cli來建立專案"> </a>使用CLI來建立專案</h2>
+<p>在laravel的根目錄下，執行以下指令</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x6216;&#x662F;&#xFF0C;&#x81EA;&#x5DF1;&#x65B0;&#x589E;&#x4E00;&#x500B;&#x5B58;&#x653E;&#x7684;&#x8CC7;&#x6599;&#x593E;&#x5F8C;&#x4E26;&#x5207;&#x63DB;&#x5230;&#x8A72;&#x8CC7;&#x6599;&#x593E;&#x4E0B;&#xFF0C;&#x57F7;&#x884C;&#x4EE5;&#x4E0B;&#x6307;&#x4EE4;</p>
+<p>或是，自己新增一個存放的資料夾後並切換到該資料夾下，執行以下指令</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng init &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x57F7;&#x884C;&#x5B8C;&#x5F8C;&#xFF0C;&#x4E00;&#x500B;Angular&#x7684;&#x5C08;&#x6848;&#x5C31;&#x5EFA;&#x7F6E;&#x5B8C;&#x6210;&#x4E86;</p>
-<h2 id="&#x8A2D;&#x5B9A;proxy-conf-json"><a class="header-anchor" href="#&#x8A2D;&#x5B9A;proxy-conf-json"> </a>&#x8A2D;&#x5B9A;proxy.conf.json</h2>
+<p>執行完後，一個Angular的專案就建置完成了</p>
+<h2 id="設定proxy-conf-json"><a class="header-anchor" href="#設定proxy-conf-json"> </a>設定proxy.conf.json</h2>
 <ul>
 <li>
-<p>&#x65B0;&#x589E;<code>proxy.config.json</code>&#x6A94;&#x6848;&#xFF0C;&#x4F9D;Laravel serve&#x7684;&#x7DB2;&#x7AD9;&#x4F4D;&#x7F6E;&#x505A;&#x4FEE;&#x6539;</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;/api&quot;</span>: {</span><br><span class="line">    <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;http://localhost:8000&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;secure&quot;</span>: <span class="literal">false</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>新增<code>proxy.config.json</code>檔案，依Laravel serve的網站位置做修改</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"/api"</span>: {</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"http://localhost:8000"</span>,</span><br><span class="line">    <span class="attr">"secure"</span>: <span class="literal">false</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x4FEE;&#x6539;<code>pageage.json</code>&#x7684;<code>scripts</code>&#x90E8;&#x5206;</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: {</span><br><span class="line">    &quot;start&quot;: &quot;ng serve --proxy-config proxy.conf.json&quot;,</span><br><span class="line">    ...</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x200B;</p>
+<p>修改<code>pageage.json</code>的<code>scripts</code>部分</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": {</span><br><span class="line">    "start": "ng serve --proxy-config proxy.conf.json",</span><br><span class="line">    ...</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
+<p>​</p>
 </li>
 </ul>
-<h2 id="&#x8A2D;&#x5B9A;angular-cli-json"><a class="header-anchor" href="#&#x8A2D;&#x5B9A;angular-cli-json"> </a>&#x8A2D;&#x5B9A;angular-cli.json</h2>
+<h2 id="設定angular-cli-json"><a class="header-anchor" href="#設定angular-cli-json"> </a>設定angular-cli.json</h2>
 <ul>
-<li>&#x5C07;laravel&#x5C08;&#x6848;&#x7684;public&#x8CC7;&#x6599;&#x593E;&#x4E0B;&#x7684;&#x6A94;&#x6848;&#x90FD;&#x8907;&#x88FD;&#x5230;angular&#x5C08;&#x6848;&#x7684;src&#x8CC7;&#x6599;&#x593E;&#x4E0B;
+<li>將laravel專案的public資料夾下的檔案都複製到angular專案的src資料夾下
 <ul>
 <li>index.php</li>
 <li>.htaccess</li>
@@ -1891,29 +1891,29 @@ h6.categories {
 <li>web.config</li>
 </ul>
 </li>
-<li>&#x5C07;&#x90A3;&#x4E9B;&#x6A94;&#x6848;&#x90FD;&#x65B0;&#x589E;&#x5230;<code>angular-cli.json</code>&#x7684;<code>assets</code>&#x5340;&#x6BB5;&#x5167;</li>
-<li>&#x8A2D;&#x5B9A;<code>outDir</code>&#x5230;laravel&#x7684;publich&#x8CC7;&#x6599;&#x593E;&#x8DEF;&#x5F91;</li>
+<li>將那些檔案都新增到<code>angular-cli.json</code>的<code>assets</code>區段內</li>
+<li>設定<code>outDir</code>到laravel的publich資料夾路徑</li>
 </ul>
-<h1 id="&#x958B;&#x767C;&#x6642;&#x671F;"><a class="header-anchor" href="#&#x958B;&#x767C;&#x6642;&#x671F;"> </a>&#x958B;&#x767C;&#x6642;&#x671F;</h1>
-<p>&#x5728;&#x958B;&#x767C;&#x6642;&#x671F;&#xFF0C;&#x56E0;&#x70BA;&#x4E0A;&#x8FF0;&#x7684;&#x8A2D;&#x5B9A;&#x65B9;&#x5F0F;&#xFF0C;&#x5DF2;&#x7D93;&#x8B93;&#x524D;&#x7AEF;&#x8207;&#x5F8C;&#x7AEF;&#x5B8C;&#x5168;&#x7684;&#x5207;&#x5272;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x958B;&#x767C;&#x6642;&#x671F;&#x5C31;&#x53EF;&#x4EE5;&#x5206;&#x5225;&#x958B;&#x767C;&#x3002;</p>
+<h1 id="開發時期"><a class="header-anchor" href="#開發時期"> </a>開發時期</h1>
+<p>在開發時期，因為上述的設定方式，已經讓前端與後端完全的切割了，所以在開發時期就可以分別開發。</p>
 <ul>
-<li>Angular&#x7684;&#x7DB2;&#x7AD9;&#x53EF;&#x4EE5;&#x900F;&#x904E;npm start&#x7684;&#x65B9;&#x5F0F;&#x53BB;&#x57F7;&#x884C;ng serve with proxy config&#x7684;&#x52D5;&#x4F5C;&#xFF0C;&#x7531;&#x65BC;proxy&#x6703;&#x5C07;api&#x76F8;&#x95DC;&#x7684;&#x547C;&#x53EB;&#xFF0C;&#x5C0D;&#x61C9;&#x5230;laravel&#x7684;&#x7DB2;&#x7AD9;&#x53BB;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x547C;&#x53EB;api&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x984D;&#x5916;&#x53BB;&#x6307;&#x5B9A;host url&#x7684;&#x90E8;&#x5206;</li>
-<li>Laravel&#x5F8C;&#x7AEF;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x5C31;&#x5C08;&#x5FC3;&#x65BC;API&#x8CC7;&#x6599;&#x7684;&#x63D0;&#x4F9B;&#x7B49;&#x52D5;&#x4F5C;</li>
+<li>Angular的網站可以透過npm start的方式去執行ng serve with proxy config的動作，由於proxy會將api相關的呼叫，對應到laravel的網站去，所以在呼叫api的部分，就不需要額外去指定host url的部分</li>
+<li>Laravel後端的部分，就專心於API資料的提供等動作</li>
 </ul>
-<h1 id="&#x90E8;&#x5C6C;laravel&#x5C08;&#x6848;"><a class="header-anchor" href="#&#x90E8;&#x5C6C;laravel&#x5C08;&#x6848;"> </a>&#x90E8;&#x5C6C;Laravel&#x5C08;&#x6848;</h1>
+<h1 id="部屬laravel專案"><a class="header-anchor" href="#部屬laravel專案"> </a>部屬Laravel專案</h1>
 <ul>
 <li>
-<p>&#x5982;&#x679C;&#x8981;&#x90E8;&#x7F72;&#x7684;&#x6642;&#x5019;&#xFF0C;Angular&#x53EF;&#x4EE5;&#x900F;&#x904E;&#x4EE5;&#x4E0B;&#x7684;&#x6307;&#x4EE4;&#x5C07;Angular&#x7684;&#x7A0B;&#x5F0F;bundle/AOT&#x8F38;&#x51FA;&#x5230;&#x6240;&#x8A2D;&#x5B9A;&#x7684;&#x8F38;&#x51FA;&#x76EE;&#x9304;&#x4E0B;</p>
+<p>如果要部署的時候，Angular可以透過以下的指令將Angular的程式bundle/AOT輸出到所設定的輸出目錄下</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng build --prod --aot --output-hashing=media</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>&#x2014;output-hasing&#x7684;&#x53C3;&#x6578;&#x662F;&#x5728;angular-cli beta25.5&#x7248;&#x4EE5;&#x5F8C;&#x63D0;&#x4F9B;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x8A2D;&#x5B9A;&#x6240;&#x8F38;&#x51FA;&#x7684;bundle&#x662F;&#x5426;&#x8981;&#x52A0;&#x4E0A;hash&#x503C;</li>
+<li>—output-hasing的參數是在angular-cli beta25.5版以後提供的，可以設定所輸出的bundle是否要加上hash值</li>
 </ul>
 </li>
 <li>
-<p>&#x8F38;&#x51FA;&#x5230;Laravel&#x5C08;&#x6848;&#x7684;public&#x8CC7;&#x6599;&#x593E;&#x4E0B;&#x6703;&#x6709;&#x4E00;&#x500B;index.html&#x7684;&#x6A94;&#x6848;&#xFF0C;&#x5C07;&#x8A72;&#x6A94;&#x6848;&#x7684;&#x5167;&#x5BB9;&#x8907;&#x88FD;&#x5230;laravel&#x8D77;&#x59CB;&#x9801;&#x9762;&#x7684;blade.php&#x6A94;&#x6848;(&#x9810;&#x8A2D;: welcome.blade.php) (&#x7B2C;&#x4E00;&#x6B21;&#x4FEE;&#x6539;&#x5373;&#x53EF;)</p>
+<p>輸出到Laravel專案的public資料夾下會有一個index.html的檔案，將該檔案的內容複製到laravel起始頁面的blade.php檔案(預設: welcome.blade.php) (第一次修改即可)</p>
 </li>
 <li>
-<p>&#x4F9D;Laravel&#x90E8;&#x7F72;&#x7DB2;&#x7AD9;&#x7684;&#x65B9;&#x5F0F;&#x90E8;&#x7F72;&#x5373;&#x53EF;</p>
+<p>依Laravel部署網站的方式部署即可</p>
 </li>
 </ul>
 

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/04/blazor-reload-after-save/"
 			},
 			"datePublished": "2020-04-04T02:48:07.000Z",
-			"dateModified": "2021-02-18T02:25:04.951Z",
+			"dateModified": "2021-02-18T02:32:11.683Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,12 +1848,12 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x5728;&#x958B;&#x767C; Blazor &#x6642;&#xFF0C;&#x6700;&#x5E38;&#x9047;&#x5230;&#x7684;&#x554F;&#x984C;&#x662F;&#x5132;&#x5B58;&#x5B8C;&#x7A0B;&#x5F0F;&#x5F8C;&#xFF0C;&#x9084;&#x9700;&#x8981;&#x624B;&#x52D5;&#x91CD;&#x65B0;&#x66F4;&#x65B0;&#x700F;&#x89BD;&#x5668;&#x7684;&#x9801;&#x9762;&#xFF0C;&#x9664;&#x4E86;&#x90A3;&#x500B;&#x63D0;&#x793A;&#x756B;&#x9762;&#x5F88;&#x7919;&#x773C;&#x5916;&#xFF0C;&#x7ADF;&#x7136;&#x9084;&#x8981;&#x624B;&#x52D5;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x4E00;&#x500B;&#x5C0F;&#x6280;&#x5DE7;&#x53EF;&#x4EE5;&#x81EA;&#x52D5;&#x66F4;&#x65B0;&#x9801;&#x9762;</p>
+			  		<p>在開發 Blazor 時，最常遇到的問題是儲存完程式後，還需要手動重新更新瀏覽器的頁面，除了那個提示畫面很礙眼外，竟然還要手動，以下是一個小技巧可以自動更新頁面</p>
 <a id="more"></a>
-<p>&#x9664;&#x4E86;&#x4FDD;&#x54E5;&#x5BEB;&#x7684;&#x9019;&#x7BC7;&#x6587;&#x7AE0;&#x5916;&#xFF0C;<a href="https://blog.miniasp.com/post/2020/01/14/ASPNET-Core-Blazor-Server-Hide-Reconnect-Modal" target="_blank" rel="noopener">&#x5982;&#x4F55;&#x8B93; ASP.NET Core Blazor Server &#x5728;&#x65B7;&#x7DDA;&#x6642;&#x4E0D;&#x5F71;&#x97FF;&#x9801;&#x9762;&#x700F;&#x89BD;</a>&#x3002;&#x5728; <code>_Host.cshtml</code> &#x7684;&#x9801;&#x9762;&#x4E0B;&#x52A0;&#x5165;&#x9019;&#x6BB5;&#x7A0B;&#x5F0F;&#x78BC;&#x5C31;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x81EA;&#x52D5;&#x66F4;&#x65B0;</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    Blazor.defaultReconnectionHandler._reconnectCallback = <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>{</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.location.reload();</span></span><br><span class="line"><span class="undefined">    }</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x6211;&#x662F;&#x653E;&#x5728; <code>&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;</code> &#x7684;&#x5F8C;&#x9762;&#x3002;&#x7576;&#x52A0;&#x4E0A;&#x9019;&#x6BB5;&#x7A0B;&#x5F0F;&#x78BC;&#x5F8C;&#xFF0C;&#x756B;&#x9762;&#x5C31;&#x6703;&#x5728;&#x9023;&#x7DDA;&#x91CD;&#x65B0;&#x9023;&#x4E0A;&#x6642;&#x81EA;&#x52D5;&#x66F4;&#x65B0;&#x756B;&#x9762;</p>
-<p>&#x5982;&#x679C;&#x60F3;&#x9650;&#x5B9A;&#x52A0;&#x5165;&#x9019;&#x6BB5; script &#x7684;&#x6642;&#x6A5F;&#x9EDE;&#xFF0C;&#x53EF;&#x4EE5;&#x642D;&#x914D; <code>&lt;environment include=&quot;Development&quot;&gt;</code> &#x4F7F;&#x7528;</p>
+<p>除了保哥寫的這篇文章外，<a href="https://blog.miniasp.com/post/2020/01/14/ASPNET-Core-Blazor-Server-Hide-Reconnect-Modal" target="_blank" rel="noopener">如何讓 ASP.NET Core Blazor Server 在斷線時不影響頁面瀏覽</a>。在 <code>_Host.cshtml</code> 的頁面下加入這段程式碼就可以做到自動更新</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    Blazor.defaultReconnectionHandler._reconnectCallback = <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>{</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.location.reload();</span></span><br><span class="line">    }</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>我是放在 <code>&lt;script src="_framework/blazor.server.js"&gt;&lt;/script&gt;</code> 的後面。當加上這段程式碼後，畫面就會在連線重新連上時自動更新畫面</p>
+<p>如果想限定加入這段 script 的時機點，可以搭配 <code>&lt;environment include="Development"&gt;</code> 使用</p>
 
 			  		
 			  		<!-- google Adsense -->

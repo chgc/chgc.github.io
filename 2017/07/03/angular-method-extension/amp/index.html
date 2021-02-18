@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/07/03/angular-method-extension/"
 			},
 			"datePublished": "2017-07-03T02:55:12.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,27 +1848,27 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x5982;&#x679C;&#x6709;&#x5BEB; C# &#x7684;&#x4EBA;&#xFF0C;&#x591A;&#x5C11;&#x90FD;&#x6703;&#x5BEB;&#x5230;&#x64F4;&#x5145;&#x65B9;&#x6CD5;(Extension Method) &#xFF0C;&#x5728; JavaScript &#x88E1;&#x9762;&#x4E5F;&#x6709;&#x96F7;&#x540C;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x5C31;&#x662F;&#x76F4;&#x63A5;&#x64F4;&#x5145; <code>prototype</code> &#x7684;&#x529F;&#x80FD;&#xFF0C;&#x800C; TypeScript &#x4E5F;&#x540C;&#x7406;&#xFF0C;&#x9019;&#x88E1;&#x6574;&#x7406; 3 &#x7A2E;&#x64F4;&#x5145;&#x65B9;&#x6CD5;&#x7684;&#x5BEB;&#x6CD5;&#xFF0C;&#x4E26;&#x5C07;&#x64F4;&#x5145;&#x65B9;&#x6CD5;&#x52A0;&#x5165;&#x5230; Angular &#x5C08;&#x6848;&#x5167;&#x4F7F;&#x7528;</p>
+			  		<p>如果有寫 C# 的人，多少都會寫到擴充方法(Extension Method) ，在 JavaScript 裡面也有雷同的功能，就是直接擴充 <code>prototype</code> 的功能，而 TypeScript 也同理，這裡整理 3 種擴充方法的寫法，並將擴充方法加入到 Angular 專案內使用</p>
 <a id="more"></a>
-<h1 id="&#x64F4;&#x5145;"><a class="header-anchor" href="#&#x64F4;&#x5145;"> </a>&#x64F4;&#x5145;</h1>
+<h1 id="擴充"><a class="header-anchor" href="#擴充"> </a>擴充</h1>
 <ul>
-<li>&#x60C5;&#x5883;&#xFF1A;&#x8981;&#x8B93;&#x6587;&#x5B57;&#x6709;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8F49;&#x8FF0;&#x5B57;&#x578B;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4E0D;&#x60F3;&#x81EA;&#x5DF1;&#x5728;&#x5BEB; <code>parseFloat</code> &#x4E86;</li>
+<li>情境：要讓文字有可以直接轉述字型的功能，不想自己在寫 <code>parseFloat</code> 了</li>
 </ul>
-<p>&#x6211;&#x76EE;&#x524D;&#x60F3;&#x5230;&#x7684;&#x5BEB;&#x6CD5;&#x6709;&#x4EE5;&#x4E0B;&#x4E09;&#x7A2E;</p>
-<h2 id="&#x5BEB;&#x6CD5;&#x4E00;-&#x76F4;&#x63A5;&#x64F4;&#x5145;-prototype"><a class="header-anchor" href="#&#x5BEB;&#x6CD5;&#x4E00;-&#x76F4;&#x63A5;&#x64F4;&#x5145;-prototype"> </a>&#x5BEB;&#x6CD5;&#x4E00; &#x76F4;&#x63A5;&#x64F4;&#x5145; prototype</h2>
+<p>我目前想到的寫法有以下三種</p>
+<h2 id="寫法一-直接擴充-prototype"><a class="header-anchor" href="#寫法一-直接擴充-prototype"> </a>寫法一 直接擴充 prototype</h2>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.prototype.toNumber = <span class="function"><span class="keyword">function</span>(<span class="params"></span>):<span class="title">number</span> </span>{</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="keyword">this</span>);</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x9019;&#x6A23;&#x7684;&#x5BEB;&#x6CD5;&#x4F5C;&#x70BA;&#x76F4;&#x63A5;</p>
-<h2 id="&#x5BEB;&#x6CD5;&#x4E8C;-object-assign"><a class="header-anchor" href="#&#x5BEB;&#x6CD5;&#x4E8C;-object-assign"> </a>&#x5BEB;&#x6CD5;&#x4E8C; Object.assign</h2>
+<p>這樣的寫法作為直接</p>
+<h2 id="寫法二-object-assign"><a class="header-anchor" href="#寫法二-object-assign"> </a>寫法二 Object.assign</h2>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(<span class="built_in">String</span>.prototype, {</span><br><span class="line">  toNumber(): <span class="built_in">number</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="keyword">this</span>);</span><br><span class="line">  }</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="&#x5BEB;&#x6CD5;&#x4E09;-object-defineproperty"><a class="header-anchor" href="#&#x5BEB;&#x6CD5;&#x4E09;-object-defineproperty"> </a>&#x5BEB;&#x6CD5;&#x4E09; Object.defineProperty</h2>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">String</span>.prototype, <span class="string">&apos;toNumber&apos;</span>, {</span><br><span class="line">  value(): <span class="built_in">number</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="keyword">this</span>);</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x4F7F;&#x7528;&#x9019;&#x7A2E;&#x65B9;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x66F4;&#x591A;&#x7684;&#x5F48;&#x6027;&#x4F86;&#x8A2D;&#x5B9A;&#x7269;&#x4EF6;&#x7684;&#x529F;&#x80FD;&#x3002;&#x53EF;&#x53C3;&#x95B1;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">API</a>&#x6587;&#x4EF6;</p>
-<h1 id="&#x52A0;&#x5165;&#x81F3;-angular-&#x5C08;&#x6848;&#x4E2D;"><a class="header-anchor" href="#&#x52A0;&#x5165;&#x81F3;-angular-&#x5C08;&#x6848;&#x4E2D;"> </a>&#x52A0;&#x5165;&#x81F3; Angular &#x5C08;&#x6848;&#x4E2D;</h1>
-<p>&#x4EE5;&#x4E0A;&#x7684;&#x4E09;&#x7A2E;&#x65B9;&#x5F0F;&#x90FD;&#x53EF;&#x4EE5;&#x9054;&#x5230;&#x76EE;&#x7684;&#xFF0C;&#x5C31;&#x4F9D;&#x500B;&#x4EBA;&#x559C;&#x597D;&#x9078;&#x64C7;&#x4E86;&#x3002;&#x73FE;&#x5728;&#x554F;&#x984C;&#x662F;&#xFF0C;&#x5982;&#x4F55;&#x5C07;&#x5BEB;&#x597D;&#x7684;&#x64F4;&#x5145;&#x65B9;&#x6CD5;&#xFF0C;&#x52A0;&#x5165;&#x81F3; Angular &#x5C08;&#x6848;&#x88E1;&#x3002;</p>
-<p>&#x57FA;&#x672C;&#x4E0A;&#xFF0C;&#x53EA;&#x8981;&#x6709;&#x7DB2;&#x7AD9;&#x4E5F;&#x8F09;&#x5165;&#x8A72;&#x64F4;&#x5145;&#x529F;&#x80FD;&#xFF0C;&#x6574;&#x500B;&#x7DB2;&#x7AD9;&#x5E95;&#x5C64;&#x5C31;&#x6703;&#x76F4;&#x63A5;&#x751F;&#x6548;&#xFF0C;&#x4F46;&#x5728;&#x958B;&#x767C;&#x6642;&#x671F;&#xFF0C;&#x6703;&#x9047;&#x5230;&#x7684;&#x932F;&#x8AA4;&#x63D0;&#x793A;&#x662F; <code>TypeScript</code> &#x7DE8;&#x8B6F;&#x5668;&#x4E0D;&#x8A8D;&#x8B58;&#x64F4;&#x5145;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x9019;&#x6642;&#x5019;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x518D; <code>typings.d.ts</code> &#x5167;&#x52A0;&#x4E0A;&#x6240;&#x64F4;&#x5145;&#x7684;&#x529F;&#x80FD;</p>
+<h2 id="寫法三-object-defineproperty"><a class="header-anchor" href="#寫法三-object-defineproperty"> </a>寫法三 Object.defineProperty</h2>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">String</span>.prototype, <span class="string">'toNumber'</span>, {</span><br><span class="line">  value(): <span class="built_in">number</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="keyword">this</span>);</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<p>使用這種方式，可以有更多的彈性來設定物件的功能。可參閱<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">API</a>文件</p>
+<h1 id="加入至-angular-專案中"><a class="header-anchor" href="#加入至-angular-專案中"> </a>加入至 Angular 專案中</h1>
+<p>以上的三種方式都可以達到目的，就依個人喜好選擇了。現在問題是，如何將寫好的擴充方法，加入至 Angular 專案裡。</p>
+<p>基本上，只要有網站也載入該擴充功能，整個網站底層就會直接生效，但在開發時期，會遇到的錯誤提示是 <code>TypeScript</code> 編譯器不認識擴充的功能，這時候，就需要再 <code>typings.d.ts</code> 內加上所擴充的功能</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> String {</span><br><span class="line">  toNumber(): <span class="built_in">number</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x9019;&#x6A23;&#x5B50;&#x5C07;&#x64F4;&#x5145;&#x65B9;&#x6CD5;&#x7684;&#x5B9A;&#x7FA9;&#x88DC;&#x4E0A;&#x5F8C;&#xFF0C;TypeScript &#x7DE8;&#x8B6F;&#x5668;&#x5C31;&#x6703;&#x8A8D;&#x8B58;&#x6211;&#x5011;&#x6240;&#x64F4;&#x5145;&#x7684;&#x529F;&#x80FD;&#x4E86;&#xFF0C;&#x4E4B;&#x5F8C;&#x5C31;&#x662F;&#x958B;&#x5FC3;&#x7684;&#x5BEB;&#x7A0B;&#x5F0F;&#x4E86;&#x3002;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<p>當這樣子將擴充方法的定義補上後，TypeScript 編譯器就會認識我們所擴充的功能了，之後就是開心的寫程式了。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign()</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">Object.defineProperty()</a></li>

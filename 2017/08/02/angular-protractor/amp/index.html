@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/08/02/angular-protractor/"
 			},
 			"datePublished": "2017-08-02T01:07:47.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,109 +1851,109 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Protractor &#x4E5F;&#x662F;&#x4E00;&#x500B;&#x51FA;&#x81EA; Google &#x4E4B;&#x624B;&#x7684; E2E &#x6E2C;&#x8A66;&#x6846;&#x67B6;&#xFF0C;&#x7576;&#x521D;&#x662F;&#x70BA;&#x4E86;&#x6E2C;&#x8A66; AngularJS &#x6240;&#x958B;&#x767C;&#x51FA;&#x4F86;&#x7684; E2E&#xFF0C;&#x7576;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x7528;&#x4F86;&#x6E2C;&#x8A66;&#x5176;&#x4ED6;&#x7684;&#x4E00;&#x822C;&#x7DB2;&#x7AD9;&#xFF0C;&#x8DDF; Angular 2 (&#x5EE2;&#x8A00;)&#x3002;&#x96D6;&#x7136; Protractor &#x51FA;&#x4F86;&#x5F88;&#x4E45;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x4E00;&#x76F4;&#x90FD;&#x6C92;&#x6709;&#x4ED4;&#x7D30;&#x7684;&#x53BB;&#x7814;&#x7A76;&#x600E;&#x9EBC;&#x4F7F;&#x7528;&#xFF0C;&#x9019;&#x7BC7;&#x6587;&#x7AE0;&#x5C31;&#x4F86;&#x8A18;&#x9304;&#x4E00;&#x4E9B;&#x3002;</p>
-<p>(&#x4E0D;&#x8AC7;&#x600E;&#x9EBC;&#x8A2D;&#x5B9A;&#x74B0;&#x5883;&#xFF0C;&#x56E0;&#x70BA; Angular CLI &#x5DF2;&#x7D93;&#x5E6B;&#x6211;&#x5011;&#x8655;&#x7406;&#x597D;&#x4E86;)</p>
+			  		<p>Protractor 也是一個出自 Google 之手的 E2E 測試框架，當初是為了測試 AngularJS 所開發出來的 E2E，當然也可以用來測試其他的一般網站，跟 Angular 2 (廢言)。雖然 Protractor 出來很久了，但是一直都沒有仔細的去研究怎麼使用，這篇文章就來記錄一些。</p>
+<p>(不談怎麼設定環境，因為 Angular CLI 已經幫我們處理好了)</p>
 <a id="more"></a>
-<h1 id="&#x76EE;&#x7684;"><a class="header-anchor" href="#&#x76EE;&#x7684;"> </a>&#x76EE;&#x7684;</h1>
-<p>E2E &#x662F;&#x5229;&#x7528;&#x7A0B;&#x5F0F;&#x4F86;&#x6A21;&#x64EC;&#x4F7F;&#x7528;&#x8005;&#x64CD;&#x4F5C;&#x7DB2;&#x9801;&#x7684;&#x52D5;&#x4F5C;&#xFF0C;&#x6E2C;&#x8A66;&#x7DB2;&#x9801;&#x7A0B;&#x5F0F;&#x6709;&#x7B26;&#x5408;&#x9810;&#x671F;&#x7684;&#x5BE6;&#x969B;&#x64CD;&#x4F5C;&#x6D41;&#x7A0B;&#x8207;&#x7D50;&#x679C;</p>
-<h1 id="&#x8A9E;&#x6CD5;"><a class="header-anchor" href="#&#x8A9E;&#x6CD5;"> </a>&#x8A9E;&#x6CD5;</h1>
+<h1 id="目的"><a class="header-anchor" href="#目的"> </a>目的</h1>
+<p>E2E 是利用程式來模擬使用者操作網頁的動作，測試網頁程式有符合預期的實際操作流程與結果</p>
+<h1 id="語法"><a class="header-anchor" href="#語法"> </a>語法</h1>
 <h2 id="browser"><a class="header-anchor" href="#browser"> </a>browser</h2>
-<p>&#x8DDF;&#x700F;&#x89BD;&#x5668;&#x6709;&#x95DC;&#x7684;&#x884C;&#x70BA;&#xFF0C;&#x53EF;&#x900F;&#x904E;&#x9019;&#x7269;&#x4EF6;&#x63A7;&#x5236;&#xFF0C;&#x5217;&#x51FA;&#x5E7E;&#x500B;&#x5E38;&#x7528;&#x7684;&#x65B9;&#x6CD5;</p>
+<p>跟瀏覽器有關的行為，可透過這物件控制，列出幾個常用的方法</p>
 <ul>
 <li>
-<p><a href="http://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.get" target="_blank" rel="noopener">get</a>&#xFF1A;&#x7DB2;&#x5740;&#x6539;&#x8B8A;</p>
+<p><a href="http://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.get" target="_blank" rel="noopener">get</a>：網址改變</p>
 </li>
 <li>
-<p><a href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.getCurrentUrl" target="_blank" rel="noopener">getCurrentUrl</a>&#xFF1A;&#x53D6;&#x5F97;&#x76EE;&#x524D;&#x7684;&#x7DB2;&#x5740;</p>
+<p><a href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.getCurrentUrl" target="_blank" rel="noopener">getCurrentUrl</a>：取得目前的網址</p>
 </li>
 <li>
-<p><a href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.wait" target="_blank" rel="noopener">wait</a>&#xFF1A;&#x7B49;&#x5230;&#x689D;&#x4EF6;&#x7B26;&#x5408;&#x5F8C;&#xFF0C;&#x5728;&#x7E7C;&#x7E8C;&#x57F7;&#x884C;</p>
+<p><a href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.wait" target="_blank" rel="noopener">wait</a>：等到條件符合後，在繼續執行</p>
 </li>
 <li>
-<p><a href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.getTitle" target="_blank" rel="noopener">getTitle</a>&#xFF1A; &#x53D6;&#x5F97;&#x7DB2;&#x9801;&#x7684; <code>&lt;title&gt;</code> &#x5167;&#x5BB9;</p>
+<p><a href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.getTitle" target="_blank" rel="noopener">getTitle</a>： 取得網頁的 <code>&lt;title&gt;</code> 內容</p>
 </li>
 <li>
-<p><a href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.takeScreenshot" target="_blank" rel="noopener">takeScreenshot</a>&#xFF1A;&#x64F7;&#x53D6;&#x7DB2;&#x9801;&#x756B;&#x9762;&#xFF0C;&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;&#x5982;&#x4E0B;</p>
+<p><a href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.takeScreenshot" target="_blank" rel="noopener">takeScreenshot</a>：擷取網頁畫面，範例程式如下</p>
 </li>
 </ul>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// at the top of the test spec:</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&apos;fs&apos;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// abstract writing screen shot to a file</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">writeScreenShot</span>(<span class="params">data, filename</span>) </span>{</span><br><span class="line">  <span class="keyword">const</span> stream = fs.createWriteStream(filename);</span><br><span class="line">  stream.write(<span class="keyword">new</span> Buffer(data, <span class="string">&apos;base64&apos;</span>));</span><br><span class="line">  stream.end();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">it(<span class="string">&apos;should have selected&apos;</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">  page.navigateTo();</span><br><span class="line">  browser.takeScreenshot().then(<span class="function"><span class="keyword">function</span>(<span class="params">png</span>) </span>{</span><br><span class="line">    writeScreenShot(png, <span class="string">&apos;exception.png&apos;</span>);</span><br><span class="line">  });    </span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// at the top of the test spec:</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// abstract writing screen shot to a file</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">writeScreenShot</span>(<span class="params">data, filename</span>) </span>{</span><br><span class="line">  <span class="keyword">const</span> stream = fs.createWriteStream(filename);</span><br><span class="line">  stream.write(<span class="keyword">new</span> Buffer(data, <span class="string">'base64'</span>));</span><br><span class="line">  stream.end();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">it(<span class="string">'should have selected'</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">  page.navigateTo();</span><br><span class="line">  browser.takeScreenshot().then(<span class="function"><span class="keyword">function</span>(<span class="params">png</span>) </span>{</span><br><span class="line">    writeScreenShot(png, <span class="string">'exception.png'</span>);</span><br><span class="line">  });    </span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="by"><a class="header-anchor" href="#by"> </a>by</h2>
-<p><code>by</code> &#x662F;&#x5B9A;&#x4F4D;&#x5668; (locator)&#xFF0C;&#x7528;&#x4F86;&#x641C;&#x5C0B; element &#x4F7F;&#x7528;&#x7684;&#xFF0C;&#x5E38;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x6709;</p>
+<p><code>by</code> 是定位器 (locator)，用來搜尋 element 使用的，常用的方法有</p>
 <ul>
-<li>&#x55AE;&#x4E00; element
+<li>單一 element
 <ul>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.css" target="_blank" rel="noopener">css</a>&#xFF1A;&#x4F7F;&#x7528; <code>CSS Selector</code> &#x4F86;&#x5B9A;&#x4F4D; element</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.id" target="_blank" rel="noopener">id</a>&#xFF1A;&#x5229;&#x7528; Id &#x4F86;&#x5B9A;&#x4F4D; element</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.css" target="_blank" rel="noopener">css</a>：使用 <code>CSS Selector</code> 來定位 element</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.id" target="_blank" rel="noopener">id</a>：利用 Id 來定位 element</li>
 </ul>
 </li>
-<li>&#x4E00;&#x500B;&#x6216;&#x591A;&#x500B; elements
+<li>一個或多個 elements
 <ul>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.linkText" target="_blank" rel="noopener">linkText</a>&#xFF1A;&#x5229;&#x7528;&#x9023;&#x7D50;&#x6587;&#x5B57;&#x4F86;&#x5B9A;&#x4F4D; elements</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.partialLinkText" target="_blank" rel="noopener">partialLinkText</a>&#xFF1A;&#x5229;&#x7528;<strong>&#x90E8;&#x5206;</strong>&#x9023;&#x7D50;&#x6587;&#x5B57;&#x4F86;&#x5B9A;&#x4F4D; elements</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.name" target="_blank" rel="noopener">name</a>&#xFF1A;&#x5229;&#x7528; name &#x4F86;&#x5B9A;&#x4F4D; elements</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.className" target="_blank" rel="noopener">className</a>&#xFF1A;&#x5229;&#x7528; css class &#x4F86;&#x5B9A;&#x4F4D; elements</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.tagName" target="_blank" rel="noopener">tagName</a>&#xFF1A;&#x5229;&#x7528; tag name &#x4F86;&#x5B9A;&#x4F4D; elements</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.xpath" target="_blank" rel="noopener">xpath</a>&#xFF1A;&#x5229;&#x7528; xpath &#x4F86;&#x5B9A;&#x4F4D; elements (&#x53EF;&#x900F;&#x904E;&#x700F;&#x89BD;&#x5668;&#x53D6;&#x5F97;&#x8A72;&#x5143;&#x4EF6;&#x7684; xpath)</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.linkText" target="_blank" rel="noopener">linkText</a>：利用連結文字來定位 elements</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.partialLinkText" target="_blank" rel="noopener">partialLinkText</a>：利用<strong>部分</strong>連結文字來定位 elements</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.name" target="_blank" rel="noopener">name</a>：利用 name 來定位 elements</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.className" target="_blank" rel="noopener">className</a>：利用 css class 來定位 elements</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.tagName" target="_blank" rel="noopener">tagName</a>：利用 tag name 來定位 elements</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.By.xpath" target="_blank" rel="noopener">xpath</a>：利用 xpath 來定位 elements (可透過瀏覽器取得該元件的 xpath)</li>
 </ul>
 </li>
-<li>&#x5C0B;&#x627E;&#x6309;&#x9215;(button) - &#x5EFA;&#x8B70;&#x4F7F;&#x7528; <code>by.css</code> &#x53D6;&#x4EE3;
+<li>尋找按鈕(button) - 建議使用 <code>by.css</code> 取代
 <ul>
-<li><a href="http://www.protractortest.org/#/api?view=ProtractorBy.prototype.buttonText" target="_blank" rel="noopener">buttonText</a>: &#x7528;&#x6309;&#x9215;&#x540D;&#x7A31;&#x627E; <code>button</code></li>
-<li><a href="http://www.protractortest.org/#/api?view=ProtractorBy.prototype.partialButtonText" target="_blank" rel="noopener">partialButtonText</a>&#xFF1A;&#x6839;&#x64DA;&#x90E8;&#x5206;&#x6309;&#x9215;&#x540D;&#x7A31;&#x627E; <code>button</code></li>
+<li><a href="http://www.protractortest.org/#/api?view=ProtractorBy.prototype.buttonText" target="_blank" rel="noopener">buttonText</a>: 用按鈕名稱找 <code>button</code></li>
+<li><a href="http://www.protractortest.org/#/api?view=ProtractorBy.prototype.partialButtonText" target="_blank" rel="noopener">partialButtonText</a>：根據部分按鈕名稱找 <code>button</code></li>
 </ul>
 </li>
 </ul>
 <h2 id="element"><a class="header-anchor" href="#element"> </a>element</h2>
-<p>element &#x9700;&#x8981;&#x642D;&#x914D; locator &#x4F7F;&#x7528;&#xFF0C;&#x9032;&#x800C;&#x53D6;&#x5F97;&#x60F3;&#x8981;&#x7684; HTMLElement&#x3002;&#x5E38;&#x7528;&#x65B9;&#x6CD5;(<a href="http://www.protractortest.org/#/api?view=ElementFinder" target="_blank" rel="noopener">&#x5B8C;&#x6574;&#x6587;&#x4EF6;</a>)&#x5982;&#x4E0B;</p>
+<p>element 需要搭配 locator 使用，進而取得想要的 HTMLElement。常用方法(<a href="http://www.protractortest.org/#/api?view=ElementFinder" target="_blank" rel="noopener">完整文件</a>)如下</p>
 <ul>
 <li>element(locator)
 <ul>
-<li><a href="http://www.protractortest.org/#/api?view=ElementFinder.prototype.isPresent" target="_blank" rel="noopener">isPresent</a>&#xFF1A;&#x662F;&#x5426;&#x6709;&#x7B26;&#x5408;&#x689D;&#x4EF6;&#x7684; element</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.click" target="_blank" rel="noopener">click</a>&#xFF1A;&#x57F7;&#x884C; click &#x52D5;&#x4F5C;</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.sendKeys" target="_blank" rel="noopener">sendKeys</a>&#xFF1A;&#x9001;&#x51FA;&#x9375;&#x76E4;&#x52D5;&#x4F5C;&#x3002;&#x4F8B;&#x5982;&#xFF1A;&#x6253;&#x5B57;&#x5230; Input &#x4E0A;</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.getAttribute" target="_blank" rel="noopener">getAttribute</a>&#xFF1A; &#x53D6;&#x5F97; element &#x7684; &#x5C6C;&#x6027;&#x503C;</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.getText" target="_blank" rel="noopener">getText</a>&#xFF1A; &#x53D6;&#x5F97; <code>innerText</code></li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.isEnabled" target="_blank" rel="noopener">isEnabled</a>&#xFF1A;&#x5224;&#x65B7; element &#x662F;&#x5426;&#x6709; disabled &#x5C6C;&#x6027;</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.isSelected" target="_blank" rel="noopener">isSelected</a>&#xFF1A;&#x5224;&#x65B7; element &#x662F;&#x5426; selected &#x5C6C;&#x6027;</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.submit" target="_blank" rel="noopener">submit</a>&#xFF1A; &#x57F7;&#x884C; Form submit &#x52D5;&#x4F5C;</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.clear" target="_blank" rel="noopener">clear</a>&#xFF1A;&#x6E05;&#x9664; value &#x6B04;&#x4F4D;</li>
-<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.isDisplayed" target="_blank" rel="noopener">isDisplayed</a>&#xFF1A;&#x5224;&#x65B7; element &#x662F;&#x5426;&#x6709;&#x986F;&#x793A;&#x5728;&#x756B;&#x9762;&#x4E0A; &#xFF0C;&#x53EF;&#x80FD;&#x88AB;&#x8A2D;&#x5B9A; visibility &#x88AB;&#x8A2D;&#x5B9A;&#x70BA; false</li>
+<li><a href="http://www.protractortest.org/#/api?view=ElementFinder.prototype.isPresent" target="_blank" rel="noopener">isPresent</a>：是否有符合條件的 element</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.click" target="_blank" rel="noopener">click</a>：執行 click 動作</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.sendKeys" target="_blank" rel="noopener">sendKeys</a>：送出鍵盤動作。例如：打字到 Input 上</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.getAttribute" target="_blank" rel="noopener">getAttribute</a>： 取得 element 的 屬性值</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.getText" target="_blank" rel="noopener">getText</a>： 取得 <code>innerText</code></li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.isEnabled" target="_blank" rel="noopener">isEnabled</a>：判斷 element 是否有 disabled 屬性</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.isSelected" target="_blank" rel="noopener">isSelected</a>：判斷 element 是否 selected 屬性</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.submit" target="_blank" rel="noopener">submit</a>： 執行 Form submit 動作</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.clear" target="_blank" rel="noopener">clear</a>：清除 value 欄位</li>
+<li><a href="http://www.protractortest.org/#/api?view=webdriver.WebElement.prototype.isDisplayed" target="_blank" rel="noopener">isDisplayed</a>：判斷 element 是否有顯示在畫面上 ，可能被設定 visibility 被設定為 false</li>
 </ul>
 </li>
 <li>element.all(locator)
 <ul>
-<li><a href="http://www.protractortest.org/#/api?view=ElementArrayFinder.prototype.get" target="_blank" rel="noopener">get</a>&#xFF1A;&#x4F7F;&#x7528; <code>ElementArrayIndex</code> &#x53D6;&#x5F97;&#x7279;&#x5B9A;&#x4F4D;&#x7F6E;&#x7684; element</li>
-<li><a href="http://www.protractortest.org/#/api?view=ElementArrayFinder.prototype.count" target="_blank" rel="noopener">count</a>&#xFF1A;&#x7B26;&#x5408;&#x689D;&#x4EF6;&#x7684; element &#x6578;&#x91CF;</li>
-<li><a href="http://www.protractortest.org/#/api?view=ElementArrayFinder.prototype.isPresent" target="_blank" rel="noopener">isPresent</a>&#xFF1A;&#x662F;&#x5426;&#x6709;&#x7B26;&#x5408;&#x689D;&#x4EF6;&#x7684; element</li>
+<li><a href="http://www.protractortest.org/#/api?view=ElementArrayFinder.prototype.get" target="_blank" rel="noopener">get</a>：使用 <code>ElementArrayIndex</code> 取得特定位置的 element</li>
+<li><a href="http://www.protractortest.org/#/api?view=ElementArrayFinder.prototype.count" target="_blank" rel="noopener">count</a>：符合條件的 element 數量</li>
+<li><a href="http://www.protractortest.org/#/api?view=ElementArrayFinder.prototype.isPresent" target="_blank" rel="noopener">isPresent</a>：是否有符合條件的 element</li>
 </ul>
 </li>
 </ul>
-<h1 id="&#x5C0F;&#x6280;&#x5DE7;"><a class="header-anchor" href="#&#x5C0F;&#x6280;&#x5DE7;"> </a>&#x5C0F;&#x6280;&#x5DE7;</h1>
-<h2 id="&#x52A0;&#x5FEB;-e2e-&#x7684;&#x6E2C;&#x8A66;&#x901F;&#x5EA6;"><a class="header-anchor" href="#&#x52A0;&#x5FEB;-e2e-&#x7684;&#x6E2C;&#x8A66;&#x901F;&#x5EA6;"> </a>&#x52A0;&#x5FEB; E2E &#x7684;&#x6E2C;&#x8A66;&#x901F;&#x5EA6;</h2>
-<h3 id="&#x95DC;&#x6389;-serve"><a class="header-anchor" href="#&#x95DC;&#x6389;-serve"> </a>&#x95DC;&#x6389; serve</h3>
-<p>&#x9810;&#x8A2D;&#x7684; E2E &#x662F;&#x6703;&#x5148;&#x57F7;&#x884C; <code>serve</code> &#x5F8C;&#x5728;&#x9032;&#x884C;&#x6E2C;&#x8A66;&#xFF0C;&#x53EF;&#x662F;&#x9019;&#x6A23;&#x5B50;&#x7684;&#x9810;&#x8A2D;&#x884C;&#x70BA;&#xFF0C;&#x90FD;&#x6703;&#x56E0;&#x70BA; <code>server</code> &#x7684;&#x5EFA;&#x7F6E;&#x6642;&#x9593;&#x800C;&#x62D6;&#x6162;&#x6E2C;&#x8A66;&#x901F;&#x5EA6;&#x3002;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x5C07;&#x9019;&#x5169;&#x500B;&#x52D5;&#x4F5C;&#x5206;&#x5225;&#x57F7;&#x884C;&#x3002; E2E &#x53EF;&#x4EE5;&#x95DC;&#x6389; <code>serve</code>&#x7684;&#x52D5;&#x4F5C;&#xFF0C;&#x6307;&#x4EE4;&#x5982;&#x4E0B;</p>
+<h1 id="小技巧"><a class="header-anchor" href="#小技巧"> </a>小技巧</h1>
+<h2 id="加快-e2e-的測試速度"><a class="header-anchor" href="#加快-e2e-的測試速度"> </a>加快 E2E 的測試速度</h2>
+<h3 id="關掉-serve"><a class="header-anchor" href="#關掉-serve"> </a>關掉 serve</h3>
+<p>預設的 E2E 是會先執行 <code>serve</code> 後在進行測試，可是這樣子的預設行為，都會因為 <code>server</code> 的建置時間而拖慢測試速度。所以可以將這兩個動作分別執行。 E2E 可以關掉 <code>serve</code>的動作，指令如下</p>
 <blockquote>
 <p>ng e2e --serve=false</p>
 </blockquote>
-<p>&#x4EE5;&#x4E0A;&#x7684;&#x8A2D;&#x5B9A;&#x65B9;&#x5F0F;&#xFF0C;&#x7576;&#x57F7;&#x884C; <code>ng e2e</code>&#x6642;&#xFF0C;&#x5C31;&#x53EA;&#x6703;&#x55AE;&#x7D14;&#x8DD1;&#x6E2C;&#x8A66;&#x4E86;&#x3002;</p>
-<h3 id="&#x4F7F;&#x7528;-chrome-headless"><a class="header-anchor" href="#&#x4F7F;&#x7528;-chrome-headless"> </a>&#x4F7F;&#x7528; chrome headless</h3>
-<p>&#x4FEE;&#x6539; protractor.conf.js&#xFF0C;&#x65B0;&#x589E; <code>chromeOptions</code> &#x5340;&#x584A;&#x5167;&#x5BB9;&#xFF0C;&#x9019;&#x6A23;&#x7684;&#x8A2D;&#x5B9A;&#x5728;&#x57F7;&#x884C; e2e &#x6642;&#xFF0C;&#x5C31;&#x4E0D;&#x6703;&#x8DF3;&#x51FA;&#x700F;&#x89BD;&#x5668;&#x4E86;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> capabilities: {</span><br><span class="line">    <span class="string">&apos;browserName&apos;</span>: <span class="string">&apos;chrome&apos;</span>,</span><br><span class="line">    chromeOptions: {</span><br><span class="line">      args: [ <span class="string">&quot;--headless&quot;</span>, <span class="string">&quot;--disable-gpu&quot;</span>, <span class="string">&quot;--window-size=1920, 1080&quot;</span> ]</span><br><span class="line">    }</span><br><span class="line"> },</span><br><span class="line"> ...</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x8A73;&#x7D30;&#x8AAA;&#x660E;&#x8ACB;&#x53C3;&#x95B1;<a href="http://oomusou.io/protractor/protractor-headless-chrome/" target="_blank" rel="noopener">&#x71C8;&#x54E5;&#x7684;&#x6587;&#x7AE0;</a></p>
-<h2 id="&#x4F7F;&#x7528;-pageobject"><a class="header-anchor" href="#&#x4F7F;&#x7528;-pageobject"> </a>&#x4F7F;&#x7528; PageObject</h2>
-<p>&#x4E00;&#x500B;&#x9801;&#x9762;&#x4E0A;&#x7684; Element &#x5F88;&#x591A;&#xFF0C;&#x5927;&#x591A;&#x6578;&#x7684;&#x6642;&#x9593;&#xFF0C;&#x9019;&#x4E9B; Element &#x90FD;&#x56E0;&#x70BA;&#x4E0D;&#x540C;&#x7684;&#x64CD;&#x4F5C;&#x6D41;&#x7A0B;&#x800C;&#x88AB;&#x91CD;&#x8907;&#x64CD;&#x4F5C;&#x8457;&#xFF0C;&#x9019;&#x6642;&#x5019;&#x5229;&#x7528; PageObject &#x7684;&#x65B9;&#x5F0F;&#x5C07; Element &#x5C01;&#x88DD;&#x3002;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> {browser, by, element} <span class="keyword">from</span> <span class="string">&apos;protractor&apos;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NgRPage {</span><br><span class="line">  navigateTo() {</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">&apos;/&apos;</span>);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  getParagraphText() {</span><br><span class="line">    <span class="keyword">return</span> element(by.css(<span class="string">&apos;app-root h1&apos;</span>)).getText();</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> {NgRPage} <span class="keyword">from</span> <span class="string">&apos;./app.po&apos;</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">&apos;ng-r App&apos;</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">  <span class="keyword">let</span> page: NgRPage;</span><br><span class="line"></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">    page = <span class="keyword">new</span> NgRPage();</span><br><span class="line">  });</span><br><span class="line"></span><br><span class="line">  it(<span class="string">&apos;should display welcome message&apos;</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">    page.navigateTo();</span><br><span class="line">    expect(page.getParagraphText()).toEqual(<span class="string">&apos;todos&apos;</span>);</span><br><span class="line">  });</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="element-&#x8207;-element-all-&#x7684;&#x6DF7;&#x642D;"><a class="header-anchor" href="#element-&#x8207;-element-all-&#x7684;&#x6DF7;&#x642D;"> </a>element &#x8207; element.all &#x7684;&#x6DF7;&#x642D;</h2>
-<p><code>element(locator)</code> &#x53EA;&#x80FD;&#x53D6;&#x56DE;&#x55AE;&#x4E00;&#x5143;&#x7D20;&#xFF0C;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x4E32;&#x63A5;&#x4E0B;&#x53BB;&#x7684;&#x3002;&#x4F8B;&#x5982;&#x8AAA;&#xFF0C;&#x6211;&#x60F3;&#x8981;&#x53D6;&#x5F97;&#x67D0;&#x500B; select options &#x7684;&#x503C;&#xFF0C;&#x5BEB;&#x6CD5;&#x53EF;&#x4EE5;&#x6709;&#x5169;&#x7A2E;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// method 2</span></span><br><span class="line">element(by.css(<span class="string">&apos;ul&gt;li&apos;</span>));  </span><br><span class="line"><span class="comment">// method 2</span></span><br><span class="line">element(by.name(<span class="string">&apos;sel&apos;</span>)).all(by.css(<span class="string">&apos;li&apos;</span>))</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x6211;&#x500B;&#x4EBA;&#x662F;&#x6BD4;&#x8F03;&#x559C;&#x6B61;&#x7B2C;&#x4E8C;&#x7A2E;&#x7684;&#x5BEB;&#x6CD5;&#xFF0C;&#x6BD4;&#x8F03;&#x6E05;&#x723D;&#x4E00;&#x9EDE;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<p>以上的設定方式，當執行 <code>ng e2e</code>時，就只會單純跑測試了。</p>
+<h3 id="使用-chrome-headless"><a class="header-anchor" href="#使用-chrome-headless"> </a>使用 chrome headless</h3>
+<p>修改 protractor.conf.js，新增 <code>chromeOptions</code> 區塊內容，這樣的設定在執行 e2e 時，就不會跳出瀏覽器了</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> capabilities: {</span><br><span class="line">    <span class="string">'browserName'</span>: <span class="string">'chrome'</span>,</span><br><span class="line">    chromeOptions: {</span><br><span class="line">      args: [ <span class="string">"--headless"</span>, <span class="string">"--disable-gpu"</span>, <span class="string">"--window-size=1920, 1080"</span> ]</span><br><span class="line">    }</span><br><span class="line"> },</span><br><span class="line"> ...</span><br></pre></td></tr></tbody></table></figure>
+<p>詳細說明請參閱<a href="http://oomusou.io/protractor/protractor-headless-chrome/" target="_blank" rel="noopener">燈哥的文章</a></p>
+<h2 id="使用-pageobject"><a class="header-anchor" href="#使用-pageobject"> </a>使用 PageObject</h2>
+<p>一個頁面上的 Element 很多，大多數的時間，這些 Element 都因為不同的操作流程而被重複操作著，這時候利用 PageObject 的方式將 Element 封裝。</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> {browser, by, element} <span class="keyword">from</span> <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NgRPage {</span><br><span class="line">  navigateTo() {</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'/'</span>);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  getParagraphText() {</span><br><span class="line">    <span class="keyword">return</span> element(by.css(<span class="string">'app-root h1'</span>)).getText();</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>使用方式如下</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> {NgRPage} <span class="keyword">from</span> <span class="string">'./app.po'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'ng-r App'</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">  <span class="keyword">let</span> page: NgRPage;</span><br><span class="line"></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">    page = <span class="keyword">new</span> NgRPage();</span><br><span class="line">  });</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should display welcome message'</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">    page.navigateTo();</span><br><span class="line">    expect(page.getParagraphText()).toEqual(<span class="string">'todos'</span>);</span><br><span class="line">  });</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="element-與-element-all-的混搭"><a class="header-anchor" href="#element-與-element-all-的混搭"> </a>element 與 element.all 的混搭</h2>
+<p><code>element(locator)</code> 只能取回單一元素，但是可以串接下去的。例如說，我想要取得某個 select options 的值，寫法可以有兩種</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// method 2</span></span><br><span class="line">element(by.css(<span class="string">'ul&gt;li'</span>));  </span><br><span class="line"><span class="comment">// method 2</span></span><br><span class="line">element(by.name(<span class="string">'sel'</span>)).all(by.css(<span class="string">'li'</span>))</span><br></pre></td></tr></tbody></table></figure>
+<p>我個人是比較喜歡第二種的寫法，比較清爽一點</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="http://www.protractortest.org/#/api" target="_blank" rel="noopener">Protractor API</a></li>
 <li><a href="http://pageobject.io/" target="_blank" rel="noopener">pageobject.io/</a></li>
-<li><a href="http://oomusou.io/protractor/protractor-headless-chrome/" target="_blank" rel="noopener">&#x5982;&#x4F55;&#x4F7F; Protractor &#x8DD1; Headless Chrome?</a></li>
+<li><a href="http://oomusou.io/protractor/protractor-headless-chrome/" target="_blank" rel="noopener">如何使 Protractor 跑 Headless Chrome?</a></li>
 </ul>
 
 			  		

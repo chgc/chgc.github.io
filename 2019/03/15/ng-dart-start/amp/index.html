@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/03/15/ng-dart-start/"
 			},
 			"datePublished": "2019-03-15T02:43:57.000Z",
-			"dateModified": "2021-02-18T02:25:04.875Z",
+			"dateModified": "2021-02-18T02:32:11.595Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,20 +1848,20 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular &#x9664;&#x4E86;&#x5E38;&#x898B;&#x7684; TypeScript &#x7248;&#x672C;&#xFF0C;&#x5176;&#x5BE6;&#x9084;&#x53C8;&#x53E6;&#x5916;&#x4E00;&#x500B; Dart &#x8A9E;&#x8A00;&#x7684;&#x7248;&#x672C;&#xFF0C;&#x96D6;&#x7136;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x5718;&#x968A;&#x7DAD;&#x8B77;&#xFF0C;&#x4F46;&#x662F;&#x57FA;&#x672C;&#x6982;&#x5FF5;&#x662F;&#x4E00;&#x6A23;&#x7684;&#xFF0C;&#x56E0;&#x70BA;&#x6700;&#x8FD1;&#x958B;&#x59CB;&#x5728;&#x78B0; Flutter&#xFF0C;&#x7576;&#x7136;&#x4E5F;&#x8981;&#x4F86;&#x73A9;&#x4E00;&#x4E0B; Angular Dart &#x4E86;&#x3002;</p>
+			  		<p>Angular 除了常見的 TypeScript 版本，其實還又另外一個 Dart 語言的版本，雖然是不同的團隊維護，但是基本概念是一樣的，因為最近開始在碰 Flutter，當然也要來玩一下 Angular Dart 了。</p>
 <a id="more"></a>
-<h1 id="&#x74B0;&#x5883;&#x8A2D;&#x5B9A;"><a class="header-anchor" href="#&#x74B0;&#x5883;&#x8A2D;&#x5B9A;"> </a>&#x74B0;&#x5883;&#x8A2D;&#x5B9A;</h1>
-<p>&#x9996;&#x5148;&#xFF0C;&#x8981;&#x5148;&#x5C07; Dart &#x8A9E;&#x8A00;&#x7684;&#x74B0;&#x5883;&#x8A2D;&#x5B9A;&#x8D77;&#x4F86;&#xFF0C;&#x96D6;&#x7136;&#x7DE8;&#x8F2F;&#x5668;&#x6C92;&#x6709;&#x9650;&#x5B9A;&#xFF0C;&#x5B98;&#x65B9;&#x63A8;&#x85A6;&#x4F7F;&#x7528; webstorm&#xFF0C;&#x800C;&#x6211;&#x672C;&#x8EAB;&#x662F;&#x4F7F;&#x7528; VSCode &#x505A;&#x958B;&#x767C;&#x3002;Anyway&#xFF0C;&#x5148;&#x4F86;&#x5B89;&#x88DD; Dart SDK</p>
-<h2 id="&#x5B89;&#x88DD;-dart-sdk"><a class="header-anchor" href="#&#x5B89;&#x88DD;-dart-sdk"> </a>&#x5B89;&#x88DD; Dart SDK</h2>
-<p>&#x652F;&#x63F4;&#x7684;&#x4F5C;&#x696D;&#x7CFB;&#x7D71;&#x6709; Windows&#x3001;Linux&#x3001;Mac&#xFF0C;&#x56E0;&#x70BA;&#x6211;&#x76EE;&#x524D;&#x7684;&#x74B0;&#x5883;&#x662F; Windows&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x5C31;&#x5148;&#x4EE5; Windows &#x7684;&#x74B0;&#x5883;&#x70BA;&#x6587;&#x7AE0;&#x7684;&#x8A2D;&#x5B9A;&#x74B0;&#x5883;</p>
+<h1 id="環境設定"><a class="header-anchor" href="#環境設定"> </a>環境設定</h1>
+<p>首先，要先將 Dart 語言的環境設定起來，雖然編輯器沒有限定，官方推薦使用 webstorm，而我本身是使用 VSCode 做開發。Anyway，先來安裝 Dart SDK</p>
+<h2 id="安裝-dart-sdk"><a class="header-anchor" href="#安裝-dart-sdk"> </a>安裝 Dart SDK</h2>
+<p>支援的作業系統有 Windows、Linux、Mac，因為我目前的環境是 Windows，所以我就先以 Windows 的環境為文章的設定環境</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco install dart-sdk</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>choco &#x662F;&#x4E00;&#x5957; windows &#x4E0A;&#x7684;&#x5957;&#x4EF6;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x8A73;&#x7D30;&#x8CC7;&#x8A0A;&#x53EF;&#x4EE5;&#x53C3;&#x95B1;<a href="https://chocolatey.org/" target="_blank" rel="noopener">&#x5B98;&#x7DB2;</a></li>
+<li>choco 是一套 windows 上的套件管理工具，詳細資訊可以參閱<a href="https://chocolatey.org/" target="_blank" rel="noopener">官網</a></li>
 </ul>
-<p>&#x5982;&#x679C;&#x539F;&#x672C;&#x5DF2;&#x7D93;&#x6709;&#x5B89;&#x88DD; Dart &#xFF0C;&#x60F3;&#x8981;&#x5347;&#x7D1A;&#x7684;&#x8A71;</p>
+<p>如果原本已經有安裝 Dart ，想要升級的話</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco upgrade dart-sdk</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="dart-sdk-&#x5167;&#x5BB9;"><a class="header-anchor" href="#dart-sdk-&#x5167;&#x5BB9;"> </a>Dart SDK &#x5167;&#x5BB9;</h3>
-<p>&#x5B89;&#x88DD;&#x5B8C; Dart SDK &#x5F8C;&#xFF0C;&#x5728;&#x958B;&#x767C;&#x74B0;&#x5883;&#x6703;&#x64C1;&#x6709;&#x4EE5;&#x4E0B;&#x7684;&#x5DE5;&#x5177;</p>
+<h3 id="dart-sdk-內容"><a class="header-anchor" href="#dart-sdk-內容"> </a>Dart SDK 內容</h3>
+<p>安裝完 Dart SDK 後，在開發環境會擁有以下的工具</p>
 <ul>
 <li><strong>dart</strong>: The standalone VM</li>
 <li><strong>dart2js</strong>: The Dart-to-JavaScript compiler (used only for web development)</li>
@@ -1871,93 +1871,93 @@ h6.categories {
 <li><strong>dartfmt</strong>: The Dart code formatter</li>
 <li><strong>pub</strong>: The Dart package manager</li>
 </ul>
-<h2 id="&#x5B89;&#x88DD;-cli-tools"><a class="header-anchor" href="#&#x5B89;&#x88DD;-cli-tools"> </a>&#x5B89;&#x88DD; CLI Tools</h2>
-<p>&#x6253;&#x958B;&#x547D;&#x4EE4;&#x8996;&#x7A97;&#xFF0C;&#x5206;&#x5225;&#x57F7;&#x884C;&#x4E0B;&#x5217;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x6703;&#x5C07; <a href="https://webdev.dartlang.org/tools/webdev" target="_blank" rel="noopener">webdev</a> &#x548C; <a href="https://pub.dartlang.org/packages/stagehand" target="_blank" rel="noopener">stagehand</a> &#x9019;&#x5169;&#x5957;&#x5DE5;&#x5177;&#x5B89;&#x88DD;&#x8D77;&#x4F86;</p>
+<h2 id="安裝-cli-tools"><a class="header-anchor" href="#安裝-cli-tools"> </a>安裝 CLI Tools</h2>
+<p>打開命令視窗，分別執行下列的指令，會將 <a href="https://webdev.dartlang.org/tools/webdev" target="_blank" rel="noopener">webdev</a> 和 <a href="https://pub.dartlang.org/packages/stagehand" target="_blank" rel="noopener">stagehand</a> 這兩套工具安裝起來</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pub global activate webdev</span><br><span class="line">pub global activate stagehand</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="vscode-&#x5B89;&#x88DD;&#x64F4;&#x5145;&#x5957;&#x4EF6;"><a class="header-anchor" href="#vscode-&#x5B89;&#x88DD;&#x64F4;&#x5145;&#x5957;&#x4EF6;"> </a>VSCode &#x5B89;&#x88DD;&#x64F4;&#x5145;&#x5957;&#x4EF6;</h2>
+<h2 id="vscode-安裝擴充套件"><a class="header-anchor" href="#vscode-安裝擴充套件"> </a>VSCode 安裝擴充套件</h2>
 <ul>
-<li>&#x53EF;&#x5B89;&#x88DD; <a href="https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code" target="_blank" rel="noopener">Dart</a> &#x5957;&#x4EF6;&#xFF0C;&#x8B93; VS Code &#x652F;&#x63F4; Dart &#x8A9E;&#x8A00;&#x7684;&#x958B;&#x767C;</li>
+<li>可安裝 <a href="https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code" target="_blank" rel="noopener">Dart</a> 套件，讓 VS Code 支援 Dart 語言的開發</li>
 </ul>
-<h1 id="&#x7B2C;&#x4E00;&#x500B;-hello-world"><a class="header-anchor" href="#&#x7B2C;&#x4E00;&#x500B;-hello-world"> </a>&#x7B2C;&#x4E00;&#x500B; Hello World</h1>
-<p>&#x5728;&#x9084;&#x6C92;&#x6709;&#x6B63;&#x5F0F;&#x9032;&#x5165; Angular Dart &#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x7C21;&#x55AE;&#x4F86;&#x4E00;&#x500B; Web Dart &#x7248;&#x672C;&#x7684;  Hello World&#xFF0C;&#x9996;&#x5148;&#xFF0C;&#x6211;&#x5011;&#x5148;&#x5C07;&#x958B;&#x767C;&#x5C08;&#x6848;&#x7684;&#x74B0;&#x5883;&#x5EFA;&#x69CB;&#x51FA;&#x4F86;</p>
+<h1 id="第一個-hello-world"><a class="header-anchor" href="#第一個-hello-world"> </a>第一個 Hello World</h1>
+<p>在還沒有正式進入 Angular Dart 之前，先簡單來一個 Web Dart 版本的  Hello World，首先，我們先將開發專案的環境建構出來</p>
 <ol>
-<li>&#x5EFA;&#x7ACB;&#x5C08;&#x6848;&#x8CC7;&#x6599;&#x593E;:
+<li>建立專案資料夾:
 <ul>
 <li><code>mkdir helloNgDart</code></li>
 </ul>
 </li>
-<li>&#x9032;&#x5165;&#x8CC7;&#x6599;&#x593E;
+<li>進入資料夾
 <ul>
 <li><code>cd helloNgDart</code></li>
 </ul>
 </li>
-<li>&#x4F7F;&#x7528;&#x525B;&#x525B;&#x5B89;&#x88DD;&#x7684; CLI &#x5DE5;&#x5177;&#x4F86;&#x521D;&#x59CB;&#x5316;&#x74B0;&#x5883;
+<li>使用剛剛安裝的 CLI 工具來初始化環境
 <ul>
 <li><code>stagehand web-simple</code></li>
 </ul>
 </li>
-<li>&#x5B89;&#x88DD;&#x76F8;&#x4F9D;&#x5957;&#x4EF6;
+<li>安裝相依套件
 <ul>
 <li><code>pub get</code></li>
 </ul>
 </li>
-<li>&#x555F;&#x52D5; webdev server&#xFF0C;&#x958B;&#x555F;&#x7DB2;&#x9801; <code>http://localhost:8080</code>&#xFF0C;&#x5373;&#x53EF;&#x770B;&#x5230;&#x7B2C;&#x4E00;&#x500B; Dart &#x7DB2;&#x9801;
+<li>啟動 webdev server，開啟網頁 <code>http://localhost:8080</code>，即可看到第一個 Dart 網頁
 <ul>
 <li><code>webdev serve</code></li>
 <li><div class="amp-img-wrapper"><amp-img src="/2019/03/15/ng-dart-start/1552621088853.png" width="523" height="153" layout="responsive"></amp-img></div></li>
 </ul>
 </li>
-<li>&#x7576;&#x770B;&#x5230;&#x4E0A;&#x5716;&#x6642;&#xFF0C;&#x5C31;&#x8868;&#x793A;&#x4F7F;&#x7528; Dart &#x958B;&#x767C; Web &#x7684;&#x74B0;&#x5883;&#x5DF2;&#x7D93;&#x6E96;&#x5099;&#x597D;&#x4E86;</li>
+<li>當看到上圖時，就表示使用 Dart 開發 Web 的環境已經準備好了</li>
 </ol>
-<h1 id="&#x7B2C;&#x4E00;&#x500B;-angular-dart-&#x7DB2;&#x9801;"><a class="header-anchor" href="#&#x7B2C;&#x4E00;&#x500B;-angular-dart-&#x7DB2;&#x9801;"> </a>&#x7B2C;&#x4E00;&#x500B; Angular Dart &#x7DB2;&#x9801;</h1>
-<h2 id="&#x5B89;&#x88DD;-angular-&#x5957;&#x4EF6;"><a class="header-anchor" href="#&#x5B89;&#x88DD;-angular-&#x5957;&#x4EF6;"> </a>&#x5B89;&#x88DD; Angular &#x5957;&#x4EF6;</h2>
-<p>Angular Dart &#x8981;&#x5982;&#x4F55;&#x5B89;&#x88DD;&#x5462;? &#x5F88;&#x7C21;&#x55AE;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728; <code>pubspec.yaml</code> &#x5167;&#xFF0C;&#x5C07; <code>angular: ^5.0.0</code> &#x653E;&#x5728; <code>dependencies</code> &#x4E0B;</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">helloNgDart</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">An</span> <span class="string">absolute</span> <span class="string">bare-bones</span> <span class="string">web</span> <span class="string">app.</span></span><br><span class="line"><span class="comment"># version: 1.0.0</span></span><br><span class="line"><span class="comment">#homepage: https://www.example.com</span></span><br><span class="line"><span class="comment">#author: Kevin Yang &lt;email@example.com&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment:</span></span><br><span class="line"><span class="attr">  sdk:</span> <span class="string">&apos;&gt;=2.1.0 &lt;3.0.0&apos;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dependencies:</span></span><br><span class="line"><span class="attr">  angular:</span> <span class="string">^5.0.0</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dev_dependencies:</span></span><br><span class="line"><span class="attr">  build_runner:</span> <span class="string">^1.1.2</span></span><br><span class="line"><span class="attr">  build_web_compilers:</span> <span class="string">^1.0.0</span></span><br><span class="line"><span class="attr">  pedantic:</span> <span class="string">^1.0.0</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x5C07; <code>angular: ^5.0.0</code> &#x52A0;&#x5165;&#x5230; <code>pubspec.yaml</code>  &#x6642;&#xFF0C;&#x7DE8;&#x8F2F;&#x5668;&#x5DE5;&#x5177;&#x6703;&#x5728;&#x80CC;&#x666F;&#x5B89;&#x88DD;&#x6B64;&#x5957;&#x4EF6;</p>
-<h2 id="&#x64B0;&#x5BEB;-angulardart"><a class="header-anchor" href="#&#x64B0;&#x5BEB;-angulardart"> </a>&#x64B0;&#x5BEB; AngularDart</h2>
+<h1 id="第一個-angular-dart-網頁"><a class="header-anchor" href="#第一個-angular-dart-網頁"> </a>第一個 Angular Dart 網頁</h1>
+<h2 id="安裝-angular-套件"><a class="header-anchor" href="#安裝-angular-套件"> </a>安裝 Angular 套件</h2>
+<p>Angular Dart 要如何安裝呢? 很簡單，只需要在 <code>pubspec.yaml</code> 內，將 <code>angular: ^5.0.0</code> 放在 <code>dependencies</code> 下</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">helloNgDart</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">An</span> <span class="string">absolute</span> <span class="string">bare-bones</span> <span class="string">web</span> <span class="string">app.</span></span><br><span class="line"><span class="comment"># version: 1.0.0</span></span><br><span class="line"><span class="comment">#homepage: https://www.example.com</span></span><br><span class="line"><span class="comment">#author: Kevin Yang &lt;email@example.com&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment:</span></span><br><span class="line">  <span class="attr">sdk:</span> <span class="string">'&gt;=2.1.0 &lt;3.0.0'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dependencies:</span></span><br><span class="line">  <span class="attr">angular:</span> <span class="string">^5.0.0</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dev_dependencies:</span></span><br><span class="line">  <span class="attr">build_runner:</span> <span class="string">^1.1.2</span></span><br><span class="line">  <span class="attr">build_web_compilers:</span> <span class="string">^1.0.0</span></span><br><span class="line">  <span class="attr">pedantic:</span> <span class="string">^1.0.0</span></span><br></pre></td></tr></tbody></table></figure>
+<p>當將 <code>angular: ^5.0.0</code> 加入到 <code>pubspec.yaml</code>  時，編輯器工具會在背景安裝此套件</p>
+<h2 id="撰寫-angulardart"><a class="header-anchor" href="#撰寫-angulardart"> </a>撰寫 AngularDart</h2>
 <ol>
 <li>
-<p>&#x5C07; <code>web</code> &#x8CC7;&#x6599;&#x593E;&#x4E0B;&#x7684;  index.html &#x6A94;&#x6848;&#x4FEE;&#x6539;&#x4E00;&#x4E0B;&#xFF0C;</p>
+<p>將 <code>web</code> 資料夾下的  index.html 檔案修改一下，</p>
 <ol>
-<li>&#x5C07; <code>&lt;app-root&gt;&lt;/app-root&gt;</code> &#x653E;&#x5230; <code>&lt;body&gt;</code> &#x5340;&#x584A;&#x4E2D;</li>
-<li>&#x65B0;&#x589E; <code>&lt;base href...&gt;</code> &#x6A19;&#x7C64;</li>
+<li>將 <code>&lt;app-root&gt;&lt;/app-root&gt;</code> 放到 <code>&lt;body&gt;</code> 區塊中</li>
+<li>新增 <code>&lt;base href...&gt;</code> 標籤</li>
 </ol>
 </li>
 <li>
-<p>&#x4FEE;&#x6539; <code>main.dart</code> &#x6A94;&#x6848;&#xFF0C;&#x5148;&#x79FB;&#x9664;&#x65E2;&#x6709;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#xFF0C;&#x6539;&#x5BEB;&#x6210;&#x4E0B;&#x5217;&#x7A0B;&#x5F0F;&#x78BC;</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&apos;package:angular/angular.dart&apos;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&apos;package:helloNgDart/app_component.template.dart&apos;</span> <span class="keyword">as</span> ng;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() {</span><br><span class="line">  runApp(ng.AppComponentNgFactory);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x76EE;&#x524D;&#x9019;&#x968E;&#x6BB5;&#xFF0C;&#x7DE8;&#x8F2F;&#x5668;&#x6703;&#x63D0;&#x793A;&#x7B2C;&#x4E8C;&#x884C;&#x7684; import  &#x627E;&#x4E0D;&#x5230;&#xFF0C;&#x9019;&#x554F;&#x984C;&#x4E4B;&#x5F8C;&#x6703;&#x88AB;&#x4FEE;&#x6B63;&#x6389;</p>
+<p>修改 <code>main.dart</code> 檔案，先移除既有的程式碼，改寫成下列程式碼</p>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:angular/angular.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:helloNgDart/app_component.template.dart'</span> <span class="keyword">as</span> ng;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() {</span><br><span class="line">  runApp(ng.AppComponentNgFactory);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>目前這階段，編輯器會提示第二行的 import  找不到，這問題之後會被修正掉</p>
 <ul>
-<li><code>import &apos;package:&lt;pubspec &#x5167;&#x8A2D;&#x5B9A;&#x7684; name &#x503C;&gt;/&lt;&#x6A94;&#x6848;&#x540D;&#x7A31;&gt;&apos;</code></li>
-<li>&#x9810;&#x8A2D;&#x6703;&#x6307;&#x5230; <code>lib</code> &#x8CC7;&#x6599;&#x593E;</li>
+<li><code>import 'package:&lt;pubspec 內設定的 name 值&gt;/&lt;檔案名稱&gt;'</code></li>
+<li>預設會指到 <code>lib</code> 資料夾</li>
 </ul>
 </li>
 <li>
-<p>&#x65B0;&#x589E; <code>lib</code> &#x8CC7;&#x6599;&#x593E;&#x4E26;&#x5EFA;&#x7ACB; <code>app_component.dart</code> &#x6A94;&#x6848;</p>
+<p>新增 <code>lib</code> 資料夾並建立 <code>app_component.dart</code> 檔案</p>
 </li>
 <li>
-<p><code>app_component.dart</code> &#x6A94;&#x6848;&#x5167;&#x5BB9;</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&apos;package:angular/angular.dart&apos;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(</span><br><span class="line">  selector: <span class="string">&apos;my-app&apos;</span>,</span><br><span class="line">  template: <span class="string">&apos;&lt;h1&gt;Hello {{name}}&lt;/h1&gt;&apos;</span>,</span><br><span class="line">)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>{</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">&apos;Angular&apos;</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><code>app_component.dart</code> 檔案內容</p>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:angular/angular.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(</span><br><span class="line">  selector: <span class="string">'my-app'</span>,</span><br><span class="line">  template: <span class="string">'&lt;h1&gt;Hello {{name}}&lt;/h1&gt;'</span>,</span><br><span class="line">)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>{</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">'Angular'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x91CD;&#x65B0;&#x57F7;&#x884C; <code>webdev serve</code>  &#x5F8C;&#x958B;&#x555F;&#x7DB2;&#x9801; <code>http://localhost:8080</code> &#xFF0C;&#x61C9;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4EE5;&#x4E0B;&#x7684;&#x756B;&#x9762;</p>
+<p>重新執行 <code>webdev serve</code>  後開啟網頁 <code>http://localhost:8080</code> ，應可以看到以下的畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/03/15/ng-dart-start/1552622388583.png" width="563" height="227" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5982;&#x679C;&#x80FD;&#x770B;&#x5230;&#x756B;&#x9762;&#xFF0C;&#x606D;&#x559C;&#xFF0C;Angular Dart &#x7684;&#x958B;&#x767C;&#x74B0;&#x5883;&#x4E5F;&#x8A2D;&#x5B9A;&#x5B8C;&#x6210;&#x4E86;</p>
+<p>如果能看到畫面，恭喜，Angular Dart 的開發環境也設定完成了</p>
 </li>
 </ol>
-<h1 id="&#x90E8;&#x7F72;"><a class="header-anchor" href="#&#x90E8;&#x7F72;"> </a>&#x90E8;&#x7F72;</h1>
-<p>&#x5982;&#x679C;&#x60F3;&#x8981;&#x5C07; Angular Dart &#x8F38;&#x51FA;&#x6210;&#x53EF;&#x4EE5;&#x90E8;&#x7F72;&#x7684;&#x72C0;&#x614B;&#x6642;&#xFF0C;&#x53C8;&#x8A72;&#x5982;&#x4F55;&#x8655;&#x7406;&#xFF0C;&#x9019;&#x90E8;&#x5206;&#x4E5F;&#x53EF;&#x4EE5;&#x900F;&#x904E;&#x6307;&#x4EE4;&#x4F86;&#x5B8C;&#x6210;</p>
+<h1 id="部署"><a class="header-anchor" href="#部署"> </a>部署</h1>
+<p>如果想要將 Angular Dart 輸出成可以部署的狀態時，又該如何處理，這部分也可以透過指令來完成</p>
 <blockquote>
 <p>webdev build --no-release --output web:build</p>
 </blockquote>
 <ul>
-<li>&#x2013;no-release : &#x6703;&#x8F38;&#x51FA;&#x6210;&#x958B;&#x767C;&#x72C0;&#x614B;&#x7684;&#x6A94;&#x6848;&#xFF0C; &#x6A94;&#x6848;&#x6578;&#x91CF;&#x6703;&#x5F88;&#x591A;&#x4E14;&#x6A94;&#x6848;&#x5F88;&#x5927;&#x3002;</li>
+<li>–no-release : 會輸出成開發狀態的檔案， 檔案數量會很多且檔案很大。</li>
 </ul>
-<p>&#x8981;&#x8F38;&#x51FA;&#x6210; production mode &#xFF0C;&#x5C07; <code>--no-release</code> &#x7684;&#x53C3;&#x6578;&#x62FF;&#x6389;&#x5373;&#x53EF;&#xFF0C;&#x7576;&#x62FF;&#x6389;&#x53C3;&#x6578;&#x6642;&#xFF0C; webdev build &#x5C07;&#x4F7F;&#x7528; dart2js  &#x7684;&#x65B9;&#x5F0F;&#x5EFA;&#x7F6E;&#x5C08;&#x6848;&#x3002;&#x5982;&#x679C;&#x60F3;&#x8981;&#x984D;&#x5916;&#x8A2D;&#x5B9A; <code>dart2js</code> (dart2js &#x6709;&#x81EA;&#x5DF1;&#x7684;&#x53C3;&#x6578;&#x53EF;&#x4EE5;&#x8A2D;&#x5B9A;)&#xFF0C;&#x9700;&#x8981;&#x984D;&#x5916;&#x65B0;&#x589E; <code>build.yaml</code> &#x6A94;&#x6848;&#xFF0C;&#x4E26;&#x5C07;&#x76F8;&#x95DC;&#x8A2D;&#x5B9A;&#x6A94;&#x6848;&#x8A2D;&#x5B9A;&#x5728;&#x88E1;&#x9762;</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">targets:</span></span><br><span class="line">  <span class="string">$default:</span></span><br><span class="line"><span class="attr">    builders:</span></span><br><span class="line">      <span class="string">build_web_compilers|entrypoint:</span></span><br><span class="line">        <span class="comment"># These are globs for the entrypoints you want to compile.</span></span><br><span class="line"><span class="attr">        generate_for:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">test/**.browser_test.dart</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">web/**.dart</span></span><br><span class="line"><span class="attr">        options:</span></span><br><span class="line"><span class="attr">          compiler:</span> <span class="string">dart2js</span></span><br><span class="line">          <span class="comment"># List any dart2js specific args here, or omit it.</span></span><br><span class="line"><span class="attr">          dart2js_args:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="bullet">--fast-startup</span></span><br><span class="line"><span class="bullet">            -</span> <span class="bullet">--minify</span></span><br><span class="line"><span class="bullet">            -</span> <span class="bullet">--trust-primitives</span></span><br><span class="line"><span class="bullet">            -</span> <span class="bullet">--trust-type-annotations</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 id="&#x6BD4;&#x8F03;&#x8F38;&#x51FA;&#x7D50;&#x679C;"><a class="header-anchor" href="#&#x6BD4;&#x8F03;&#x8F38;&#x51FA;&#x7D50;&#x679C;"> </a>&#x6BD4;&#x8F03;&#x8F38;&#x51FA;&#x7D50;&#x679C;</h2>
+<p>要輸出成 production mode ，將 <code>--no-release</code> 的參數拿掉即可，當拿掉參數時， webdev build 將使用 dart2js  的方式建置專案。如果想要額外設定 <code>dart2js</code> (dart2js 有自己的參數可以設定)，需要額外新增 <code>build.yaml</code> 檔案，並將相關設定檔案設定在裡面</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">targets:</span></span><br><span class="line">  <span class="string">$default:</span></span><br><span class="line">    <span class="attr">builders:</span></span><br><span class="line">      <span class="string">build_web_compilers|entrypoint:</span></span><br><span class="line">        <span class="comment"># These are globs for the entrypoints you want to compile.</span></span><br><span class="line">        <span class="attr">generate_for:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">test/**.browser_test.dart</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">web/**.dart</span></span><br><span class="line">        <span class="attr">options:</span></span><br><span class="line">          <span class="attr">compiler:</span> <span class="string">dart2js</span></span><br><span class="line">          <span class="comment"># List any dart2js specific args here, or omit it.</span></span><br><span class="line">          <span class="attr">dart2js_args:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--fast-startup</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--minify</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--trust-primitives</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--trust-type-annotations</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="比較輸出結果"><a class="header-anchor" href="#比較輸出結果"> </a>比較輸出結果</h2>
 <ul>
 <li>
 <p>with <code>--no-release</code></p>
@@ -1971,8 +1971,8 @@ h6.categories {
 </li>
 </ul>
 <h1 id="conclusion"><a class="header-anchor" href="#conclusion"> </a>Conclusion</h1>
-<p>Angular Dart &#x56E0;&#x70BA;&#x6240;&#x4F7F;&#x7528;&#x8A9E;&#x8A00;&#x7684;&#x95DC;&#x4FC2;&#xFF0C;&#x53EF;&#x4EE5;&#x4EAB;&#x53D7;&#x5230;&#x4E00;&#x4E9B; TypeScript &#x6240;&#x6C92;&#x6709;&#x63D0;&#x4F9B;&#x7684;&#xFF0C;&#x4F46;&#x4E5F;&#x7531;&#x65BC;&#x662F;&#x4E0D;&#x540C;&#x8A9E;&#x8A00;&#x958B;&#x767C;&#x7684;&#xFF0C;&#x5373;&#x4F7F;&#x6709; 90% &#x7684;&#x89C0;&#x5FF5;&#x76F8;&#x540C;&#xFF0C;&#x4ECD;&#x9700;&#x8981;&#x91DD;&#x5C0D;&#x5DEE;&#x7570;&#x7684;&#x90E8;&#x4EFD;&#x53BB;&#x505A;&#x4E86;&#x89E3;&#xFF0C;&#x4F46;&#x90A3;&#x90E8;&#x4EFD;&#x5C31;&#x7559;&#x5728;&#x4EE5;&#x5F8C;&#x5206;&#x4EAB;&#x4E86;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<p>Angular Dart 因為所使用語言的關係，可以享受到一些 TypeScript 所沒有提供的，但也由於是不同語言開發的，即使有 90% 的觀念相同，仍需要針對差異的部份去做了解，但那部份就留在以後分享了</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://webdev.dartlang.org/guides/get-started" target="_blank" rel="noopener">Start Guide</a></li>
 </ul>

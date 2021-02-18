@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/05/flutter-layout-01/"
 			},
 			"datePublished": "2019-10-05T00:21:17.000Z",
-			"dateModified": "2021-02-18T02:25:04.919Z",
+			"dateModified": "2021-02-18T02:32:11.643Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,23 +1848,23 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x9019;&#x4E00;&#x985E;&#x7684; UI Framework &#x6700;&#x9700;&#x8981;&#x638C;&#x63E1;&#x7684;&#x662F; UI Component (Widget) &#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x6392;&#x7248;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x8981;&#x5982;&#x4F55;&#x751F;&#x51FA;&#x81EA;&#x5DF1;&#x60F3;&#x8981;&#x7684;&#x756B;&#x9762;&#xFF0C;&#x5C31;&#x6C7A;&#x5B9A;&#x65BC;&#x6392;&#x7248;&#x6280;&#x5DE7;&#x7684;&#x719F;&#x6089;&#x5EA6;&#xFF0C;&#x5C31;&#x50CF;&#x7DB2;&#x9801;&#x5207;&#x7248;&#xFF0C;&#x5982;&#x679C; CSS &#x4E0D;&#x719F;&#xFF0C;&#x5C31;&#x7121;&#x6CD5;&#x5207;&#x51FA;&#x6F02;&#x4EAE;&#x6709;&#x53EF;&#x7528;&#x7684;&#x7248;&#x578B;&#xFF0C;&#x540C;&#x7406;&#xFF0C;Flutter &#x4E5F;&#x9700;&#x8981;&#x5148;&#x5F9E; Layout Widget &#x8DDF;&#x8A2D;&#x8A08;&#x601D;&#x7DAD;&#x5B78;&#x8D77;</p>
+			  		<p>這一類的 UI Framework 最需要掌握的是 UI Component (Widget) 的操作，尤其是排版的部分，要如何生出自己想要的畫面，就決定於排版技巧的熟悉度，就像網頁切版，如果 CSS 不熟，就無法切出漂亮有可用的版型，同理，Flutter 也需要先從 Layout Widget 跟設計思維學起</p>
 <a id="more"></a>
-<h1 id="layout-&#x601D;&#x7DAD;"><a class="header-anchor" href="#layout-&#x601D;&#x7DAD;"> </a>Layout &#x601D;&#x7DAD;</h1>
-<p>Flutter &#x6709;&#x63D0;&#x4F9B;&#x5F88;&#x591A;&#x7A2E;&#x7528;&#x4F86;&#x6392;&#x7248;&#x7684; Widget&#xFF0C;&#x4F46;&#x8981;&#x4F7F;&#x7528;&#x54EA;&#x4E00;&#x7A2E;&#x6703;&#x6BD4;&#x8F03;&#x5408;&#x9069;&#xFF0C;&#x9019;&#x65E2;&#x9700;&#x8981;&#x5C0D;&#x6BCF;&#x4E00;&#x500B; Layout Widget &#x7684;&#x7279;&#x6027;&#x505A;&#x6DF1;&#x5165;&#x7684;&#x4E86;&#x89E3;&#xFF0C;&#x4F46;&#x9019;&#x4E4B;&#x524D;&#xFF0C;&#x7E3D;&#x8981;&#x77E5;&#x9053;&#x5982;&#x4F55;&#x5B89;&#x6392;&#x756B;&#x9762;&#xFF0C;&#x624D;&#x80FD;&#x9078;&#x5230;&#x5C0D;&#x7684; Widget&#x3002;&#x9019;&#x88E1;&#x6709;&#x4E00;&#x500B;&#x5B98;&#x7DB2;&#x6587;&#x4EF6;&#x63D0;&#x4F9B;&#x7684;&#x5716;</p>
+<h1 id="layout-思維"><a class="header-anchor" href="#layout-思維"> </a>Layout 思維</h1>
+<p>Flutter 有提供很多種用來排版的 Widget，但要使用哪一種會比較合適，這既需要對每一個 Layout Widget 的特性做深入的了解，但這之前，總要知道如何安排畫面，才能選到對的 Widget。這裡有一個官網文件提供的圖</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570243349615.png" width="986" height="484" layout="responsive"></amp-img></div>
-<p>&#x9019;&#x662F;&#x4E00;&#x500B;&#x7B97;&#x5E38;&#x898B;&#x7684;&#x7522;&#x54C1;&#x4ECB;&#x7D39;&#x756B;&#x9762;&#xFF0C;&#x7576;&#x770B;&#x5230;&#x9019;&#x756B;&#x9762;&#x6642;&#xFF0C;&#x6703;&#x601D;&#x8003;&#x8981;&#x600E;&#x9EBC;&#x5448;&#x73FE;&#x3002;&#x6839;&#x64DA;&#x5716;&#x4E0A;&#x9762;&#x6240;&#x6A19;&#x793A;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x7B2C;&#x4E00;&#x5C64;&#x662F;&#x4F7F;&#x7528; <code>Row</code> &#x4F86;&#x5448;&#x986F;&#x5DE6;&#x53F3;&#x5169;&#x6B04;&#x7684;&#x756B;&#x9762;&#xFF0C;&#x800C;&#x7B2C;&#x4E00;&#x6B04;&#x4F7F;&#x7528; <code>Column Widget</code> &#x4F86;&#x986F;&#x793A;&#x5176;&#x4ED6;&#x8CC7;&#x8A0A;&#xFF0C;&#x800C;&#x7B2C;&#x4E8C;&#x6B04;&#x662F;&#x4F7F;&#x7528; <code>Image Widget</code> &#x4F86;&#x986F;&#x793A;&#x756B;&#x9762;&#x3002;</p>
-<p>&#x518D;&#x4F86;&#x7B2C;&#x4E00;&#x6B04;&#x7684;&#x7522;&#x54C1;&#x8CC7;&#x8A0A;&#x4F7F;&#x7528; <code>Column Widget</code> &#xFF0C;&#x6240;&#x4EE5;&#x7269;&#x4EF6;&#x6703;&#x662F;&#x7531;&#x4E0A;&#x800C;&#x4E0B;&#x7684;&#x5448;&#x73FE;&#xFF0C;&#x7D30;&#x7BC0;&#x8A2D;&#x8A08;&#x601D;&#x7DAD;&#x7684;&#x90E8;&#x5206;&#x53EF;&#x4EE5;&#x53C3;&#x95B1;&#x4E0B;&#x5716;</p>
+<p>這是一個算常見的產品介紹畫面，當看到這畫面時，會思考要怎麼呈現。根據圖上面所標示的，可以知道第一層是使用 <code>Row</code> 來呈顯左右兩欄的畫面，而第一欄使用 <code>Column Widget</code> 來顯示其他資訊，而第二欄是使用 <code>Image Widget</code> 來顯示畫面。</p>
+<p>再來第一欄的產品資訊使用 <code>Column Widget</code> ，所以物件會是由上而下的呈現，細節設計思維的部分可以參閱下圖</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570243368663.png" width="1006" height="425" layout="responsive"></amp-img></div>
-<p>&#x6240;&#x4EE5;&#x7D9C;&#x5408;&#x9019;&#x4E9B;&#x8CC7;&#x8A0A;&#xFF0C;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x6210; Flutter &#x7684;&#x756B;&#x9762;&#x662F;&#x5F9E;&#x5DE6;&#x4E0A;&#x5230;&#x53F3;&#x4E0B;&#xFF0C;&#x7531;&#x4E0A;&#x800C;&#x4E0B;&#xFF0C;&#x7531;&#x5DE6;&#x800C;&#x53F3;&#x63A1; S &#x578B;&#x79FB;&#x52D5;&#x3002;&#x9019;&#x6A23;&#x7406;&#x89E3;&#x5F8C;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5E6B;&#x6211;&#x5011;&#x9078;&#x64C7;&#x5408;&#x9069;&#x7684; layout widget &#x4E86;</p>
-<h1 id="layout-widget-&#x5C6C;&#x6027;"><a class="header-anchor" href="#layout-widget-&#x5C6C;&#x6027;"> </a>Layout Widget &#x5C6C;&#x6027;</h1>
+<p>所以綜合這些資訊，我們可以理解成 Flutter 的畫面是從左上到右下，由上而下，由左而右採 S 型移動。這樣理解後，就可以幫我們選擇合適的 layout widget 了</p>
+<h1 id="layout-widget-屬性"><a class="header-anchor" href="#layout-widget-屬性"> </a>Layout Widget 屬性</h1>
 <h2 id="aligning-widgets"><a class="header-anchor" href="#aligning-widgets"> </a>Aligning Widgets</h2>
-<p><code>Row</code> &#x548C; <code>Column</code> widget &#x5167;&#x6709;&#x53EF;&#x4EE5;&#x8A2D;&#x5B9A;&#x6392;&#x5E8F;&#x7269;&#x4EF6;&#x7684;&#x5C6C;&#x6027;&#xFF0C;<code>mainAxisAligment</code> &#x548C; ``crossAxisAlignment`</p>
+<p><code>Row</code> 和 <code>Column</code> widget 內有可以設定排序物件的屬性，<code>mainAxisAligment</code> 和 ``crossAxisAlignment`</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570243387835.png" width="594" height="330" layout="responsive"></amp-img></div>
-<p>&#x800C; <code>mainAxisAlignment</code> &#x6709;&#x63D0;&#x4F9B;&#x4E0B;&#x5217;&#x7684;&#x9078;&#x9805;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;</p>
+<p>而 <code>mainAxisAlignment</code> 有提供下列的選項可以使用</p>
 <ul>
 <li>
-<p>start (&#x9810;&#x8A2D;&#x503C;)</p>
+<p>start (預設值)</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570249691644.png" width="418" height="243" layout="responsive"></amp-img></div>
 </li>
 <li>
@@ -1876,7 +1876,7 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570248078641.png" width="419" height="308" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>spaceAround: &#x982D;&#x5C3E;&#x7684;&#x7A7A;&#x767D;&#x5927;&#x5C0F;&#x662F;&#x4E2D;&#x9593;&#x7A7A;&#x767D;&#x7684;&#x4E00;&#x534A;</p>
+<p>spaceAround: 頭尾的空白大小是中間空白的一半</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570248128083.png" width="421" height="253" layout="responsive"></amp-img></div>
 </li>
 <li>
@@ -1888,18 +1888,18 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570248184243.png" width="414" height="225" layout="responsive"></amp-img></div>
 </li>
 </ul>
-<p><code>crossAxisAlignment</code> &#x6709;&#x63D0;&#x4F9B;&#x4EE5;&#x4E0B;&#x7684;&#x9078;&#x9805;&#x53EF;&#x4F7F;&#x7528;</p>
+<p><code>crossAxisAlignment</code> 有提供以下的選項可使用</p>
 <ul>
 <li>
-<p>center(&#x9810;&#x8A2D;&#x503C;)</p>
+<p>center(預設值)</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570248054188.png" width="415" height="290" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>baseline: &#x9808;&#x8A2D;&#x5B9A; <code>textBaseline</code> &#x5C6C;&#x6027;</p>
+<p>baseline: 須設定 <code>textBaseline</code> 屬性</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570249395817.png" width="407" height="127" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x6C92;&#x8A2D;&#x5B9A; baseline &#x6642;</p>
+<p>沒設定 baseline 時</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570249591807.png" width="420" height="109" layout="responsive"></amp-img></div>
 </li>
 <li>
@@ -1911,26 +1911,26 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570248936450.png" width="420" height="205" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>stretch: &#x585E;&#x6EFF;&#x756B;&#x9762;</p>
+<p>stretch: 塞滿畫面</p>
 </li>
 </ul>
 <h2 id="sizing"><a class="header-anchor" href="#sizing"> </a>Sizing</h2>
-<p>&#x4F7F;&#x7528; <code>Expanded widget</code> &#x53EF;&#x4EE5;&#x907F;&#x514D;&#x539F;&#x59CB;&#x5716;&#x6A94;&#x592A;&#x5927;&#x9020;&#x6210; App &#x7522;&#x751F;&#x756B;&#x9762;&#x6642;&#x7684;&#x932F;&#x8AA4;</p>
+<p>使用 <code>Expanded widget</code> 可以避免原始圖檔太大造成 App 產生畫面時的錯誤</p>
 <ul>
 <li>
-<p>&#x4F7F;&#x7528;&#x524D;</p>
+<p>使用前</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570249918702.png" width="415" height="653" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x4F7F;&#x7528;&#x5F8C;</p>
+<p>使用後</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570249929541.png" width="419" height="270" layout="responsive"></amp-img></div>
 </li>
 </ul>
-<p>&#x8A2D;&#x5B9A; <code>flex</code> &#x7684;&#x6548;&#x679C;</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Row(</span><br><span class="line">        mainAxisAlignment: MainAxisAlignment.start,</span><br><span class="line">        children: [</span><br><span class="line">          Expanded(</span><br><span class="line">            child: Image.network(<span class="string">&apos;https://picsum.photos/300&apos;</span>),</span><br><span class="line">          ),</span><br><span class="line">          Expanded(</span><br><span class="line">            flex: <span class="number">2</span>,</span><br><span class="line">            child: Image.network(<span class="string">&apos;https://picsum.photos/800&apos;</span>),</span><br><span class="line">          ),</span><br><span class="line">          Expanded(</span><br><span class="line">            flex: <span class="number">3</span>,</span><br><span class="line">            child: Image.network(<span class="string">&apos;https://picsum.photos/600&apos;</span>),</span><br><span class="line">          )</span><br><span class="line">        ],</span><br><span class="line">      );</span><br></pre></td></tr></tbody></table></figure>
+<p>設定 <code>flex</code> 的效果</p>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Row(</span><br><span class="line">        mainAxisAlignment: MainAxisAlignment.start,</span><br><span class="line">        children: [</span><br><span class="line">          Expanded(</span><br><span class="line">            child: Image.network(<span class="string">'https://picsum.photos/300'</span>),</span><br><span class="line">          ),</span><br><span class="line">          Expanded(</span><br><span class="line">            flex: <span class="number">2</span>,</span><br><span class="line">            child: Image.network(<span class="string">'https://picsum.photos/800'</span>),</span><br><span class="line">          ),</span><br><span class="line">          Expanded(</span><br><span class="line">            flex: <span class="number">3</span>,</span><br><span class="line">            child: Image.network(<span class="string">'https://picsum.photos/600'</span>),</span><br><span class="line">          )</span><br><span class="line">        ],</span><br><span class="line">      );</span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570250111924.png" width="419" height="308" layout="responsive"></amp-img></div>
-<h1 id="&#x5C0F;&#x7D50;"><a class="header-anchor" href="#&#x5C0F;&#x7D50;"> </a>&#x5C0F;&#x7D50;</h1>
-<p>&#x5F88;&#x591A;&#x6392;&#x6CD5;&#x8DDF; css flex &#x5F88;&#x50CF;&#xFF0C;&#x5728;&#x89C0;&#x5FF5;&#x929C;&#x63A5;&#x4E0A;&#x662F;&#x5F88;&#x5FEB;&#x901F;&#x7684;&#x3002;&#x57FA;&#x672C;&#x4E0A;&#x6C92;&#x4EC0;&#x9EBC;&#x5927;&#x554F;&#x984C;&#xFF0C;&#x4E0B;&#x4E00;&#x7BC7;&#x7B46;&#x8A18;&#x6703;&#x91DD;&#x5C0D; layout widget &#x505A;&#x7814;&#x7A76;</p>
+<h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
+<p>很多排法跟 css flex 很像，在觀念銜接上是很快速的。基本上沒什麼大問題，下一篇筆記會針對 layout widget 做研究</p>
 
 			  		
 			  		<!-- google Adsense -->

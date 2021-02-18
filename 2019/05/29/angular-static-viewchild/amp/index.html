@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/05/29/angular-static-viewchild/"
 			},
 			"datePublished": "2019-05-29T14:00:12.000Z",
-			"dateModified": "2021-02-18T02:25:04.891Z",
+			"dateModified": "2021-02-18T02:32:11.615Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,38 +1848,38 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular 8 &#x5728;&#x4E94;&#x6708;&#x5E95;&#x6B63;&#x5F0F;&#x91CB;&#x51FA;&#xFF0C;&#x800C;&#x9019;&#x6B21;&#x7684;&#x91CB;&#x51FA;&#x88E1;&#x9762;&#x6709;&#x4E00;&#x500B;&#x66F4;&#x65B0;&#x5C6C;&#x65BC;&#x65B0;&#x8A2D;&#x5B9A;&#xFF0C;&#x89C0;&#x5FF5;&#x4E0A;&#x662F;&#x6709;&#x9700;&#x8981;&#x8ABF;&#x6574;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5BEB;&#x4E86;&#x9019;&#x7BC7;&#x6587;&#x7AE0;&#x91D0;&#x6E05;&#x4E00;&#x4E0B;</p>
+			  		<p>Angular 8 在五月底正式釋出，而這次的釋出裡面有一個更新屬於新設定，觀念上是有需要調整的，所以寫了這篇文章釐清一下</p>
 <a id="more"></a>
-<p>&#x6240;&#x8B02;&#x7684; Query &#x4E0A;&#x7684;&#x6539;&#x8B8A;&#xFF0C;&#x662F;&#x91DD;&#x5C0D; <code>ViewChild</code> / <code>ContentChild</code> &#x9019;&#x4E00;&#x985E;&#x7684; decorator &#x505A;&#x984D;&#x5916;&#x7684;&#x8A2D;&#x5B9A;&#xFF0C;&#x4EE5;&#x524D;&#x6211;&#x5011;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#x6703;&#x9019;&#x6A23;&#x5B50;&#x5BEB;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ViewChild</span>(<span class="string">&apos;foo&apos;</span>) foo: ElementRef</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x9019;&#x6A23;&#x5B50;&#x5BEB;&#x5728;&#x53D6;&#x5F97;&#x5167;&#x5BB9;&#x7684;&#x6642;&#x9593;&#x9EDE;&#xFF0C;&#x6709;&#x6642;&#x5019;&#x6703;&#x662F;&#x5728; <code>Oninit</code> &#x6709;&#x6642;&#x5019;&#x9700;&#x8981;&#x5728; <code>ngAfterViewInit</code> &#x6642;&#x624D;&#x53EF;&#x4EE5;&#x53D6;&#x5F97;&#x3002;&#x7A0D;&#x5FAE;&#x5206;&#x6790;&#x4E00;&#x4E0B;&#x70BA;&#x4EC0;&#x9EBC;&#x6703;&#x6709;&#x9019;&#x6A23;&#x5B50;&#x7684;&#x6642;&#x9593;&#x9EDE;&#x4E0A;&#x7684;&#x5DEE;&#x7570;&#x6027;</p>
+<p>所謂的 Query 上的改變，是針對 <code>ViewChild</code> / <code>ContentChild</code> 這一類的 decorator 做額外的設定，以前我們的程式碼會這樣子寫</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ViewChild</span>(<span class="string">'foo'</span>) foo: ElementRef</span><br></pre></td></tr></tbody></table></figure>
+<p>這樣子寫在取得內容的時間點，有時候會是在 <code>Oninit</code> 有時候需要在 <code>ngAfterViewInit</code> 時才可以取得。稍微分析一下為什麼會有這樣子的時間點上的差異性</p>
 <ol>
-<li>&#x7576;&#x6240;&#x8981;&#x67E5;&#x8A62;&#x7684; Element &#x4E0A;&#x6C92;&#x6709;&#x4EFB;&#x4F55; <code>*ngIf</code> &#x6216;&#x662F; <code>*ngFor</code> &#x7684; directive &#x6642;&#xFF0C;&#x8A72; element &#x4E00;&#x958B;&#x59CB;&#x5C31;&#x5DF2;&#x7D93;&#x5B58;&#x5728;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x7D93;&#x904E; Angular &#x505A;&#x984D;&#x5916;&#x7684;&#x5224;&#x65B7; (&#x9801;&#x9762;&#x8655;&#x7406;)&#xFF0C;&#x9019;&#x6642;&#x5019;&#x5C31;&#x53EF;&#x4EE5;&#x5728; <code>OnInit</code> &#x9019;&#x968E;&#x6BB5;&#x53D6;&#x5F97;&#x8A72; Element &#x7684;&#x76F8;&#x95DC;&#x8CC7;&#x8A0A;</li>
+<li>當所要查詢的 Element 上沒有任何 <code>*ngIf</code> 或是 <code>*ngFor</code> 的 directive 時，該 element 一開始就已經存在，不需要再經過 Angular 做額外的判斷 (頁面處理)，這時候就可以在 <code>OnInit</code> 這階段取得該 Element 的相關資訊</li>
 </ol>
 <div class="amp-img-wrapper"><amp-img src="/2019/05/29/angular-static-viewchild/1559139325690.png" width="1171" height="564" layout="responsive"></amp-img></div>
 <ol start="2">
-<li>&#x7576;&#x6709;&#x4F7F;&#x7528;&#x5230; <code>*ngIf</code> &#x6216;&#x662F; <code>*ngFor</code> &#x6642;&#xFF0C;&#x5C31;&#x6703;&#x51FA;&#x73FE;&#x53E6;&#x5916;&#x4E00;&#x7A2E;&#x72C0;&#x614B;</li>
+<li>當有使用到 <code>*ngIf</code> 或是 <code>*ngFor</code> 時，就會出現另外一種狀態</li>
 </ol>
 <div class="amp-img-wrapper"><amp-img src="/2019/05/29/angular-static-viewchild/1559139445907.png" width="1220" height="663" layout="responsive"></amp-img></div>
-<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x540C;&#x4E00;&#x7A2E;&#x5BEB;&#x6CD5;&#x537B;&#x6709;&#x53EF;&#x80FD;&#x5728;&#x5169;&#x7A2E;&#x5730;&#x65B9;&#x53D6;&#x5F97;&#x7269;&#x4EF6;&#xFF0C;&#x9019;&#x4E00;&#x500B;&#x554F;&#x984C; Angular &#x5718;&#x968A;&#x60F3;&#x8981;&#x900F;&#x904E;&#x624B;&#x52D5;&#x8A2D;&#x5B9A;&#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x544A;&#x8A34;&#x5E95;&#x5C64;&#x7684; compiler &#x5728;&#x4F55;&#x6642;&#x53D6;&#x5F97;&#x7269;&#x4EF6;</p>
-<h1 id="&#x5728;-version-8-&#x904E;&#x5EA6;&#x6642;&#x671F;"><a class="header-anchor" href="#&#x5728;-version-8-&#x904E;&#x5EA6;&#x6642;&#x671F;"> </a>&#x5728; Version 8 (&#x904E;&#x5EA6;&#x6642;&#x671F;)</h1>
-<p>&#x7576;&#x5728;&#x5BEB; <code>@ViewChild</code> &#x6216;&#x662F; <code>@ContentChild</code> &#x6642;&#xFF0C;&#x5C31;&#x5FC5;&#x9808;&#x660E;&#x78BA;&#x7684;&#x6A19;&#x793A;&#x7B2C;&#x4E8C;&#x500B;&#x53C3;&#x6578; <code>{ static: true | false}</code>&#xFF0C;&#x9019;&#x53C3;&#x6578;&#x7684;&#x8A2D;&#x5B9A;&#x610F;&#x7FA9;&#x5206;&#x5225;&#x70BA;</p>
+<p>以上就是同一種寫法卻有可能在兩種地方取得物件，這一個問題 Angular 團隊想要透過手動設定的方式來告訴底層的 compiler 在何時取得物件</p>
+<h1 id="在-version-8-過度時期"><a class="header-anchor" href="#在-version-8-過度時期"> </a>在 Version 8 (過度時期)</h1>
+<p>當在寫 <code>@ViewChild</code> 或是 <code>@ContentChild</code> 時，就必須明確的標示第二個參數 <code>{ static: true | false}</code>，這參數的設定意義分別為</p>
 <ul>
 <li>
-<p>&#x7576;&#x8A2D;&#x5B9A;&#x70BA; <code>true</code> &#x6642;&#xFF0C;&#x53EA;&#x6703;&#x5728; <code>ngOnInit</code> &#x7684;&#x5730;&#x65B9;&#x53D6;&#x5F97; Element &#x7269;&#x4EF6;</p>
+<p>當設定為 <code>true</code> 時，只會在 <code>ngOnInit</code> 的地方取得 Element 物件</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/05/29/angular-static-viewchild/1559139827426.png" width="1549" height="874" layout="responsive"></amp-img></div>
-<p>&#x7576;&#x8A2D;&#x5B9A;&#x70BA; <code>{ static: true }</code> &#x6642;&#xFF0C;&#x5728;&#x52A0;&#x4E0A; <code>ngIf</code> &#x7684;&#x689D;&#x4EF6;&#xFF0C;&#x5728; <code>ngAfterViewInit</code> &#x7684;&#x5730;&#x65B9;&#x4F9D;&#x820A;&#x53D6;&#x4E0D;&#x5230;&#x8A72; Element &#x7269;&#x4EF6;&#xFF0C;&#x539F;&#x56E0;&#x662F; Angular Compiler &#x8A8D;&#x5B9A;&#x8A72; Element &#x70BA; static &#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x6703;&#x5728; OnInit &#x7684;&#x5730;&#x65B9;&#x53D6;&#x4E00;&#x6B21;&#xFF0C;&#x4E4B;&#x5F8C;&#x5C31;&#x4E0D;&#x6703;&#x88AB;&#x57F7;&#x884C;</p>
+<p>當設定為 <code>{ static: true }</code> 時，在加上 <code>ngIf</code> 的條件，在 <code>ngAfterViewInit</code> 的地方依舊取不到該 Element 物件，原因是 Angular Compiler 認定該 Element 為 static ，所以只會在 OnInit 的地方取一次，之後就不會被執行</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/05/29/angular-static-viewchild/1559140008278.png" width="1446" height="906" layout="responsive"></amp-img></div>
-<p>&#x6240;&#x4EE5;&#x7576;&#x9047;&#x5230;&#x9019;&#x7A2E;&#x60C5;&#x5F62;&#xFF0C;&#x5C31;&#x5FC5;&#x9808;&#x5C07; <code>static</code> &#x8A2D;&#x5B9A;&#x70BA; <code>false</code></p>
+<p>所以當遇到這種情形，就必須將 <code>static</code> 設定為 <code>false</code></p>
 </li>
 <li>
-<p>&#x7576;&#x8A2D;&#x5B9A;&#x70BA; <code>false</code> &#x6642;&#xFF0C;&#x53EA;&#x6703;&#x5728; <code>ngAfterViewInit</code> &#x7684;&#x5730;&#x65B9;&#x53D6;&#x5F97; Element &#x7269;&#x4EF6;</p>
+<p>當設定為 <code>false</code> 時，只會在 <code>ngAfterViewInit</code> 的地方取得 Element 物件</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/05/29/angular-static-viewchild/1559140094660.png" width="1326" height="586" layout="responsive"></amp-img></div>
 </li>
 </ul>
-<h1 id="&#x6700;&#x5F8C;"><a class="header-anchor" href="#&#x6700;&#x5F8C;"> </a>&#x6700;&#x5F8C;</h1>
-<p>&#x800C;&#x9019;&#x4E00;&#x500B; API &#x6539;&#x8B8A;&#x662F;&#x66AB;&#x6642;&#x6027;&#x7684;&#xFF0C;&#x5728; Angular 9 &#x9019;&#x4E00;&#x500B;&#x53C3;&#x6578;&#x7684;&#x9810;&#x8A2D;&#x503C;&#x6703;&#x662F; <code>false</code>&#xFF0C;&#x4E4B;&#x5F8C;&#x5C31;&#x53C8;&#x6703;&#x56DE;&#x5230;&#x4E00;&#x822C;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x3002;&#x5728;&#x4E0B;&#x9762;&#x7684;&#x53C3;&#x8003;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x5F8C;&#x534A;&#x6BB5;&#xFF0C;&#x6709;&#x4E00;&#x4E9B; QA &#x7684;&#x5167;&#x5BB9;&#xFF0C;&#x5982;&#x679C;&#x5C0D;&#x65BC;&#x9019;&#x6A23;&#x5B50;&#x7684;&#x8A2D;&#x5B9A;&#x6709;&#x554F;&#x984C;&#x7684;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x95B1;&#x8B80;&#x90A3;&#x908A;&#x7684;&#x56DE;&#x7B54;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="最後"><a class="header-anchor" href="#最後"> </a>最後</h1>
+<p>而這一個 API 改變是暫時性的，在 Angular 9 這一個參數的預設值會是 <code>false</code>，之後就又會回到一般的使用方式。在下面的參考文件中的後半段，有一些 QA 的內容，如果對於這樣子的設定有問題的，也可以閱讀那邊的回答</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://angular.io/guide/static-query-migration" target="_blank" rel="noopener">Static Query Migration Guide</a></li>
 </ul>

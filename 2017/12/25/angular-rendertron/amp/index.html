@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/12/25/angular-rendertron/"
 			},
 			"datePublished": "2017-12-25T02:38:34.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,57 +1848,57 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4EC0;&#x9EBC;&#x662F; <code>rendertron</code> ? <code>rendertron</code> &#x662F; Google Chrome &#x5718;&#x968A;&#x63A8;&#x51FA;&#x7684;&#x53E6;&#x5916;&#x4E00;&#x500B;&#x65B0;&#x5DE5;&#x5177;&#xFF0C;&#x9019;&#x5DE5;&#x5177;&#x53EF;&#x4EE5;&#x8B93; PWA &#x7DB2;&#x7AD9;&#x9047;&#x5230;&#x7DB2;&#x8DEF;&#x722C;&#x87F2;&#x6216;&#x662F;&#x5206;&#x4EAB;&#x5230; twitter/Facebook &#x6642;&#xFF0C;&#x53EF;&#x4EE5;&#x7522;&#x51FA;&#x975C;&#x614B;&#x9801;&#x9762;&#x7684;&#x6548;&#x679C;&#x3002;&#x63DB;&#x53E5;&#x7B97;&#x8AAA;&#xFF0C;&#x9019;&#x5DE5;&#x5177;&#x53EF;&#x4EE5;&#x8B93;&#x6211;&#x5011;&#x4E0D;&#x7528;&#x984D;&#x5916;&#x8655;&#x7406; Service Side Rendering &#x537B;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x76F8;&#x540C;&#x7684;&#x6548;&#x679C; (&#x50C5;&#x5C40;&#x9650;&#x65BC;&#x7DB2;&#x8DEF;&#x722C;&#x87F2;&#x6216;&#x662F; Rich Content Sharing&#x6642;)&#x3002;</p>
+			  		<p>什麼是 <code>rendertron</code> ? <code>rendertron</code> 是 Google Chrome 團隊推出的另外一個新工具，這工具可以讓 PWA 網站遇到網路爬蟲或是分享到 twitter/Facebook 時，可以產出靜態頁面的效果。換句算說，這工具可以讓我們不用額外處理 Service Side Rendering 卻可以得到相同的效果 (僅局限於網路爬蟲或是 Rich Content Sharing時)。</p>
 <a id="more"></a>
-<h1 id="&#x7C21;&#x4ECB;"><a class="header-anchor" href="#&#x7C21;&#x4ECB;"> </a>&#x7C21;&#x4ECB;</h1>
-<p><code>rendertron</code> &#x662F;&#x5982;&#x4F55;&#x904B;&#x4F5C;&#x7684;&#x5462;? &#x5176;&#x5BE6; rendertron &#x662F;&#x900F;&#x904E; Headless Chrome &#x4F86;&#x8B80;&#x53D6; PWA &#x7DB2;&#x7AD9;&#x4E26;&#x56DE;&#x50B3;&#x6240;&#x7522;&#x751F;&#x51FA;&#x4F86;&#x7684;&#x7D50;&#x679C;&#xFF0C;&#x56E0;&#x70BA;&#x662F;&#x4F7F;&#x7528;&#x700F;&#x89BD;&#x5668;&#x4F86;&#x7522;&#x751F; DOM&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x5E38;&#x5728;&#x5BE6;&#x4F5C; Server Side Rendering &#x6642;&#x6703;&#x9047;&#x5230;&#x7684;&#x554F;&#x984C;&#x90FD;&#x4E0D;&#x6703;&#x767C;&#x751F;&#xFF0C;&#x4F8B;&#x5982; <code>document</code> &#x7269;&#x4EF6;&#x4E0D;&#x5B58;&#x5728;&#x3002;</p>
-<p>&#x53E6;&#x5916;&#x4E00;&#x500B;&#x597D;&#x8655;&#x662F;&#xFF0C;&#x56E0;&#x70BA;&#x662F;&#x4F7F;&#x7528;&#x700F;&#x89BD;&#x5668;&#x4F86;&#x7522;&#x751F; DOM&#xFF0C;&#x6240;&#x4EE5;&#x4EFB;&#x4F55;&#x524D;&#x7AEF;&#x6280;&#x8853;&#x90FD;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;!! &#x56E0;&#x70BA;&#x662F;&#x900F;&#x904E; proxy middleware &#x7684;&#x65B9;&#x5F0F;&#x4F86;&#x5B8C;&#x6210;&#x7684;&#xFF0C;middleware &#x7684;&#x8A2D;&#x5B9A;&#x65B9;&#x662F;&#x6839;&#x64DA;&#x6587;&#x4EF6;&#xFF0C;&#x770B;&#x8D77;&#x4F86;&#x4E26;&#x4E0D;&#x8907;&#x96DC;</p>
+<h1 id="簡介"><a class="header-anchor" href="#簡介"> </a>簡介</h1>
+<p><code>rendertron</code> 是如何運作的呢? 其實 rendertron 是透過 Headless Chrome 來讀取 PWA 網站並回傳所產生出來的結果，因為是使用瀏覽器來產生 DOM，所以通常在實作 Server Side Rendering 時會遇到的問題都不會發生，例如 <code>document</code> 物件不存在。</p>
+<p>另外一個好處是，因為是使用瀏覽器來產生 DOM，所以任何前端技術都可以使用!! 因為是透過 proxy middleware 的方式來完成的，middleware 的設定方是根據文件，看起來並不複雜</p>
 <h1 id="middleware"><a class="header-anchor" href="#middleware"> </a>Middleware</h1>
-<p>&#x6839;&#x64DA;&#x5B98;&#x65B9;&#x6587;&#x4EF6;&#x6709; 3 &#x7A2E;&#x8A2D;&#x5B9A;&#x4F7F;&#x7528;&#x7684;&#x65B9;&#x5F0F;</p>
+<p>根據官方文件有 3 種設定使用的方式</p>
 <ol>
 <li><a href="https://github.com/GoogleChrome/rendertron/blob/master/middleware" target="_blank" rel="noopener">Express.js middleware</a></li>
 <li><a href="https://github.com/justinribeiro/pwa-firebase-functions-botrender" target="_blank" rel="noopener">Firebase functions</a> (Community maintained)</li>
 <li><a href="https://github.com/galamai/AspNetCore.Rendertron" target="_blank" rel="noopener">ASP.net core middleware</a> (Community maintained)</li>
 </ol>
-<p>&#x4E0A;&#x8FF0;&#x7684;&#x4E09;&#x7A2E;&#x65B9;&#x5F0F;&#x90FD;&#x662F;&#x4F7F;&#x7528;&#x540C;&#x4E00;&#x500B;&#x539F;&#x7406;&#xFF0C;&#x90A3;&#x5C31;&#x5224;&#x65B7;&#x767C;&#x51FA;&#x8ACB;&#x6C42;&#x7684;&#x5C0D;&#x8C61;&#x662F;&#x4F7F;&#x7528;&#x8005;&#x9084;&#x662F;&#x7DB2;&#x8DEF;&#x722C;&#x87F2;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x7DB2;&#x8DEF;&#x722C;&#x87F2;&#xFF0C;&#x5247;&#x4F7F;&#x7528; rendertron &#x6240;&#x751F;&#x7684;&#x5167;&#x5BB9;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x4F7F;&#x7528;&#x8005;&#xFF0C;&#x5247;&#x76F4;&#x63A5;&#x8F38;&#x51FA;&#x9810;&#x8A2D;&#x7684;&#x5167;&#x5BB9;</p>
+<p>上述的三種方式都是使用同一個原理，那就判斷發出請求的對象是使用者還是網路爬蟲，如果是網路爬蟲，則使用 rendertron 所生的內容，如果是使用者，則直接輸出預設的內容</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/zjfodpF.png" width="806" height="457" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KBQa1RE.png" width="778" height="457" layout="responsive"></amp-img></div>
 <h2 id="asp-net-core-mvc"><a class="header-anchor" href="#asp-net-core-mvc"> </a><a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC</h2>
-<p>&#x5C31;&#x4EE5; <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC &#x4F86;&#x8AAA;&#xFF0C;&#x5B89;&#x88DD;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;</p>
+<p>就以 <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC 來說，安裝使用方式如下</p>
 <ol>
 <li>
-<p>&#x5B89;&#x88DD; <code>Galamai.AspNetCore.Rendertron</code> &#x5957;&#x4EF6;</p>
+<p>安裝 <code>Galamai.AspNetCore.Rendertron</code> 套件</p>
 </li>
 <li>
-<p>&#x65B0;&#x589E; <code>Startup.cs</code></p>
+<p>新增 <code>Startup.cs</code></p>
 <ol>
 <li>
-<p>services &#x52A0;&#x5165; <code>AddRendertron</code></p>
+<p>services 加入 <code>AddRendertron</code></p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">// Add rendertron services</span></span><br><span class="line">    services.AddRendertron(options =&gt;</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">// use http compression</span></span><br><span class="line">        options.AcceptCompression = <span class="literal">true</span>;</span><br><span class="line">    });</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x8A2D;&#x5B9A;&#x4E26;&#x4F7F;&#x7528; <code>Rendertron</code></p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Use Rendertron middleware</span></span><br><span class="line"><span class="comment">// &#x6307;&#x5B9A; rendertron &#x670D;&#x52D9;&#x7684;&#x4F4D;&#x7F6E;</span></span><br><span class="line">app.UseRendertron(proxyUrl: <span class="string">&quot;http://rendertron:8080/render/&quot;</span>); &#x6210;&#x3115;</span><br></pre></td></tr></tbody></table></figure>
+<p>設定並使用 <code>Rendertron</code></p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Use Rendertron middleware</span></span><br><span class="line"><span class="comment">// 指定 rendertron 服務的位置</span></span><br><span class="line">app.UseRendertron(proxyUrl: <span class="string">"http://rendertron:8080/render/"</span>); 成ㄕ</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
 </li>
 <li>
-<p>&#x5B8C;&#x6210;&#x8A2D;&#x5B9A;&#xFF0C;&#x9019;&#x6A23;&#x5B50;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E86;</p>
+<p>完成設定，這樣子就可以使用了</p>
 </li>
 </ol>
-<h1 id="&#x5B89;&#x88DD;"><a class="header-anchor" href="#&#x5B89;&#x88DD;"> </a>&#x5B89;&#x88DD;</h1>
-<h2 id="&#x672C;&#x5730;&#x7AEF;"><a class="header-anchor" href="#&#x672C;&#x5730;&#x7AEF;"> </a>&#x672C;&#x5730;&#x7AEF;</h2>
+<h1 id="安裝"><a class="header-anchor" href="#安裝"> </a>安裝</h1>
+<h2 id="本地端"><a class="header-anchor" href="#本地端"> </a>本地端</h2>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/GoogleChrome/rendertron.git</span><br><span class="line">cd rendertron</span><br><span class="line">npm install</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x5F9E; Github &#x5C07;&#x7A0B;&#x5F0F;&#x78BC;&#x6293;&#x4E0B;&#x4F86;&#x5F8C;&#xFF0C;&#x57F7;&#x884C; npm install &#x5F8C;&#xFF0C;&#x5373;&#x53EF;&#x900F;&#x904E; <code>npm start</code> &#x5C07; rendertron &#x57F7;&#x884C;&#x8D77;&#x4F86;</p>
-<h2 id="&#x4F7F;&#x7528;-docker-image"><a class="header-anchor" href="#&#x4F7F;&#x7528;-docker-image"> </a>&#x4F7F;&#x7528; docker image</h2>
+<p>從 Github 將程式碼抓下來後，執行 npm install 後，即可透過 <code>npm start</code> 將 rendertron 執行起來</p>
+<h2 id="使用-docker-image"><a class="header-anchor" href="#使用-docker-image"> </a>使用 docker image</h2>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t rendertron . --no-cache=true</span><br><span class="line">docker run -it -p 8080:8080 --name rendertron-container rendertron</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x958B;&#x555F;&#x7DB2;&#x9801;</p>
+<p>開啟網頁</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8080/</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x505C;&#x6B62; container</p>
+<p>停止 container</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker kill rendertron-container</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x6E05;&#x9664; container</p>
+<p>清除 container</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f $(docker ps -a -q)</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <p><a href="https://github.com/GoogleChrome/rendertron" target="_blank" rel="noopener">rendertron</a></p>
 
 			  		

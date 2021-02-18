@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/07/13/mvc-when-the-mvc-in-exe-file-need-to-read-when-a-network-drive/"
 			},
 			"datePublished": "2015-07-13T03:15:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,11 +1842,11 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x6700;&#x8FD1;&#x8981;&#x5BEB;&#x4E00;&#x500B;api&#xFF0C;&#x5176;&#x529F;&#x80FD;&#x9700;&#x8981;&#x547C;&#x53EB;&#x4E00;&#x500B;exe&#x57F7;&#x884C;&#x6A94;&#x7136;&#x5F8C;&#x53D6;&#x5F97;&#x8A72;&#x6A94;&#x56DE;&#x50B3;&#x7684;dbf&#x6A94;&#x6848;
-&#x4F46;&#x662F;&#x8A72;&#x57F7;&#x884C;&#x6A94;&#x53C8;&#x9700;&#x8981;&#x8B80;&#x53D6;&#x7DB2;&#x8DEF;&#x78C1;&#x789F;&#x6A5F;&#x7684;&#x6A94;&#x6848;&#x3002;&#x9019;IIS&#x5C31;&#x6703;&#x5361;&#x4F4F;&#x4E86;&#x3002;&#x4E0D;&#x7BA1;&#x6B0A;&#x9650;&#x600E;&#x9EBC;&#x8A2D;&#x5B9A;&#x90FD;&#x904E;&#x4E0D;&#x53BB;&#x3002;</p>
-<p>&#x6240;&#x4EE5;&#x53EA;&#x597D;&#x7E5E;&#x8DEF;&#x89E3;&#x6C7A;&#x4E86;. &#x89E3;&#x6CD5;&#x662F;: &#x5EFA;&#x7ACB;&#x53E6;&#x5916;&#x4E00;&#x500B;selfhost&#x7684;webapi (console mode), &#x5728;&#x8A72;api&#x4E0B;&#x57F7;&#x884C;&#x8A72;&#x57F7;&#x884C;&#x6A94;&#x5C31;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x904B;&#x4F5C;&#x4E86;&#xFF0C;&#x56E0;&#x70BA;&#x4E0D;&#x662F;&#x900F;&#x904E;IIS. &#x7136;&#x5F8C;&#x7DB2;&#x7AD9;&#x53BB;&#x547C;&#x53EB;&#x90A3;&#x500B;&#x81EA;&#x884C;&#x904B;&#x4F5C;&#x7684;webapi&#x53D6;&#x56DE;&#x7D50;&#x679C;.</p>
-<p>&#x96D6;&#x7136;&#x6709;&#x9EDE;&#x9EBB;&#x7169;&#xFF0C;&#x4F46;&#x662F;&#x81F3;&#x5C11;&#x89E3;&#x6C7A;&#x554F;&#x984C;&#x4E86;&#x3002;(&#x6D6A;&#x8CBB;&#x6211;&#x5169;&#x5929;&#x7684;&#x751F;&#x547D;)</p>
-<p>&#x95DC;&#x65BC;selft&#x7684;webapi&#x5EFA;&#x7ACB;&#x65B9;&#x5F0F;&#xFF0C;&#x8ACB;&#x53C3;&#x8003;<a href="http://www.asp.net/web-api/overview/older-versions/self-host-a-web-api" target="_blank" rel="noopener">webapi selfhost</a></p>
+			  		<p>最近要寫一個api，其功能需要呼叫一個exe執行檔然後取得該檔回傳的dbf檔案
+但是該執行檔又需要讀取網路磁碟機的檔案。這IIS就會卡住了。不管權限怎麼設定都過不去。</p>
+<p>所以只好繞路解決了. 解法是: 建立另外一個selfhost的webapi (console mode), 在該api下執行該執行檔就可以正常運作了，因為不是透過IIS. 然後網站去呼叫那個自行運作的webapi取回結果.</p>
+<p>雖然有點麻煩，但是至少解決問題了。(浪費我兩天的生命)</p>
+<p>關於selft的webapi建立方式，請參考<a href="http://www.asp.net/web-api/overview/older-versions/self-host-a-web-api" target="_blank" rel="noopener">webapi selfhost</a></p>
 
 			  		
 			  		<!-- google Adsense -->

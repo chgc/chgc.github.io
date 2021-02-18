@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/05/04/angular2-upgrade-to-rc0/"
 			},
 			"datePublished": "2016-05-04T00:39:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,45 +1848,45 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular&#x767C;&#x4F48;RC&#x4E86;&#xFF0C;&#x4F86;&#x5347;&#x7D1A;&#x5427;</p>
+			  		<p>Angular發佈RC了，來升級吧</p>
 <a id="more"></a>
 <p><a href="https://github.com/angular/angular/blob/master/CHANGELOG.md#200-rc0-2016-05-02" target="_blank" rel="noopener">Changelog</a></p>
-<h1 id="&#x5347;&#x7D1A;angular2-rc"><a class="header-anchor" href="#&#x5347;&#x7D1A;angular2-rc"> </a>&#x5347;&#x7D1A;Angular2 RC</h1>
-<h2 id="npm&#x5B89;&#x88DD;&#x547D;&#x4EE4;"><a class="header-anchor" href="#npm&#x5B89;&#x88DD;&#x547D;&#x4EE4;"> </a>NPM&#x5B89;&#x88DD;&#x547D;&#x4EE4;</h2>
+<h1 id="升級angular2-rc"><a class="header-anchor" href="#升級angular2-rc"> </a>升級Angular2 RC</h1>
+<h2 id="npm安裝命令"><a class="header-anchor" href="#npm安裝命令"> </a>NPM安裝命令</h2>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic rxjs@5.0.0-beta.6 zone.js@0.6.12</span><br></pre></td></tr></tbody></table></figure>
-<p>RC&#x7248;&#x672C;&#xFF0C;&#x5C07;&#x5404;Module&#x90FD;&#x62C6;&#x958B;&#x4E86;&#xFF0C;&#x9019;&#x8868;&#x793A;&#xFF0C;&#x53EF;&#x4EE5;&#x53EA;&#x5B89;&#x88DD;&#x81EA;&#x5DF1;&#x9700;&#x8981;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x5C31;&#x4E0D;&#x7528;&#x5168;&#x90E8;&#x90FD;&#x5305;&#x9032;&#x4F86;&#x4E86;</p>
-<p>&#x5982;&#x679C;&#x51FA;&#x73FE;&#x4E0B;&#x9762;&#x7684;&#x756B;&#x9762;&#xFF0C;&#x66F4;&#x65B0;npm&#x5F8C;&#x5C31;&#x53EF;&#x4EE5;&#x4FEE;&#x6B63;&#x554F;&#x984C;&#x4E86;</p>
+<p>RC版本，將各Module都拆開了，這表示，可以只安裝自己需要的部分，就不用全部都包進來了</p>
+<p>如果出現下面的畫面，更新npm後就可以修正問題了</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm8.staticflickr.com/7123/26802139945_49ab0ab1c8_o.png" width="621" height="263" layout="responsive"></amp-img></div>
-<h2 id="&#x4FEE;&#x6539;import-namespace"><a class="header-anchor" href="#&#x4FEE;&#x6539;import-namespace"> </a>&#x4FEE;&#x6539;import namespace</h2>
-<p>&#x4F8B;&#x5982;</p>
+<h2 id="修改import-namespace"><a class="header-anchor" href="#修改import-namespace"> </a>修改import namespace</h2>
+<p>例如</p>
 <ul>
 <li><code>angular2/core</code> -&gt; <code>@angular/core</code></li>
 <li><code>angular2/compiler</code> -&gt; <code>@angular/compiler</code></li>
 <li><code>angular2/common</code> -&gt; <code>@angular/common</code></li>
 <li><code>angular2/platform/browser</code> -&gt; <code>@angular/platform-browser</code> (applications with precompiled templates) + <code>@angular/platform-browser-dynamic</code> (applications that compile templates on the fly)</li>
 <li><code>angular2/platform/server</code> -&gt; <code>@angular/platform-server</code></li>
-<li><code>angular2/testing</code> -&gt; <code>@angular/core/testing</code> (it/describe/&#x2026;) + <code>@angular/compiler/testing</code> (TestComponentBuilder) + <code>@angular/platform-browser/testing</code></li>
+<li><code>angular2/testing</code> -&gt; <code>@angular/core/testing</code> (it/describe/…) + <code>@angular/compiler/testing</code> (TestComponentBuilder) + <code>@angular/platform-browser/testing</code></li>
 <li><code>angular2/upgrade</code> -&gt; <code>@angular/upgrade</code></li>
 <li><code>angular2/http</code> -&gt; <code>@angular/http</code></li>
 <li><code>angular2/router</code> -&gt; <code>@angular/router-deprecated</code> (snapshot of the component router from beta.17 for backwards compatibility)</li>
 <li>new package: <code>@angular/router</code> - component router with several <a href="https://docs.google.com/document/d/1WLSNV3V1AKdwLwRiLuN7JqbPBKQ_S5quRlcT5LPIldw/edit#heading=h.blfh5ya9sf5r" target="_blank" rel="noopener">breaking changes</a></li>
 </ul>
-<p>&#x4F46;&#x662F;&#x6709;&#x4E9B;&#x6771;&#x897F;&#x9084;&#x662F;&#x6709;&#x63DB;&#x4F4D;&#x7F6E;</p>
+<p>但是有些東西還是有換位置</p>
 <ul>
-<li>import { bootstrap }    from &#x300E;@angular/platform-browser-dynamic&#x300F;; --&gt;&#x300E;angular2/platform/browser&#x300F;;</li>
-<li>import { APP_BASE_HREF } from &#x300E;@angular/common&#x300F;; --&gt; from &#x300E;angular2/http&#x300F;</li>
+<li>import { bootstrap }    from 『@angular/platform-browser-dynamic』; --&gt;『angular2/platform/browser』;</li>
+<li>import { APP_BASE_HREF } from 『@angular/common』; --&gt; from 『angular2/http』</li>
 </ul>
-<h2 id="&#x66F4;&#x65B0;&#x5176;&#x4ED6;&#x6709;&#x7528;&#x5230;ng2&#x7684;library"><a class="header-anchor" href="#&#x66F4;&#x65B0;&#x5176;&#x4ED6;&#x6709;&#x7528;&#x5230;ng2&#x7684;library"> </a>&#x66F4;&#x65B0;&#x5176;&#x4ED6;&#x6709;&#x7528;&#x5230;ng2&#x7684;Library</h2>
-<p>&#x9019;&#x90E8;&#x5206;&#x53EF;&#x80FD;&#x6703;&#x6709;&#x4E9B;&#x554F;&#x984C;&#xFF0C;&#x56E0;&#x70BA;RC&#x662F;&#x8FD1;&#x671F;&#x7684;&#x767C;&#x4F48;&#x7684;&#xFF0C;&#x6709;&#x53EF;&#x80FD;&#x90E8;&#x5206;&#x7684;Library&#x9084;&#x6C92;&#x6709;&#x8DDF;&#x8457;&#x66F4;&#x65B0;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x4F7F;&#x7528;&#x4E0A;&#x6703;&#x51FA;&#x73FE;&#x554F;&#x984C;&#x3002;</p>
-<h2 id="&#x66F4;&#x65B0;build-tool-config-if-need"><a class="header-anchor" href="#&#x66F4;&#x65B0;build-tool-config-if-need"> </a>&#x66F4;&#x65B0;Build tool config if need</h2>
+<h2 id="更新其他有用到ng2的library"><a class="header-anchor" href="#更新其他有用到ng2的library"> </a>更新其他有用到ng2的Library</h2>
+<p>這部分可能會有些問題，因為RC是近期的發佈的，有可能部分的Library還沒有跟著更新，所以在使用上會出現問題。</p>
+<h2 id="更新build-tool-config-if-need"><a class="header-anchor" href="#更新build-tool-config-if-need"> </a>更新Build tool config if need</h2>
 <p>ex: Webpack</p>
-<h2 id="&#x6E2C;&#x8A66;&#x5347;&#x7D1A;&#x5F8C;&#x7684;&#x7D50;&#x679C;"><a class="header-anchor" href="#&#x6E2C;&#x8A66;&#x5347;&#x7D1A;&#x5F8C;&#x7684;&#x7D50;&#x679C;"> </a>&#x6E2C;&#x8A66;&#x5347;&#x7D1A;&#x5F8C;&#x7684;&#x7D50;&#x679C;</h2>
-<h1 id="&#x8A9E;&#x6CD5;&#x8ABF;&#x6574;"><a class="header-anchor" href="#&#x8A9E;&#x6CD5;&#x8ABF;&#x6574;"> </a>&#x8A9E;&#x6CD5;&#x8ABF;&#x6574;</h1>
+<h2 id="測試升級後的結果"><a class="header-anchor" href="#測試升級後的結果"> </a>測試升級後的結果</h2>
+<h1 id="語法調整"><a class="header-anchor" href="#語法調整"> </a>語法調整</h1>
 <h2 id="ngfor-change-in-2-0-0-beta-17"><a class="header-anchor" href="#ngfor-change-in-2-0-0-beta-17"> </a>*ngFor (change in 2.0.0-beta.17)</h2>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#x539F;&#x672C;&#x7684;ngFor&#x7528;&#x6CD5;&#x70BA;</span></span><br><span class="line">*ngFor=<span class="string">&quot;#item of items&quot;</span></span><br><span class="line"><span class="comment">// &#x4FEE;&#x6B63;&#x70BA;</span></span><br><span class="line">*ngFor=<span class="string">&quot;let item of items&quot;</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原本的ngFor用法為</span></span><br><span class="line">*ngFor=<span class="string">"#item of items"</span></span><br><span class="line"><span class="comment">// 修正為</span></span><br><span class="line">*ngFor=<span class="string">"let item of items"</span></span><br></pre></td></tr></tbody></table></figure>
 <h2 id="pipe-change-in-2-0-0-beta-16"><a class="header-anchor" href="#pipe-change-in-2-0-0-beta-16"> </a>Pipe (change in 2.0.0-beta.16)</h2>
-<p>&#x91DD;&#x5C0D;Argument&#x7684;&#x8655;&#x7406;&#x65B9;&#x5F0F;&#x6539;&#x8B8A;</p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//&#x539F;&#x672C;&#x7684;</span></span><br><span class="line"> transform(todos, args) {        </span><br><span class="line">    <span class="comment">// &#x50B3;&#x9032;&#x4F86;&#x7684;args&#x70BA;array</span></span><br><span class="line">    ...       </span><br><span class="line">}</span><br><span class="line"><span class="comment">// &#x5347;&#x7D1A;&#x5F8C;</span></span><br><span class="line">transform(todos, args) { </span><br><span class="line">  <span class="comment">// &#x50B3;&#x9032;&#x4F86;&#x7684;args&#x8B8A;&#x6210;&#x50B3;&#x7D66;&#x4ED6;&#x4EC0;&#x9EBC;&#x5C31;&#x662F;&#x4EC0;&#x9EBC;</span></span><br><span class="line">  ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>針對Argument的處理方式改變</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//原本的</span></span><br><span class="line"> transform(todos, args) {        </span><br><span class="line">    <span class="comment">// 傳進來的args為array</span></span><br><span class="line">    ...       </span><br><span class="line">}</span><br><span class="line"><span class="comment">// 升級後</span></span><br><span class="line">transform(todos, args) { </span><br><span class="line">  <span class="comment">// 傳進來的args變成傳給他什麼就是什麼</span></span><br><span class="line">  ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

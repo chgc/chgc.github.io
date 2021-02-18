@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/07/25/angular-moment-localte-is-too-fat/"
 			},
 			"datePublished": "2020-07-25T04:21:38.000Z",
-			"dateModified": "2021-02-18T02:25:04.955Z",
+			"dateModified": "2021-02-18T02:32:11.687Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,16 +1851,16 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x9577;&#x4E45;&#x4EE5;&#x4F86;&#xFF0C;&#x4F7F;&#x7528; moment.js &#x9019;&#x4E00;&#x500B;&#x6642;&#x9593;&#x5957;&#x4EF6;&#x8B93;&#x6211;&#x5F88;&#x6399;&#x624E;&#xFF0C;&#x7562;&#x7ADF;&#x4ED6;&#x5F88;&#x597D;&#x7528;&#x4F46;&#x5F88;&#x80A5;&#xFF0C;&#x4E3B;&#x8981;&#x80A5;&#x80D6;&#x7684;&#x5730;&#x65B9;&#x90FD;&#x662F;&#x4E00;&#x5806;&#x7528;&#x4E0D;&#x5230;&#x7684; locale.</p>
-<p>&#x4ECA;&#x5929;&#x7D42;&#x65BC;&#x4E0B;&#x5B9A;&#x6C7A;&#x5FC3;&#x8981;&#x4F86;&#x89E3;&#x6C7A;&#x9019;&#x500B;&#x554F;&#x984C;&#xFF0C;&#x7D93;&#x904E;&#x5169;&#x5206;&#x9418;&#x7684;&#x641C;&#x5C0B;&#x5F8C;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x89E3;&#x6CD5;</p>
+			  		<p>長久以來，使用 moment.js 這一個時間套件讓我很掙扎，畢竟他很好用但很肥，主要肥胖的地方都是一堆用不到的 locale.</p>
+<p>今天終於下定決心要來解決這個問題，經過兩分鐘的搜尋後，以下是解法</p>
 <a id="more"></a>
 <ol>
-<li>&#x5728; <code>src</code> &#x8CC7;&#x6599;&#x593E;&#x4E0B;&#x5EFA;&#x7ACB;&#x4E00;&#x500B; locale &#x7A7A;&#x7684;&#x8CC7;&#x6599;&#x593E;</li>
-<li>&#x5728; <code>angular.json</code> &#x7684; <code>fileReplacements</code> &#x5167;&#x591A;&#x65B0;&#x589E;&#x4E0B;&#x9762;&#x8A2D;&#x5B9A;</li>
+<li>在 <code>src</code> 資料夾下建立一個 locale 空的資料夾</li>
+<li>在 <code>angular.json</code> 的 <code>fileReplacements</code> 內多新增下面設定</li>
 </ol>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;replace&quot;</span>: <span class="string">&quot;node_modules/moment/locale/&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;with&quot;</span>: <span class="string">&quot;src/locale/&quot;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x9019;&#x6A23;&#x5B50;&#x8A2D;&#x5B9A;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;ng build --prod &#x6642;&#x6703;&#x51FA;&#x73FE; <code>\moment\locale\af.js&quot; does not exist.</code> &#x627E;&#x4E0D;&#x5230;&#x7684;&#x932F;&#x8AA4;&#x8A0A;&#x606F;&#xFF0C;&#x6C92;&#x95DC;&#x4FC2;&#x9019;&#x500B;&#x4E0D;&#x6703;&#x5F71;&#x97FF;&#x5230;&#x6211;&#x5011;&#x7684;&#x7A0B;&#x5F0F;&#x57F7;&#x884C;&#x3002;</p>
-<p>&#x7D93;&#x904E;&#x9019;&#x6A23;&#x5B50;&#x7684;&#x8ABF;&#x6574;&#x5F8C;&#xFF0C;&#x6574;&#x500B; moment locale &#x7684;&#x90E8;&#x5206;&#x5C31;&#x6703;&#x88AB;&#x62D4;&#x6389;&#xFF0C;&#x77AC;&#x9593;&#x7626;&#x4E86;&#x5FEB; 400kb &#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x53EF;&#x4EE5;&#x7B97;&#x662F;&#x7626;&#x8EAB;&#x6210;&#x529F;</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"replace"</span>: <span class="string">"node_modules/moment/locale/"</span>,</span><br><span class="line">  <span class="attr">"with"</span>: <span class="string">"src/locale/"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>當這樣子設定完成後，ng build --prod 時會出現 <code>\moment\locale\af.js" does not exist.</code> 找不到的錯誤訊息，沒關係這個不會影響到我們的程式執行。</p>
+<p>經過這樣子的調整後，整個 moment locale 的部分就會被拔掉，瞬間瘦了快 400kb 的大小，可以算是瘦身成功</p>
 
 			  		
 			  		<!-- google Adsense -->

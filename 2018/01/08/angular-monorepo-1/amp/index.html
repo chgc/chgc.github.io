@@ -63,7 +63,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/01/08/angular-monorepo-1/"
 			},
 			"datePublished": "2018-01-08T02:39:35.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1853,31 +1853,31 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x76EE;&#x524D;&#x7684;&#x7BA1;&#x7406;&#x7A0B;&#x5F0F;&#x78BC;&#xFF0C;&#x5927;&#x81F4;&#x4E0A;&#x53EF;&#x4EE5;&#x5206;&#x6210;&#x5169;&#x7A2E;&#x65B9;&#x5F0F;&#xFF0C; mono &#x8207; multiple repositories&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x63A1; Multiple Repo&#xFF0C;&#x6BCF;&#x4E00;&#x500B;&#x7CFB;&#x7D71;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x7684; repository &#x505A;&#x7248;&#x63A7;&#xFF0C;&#x5404;&#x81EA;&#x7BA1;&#x7406;&#x81EA;&#x5DF1;&#x7684;&#x5957;&#x4EF6;&#x7248;&#x672C;&#xFF0C;&#x9019;&#x807D;&#x8D77;&#x4F86;&#x5F88;&#x5408;&#x7406;&#xFF0C;&#x4F46;&#x76EE;&#x524D;&#x6BD4;&#x8F03;&#x5927;&#x578B;&#x7684;&#x8EDF;&#x9AD4;&#x516C;&#x53F8;&#xFF0C;&#x50CF;&#x662F; Google &#x3001;Facebook&#x3001;Twitter &#x7B49;&#x3002;&#x90FD;&#x662F;&#x63A1;&#x53D6; mono repo &#x7684;&#x958B;&#x767C;&#x6A21;&#x5F0F;(&#x8ACB;&#x7559;&#x610F;&#x4E0A;&#x8FF0;&#x516C;&#x53F8;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x4E00;&#x5957;&#x7684;&#x958B;&#x767C;&#x6D41;&#x7A0B;)</p>
-<p><strong>&#x203B;&#x6C92;&#x6709;&#x54EA;&#x4E00;&#x7A2E;&#x65B9;&#x6CD5;&#x597D;&#xFF0C;&#x54EA;&#x4E00;&#x7A2E;&#x65B9;&#x6CD5;&#x4E0D;&#x597D;&#x3002;&#x90FD;&#x6709;&#x5404;&#x81EA;&#x7684;&#x512A;&#x7F3A;&#x9EDE; !</strong></p>
+			  		<p>目前的管理程式碼，大致上可以分成兩種方式， mono 與 multiple repositories，通常是採 Multiple Repo，每一個系統都有自己的 repository 做版控，各自管理自己的套件版本，這聽起來很合理，但目前比較大型的軟體公司，像是 Google 、Facebook、Twitter 等。都是採取 mono repo 的開發模式(請留意上述公司都有自己一套的開發流程)</p>
+<p><strong>※沒有哪一種方法好，哪一種方法不好。都有各自的優缺點 !</strong></p>
 <a id="more"></a>
-<p>&#x7B2C;&#x4E00;&#x500B;&#x554F;&#x984C;&#x662F;&#x4EC0;&#x9EBC;&#x662F; Mono Repo?  Mono Repo &#x662F;&#x5C07;&#x5404;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x53CA;&#x76F8;&#x95DC;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#x90FD;&#x653E;&#x5728;&#x540C;&#x4E00;&#x500B; Repo &#x4E0B;&#x505A;&#x7BA1;&#x7406;&#xFF0C;&#x8B93;&#x7A0B;&#x5F0F;&#x78BC;&#x5171;&#x7528;&#x7684;&#x8907;&#x96DC;&#x5EA6;&#x964D;&#x4F4E;&#xFF0C;&#x9019;&#x88E1;&#x6709;&#x4E00;&#x90E8;&#x5728; YouTube &#x4E0A;&#x9762;&#x7684;&#x5F71;&#x7247;&#xFF0C;&#x8AAA;&#x660E; Google &#x5167;&#x90E8;&#x662F;&#x5982;&#x4F55;&#x4F7F;&#x7528; Mono Repo &#x8DDF;&#x70BA;&#x4EC0;&#x9EBC;&#x8981;&#x9019;&#x6A23;&#x5B50;&#x505A;</p>
+<p>第一個問題是什麼是 Mono Repo?  Mono Repo 是將各應用程式及相關的程式碼都放在同一個 Repo 下做管理，讓程式碼共用的複雜度降低，這裡有一部在 YouTube 上面的影片，說明 Google 內部是如何使用 Mono Repo 跟為什麼要這樣子做</p>
 <div class="video-container"><amp-youtube data-videoid="W71BTkUbdqE" width="1920" height="1080" layout="responsive"></amp-youtube></div>
-<p>&#x9019;&#x6A23;&#x5B50;&#x6709;&#x4EC0;&#x9EBC;&#x6A23;&#x7684;&#x597D;&#x8655;&#x5462;? &#x5728;&#x63D0;&#x597D;&#x8655;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x4F86;&#x770B; Multiple Repositories &#x7684;&#x597D;&#x8655;&#x6709;&#x54EA;&#x4E9B;</p>
+<p>這樣子有什麼樣的好處呢? 在提好處之前，先來看 Multiple Repositories 的好處有哪些</p>
 <ol>
 <li>Clean ownership</li>
 <li>Better scale</li>
 <li>Narrow Clones</li>
 </ol>
-<p>&#x9019;&#x4E9B;&#x597D;&#x8655;&#x770B;&#x8D77;&#x4F86;&#x6C92;&#x6709;&#x4EC0;&#x9EBC;&#x554F;&#x984C;&#xFF0C;&#x65E2;&#x7136;&#x6C92;&#x6709;&#x554F;&#x984C;&#xFF0C;&#x70BA;&#x4EC0;&#x9EBC;&#x6703;&#x6709; Mono Repo &#x9019;&#x7A2E;&#x6A21;&#x5F0F;&#x51FA;&#x4F86;&#x5462;? &#x4E3B;&#x8981;&#x539F;&#x56E0;&#x6211;&#x60F3;&#x662F;&#x7576;&#x7CFB;&#x7D71;&#x6216;&#x662F;&#x7522;&#x54C1;&#x7DDA;&#x8B8A;&#x5927;&#x6642;&#xFF0C;&#x6709;&#x4E9B;&#x5E95;&#x5C64;&#x91CD;&#x8907;&#x6027;&#x9AD8;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#xFF0C;&#x8B8A;&#x7684;&#x5F88;&#x96E3;&#x7BA1;&#x7406;&#x3002;&#x60F3;&#x60F3;&#x770B;&#xFF0C;&#x5728;&#x5F8C;&#x7AEF;&#x5BEB; C# &#x5C08;&#x6848;&#x6642;&#xFF0C;&#x5F9E;&#x539F;&#x672C;&#x7684;&#x55AE;&#x4E00;&#x5C08;&#x6848;&#xFF0C;&#x5EF6;&#x4F38;&#x51FA; n-tier &#x7684;&#x67B6;&#x69CB;&#xFF0C;&#x662F;&#x70BA;&#x4E86;&#x600E;&#x6A23;&#x7684;&#x539F;&#x56E0;&#x3002;</p>
-<p>&#x6211;&#x60F3;&#x8981;&#x8868;&#x9054;&#x7684;&#x662F;&#xFF0C;Mono Repo &#x7684;&#x51FA;&#x73FE;&#x5C31;&#x662F;&#x70BA;&#x4E86;&#x8981;&#x89E3;&#x6C7A; Multiple Repositories &#x7684;&#x554F;&#x984C;&#xFF0C;&#x800C; Mono Repo &#x7684;&#x597D;&#x8655;&#x6709;</p>
+<p>這些好處看起來沒有什麼問題，既然沒有問題，為什麼會有 Mono Repo 這種模式出來呢? 主要原因我想是當系統或是產品線變大時，有些底層重複性高的程式碼，變的很難管理。想想看，在後端寫 C# 專案時，從原本的單一專案，延伸出 n-tier 的架構，是為了怎樣的原因。</p>
+<p>我想要表達的是，Mono Repo 的出現就是為了要解決 Multiple Repositories 的問題，而 Mono Repo 的好處有</p>
 <ol>
-<li>Better developer testing - &#x958B;&#x767C;&#x8005;&#x53EF;&#x4EE5;&#x7ACB;&#x5373;&#x77E5;&#x9053;&#x81EA;&#x5DF1;&#x4FEE;&#x6539;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#x6703;&#x4E0D;&#x6703;&#x9020;&#x6210;&#x5176;&#x4ED6;&#x7CFB;&#x7D71;&#x51FA;&#x932F;</li>
-<li>Reduced code complexity - &#x56E0;&#x70BA;&#x7A0B;&#x5F0F;&#x78BC;&#x90FD;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x6240;&#x4EE5;&#x521D;&#x968E;&#x5DE5;&#x7A0B;&#x662F;&#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x53D6;&#x5F97;&#x4E26;&#x4E86;&#x89E3;&#x516C;&#x53F8;&#x5167;&#x6A19;&#x6E96;&#x7684;&#x7A0B;&#x5F0F;&#x7DE8;&#x5BEB;&#x539F;&#x5247;</li>
+<li>Better developer testing - 開發者可以立即知道自己修改的程式碼會不會造成其他系統出錯</li>
+<li>Reduced code complexity - 因為程式碼都在一起，所以初階工程是可以很容易取得並了解公司內標準的程式編寫原則</li>
 <li>Effective code reviews</li>
 <li>Sharing of common components</li>
 <li>Easy refactoring</li>
 </ol>
-<p>&#x4F46;&#x6C92;&#x6709;&#x4EC0;&#x9EBC;&#x6771;&#x897F;&#x662F;&#x5B8C;&#x7F8E;&#x7684;&#xFF0C;&#x4E00;&#x5B9A;&#x6703;&#x6709;&#x7F3A;&#x9EDE;&#x7684;</p>
-<p>Mono Repo &#x6700;&#x5927;&#x7684;&#x554F;&#x984C;&#x662F;&#x6709;&#x6C92;&#x6709;&#x5408;&#x9069;&#x7684;&#x5DE5;&#x5177;&#x505A; CI/CD&#xFF0C;&#x7576;&#x7A0B;&#x5F0F;&#x8D8A;&#x5927;&#xFF0C;&#x5EFA;&#x7F6E;&#x6E2C;&#x8A66;&#x7684;&#x6642;&#x9593;&#x5C31;&#x6703;&#x8D8A;&#x4E45;&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x5982;&#x4F55;&#x5340;&#x5206;&#x7570;&#x52D5;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;&#x6240;&#x5F71;&#x97FF;&#x7684;&#x7BC4;&#x570D;&#xFF0C;&#x800C;&#x53EA;&#x91DD;&#x5C0D;&#x5F71;&#x97FF;&#x7BC4;&#x570D;&#x4F5C;&#x6E2C;&#x8A66;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x4EE5;&#x964D;&#x4F4E;&#x5EFA;&#x7F6E;&#x6E2C;&#x8A66;&#x6642;&#x9593;&#xFF0C;&#x9019;&#x90FD;&#x662F;&#x958B;&#x767C;&#x5DE5;&#x5177;&#x53CA;&#x74B0;&#x5883;&#x8A2D;&#x5B9A;&#x8981;&#x9762;&#x5C0D;&#x7684;&#x554F;&#x984C;&#x3002;</p>
-<p>&#x53E6;&#x5916;&#x4E00;&#x500B;&#x554F;&#x984C;&#x662F;&#x7A0B;&#x5F0F;&#x78BC;&#x7684;&#x5065;&#x5EB7;&#x7A0B;&#x5EA6;&#xFF0C;&#x6703;&#x5F71;&#x97FF; Mono Repo &#x6240;&#x80FD;&#x5E36;&#x51FA;&#x7684;&#x6548;&#x76CA;&#x3002;&#x56E0;&#x70BA;&#x4E00;&#x500B;&#x5730;&#x65B9;&#x5BEB;&#x58DE;&#xFF0C;&#x6709;&#x53EF;&#x80FD;&#x6703;&#x9020;&#x6210;&#x6574;&#x500B;&#x7CFB;&#x7D71;&#x7684;&#x5D29;&#x58DE;&#xFF0C;Better developer testing &#x662F;&#x4E00;&#x628A;&#x96D9;&#x5203;&#x528D;&#xFF0C;&#x5C31;&#x770B;&#x662F;&#x5F9E;&#x54EA;&#x4E00;&#x500B;&#x89D2;&#x5EA6;&#x4F86;&#x770B;&#x4E86;</p>
-<p>&#x7E3D;&#x7D50;&#xFF0C;&#x5169;&#x7A2E;&#x6A21;&#x5F0F;&#x90FD;&#x6709;&#x5404;&#x81EA;&#x7684;&#x512A;&#x7F3A;&#x9EDE;&#xFF0C;&#x8A72;&#x5982;&#x4F55;&#x7D50;&#x5408;&#x5169;&#x8005;&#x7684;&#x512A;&#x9EDE;&#xFF0C;&#x6E1B;&#x5C11;&#x7F3A;&#x9EDE;&#xFF0C;&#x6709;&#x4EC0;&#x9EBC;&#x65B9;&#x5F0F;&#x662F; Angular &#x53EF;&#x4EE5;&#x62FF;&#x4F86;&#x7528;&#x7684;&#xFF0C;&#x6211;&#x89BA;&#x5F97;&#x662F;&#x503C;&#x5F97;&#x601D;&#x8003;&#x7684;</p>
-<h1 id="&#x5EF6;&#x4F38;&#x95B1;&#x8B80;"><a class="header-anchor" href="#&#x5EF6;&#x4F38;&#x95B1;&#x8B80;"> </a>&#x5EF6;&#x4F38;&#x95B1;&#x8B80;</h1>
+<p>但沒有什麼東西是完美的，一定會有缺點的</p>
+<p>Mono Repo 最大的問題是有沒有合適的工具做 CI/CD，當程式越大，建置測試的時間就會越久，所以要如何區分異動的程式碼所影響的範圍，而只針對影響範圍作測試的工作，以降低建置測試時間，這都是開發工具及環境設定要面對的問題。</p>
+<p>另外一個問題是程式碼的健康程度，會影響 Mono Repo 所能帶出的效益。因為一個地方寫壞，有可能會造成整個系統的崩壞，Better developer testing 是一把雙刃劍，就看是從哪一個角度來看了</p>
+<p>總結，兩種模式都有各自的優缺點，該如何結合兩者的優點，減少缺點，有什麼方式是 Angular 可以拿來用的，我覺得是值得思考的</p>
+<h1 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h1>
 <ul>
 <li><a href="https://research.google.com/pubs/pub45424.html" target="_blank" rel="noopener">Why Google Stores Billions of Lines of Code in a Single Repository</a></li>
 <li><a href="http://blog.shippable.com/ci/cd-of-microservices-using-mono-repos" target="_blank" rel="noopener">CI/CD FOR MICROSERVICES USING MONOREPOS</a></li>

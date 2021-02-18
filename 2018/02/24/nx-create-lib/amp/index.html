@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/02/24/nx-create-lib/"
 			},
 			"datePublished": "2018-02-24T10:10:06.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,78 +1848,78 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x5EFA;&#x7ACB; App &#x662F;&#x5C0F;&#x4E8B;&#xFF0C;&#x771F;&#x6B63;&#x91CD;&#x982D;&#x6232;&#x662F;&#x5EFA;&#x7ACB; Libs&#xFF0C;&#x5728; Nx &#x6240;&#x63D0;&#x4F9B;&#x7684;&#x67B6;&#x69CB;&#x4E0B;&#xFF0C;&#x6240;&#x6709;&#x7684; <code>NgModule</code>&#x3001;<code>Serivces</code>&#x3001;<code>Utility</code> &#x90FD;&#x662F;&#x653E;&#x5728; Libs &#x8CC7;&#x6599;&#x593E;&#x4E0B;&#xFF0C;&#x6240;&#x4EE5;&#x5EFA;&#x7ACB; libs &#x7684;&#x53C3;&#x6578;&#x76F8;&#x5C0D;&#x7684;&#x591A;&#xFF0C;&#x5F71;&#x97FF;&#x7684;&#x7BC4;&#x570D;&#x6BD4;&#x8F03;&#x5EE3;&#xFF0C;&#x5728;&#x9019;&#x7BC7;&#x6587;&#x7AE0;&#x6703;&#x7A0D;&#x5FAE;&#x6574;&#x7406;&#x4E00;&#x4E0B;</p>
+			  		<p>建立 App 是小事，真正重頭戲是建立 Libs，在 Nx 所提供的架構下，所有的 <code>NgModule</code>、<code>Serivces</code>、<code>Utility</code> 都是放在 Libs 資料夾下，所以建立 libs 的參數相對的多，影響的範圍比較廣，在這篇文章會稍微整理一下</p>
 <a id="more"></a>
-<h1 id="&#x53C3;&#x6578;"><a class="header-anchor" href="#&#x53C3;&#x6578;"> </a>&#x53C3;&#x6578;</h1>
-<p>Nx &#x5EFA;&#x7ACB; Lib &#x6307;&#x4EE4;&#x5F8C;&#x9762;&#x53EF;&#x4F7F;&#x7528;&#x7684;&#x53C3;&#x6578;&#x6709;</p>
+<h1 id="參數"><a class="header-anchor" href="#參數"> </a>參數</h1>
+<p>Nx 建立 Lib 指令後面可使用的參數有</p>
 <ul>
 <li>
-<p><strong>name</strong> &#xFF1A; Library &#x540D;&#x7A31;</p>
+<p><strong>name</strong> ： Library 名稱</p>
 </li>
 <li>
-<p><strong>directory</strong>&#xFF1A;&#x5982;&#x679C;&#x6709;&#x8A2D;&#x5B9A; directory&#xFF0C;application&#x7684;&#x5EFA;&#x7ACB;&#x8DEF;&#x5F91;&#x70BA; <code>&lt;&lt;directory name&gt;&gt;/&lt;&lt;library name&gt;&gt;</code> &#x5982;&#x679C;&#x6C92;&#x6709;&#x8A2D;&#x5B9A;&#xFF0C;&#x5EFA;&#x7ACB;&#x8DEF;&#x5F91;&#x5247;&#x662F; <code>&lt;&lt;library name&gt;&gt;</code></p>
+<p><strong>directory</strong>：如果有設定 directory，application的建立路徑為 <code>&lt;&lt;directory name&gt;&gt;/&lt;&lt;library name&gt;&gt;</code> 如果沒有設定，建立路徑則是 <code>&lt;&lt;library name&gt;&gt;</code></p>
 </li>
 <li>
-<p><strong>sourceDir</strong>&#xFF1A;&#x8A2D;&#x5B9A;&#x7A0B;&#x5F0F;&#x78BC;&#x7684;&#x5B58;&#x653E;&#x8DEF;&#x5F91;&#xFF0C;&#x9019;&#x500B;&#x6703;&#x63A5;&#x5728;&#x8A2D;&#x5B9A;&#x7684; <code>directory</code> &#x4E4B;&#x5F8C;&#xFF0C;&#x5B8C;&#x6574;&#x7684;&#x8A2D;&#x5B9A;&#x898F;&#x5247;&#x5982;&#x4E0B;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = toFileName(options.name);</span><br><span class="line"><span class="keyword">const</span> fullName = options.directory ? <span class="string">`<span class="subst"><!--figure0-->#123;toFileName(options.directory)}</span>/<span class="subst"><!--figure0-->#123;name}</span>`</span> : name;</span><br><span class="line"><span class="keyword">const</span> fullPath = <span class="string">`libs/<span class="subst"><!--figure0-->#123;fullName}</span>/<span class="subst"><!--figure0-->#123;options.sourceDir}</span>`</span>; <span class="comment">// &#x7A0B;&#x5F0F;&#x78BC;&#x6700;&#x7D42;&#x8F38;&#x51FA;&#x4F4D;&#x7F6E;</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>sourceDir</strong>：設定程式碼的存放路徑，這個會接在設定的 <code>directory</code> 之後，完整的設定規則如下</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = toFileName(options.name);</span><br><span class="line"><span class="keyword">const</span> fullName = options.directory ? <span class="string">`<span class="subst"><!--figure0-->#123;toFileName(options.directory)}</span>/<span class="subst"><!--figure0-->#123;name}</span>`</span> : name;</span><br><span class="line"><span class="keyword">const</span> fullPath = <span class="string">`libs/<span class="subst"><!--figure0-->#123;fullName}</span>/<span class="subst"><!--figure0-->#123;options.sourceDir}</span>`</span>; <span class="comment">// 程式碼最終輸出位置</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p><strong>nomodule</strong>&#xFF1A;&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x6C92;&#x6709; NgModule &#x7684; library</p>
+<p><strong>nomodule</strong>：建立一個沒有 NgModule 的 library</p>
 </li>
 <li>
-<p><strong>routing</strong>&#xFF1A;&#x9700;&#x7522;&#x751F;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;</p>
+<p><strong>routing</strong>：需產生路由設定檔</p>
 </li>
 <li>
-<p><strong>lazy</strong>&#xFF1A;&#x8A2D;&#x5B9A;&#x70BA; lazyloading &#x7684; NgModule</p>
+<p><strong>lazy</strong>：設定為 lazyloading 的 NgModule</p>
 </li>
 <li>
-<p><strong>parent-module</strong>&#xFF1A;&#x5C07;&#x5EFA;&#x7ACB;&#x7684; Library import &#x5230;&#x67D0;&#x4E00;&#x500B; NgModule &#x5167;&#xFF0C;&#x9700;&#x6307;&#x5B9A;&#x6240;&#x8981;&#x6CE8;&#x5165;&#x7684; NgModule &#x5BE6;&#x969B;&#x7684;&#x6A94;&#x6848;&#x4F4D;&#x7F6E;</p>
+<p><strong>parent-module</strong>：將建立的 Library import 到某一個 NgModule 內，需指定所要注入的 NgModule 實際的檔案位置</p>
 </li>
 </ul>
-<h1 id="&#x5EFA;&#x7ACB;-library"><a class="header-anchor" href="#&#x5EFA;&#x7ACB;-library"> </a>&#x5EFA;&#x7ACB; Library</h1>
-<p>&#x9810;&#x8A2D;&#x5EFA;&#x7ACB; Library &#x90FD;&#x6703;&#x4EE5; <code>NgModule</code> &#x7684;&#x65B9;&#x5F0F;&#x5448;&#x73FE;&#xFF0C;&#x9019;&#x8868;&#x793A;&#xFF0C;&#x4EFB;&#x4F55;&#x6240;&#x5EFA;&#x7ACB;&#x7684; Library &#x90FD;&#x6703;&#x662F;&#x4E00;&#x500B; NgModule&#xFF0C;&#x4EE5;&#x65B9;&#x4FBF; import &#x5230;&#x5176;&#x4ED6; Module &#x5167;&#x3002;&#x7576;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x8A2D;&#x5B9A; <code>--nomodule</code> &#x5373;&#x53EF;&#x5EFA;&#x7ACB;&#x6C92;&#x6709; NgModule &#x7684; library</p>
+<h1 id="建立-library"><a class="header-anchor" href="#建立-library"> </a>建立 Library</h1>
+<p>預設建立 Library 都會以 <code>NgModule</code> 的方式呈現，這表示，任何所建立的 Library 都會是一個 NgModule，以方便 import 到其他 Module 內。當然也可以設定 <code>--nomodule</code> 即可建立沒有 NgModule 的 library</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Bv1lSnR.png" width="975" height="233" layout="responsive"></amp-img></div>
-<p>&#x6240;&#x5EFA;&#x7ACB;&#x7684; library &#x90FD;&#x6703;&#x653E;&#x5230; <code>libs</code> &#x8CC7;&#x6599;&#x593E;&#x4E0B;&#xFF0C;&#x9019;&#x6642;&#x6703;&#x767C;&#x73FE; Nx &#x6709;&#x591A;&#x7522;&#x751F;&#x4E00;&#x500B; index.ts &#x6A94;&#x6848;&#xFF0C;&#x800C;&#x9019;&#x4E00;&#x500B; index.ts &#x6A94;&#x6848;&#x6703; export NgModule &#x7684;&#x5167;&#x5BB9;&#xFF0C;&#x4E4B;&#x6240;&#x4EE5;&#x6703;&#x9019;&#x6A23;&#x5B50;&#x8A2D;&#x5B9A;&#xFF0C;&#x662F;&#x65B9;&#x4FBF;&#x6211;&#x5011;&#x5728;&#x5176;&#x4ED6;&#x5730;&#x65B9;&#x9032;&#x884C; imports &#x6642;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x6307;&#x5230; library &#x7684;&#x6700;&#x4E0A;&#x5C64;&#x4F4D;&#x7F6E;&#xFF0C;&#x5373;&#x53EF;&#x53D6;&#x5F97;&#x5167;&#x90E8;&#x6240;&#x958B;&#x653E;&#x51FA;&#x4F86;&#x7684;&#x6240;&#x6709;&#x529F;&#x80FD;&#xFF0C;&#x4F8B;&#x5982; <code>import { ... } from &apos;@nxdemo/backend&apos;</code></p>
-<p>&#x6B64;&#x5916;&#xFF0C;Nx &#x4E26;&#x6703;&#x5728; <code>.angular-cli.json</code> &#x7684; <code>apps</code> &#x5340;&#x584A;&#x65B0;&#x589E;&#x6B64; library &#x7684;&#x76F8;&#x95DC;&#x8CC7;&#x8A0A;</p>
+<p>所建立的 library 都會放到 <code>libs</code> 資料夾下，這時會發現 Nx 有多產生一個 index.ts 檔案，而這一個 index.ts 檔案會 export NgModule 的內容，之所以會這樣子設定，是方便我們在其他地方進行 imports 時，只需要指到 library 的最上層位置，即可取得內部所開放出來的所有功能，例如 <code>import { ... } from '@nxdemo/backend'</code></p>
+<p>此外，Nx 並會在 <code>.angular-cli.json</code> 的 <code>apps</code> 區塊新增此 library 的相關資訊</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/K3qt59i.png" width="650" height="284" layout="responsive"></amp-img></div>
-<p>&#x9019;&#x500B;&#x52D5;&#x4F5C;&#x7684;&#x7528;&#x610F;&#xFF0C;&#x9019;&#x65B9;&#x4FBF;&#x6211;&#x5011;&#x4F7F;&#x7528; Angular CLI &#x7684; generator &#x529F;&#x80FD;&#xFF0C;Angular CLI generator &#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x6240;&#x7522;&#x751F;&#x7684;&#x7BC4;&#x672C;&#x662F;&#x8981;&#x8F38;&#x51FA;&#x5230;&#x54EA;&#x4E00;&#x500B; apps &#x4E0B;</p>
+<p>這個動作的用意，這方便我們使用 Angular CLI 的 generator 功能，Angular CLI generator 可以指定所產生的範本是要輸出到哪一個 apps 下</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g service ticket -a=backend</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x4E0A;&#x5217;&#x7684;&#x6307;&#x4EE4;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x525B;&#x525B;&#x5EFA;&#x7ACB;&#x7684; <code>BackendModule</code> &#x88E1;&#xFF0C;&#x65B0;&#x589E;&#x4E00;&#x500B; <code>ticket service</code></p>
+<p>上列的指令就可以在剛剛建立的 <code>BackendModule</code> 裡，新增一個 <code>ticket service</code></p>
 <h2 id="ngmodule-with-routing"><a class="header-anchor" href="#ngmodule-with-routing"> </a>NgModule with routing</h2>
-<p>&#x6211;&#x5011;&#x4E5F;&#x53EF;&#x4EE5;&#x900F;&#x904E; <code>--routing</code> &#x7684;&#x53C3;&#x6578;&#xFF0C;&#x4F86;&#x7522;&#x751F;&#x4E00;&#x500B;&#x542B;&#x6709;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;&#x7684; NgModule</p>
+<p>我們也可以透過 <code>--routing</code> 的參數，來產生一個含有路由設定檔的 NgModule</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g lib account --routing</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x6240;&#x7522;&#x751F;&#x7684; NgModule &#x6703;&#x9577;&#x9019;&#x6A23;</p>
+<p>所產生的 NgModule 會長這樣</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/dGnzb6A.png" width="771" height="367" layout="responsive"></amp-img></div>
-<p>&#x6703;&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;&#xFF0C;&#x4E26;&#x6CE8;&#x5165; <code>RouterModule</code> &#x800C;&#x4E0A;&#x4E00;&#x5C64;&#x7684; <code>index.ts</code> &#x6A94;&#x6848;&#x5167;&#xFF0C;&#x4E5F;&#x540C;&#x6642;&#x6703;&#x8F38;&#x51FA;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;</p>
+<p>會建立一個路由設定檔，並注入 <code>RouterModule</code> 而上一層的 <code>index.ts</code> 檔案內，也同時會輸出路由設定檔</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KNin2x1.png" width="966" height="98" layout="responsive"></amp-img></div>
-<p>&#x9019;&#x500B;&#x52D5;&#x4F5C;&#x5141;&#x8A31;&#x5176;&#x4ED6; NgModule &#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x5730;&#x53D6;&#x5F97;&#x76EE;&#x524D; NgModule &#x5167;&#x7684;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;</p>
-<h2 id="parentmodule-&#x8A2D;&#x5B9A;"><a class="header-anchor" href="#parentmodule-&#x8A2D;&#x5B9A;"> </a>parentModule &#x8A2D;&#x5B9A;</h2>
-<p><code>parentModule</code> &#x53C3;&#x6578;&#x7684;&#x8A2D;&#x5B9A;&#xFF0C;&#x53EF;&#x4EE5;&#x5C07;&#x76EE;&#x524D;&#x8981;&#x5EFA;&#x7ACB;&#x7684; library &#x6CE8;&#x5165;&#x5230;&#x5176;&#x4ED6; NgModule &#x88E1;</p>
+<p>這個動作允許其他 NgModule 可以很容易地取得目前 NgModule 內的路由設定檔</p>
+<h2 id="parentmodule-設定"><a class="header-anchor" href="#parentmodule-設定"> </a>parentModule 設定</h2>
+<p><code>parentModule</code> 參數的設定，可以將目前要建立的 library 注入到其他 NgModule 裡</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g lib profile-setting --routing --parent-module=apps/client/dashboard/src/app/app.module.ts</span><br></pre></td></tr></tbody></table></figure>
-<p><code>--parent-module</code> &#x9700;&#x8981;&#x6307;&#x5B9A;&#x6240;&#x8981;&#x6CE8;&#x5165;&#x7684; NgModule &#x5BE6;&#x969B;&#x7684;&#x6A94;&#x6848;&#x4F4D;&#x7F6E;</p>
+<p><code>--parent-module</code> 需要指定所要注入的 NgModule 實際的檔案位置</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/XLhW7bg.png" width="1091" height="271" layout="responsive"></amp-img></div>
-<p>&#x540C;&#x6642;&#x4E5F;&#x6703;&#x5C07;&#x6240;&#x5EFA;&#x7ACB;&#x7684;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;&#x52A0;&#x5165;&#x5230;&#x8A2D;&#x5B9A;&#x7684; <code>parent-module</code> &#x7684;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;&#x5167;</p>
+<p>同時也會將所建立的路由設定檔加入到設定的 <code>parent-module</code> 的路由設定檔內</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/u1qEYBq.png" width="1163" height="315" layout="responsive"></amp-img></div>
 <h2 id="lazy"><a class="header-anchor" href="#lazy"> </a>lazy</h2>
-<p>&#x5982;&#x679C;&#x591A;&#x52A0;&#x4E0A; <code>--lazy</code> &#x7684;&#x53C3;&#x6578;&#x6642;&#xFF0C;&#x5728;&#x66F4;&#x65B0; <code>parent-module</code> &#x8DEF;&#x7531;&#x6A94;&#x7684;&#x65B9;&#x5F0F;&#x5C31;&#x6703;&#x6709;&#x6240;&#x5DEE;&#x7570;&#xFF0C;&#x800C;&#x4E14;&#x66F4;&#x65B0;&#x7684;&#x6A94;&#x6848;&#x6578;&#x91CF;&#x4E5F;&#x6BD4;&#x8F03;&#x591A;</p>
+<p>如果多加上 <code>--lazy</code> 的參數時，在更新 <code>parent-module</code> 路由檔的方式就會有所差異，而且更新的檔案數量也比較多</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/jIu3I6e.png" width="1165" height="346" layout="responsive"></amp-img></div>
-<p><code>parent-module</code> &#x7684;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;&#x6703;&#x63A1; <code>loadChildren</code> &#x7684;&#x65B9;&#x5F0F;&#x5C07;&#x8A72; NgModule &#x8F09;&#x5165;</p>
+<p><code>parent-module</code> 的路由設定檔會採 <code>loadChildren</code> 的方式將該 NgModule 載入</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KUrjeux.png" width="1261" height="490" layout="responsive"></amp-img></div>
-<p>&#x56E0;&#x70BA; <code>lazy</code> &#x7684;&#x95DC;&#x4FC2;&#xFF0C;&#x65B0;&#x589E;&#x7684; NgModule &#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x6A94;&#x7684;&#x5448;&#x73FE;&#x65B9;&#x5F0F;&#x4E5F;&#x6703;&#x6709;&#x6240;&#x4E0D;&#x540C;&#xFF0C;&#x6703;&#x76F4;&#x63A5;&#x4EE5; <code>RouterModule.forChild([])</code> &#x7684;&#x65B9;&#x5F0F;&#x5448;&#x73FE;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>({</span><br><span class="line">  imports: [</span><br><span class="line">    CommonModule,</span><br><span class="line">    RouterModule.forChild([</span><br><span class="line">      <span class="comment">/* {path: &apos;&apos;, pathMatch: &apos;full&apos;, component: InsertYourComponentHere} */</span></span><br><span class="line">    ])</span><br><span class="line">  ]</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ProfileSettingModule {}</span><br></pre></td></tr></tbody></table></figure>
+<p>因為 <code>lazy</code> 的關係，新增的 NgModule 路由設定檔的呈現方式也會有所不同，會直接以 <code>RouterModule.forChild([])</code> 的方式呈現</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>({</span><br><span class="line">  imports: [</span><br><span class="line">    CommonModule,</span><br><span class="line">    RouterModule.forChild([</span><br><span class="line">      <span class="comment">/* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */</span></span><br><span class="line">    ])</span><br><span class="line">  ]</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ProfileSettingModule {}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>
-<p><code>tslin.json</code> &#x6A94;&#x6848;&#x4E5F;&#x6703;&#x88AB;&#x7570;&#x52D5;&#xFF0C;&#x6703;&#x5C07; lazy load module &#x65B0;&#x589E;&#x5230; <code>lazyload</code> &#x9663;&#x5217;&#x4E2D;&#x4EE5;&#x907F;&#x514D;&#x8A72; module &#x4EE5;&#x975E; lazy load &#x7684;&#x65B9;&#x5F0F;&#x88AB;&#x8F09;&#x5165;</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;nx-enforce-module-boundaries&quot;: [</span><br><span class="line">     true,</span><br><span class="line">     {</span><br><span class="line">       <span class="attr">&quot;lazyLoad&quot;</span>: [</span><br><span class="line">         <span class="string">&quot;profile-setting&quot;</span></span><br><span class="line">       ],</span><br><span class="line">       <span class="attr">&quot;allow&quot;</span>: []</span><br><span class="line">     }</span><br><span class="line">   ]</span><br></pre></td></tr></tbody></table></figure>
+<p><code>tslin.json</code> 檔案也會被異動，會將 lazy load module 新增到 <code>lazyload</code> 陣列中以避免該 module 以非 lazy load 的方式被載入</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">"nx-enforce-module-boundaries": [</span><br><span class="line">     true,</span><br><span class="line">     {</span><br><span class="line">       <span class="attr">"lazyLoad"</span>: [</span><br><span class="line">         <span class="string">"profile-setting"</span></span><br><span class="line">       ],</span><br><span class="line">       <span class="attr">"allow"</span>: []</span><br><span class="line">     }</span><br><span class="line">   ]</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h2 id="nomodule"><a class="header-anchor" href="#nomodule"> </a>nomodule</h2>
-<p>&#x8981;&#x7522;&#x751F;&#x4E00;&#x500B;&#x7C21;&#x55AE;&#x7684; TypeScript library &#x6642;&#xFF0C;&#x53EA;&#x8981;&#x52A0;&#x4E0A; <code>--nomodule</code>&#x5373;&#x53EF;</p>
+<p>要產生一個簡單的 TypeScript library 時，只要加上 <code>--nomodule</code>即可</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g lib helper --nomodule</span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/ni4NQDs.png" width="918" height="253" layout="responsive"></amp-img></div>
-<h1 id="&#x7E3D;&#x7D50;"><a class="header-anchor" href="#&#x7E3D;&#x7D50;"> </a>&#x7E3D;&#x7D50;</h1>
-<p>&#x900F;&#x904E;&#x4EE5;&#x4E0A;&#x5EFA;&#x7ACB;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x601D;&#x8003; <code>Feature module</code>  &#x7684;&#x898F;&#x5283;&#x65B9;&#x5F0F;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5C07;&#x4E00;&#x4E9B;&#x8207; Angular &#x7121;&#x95DC;&#x7684;&#x5546;&#x696D;&#x908F;&#x8F2F;&#x7368;&#x7ACB;&#x6210;&#x55AE;&#x4E00; Library&#xFF0C;&#x4EE5;&#x4FBF;&#x4E4B;&#x5F8C;&#x7684;&#x91CD;&#x8907;&#x5229;&#x7528;&#x6027;</p>
-<h1 id="&#x5EF6;&#x4F38;&#x95B1;&#x8B80;"><a class="header-anchor" href="#&#x5EF6;&#x4F38;&#x95B1;&#x8B80;"> </a>&#x5EF6;&#x4F38;&#x95B1;&#x8B80;</h1>
+<h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
+<p>透過以上建立的方式，可以重新思考 <code>Feature module</code>  的規劃方式，也可以將一些與 Angular 無關的商業邏輯獨立成單一 Library，以便之後的重複利用性</p>
+<h1 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h1>
 <ul>
 <li><a href="https://angular.io/guide/feature-modules" target="_blank" rel="noopener">Feature Modules</a></li>
 <li><a href="https://angular.io/guide/lazy-loading-ngmodules" target="_blank" rel="noopener">Lazy Loading Feature Modules</a></li>

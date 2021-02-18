@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/04/11/ng-windows-auth/"
 			},
 			"datePublished": "2019-04-11T02:52:41.000Z",
-			"dateModified": "2021-02-18T02:25:04.883Z",
+			"dateModified": "2021-02-18T02:32:11.607Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,78 +1851,78 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular &#x4F7F;&#x7528; Windows Authentication&#xFF0C;&#x807D;&#x8D77;&#x4F86;&#x6C92;&#x4EC0;&#x9EBC;&#xFF0C;&#x4F46;&#x662F;&#x52A0;&#x4E0A; CORS &#x5C31;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x6545;&#x4E8B;&#x4E86;</p>
-<p>&#x203B; &#x9019;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x5F8C;&#x7AEF;&#x662F;&#x4F7F;&#x7528; <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC &#xFF0C;&#x4F46;&#x8981;&#x8655;&#x7406;&#x7684;&#x554F;&#x984C;&#x662F;&#x4E00;&#x6A23;&#x7684;&#xFF0C;&#x89C0;&#x5FF5;&#x901A;&#x7528;</p>
+			  		<p>Angular 使用 Windows Authentication，聽起來沒什麼，但是加上 CORS 就是不同的故事了</p>
+<p>※ 這篇文章的後端是使用 <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC ，但要處理的問題是一樣的，觀念通用</p>
 <a id="more"></a>
-<p>Angular &#x7684; HttpClient &#x5728;&#x767C;&#x9001;&#x8ACB;&#x6C42;&#x6642;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x540C;&#x4E00;&#x500B;&#x7DB2;&#x5740;&#x4E0B; (&#x540C;&#x4E00;&#x500B;&#x7DB2;&#x7AD9;)&#xFF0C;&#x81EA;&#x7136;&#x6703;&#x4ED8;&#x4E0A; cookie&#xFF0C;&#x4F46;&#x9047;&#x5230;&#x4E0D;&#x540C;&#x7AD9;&#x9EDE;&#x4E0B;&#x6642;&#x53C8;&#x60F3;&#x8981;&#x5E36; cookie &#x6642;&#xFF0C;&#x8A72;&#x600E;&#x9EBC;&#x8655;&#x7406;&#xFF0C;&#x9019;&#x6642;&#x5019;&#x5C31;&#x5FC5;&#x9808;&#x5C07; <code>withCredentials</code> &#x958B;&#x555F;&#xFF0C;&#x9019;&#x662F; <code>XMLHttpRequest</code> &#x5167;&#x5EFA;&#x5C6C;&#x6027;&#xFF0C;&#x7528;&#x9014;&#x70BA;&#x5224;&#x65B7;&#x662F;&#x5426;&#x8A72;&#x4F7F;&#x7528;&#x985E;&#x4F3C; cookies, authorization headers &#x6216;&#x8005; TLS &#x5BA2;&#x6236;&#x7AEF;&#x8A8D;&#x8B49;&#x9019;&#x4E00;&#x985E;&#x8CC7;&#x683C;&#x8B49;&#x66F8;&#x4F86;&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x8DE8;&#x7AD9;&#x9EDE;&#x8A2A;&#x554F;&#x63A7;&#x5236;&#xFF08;cross-site <code>Access-Control</code>&#xFF09;&#x8ACB;&#x6C42;&#x3002;&#x9019;&#x88E1;&#x662F;&#x57FA;&#x672C;&#x7528;&#x6CD5;&#xFF0C;&#x7576;&#x7136;&#x5982;&#x679C;&#x8981;&#x5168;&#x57DF;&#x5957;&#x7528;&#x6642;&#xFF0C;&#x5C31;&#x6703;&#x5BEB;&#x6210; Http interceptor</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.http.get(<span class="string">&apos;https://localhost:44369/api/values&apos;</span>, {</span><br><span class="line">        withCredentials: <span class="literal">true</span></span><br><span class="line">      })</span><br><span class="line">      .subscribe(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></tbody></table></figure>
-<p>Angular &#x7AEF;&#x9019;&#x6A23;&#x5B50;&#x5C31;&#x53EF;&#x4EE5;&#x7B97;&#x662F;&#x8A2D;&#x5B9A;&#x5B8C;&#x6210;&#x4E86;</p>
-<p>&#x554F;&#x984C;&#x662F;&#x5F8C;&#x7AEF;&#x8981;&#x600E;&#x9EBC;&#x8A2D;&#x5B9A;&#xFF0C;&#x6703;&#x9047;&#x5230;&#x5E7E;&#x500B;&#x554F;&#x984C;</p>
+<p>Angular 的 HttpClient 在發送請求時，如果在同一個網址下 (同一個網站)，自然會付上 cookie，但遇到不同站點下時又想要帶 cookie 時，該怎麼處理，這時候就必須將 <code>withCredentials</code> 開啟，這是 <code>XMLHttpRequest</code> 內建屬性，用途為判斷是否該使用類似 cookies, authorization headers 或者 TLS 客戶端認證這一類資格證書來建立一個跨站點訪問控制（cross-site <code>Access-Control</code>）請求。這裡是基本用法，當然如果要全域套用時，就會寫成 Http interceptor</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.http.get(<span class="string">'https://localhost:44369/api/values'</span>, {</span><br><span class="line">        withCredentials: <span class="literal">true</span></span><br><span class="line">      })</span><br><span class="line">      .subscribe(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></tbody></table></figure>
+<p>Angular 端這樣子就可以算是設定完成了</p>
+<p>問題是後端要怎麼設定，會遇到幾個問題</p>
 <ol>
 <li>CORS</li>
-<li>Web &#x6388;&#x6B0A;&#x8A2D;&#x5B9A;</li>
+<li>Web 授權設定</li>
 </ol>
-<h1 id="&#x7C21;&#x55AE;&#x60C5;&#x5883;"><a class="header-anchor" href="#&#x7C21;&#x55AE;&#x60C5;&#x5883;"> </a>&#x7C21;&#x55AE;&#x60C5;&#x5883;</h1>
-<p>&#x7576; Angular  &#x7684; Http &#x8ACB;&#x6C42;&#x53EA;&#x6709;&#x55AE;&#x7D14;&#x7684;&#x8A2D;&#x5B9A; <code>withCredentials: true</code> &#x6642;&#xFF0C;&#x5F8C;&#x7AEF;&#x7684;&#x8A2D;&#x5B9A;&#x5C31;&#x5F88;&#x55AE;&#x7D14;&#xFF0C;(&#x9019;&#x88E1;&#x5C31;&#x5047;&#x8A2D;&#x5DF2;&#x7D93;&#x6703;&#x65B0;&#x589E;&#x4E00;&#x500B;&#x57FA;&#x672C;&#x7684; <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC &#x7DB2;&#x7AD9;)</p>
+<h1 id="簡單情境"><a class="header-anchor" href="#簡單情境"> </a>簡單情境</h1>
+<p>當 Angular  的 Http 請求只有單純的設定 <code>withCredentials: true</code> 時，後端的設定就很單純，(這裡就假設已經會新增一個基本的 <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC 網站)</p>
 <ol>
 <li>
-<p>&#x958B;&#x555F; <code>windowsAuthentication</code> &#x7684;&#x65B9;&#x6CD5;&#x6709;&#x5169;&#x7A2E;</p>
+<p>開啟 <code>windowsAuthentication</code> 的方法有兩種</p>
 <ol>
 <li>
-<p>&#x76F4;&#x63A5;&#x4FEE;&#x6539; <code>Properties/launchSettings.json</code></p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;iisSettings&quot;</span>: {</span><br><span class="line">    &quot;windowsAuthentication&quot;: true, // &#x8A2D;&#x5B9A;&#x70BA; true</span><br><span class="line">    &quot;anonymousAuthentication&quot;: false,</span><br><span class="line">    &quot;iisExpress&quot;: {</span><br><span class="line">      &quot;applicationUrl&quot;: &quot;http://localhost:11235&quot;,</span><br><span class="line">      &quot;sslPort&quot;: 44369</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">   ....</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>直接修改 <code>Properties/launchSettings.json</code></p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"iisSettings"</span>: {</span><br><span class="line">    <span class="attr">"windowsAuthentication"</span>: <span class="literal">true</span>, <span class="comment">// 設定為 true</span></span><br><span class="line">    <span class="attr">"anonymousAuthentication"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"iisExpress"</span>: {</span><br><span class="line">      <span class="attr">"applicationUrl"</span>: <span class="string">"http://localhost:11235"</span>,</span><br><span class="line">      <span class="attr">"sslPort"</span>: <span class="number">44369</span></span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">   ....</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x900F;&#x904E; UI &#x7684;&#x65B9;&#x5F0F;&#x8A2D;&#x5B9A;</p>
+<p>透過 UI 的方式設定</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/04/11/ng-windows-auth/1554953527168.png" width="816" height="692" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5728; API &#x7684; Controller &#x7684;&#x5730;&#x65B9;&#xFF0C;&#x52A0;&#x4E0A; <code>[Authorize]</code></p>
+<p>在 API 的 Controller 的地方，加上 <code>[Authorize]</code></p>
 </li>
 </ol>
 </li>
 <li>
-<p>&#x555F;&#x52D5; <code>CORS</code></p>
+<p>啟動 <code>CORS</code></p>
 <ol>
 <li>
-<p>&#x5728; <code>Startup.cs</code> &#x6A94;&#x6848;&#x65B0;&#x589E;&#x4EE5;&#x4E0B;&#x7A0B;&#x5F0F;&#x78BC;</p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">            services.AddCors(o =&gt; o.AddPolicy(<span class="string">&quot;CORSPolicy&quot;</span>, builder =&gt;</span><br><span class="line">            {</span><br><span class="line">                builder.AllowAnyOrigin()</span><br><span class="line">                       .AllowAnyMethod()</span><br><span class="line">                       .AllowAnyHeader()</span><br><span class="line">                       .AllowCredentials()</span><br><span class="line">                       .WithOrigins(<span class="string">&quot;http://localhost:4200&quot;</span>);</span><br><span class="line">            }));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    	...</span><br><span class="line">        app.UseCors(<span class="string">&quot;CORSPolicy&quot;</span>);</span><br><span class="line">    	...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>在 <code>Startup.cs</code> 檔案新增以下程式碼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">            services.AddCors(o =&gt; o.AddPolicy(<span class="string">"CORSPolicy"</span>, builder =&gt;</span><br><span class="line">            {</span><br><span class="line">                builder.AllowAnyOrigin()</span><br><span class="line">                       .AllowAnyMethod()</span><br><span class="line">                       .AllowAnyHeader()</span><br><span class="line">                       .AllowCredentials()</span><br><span class="line">                       .WithOrigins(<span class="string">"http://localhost:4200"</span>);</span><br><span class="line">            }));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    	...</span><br><span class="line">        app.UseCors(<span class="string">"CORSPolicy"</span>);</span><br><span class="line">    	...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p><code>.WithOrigins(&quot;http://localhost:4200&quot;)</code> &#x9019;&#x4E00;&#x884C;&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x7576; CORS + <code>withCredentials: true</code> &#x6642;&#xFF0C;&#x6C92;&#x6709;&#x9019;&#x4E00;&#x884C;&#x5C31;&#x6703;&#x5674;&#x51FA;&#x932F;&#x8AA4;&#x8A0A;&#x606F;</p>
+<p><code>.WithOrigins("http://localhost:4200")</code> 這一行很重要，當 CORS + <code>withCredentials: true</code> 時，沒有這一行就會噴出錯誤訊息</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/04/11/ng-windows-auth/1554953778917.png" width="991" height="237" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5728; API &#x7684; Controller &#x7684;&#x5730;&#x65B9;&#xFF0C;&#x52A0;&#x4E0A; <code>[EnableCors(&quot;CORSPolicy&quot;)]</code></p>
+<p>在 API 的 Controller 的地方，加上 <code>[EnableCors("CORSPolicy")]</code></p>
 </li>
 <li>
-<p>&#x76F8;&#x95DC;&#x95DC;&#x65BC; <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC &#x5982;&#x4F55;&#x52A0;&#x4E0A; CORS &#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x7DB2;&#x8DEF;&#x5F88;&#x591A;&#xFF0C;&#x641C;&#x5C0B;&#x4E00;&#x4E0B;&#x61C9;&#x8A72;&#x5F88;&#x5BB9;&#x6613;&#x5C31;&#x627E;&#x5230;&#x4E86;</p>
+<p>相關關於 <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC 如何加上 CORS 的文章，網路很多，搜尋一下應該很容易就找到了</p>
 </li>
 </ol>
 </li>
 <li>
-<p>&#x7576;&#x4E0A;&#x8FF0;&#x7684;&#x5169;&#x7684;&#x6B65;&#x9A5F;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x61C9;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x6700;&#x57FA;&#x672C;&#x7684; Windows &#x9A57;&#x8B49;&#x529F;&#x80FD;</p>
+<p>當上述的兩的步驟完成後，應可以完成最基本的 Windows 驗證功能</p>
 </li>
 <li>
-<p>&#x81F3;&#x65BC;&#x4E4B;&#x5F8C;&#x9A57;&#x8B49;&#x8981;&#x505A;&#x5230;&#x591A;&#x7D30;&#xFF0C;&#x5C31;&#x8207;&#x8655;&#x7406;&#x767B;&#x5165;&#x9A57;&#x8B49;&#x7684;&#x505A;&#x6CD5;&#x662F;&#x4E00;&#x6A23;&#x7684;&#x4E86;</p>
+<p>至於之後驗證要做到多細，就與處理登入驗證的做法是一樣的了</p>
 </li>
 </ol>
-<h1 id="&#x7A0D;&#x5FAE;&#x8907;&#x96DC;&#x60C5;&#x5883;"><a class="header-anchor" href="#&#x7A0D;&#x5FAE;&#x8907;&#x96DC;&#x60C5;&#x5883;"> </a>&#x7A0D;&#x5FAE;&#x8907;&#x96DC;&#x60C5;&#x5883;</h1>
-<p>&#x5728;&#x5BE6;&#x505A;&#x7684;&#x904E;&#x7A0B;&#x4E2D;&#x767C;&#x73FE;&#x4E86;&#x4E00;&#x500B;&#x554F;&#x984C;&#xFF0C;&#x7576;&#x6211;&#x7684; Http &#x8ACB;&#x6C42;&#x5BEB;&#x6210;&#x9019;&#x6A23;&#x6642;&#xFF0C;&#x5F8C;&#x7AEF;&#x8A2D;&#x5B9A;&#x5C31;&#x8B8A;&#x8907;&#x96DC;&#x8A31;&#x591A;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.http</span><br><span class="line">      .get(<span class="string">&apos;https://localhost:44369/api/values&apos;</span>, {</span><br><span class="line">        headers: <span class="keyword">new</span> HttpHeaders({</span><br><span class="line">          <span class="string">&apos;Access-Control-Allow-Origin&apos;</span>: <span class="string">&apos;*&apos;</span></span><br><span class="line">        }),</span><br><span class="line">        withCredentials: <span class="literal">true</span></span><br><span class="line">      })</span><br><span class="line">      .subscribe(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x700F;&#x89BD;&#x5668;&#x5728;&#x8ACB;&#x6C42;&#x6642;&#xFF0C;&#x56E0;&#x70BA;&#x6703;&#x5148;&#x767C; <code>Options</code> &#x7684; preflight &#x8ACB;&#x6C42;&#xFF0C;&#x4F46;&#x9019;&#x6642;&#x767C;&#x7684;&#x8ACB;&#x6C42;&#x662F;&#x4E0D;&#x6703;&#x6709;&#x4EFB;&#x4F55; credentials &#x7684;&#xFF0C;&#x7576;&#x7136;&#x5F8C;&#x7AEF;&#x6703;&#x76F4;&#x63A5;&#x64CB;&#x6389;</p>
+<h1 id="稍微複雜情境"><a class="header-anchor" href="#稍微複雜情境"> </a>稍微複雜情境</h1>
+<p>在實做的過程中發現了一個問題，當我的 Http 請求寫成這樣時，後端設定就變複雜許多</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.http</span><br><span class="line">      .get(<span class="string">'https://localhost:44369/api/values'</span>, {</span><br><span class="line">        headers: <span class="keyword">new</span> HttpHeaders({</span><br><span class="line">          <span class="string">'Access-Control-Allow-Origin'</span>: <span class="string">'*'</span></span><br><span class="line">        }),</span><br><span class="line">        withCredentials: <span class="literal">true</span></span><br><span class="line">      })</span><br><span class="line">      .subscribe(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></tbody></table></figure>
+<p>瀏覽器在請求時，因為會先發 <code>Options</code> 的 preflight 請求，但這時發的請求是不會有任何 credentials 的，當然後端會直接擋掉</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/04/11/ng-windows-auth/1554954488888.png" width="998" height="209" layout="responsive"></amp-img></div>
-<p>&#x9019;&#x6642;&#x5019;&#x5F8C;&#x7AEF;&#x7684;&#x8A2D;&#x5B9A;&#x8981;&#x8ABF;&#x6574;&#x4E00;&#x4E0B;&#xFF0C;&#x8981;&#x5141;&#x8A31;&#x533F;&#x540D;&#x767B;&#x5165;&#xFF0C;&#x8A2D;&#x5B9A;&#x65B9;&#x5F0F;&#x8DDF;&#x4E0A;&#x9762;&#x958B;&#x555F; <code>windowsAuthentication</code> &#x985E;&#x4F3C;&#xFF0C;&#x53EA;&#x8981;&#x5C07; <code>anonymousAuthentication</code> &#x8A2D;&#x5B9A;&#x70BA;&#x771F;&#xFF0C;&#x6216;&#x662F;&#x5C07; <code>&#x555F;&#x52D5;&#x533F;&#x540D;&#x9A57;&#x8B49;</code> &#x6253;&#x52FE;</p>
+<p>這時候後端的設定要調整一下，要允許匿名登入，設定方式跟上面開啟 <code>windowsAuthentication</code> 類似，只要將 <code>anonymousAuthentication</code> 設定為真，或是將 <code>啟動匿名驗證</code> 打勾</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/04/11/ng-windows-auth/1554954644800.png" width="890" height="668" layout="responsive"></amp-img></div>
-<p>&#x7576;&#x9019;&#x6A23;&#x5B50;&#x8A2D;&#x5B9A;&#x5B8C;&#x5F8C;&#xFF0C;&#x91CD;&#x65B0;&#x555F;&#x52D5;&#x5F8C;&#x7AEF;&#x670D;&#x52D9;&#xFF0C;&#x7576;&#x6253;&#x958B; <code>https://localhost:44369/api/values</code>  &#x7DB2;&#x5740;&#x6642;&#x6703;&#x51FA;&#x73FE;&#x4EE5;&#x4E0B;&#x7684;&#x932F;&#x8AA4;&#x756B;&#x9762;</p>
+<p>當這樣子設定完後，重新啟動後端服務，當打開 <code>https://localhost:44369/api/values</code>  網址時會出現以下的錯誤畫面</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/04/11/ng-windows-auth/1554954728393.png" width="1066" height="271" layout="responsive"></amp-img></div>
-<p>&#x53EA;&#x597D;&#x518D;&#x4F86;&#x8ABF;&#x6574;&#x4E00;&#x4E0B; <code>Startup.cs</code> &#x7684;&#x7A0B;&#x5F0F;&#x4E86;</p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">// &#x65B0;&#x589E;&#x9019;&#x884C;</span></span><br><span class="line">    services.AddAuthentication(IISDefaults.AuthenticationScheme);</span><br><span class="line"></span><br><span class="line">    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7576;&#x4FEE;&#x6539;&#x5B8C;&#x6210;&#x5F8C;&#xFF0C;&#x91CD;&#x65B0;&#x6574;&#x7406;&#x4E00;&#x6B21;&#x7DB2;&#x9801;&#xFF0C;&#x4E4B;&#x524D;&#x7684;&#x932F;&#x8AA4;&#x8A0A;&#x606F;&#x5C31;&#x6703;&#x6D88;&#x5931;&#x4E86;&#xFF0C;&#x6253;&#x958B; <code>Networking</code> &#x7684;&#x5730;&#x65B9;&#xFF0C;&#x5C31;&#x6703;&#x770B;&#x5230;&#x5169;&#x6B21;&#x5C0D;&#x5F8C;&#x7AEF;&#x7684;&#x8ACB;&#x6C42;&#x90FD;&#x662F;&#x6B63;&#x5E38;&#x7684;</p>
+<p>只好再來調整一下 <code>Startup.cs</code> 的程式了</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">// 新增這行</span></span><br><span class="line">    services.AddAuthentication(IISDefaults.AuthenticationScheme);</span><br><span class="line"></span><br><span class="line">    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>當修改完成後，重新整理一次網頁，之前的錯誤訊息就會消失了，打開 <code>Networking</code> 的地方，就會看到兩次對後端的請求都是正常的</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/04/11/ng-windows-auth/1554955062068.png" width="964" height="558" layout="responsive"></amp-img></div>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/windowsauth?view=aspnetcore-2.2&amp;tabs=visual-studio" target="_blank" rel="noopener">&#x8A2D;&#x5B9A; Windows &#x9A57;&#x8B49;</a></li>
+<li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/windowsauth?view=aspnetcore-2.2&amp;tabs=visual-studio" target="_blank" rel="noopener">設定 Windows 驗證</a></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials" target="_blank" rel="noopener">XMLHttpRequest.withCredentials</a></li>
 </ul>
 

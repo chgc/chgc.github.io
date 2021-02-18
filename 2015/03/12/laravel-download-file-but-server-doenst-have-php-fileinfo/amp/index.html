@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/03/12/laravel-download-file-but-server-doenst-have-php-fileinfo/"
 			},
 			"datePublished": "2015-03-12T07:22:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,9 +1842,9 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Response::Download() in Laravel 4.x needs php_fileinfo extension. Sometimes web hosting server doesn&#x2019;t have that extension on, althought it&#x2019;s default for php 5.4.</p>
+			  		<p>Response::Download() in Laravel 4.x needs php_fileinfo extension. Sometimes web hosting server doesn’t have that extension on, althought it’s default for php 5.4.</p>
 <p>so the way to work around is make a response, and add header to it. See code below</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$file = File::get($filepath);</span><br><span class="line">$response = Response::make($file, 200);</span><br><span class="line">$response-&gt;header(&apos;Content-Type&apos;, $item-&gt;mime);</span><br><span class="line">$response-&gt;header(&apos;Content-Disposition&apos;,&apos;attachment;filename=&quot;&apos;.$filename.&apos;&quot;&apos;);</span><br><span class="line">return $response;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$file = File::get($filepath);</span><br><span class="line">$response = Response::make($file, 200);</span><br><span class="line">$response-&gt;header('Content-Type', $item-&gt;mime);</span><br><span class="line">$response-&gt;header('Content-Disposition','attachment;filename="'.$filename.'"');</span><br><span class="line">return $response;</span><br></pre></td></tr></tbody></table></figure>
 			  		
 			  		<!-- google Adsense -->
 			  		

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/"
 			},
 			"datePublished": "2018-08-16T01:02:11.000Z",
-			"dateModified": "2021-02-18T02:25:04.859Z",
+			"dateModified": "2021-02-18T02:32:11.575Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,117 +1848,117 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Schematics &#x8DDF;&#x6A94;&#x6848;&#x64CD;&#x4F5C;&#x7684;&#x5143;&#x7D20;&#x6709;&#x4E09;&#x7A2E;&#xFF0C;&#x5206;&#x5225;&#x662F; <code>Tree</code>&#x3001;<code>Rule</code>&#x3001;<code>Source</code> &#xFF0C;&#x4F46;&#x9019;&#x4E09;&#x500B;&#x5143;&#x7D20;&#x5230;&#x5E95;&#x662F;&#x4EC0;&#x9EBC;? &#x53C8;&#x5404;&#x81EA;&#x6709;&#x54EA;&#x4E9B;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5462;?</p>
+			  		<p>Schematics 跟檔案操作的元素有三種，分別是 <code>Tree</code>、<code>Rule</code>、<code>Source</code> ，但這三個元素到底是什麼? 又各自有哪些方法可以使用呢?</p>
 <a id="more"></a>
-<h1 id="&#x57FA;&#x672C;&#x7C21;&#x4ECB;"><a class="header-anchor" href="#&#x57FA;&#x672C;&#x7C21;&#x4ECB;"> </a>&#x57FA;&#x672C;&#x7C21;&#x4ECB;</h1>
-<p>&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x7684;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x7B97;&#x662F; Schematics &#x5167;&#x6838;&#x5FC3;&#x7684;&#x529F;&#x80FD;&#x4E4B;&#x4E00;&#xFF0C;&#x4E5F;&#x662F;&#x5927;&#x90E8;&#x5206;&#x6211;&#x5011;&#x5E0C;&#x671B; schematics &#x5E6B;&#x6211;&#x5011;&#x8655;&#x7406;&#x7684;&#x4E8B;&#x60C5;&#x3002;&#x6240;&#x4EE5;&#x719F;&#x6089; schematics &#x7684;&#x6A94;&#x6848;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#xFF0C;&#x5728;&#x5BEB;&#x81EA;&#x5DF1;&#x7684; schematics &#x6703;&#x8F15;&#x9B06;&#x5F88;&#x591A;&#x3002;</p>
-<h1 id="&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x64CD;&#x4F5C;"><a class="header-anchor" href="#&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x64CD;&#x4F5C;"> </a>&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x64CD;&#x4F5C;</h1>
-<h2 id="&#x578B;&#x5225;"><a class="header-anchor" href="#&#x578B;&#x5225;"> </a>&#x578B;&#x5225;</h2>
+<h1 id="基本簡介"><a class="header-anchor" href="#基本簡介"> </a>基本簡介</h1>
+<p>檔案系統的操作可以算是 Schematics 內核心的功能之一，也是大部分我們希望 schematics 幫我們處理的事情。所以熟悉 schematics 的檔案操作方式，在寫自己的 schematics 會輕鬆很多。</p>
+<h1 id="檔案系統操作"><a class="header-anchor" href="#檔案系統操作"> </a>檔案系統操作</h1>
+<h2 id="型別"><a class="header-anchor" href="#型別"> </a>型別</h2>
 <ul>
-<li>Tree&#xFF1A; &#x662F;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x7684;&#x7D50;&#x69CB;&#x63CF;&#x8FF0;&#xFF0C;&#x5305;&#x542B;&#x6A94;&#x6848;&#x7684;&#x72C0;&#x614B;&#x8207;&#x6539;&#x8B8A;&#x6A94;&#x6848;&#x7684;&#x898F;&#x5247; (<code>Rule</code>)</li>
-<li>Source&#xFF1A; &#x662F;&#x4E00;&#x500B;&#x5EFA;&#x7ACB;&#x7A7A;&#x7684;&#x65B0; <code>Tree</code>&#xFF0C;&#x5E38;&#x898B;&#x7684;&#x65B9;&#x6CD5;&#x6709; <code>Url(path)</code></li>
-<li>Rule&#xFF1A; &#x662F;&#x63CF;&#x8FF0;&#x8981;&#x5982;&#x4F55;&#x6539;&#x8B8A; <code>Tree</code>&#xFF0C;&#x6240;&#x4EE5; <code>Rule</code> &#x6703;&#x56DE;&#x50B3;&#x4E00;&#x500B;&#x5305;&#x542B;&#x6539;&#x8B8A;&#x898F;&#x5247;&#x7684; <code>Tree</code></li>
+<li>Tree： 是檔案系統的結構描述，包含檔案的狀態與改變檔案的規則 (<code>Rule</code>)</li>
+<li>Source： 是一個建立空的新 <code>Tree</code>，常見的方法有 <code>Url(path)</code></li>
+<li>Rule： 是描述要如何改變 <code>Tree</code>，所以 <code>Rule</code> 會回傳一個包含改變規則的 <code>Tree</code></li>
 </ul>
-<h2 id="&#x65B9;&#x6CD5;"><a class="header-anchor" href="#&#x65B9;&#x6CD5;"> </a>&#x65B9;&#x6CD5;</h2>
+<h2 id="方法"><a class="header-anchor" href="#方法"> </a>方法</h2>
 <h3 id="tree"><a class="header-anchor" href="#tree"> </a>Tree</h3>
-<p>&#x7576;&#x7B2C;&#x4E00;&#x6B21;&#x5EFA;&#x7ACB;&#x7A7A;&#x7684; schematics &#x6642;&#xFF0C;&#x6703;&#x770B;&#x5230;&#x9019;&#x4E00;&#x6BB5;&#x7A0B;&#x5F0F;&#x78BC;</p>
+<p>當第一次建立空的 schematics 時，會看到這一段程式碼</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, _context: SchematicContext</span>) =&gt;</span> {</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x9019;&#x88E1;&#x53D6;&#x5F97;&#x7684; <code>Tree</code> &#x6703;&#x662F;&#x7576;&#x4E0B;&#x7684;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#xFF0C;&#x6240;&#x4EE5;&#x6703;&#x5305;&#x542B;&#x76EE;&#x524D;&#x76EE;&#x9304;&#x4E0B;&#x7684;&#x6240;&#x6709;&#x6A94;&#x6848;&#x8207;&#x8CC7;&#x6599;&#x593E;&#xFF0C;&#x7576;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x91DD;&#x5C0D;&#x90A3;&#x4E9B;&#x6A94;&#x6848;&#x53BB;&#x505A;&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4F7F;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x6709;</p>
+<p>這裡取得的 <code>Tree</code> 會是當下的檔案系統，所以會包含目前目錄下的所有檔案與資料夾，當然也可以針對那些檔案去做操作，可使用的方法有</p>
 <ul>
-<li><code>branch(): Tree</code> &#xFF1A;&#x8907;&#x88FD;&#x4E00;&#x4EFD;&#x76EE;&#x524D; <code>Tree</code> &#x72C0;&#x614B;&#x7684; Tree &#x7269;&#x4EF6;</li>
-<li><code>merge(other: Tree, strategy?: MergeStrategy): void</code> &#xFF1A;&#x5408;&#x4F75;&#x5169;&#x500B; <code>Tree</code> &#x7269;&#x4EF6;&#xFF0C;&#x53EF;&#x6C7A;&#x5B9A;&#x5408;&#x4F75;&#x885D;&#x7A81;&#x6642;&#x7684;&#x89E3;&#x6C7A;&#x65B9;&#x5F0F;
+<li><code>branch(): Tree</code> ：複製一份目前 <code>Tree</code> 狀態的 Tree 物件</li>
+<li><code>merge(other: Tree, strategy?: MergeStrategy): void</code> ：合併兩個 <code>Tree</code> 物件，可決定合併衝突時的解決方式
 <ul>
-<li><code>MergeStrategy</code> &#x6709;&#x4EE5;&#x4E0B;&#x9078;&#x9805;
+<li><code>MergeStrategy</code> 有以下選項
 <ul>
 <li><code>AllowOverwriteConflict</code></li>
 <li><code>AllowCreationConflict</code></li>
 <li><code>AllowDeleteConflict</code></li>
 <li><code>Default</code></li>
-<li><code>Error</code>&#xFF1A;&#x5982;&#x679C;2&#x500B;&#x6A94;&#x6848;&#x5B58;&#x5728;&#x65BC;&#x76F8;&#x540C;&#x7684;&#x4F4D;&#x7F6E;&#x5C31;&#x6703;&#x4E1F;&#x51FA;&#x932F;&#x8AA4;&#x8A0A;&#x606F;</li>
-<li><code>ContentOnly</code>&#xFF1A;&#x53EA;&#x6709;&#x5167;&#x5BB9;&#x885D;&#x7A81;&#x6642;&#x624D;&#x53EF;&#x4EE5;&#x88AB;&#x8986;&#x5BEB;</li>
-<li><code>Overwrite</code>&#xFF1A;&#x5305;&#x542B; <code>AllowOverwriteConflict</code>&#x3001;<code>AllowCreationConflict</code>&#x3001;<code>AllowDeleteConflict</code>&#xFF0C;&#x6839;&#x64DA;&#x6700;&#x5F8C;&#x7684;&#x7570;&#x52D5;&#x505A;&#x8986;&#x84CB;</li>
+<li><code>Error</code>：如果2個檔案存在於相同的位置就會丟出錯誤訊息</li>
+<li><code>ContentOnly</code>：只有內容衝突時才可以被覆寫</li>
+<li><code>Overwrite</code>：包含 <code>AllowOverwriteConflict</code>、<code>AllowCreationConflict</code>、<code>AllowDeleteConflict</code>，根據最後的異動做覆蓋</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><code>root: DirEntry</code> (&#x552F;&#x8B80;)&#xFF1A;&#x53D6;&#x5F97;&#x76EE;&#x524D;&#x7684;&#x8CC7;&#x6599;&#x593E;&#x8CC7;&#x8A0A; (<code>FileSystemDirEntry</code> &#x578B;&#x5225;)</li>
-<li><code>read(path: string): Buffer | null</code>&#xFF1A;&#x8B80;&#x53D6;&#x6A94;&#x6848;&#x4E26;&#x7528; binary  &#x7684;&#x65B9;&#x5F0F;&#x5448;&#x73FE;</li>
-<li><code>exists(path: string): boolean</code>&#xFF1A;&#x6AA2;&#x67E5;&#x6A94;&#x6848;&#x662F;&#x5426;&#x5B58;&#x5728;</li>
-<li><code>get(path: string): FileEntry | null</code>&#xFF1A;&#x53D6;&#x5F97;&#x6A94;&#x6848; ( <code>FileEntry</code> &#x578B;&#x5225;)</li>
-<li><code>getDir(path: string): DirEntry</code> &#xFF1A;&#x53D6;&#x5F97;&#x67D0;&#x8CC7;&#x6599;&#x593E;&#x7684;&#x8CC7;&#x8A0A; (<code>FileSystemDirEntry</code> &#x578B;&#x5225;)</li>
-<li><code>visit(visitor: FileVisitor): void</code>&#xFF1A;&#x62DC;&#x8A2A;&#x76EE;&#x524D; Tree &#x4E0B;&#x7684;&#x6240;&#x6709;&#x6A94;&#x6848; (list through folders)</li>
-<li><code>overwrite(path: string, content: Buffer | string): void</code>&#xFF1A;&#x8907;&#x5BEB;&#x7279;&#x5B9A;&#x4F4D;&#x7F6E;&#x7684;&#x6A94;&#x6848;&#x5167;&#x5BB9;</li>
-<li><code>beginUpdate(path: string): UpdateRecorder</code>&#xFF1A;&#x958B;&#x59CB;&#x4FEE;&#x6539;&#x67D0;&#x500B;&#x6A94;&#x6848;</li>
-<li><code>commitUpdate(record: UpdateRecorder): void</code>&#xFF1A;&#x78BA;&#x8A8D;&#x4FEE;&#x6539;&#x5167;&#x5BB9;&#xFF0C;&#x9700;&#x8207; <code>beginUpate</code> &#x914D;&#x5408;&#x4F7F;&#x7528;</li>
-<li><code>create(path: string, content: Buffer | string): void</code>&#xFF1A;&#x5EFA;&#x7ACB;&#x6A94;&#x6848;&#x4E26;&#x7D66;&#x4E88;&#x6A94;&#x6848;&#x5167;&#x5BB9;</li>
-<li><code>delete(path: string): void</code>&#xFF1A;&#x522A;&#x9664;&#x6A94;&#x6848;</li>
-<li><code>rename(from: string, to: string): void</code>&#xFF1A;&#x91CD;&#x65B0;&#x547D;&#x540D;&#x6A94;&#x6848;</li>
-<li><code>apply(action: Action, strategy?: MergeStrategy): void</code>&#xFF1A;&#x5957;&#x7528;&#x898F;&#x5247;&#xFF0C;&#x4F46;&#x7121;&#x6CD5;&#x5728; <code>HostTree</code> &#x4F7F;&#x7528;</li>
-<li><code>actions: Action[] (readonly)</code>&#xFF1A;&#x5217;&#x51FA;&#x8A72; <code>Tree</code> &#x76EE;&#x524D;&#x6240;&#x6709;&#x7684; actions&#xFF0C;&#x6BCF;&#x4E00;&#x500B; action &#x6703;&#x6709;&#x4EE5;&#x4E0B;&#x8CC7;&#x8A0A;
+<li><code>root: DirEntry</code> (唯讀)：取得目前的資料夾資訊 (<code>FileSystemDirEntry</code> 型別)</li>
+<li><code>read(path: string): Buffer | null</code>：讀取檔案並用 binary  的方式呈現</li>
+<li><code>exists(path: string): boolean</code>：檢查檔案是否存在</li>
+<li><code>get(path: string): FileEntry | null</code>：取得檔案 ( <code>FileEntry</code> 型別)</li>
+<li><code>getDir(path: string): DirEntry</code> ：取得某資料夾的資訊 (<code>FileSystemDirEntry</code> 型別)</li>
+<li><code>visit(visitor: FileVisitor): void</code>：拜訪目前 Tree 下的所有檔案 (list through folders)</li>
+<li><code>overwrite(path: string, content: Buffer | string): void</code>：複寫特定位置的檔案內容</li>
+<li><code>beginUpdate(path: string): UpdateRecorder</code>：開始修改某個檔案</li>
+<li><code>commitUpdate(record: UpdateRecorder): void</code>：確認修改內容，需與 <code>beginUpate</code> 配合使用</li>
+<li><code>create(path: string, content: Buffer | string): void</code>：建立檔案並給予檔案內容</li>
+<li><code>delete(path: string): void</code>：刪除檔案</li>
+<li><code>rename(from: string, to: string): void</code>：重新命名檔案</li>
+<li><code>apply(action: Action, strategy?: MergeStrategy): void</code>：套用規則，但無法在 <code>HostTree</code> 使用</li>
+<li><code>actions: Action[] (readonly)</code>：列出該 <code>Tree</code> 目前所有的 actions，每一個 action 會有以下資訊
 <ul>
-<li><code>kind</code>&#xFF1A;&#x52D5;&#x4F5C;&#x7A2E;&#x985E;
+<li><code>kind</code>：動作種類
 <ul>
-<li><code>c</code>&#xFF1A;&#x5EFA;&#x7ACB;</li>
-<li><code>d</code>&#xFF1A;&#x522A;&#x9664;</li>
-<li><code>o</code>&#xFF1A;&#x8907;&#x5BEB;</li>
-<li><code>r</code>&#xFF1A;&#x91CD;&#x65B0;&#x547D;&#x540D;</li>
+<li><code>c</code>：建立</li>
+<li><code>d</code>：刪除</li>
+<li><code>o</code>：複寫</li>
+<li><code>r</code>：重新命名</li>
 </ul>
 </li>
-<li><code>path</code> &#xFF1A;&#x8DEF;&#x5F91;(from)</li>
-<li><code>to</code>&#xFF1A;&#x8DEF;&#x5F91; (to)</li>
-<li><code>content</code>&#xFF1A;&#x7570;&#x52D5;&#x5167;&#x5BB9;</li>
+<li><code>path</code> ：路徑(from)</li>
+<li><code>to</code>：路徑 (to)</li>
+<li><code>content</code>：異動內容</li>
 </ul>
 </li>
 </ul>
-<p>&#x57FA;&#x672C;&#x4E0A;&#xFF0C;&#x5C6C;&#x65BC; <code>Tree</code> &#x578B;&#x5225;&#x7684;&#x8CC7;&#x6599;&#xFF0C;&#x90FD;&#x6709;&#x4E0A;&#x8FF0;&#x7684;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x3002;&#x5728;&#x64CD;&#x4F5C;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x6642;&#xFF0C;<code>Tree</code> &#x662F;&#x4E00;&#x500B;&#x5F88;&#x91CD;&#x8981;&#x7684;&#x89C0;&#x5FF5;&#xFF0C;&#x53EF;&#x4EE5;&#x60F3;&#x50CF;&#x7A0B;&#x4ED6;&#x8DDF; Git &#x7684; commit history &#x6709;&#x96F7;&#x540C;&#x7684;&#x904B;&#x4F5C;&#x65B9;&#x5F0F;&#x3002;&#x800C;&#x6240;&#x6709;&#x7684;&#x7570;&#x52D5;&#x8207;&#x898F;&#x5247;&#xFF0C;&#x6700;&#x7D42;&#x90FD;&#x5F97;&#x56DE;&#x5230; Tree &#x4E0A;</p>
+<p>基本上，屬於 <code>Tree</code> 型別的資料，都有上述的方法可以使用。在操作檔案系統時，<code>Tree</code> 是一個很重要的觀念，可以想像程他跟 Git 的 commit history 有雷同的運作方式。而所有的異動與規則，最終都得回到 Tree 上</p>
 <h3 id="source"><a class="header-anchor" href="#source"> </a>Source</h3>
-<p>Source &#x5982;&#x4E0A;&#x982D;&#x6240;&#x4ECB;&#x7D39;&#x7684;&#xFF0C;&#x662F;&#x7528;&#x4F86;&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x5168;&#x65B0;&#x7A7A;&#x7684;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#xFF0C;&#x6709;&#x4EE5;&#x4E0B;&#x7684;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x7522;&#x751F; Source</p>
+<p>Source 如上頭所介紹的，是用來建立一個全新空的檔案系統，有以下的方法可以產生 Source</p>
 <ul>
 <li>
 <p><code>url(path: String)</code></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/blogdemo/index.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> {</span><br><span class="line">    <span class="comment">// &#x6839;&#x64DA; index.ts &#x7684;&#x4F4D;&#x7F6E;&#x70BA;&#x51FA;&#x767C;&#x9EDE;</span></span><br><span class="line">    <span class="keyword">const</span> files = url(<span class="string">&apos;./&apos;</span>)(context) <span class="keyword">as</span> Tree;</span><br><span class="line">    <span class="comment">// &#x5217;&#x51FA;&#x8A72; Tree &#x4E0B;&#x7684;&#x6240;&#x6709;&#x6A94;&#x6848;    </span></span><br><span class="line">    files.visit(<span class="function"><span class="params">v</span> =&gt;</span> <span class="built_in">console</span>.log(v));</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x57F7;&#x884C;&#x7D50;&#x679C;</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/blogdemo/index.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> {</span><br><span class="line">    <span class="comment">// 根據 index.ts 的位置為出發點</span></span><br><span class="line">    <span class="keyword">const</span> files = url(<span class="string">'./'</span>)(context) <span class="keyword">as</span> Tree;</span><br><span class="line">    <span class="comment">// 列出該 Tree 下的所有檔案    </span></span><br><span class="line">    files.visit(<span class="function"><span class="params">v</span> =&gt;</span> <span class="built_in">console</span>.log(v));</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>執行結果</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/RJOiBYL.png" width="282" height="224" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p><code>apply(source: Source, rules: Rule[])</code>&#xFF1A;&#x5957;&#x7528;&#x898F;&#x5247;&#x5230; <code>Source</code> &#x4E0A;&#xFF0C;&#x4E26;&#x56DE;&#x50B3;&#x7D93;&#x8655;&#x7406;&#x5F8C;&#x7684; <code>Source</code></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> {</span><br><span class="line">    <span class="keyword">const</span> filterRule = filter(<span class="function"><span class="params">x</span> =&gt;</span> x.endsWith(<span class="string">&apos;ts&apos;</span>));</span><br><span class="line">    <span class="keyword">const</span> files = apply(url(<span class="string">&apos;./&apos;</span>), [filterRule])(context) <span class="keyword">as</span> Observable&lt;Tree&gt;;</span><br><span class="line">    files.subscribe(<span class="function"><span class="params">tree</span> =&gt;</span> {</span><br><span class="line">      tree.visit(<span class="function"><span class="params">f</span> =&gt;</span> <span class="built_in">console</span>.log(f));</span><br><span class="line">    });</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><code>apply(source: Source, rules: Rule[])</code>：套用規則到 <code>Source</code> 上，並回傳經處理後的 <code>Source</code></p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> {</span><br><span class="line">    <span class="keyword">const</span> filterRule = filter(<span class="function"><span class="params">x</span> =&gt;</span> x.endsWith(<span class="string">'ts'</span>));</span><br><span class="line">    <span class="keyword">const</span> files = apply(url(<span class="string">'./'</span>), [filterRule])(context) <span class="keyword">as</span> Observable&lt;Tree&gt;;</span><br><span class="line">    files.subscribe(<span class="function"><span class="params">tree</span> =&gt;</span> {</span><br><span class="line">      tree.visit(<span class="function"><span class="params">f</span> =&gt;</span> <span class="built_in">console</span>.log(f));</span><br><span class="line">    });</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/dYhIUIM.png" width="382" height="136" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p><code>source(tree: Tree)</code>&#xFF1A;&#x5C07; <code>Tree</code> &#x8F49;&#x63DB;&#x6210; <code>Source</code> &#x578B;&#x5225;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> {</span><br><span class="line">    <span class="keyword">const</span> filterRule = filter(<span class="function"><span class="params">x</span> =&gt;</span> x.endsWith(<span class="string">&apos;ts&apos;</span>));</span><br><span class="line">    <span class="keyword">const</span> files = apply(source(tree), [filterRule])(context) <span class="keyword">as</span> Observable&lt;</span><br><span class="line">      Tree</span><br><span class="line">    &gt;;</span><br><span class="line">    files.subscribe(<span class="function"><span class="params">tree</span> =&gt;</span> {</span><br><span class="line">      tree.visit(<span class="function"><span class="params">f</span> =&gt;</span> <span class="built_in">console</span>.log(f));</span><br><span class="line">    });</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><code>source(tree: Tree)</code>：將 <code>Tree</code> 轉換成 <code>Source</code> 型別</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">_options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> {</span><br><span class="line">    <span class="keyword">const</span> filterRule = filter(<span class="function"><span class="params">x</span> =&gt;</span> x.endsWith(<span class="string">'ts'</span>));</span><br><span class="line">    <span class="keyword">const</span> files = apply(source(tree), [filterRule])(context) <span class="keyword">as</span> Observable&lt;</span><br><span class="line">      Tree</span><br><span class="line">    &gt;;</span><br><span class="line">    files.subscribe(<span class="function"><span class="params">tree</span> =&gt;</span> {</span><br><span class="line">      tree.visit(<span class="function"><span class="params">f</span> =&gt;</span> <span class="built_in">console</span>.log(f));</span><br><span class="line">    });</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p><code>empty()</code>&#xFF1A; &#x56DE;&#x50B3;&#x4E00;&#x500B;&#x7A7A;&#x7684; <code>Tree</code></p>
+<p><code>empty()</code>： 回傳一個空的 <code>Tree</code></p>
 </li>
 <li>
-<p><code>asSource (rule: Rule)</code> &#x5C07;&#x898F;&#x5247;&#x8F49;&#x63DB;&#x6210; <code>source</code></p>
+<p><code>asSource (rule: Rule)</code> 將規則轉換成 <code>source</code></p>
 </li>
 </ul>
-<p>&#x9019;&#x908A;&#x6703;&#x767C;&#x73FE;&#x6211;&#x5728; <code>source</code> &#x7269;&#x4EF6;&#x5F8C;&#x9762;&#x52A0;&#x4E0A; <code>(context)</code> &#xFF0C;&#x9019;&#x500B;&#x52D5;&#x4F5C;&#x662F;&#x5C07; <code>source</code> &#x578B;&#x5225;&#x9032;&#x884C;&#x8655;&#x7406;&#x4E26;&#x6703;&#x56DE;&#x50B3; <code>Tree | Observable&lt;Tree&gt;</code> &#x578B;&#x5225;&#x7684;&#x8CC7;&#x6599;&#xFF0C;&#x4E4B;&#x5F8C;&#x7684;&#x64CD;&#x4F5C;&#x5C31;&#x8DDF;&#x64CD;&#x4F5C; <code>Tree</code> &#x662F;&#x4E00;&#x6A21;&#x4E00;&#x6A23;&#x7684;</p>
+<p>這邊會發現我在 <code>source</code> 物件後面加上 <code>(context)</code> ，這個動作是將 <code>source</code> 型別進行處理並會回傳 <code>Tree | Observable&lt;Tree&gt;</code> 型別的資料，之後的操作就跟操作 <code>Tree</code> 是一模一樣的</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Source = <span class="function">(<span class="params">context: SchematicContext</span>) =&gt;</span> Tree | Observable&lt;Tree&gt;;</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="rule"><a class="header-anchor" href="#rule"> </a>Rule</h3>
 <ul>
-<li><code>chain(rules: Rule[]): Rule</code> &#xFF1A; &#x5C07; Rule &#x4E32;&#x63A5;&#x5728;&#x4E00;&#x8D77;</li>
-<li><code>mergeWith(source: Source, strategy: MergeStrategy = MergeStrategy.Default): Rule</code> &#x5C07; <code>source</code> &#x8207; <code>Tree</code> &#x505A;&#x5408;&#x4F75; (&#x76F4;&#x63A5;&#x4FEE;&#x6539;)</li>
-<li><code>noop() : Rule</code>&#xFF1A;&#x56DE;&#x50B3;&#x6C92;&#x6709;&#x4EFB;&#x4F55;&#x52D5;&#x4F5C;&#x7684; <code>Rule</code></li>
-<li><code>filter(predicate: FilePredicate&lt;boolean&gt;): Rule</code>&#xFF1A;&#x904E;&#x6FFE;&#x898F;&#x5247;</li>
-<li><code>branchAndMerge(rule: Rule, strategy = MergeStrategy.Default): Rule</code>&#xFF1A;&#x8207;&#x76EE;&#x524D;&#x7684; Tree (&#x8907;&#x88FD;) &#x5408;&#x4F75;&#x4E26;&#x56DE;&#x50B3;&#x4E00;&#x4EFD;&#x65B0;&#x7684; Tree</li>
-<li><code>partitionApplyMerge(predicate: FilePredicate&lt;boolean&gt;, ruleYes: Rule , ruleNo?: Rule): Rule</code>&#xFF1A;&#x6839;&#x64DA;&#x689D;&#x4EF6;&#x57F7;&#x884C;&#x5C0D;&#x61C9;&#x7684; <code>Rule</code></li>
-<li><code>forEach(operator: FileOperator): Rule</code>&#xFF1A;&#x6279;&#x6B21;&#x76F4;&#x578B;&#x50B3;&#x9032;&#x7684; <code>FileOperator</code></li>
-<li><code>move(from: string, to?: string): Rule</code>&#xFF1A;&#x79FB;&#x52D5;&#x6A94;&#x6848;&#x81F3;&#x8CC7;&#x6599;&#x593E;</li>
-<li><code>rename(match: FilePredicate&lt;boolean&gt;, to: FilePredicate&lt;string&gt;): Rule</code>&#xFF1A;&#x5C07;&#x7B26;&#x5408;&#x689D;&#x4EF6;&#x7684;&#x6A94;&#x6848;&#x66F4;&#x63DB;&#x540D;&#x7A31;</li>
-<li><code>externalSchematic&lt;OptionT extends object&gt;(collectionName: string, schematicName: string, options: OptionT): Rule</code>&#xFF1A;&#x57F7;&#x884C;&#x7B2C;&#x4E09;&#x65B9; schematics &#x7684;&#x547D;&#x4EE4;</li>
-<li><code>schematic&lt;OptionT extends object&gt;(schematicName: string, options: OptionT): Rule</code>&#xFF1A;&#x57F7;&#x884C;&#x5176;&#x4ED6;&#x7684; schematics &#x547D;&#x4EE4;</li>
-<li><code>template&lt;T&gt;(options: T): Rule</code>&#xFF1A;&#x6A23;&#x677F;&#x5957;&#x7528;&#xFF0C;&#x5305;&#x542B;&#x6A94;&#x6848;&#x5167;&#x5BB9;&#x8207;&#x6A94;&#x540D;&#x8DEF;&#x5F91;&#x7684;&#x90E8;&#x5206;&#x8F49;&#x63DB;</li>
-<li><code>pathTemplate&lt;T extends PathTemplateData&gt;(options: T): Rule</code>&#xFF1A;&#x8F49;&#x63DB;&#x6A94;&#x540D;&#x8DEF;&#x5F91;&#x81F3;&#x5C0D;&#x61C9;&#x7684;&#x5167;&#x5BB9;</li>
-<li><code>contentTemplate&lt;T&gt;(options: T): Rule</code>&#xFF1A;&#x8F49;&#x63DB;&#x6A94;&#x540D;&#x5167;&#x5BB9;&#x7684;&#x8B8A;&#x6578;&#x81F3;&#x5C0D;&#x61C9;&#x7684;&#x5167;&#x5BB9;</li>
+<li><code>chain(rules: Rule[]): Rule</code> ： 將 Rule 串接在一起</li>
+<li><code>mergeWith(source: Source, strategy: MergeStrategy = MergeStrategy.Default): Rule</code> 將 <code>source</code> 與 <code>Tree</code> 做合併 (直接修改)</li>
+<li><code>noop() : Rule</code>：回傳沒有任何動作的 <code>Rule</code></li>
+<li><code>filter(predicate: FilePredicate&lt;boolean&gt;): Rule</code>：過濾規則</li>
+<li><code>branchAndMerge(rule: Rule, strategy = MergeStrategy.Default): Rule</code>：與目前的 Tree (複製) 合併並回傳一份新的 Tree</li>
+<li><code>partitionApplyMerge(predicate: FilePredicate&lt;boolean&gt;, ruleYes: Rule , ruleNo?: Rule): Rule</code>：根據條件執行對應的 <code>Rule</code></li>
+<li><code>forEach(operator: FileOperator): Rule</code>：批次直型傳進的 <code>FileOperator</code></li>
+<li><code>move(from: string, to?: string): Rule</code>：移動檔案至資料夾</li>
+<li><code>rename(match: FilePredicate&lt;boolean&gt;, to: FilePredicate&lt;string&gt;): Rule</code>：將符合條件的檔案更換名稱</li>
+<li><code>externalSchematic&lt;OptionT extends object&gt;(collectionName: string, schematicName: string, options: OptionT): Rule</code>：執行第三方 schematics 的命令</li>
+<li><code>schematic&lt;OptionT extends object&gt;(schematicName: string, options: OptionT): Rule</code>：執行其他的 schematics 命令</li>
+<li><code>template&lt;T&gt;(options: T): Rule</code>：樣板套用，包含檔案內容與檔名路徑的部分轉換</li>
+<li><code>pathTemplate&lt;T extends PathTemplateData&gt;(options: T): Rule</code>：轉換檔名路徑至對應的內容</li>
+<li><code>contentTemplate&lt;T&gt;(options: T): Rule</code>：轉換檔名內容的變數至對應的內容</li>
 </ul>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Rule = <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> Tree | Observable&lt;Tree&gt; | Rule | <span class="built_in">void</span>;</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="&#x7E3D;&#x7D50;"><a class="header-anchor" href="#&#x7E3D;&#x7D50;"> </a>&#x7E3D;&#x7D50;</h1>
-<p><code>Tree</code>&#x3001;<code>source</code> &#x8207; <code>Rule</code> &#x9593;&#x7684;&#x95DC;&#x4FC2;&#x5176;&#x5BE6;&#x5F88;&#x5BC6;&#x5207;&#xFF0C;&#x5C07;&#x9019;&#x4E09;&#x8005;&#x7684;&#x63A7;&#x5236;&#x5F04;&#x719F;&#x4E4B;&#x5F8C;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5BEB;&#x51FA;&#x529F;&#x80FD;&#x5F88;&#x5F37;&#x5927;&#x7684; schematics&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x55AE;&#x7D14;&#x7684;&#x5F9E;&#x5225;&#x4EBA;&#x7684; schematics &#x8907;&#x88FD;&#x8CBC;&#x4E0A;&#xFF0C;&#x537B;&#x4E0D;&#x61C2;&#x6BCF;&#x4E00;&#x500B;&#x52D5;&#x4F5C;&#x7684;&#x610F;&#x7FA9;&#x3002;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
+<p><code>Tree</code>、<code>source</code> 與 <code>Rule</code> 間的關係其實很密切，將這三者的控制弄熟之後，就可以寫出功能很強大的 schematics，而不是單純的從別人的 schematics 複製貼上，卻不懂每一個動作的意義。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li><a href="https://github.com/angular/angular-cli/blob/master/packages/angular_devkit/schematics/README.md" target="_blank" rel="noopener">Schematics</a></li>
 </ul>

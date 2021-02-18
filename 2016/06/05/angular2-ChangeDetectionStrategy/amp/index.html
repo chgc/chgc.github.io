@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/06/05/angular2-ChangeDetectionStrategy/"
 			},
 			"datePublished": "2016-06-05T02:30:35.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,9 +1848,9 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular2&#x88E1;&#x9762;&#x5075;&#x6E2C;&#x6539;&#x8B8A;&#x7684;&#x65B9;&#x6CD5;&#x6709;&#x5168;&#x65B0;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x7528;&#x4F86;&#x63D0;&#x5347;&#x6574;&#x9AD4;&#x7684;&#x6548;&#x80FD;&#xFF0C;&#x90A3;&#x91DD;&#x5C0D;Component&#x5C0D;&#x65BC;&#x5075;&#x6E2C;&#x6539;&#x8B8A;&#x6709;&#x4E00;&#x500B;&#x5C6C;&#x6027;&#x53EF;&#x4EE5;&#x8A2D;&#x5B9A;&#xFF0C;&#x90A3;&#x5C31;&#x662F;&#x900F;&#x904E; <code>ChangeDetectionStrategy</code></p>
+			  		<p>Angular2裡面偵測改變的方法有全新的方式，用來提升整體的效能，那針對Component對於偵測改變有一個屬性可以設定，那就是透過 <code>ChangeDetectionStrategy</code></p>
 <a id="more"></a>
-<p>&#x6839;&#x64DA;<a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html" target="_blank" rel="noopener">&#x5B98;&#x65B9;&#x6587;&#x4EF6;</a>, ChangeDetectionStrategy&#x6709;&#x5E7E;&#x7A2E;&#x65B9;&#x5F0F;</p>
+<p>根據<a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html" target="_blank" rel="noopener">官方文件</a>, ChangeDetectionStrategy有幾種方式</p>
 <ol>
 <li>CheckOnce</li>
 <li>Checked</li>
@@ -1859,27 +1859,27 @@ h6.categories {
 <li>OnPush</li>
 <li>Default</li>
 </ol>
-<p>&#x9019;&#x7BC7;&#x53EA;&#x5C08;&#x6CE8;&#x65BC;Default&#x8207;OnPush&#x9019;&#x5169;&#x7A2E;</p>
+<p>這篇只專注於Default與OnPush這兩種</p>
 <h1 id="change-detection-strategy"><a class="header-anchor" href="#change-detection-strategy"> </a>Change Detection Strategy</h1>
 <h2 id="default"><a class="header-anchor" href="#default"> </a>Default</h2>
 <p>Example Code</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">movie</span> [<span class="attr">title</span>]=<span class="string">&quot;title&quot;</span> [<span class="attr">actor</span>]=<span class="string">&quot;actor&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">movie</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: <span class="built_in">string</span> = <span class="string">&quot;Movie 1&quot;</span>;</span><br><span class="line">actor: Actor =<span class="keyword">new</span> Actor( <span class="string">&apos;Bruce&apos;</span>, <span class="string">&apos;Willis&apos;</span>);</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x91DD;&#x5C0D;movie&#x9019;&#x500B;component, &#x5B83;&#x63A5;&#x6536;&#x5169;&#x7A2E;&#x503C;&#xFF0C;&#x4E00;&#x500B;&#x662F;string&#x578B;&#x5225;&#x7684;title, &#x53E6;&#x5916;&#x4E00;&#x500B;&#x662F;Actor&#x578B;&#x5225;&#x7684;&#x7269;&#x4EF6;&#x3002;</p>
-<p>Movie Component&#x6703;&#x5728;&#x4EC0;&#x9EBC;&#x6642;&#x6A5F;&#x9EDE;&#x66F4;&#x65B0;&#x8981;&#x986F;&#x793A;&#x7684;&#x5167;&#x5BB9;&#x5462;? &#x5982;&#x679C; ChangeDetectionStrategy&#x662F;&#x8A2D;&#x5B9A;&#x5728;Default&#x7684;&#x6642;&#x5019;&#xFF0C;&#x90A3;&#x5C31;&#x662F;&#x53EA;&#x8981;&#x50B3;&#x5165;&#x7684;&#x503C;&#x6709;&#x7570;&#x52D5;&#x6642;&#xFF0C;&#x5C31;&#x66F4;&#x65B0;&#x986F;&#x793A;&#x7684;&#x5167;&#x5BB9;&#x3002;&#x63DB;&#x53E5;&#x8A71;&#x8AAA;, &#x5373;&#x4F7F;&#x4FEE;&#x6539;actor&#x7269;&#x4EF6;&#x88E1;&#x9762;&#x7684;property, &#x4E5F;&#x6703;&#x89F8;&#x767C;&#x3002;</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">movie</span> [<span class="attr">title</span>]=<span class="string">"title"</span> [<span class="attr">actor</span>]=<span class="string">"actor"</span>&gt;</span><span class="tag">&lt;/<span class="name">movie</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: <span class="built_in">string</span> = <span class="string">"Movie 1"</span>;</span><br><span class="line">actor: Actor =<span class="keyword">new</span> Actor( <span class="string">'Bruce'</span>, <span class="string">'Willis'</span>);</span><br></pre></td></tr></tbody></table></figure>
+<p>針對movie這個component, 它接收兩種值，一個是string型別的title, 另外一個是Actor型別的物件。</p>
+<p>Movie Component會在什麼時機點更新要顯示的內容呢? 如果 ChangeDetectionStrategy是設定在Default的時候，那就是只要傳入的值有異動時，就更新顯示的內容。換句話說, 即使修改actor物件裡面的property, 也會觸發。</p>
 <h2 id="onpush"><a class="header-anchor" href="#onpush"> </a>onPush</h2>
-<p>&#x53EF;&#x662F;&#x63DB;&#x5230;onPush&#x7684;&#x6642;&#x5019;&#x5C31;&#x6709;&#x9EDE;&#x4E0D;&#x4E00;&#x6A23;&#x4E86;&#xFF0C;&#x4ED6;&#x4E0D;&#x6703;&#x5C07;&#x4FEE;&#x6539;actor&#x5C6C;&#x6027;&#x8996;&#x70BA;&#x503C;&#x7684;&#x7570;&#x52D5;&#xFF0C;&#x53EA;&#x6703;&#x7576;&#x4E00;&#x500B;&#x5168;&#x65B0;&#x7684;Actor&#x7269;&#x4EF6;&#x88AB;&#x5EFA;&#x7ACB;&#x6642;&#xFF0C;&#x624D;&#x6703;&#x89F8;&#x767C;&#x66F4;&#x65B0;&#x3002;</p>
-<p>&#x9019;&#x6A23;&#x7684;&#x597D;&#x8655;&#x662F;&#xFF0C;&#x6E1B;&#x5C11;detect Dirty Change&#x7684;&#x6B21;&#x6578;. &#x5C31;&#x9810;&#x8A2D;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x7684;Actor&#x7269;&#x4EF6;&#x88E1;&#x9762;&#x6709;&#x5F88;&#x591A;&#x5C6C;&#x6027;&#xFF0C;&#x90A3;&#x7576;&#x6BCF;&#x4E00;&#x6B21;&#x5176;&#x4E2D;&#x4E00;&#x500B;&#x5C6C;&#x6027;&#x7684;&#x503C;&#x88AB;&#x7570;&#x52D5;&#x6642;&#xFF0C;&#x90FD;&#x6703;&#x89F8;&#x767C;&#x756B;&#x9762;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x90A3;&#x5C31;&#x592A;&#x7D2F;&#x4E86;&#x3002;&#x800C;onPush&#x662F;&#x6703;&#x7B49;&#x4E00;&#x500B;&#x5168;&#x65B0;&#x7269;&#x4EF6;&#x88AB;&#x5EFA;&#x7ACB;&#x6642;&#xFF0C;&#x624D;&#x6703;&#x51FA;&#x767C;&#x3002;&#x6240;&#x4EE5;&#x53EA;&#x8981;&#x7528;&#x8981;&#x66F4;&#x65B0;&#x7684;&#x503C;&#x53BB;&#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x65B0;&#x7684;&#x7269;&#x4EF6;&#x5C31;&#x597D;&#x4E86;&#xFF0C;&#x9019;&#x6A23;&#x5B50;&#x53EA;&#x6703;&#x88AB;&#x89F8;&#x767C;&#x4E00;&#x6B21;&#x3002;&#x7576;&#x7136;&#x6548;&#x80FD;&#x5C31;&#x6703;&#x5927;&#x5927;&#x7684;&#x63D0;&#x5347;</p>
+<p>可是換到onPush的時候就有點不一樣了，他不會將修改actor屬性視為值的異動，只會當一個全新的Actor物件被建立時，才會觸發更新。</p>
+<p>這樣的好處是，減少detect Dirty Change的次數. 就預設的方式，如果我的Actor物件裡面有很多屬性，那當每一次其中一個屬性的值被異動時，都會觸發畫面的更新，那就太累了。而onPush是會等一個全新物件被建立時，才會出發。所以只要用要更新的值去建立一個新的物件就好了，這樣子只會被觸發一次。當然效能就會大大的提升</p>
 <h1 id="immutable"><a class="header-anchor" href="#immutable"> </a>Immutable</h1>
-<p>Immuatable&#x662F;&#x53E6;&#x5916;&#x4E00;&#x500B;&#x8B70;&#x984C;&#x3002;&#x4ED6;&#x7684;&#x4E3B;&#x8981;&#x7CBE;&#x795E;&#x662F;&#x3002;&#x6BCF;&#x4E00;&#x6B21;&#x7684;&#x52D5;&#x4F5C;&#xFF0C;&#x90FD;&#x6703;&#x7522;&#x751F;&#x4E00;&#x500B;&#x65B0;&#x7684;&#x7269;&#x4EF6;&#xFF0C;&#x4E26;&#x4E0D;&#x6703;&#x76F4;&#x63A5;&#x4FEE;&#x6539;&#x539F;&#x59CB;&#x7269;&#x4EF6;&#x5167;&#x7684;&#x503C;&#xFF0C;&#x6216;&#x662F;&#x4F7F;&#x7528;&#x53C3;&#x5740;&#x7684;&#x65B9;&#x5F0F;&#x8655;&#x7406;&#x8CC7;&#x6599;. &#x66F4;&#x8A73;&#x7D30;&#x7684;&#x5167;&#x5BB9;&#x53EF;&#x4EE5;&#x53C3;&#x95B1;<a href="http://reactivex.io/rxjs/" target="_blank" rel="noopener">RxJS</a>&#x548C;<a href="https://facebook.github.io/immutable-js/" target="_blank" rel="noopener">Immutable</a></p>
-<h1 id="&#x53C3;&#x8003;&#x6587;&#x4EF6;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x6587;&#x4EF6;"> </a>&#x53C3;&#x8003;&#x6587;&#x4EF6;</h1>
+<p>Immuatable是另外一個議題。他的主要精神是。每一次的動作，都會產生一個新的物件，並不會直接修改原始物件內的值，或是使用參址的方式處理資料. 更詳細的內容可以參閱<a href="http://reactivex.io/rxjs/" target="_blank" rel="noopener">RxJS</a>和<a href="https://facebook.github.io/immutable-js/" target="_blank" rel="noopener">Immutable</a></p>
+<h1 id="參考文件"><a class="header-anchor" href="#參考文件"> </a>參考文件</h1>
 <ul>
 <li>
 <p><a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html" target="_blank" rel="noopener">ChangeDetectionStrategy</a></p>
 </li>
 <li>
 <p><a href="http://ngcourse.rangle.io/handout/change-detection/change_detection_strategy_onpush.html" target="_blank" rel="noopener">Change Detection Strategy: OnPush</a></p>
-<p>&#x200B;</p>
+<p>​</p>
 </li>
 </ul>
 

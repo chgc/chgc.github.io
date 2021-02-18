@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/07/26/angular-with-o365-3/"
 			},
 			"datePublished": "2019-07-26T03:06:20.000Z",
-			"dateModified": "2021-02-18T02:25:04.899Z",
+			"dateModified": "2021-02-18T02:32:11.623Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1860,38 +1860,38 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x81EA;&#x5F9E;&#x53BB;&#x5E74;&#x5BEB;&#x4E86;&#x5169;&#x7BC7;&#x8DDF; O365 Graph &#x6709;&#x95DC;&#x7684;&#x6587;&#x7AE0;&#x5F8C;&#xFF0C;&#x5C31;&#x505C;&#x4E86;&#x597D;&#x9577;&#x7684;&#x4E00;&#x6BB5;&#x6642;&#x9593;&#xFF0C;&#x9577;&#x5230;&#x9023;&#x767B;&#x5165;&#x7684;&#x65B9;&#x6CD5;&#x90FD;&#x6539;&#x8B8A;&#x4E86;&#xFF0C;(<a href="https://blog.kevinyang.net/2018/10/20/angular-with-o365-1/">&#x767B;&#x5165;&#x7BC7;</a> &#x4E5F;&#x505A;&#x4E86;&#x76F8;&#x5C0D;&#x61C9;&#x7684;&#x66F4;&#x65B0;)</p>
-<p>&#x5B58;&#x53D6;&#x6A94;&#x6848;&#x53EF;&#x4EE5;&#x7B97;&#x662F;&#x5F88;&#x5E38;&#x898B;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x6240;&#x4EE5;&#x9019;&#x6B21;&#x8981;&#x4F86;&#x7814;&#x7A76;&#x5982;&#x4F55;&#x8B80;&#x5BEB;&#x5728;  OneDrive &#x4E0A;&#x7684;&#x6A94;&#x6848;</p>
+			  		<p>自從去年寫了兩篇跟 O365 Graph 有關的文章後，就停了好長的一段時間，長到連登入的方法都改變了，(<a href="https://blog.kevinyang.net/2018/10/20/angular-with-o365-1/">登入篇</a> 也做了相對應的更新)</p>
+<p>存取檔案可以算是很常見的需求，所以這次要來研究如何讀寫在  OneDrive 上的檔案</p>
 <a id="more"></a>
-<h1 id="&#x6B0A;&#x9650;"><a class="header-anchor" href="#&#x6B0A;&#x9650;"> </a>&#x6B0A;&#x9650;</h1>
-<p>&#x7576;&#x7136;&#x8981;&#x5B58;&#x53D6;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#xFF0C;&#x5C31;&#x5FC5;&#x9808;&#x7533;&#x8ACB;&#x6B0A;&#x9650;&#xFF0C;&#x64CD;&#x4F5C;&#x6A94;&#x6848;&#x9700;&#x8981;&#x8ACB;&#x6C42; <code>Files.Read</code>  &#x6216; <code>Files.ReadWrite</code> &#x8B80;&#x5BEB;&#x6B0A;&#x9650;&#x3002;</p>
-<h1 id="&#x57FA;&#x672C;&#x6982;&#x5FF5;"><a class="header-anchor" href="#&#x57FA;&#x672C;&#x6982;&#x5FF5;"> </a>&#x57FA;&#x672C;&#x6982;&#x5FF5;</h1>
-<p>Microsoft Graph &#x91DD;&#x5C0D;&#x6A94;&#x6848;&#x64CD;&#x4F5C;&#x6709;&#x5169;&#x7A2E;&#x985E;&#x578B;&#x7684;&#x7269;&#x4EF6;</p>
+<h1 id="權限"><a class="header-anchor" href="#權限"> </a>權限</h1>
+<p>當然要存取檔案系統，就必須申請權限，操作檔案需要請求 <code>Files.Read</code>  或 <code>Files.ReadWrite</code> 讀寫權限。</p>
+<h1 id="基本概念"><a class="header-anchor" href="#基本概念"> </a>基本概念</h1>
+<p>Microsoft Graph 針對檔案操作有兩種類型的物件</p>
 <ol>
-<li><code>Drive</code> : &#x4EE3;&#x8868;&#x8457;&#x4F7F;&#x7528;&#x8005;&#x88DD;&#x6A94;&#x6848;&#x7684;&#x5BB9;&#x5668;&#x6216;&#x6A94;&#x6848;&#x7684;&#x57FA;&#x672C;&#x8CC7;&#x8A0A;</li>
-<li><code>DriveItem</code>: &#x5448;&#x73FE;&#x6A94;&#x6848;&#x6216;&#x662F;&#x8CC7;&#x6599;&#x593E;&#x672C;&#x8EAB;&#x7684;&#x8A73;&#x7D30;&#x8CC7;&#x8A0A;</li>
+<li><code>Drive</code> : 代表著使用者裝檔案的容器或檔案的基本資訊</li>
+<li><code>DriveItem</code>: 呈現檔案或是資料夾本身的詳細資訊</li>
 </ol>
-<p>&#x9019;&#x88E1;&#x6211;&#x53EA;&#x6703;&#x91DD;&#x5C0D; <code>DriveItem</code> &#x53BB;&#x505A;&#x5C55;&#x793A;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x7684;&#x64CD;&#x4F5C;&#x4E5F;&#x662F;&#x91DD;&#x5C0D; <code>DriveItem</code> &#x8CC7;&#x6599;&#x985E;&#x578B;&#x53BB;&#x505A;&#x64CD;&#x4F5C;&#x3002;</p>
-<h1 id="api-&#x64CD;&#x4F5C;"><a class="header-anchor" href="#api-&#x64CD;&#x4F5C;"> </a>API &#x64CD;&#x4F5C;</h1>
-<h2 id="&#x5217;&#x8868;"><a class="header-anchor" href="#&#x5217;&#x8868;"> </a>&#x5217;&#x8868;</h2>
+<p>這裡我只會針對 <code>DriveItem</code> 去做展示，大部分的操作也是針對 <code>DriveItem</code> 資料類型去做操作。</p>
+<h1 id="api-操作"><a class="header-anchor" href="#api-操作"> </a>API 操作</h1>
+<h2 id="列表"><a class="header-anchor" href="#列表"> </a>列表</h2>
 <ul>
 <li>
-<p><code>/drivers/{drive-id}</code> : &#x53D6;&#x5F97;&#x7279;&#x5B9A; drive &#x7684; metadata</p>
+<p><code>/drivers/{drive-id}</code> : 取得特定 drive 的 metadata</p>
 </li>
 <li>
-<p><code>/drive/root</code> : &#x53D6;&#x5F97;&#x76EE;&#x524D;&#x4F7F;&#x7528;&#x8005;&#x9810;&#x8A2D;&#x6839;&#x76EE;&#x9304;</p>
+<p><code>/drive/root</code> : 取得目前使用者預設根目錄</p>
 </li>
 <li>
-<p><code>/drive/root/children</code> &#x5217;&#x51FA;&#x76EE;&#x524D;&#x4F7F;&#x7528;&#x8005;&#x6839;&#x76EE;&#x9304;&#x4E0B;&#x7684;&#x6240;&#x6709;&#x8CC7;&#x6599;&#x593E;&#x548C;&#x6A94;&#x6848;&#x9805;&#x76EE;</p>
+<p><code>/drive/root/children</code> 列出目前使用者根目錄下的所有資料夾和檔案項目</p>
 </li>
 <li>
-<p><code>/drive/root/search</code>: &#x641C;&#x5C0B;&#x6839;&#x76EE;&#x9304;</p>
+<p><code>/drive/root/search</code>: 搜尋根目錄</p>
 </li>
 <li>
-<p><code>/drive/sharedWithMe</code>: &#x5217;&#x51FA;&#x5206;&#x4EAB;&#x7D66;&#x4F7F;&#x7528;&#x8005;&#x7684;&#x6A94;&#x6848;&#x6E05;&#x55AE;</p>
+<p><code>/drive/sharedWithMe</code>: 列出分享給使用者的檔案清單</p>
 </li>
 <li>
-<p><code>/drive/special/{special-folder-id}</code>: &#x9032;&#x5165;&#x7279;&#x5B9A;&#x7684;&#x8CC7;&#x6599;&#x593E;&#xFF0C;&#x7279;&#x6B8A;&#x8CC7;&#x6599;&#x593E;&#x6709;&#x4EE5;&#x4E0B;</p>
+<p><code>/drive/special/{special-folder-id}</code>: 進入特定的資料夾，特殊資料夾有以下</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1924,30 +1924,30 @@ h6.categories {
 </table></div>
 </li>
 </ul>
-<p><strong>&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;</strong></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">getPhotos() {</span><br><span class="line">    <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">&apos;Authorization&apos;</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure0-->#123;this.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get(</span><br><span class="line">      <span class="string">&apos;https://graph.microsoft.com/v1.0/me/drive/special/photos&apos;</span>,{headers}</span><br><span class="line">    );</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>範例程式</strong></p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">getPhotos() {</span><br><span class="line">    <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">'Authorization'</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure0-->#123;<span class="keyword">this</span>.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get(</span><br><span class="line">      <span class="string">'https://graph.microsoft.com/v1.0/me/drive/special/photos'</span>,{headers}</span><br><span class="line">    );</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>
-<p>&#x6B64; API &#x547C;&#x53EB;&#x6703;&#x56DE;&#x50B3;  <code>Drive</code> &#x578B;&#x5225;&#x7684;&#x8CC7;&#x8A0A;</p>
+<p>此 API 呼叫會回傳  <code>Drive</code> 型別的資訊</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/07/26/angular-with-o365-3/1564120526642.png" width="268" height="449" layout="responsive"></amp-img></div>
 </li>
 </ul>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">getPhotos() {</span><br><span class="line">    <span class="keyword">const</span> header = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">&apos;Authorization&apos;</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure1-->#123;this.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get(</span><br><span class="line">      <span class="string">&apos;https://graph.microsoft.com/v1.0/me/drive/special/photos/children&apos;</span>,</span><br><span class="line">      {</span><br><span class="line">        headers: header</span><br><span class="line">      }</span><br><span class="line">    );</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">getPhotos() {</span><br><span class="line">    <span class="keyword">const</span> header = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">'Authorization'</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure1-->#123;<span class="keyword">this</span>.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get(</span><br><span class="line">      <span class="string">'https://graph.microsoft.com/v1.0/me/drive/special/photos/children'</span>,</span><br><span class="line">      {</span><br><span class="line">        headers: header</span><br><span class="line">      }</span><br><span class="line">    );</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>
-<p>&#x53D6;&#x5F97; Photos &#x8CC7;&#x6599;&#x593E;&#x4E0B;&#x6240;&#x6709;&#x7684;&#x6A94;&#x6848;&#x9805;&#x76EE;</p>
+<p>取得 Photos 資料夾下所有的檔案項目</p>
 </li>
 <li>
-<p>&#x56DE;&#x50B3;&#x7684;&#x8CC7;&#x6599;&#x578B;&#x5225;&#x70BA; <code>DriveItem</code></p>
+<p>回傳的資料型別為 <code>DriveItem</code></p>
 <div class="amp-img-wrapper"><amp-img src="/2019/07/26/angular-with-o365-3/1564120647528.png" width="295" height="411" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x5982;&#x679C;&#x662F;&#x6A94;&#x6848;&#xFF0C;&#x5C31;&#x6703;&#x51FA;&#x73FE; <code>@microsoft.graph.downloadUrl</code> &#xFF0C;&#x5982;&#x679C;&#x662F;&#x8CC7;&#x6599;&#x593E;&#x5C31;&#x4E0D;&#x6703;</p>
+<p>如果是檔案，就會出現 <code>@microsoft.graph.downloadUrl</code> ，如果是資料夾就不會</p>
 </li>
 </ul>
-<h2 id="&#x65B0;&#x589E;&#x8CC7;&#x6599;&#x593E;"><a class="header-anchor" href="#&#x65B0;&#x589E;&#x8CC7;&#x6599;&#x593E;"> </a>&#x65B0;&#x589E;&#x8CC7;&#x6599;&#x593E;</h2>
-<p>&#x5EFA;&#x7ACB;&#x8CC7;&#x6599;&#x593E;&#x7576;&#x7136;&#x9700;&#x8981;&#x64C1;&#x6709;&#x5BEB;&#x5165;&#x8CC7;&#x6599;&#x593E;&#x7684;&#x6B0A;&#x9650;&#xFF0C;&#x8A18;&#x5F97;&#x8981;&#x6388;&#x6B0A; <code>Files.ReadWrite</code></p>
-<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7684; API &#x6709;</p>
+<h2 id="新增資料夾"><a class="header-anchor" href="#新增資料夾"> </a>新增資料夾</h2>
+<p>建立資料夾當然需要擁有寫入資料夾的權限，記得要授權 <code>Files.ReadWrite</code></p>
+<p>可以使用的 API 有</p>
 <ul>
 <li><code>POST /drives/{drive-id}/items/{parent-item-id}/children</code></li>
 <li><code>POST /groups/{group-id}/drive/items/{parent-item-id}/children</code></li>
@@ -1955,32 +1955,32 @@ h6.categories {
 <li><code>POST /sites/{site-id}/drive/items/{parent-item-id}/children</code></li>
 <li><code>POST /users/{user-id}/drive/items/{parent-item-id}/children</code></li>
 </ul>
-<p><strong>&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;</strong></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">createFolder() {</span><br><span class="line">   <span class="keyword">const</span> driveItem = {</span><br><span class="line">     name: <span class="string">&apos;New Folder&apos;</span>,</span><br><span class="line">     folder: {},</span><br><span class="line">     <span class="string">&apos;@microsoft.graph.conflictBehavior&apos;</span>: <span class="string">&apos;rename&apos;</span></span><br><span class="line">   };</span><br><span class="line">   <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">     <span class="string">&apos;Authorization&apos;</span>,</span><br><span class="line">     <span class="string">`Bearer <span class="subst"><!--figure2-->#123;this.accessToken}</span>`</span></span><br><span class="line">   );</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">this</span>.http.post&lt;<span class="built_in">any</span>&gt;(</span><br><span class="line">     <span class="string">&apos;https://graph.microsoft.com/v1.0/me/drive/items/689EA0E484C3AFBF!33462/children&apos;</span>,</span><br><span class="line">     driveItem,</span><br><span class="line">     { headers }</span><br><span class="line">   );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>範例程式</strong></p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">createFolder() {</span><br><span class="line">   <span class="keyword">const</span> driveItem = {</span><br><span class="line">     name: <span class="string">'New Folder'</span>,</span><br><span class="line">     folder: {},</span><br><span class="line">     <span class="string">'@microsoft.graph.conflictBehavior'</span>: <span class="string">'rename'</span></span><br><span class="line">   };</span><br><span class="line">   <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">     <span class="string">'Authorization'</span>,</span><br><span class="line">     <span class="string">`Bearer <span class="subst"><!--figure2-->#123;<span class="keyword">this</span>.accessToken}</span>`</span></span><br><span class="line">   );</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">this</span>.http.post&lt;<span class="built_in">any</span>&gt;(</span><br><span class="line">     <span class="string">'https://graph.microsoft.com/v1.0/me/drive/items/689EA0E484C3AFBF!33462/children'</span>,</span><br><span class="line">     driveItem,</span><br><span class="line">     { headers }</span><br><span class="line">   );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>line 5: &#x6C7A;&#x5B9A;&#x7576;&#x9047;&#x5230;&#x540D;&#x7A31;&#x91CD;&#x8907;&#x6642;&#x7684;&#x52D5;&#x4F5C;
+<li>line 5: 決定當遇到名稱重複時的動作
 <ul>
 <li><code>fail</code></li>
 <li><code>replace</code></li>
-<li><code>rename</code> : &#x5728;&#x540D;&#x7A31;&#x5F8C;&#x7D66;&#x4E88;&#x6D41;&#x6C34;&#x865F;&#xFF0C;&#x4F8B;&#x5982; <code>fname</code> &#x3001;<code>fname 1</code> &#x3001;<code>fname 2</code></li>
+<li><code>rename</code> : 在名稱後給予流水號，例如 <code>fname</code> 、<code>fname 1</code> 、<code>fname 2</code></li>
 </ul>
 </li>
-<li>&#x56DE;&#x50B3;&#x7684; response &#x5167;&#x5C31;&#x6703;&#x5305;&#x542B;&#x9019;&#x4E00;&#x6B21;&#x5EFA;&#x7ACB;&#x8CC7;&#x6599;&#x593E;&#x7684;&#x76F8;&#x95DC;&#x8CC7;&#x8A0A;</li>
+<li>回傳的 response 內就會包含這一次建立資料夾的相關資訊</li>
 </ul>
-<h2 id="&#x4FEE;&#x6539;&#x540D;&#x7A31;-&#x79FB;&#x52D5;&#x6A94;&#x6848;"><a class="header-anchor" href="#&#x4FEE;&#x6539;&#x540D;&#x7A31;-&#x79FB;&#x52D5;&#x6A94;&#x6848;"> </a>&#x4FEE;&#x6539;&#x540D;&#x7A31; / &#x79FB;&#x52D5;&#x6A94;&#x6848;</h2>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">renameItem() {</span><br><span class="line">    <span class="keyword">const</span> driveItem = {</span><br><span class="line">      name: <span class="string">&apos;Folder After Rename&apos;</span></span><br><span class="line">    };</span><br><span class="line">    <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">&apos;Authorization&apos;</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure3-->#123;this.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.patch&lt;<span class="built_in">any</span>&gt;(</span><br><span class="line">      <span class="string">&apos;https://graph.microsoft.com/v1.0/me/drive/items/{item-id}&apos;</span>,</span><br><span class="line">      driveItem,</span><br><span class="line">      { headers }</span><br><span class="line">    );</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="修改名稱-移動檔案"><a class="header-anchor" href="#修改名稱-移動檔案"> </a>修改名稱 / 移動檔案</h2>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">renameItem() {</span><br><span class="line">    <span class="keyword">const</span> driveItem = {</span><br><span class="line">      name: <span class="string">'Folder After Rename'</span></span><br><span class="line">    };</span><br><span class="line">    <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">'Authorization'</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure3-->#123;<span class="keyword">this</span>.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.patch&lt;<span class="built_in">any</span>&gt;(</span><br><span class="line">      <span class="string">'https://graph.microsoft.com/v1.0/me/drive/items/{item-id}'</span>,</span><br><span class="line">      driveItem,</span><br><span class="line">      { headers }</span><br><span class="line">    );</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>
-<p>&#x8981;&#x4F7F;&#x7528; <code>patch</code> &#x7684;&#x65B9;&#x6CD5;</p>
+<p>要使用 <code>patch</code> 的方法</p>
 </li>
 <li>
-<p>&#x5982;&#x679C;&#x79FB;&#x52D5;&#x8CC7;&#x6599;&#x593E;&#x6216;&#x662F;&#x6A94;&#x6848;&#xFF0C;&#x8981;&#x4FEE;&#x6539;&#x7684;&#x5C0D;&#x8C61;&#x70BA; <code>parentReference</code> &#x88E1;&#x7684; id</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> driveItem = {</span><br><span class="line">      parentReference: {</span><br><span class="line">        id: <span class="string">&apos;{new-parent-folder-id}&apos;</span></span><br><span class="line">      },</span><br><span class="line">      name: <span class="string">&apos;new-item-name.txt&apos;</span></span><br><span class="line">    };</span><br></pre></td></tr></tbody></table></figure>
+<p>如果移動資料夾或是檔案，要修改的對象為 <code>parentReference</code> 裡的 id</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> driveItem = {</span><br><span class="line">      parentReference: {</span><br><span class="line">        id: <span class="string">'{new-parent-folder-id}'</span></span><br><span class="line">      },</span><br><span class="line">      name: <span class="string">'new-item-name.txt'</span></span><br><span class="line">    };</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
-<h2 id="&#x522A;&#x9664;&#x6A94;&#x6848;"><a class="header-anchor" href="#&#x522A;&#x9664;&#x6A94;&#x6848;"> </a>&#x522A;&#x9664;&#x6A94;&#x6848;</h2>
-<p>&#x522A;&#x9664;&#x6A94;&#x6848;&#x5C31;&#x6BD4;&#x8F03;&#x76F4;&#x89BA;&#x4E86;</p>
-<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7684; API &#x6709;</p>
+<h2 id="刪除檔案"><a class="header-anchor" href="#刪除檔案"> </a>刪除檔案</h2>
+<p>刪除檔案就比較直覺了</p>
+<p>可以使用的 API 有</p>
 <ul>
 <li><code>DELETE /drives/{drive-id}/items/{item-id}</code></li>
 <li><code>DELETE /groups/{group-id}/drive/items/{item-id}</code></li>
@@ -1988,10 +1988,10 @@ h6.categories {
 <li><code>DELETE /sites/{siteId}/drive/items/{itemId}</code></li>
 <li><code>DELETE /users/{userId}/drive/items/{itemId}</code></li>
 </ul>
-<p><strong>&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;</strong></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> deleteItem() {</span><br><span class="line">    <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">&apos;Authorization&apos;</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure5-->#123;this.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.delete&lt;<span class="built_in">any</span>&gt;(</span><br><span class="line">      <span class="string">&apos;https://graph.microsoft.com/v1.0/me/drive/items/{item-id}&apos;</span>,</span><br><span class="line">      { headers }</span><br><span class="line">    );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="&#x4E0B;&#x8F09;&#x6A94;&#x6848;"><a class="header-anchor" href="#&#x4E0B;&#x8F09;&#x6A94;&#x6848;"> </a>&#x4E0B;&#x8F09;&#x6A94;&#x6848;</h2>
-<p>&#x900F;&#x904E; API &#x65B9;&#x5F0F;&#x53D6;&#x5F97;&#x6A94;&#x6848;&#x7684;&#x5167;&#x5BB9;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7684; API &#x6709;</p>
+<p><strong>範例程式</strong></p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> deleteItem() {</span><br><span class="line">    <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">'Authorization'</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure5-->#123;<span class="keyword">this</span>.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.delete&lt;<span class="built_in">any</span>&gt;(</span><br><span class="line">      <span class="string">'https://graph.microsoft.com/v1.0/me/drive/items/{item-id}'</span>,</span><br><span class="line">      { headers }</span><br><span class="line">    );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="下載檔案"><a class="header-anchor" href="#下載檔案"> </a>下載檔案</h2>
+<p>透過 API 方式取得檔案的內容，可以使用的 API 有</p>
 <ul>
 <li><code>GET /drives/{drive-id}/items/{item-id}/content</code></li>
 <li><code>GET /groups/{group-id}/drive/items/{item-id}/content</code></li>
@@ -2000,15 +2000,15 @@ h6.categories {
 <li><code>GET /sites/{siteId}/drive/items/{item-id}/content</code></li>
 <li><code>GET /users/{userId}/drive/items/{item-id}/content</code></li>
 </ul>
-<p><strong>&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;</strong></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { saveAs } <span class="keyword">from</span> <span class="string">&apos;file-saver&apos;</span>;</span><br><span class="line">downloadFile() {</span><br><span class="line">    <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">&apos;Authorization&apos;</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure6-->#123;this.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http</span><br><span class="line">      .get(</span><br><span class="line">        <span class="string">&apos;https://graph.microsoft.com/v1.0/me/drive/items/{item-id}/content&apos;</span>,</span><br><span class="line">        { headers, responseType: <span class="string">&apos;blob&apos;</span> }</span><br><span class="line">      )</span><br><span class="line">      .subscribe(<span class="function"><span class="params">res</span> =&gt;</span> {</span><br><span class="line">        <span class="keyword">const</span> blob = <span class="keyword">new</span> Blob([res], { <span class="keyword">type</span>: res.type });</span><br><span class="line">        <span class="keyword">const</span> filename = <span class="string">&apos;example.txt&apos;</span>;</span><br><span class="line">        saveAs(blob, filename);</span><br><span class="line">      });</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>範例程式</strong></p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { saveAs } <span class="keyword">from</span> <span class="string">'file-saver'</span>;</span><br><span class="line">downloadFile() {</span><br><span class="line">    <span class="keyword">const</span> headers = <span class="keyword">new</span> HttpHeaders().append(</span><br><span class="line">      <span class="string">'Authorization'</span>,</span><br><span class="line">      <span class="string">`Bearer <span class="subst"><!--figure6-->#123;<span class="keyword">this</span>.accessToken}</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http</span><br><span class="line">      .get(</span><br><span class="line">        <span class="string">'https://graph.microsoft.com/v1.0/me/drive/items/{item-id}/content'</span>,</span><br><span class="line">        { headers, responseType: <span class="string">'blob'</span> }</span><br><span class="line">      )</span><br><span class="line">      .subscribe(<span class="function"><span class="params">res</span> =&gt;</span> {</span><br><span class="line">        <span class="keyword">const</span> blob = <span class="keyword">new</span> Blob([res], { <span class="keyword">type</span>: res.type });</span><br><span class="line">        <span class="keyword">const</span> filename = <span class="string">'example.txt'</span>;</span><br><span class="line">        saveAs(blob, filename);</span><br><span class="line">      });</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>&#x5077;&#x61F6;&#x4E00;&#x4E0B;&#xFF0C;&#x5B89;&#x88DD; <code>file-saver</code> &#x5957;&#x4EF6;</li>
-<li>&#x8A2D;&#x5B9A;  <code>responseType</code> &#x81F3; <code>blob</code></li>
+<li>偷懶一下，安裝 <code>file-saver</code> 套件</li>
+<li>設定  <code>responseType</code> 至 <code>blob</code></li>
 </ul>
-<h1 id="&#x7D50;&#x8A9E;"><a class="header-anchor" href="#&#x7D50;&#x8A9E;"> </a>&#x7D50;&#x8A9E;</h1>
-<p>&#x66F4;&#x591A;&#x7684;&#x76F8;&#x95DC;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x53C3;&#x95B1;&#x5B98;&#x65B9;&#x6587;&#x4EF6;&#xFF0C;&#x6587;&#x4EF6;&#x7684;&#x90E8;&#x5206;&#x5BEB;&#x5F97;&#x7B97;&#x662F;&#x5F88;&#x8A73;&#x7D30;&#x3002;&#x6587;&#x4EF6;&#x7684;&#x9023;&#x7D50;&#x6211;&#x5C31;&#x653E;&#x5728;&#x4E0B;&#x9762;&#x7684;&#x53C3;&#x8003;&#x8CC7;&#x6599;&#x5167;</p>
-<h1 id="&#x53C3;&#x8003;&#x8CC7;&#x6599;"><a class="header-anchor" href="#&#x53C3;&#x8003;&#x8CC7;&#x6599;"> </a>&#x53C3;&#x8003;&#x8CC7;&#x6599;</h1>
+<h1 id="結語"><a class="header-anchor" href="#結語"> </a>結語</h1>
+<p>更多的相關操作可以參閱官方文件，文件的部分寫得算是很詳細。文件的連結我就放在下面的參考資料內</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li>Microsoft Graph Rest API V1.0
 <ul>

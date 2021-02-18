@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/07/31/aspnet-mvc-odata-pageresult-v4/"
 			},
 			"datePublished": "2014-07-31T02:28:00.000Z",
-			"dateModified": "2021-02-18T02:25:04.851Z",
+			"dateModified": "2021-02-18T02:32:11.567Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,11 +1842,11 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ODataHttpRequestMessageExtensions.GetNextPageLink &#x548C; </span><br><span class="line">ODataHttpRequestMessageExtensions.GetInlineCount &#x90FD;&#x904E;&#x6642;&#x4E86;..</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x8981;&#x6539;&#x7528;</p>
+			  		<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ODataHttpRequestMessageExtensions.GetNextPageLink 和 </span><br><span class="line">ODataHttpRequestMessageExtensions.GetInlineCount 都過時了..</span><br></pre></td></tr></tbody></table></figure>
+<p>要改用</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Request.ODataProperties().NextLink,</span><br><span class="line">Request.ODataProperties().TotalCount</span><br></pre></td></tr></tbody></table></figure>
-<p>ODataProperties &#x9700;&#x8981;&#x4F7F;&#x7528;
-<strong>System.Web.Http.OData.Extensions</strong> &#x6216; <strong>System.Web.OData.Extensions</strong> &#x547D;&#x540D;&#x7A7A;&#x9593;</p>
+<p>ODataProperties 需要使用
+<strong>System.Web.Http.OData.Extensions</strong> 或 <strong>System.Web.OData.Extensions</strong> 命名空間</p>
 
 			  		
 			  		<!-- google Adsense -->

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/02/obs-tips-2/"
 			},
 			"datePublished": "2020-04-02T13:03:49.000Z",
-			"dateModified": "2021-02-18T02:25:04.951Z",
+			"dateModified": "2021-02-18T02:32:11.679Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,62 +1848,62 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4F7F;&#x7528; OBS &#x5167;&#x5EFA;&#x7684;&#x529F;&#x80FD;&#x5C31;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x8DD1;&#x99AC;&#x71C8;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x800C;&#x4EE5;&#x4E0B;&#x662F;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</p>
+			  		<p>使用 OBS 內建的功能就可以完成跑馬燈的效果，而以下是使用方法</p>
 <a id="more"></a>
-<p>&#x4F46;&#x9019;&#x4E4B;&#x524D;&#xFF0C;&#x8981;&#x5148;&#x4E86;&#x89E3;&#x5982;&#x4F55;&#x65B0;&#x589E;&#x986F;&#x793A;&#x6587;&#x5B57;&#x5230; OBS &#x4E0A;</p>
-<h1 id="&#x65B0;&#x589E;&#x6587;&#x5B57;"><a class="header-anchor" href="#&#x65B0;&#x589E;&#x6587;&#x5B57;"> </a>&#x65B0;&#x589E;&#x6587;&#x5B57;</h1>
-<p>&#x5728; Source &#x7684;&#x5730;&#x65B9;&#x9078;&#x64C7;&#x65B0;&#x589E; <code>Text(GDI+)</code></p>
+<p>但這之前，要先了解如何新增顯示文字到 OBS 上</p>
+<h1 id="新增文字"><a class="header-anchor" href="#新增文字"> </a>新增文字</h1>
+<p>在 Source 的地方選擇新增 <code>Text(GDI+)</code></p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-2/image-20200402211033654.png" width="243" height="569" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-2/image-20200402211121586.png" width="691" height="802" layout="responsive"></amp-img></div>
 <ul>
 <li>
-<p>Font: &#x8A2D;&#x5B9A;&#x6587;&#x5B57;&#x5B57;&#x578B;&#x3001;&#x6A23;&#x5F0F;&#x3001;&#x5927;&#x5C0F;&#x7B49;</p>
+<p>Font: 設定文字字型、樣式、大小等</p>
 </li>
 <li>
-<p>Text: &#x8981;&#x986F;&#x793A;&#x7684;&#x6587;&#x5B57;</p>
+<p>Text: 要顯示的文字</p>
 </li>
 <li>
-<p>Text Transform: &#x8A2D;&#x5B9A;&#x82F1;&#x6587;&#x5B57;&#x5927;&#x5C0F;&#x5BEB;&#x986F;&#x793A;&#x898F;&#x5247;</p>
+<p>Text Transform: 設定英文字大小寫顯示規則</p>
 <ul>
-<li>None: &#x4E0D;&#x8ABF;&#x6574;</li>
-<li>Upper Case: &#x5168;&#x90E8;&#x5927;&#x5C0F;</li>
-<li>Lower Case: &#x5168;&#x90E8;&#x5C0F;&#x5BEB;</li>
-<li>Start Case: &#x55AE;&#x5B57;&#x958B;&#x982D;&#x6587;&#x5B57;&#x5927;&#x5C0F;</li>
+<li>None: 不調整</li>
+<li>Upper Case: 全部大小</li>
+<li>Lower Case: 全部小寫</li>
+<li>Start Case: 單字開頭文字大小</li>
 </ul>
 </li>
 <li>
-<p>Vertical: &#x5782;&#x76F4;&#x986F;&#x793A;</p>
+<p>Vertical: 垂直顯示</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-2/image-20200402211506493.png" width="1064" height="687" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>Color: &#x8A2D;&#x5B9A;&#x6587;&#x5B57;&#x986F;&#x793A;&#x984F;&#x8272;</p>
+<p>Color: 設定文字顯示顏色</p>
 </li>
 <li>
-<p>Opacity: &#x98FD;&#x548C;&#x5EA6;</p>
+<p>Opacity: 飽和度</p>
 </li>
 <li>
-<p>Gradient: &#x662F;&#x5426;&#x958B;&#x555F;&#x984F;&#x8272;&#x6F38;&#x5C64;&#x6548;&#x679C;&#xFF0C;&#x958B;&#x555F;&#x5F8C;&#x53EF;&#x4EE5;&#x9078;&#x64C7;&#x7B2C;&#x4E8C;&#x500B;&#x984F;&#x8272;&#x9054;&#x5230;&#x6F38;&#x5C64;&#x6548;&#x679C;</p>
+<p>Gradient: 是否開啟顏色漸層效果，開啟後可以選擇第二個顏色達到漸層效果</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-2/image-20200402211701490.png" width="691" height="851" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>Background Color: &#x80CC;&#x666F;&#x984F;&#x8272;&#x8A2D;&#x5B9A;</p>
+<p>Background Color: 背景顏色設定</p>
 </li>
 <li>
-<p>Background Opacity: &#x80CC;&#x666F;&#x984F;&#x8272;&#x98FD;&#x548C;&#x5EA6;</p>
+<p>Background Opacity: 背景顏色飽和度</p>
 </li>
 <li>
-<p>Alignment / Vertical Alignment: &#x5C0D;&#x9F4A;&#x65B9;&#x5F0F;</p>
+<p>Alignment / Vertical Alignment: 對齊方式</p>
 </li>
 <li>
-<p>Use Custom Text Extents: &#x81EA;&#x8A02;&#x6587;&#x5B57;&#x986F;&#x793A;&#x7BC4;&#x570D;</p>
+<p>Use Custom Text Extents: 自訂文字顯示範圍</p>
 </li>
 </ul>
-<p>&#x7576;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x5C07;&#x6A94;&#x6848;&#x7684;&#x6587;&#x5B57;&#x8B80;&#x9032;&#x4F86;&#x986F;&#x793A;&#xFF0C;&#x5C07; <code>Read from file</code> &#x52FE;&#x9078;&#x8D77;&#x4F86;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF0C;&#x9078;&#x53D6;&#x6A94;&#x6848;&#x5F8C;&#xFF0C;&#x7576;&#x6A94;&#x6848;&#x5167;&#x5BB9;&#x6539;&#x8B8A;&#x6642;&#xFF0C;&#x8981;&#x986F;&#x793A;&#x7684;&#x6587;&#x5B57;&#x4E5F;&#x6703;&#x8DDF;&#x8457;&#x6539;&#x8B8A;&#xFF0C;&#x96D6;&#x7136;&#x6709;&#x4E9B;&#x5EF6;&#x9072;&#xFF0C;&#x4F46;&#x9084;&#x5728;&#x53EF;&#x4EE5;&#x63A5;&#x53D7;&#x7684;&#x7BC4;&#x570D;&#x5167;</p>
-<h1 id="&#x8DD1;&#x99AC;&#x71C8;&#x6548;&#x679C;"><a class="header-anchor" href="#&#x8DD1;&#x99AC;&#x71C8;&#x6548;&#x679C;"> </a>&#x8DD1;&#x99AC;&#x71C8;&#x6548;&#x679C;</h1>
-<p>&#x8981;&#x8B93;&#x6587;&#x5B57;&#x8DD1;&#x8D77;&#x4F86;&#xFF0C;&#x5C31;&#x8981;&#x518D;&#x591A;&#x52A0;&#x4E00;&#x500B; filter &#x5230;&#x6587;&#x5B57; source &#x4E0A;&#xFF0C;&#x900F;&#x904E; scroll  filter &#x5C31;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x8DD1;&#x99AC;&#x71C8;&#x7684;&#x6548;&#x679C;</p>
+<p>當然也可以將檔案的文字讀進來顯示，將 <code>Read from file</code> 勾選起來就可以了，選取檔案後，當檔案內容改變時，要顯示的文字也會跟著改變，雖然有些延遲，但還在可以接受的範圍內</p>
+<h1 id="跑馬燈效果"><a class="header-anchor" href="#跑馬燈效果"> </a>跑馬燈效果</h1>
+<p>要讓文字跑起來，就要再多加一個 filter 到文字 source 上，透過 scroll  filter 就可以做到跑馬燈的效果</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-2/image-20200402214146343.png" width="250" height="331" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-2/image-20200402214423645.png" width="863" height="758" layout="responsive"></amp-img></div>
-<p>&#x65B0;&#x589E;&#x5B8C; scroll filter &#x5F8C;&#xFF0C;&#x900F;&#x904E;&#x8A2D;&#x5B9A; Horizontal Speed &#x548C; Vertical Speed &#x4F86;&#x6C7A;&#x5B9A;&#x6587;&#x5B57;&#x79FB;&#x52D5;&#x7684;&#x65B9;&#x5411;&#x53CA;&#x901F;&#x5EA6;&#xFF0C;&#x5C31;&#x662F;&#x9019;&#x9EBC;&#x7C21;&#x55AE;</p>
+<p>新增完 scroll filter 後，透過設定 Horizontal Speed 和 Vertical Speed 來決定文字移動的方向及速度，就是這麼簡單</p>
 
 			  		
 			  		<!-- google Adsense -->

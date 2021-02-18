@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/10/24/angular-secondary-routes/"
 			},
 			"datePublished": "2018-10-24T01:49:08.000Z",
-			"dateModified": "2021-02-18T02:25:04.859Z",
+			"dateModified": "2021-02-18T02:32:11.575Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,34 +1848,34 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4E00;&#x822C;&#x7684;&#x60C5;&#x6CC1;&#x4E0B;&#xFF0C;<code>&lt;router-outlet&gt;</code> &#x4E00;&#x7D44;&#x5C31;&#x5DF2;&#x8DB3;&#x5920;&#xFF0C;&#x4F46;&#x7576;&#x756B;&#x9762;&#x7684;&#x8907;&#x96DC;&#x5EA6;&#x63D0;&#x9AD8;&#xFF0C;&#x4F7F;&#x7528;&#x4E00;&#x500B; <code>&lt;router-outlet&gt;</code> &#x53EF;&#x80FD;&#x6703;&#x8B93;&#x7A0B;&#x5F0F;&#x78BC;&#x7684;&#x53EF;&#x7DAD;&#x8B77;&#x6027;&#x964D;&#x4F4E;&#xFF0C;&#x5982;&#x679C;&#x80FD;&#x5728;&#x591A;&#x5E7E;&#x7D44; <code>&lt;router-outlet&gt;</code> &#x8A72;&#x6709;&#x591A;&#x597D;&#x3002;&#x800C; Angular &#x7684; <code>&lt;router-outlet&gt;</code> &#x78BA;&#x5BE6;&#x652F;&#x63F4;&#x6B64;&#x529F;&#x80FD;&#x3002;</p>
+			  		<p>一般的情況下，<code>&lt;router-outlet&gt;</code> 一組就已足夠，但當畫面的複雜度提高，使用一個 <code>&lt;router-outlet&gt;</code> 可能會讓程式碼的可維護性降低，如果能在多幾組 <code>&lt;router-outlet&gt;</code> 該有多好。而 Angular 的 <code>&lt;router-outlet&gt;</code> 確實支援此功能。</p>
 <a id="more"></a>
-<h1 id="&#x57FA;&#x672C;"><a class="header-anchor" href="#&#x57FA;&#x672C;"> </a>&#x57FA;&#x672C;</h1>
-<p>&#x5C07; <code>&lt;router-outlet&gt;</code> &#x8CE6;&#x4E88; <code>name</code> &#x7684;&#x503C;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5275;&#x9020;&#x51FA;&#x7B2C;&#x4E8C;&#x7D44;&#x6216;&#x662F;&#x591A;&#x7D44;&#x7684; routes&#x3002;&#x4F46;&#x6709;&#x5E7E;&#x4E0B;&#x5E7E;&#x9EDE;&#x8981;&#x6CE8;&#x610F;</p>
+<h1 id="基本"><a class="header-anchor" href="#基本"> </a>基本</h1>
+<p>將 <code>&lt;router-outlet&gt;</code> 賦予 <code>name</code> 的值，就可以創造出第二組或是多組的 routes。但有幾下幾點要注意</p>
 <ol>
-<li>&#x6BCF;&#x4E00;&#x7D44; routes &#x662F;&#x7368;&#x7ACB;&#x7684;&#x3002;</li>
-<li>&#x53EF;&#x4EE5;&#x7D50;&#x5408;&#x5176;&#x4ED6;&#x8DEF;&#x7531;&#x4F7F;&#x7528;</li>
-<li>&#x6703;&#x986F;&#x793A;&#x5728;&#x6307;&#x5B9A;&#x7684; names outlet &#x88E1;</li>
+<li>每一組 routes 是獨立的。</li>
+<li>可以結合其他路由使用</li>
+<li>會顯示在指定的 names outlet 裡</li>
 </ol>
-<h2 id="&#x8A2D;&#x5B9A;-routes"><a class="header-anchor" href="#&#x8A2D;&#x5B9A;-routes"> </a>&#x8A2D;&#x5B9A; Routes</h2>
-<p>&#x4F46;&#x8981;&#x600E;&#x9EBC;&#x8A2D;&#x5B9A;&#x4F7F;&#x7528;&#x5462;? &#x9996;&#x5148;&#x91DD;&#x5C0D;&#x8DEF;&#x7531;&#x8A2D;&#x5B9A;&#x7684;&#x90E8;&#x5206;</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  path: <span class="string">&apos;compose&apos;</span>,</span><br><span class="line">  component: ComposeMessageComponent,</span><br><span class="line">  outlet: <span class="string">&apos;popup&apos;</span></span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="設定-routes"><a class="header-anchor" href="#設定-routes"> </a>設定 Routes</h2>
+<p>但要怎麼設定使用呢? 首先針對路由設定的部分</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  path: <span class="string">'compose'</span>,</span><br><span class="line">  component: ComposeMessageComponent,</span><br><span class="line">  outlet: <span class="string">'popup'</span></span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li><code>outlet</code>:  &#x8A2D;&#x5B9A;&#x6240;&#x6B78;&#x5C6C;&#x7684; names outlet&#xFF0C;&#x53EF;&#x4EE5;&#x591A;&#x7D44;</li>
+<li><code>outlet</code>:  設定所歸屬的 names outlet，可以多組</li>
 </ul>
-<h2 id="&#x9023;&#x7D50;&#x5BEB;&#x6CD5;"><a class="header-anchor" href="#&#x9023;&#x7D50;&#x5BEB;&#x6CD5;"> </a>&#x9023;&#x7D50;&#x5BEB;&#x6CD5;</h2>
-<p>&#x7DB2;&#x9801;&#x4E0A;&#x9023;&#x7D50;&#x7684;&#x5BEB;&#x6CD5;</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">&quot;[{ outlets: { popup: [&apos;compose&apos;] } }]&quot;</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<p>&#x7DB2;&#x5740;&#x5217;&#x7684;&#x6A23;&#x5B50;&#x6703;&#x662F;&#x9019;&#x6A23;&#x5B50;&#x5448;&#x73FE;&#x7684;</p>
+<h2 id="連結寫法"><a class="header-anchor" href="#連結寫法"> </a>連結寫法</h2>
+<p>網頁上連結的寫法</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"[{ outlets: { popup: ['compose'] } }]"</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>網址列的樣子會是這樣子呈現的</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.../details(popup: compose)</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x5728;&#x66F4;&#x8907;&#x96DC;&#x4E00;&#x9EDE;&#xFF0C;&#x5047;&#x8A2D;&#x6709;&#x591A;&#x500B; names routes &#x6642;&#xFF0C;&#x53C8;&#x9700;&#x8981;&#x600E;&#x9EBC;&#x5BEB;&#xFF0C;&#x5373;&#x7DB2;&#x5740;&#x6703;&#x600E;&#x9EBC;&#x5448;&#x73FE;&#x5462;?</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">&quot;[{ outlets: { popup: [&apos;compose&apos;], detail: [&apos;detail&apos;] } }]&quot;</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>在更複雜一點，假設有多個 names routes 時，又需要怎麼寫，即網址會怎麼呈現呢?</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"[{ outlets: { popup: ['compose'], detail: ['detail'] } }]"</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.../details(popup:compose//detail:detail)</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="&#x6E05;&#x7A7A;-secondary-routes"><a class="header-anchor" href="#&#x6E05;&#x7A7A;-secondary-routes"> </a>&#x6E05;&#x7A7A; secondary routes</h2>
-<p>&#x8981;&#x5982;&#x4F55;&#x6E05;&#x9664;&#x5462;? &#x55AE;&#x7D14;&#x7684;&#x5C07; outlets &#x88E1;&#x7684; names &#x6307;&#x5B9A;&#x7684;&#x8DEF;&#x5F91;&#x6E05;&#x7A7A;&#x5373;&#x53EF;</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">&quot;[{ outlets: { popup: null } }]&quot;</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="清空-secondary-routes"><a class="header-anchor" href="#清空-secondary-routes"> </a>清空 secondary routes</h2>
+<p>要如何清除呢? 單純的將 outlets 裡的 names 指定的路徑清空即可</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"[{ outlets: { popup: null } }]"</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">closePopup() {</span><br><span class="line">  <span class="comment">// Providing a `null` value to the named outlet</span></span><br><span class="line">  <span class="comment">// clears the contents of the named outlet</span></span><br><span class="line">  <span class="keyword">this</span>.router.navigate([{ outlets: { popup: <span class="literal">null</span> }}]);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x66F4;&#x591A;&#x7684;&#x7D30;&#x7BC0;&#xFF0C;&#x53EF;&#x4EE5;&#x53C3;&#x8003;&#x6211;&#x6E96;&#x5099;&#x7A0D;&#x5FAE;&#x8907;&#x96DC;&#x7684;&#x7BC4;&#x4F8B;&#x7A0B;&#x5F0F;&#x78BC;&#xFF0C;<a href="https://stackblitz.com/edit/multi-router-outlet" target="_blank" rel="noopener">&#x9023;&#x7D50;&#x5728;&#x6B64;</a></p>
+<p>更多的細節，可以參考我準備稍微複雜的範例程式碼，<a href="https://stackblitz.com/edit/multi-router-outlet" target="_blank" rel="noopener">連結在此</a></p>
 
 			  		
 			  		<!-- google Adsense -->

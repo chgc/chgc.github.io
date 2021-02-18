@@ -72,7 +72,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/04/02/angular-ionic-capacitor/"
 			},
 			"datePublished": "2018-04-02T15:26:02.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1862,94 +1862,94 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4EC0;&#x9EBC;&#x662F; Capacitor ? Capacitor &#x662F; Ionic &#x5718;&#x968A;&#x6240;&#x958B;&#x767C;&#x51FA;&#x4F86;&#x7684;&#x65B0;&#x958B;&#x767C;&#x6846;&#x67B6;&#xFF0C;&#x518D;&#x6B21;&#x8B49;&#x660E;&#x4ED6;&#x5011;&#x7684;&#x91CE;&#x5FC3;</p>
+			  		<p>什麼是 Capacitor ? Capacitor 是 Ionic 團隊所開發出來的新開發框架，再次證明他們的野心</p>
 <blockquote>
-<p>Capacitor is a cross-platform app runtime that makes it easy to build web apps that run natively on iOS, Android, Electron, <em>and</em> the web. We call these apps &#x300C;Native Progressive Web Apps&#x300D; and they represent the next evolution beyond Hybrid apps.</p>
+<p>Capacitor is a cross-platform app runtime that makes it easy to build web apps that run natively on iOS, Android, Electron, <em>and</em> the web. We call these apps 「Native Progressive Web Apps」 and they represent the next evolution beyond Hybrid apps.</p>
 </blockquote>
-<p>&#x4F46;&#x662F;&#x5426;&#x5982;&#x4ED6;&#x5011;&#x6240;&#x8AAA;&#x7684;&#x90A3;&#x9EBC;&#x5F37;&#x5927;&#x5462;? &#x4E00;&#x5B9A;&#x8981;&#x52D5;&#x624B;&#x73A9;&#x770B;&#x770B;&#x624D;&#x77E5;&#x9053;</p>
+<p>但是否如他們所說的那麼強大呢? 一定要動手玩看看才知道</p>
 <a id="more"></a>
-<h1 id="&#x6E2C;&#x8A66;&#x6B65;&#x9A5F;"><a class="header-anchor" href="#&#x6E2C;&#x8A66;&#x6B65;&#x9A5F;"> </a>&#x6E2C;&#x8A66;&#x6B65;&#x9A5F;</h1>
+<h1 id="測試步驟"><a class="header-anchor" href="#測試步驟"> </a>測試步驟</h1>
 <ol>
 <li>
-<p>&#x900F;&#x904E; Angular CLI &#x5EFA;&#x7ACB;&#x4E00;&#x500B;&#x6A19;&#x6E96;&#x7684; Angular &#x5C08;&#x6848;</p>
+<p>透過 Angular CLI 建立一個標準的 Angular 專案</p>
 <p><code>ng new appCapacitor</code></p>
 </li>
 <li>
-<p>&#x5728; Angular &#x5C08;&#x6848;&#x8CC7;&#x6599;&#x593E;&#x4E0B;&#xFF0C;&#x5B89;&#x88DD; <code>@capacitor/core</code> &#x548C; <code>@capacitor/cli</code></p>
+<p>在 Angular 專案資料夾下，安裝 <code>@capacitor/core</code> 和 <code>@capacitor/cli</code></p>
 <p><code>npm install --save @capacitor/core @capacitor/cli</code></p>
 </li>
 <li>
-<p>&#x57F7;&#x884C; <code>Capacitor</code> &#x521D;&#x59CB;&#x5316;&#xFF0C;&#x9019;&#x52D5;&#x4F5C;&#x6703;&#x5EFA;&#x7ACB;&#x4E00;&#x500B; json &#x7684;&#x8A2D;&#x5B9A;&#x6A94;</p>
+<p>執行 <code>Capacitor</code> 初始化，這動作會建立一個 json 的設定檔</p>
 <p><code>npx cap init</code></p>
 <ol>
-<li>&#x5982;&#x679C;&#x4E0D;&#x77E5;&#x9053; <code>npx</code> &#x662F;&#x4EC0;&#x9EBC;&#x7684;&#xFF0C;&#x8ACB;&#x53C3;&#x95B1;&#x9019;&#x7BC7;<a href="https://robin-front.github.io/2017/07/14/introducing-npx-an-npm-package-runner/" target="_blank" rel="noopener">&#x6587;&#x7AE0;</a></li>
-<li>&#x8F38;&#x5165;&#x4E00;&#x4E9B;&#x57FA;&#x672C;&#x8CC7;&#x6599;&#x5F8C;&#xFF0C;&#x5373;&#x5B8C;&#x6210;&#x8A2D;&#x5B9A;&#x52D5;&#x4F5C;&#xFF0C;&#x5B8C;&#x6210;&#x5F8C;&#x7684;&#x756B;&#x9762;&#x5982;&#x4E0B;</li>
+<li>如果不知道 <code>npx</code> 是什麼的，請參閱這篇<a href="https://robin-front.github.io/2017/07/14/introducing-npx-an-npm-package-runner/" target="_blank" rel="noopener">文章</a></li>
+<li>輸入一些基本資料後，即完成設定動作，完成後的畫面如下</li>
 </ol>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/2apRkeu.png" width="664" height="339" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p>&#x914D;&#x5408; Angular CLI &#x7684;&#x5EFA;&#x7F6E;&#x8F38;&#x51FA;&#x8DEF;&#x5F91;&#x4FEE;&#x6539; <code>capacitor.config.json</code> &#x6A94;&#x6848;</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;appId&quot;</span>: <span class="string">&quot;cky.demo.app&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;appName&quot;</span>: <span class="string">&quot;App&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;bundledWebRuntime&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;webDir&quot;</span>: <span class="string">&quot;dist&quot;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>配合 Angular CLI 的建置輸出路徑修改 <code>capacitor.config.json</code> 檔案</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"appId"</span>: <span class="string">"cky.demo.app"</span>,</span><br><span class="line">  <span class="attr">"appName"</span>: <span class="string">"App"</span>,</span><br><span class="line">  <span class="attr">"bundledWebRuntime"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"webDir"</span>: <span class="string">"dist"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>&#x958B;&#x59CB;&#x7B2C;&#x4E00;&#x6B21; <code>build &#x2014;prod</code></p>
+<p>開始第一次 <code>build —prod</code></p>
 </li>
 <li>
-<p>&#x56E0;&#x70BA;&#x7B2C;&#x4E00;&#x6B21;&#x60F3;&#x7528; PWA &#x7684;&#x65B9;&#x5F0F;&#x5448;&#x73FE;&#xFF0C;&#x53EF;&#x900F;&#x904E; <code>npx cap serve</code> &#x4F86;&#x555F;&#x52D5; web server</p>
+<p>因為第一次想用 PWA 的方式呈現，可透過 <code>npx cap serve</code> 來啟動 web server</p>
 <ol>
-<li>&#x5982;&#x679C;&#x60F3;&#x8981;&#x8DD1;&#x6210; iOS &#x7684;&#x683C;&#x5F0F;&#xFF0C;&#x6307;&#x4EE4;&#x70BA; <code>npx cap open ios</code> (&#x9700;&#x8981;&#x6709; xcode &#x624D;&#x53EF;&#x4EE5;&#x8DD1;)</li>
-<li>&#x5982;&#x679C;&#x60F3;&#x8981;&#x8DD1;&#x6210; Android &#x7684;&#x683C;&#x5F0F;&#xFF0C;&#x6307;&#x4EE4;&#x70BA; <code>npx cap open android</code></li>
+<li>如果想要跑成 iOS 的格式，指令為 <code>npx cap open ios</code> (需要有 xcode 才可以跑)</li>
+<li>如果想要跑成 Android 的格式，指令為 <code>npx cap open android</code></li>
 </ol>
 </li>
 <li>
-<p>&#x8DD1;&#x8D77;&#x4F86;&#x7684;&#x756B;&#x9762;&#x5C31;&#x8DDF;&#x9810;&#x8A2D;&#x7684;&#x756B;&#x9762;&#x662F;&#x4E00;&#x6A23;&#x7684;&#xFF0C;&#x53EA;&#x662F;&#x7DB2;&#x5740;&#x8B8A;&#x6210; <code>http://localhost:3333</code></p>
+<p>跑起來的畫面就跟預設的畫面是一樣的，只是網址變成 <code>http://localhost:3333</code></p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/ExGjmJY.png" width="1280" height="626" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<h1 id="&#x4F7F;&#x7528;&#x5957;&#x4EF6;-plugin"><a class="header-anchor" href="#&#x4F7F;&#x7528;&#x5957;&#x4EF6;-plugin"> </a>&#x4F7F;&#x7528;&#x5957;&#x4EF6;(Plugin)</h1>
-<p>&#x4F86;&#x8A66;&#x8A66;&#x770B;&#x73FE;&#x6210;&#x7684; Geolocation API (&#x5167;&#x5EFA;&#x7684;) &#x80FD;&#x4E0D;&#x80FD;&#x6B63;&#x5E38;&#x4F7F;&#x7528;&#xFF0C;&#x5728;&#x7A0B;&#x5F0F;&#x78BC;&#x4E0A;&#x6703;&#x4E0D;&#x6703;&#x5F88;&#x96E3;&#x8655;&#x7406;</p>
-<p>&#x56E0;&#x70BA;&#x5DF2;&#x7D93;&#x6709;&#x88DD; <code>@capacitor/core</code>&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x900F;&#x904E; <code>import { Plugin } from &apos;@capacitor/core&apos;</code> &#x4F86;&#x53D6;&#x5F97;&#x73FE;&#x6709;&#x5167;&#x5EFA;&#x7684; <a href="https://capacitor.ionicframework.com/docs/apis/" target="_blank" rel="noopener">API</a></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.component.ts</span></span><br><span class="line"><span class="keyword">import</span> { Component, OnInit } <span class="keyword">from</span> <span class="string">&apos;@angular/core&apos;</span>;</span><br><span class="line"><span class="keyword">import</span> { Plugins } <span class="keyword">from</span> <span class="string">&apos;@capacitor/core&apos;</span>;</span><br><span class="line"><span class="keyword">import</span> { Observable } <span class="keyword">from</span> <span class="string">&apos;rxjs/Observable&apos;</span>;</span><br><span class="line"><span class="keyword">import</span> { bindCallback } <span class="keyword">from</span> <span class="string">&apos;rxjs/observable/bindCallback&apos;</span>;</span><br><span class="line"><span class="keyword">import</span> { map } <span class="keyword">from</span> <span class="string">&apos;rxjs/operators&apos;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> { Geolocation, Modals, App } = Plugins;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>({</span><br><span class="line">  selector: <span class="string">&apos;app-root&apos;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">	&lt;button (click)=&quot;currentLocation()&quot;&gt;&#x986F;&#x793A;&#x76EE;&#x524D;&#x4F4D;&#x7F6E;&lt;/button&gt;</span></span><br><span class="line"><span class="string">	`</span>,</span><br><span class="line">  styleUrls: [<span class="string">&apos;./app.component.css&apos;</span>]</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit {</span><br><span class="line">  coords: Coordinates;</span><br><span class="line">  ngOnInit() {</span><br><span class="line">     App.addListener(<span class="string">&apos;backButton&apos;</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">      Plugins.App.exitApp();</span><br><span class="line">    });</span><br><span class="line">      </span><br><span class="line">    <span class="keyword">this</span>.watchPosition().subscribe(<span class="function"><span class="params">coords</span> =&gt;</span> {</span><br><span class="line">      <span class="keyword">this</span>.coords = coords;</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  watchPosition(): Observable&lt;<span class="built_in">any</span>&gt; {</span><br><span class="line">    <span class="keyword">const</span> watch = bindCallback(Geolocation.watchPosition)({});</span><br><span class="line">    <span class="keyword">return</span> watch.pipe(map(<span class="function"><span class="params">pos</span> =&gt;</span> pos.coords));</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> currentLocation() {</span><br><span class="line">    <span class="keyword">const</span> position = <span class="keyword">await</span> Geolocation.getCurrentPosition();</span><br><span class="line">    Modals.alert({</span><br><span class="line"> &#xA0; &#xA0; &#xA0;title: <span class="string">&apos;&#x76EE;&#x524D;&#x4F4D;&#x7F6E;&apos;</span>,</span><br><span class="line"> &#xA0; &#xA0; &#xA0;message: <span class="string">`lat: <span class="subst"><!--figure1-->#123;position.coords.latitude}</span>, long: <span class="subst"><!--figure1-->#123;position.coords.longitude}</span>`</span></span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="使用套件-plugin"><a class="header-anchor" href="#使用套件-plugin"> </a>使用套件(Plugin)</h1>
+<p>來試試看現成的 Geolocation API (內建的) 能不能正常使用，在程式碼上會不會很難處理</p>
+<p>因為已經有裝 <code>@capacitor/core</code>，所以可以透過 <code>import { Plugin } from '@capacitor/core'</code> 來取得現有內建的 <a href="https://capacitor.ionicframework.com/docs/apis/" target="_blank" rel="noopener">API</a></p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.component.ts</span></span><br><span class="line"><span class="keyword">import</span> { Component, OnInit } <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> { Plugins } <span class="keyword">from</span> <span class="string">'@capacitor/core'</span>;</span><br><span class="line"><span class="keyword">import</span> { Observable } <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> { bindCallback } <span class="keyword">from</span> <span class="string">'rxjs/observable/bindCallback'</span>;</span><br><span class="line"><span class="keyword">import</span> { map } <span class="keyword">from</span> <span class="string">'rxjs/operators'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> { Geolocation, Modals, App } = Plugins;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>({</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">	&lt;button (click)="currentLocation()"&gt;顯示目前位置&lt;/button&gt;</span></span><br><span class="line"><span class="string">	`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit {</span><br><span class="line">  coords: Coordinates;</span><br><span class="line">  ngOnInit() {</span><br><span class="line">     App.addListener(<span class="string">'backButton'</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">      Plugins.App.exitApp();</span><br><span class="line">    });</span><br><span class="line">      </span><br><span class="line">    <span class="keyword">this</span>.watchPosition().subscribe(<span class="function"><span class="params">coords</span> =&gt;</span> {</span><br><span class="line">      <span class="keyword">this</span>.coords = coords;</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  watchPosition(): Observable&lt;<span class="built_in">any</span>&gt; {</span><br><span class="line">    <span class="keyword">const</span> watch = bindCallback(Geolocation.watchPosition)({});</span><br><span class="line">    <span class="keyword">return</span> watch.pipe(map(<span class="function"><span class="params">pos</span> =&gt;</span> pos.coords));</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> currentLocation() {</span><br><span class="line">    <span class="keyword">const</span> position = <span class="keyword">await</span> Geolocation.getCurrentPosition();</span><br><span class="line">    Modals.alert({</span><br><span class="line"> &nbsp; &nbsp; &nbsp;title: <span class="string">'目前位置'</span>,</span><br><span class="line"> &nbsp; &nbsp; &nbsp;message: <span class="string">`lat: <span class="subst"><!--figure1-->#123;position.coords.latitude}</span>, long: <span class="subst"><!--figure1-->#123;position.coords.longitude}</span>`</span></span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li>&#x5229;&#x7528; <code>bindCallback</code> &#x7684;&#x65B9;&#x6CD5;&#x5C07; api &#x8F49;&#x63DB;&#x6210; <code>Observable</code> &#x578B;&#x5225;</li>
-<li>Chrome &#x5728;&#x7248;&#x672C; 50 &#x4EE5;&#x5F8C;&#x5C31;&#x4E0D;&#x5141;&#x8A31; http &#x8DD1; Geolocation &#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x8981;&#x6E2C;&#x8A66;&#x9019;&#x6BB5;&#xFF0C;&#x9019;&#x90E8;&#x5206;&#x53EF;&#x80FD;&#x5C31;&#x8981;&#x81EA;&#x5DF1;&#x6478;&#x7D22;&#x4E86;</li>
+<li>利用 <code>bindCallback</code> 的方法將 api 轉換成 <code>Observable</code> 型別</li>
+<li>Chrome 在版本 50 以後就不允許 http 跑 Geolocation 了，所以如果要測試這段，這部分可能就要自己摸索了</li>
 </ul>
-<h1 id="&#x90E8;&#x5C6C;&#x5230;-android-&#x8A2D;&#x5099;&#x4E0A;"><a class="header-anchor" href="#&#x90E8;&#x5C6C;&#x5230;-android-&#x8A2D;&#x5099;&#x4E0A;"> </a>&#x90E8;&#x5C6C;&#x5230; Android &#x8A2D;&#x5099;&#x4E0A;</h1>
-<p>&#x5047;&#x8A2D; Android &#x958B;&#x767C;&#x74B0;&#x5883;&#x5DF2;&#x7D93;&#x6E96;&#x5099;&#x597D;&#x4E86; ( &#x4F7F;&#x7528; Android Studio )&#xFF0C;Capacitor &#x53EA;&#x9700;&#x8981;&#x900F;&#x904E;&#x5E7E;&#x500B;&#x6307;&#x4EE4;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5C07; Android &#x90E8;&#x5C6C;&#x76EE;&#x6A19;&#x52A0;&#x4E0A;&#x53BB;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x76F8;&#x95DC;&#x7684;&#x6307;&#x4EE4;&#x53CA;&#x5C0D;&#x61C9;&#x7684;&#x529F;&#x80FD;</p>
+<h1 id="部屬到-android-設備上"><a class="header-anchor" href="#部屬到-android-設備上"> </a>部屬到 Android 設備上</h1>
+<p>假設 Android 開發環境已經準備好了 ( 使用 Android Studio )，Capacitor 只需要透過幾個指令，就可以將 Android 部屬目標加上去，以下是相關的指令及對應的功能</p>
 <ol>
 <li>
-<p><code>npx cap add android</code> &#x5C07; <code>Android platform</code>  &#x52A0;&#x5165;&#x5230;&#x76EE;&#x524D;&#x7684;&#x5C08;&#x6848;&#x4E0B;</p>
+<p><code>npx cap add android</code> 將 <code>Android platform</code>  加入到目前的專案下</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/e8QpqT9.png" width="347" height="526" layout="responsive"></amp-img></div>
 </li>
 <li>
-<p><code>npx cap sync</code> &#x540C;&#x6B65; <code>dependency</code> &#x548C; <code>web</code> &#x5167;&#x5BB9;</p>
+<p><code>npx cap sync</code> 同步 <code>dependency</code> 和 <code>web</code> 內容</p>
 </li>
 <li>
-<p><code>npx cap copy</code> &#x8907;&#x88FD; <code>web</code> &#x5167;&#x5BB9;</p>
+<p><code>npx cap copy</code> 複製 <code>web</code> 內容</p>
 </li>
 <li>
-<p><code>npx cap open android</code> &#x958B;&#x555F; <code>Android Studio</code> &#x4E26;&#x57F7;&#x884C;&#x5EFA;&#x7F6E;&#x52D5;&#x4F5C;</p>
+<p><code>npx cap open android</code> 開啟 <code>Android Studio</code> 並執行建置動作</p>
 </li>
 </ol>
 <ul>
 <li>
-<p>&#x5982;&#x679C; <code>Android Studio</code> &#x4E0D;&#x662F;&#x5B89;&#x88DD;&#x5728;&#x9810;&#x8A2D;&#x8DEF;&#x5F91;&#x4E0B;&#x6642;&#xFF0C;&#x53EF;&#x4EE5;&#x5728; <code>capacitor.config.json</code> &#x5167;&#x8A2D;&#x5B9A;&#x5BE6;&#x969B;&#x7684;&#x5B89;&#x88DD;&#x4F4D;&#x7F6E;</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line"> ...</span><br><span class="line">  &quot;windowsAndroidStudioPath&quot;: &quot;D:\\Program Files\\Android\\Android Studio\\bin\\studio64.exe&quot;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>如果 <code>Android Studio</code> 不是安裝在預設路徑下時，可以在 <code>capacitor.config.json</code> 內設定實際的安裝位置</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line"> ...</span><br><span class="line">  "windowsAndroidStudioPath": "D:\\Program Files\\Android\\Android Studio\\bin\\studio64.exe"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
-<h2 id="&#x5BE6;&#x969B;&#x6E2C;&#x8A66;-&#x90E8;&#x5C6C;&#x5230;-android"><a class="header-anchor" href="#&#x5BE6;&#x969B;&#x6E2C;&#x8A66;-&#x90E8;&#x5C6C;&#x5230;-android"> </a>&#x5BE6;&#x969B;&#x6E2C;&#x8A66;/&#x90E8;&#x5C6C;&#x5230; Android</h2>
-<p>&#x56E0;&#x70BA;&#x6211;&#x5011;&#x9700;&#x8981;&#x5C07;&#x7DB2;&#x9801;&#x5EFA;&#x7F6E;&#x5F8C;&#x7684;&#x7D50;&#x679C;&#x8907;&#x88FD;&#x5230; Android &#x7684;&#x5C08;&#x6848;&#x4E0B;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x57F7;&#x884C; <code>npx cap sync</code> &#x4E4B;&#x524D;&#xFF0C;&#x8A18;&#x5F97;&#x8981;&#x505A; <code>ng build --prod</code> &#x7684;&#x52D5;&#x4F5C;</p>
-<p>&#x57FA;&#x672C;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;</p>
+<h2 id="實際測試-部屬到-android"><a class="header-anchor" href="#實際測試-部屬到-android"> </a>實際測試/部屬到 Android</h2>
+<p>因為我們需要將網頁建置後的結果複製到 Android 的專案下，所以在執行 <code>npx cap sync</code> 之前，記得要做 <code>ng build --prod</code> 的動作</p>
+<p>基本流程如下</p>
 <ol>
-<li><code>ng build --prod</code>  &#x5EFA;&#x7F6E; web &#x5C08;&#x6848;</li>
-<li><code>npca cap sync</code> &#x540C;&#x6B65; web &#x5C08;&#x6848;&#x53CA; dependency &#x5143;&#x5EFA;&#x81F3; Android &#x5C08;&#x6848;&#x4E0B;</li>
-<li><code>npx cap open android</code> &#x958B;&#x555F; Android Studio &#x9032;&#x884C;&#x5F8C;&#x7E8C;&#x7684;&#x6E2C;&#x8A66;&#x90E8;&#x5C6C;&#xFF0C;&#x5982;&#x679C; Android Studio &#x5DF2;&#x7D93;&#x958B;&#x555F;&#x6642;&#xFF0C;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x57F7;&#x884C;&#x9019;&#x884C;&#x6307;&#x4EE4;</li>
+<li><code>ng build --prod</code>  建置 web 專案</li>
+<li><code>npca cap sync</code> 同步 web 專案及 dependency 元建至 Android 專案下</li>
+<li><code>npx cap open android</code> 開啟 Android Studio 進行後續的測試部屬，如果 Android Studio 已經開啟時，就不需要執行這行指令</li>
 </ol>
-<h2 id="&#x57F7;&#x884C;&#x7D50;&#x679C;"><a class="header-anchor" href="#&#x57F7;&#x884C;&#x7D50;&#x679C;"> </a>&#x57F7;&#x884C;&#x7D50;&#x679C;</h2>
+<h2 id="執行結果"><a class="header-anchor" href="#執行結果"> </a>執行結果</h2>
 <div class="video-container"><amp-youtube data-videoid="WsJ90xN28ww" width="1920" height="1080" layout="responsive"></amp-youtube></div>
-<h1 id="&#x7E3D;&#x7D50;"><a class="header-anchor" href="#&#x7E3D;&#x7D50;"> </a>&#x7E3D;&#x7D50;</h1>
-<p>&#x76EE;&#x524D;&#x770B;&#x8D77;&#x4F86; Ionic &#x7684;&#x65B0;&#x67B6;&#x69CB; <code>Capacitor</code> &#x7684;&#x78BA;&#x53EF;&#x4EE5;&#x64FA;&#x812B;&#x4EE5;&#x524D;&#x7684; ionic &#x7684;&#x958B;&#x767C;&#x65B9;&#x5F0F;&#xFF0C;&#x8B93;&#x4F7F;&#x7528;&#x8005;&#x7528;&#x81EA;&#x5DF1;&#x719F;&#x6089;&#x7684; JavaScript framework &#x505A;&#x958B;&#x767C;&#xFF0C;&#x800C;&#x4E0D;&#x7528;&#x4FB7;&#x9650;&#x4F7F;&#x7528;  Angular&#xFF0C;&#x500B;&#x4EBA;&#x9084;&#x883B;&#x671F;&#x5F85;&#x5F8C;&#x7E8C;&#x7684;&#x767C;&#x5C55;&#x7684;</p>
-<h1 id="&#x5EF6;&#x4F38;&#x95B1;&#x8B80;"><a class="header-anchor" href="#&#x5EF6;&#x4F38;&#x95B1;&#x8B80;"> </a>&#x5EF6;&#x4F38;&#x95B1;&#x8B80;</h1>
+<h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
+<p>目前看起來 Ionic 的新架構 <code>Capacitor</code> 的確可以擺脫以前的 ionic 的開發方式，讓使用者用自己熟悉的 JavaScript framework 做開發，而不用侷限使用  Angular，個人還蠻期待後續的發展的</p>
+<h1 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h1>
 <ul>
 <li><a href="https://capacitor.ionicframework.com/docs/" target="_blank" rel="noopener"> Capacitor Documentation</a></li>
 </ul>

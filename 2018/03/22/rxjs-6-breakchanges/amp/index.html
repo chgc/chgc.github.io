@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/03/22/rxjs-6-breakchanges/"
 			},
 			"datePublished": "2018-03-22T08:07:53.000Z",
-			"dateModified": "2021-02-18T02:25:04.855Z",
+			"dateModified": "2021-02-18T02:32:11.571Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,9 +1848,9 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular 6 &#x5C07;&#x6703;&#x628A; RxJS &#x4E00;&#x8D77;&#x5347;&#x7D1A;&#x5230; 6 &#x7248;&#xFF0C;&#x5728; RxJS 6 &#x7248;&#x6709;&#x8A31;&#x591A;&#x7684; breaking changes&#xFF0C;&#x9019;&#x4E9B; breaking changes &#x6709;&#x8A31;&#x591A;&#x662F;&#x70BA;&#x4E86;&#x7C21;&#x5316;&#x958B;&#x767C;&#x6642;&#x7684;&#x5BEB;&#x6CD5;&#x6240;&#x505A;&#x7684;&#x6539;&#x8B8A;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x8981;&#x592A;&#x7DCA;&#x5F35;&#xFF0C;&#x5C31;&#x6162;&#x6162;&#x7684;&#x4E86;&#x89E3;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;</p>
+			  		<p>Angular 6 將會把 RxJS 一起升級到 6 版，在 RxJS 6 版有許多的 breaking changes，這些 breaking changes 有許多是為了簡化開發時的寫法所做的改變，所以不要太緊張，就慢慢的了解就可以了。</p>
 <a id="more"></a>
-<h1 id="rxjs-6-breaking-changes-&#x5217;&#x8868;"><a class="header-anchor" href="#rxjs-6-breaking-changes-&#x5217;&#x8868;"> </a>RxJS 6 Breaking Changes &#x5217;&#x8868;</h1>
+<h1 id="rxjs-6-breaking-changes-列表"><a class="header-anchor" href="#rxjs-6-breaking-changes-列表"> </a>RxJS 6 Breaking Changes 列表</h1>
 <ul>
 <li><strong>webSocket</strong>: <code>webSocket</code> creator function now exported from <code>rxjs/websocket</code> as <code>websocket</code>.</li>
 <li><strong>IteratorObservable</strong>: IteratorObservable no longer share iterator between subscription</li>
@@ -1859,15 +1859,15 @@ h6.categories {
 <li><strong>creation functions</strong>: All create functions such as of, from, <code>combineLatest</code> and <code>fromEvent</code> should now be imported from <code>rxjs/create</code>.</li>
 <li><strong>types and interfaces</strong>: Can no longer explicitly import types from <code>rxjs/interfaces</code>, import them from <code>rxjs</code> instead</li>
 <li><strong>symbols</strong>: Symbols are no longer exported directly from modules such as <code>rxjs/symbol/observable</code>please use <code>Symbol.observable</code> and <code>Symbol.iterator</code> (polyfills may be required)</li>
-<li><strong>deep imports</strong>: Can no longer deep import top-level types such as <code>rxjs/Observable</code>, <code>rxjs/Subject</code>, <code>rxjs/ReplaySubject</code>, et al. All imports should be done directly from <code>rxjs</code>, for example: <code>import \{ Observable, Subject \} from &apos;rxjs&apos;</code>;</li>
+<li><strong>deep imports</strong>: Can no longer deep import top-level types such as <code>rxjs/Observable</code>, <code>rxjs/Subject</code>, <code>rxjs/ReplaySubject</code>, et al. All imports should be done directly from <code>rxjs</code>, for example: <code>import \{ Observable, Subject \} from 'rxjs'</code>;</li>
 <li><strong>schedulers</strong>: Scheduler instances have changed names to be suffixed with <code>Scheduler</code>, (e.g. <code>asap</code> -&gt; <code>asapScheduler</code>)</li>
-<li><strong>operators</strong>: Pipeable operators must now be <code>imported from rxjs</code> like so: <code>import { map, filter, switchMap } from &apos;rxjs/operators&apos;;</code>. No deep imports.</li>
+<li><strong>operators</strong>: Pipeable operators must now be <code>imported from rxjs</code> like so: <code>import { map, filter, switchMap } from 'rxjs/operators';</code>. No deep imports.</li>
 <li><strong>ajax</strong>: Ajax observable should be imported from <code>rxjs/ajax</code>.</li>
 <li><strong>ajax</strong>: will no longer execute a CORS request by default, you must opt-in with the crossDomain flag in the config.</li>
 <li><strong>Observable</strong>: You should no longer deep import custom Observable implementations such as <code>ArrayObservable</code> or <code>ForkJoinObservable</code>.</li>
 <li><strong>_throw</strong>: _throw is now exported as <code>throwError</code></li>
 <li><strong>operators</strong>: Deep imports to <code>rxjs/operator/*</code> will no longer work. Again, pipe operators are still where they were.</li>
-<li><strong>error handling</strong>: Unhandled errors are no longer caught and rethrown, rather they are caught and scheduled to be thrown, which causes them to be reported to window.onerror or process.on(&#x300E;error&#x300F;), depending on the environment. Consequently, teardown after a synchronous, unhandled, error will no longer occur, as the teardown would not exist, and producer interference cannot occur</li>
+<li><strong>error handling</strong>: Unhandled errors are no longer caught and rethrown, rather they are caught and scheduled to be thrown, which causes them to be reported to window.onerror or process.on(『error』), depending on the environment. Consequently, teardown after a synchronous, unhandled, error will no longer occur, as the teardown would not exist, and producer interference cannot occur</li>
 <li><strong>distinct</strong>: Using <code>distinct</code> requires a <code>Set</code> implementation and must be polyfilled in older runtimes</li>
 <li><strong>asap</strong>: Old runtimes must polyfill Promise in order to use ASAP scheduling.</li>
 <li><strong>groupBy</strong>: Older runtimes will require Map to be polyfilled to use <code>groupBy</code></li>
@@ -1883,48 +1883,48 @@ h6.categories {
 <li><strong>Symbol.observable</strong>: RxJS will no longer be polyfilling Symbol.observable. That should be done by an actual polyfill library. This is to prevent duplication of code, and also to prevent having modules with side-effects in rxjs.</li>
 <li><strong>bindCallback</strong>: removes result selector, use <code>map</code> instead: <code>bindCallback(fn1, fn2)()</code> becomes <code>bindCallback(fn1)().pipe(map(fn2))</code></li>
 <li><strong>Symbol.iterator</strong>: We are no longer polyfilling Symbol.iterator. That would be done by a proper polyfilling library</li>
-<li><strong>Observable.if</strong>: TypeScript users using <code>Observable.if</code> will have to cast <code>Observable</code> as any to get to if. It is a better idae to just use <code>iif</code> directly via <code>import { iif } from &apos;rxjs&apos;;</code></li>
+<li><strong>Observable.if</strong>: TypeScript users using <code>Observable.if</code> will have to cast <code>Observable</code> as any to get to if. It is a better idae to just use <code>iif</code> directly via <code>import { iif } from 'rxjs';</code></li>
 <li><strong>bindNodeCallback</strong>: resultSelector removed, use <code>map</code> instead: <code>bindNodeCallback(fn1, fn2)()</code> becomes <code>bindNodeCallback(fn1)().pipe(map(fn2))</code></li>
 <li><strong>Rx.ts</strong>: importing from <code>rxjs/Rx</code> is no longer available. Upcoming backwards compat solution will allow that</li>
-<li><strong>fromEvent</strong>: result selector removed, use <code>map</code> instead: <code>fromEvent(target, &apos;click&apos;, fn)</code> becomes <code>fromEvent(target, &apos;click&apos;).pipe(map(fn))</code></li>
+<li><strong>fromEvent</strong>: result selector removed, use <code>map</code> instead: <code>fromEvent(target, 'click', fn)</code> becomes <code>fromEvent(target, 'click').pipe(map(fn))</code></li>
 <li><strong>last</strong>: no longer accepts <code>resultSelector</code> argument. To get this same functionality, use <code>map</code>.</li>
 <li><strong>first</strong>: no longer supports <code>resultSelector</code> argument. The same functionality can be achieved by simply mapping either before or after <code>first</code> depending on your use case.</li>
 <li><strong>exhaustMap</strong>: <code>resultSelector</code> no longer supported, to get this functionality use: <code>source.pipe(exhaustMap(x =&gt; of(x + x).pipe(map(y =&gt; x + y))))</code></li>
 <li><strong>switchMap|switchMapTo</strong>: <code>switchMap</code> and <code>switchMapTo</code> no longer take <code>resultSelector</code> arguments, to get the same functionality use <code>switchMap</code> and <code>map</code> in combination: <code>source.pipe(switchMap(x =&gt; of(x + x).pipe(y =&gt; x + y)))</code>.</li>
-<li><strong>mergeMapTo</strong>: <code>mergeMapTo</code> no longer accepts a resultSelector, to get this functionality, you&#x2019;ll want to use <code>mergeMap</code> and <code>map</code> together: <code>source.pipe(mergeMap(() =&gt; inner).pipe(map(y =&gt; x + y)))</code></li>
+<li><strong>mergeMapTo</strong>: <code>mergeMapTo</code> no longer accepts a resultSelector, to get this functionality, you’ll want to use <code>mergeMap</code> and <code>map</code> together: <code>source.pipe(mergeMap(() =&gt; inner).pipe(map(y =&gt; x + y)))</code></li>
 <li><strong>fromEventPattern</strong>: no longer supports a result selector, use <code>map</code> instead: <code>fromEventPattern(fn1, fn2, fn3)</code> becomes <code>fromEventPattern(fn1, fn2).pipe(map(fn3))</code></li>
 </ul>
-<h1 id="&#x91CD;&#x9EDE;&#x6574;&#x7406;"><a class="header-anchor" href="#&#x91CD;&#x9EDE;&#x6574;&#x7406;"> </a>&#x91CD;&#x9EDE;&#x6574;&#x7406;</h1>
+<h1 id="重點整理"><a class="header-anchor" href="#重點整理"> </a>重點整理</h1>
 <ol>
 <li>
-<p>Import &#x4F4D;&#x7F6E;&#x7C21;&#x5316;</p>
+<p>Import 位置簡化</p>
 <ol>
 <li>
-<p>creation functions &#x73FE;&#x5728;&#x6539;&#x7531; <code>rxjs</code> import</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { of, <span class="keyword">from</span> } <span class="keyword">from</span> <span class="string">&apos;rxjs&apos;</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>creation functions 現在改由 <code>rxjs</code> import</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { of, <span class="keyword">from</span> } <span class="keyword">from</span> <span class="string">'rxjs'</span>;</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>types and interfaces &#x73FE;&#x5728;&#x6539;&#x7531; <code>rxjs</code> import</p>
+<p>types and interfaces 現在改由 <code>rxjs</code> import</p>
 </li>
 </ol>
 </li>
 <li>
-<p>&#x8A9E;&#x6CD5;&#x8ABF;&#x6574;</p>
+<p>語法調整</p>
 <ol>
-<li><code>_if</code> &#x4FEE;&#x6539;&#x6210; <code>iif</code></li>
-<li><code>_throw</code> &#x4FEE;&#x6539;&#x6210; <code>throwError</code></li>
-<li><code>asap</code> &#x4FEE;&#x6539;&#x6210; <code>asapScheduler</code> &#x7B49;</li>
+<li><code>_if</code> 修改成 <code>iif</code></li>
+<li><code>_throw</code> 修改成 <code>throwError</code></li>
+<li><code>asap</code> 修改成 <code>asapScheduler</code> 等</li>
 </ol>
 </li>
 <li>
-<p>&#x64C1;&#x6709; <code>resultSelector</code> &#x7684; <code>operators</code> &#x90FD;&#x88AB;&#x62D4;&#x6389;&#x4E86;&#xFF0C;&#x5EFA;&#x8B70;&#x6539;&#x642D;&#x914D;&#x4F7F;&#x7528; <code>map</code>&#xFF0C;&#x4F8B;&#x5982;</p>
+<p>擁有 <code>resultSelector</code> 的 <code>operators</code> 都被拔掉了，建議改搭配使用 <code>map</code>，例如</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source.pipe(mergeMap(<span class="function">(<span class="params">x</span>)=&gt;</span> of(x+x).pipe(<span class="function"><span class="params">y</span>=&gt;</span> x=y)))</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
-<p>Pipeable operators &#x5FC5;&#x9808;&#x5F9E; <code>rxjs/operators</code> &#x5F15;&#x7528;</p>
+<p>Pipeable operators 必須從 <code>rxjs/operators</code> 引用</p>
 </li>
 <li>
-<p>importing from <code>rxjs/Rx</code> &#x7121;&#x6CD5;&#x7E7C;&#x7E8C;&#x4F7F;&#x7528;. &#x4F46;&#x6703;&#x63D0;&#x4F9B; <code>rxjs-compat</code> &#x5957;&#x4EF6;&#x505A;&#x5411;&#x4E0B;&#x76F8;&#x5BB9;</p>
+<p>importing from <code>rxjs/Rx</code> 無法繼續使用. 但會提供 <code>rxjs-compat</code> 套件做向下相容</p>
 </li>
 </ol>
 
