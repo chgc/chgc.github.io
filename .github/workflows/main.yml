@@ -17,7 +17,7 @@ jobs:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.5.0
         with:
-          access_token: ${{ github.GITHUB_TOKEN }}
+          access_token: ${{ github.token }}
       - uses: actions/checkout@v2
       # install node
       - name: Use Node.js 12.x
@@ -46,6 +46,6 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.token }}
           publish_dir: ./public
           publish_branch: master  # deploying branch
