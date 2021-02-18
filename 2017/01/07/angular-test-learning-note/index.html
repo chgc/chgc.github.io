@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-TW">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+     google_ad_client: "ca-pub-7997572949867824",
+     enable_page_level_ads: true
+   });
+ </script>
+
+
+  <meta name="description" content="Angular 2 — Testing Guide的閱讀筆記，這篇文章是由 Gerard Sans撰寫的 這篇文章包含Angular Application的基本單元測試，像是Components, Services, Http and Pipes. 該文章有提供另外一個Testing Checklist 幫助建立測試">
+<meta name="keywords" content="Angular,學習筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 學習筆記(2) - Angular 2 — Testing Guide">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/01/07/angular-test-learning-note/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Angular 2 — Testing Guide的閱讀筆記，這篇文章是由 Gerard Sans撰寫的 這篇文章包含Angular Application的基本單元測試，像是Components, Services, Http and Pipes. 該文章有提供另外一個Testing Checklist 幫助建立測試">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2021-02-18T02:25:04.855Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Angular] 學習筆記(2) - Angular 2 — Testing Guide">
+<meta name="twitter:description" content="Angular 2 — Testing Guide的閱讀筆記，這篇文章是由 Gerard Sans撰寫的 這篇文章包含Angular Application的基本單元測試，像是Components, Services, Http and Pipes. 該文章有提供另外一個Testing Checklist 幫助建立測試">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://blog.kevinyang.net/2017/01/07/angular-test-learning-note/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[Angular] 學習筆記(2) - Angular 2 — Testing Guide | CK's Notepad</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-56711593-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CK's Notepad</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/01/07/angular-test-learning-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/4550568.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Angular] 學習筆記(2) - Angular 2 — Testing Guide
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2017-01-07 11:53:07" itemprop="dateCreated datePublished" datetime="2017-01-07T11:53:07+08:00">2017-01-07</time>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">評論數：</span>
+                <a href="/2017/01/07/angular-test-learning-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/07/angular-test-learning-note/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://medium.com/google-developer-experts/angular-2-testing-guide-a485b6cb1ef0#.gyor9igx8" target="_blank" rel="noopener">Angular 2 — Testing Guide</a>的閱讀筆記，這篇文章是由 <a href="https://medium.com/@gerard.sans" target="_blank" rel="noopener">Gerard Sans</a>撰寫的</p>
+<p>這篇文章包含Angular Application的基本單元測試，像是Components, Services, Http and Pipes.</p>
+<p>該文章有提供另外一個<a href="https://medium.com/google-developer-experts/angular-2-testing-guide-a485b6cb1ef0#8ea4" target="_blank" rel="noopener"><strong>Testing Checklist</strong></a> 幫助建立測試</p>
+<a id="more"></a>
+<h1 id="jasmine的基本介紹"><a class="header-anchor" href="#jasmine的基本介紹"> </a>Jasmine的基本介紹</h1>
+<p>Jasmine有幾個基本的元素</p>
+<ul>
+<li>Suites - <code>describe(title:string, function)</code> : 基本容器. 用來裝 Specs.</li>
+<li>Specs - <code>it(title:string, function)</code>: 基本測試單位，裡面可以包含一個或多個expectations</li>
+<li>expectations - <code>expect(actual).toBe(expected)</code> 用來比對測試結果與預期結果</li>
+<li>Matchers - 預先設定的運算式, Eg. <code>toBe(expected)</code>, <code>toEqual(expected)</code>,  <a href="https://github.com/JamieMason/Jasmine-Matchers" target="_blank" rel="noopener">更多</a></li>
+</ul>
+<p>Jasmine有提供4個handlers，來處理一些在測試前或是測試後可以額外執行的動作</p>
+<ul>
+<li><code>beforeEach</code>, <code>afterEach</code> 於每一個 <code>spec</code> 前後執行</li>
+<li><code>beforeAll</code>,<code>afterAll</code> 於每一個 <code>Suit</code> 前後執行</li>
+</ul>
+<p>可以透過上列的方式避免重複程式碼的產生</p>
+<h1 id="angular-測試"><a class="header-anchor" href="#angular-測試"> </a>Angular 測試</h1>
+<ul>
+<li>
+<p><strong>TestBed</strong>: 在測試裡面建立ngModule，設定方式與一般設定ngModule一樣，提供方法讓測試案例裡可以取得想要測試的component/service等</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  declarations: [ ComponentToTest ] </span><br><span class="line">  providers: [ MyService ]</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line">mockMyService = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> AppModule &#123; &#125;</span><br><span class="line">TestBed.configureTestingModule(&#123;</span><br><span class="line">  declarations: [ ComponentToTest ],</span><br><span class="line">  providers: [ </span><br><span class="line">  	&#123;provide: MyService, useValue: mockMyService&#125;</span><br><span class="line">  ]  </span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//get instance from TestBed (root injector)</span></span><br><span class="line"><span class="keyword">let</span> service = TestBed.get(MyService);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>Inject</strong>: 允許我們在TestBed Level取得dependencies</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should return ...'</span>, inject([MyService], <span class="function"><span class="params">service</span> =&gt;</span> &#123; </span><br><span class="line">  service.foo();</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>Component Injector</strong>: 允許我們在Component Level取得dependencies</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123; </span><br><span class="line">  providers: [ MyService ] </span><br><span class="line">&#125;) </span><br><span class="line"><span class="keyword">class</span> ComponentToTest &#123; &#125;</span><br><span class="line"><span class="keyword">let</span> fixture = TestBed.createComponent(ComponentToTest);</span><br><span class="line"><span class="keyword">let</span> service = fixture.debugElement.injector.get(MyService);</span><br></pre></td></tr></table></figure>
+<p>如果DI是在Component裡面定義的話，只能透過上述方法才能取得. <code>TestBed.get</code>或是<code>Inject</code>是取不到的</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>service測試的範例程式</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">describe(<span class="string">'Service: LanguagesService'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> service;</span><br><span class="line"></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> TestBed.configureTestingModule(&#123;</span><br><span class="line">    providers: [ LanguagesService ]</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  beforeEach(inject([LanguagesService], <span class="function"><span class="params">s</span> =&gt;</span> &#123;</span><br><span class="line">    service = s;</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should return available languages'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    expect(service.get()).toContain(<span class="string">'en'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>產生component的方式</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// synchronous</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fixture = TestBed.createComponent(MyTestComponent);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// asynchronous </span></span><br><span class="line">  beforeEach(<span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      declarations: [ MyTestComponent ],</span><br><span class="line">    &#125;).compileComponents(); <span class="comment">// compile external templates and css</span></span><br><span class="line">  &#125;));</span><br></pre></td></tr></table></figure>
+<p>用非同步的方式產生component, 這方式同時間會產生<code>zone</code>來負責所有非同步的行為</p>
+</li>
+</ol>
+<h2 id="testing-checklist"><a class="header-anchor" href="#testing-checklist"> </a>Testing Checklist</h2>
+<ol>
+<li>需要決定測試的種類: Isoldated, shallow or integration <a href="http://blog.kevinyang.net/2017/01/05/angular2-ssw-testing-angular2-note/">參閱</a></li>
+<li>應該使用 <code>Mocks</code>、<code>Stubs</code> or <code>Spies</code>?</li>
+<li>同步或非同步?</li>
+</ol>
+<h1 id="測試範例"><a class="header-anchor" href="#測試範例"> </a>測試範例</h1>
+<h2 id="component"><a class="header-anchor" href="#component"> </a>Component</h2>
+<p>要測試的Component</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Usage:    &lt;greeter name="Joe"&gt;&lt;/greeter&gt; </span></span><br><span class="line"><span class="comment">// Renders:  &lt;h1&gt;Hello Joe!&lt;/h1&gt;</span></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'greeter'</span>,</span><br><span class="line">  template: <span class="string">`&lt;h1&gt;Hello &#123;&#123;name&#125;&#125;!&lt;/h1&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Greeter &#123; </span><br><span class="line">  <span class="meta">@Input</span>() name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Angular建議使用TestBed來產生component</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'Component: Greeter'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> fixture, greeter, element, de;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//setup</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      declarations: [ Greeter ]</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    fixture = TestBed.createComponent(Greeter);</span><br><span class="line">    greeter = fixture.componentInstance;  <span class="comment">// to access properties and methods</span></span><br><span class="line">    element = fixture.nativeElement;      <span class="comment">// to access DOM element</span></span><br><span class="line">    de = fixture.debugElement;            <span class="comment">// test helper</span></span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//specs</span></span><br><span class="line">  it(<span class="string">'should render `Hello World!`'</span>, <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    greeter.name = <span class="string">'World'</span>;</span><br><span class="line">    <span class="comment">//trigger change detection</span></span><br><span class="line">    fixture.detectChanges();</span><br><span class="line">    fixture.whenStable().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123; </span><br><span class="line">      expect(element.querySelector(<span class="string">'h1'</span>).innerText).toBe(<span class="string">'Hello World!'</span>);</span><br><span class="line">      expect(de.query(By.css(<span class="string">'h1'</span>)).nativeElement.innerText).toBe(<span class="string">'Hello World!'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>fixture是用來讀取component的方法. 他有下列的方法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> ComponentFixture &#123;</span><br><span class="line">  debugElement;       <span class="comment">// test helper </span></span><br><span class="line">  componentInstance;  <span class="comment">// to access properties and methods</span></span><br><span class="line">  nativeElement;      <span class="comment">// to access DOM element</span></span><br><span class="line">  detectChanges();    <span class="comment">// trigger component change detection</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>whenStable</code>是當所有非同步的行為都完成後，會執行<code>whenStable</code>，這時，就可以取得應有的結果</li>
+<li>其他讀取搜尋debugElement的方式:
+<ul>
+<li>query(By.all())</li>
+<li>query(By.directive(MyDirective))</li>
+</ul>
+</li>
+</ul>
+<h2 id="service"><a class="header-anchor" href="#service"> </a>Service</h2>
+<p>要測試的serivce範例</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a simple service</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LanguagesService &#123;</span><br><span class="line">  <span class="keyword">get</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="string">'en'</span>, <span class="string">'es'</span>, <span class="string">'fr'</span>];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>類似測試Component的方式，一樣使用TestBed來產生Service.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'Service: LanguagesService'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> service;</span><br><span class="line"></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> TestBed.configureTestingModule(&#123;</span><br><span class="line">    providers: [ LanguagesService ]</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  beforeEach(inject([LanguagesService], <span class="function"><span class="params">s</span> =&gt;</span> &#123;</span><br><span class="line">    service = s;</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should return available languages'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> languages = service.get();</span><br><span class="line">    expect(languages).toContain(<span class="string">'en'</span>);</span><br><span class="line">    expect(languages).toContain(<span class="string">'es'</span>);</span><br><span class="line">    expect(languages).toContain(<span class="string">'fr'</span>);</span><br><span class="line">    expect(languages.length).toEqual(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="using-http"><a class="header-anchor" href="#using-http"> </a>Using Http</h2>
+<p>通常在測試階段不會做任何HTTP call. 但是還是簡單介紹一下，因為這時需要使用到HttpModule</p>
+<p>要測試的Service程式碼</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LanguagesServiceHttp &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> http:Http</span>) &#123; &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">get</span>()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get(<span class="string">'api/languages.json'</span>)</span><br><span class="line">      .map(<span class="function"><span class="params">response</span> =&gt;</span> response.json());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>測試</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'Service: LanguagesServiceHttp'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> service;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//setup</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> TestBed.configureTestingModule(&#123;</span><br><span class="line">    imports: [ HttpModule ], <span class="comment">// 如果有相依其他的Module, 在此定義</span></span><br><span class="line">    providers: [ LanguagesServiceHttp ]</span><br><span class="line">  &#125;));</span><br><span class="line">  </span><br><span class="line">  beforeEach(inject([LanguagesServiceHttp], <span class="function"><span class="params">s</span> =&gt;</span> &#123;</span><br><span class="line">    service = s;</span><br><span class="line">  &#125;));</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//specs</span></span><br><span class="line">  it(<span class="string">'should return available languages'</span>, <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    service.get().subscribe(<span class="function"><span class="params">x</span> =&gt;</span> &#123; </span><br><span class="line">      expect(x).toContain(<span class="string">'en'</span>);</span><br><span class="line">      expect(x).toContain(<span class="string">'es'</span>);</span><br><span class="line">      expect(x).toContain(<span class="string">'fr'</span>);</span><br><span class="line">      expect(x.length).toEqual(<span class="number">3</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="using-mockbackend"><a class="header-anchor" href="#using-mockbackend"> </a>Using MockBackend</h2>
+<p>由於測試時不呼叫真實的後端API, 就會寫一個假的來模擬替代真實的呼叫</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'MockBackend: LanguagesServiceHttp'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> mockbackend, service;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//setup</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      imports: [ HttpModule ],</span><br><span class="line">      providers: [</span><br><span class="line">        LanguagesServiceHttp,</span><br><span class="line">        &#123; provide: XHRBackend, useClass: MockBackend &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">    </span><br><span class="line">  beforeEach(inject([LanguagesServiceHttp, XHRBackend], <span class="function">(<span class="params">_service, _mockbackend</span>) =&gt;</span> &#123;</span><br><span class="line">    service = _service;</span><br><span class="line">    mockbackend = _mockbackend;</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  <span class="comment">//specs</span></span><br><span class="line">  it(<span class="string">'should return mocked response (async)'</span>, <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> response = [<span class="string">"ru"</span>, <span class="string">"es"</span>];</span><br><span class="line">    <span class="comment">// 模擬後端Response的結果</span></span><br><span class="line">    mockbackend.connections.subscribe(<span class="function"><span class="params">connection</span> =&gt;</span> &#123;</span><br><span class="line">      connection.mockRespond(<span class="keyword">new</span> Response(&#123;body: <span class="built_in">JSON</span>.stringify(response)&#125;));</span><br><span class="line">    &#125;);</span><br><span class="line">    service.get().subscribe(<span class="function"><span class="params">languages</span> =&gt;</span> &#123;</span><br><span class="line">      expect(languages).toContain(<span class="string">'ru'</span>);</span><br><span class="line">      expect(languages).toContain(<span class="string">'es'</span>);</span><br><span class="line">      expect(languages.length).toBe(<span class="number">2</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;));  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="directive"><a class="header-anchor" href="#directive"> </a>Directive</h2>
+<p>因為Directive沒有view, 而且是相依在dom上，所以必須建立一個component容器來測試directive</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Example: &lt;div log-clicks&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="meta">@Directive</span>(&#123;</span><br><span class="line">  selector: <span class="string">"[log-clicks]"</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> logClicks &#123;</span><br><span class="line">  counter = <span class="number">0</span>;</span><br><span class="line">  <span class="meta">@Output</span>() changes = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@HostListener</span>(<span class="string">'click'</span>, [<span class="string">'$event.target'</span>])</span><br><span class="line">  clicked(target) &#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Click on [<span class="subst">$&#123;target&#125;</span>]: <span class="subst">$&#123;++this.counter&#125;</span>`</span>);</span><br><span class="line">    <span class="comment">//we use emit as next is marked as deprecated</span></span><br><span class="line">    <span class="keyword">this</span>.changes.emit(<span class="keyword">this</span>.counter);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>測試</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用來測試Directive的容器Component</span></span><br><span class="line"><span class="meta">@Component</span>(&#123; </span><br><span class="line">  selector: <span class="string">'container'</span>,</span><br><span class="line">  template: <span class="string">`&lt;div log-clicks (changes)="changed($event)"&gt;&lt;/div&gt;`</span>,</span><br><span class="line">  directives: [logClicks]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Container &#123;  </span><br><span class="line">  <span class="meta">@Output</span>() changes = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">  </span><br><span class="line">  changed(value)&#123;</span><br><span class="line">    <span class="keyword">this</span>.changes.emit(value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Directive: logClicks'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> fixture;</span><br><span class="line">  <span class="keyword">let</span> container;</span><br><span class="line">  <span class="keyword">let</span> element;  </span><br><span class="line"></span><br><span class="line">  <span class="comment">//setup</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      declarations: [ Container, logClicks ]</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    fixture = TestBed.createComponent(Container);</span><br><span class="line">    container = fixture.componentInstance; <span class="comment">// to access properties and methods</span></span><br><span class="line">    element = fixture.nativeElement;       <span class="comment">// to access DOM element</span></span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//specs</span></span><br><span class="line">  it(<span class="string">'should increment counter'</span>, fakeAsync(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> div = element.querySelector(<span class="string">'div'</span>);</span><br><span class="line">    <span class="comment">//set up subscriber</span></span><br><span class="line">    container.changes.subscribe(<span class="function"><span class="params">x</span> =&gt;</span> &#123; </span><br><span class="line">      expect(x).toBe(<span class="number">1</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//trigger click on container</span></span><br><span class="line">    div.click();</span><br><span class="line">    <span class="comment">//execute all pending asynchronous calls</span></span><br><span class="line">    tick();</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>fakeAsync</code> 所有的非同步行為會被暫停直到 呼叫<code>tick</code></li>
+<li><code>fakeAsync</code> / <code>tick</code> 不能跟XHR一起使用</li>
+</ul>
+<h2 id="pipe"><a class="header-anchor" href="#pipe"> </a>Pipe</h2>
+<p>Pipe很容易測試，很單純的Class</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Pipe, PipeTransform&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="meta">@Pipe</span>(&#123;</span><br><span class="line">  name: <span class="string">'capitalise'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CapitalisePipe <span class="keyword">implements</span> PipeTransform &#123;</span><br><span class="line">  transform(value: <span class="built_in">string</span>): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> value !== <span class="string">'string'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Requires a String as input'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value.toUpperCase();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>測試</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'Pipe: CapitalisePipe'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> pipe;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//setup</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> TestBed.configureTestingModule(&#123;</span><br><span class="line">    providers: [ CapitalisePipe ]</span><br><span class="line">  &#125;));</span><br><span class="line">  </span><br><span class="line">  beforeEach(inject([CapitalisePipe], <span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">    pipe = p;</span><br><span class="line">  &#125;));</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//specs</span></span><br><span class="line">  it(<span class="string">'should work with empty string'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    expect(pipe.transform(<span class="string">''</span>)).toEqual(<span class="string">''</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  it(<span class="string">'should capitalise'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    expect(pipe.transform(<span class="string">'wow'</span>)).toEqual(<span class="string">'WOW'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  it(<span class="string">'should throw with invalid values'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//must use arrow function for expect to capture exception</span></span><br><span class="line">    expect(<span class="function"><span class="params">()</span>=&gt;</span>pipe.transform(<span class="literal">undefined</span>)).toThrow();</span><br><span class="line">    expect(<span class="function"><span class="params">()</span>=&gt;</span>pipe.transform()).toThrow();</span><br><span class="line">    expect(<span class="function"><span class="params">()</span>=&gt;</span>pipe.transform()).toThrowError(<span class="string">'Requires a String as input'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="routes"><a class="header-anchor" href="#routes"> </a>Routes</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'my-app'</span>,</span><br><span class="line">  template: <span class="string">`&lt;router-outlet&gt;&lt;/router-outlet&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">class</span> TestComponent &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'home'</span>,</span><br><span class="line">  template: <span class="string">`&lt;h1&gt;Home&lt;/h1&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Home &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">''</span>, redirectTo: <span class="string">'home'</span>, pathMatch: <span class="string">'full'</span> &#125;,</span><br><span class="line">  &#123; path: <span class="string">'home'</span>, component: Home &#125;,</span><br><span class="line">  &#123; path: <span class="string">'**'</span>, redirectTo: <span class="string">'home'</span> &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule, RouterModule.forRoot(routes),</span><br><span class="line">  ],</span><br><span class="line">  declarations: [TestComponent, Home],</span><br><span class="line">  bootstrap: [TestComponent],</span><br><span class="line">  exports: [TestComponent] </span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>測試</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; RouterTestingModule &#125; <span class="keyword">from</span> <span class="string">'@angular/router/testing'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Router tests'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//setup</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      imports: [</span><br><span class="line">        RouterTestingModule.withRoutes(routes),</span><br><span class="line">        AppModule</span><br><span class="line">      ]</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 3 way to test Router</span></span><br><span class="line">  <span class="comment">// async</span></span><br><span class="line">  it(<span class="string">'can navigate to home (async)'</span>, <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> fixture = TestBed.createComponent(TestComponent);</span><br><span class="line">    TestBed.get(Router)</span><br><span class="line">      .navigate([<span class="string">'/home'</span>])</span><br><span class="line">        .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          expect(location.pathname.endsWith(<span class="string">'/home'</span>)).toBe(<span class="literal">true</span>);</span><br><span class="line">        &#125;).catch(<span class="function"><span class="params">e</span> =&gt;</span> <span class="built_in">console</span>.log(e));</span><br><span class="line">  &#125;));</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// fakeAsync/tick</span></span><br><span class="line">  it(<span class="string">'can navigate to home (fakeAsync/tick)'</span>, fakeAsync(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> fixture = TestBed.createComponent(TestComponent);</span><br><span class="line">    TestBed.get(Router).navigate([<span class="string">'/home'</span>]);</span><br><span class="line">    fixture.detectChanges();</span><br><span class="line">    <span class="comment">//execute all pending asynchronous calls</span></span><br><span class="line">    tick();    </span><br><span class="line">    expect(location.pathname.endsWith(<span class="string">'/home'</span>)).toBe(<span class="literal">true</span>);</span><br><span class="line">  &#125;));</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// done</span></span><br><span class="line">  it(<span class="string">'can navigate to home (done)'</span>, <span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> fixture = TestBed.createComponent(TestComponent);</span><br><span class="line">    TestBed.get(Router)</span><br><span class="line">      .navigate([<span class="string">'/home'</span>])</span><br><span class="line">        .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          expect(location.pathname.endsWith(<span class="string">'/home'</span>)).toBe(<span class="literal">true</span>);</span><br><span class="line">          done();</span><br><span class="line">        &#125;).catch(<span class="function"><span class="params">e</span> =&gt;</span> <span class="built_in">console</span>.log(e));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="observables"><a class="header-anchor" href="#observables"> </a>Observables</h2>
+<p>如何測試<code>Observable</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'Observable: basic observable'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> basic$;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//setup</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    basic$ = <span class="keyword">new</span> Observable(<span class="function"><span class="params">observer</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">//pushing values</span></span><br><span class="line">      observer.next(<span class="number">1</span>);</span><br><span class="line">      observer.next(<span class="number">2</span>);</span><br><span class="line">      observer.next(<span class="number">3</span>);</span><br><span class="line">      <span class="comment">//complete stream</span></span><br><span class="line">      observer.complete(); </span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//specs</span></span><br><span class="line">  it(<span class="string">'should create the expected sequence (async)'</span>, <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> expected = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], </span><br><span class="line">      index = <span class="number">0</span>;</span><br><span class="line">    basic$</span><br><span class="line">      .subscribe(&#123;</span><br><span class="line">        next: <span class="function"><span class="params">x</span> =&gt;</span> expect(x).toEqual(expected[index++]),</span><br><span class="line">        error: <span class="function"><span class="params">e</span> =&gt;</span> <span class="built_in">console</span>.log(e)</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="eventemitters"><a class="header-anchor" href="#eventemitters"> </a>EventEmitters</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'counter'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;div&gt;</span></span><br><span class="line"><span class="string">      &lt;h1&gt;&#123;&#123;counter&#125;&#125;&lt;/h1&gt;</span></span><br><span class="line"><span class="string">      &lt;button (click)="change(1)"&gt;+1&lt;/button&gt;</span></span><br><span class="line"><span class="string">      &lt;button (click)="change(-1)"&gt;-1&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Counter &#123;</span><br><span class="line">  <span class="meta">@Output</span>() changes = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">this</span>.counter = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  change(increment) &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter += increment;</span><br><span class="line">    <span class="comment">//we use emit as next is marked as deprecated</span></span><br><span class="line">    <span class="keyword">this</span>.changes.emit(<span class="keyword">this</span>.counter);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>測試方式類似Observable</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'EventEmitter: Counter'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> counter;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//setup</span></span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> TestBed.configureTestingModule(&#123;</span><br><span class="line">    providers: [ Counter ]</span><br><span class="line">  &#125;));</span><br><span class="line">  </span><br><span class="line">  beforeEach(inject([Counter], <span class="function"><span class="params">c</span> =&gt;</span> &#123;</span><br><span class="line">    counter = c;</span><br><span class="line">  &#125;))</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//specs</span></span><br><span class="line">  it(<span class="string">'should increment +1 (async)'</span>, <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    counter.changes.subscribe(<span class="function"><span class="params">x</span> =&gt;</span> &#123; </span><br><span class="line">      expect(x).toBe(<span class="number">1</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    counter.change(<span class="number">1</span>);</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should decrement -1 (async)'</span>, <span class="keyword">async</span>(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    counter.changes.subscribe(<span class="function"><span class="params">x</span> =&gt;</span> &#123; </span><br><span class="line">      expect(x).toBe(<span class="number">-1</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    counter.change(<span class="number">-1</span>);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Angular/" rel="tag"># Angular</a>
+          
+            <a href="/tags/學習筆記/" rel="tag"># 學習筆記</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/05/angular2-ssw-testing-angular2-note/" rel="next" title="[Angular] 學習筆記(1) - Techniques and practices for testing Angular 2">
+                <i class="fa fa-chevron-left"></i> [Angular] 學習筆記(1) - Techniques and practices for testing Angular 2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/08/rxjs-context-demo-1/" rel="prev" title="[RxJS]使用情境(1)-FB爬文">
+                [RxJS]使用情境(1)-FB爬文 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    
+      <div>
+        <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
+            
+              <p class="site-author-name" itemprop="name">KevinYang</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">300</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情連結
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jasmine的基本介紹"><span class="nav-number">1.</span> <span class="nav-text"> Jasmine的基本介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#angular-測試"><span class="nav-number">2.</span> <span class="nav-text"> Angular 測試</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#testing-checklist"><span class="nav-number">2.1.</span> <span class="nav-text"> Testing Checklist</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#測試範例"><span class="nav-number">3.</span> <span class="nav-text"> 測試範例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#component"><span class="nav-number">3.1.</span> <span class="nav-text"> Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service"><span class="nav-number">3.2.</span> <span class="nav-text"> Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#using-http"><span class="nav-number">3.3.</span> <span class="nav-text"> Using Http</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#using-mockbackend"><span class="nav-number">3.4.</span> <span class="nav-text"> Using MockBackend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#directive"><span class="nav-number">3.5.</span> <span class="nav-text"> Directive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pipe"><span class="nav-number">3.6.</span> <span class="nav-text"> Pipe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#routes"><span class="nav-number">3.7.</span> <span class="nav-text"> Routes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#observables"><span class="nav-number">3.8.</span> <span class="nav-text"> Observables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eventemitters"><span class="nav-number">3.9.</span> <span class="nav-text"> EventEmitters</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div class="gooAd sidebar-inner" style="display: block;">
+        <!-- Google AdSense start -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- blog-sidebar -->
+<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+     </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2017/01/07/angular-test-learning-note/";
+    this.page.identifier = "2017/01/07/angular-test-learning-note/";
+    this.page.title = '[Angular] 學習筆記(2) - Angular 2 — Testing Guide';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
