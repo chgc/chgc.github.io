@@ -14,7 +14,7 @@
 	
 	<meta property="og:site_name" content="CK&#39;s Notepad">
 	
-		<meta property="og:description" content="&lt;p&gt;&lt;img src=&#34;https://farm1.staticflickr.com/740/32472149965_a7d79c9969_o.png&#34; alt&gt;&lt;/p&gt;
+		<meta property="og:description" content="&lt;p&gt;&lt;img src=&#34;https://farm1.staticflickr.com/740/32472149965_a7d79c9969_o.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Angular會讓View上面的結果與Model的值同步，大部分的時候，我們並不需要去管 &lt;code&gt;change detection&lt;/code&gt;怎麼運作的，但是，了解 &lt;code&gt;change detection&lt;/code&gt;並在適當的時候選擇對的 &lt;code&gt;change detection strategy&lt;/code&gt;，可以增加系統的效能&lt;/p&gt;">
 	
 	<meta name="twitter:card" content="summary_large_image" />
@@ -22,7 +22,7 @@
 	<meta name="twitter:url" content="http://blog.kevinyang.net/2017/01/23/angular2-change-detection/">
 	<meta name="twitter:title" content="[Angular] Change Detection - CK&#39;s Notepad">
 	
-		<meta name="twitter:description" content="&lt;p&gt;&lt;img src=&#34;https://farm1.staticflickr.com/740/32472149965_a7d79c9969_o.png&#34; alt&gt;&lt;/p&gt;
+		<meta name="twitter:description" content="&lt;p&gt;&lt;img src=&#34;https://farm1.staticflickr.com/740/32472149965_a7d79c9969_o.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Angular會讓View上面的結果與Model的值同步，大部分的時候，我們並不需要去管 &lt;code&gt;change detection&lt;/code&gt;怎麼運作的，但是，了解 &lt;code&gt;change detection&lt;/code&gt;並在適當的時候選擇對的 &lt;code&gt;change detection strategy&lt;/code&gt;，可以增加系統的效能&lt;/p&gt;">
 	
     
@@ -53,7 +53,7 @@
 			"@type": "BlogPosting",
 			"headline": "[Angular] Change Detection",
 			
-			"description": "&lt;p&gt;&lt;img src=&#34;https://farm1.staticflickr.com/740/32472149965_a7d79c9969_o.png&#34; alt&gt;&lt;/p&gt;
+			"description": "&lt;p&gt;&lt;img src=&#34;https://farm1.staticflickr.com/740/32472149965_a7d79c9969_o.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Angular會讓View上面的結果與Model的值同步，大部分的時候，我們並不需要去管 &lt;code&gt;change detection&lt;/code&gt;怎麼運作的，但是，了解 &lt;code&gt;change detection&lt;/code&gt;並在適當的時候選擇對的 &lt;code&gt;change detection strategy&lt;/code&gt;，可以增加系統的效能&lt;/p&gt;",
 			
 			"mainEntityOfPage":{
@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/01/23/angular2-change-detection/"
 			},
 			"datePublished": "2017-01-23T02:21:04.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1860,7 +1860,7 @@ h6.categories {
 <li>AJAX Requests</li>
 <li>Timers (setTimeout(), setInterval())</li>
 </ul>
-<h2 id="zone"><a class="header-anchor" href="#zone"> </a>Zone</h2>
+<h2 id="Zone"><a class="header-anchor" href="#Zone"> </a>Zone</h2>
 <p>Angular透過Zone來監控上述行為的變化</p>
 <h1 id="運作原理"><a class="header-anchor" href="#運作原理"> </a>運作原理</h1>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/640/32352266961_1eeb7fba5a_o.png" width="1011" height="659" layout="responsive"></amp-img></div>
@@ -1871,9 +1871,9 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/663/31662279353_4ac2e09719_o.png" width="1014" height="637" layout="responsive"></amp-img></div>
 <p>而在 <code>OnPush</code>模式下，如果該節點沒有發生異動時，就不會往下檢查了</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/437/32480298545_a7aafccf9e_o.png" width="1359" height="918" layout="responsive"></amp-img></div>
-<h1 id="js101-value-types-reference-types比較"><a class="header-anchor" href="#js101-value-types-reference-types比較"> </a>JS101: Value Types &amp; Reference Types比較</h1>
+<h1 id="JS101-Value-Types-Reference-Types比較"><a class="header-anchor" href="#JS101-Value-Types-Reference-Types比較"> </a>JS101: Value Types &amp; Reference Types比較</h1>
 <p>在進入Change Detection Strategy之前，先重新溫習一下Value Types和Reference Type</p>
-<h2 id="value-types-stack-memory"><a class="header-anchor" href="#value-types-stack-memory"> </a>Value Types (Stack Memory)</h2>
+<h2 id="Value-Types-Stack-Memory"><a class="header-anchor" href="#Value-Types-Stack-Memory"> </a>Value Types (Stack Memory)</h2>
 <p>包含以下類別</p>
 <ul>
 <li>string</li>
@@ -1889,7 +1889,7 @@ h6.categories {
 <li>compared by value</li>
 <li>copied by value</li>
 </ol>
-<h2 id="reference-types-heap-memory"><a class="header-anchor" href="#reference-types-heap-memory"> </a>Reference Types (Heap Memory)</h2>
+<h2 id="Reference-Types-Heap-Memory"><a class="header-anchor" href="#Reference-Types-Heap-Memory"> </a>Reference Types (Heap Memory)</h2>
 <p>包含以下類別</p>
 <ul>
 <li>object</li>
@@ -1903,13 +1903,13 @@ h6.categories {
 <li>compared by reference</li>
 <li>copied by reference</li>
 </ol>
-<h1 id="change-detection-strategies"><a class="header-anchor" href="#change-detection-strategies"> </a>Change Detection Strategies</h1>
+<h1 id="Change-Detection-Strategies"><a class="header-anchor" href="#Change-Detection-Strategies"> </a>Change Detection Strategies</h1>
 <p><code>Default</code>和 <code>OnPush</code> 細節部份，可參考這篇<a href="http://blog.kevinyang.net/2016/06/05/angular2-ChangeDetectionStrategy/">[Angular] ChangeDetectionStrategy</a></p>
 <p>根據上面的運作原理，我們可以針對個別的Change Detector做策略上的設定，例如下面的圖</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/753/32328351742_3920853cee_o.png" width="954" height="689" layout="responsive"></amp-img></div>
-<h2 id="onpush"><a class="header-anchor" href="#onpush"> </a>OnPush</h2>
+<h2 id="OnPush"><a class="header-anchor" href="#OnPush"> </a>OnPush</h2>
 <p><code>OnPush</code>的設定方法如下列程式碼</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { Component, Input, ChangeDetectionStrategy } <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>({</span><br><span class="line">  ...</span><br><span class="line">  changeDetection: ChangeDetectionStrategy.OnPush</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> MovieComponent {</span><br><span class="line">  <span class="meta">@Input</span>() movie;</span><br><span class="line">  ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { Component, Input, ChangeDetectionStrategy } <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>({</span><br><span class="line">  ...</span><br><span class="line">  changeDetection: ChangeDetectionStrategy.OnPush</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieComponent</span> </span>{</span><br><span class="line">  <span class="meta">@Input</span>() movie;</span><br><span class="line">  ...</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>當該Component的<code>changeDetection</code>被設定為<code>ChangeDetectionStrategy.OnPush</code>時，這個Component的檢查關注點就只會在 @Input的這個物件上，所以如果想要讓該Component的 <code>DoCheck</code>被觸發，就必須重新指定新的Input Value。</p>
 <p>而這裡應用的的原理是，單獨改變Object內的值而不重新給予一個新的Object，在檢查時，將舊object和異動後的object比較後，結果為兩個是同一個object，所以視為無異動(Reference value的特性)</p>
 <figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = {<span class="attr">title</span>: <span class="string">'kevin'</span>};</span><br><span class="line"><span class="keyword">var</span> obj2 = obj1;</span><br><span class="line">obj2.title = <span class="string">'KEVIN'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj1 == obj2);</span><br><span class="line">&gt; <span class="literal">true</span></span><br><span class="line">obj2 = {<span class="attr">title</span>: <span class="string">'KEVIN'</span>};</span><br><span class="line"><span class="built_in">console</span>.log(obj1 == obj2);</span><br><span class="line">&gt; <span class="literal">false</span></span><br></pre></td></tr></tbody></table></figure>

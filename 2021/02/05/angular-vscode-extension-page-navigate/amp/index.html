@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2021/02/05/angular-vscode-extension-page-navigate/"
 			},
 			"datePublished": "2021-02-05T16:22:09.000Z",
-			"dateModified": "2021-02-18T02:39:29.144Z",
+			"dateModified": "2021-02-18T04:09:35.013Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1856,7 +1856,7 @@ h6.categories {
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>到這邊基本上 Angular 的路由就可以正常運作了</p>
 <p>或許會問說，那 LazyLoading 的部分呢? 很抱歉，在 VSCode Extension Webview 內是不能使用的，所以 <code>loadChildren</code> 的寫法要改成這樣</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{ path: <span class="string">'product'</span>, loadChildren: <span class="function"><span class="params">()</span> =&gt;</span> ProductModule },</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{ <span class="attr">path</span>: <span class="string">'product'</span>, <span class="attr">loadChildren</span>: <span class="function">() =&gt;</span> ProductModule },</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

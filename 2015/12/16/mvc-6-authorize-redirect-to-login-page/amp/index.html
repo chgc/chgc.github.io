@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/12/16/mvc-6-authorize-redirect-to-login-page/"
 			},
 			"datePublished": "2015-12-16T05:23:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,7 +1842,7 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p><a href="http://docs.asp.net/en/latest/security/authorization/simple.html" target="_blank" rel="noopener">http://docs.asp.net/en/latest/security/authorization/simple.html</a>
+			  		<p><a href="http://docs.asp.net/en/latest/security/authorization/simple.html">http://docs.asp.net/en/latest/security/authorization/simple.html</a>
 這裡描述怎麼設定頁面授權的方式，<s>可是卻都沒有提到如果說沒授權的人要頁面轉至登入畫面的方式</s></p>
 <p>經過網頁上的查詢及測試後. 在1.0.0-rc1-update1的版本裡，設定方式如下</p>
 <ol>
@@ -1862,9 +1862,9 @@ AuthenticationScheme: The AuthenticationScheme in the options corresponds to the
 <p>這表示在Controller裡的[Authorize]可以指定AuthenticationScheme, 就可以做出很有彈性的權限設定轉址或是其他後續動作了</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Authorize(ActiveAuthenticationSchemes ="abc")]</span><br><span class="line">public IActionResult Index(){}</span><br></pre></td></tr></tbody></table></figure>
 <p>##update
-設定頁面授權的方式在這裡 <a href="http://docs.asp.net/en/latest/security/authentication/cookie.html" target="_blank" rel="noopener">http://docs.asp.net/en/latest/security/authentication/cookie.html</a></p>
-<h3 id="reference"><a class="header-anchor" href="#reference"> </a>Reference</h3>
-<p><a href="http://blueprogram.blogspot.tw/2015/12/aspnet-5mvc-6-claim.html" target="_blank" rel="noopener">ASP.NET 5/MVC 6 自訂使用Claim驗証</a></p>
+設定頁面授權的方式在這裡 <a href="http://docs.asp.net/en/latest/security/authentication/cookie.html">http://docs.asp.net/en/latest/security/authentication/cookie.html</a></p>
+<h3 id="Reference"><a class="header-anchor" href="#Reference"> </a>Reference</h3>
+<p><a href="http://blueprogram.blogspot.tw/2015/12/aspnet-5mvc-6-claim.html">ASP.NET 5/MVC 6 自訂使用Claim驗証</a></p>
 
 			  		
 			  		<!-- google Adsense -->

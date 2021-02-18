@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/08/01/ef-oracle-code-first/"
 			},
 			"datePublished": "2018-08-01T07:07:15.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.889Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1856,10 +1856,10 @@ h6.categories {
 <a id="more"></a>
 <h1 id="事前準備"><a class="header-anchor" href="#事前準備"> </a>事前準備</h1>
 <p>在開始之前，先假設 Oracle 的環境是非常乾淨的，就只能用 system 帳號做連線，我們可以先用 <code>Oracle SQL Developer</code> 工具來測試連線，使用 system 的帳號登入後，我們要先新增使用者</p>
-<h2 id="建立-tablespace"><a class="header-anchor" href="#建立-tablespace"> </a>建立 TableSpace</h2>
+<h2 id="建立-TableSpace"><a class="header-anchor" href="#建立-TableSpace"> </a>建立 TableSpace</h2>
 <p>由於 Oracle 只能有一個資料庫 (Database)，當想要做到多資料庫的格式，就得透過 Tablespace 的方式來完成。Tablespace 可以想程式一個資料表的集合，而使用者也可以指定使用特定的 Tablespace，這表示一個使用者帳號就可以代表是一個資料庫</p>
 <p>建立 tablespace 的方法，如果是使用 <code>Oracle SQL Developer</code> 者，就需要透過指令的方式來建立，建立後，似乎沒有辦法再改名稱了。所以要小心</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span>  <span class="keyword">TABLESPACE</span> <span class="string">"NewTableSpace"</span> </span><br><span class="line"><span class="keyword">DATAFILE</span> <span class="string">'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\Northwind'</span> <span class="keyword">SIZE</span> <span class="number">100</span> M <span class="comment">-- 存放位置與預設初始檔案大小</span></span><br><span class="line"><span class="keyword">AUTOEXTEND</span> <span class="keyword">ON</span> <span class="keyword">NEXT</span> <span class="number">10</span> M <span class="comment">-- 當資料大小已經增加到原先設定容量時，是否會自動依據設定增加容量</span></span><br><span class="line"><span class="keyword">MAXSIZE</span> <span class="keyword">UNLIMITED</span> ; <span class="comment">-- 檔案無大小上限</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span>  TABLESPACE "NewTableSpace" </span><br><span class="line">DATAFILE <span class="string">'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\Northwind'</span> SIZE <span class="number">100</span> M <span class="comment">-- 存放位置與預設初始檔案大小</span></span><br><span class="line">AUTOEXTEND <span class="keyword">ON</span> NEXT <span class="number">10</span> M <span class="comment">-- 當資料大小已經增加到原先設定容量時，是否會自動依據設定增加容量</span></span><br><span class="line">MAXSIZE UNLIMITED ; <span class="comment">-- 檔案無大小上限</span></span><br></pre></td></tr></tbody></table></figure>
 <h2 id="建立使用者"><a class="header-anchor" href="#建立使用者"> </a>建立使用者</h2>
 <p>來新增一個使用者，等一下做 EF 時可以用，新增步驟如下</p>
 <p>(使用 Oracle SQL Developer Tool)</p>
@@ -1896,14 +1896,14 @@ h6.categories {
 <p>完成設定後就按下【套用】執行，完成使用者建立</p>
 </li>
 </ol>
-<h1 id="建立-net-專案"><a class="header-anchor" href="#建立-net-專案"> </a>建立 .NET 專案</h1>
+<h1 id="建立-NET-專案"><a class="header-anchor" href="#建立-NET-專案"> </a>建立 .NET 專案</h1>
 <ol>
 <li>
 <p>先建立一個 Console 專案</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KECe5OQ.png" width="941" height="653" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<h2 id="安裝-oracle-entityframework-套件"><a class="header-anchor" href="#安裝-oracle-entityframework-套件"> </a>安裝 Oracle EntityFramework 套件</h2>
+<h2 id="安裝-Oracle-EntityFramework-套件"><a class="header-anchor" href="#安裝-Oracle-EntityFramework-套件"> </a>安裝 Oracle EntityFramework 套件</h2>
 <ol>
 <li>
 <p>打開 Nuget 管理工具</p>
@@ -1920,9 +1920,9 @@ h6.categories {
 </ol>
 <p>※ 在 readme.txt 的內容要稍微看一下</p>
 <blockquote>
-<p>Note: The 32-bit 「Oracle Developer Tools for Visual Studio」 download from <a href="http://otn.oracle.com/dotnet" target="_blank" rel="noopener">http://otn.oracle.com/dotnet</a> is
+<p>Note: The 32-bit 「Oracle Developer Tools for Visual Studio」 download from <a href="http://otn.oracle.com/dotnet">http://otn.oracle.com/dotnet</a> is
 required for Entity Framework design-time features. This NuGet download does not enable design-time tools; it
-only provides run-time support. This version of <a href="http://ODP.NET" target="_blank" rel="noopener">ODP.NET</a> for Entity Framework supports Oracle Database version
+only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET</a> for Entity Framework supports Oracle Database version
 10.2 and higher.</p>
 </blockquote>
 <h2 id="設定連線"><a class="header-anchor" href="#設定連線"> </a>設定連線</h2>
@@ -1937,7 +1937,7 @@ only provides run-time support. This version of <a href="http://ODP.NET" target=
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/6qI3wMa.png" width="1231" height="376" layout="responsive"></amp-img></div>
 </li>
 </ol>
-<h2 id="建立-dbcontext"><a class="header-anchor" href="#建立-dbcontext"> </a>建立 DbContext</h2>
+<h2 id="建立-DbContext"><a class="header-anchor" href="#建立-DbContext"> </a>建立 DbContext</h2>
 <p>這裡的動作與一般操作 Entity Framework 是一樣的</p>
 <ul>
 <li>
@@ -1946,11 +1946,11 @@ only provides run-time support. This version of <a href="http://ODP.NET" target=
 </li>
 <li>
 <p>建立 <code>Employee.cs</code> 檔案</p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Employee</span></span><br><span class="line">  {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Employee</span></span><br><span class="line">  {</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Name { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>設定 <code>program.cs</code> ，啟動 EF 並塞入一筆資料</p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">  {</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">      Database.SetInitializer(<span class="keyword">new</span> DropCreateDatabaseAlways&lt;OracleDbContext&gt;());</span><br><span class="line"></span><br><span class="line">      <span class="keyword">using</span> (OracleDbContext ctx = <span class="keyword">new</span> OracleDbContext())</span><br><span class="line">      {</span><br><span class="line">        Employee emp = <span class="keyword">new</span> Employee()</span><br><span class="line">        {</span><br><span class="line">          Name = <span class="string">"Kevin"</span></span><br><span class="line">        };</span><br><span class="line"></span><br><span class="line">        ctx.Employees.Add(emp);</span><br><span class="line">        ctx.SaveChanges();</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">  {</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">      Database.SetInitializer(<span class="keyword">new</span> DropCreateDatabaseAlways&lt;OracleDbContext&gt;());</span><br><span class="line"></span><br><span class="line">      <span class="keyword">using</span> (OracleDbContext ctx = <span class="keyword">new</span> OracleDbContext())</span><br><span class="line">      {</span><br><span class="line">        Employee emp = <span class="keyword">new</span> Employee()</span><br><span class="line">        {</span><br><span class="line">          Name = <span class="string">"Kevin"</span></span><br><span class="line">        };</span><br><span class="line"></span><br><span class="line">        ctx.Employees.Add(emp);</span><br><span class="line">        ctx.SaveChanges();</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>第一次執行，因為 <code>DropCreateDatabaseAlways</code> 的關係，所以會建立資料表，<strong>這模式不適合以在開發的系統</strong>，請留意!!</p>
@@ -1977,7 +1977,7 @@ only provides run-time support. This version of <a href="http://ODP.NET" target=
 </li>
 <li>
 <p>修改 <code>Employee</code> 資料表內容，新增 <code>address</code> 欄位</p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Employee</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Address { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Employee</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Name { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Address { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>新增 <code>migrations</code> 檔案，<code>add-migration &lt;filename&gt;</code></p>
@@ -2004,9 +2004,9 @@ only provides run-time support. This version of <a href="http://ODP.NET" target=
 <p>關於 EF 相關的操作方式，請參閱 Entity Framework 的相關文件，這邊只針對 Oracle Entity Framework 要怎麼連線及相關設定的說明。畢竟有些細節的部分與 MSSQL 的連線是不一樣的。</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/db/dotnet/CodeFirst/index.html#overview" target="_blank" rel="noopener">Entity Framework Code First and Code First Migrations for Oracle Database</a></li>
-<li><a href="http://kevintsengtw.blogspot.com/2011/11/aspnet-mvc-oracle-11g-xe-entity_13.html" target="_blank" rel="noopener">ASP.NET MVC + Oracle 11g XE + Entity Framework. Part 2</a></li>
-<li><a href="https://dotblogs.com.tw/vitochiang/2016/01/19/oracle-manageddataaccess-entityframework" target="_blank" rel="noopener">【EF-Oracle-01】使用 Entity Framework 連結 Oracle 資料庫</a></li>
+<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/db/dotnet/CodeFirst/index.html#overview">Entity Framework Code First and Code First Migrations for Oracle Database</a></li>
+<li><a href="http://kevintsengtw.blogspot.com/2011/11/aspnet-mvc-oracle-11g-xe-entity_13.html">ASP.NET MVC + Oracle 11g XE + Entity Framework. Part 2</a></li>
+<li><a href="https://dotblogs.com.tw/vitochiang/2016/01/19/oracle-manageddataaccess-entityframework">【EF-Oracle-01】使用 Entity Framework 連結 Oracle 資料庫</a></li>
 </ul>
 <p>​</p>
 

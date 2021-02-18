@@ -1,116 +1,33 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-TW">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-TW">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
 
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-<link rel="stylesheet" href="/css/main.css?v=7.2.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.2.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
-    back2top: true,
-    back2top_sidebar: false,
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
- <script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-     google_ad_client: "ca-pub-7997572949867824",
-     enable_page_level_ads: true
-   });
- </script>
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content="Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。 Angular 有內建了一些 Pipe 像是 DatePipe、 UpperCasePipe、LowerCasePipe、 CurrencyPipe 和 PercentPipe及其他的 Pipe。當然 Angular 也允許讓我們自訂 Pipe">
-<meta name="keywords" content="Angular">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Angular] Pipe">
 <meta property="og:url" content="http://blog.kevinyang.net/2017/05/13/angular-pipe/index.html">
 <meta property="og:site_name" content="CK&#39;s Notepad">
 <meta property="og:description" content="Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。 Angular 有內建了一些 Pipe 像是 DatePipe、 UpperCasePipe、LowerCasePipe、 CurrencyPipe 和 PercentPipe及其他的 Pipe。當然 Angular 也允許讓我們自訂 Pipe">
-<meta property="og:locale" content="zh-TW">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://farm5.staticflickr.com/4159/34581824156_b21fe3eecf_o.png">
 <meta property="og:image" content="https://farm5.staticflickr.com/4187/33813227533_255dea8cb8_o.png">
 <meta property="og:image" content="https://farm5.staticflickr.com/4165/34623295465_458e50f4b6_o.png">
@@ -121,49 +38,37 @@
 <meta property="og:image" content="https://farm5.staticflickr.com/4180/34288536410_a1b29ab000_o.png">
 <meta property="og:image" content="https://farm5.staticflickr.com/4170/34512030522_8b45394b1e_o.png">
 <meta property="og:image" content="https://farm5.staticflickr.com/4191/34673947075_be9600bd26_o.png">
-<meta property="og:updated_time" content="2021-02-18T02:39:29.008Z">
+<meta property="article:published_time" content="2017-05-13T02:16:55.000Z">
+<meta property="article:modified_time" content="2021-02-18T04:09:34.885Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[Angular] Pipe">
-<meta name="twitter:description" content="Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。 Angular 有內建了一些 Pipe 像是 DatePipe、 UpperCasePipe、LowerCasePipe、 CurrencyPipe 和 PercentPipe及其他的 Pipe。當然 Angular 也允許讓我們自訂 Pipe">
 <meta name="twitter:image" content="https://farm5.staticflickr.com/4159/34581824156_b21fe3eecf_o.png">
 
+<link rel="canonical" href="http://blog.kevinyang.net/2017/05/13/angular-pipe/">
 
 
-  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
-
-
-
-  
-  
-  <link rel="canonical" href="http://blog.kevinyang.net/2017/05/13/angular-pipe/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
   };
 </script>
 
   <title>[Angular] Pipe | CK's Notepad</title>
   
-
-
-
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-56711593-1');
-    }
-  </script>
-
-
-
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
 
 
 
@@ -172,7 +77,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -181,9 +85,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -195,289 +98,172 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">CK's Notepad</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="切換導航欄">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
             
 
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/05/13/angular-pipe/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="CK's Notepad">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">[Angular] Pipe
-
-              
-            
-          </h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] Pipe
+        </h1>
 
         <div class="post-meta">
-
-          
-          
-          
-
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">發表於</span>
 
               <time title="創建時間：2017-05-13 10:16:55" itemprop="dateCreated datePublished" datetime="2017-05-13T10:16:55+08:00">2017-05-13</time>
             </span>
-          
-
-          
-
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
                 </span>
-            
-                <span class="post-meta-item-text">評論數：</span>
-                <a href="/2017/05/13/angular-pipe/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/13/angular-pipe/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
+            </span>
 
           
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/05/13/angular-pipe/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/13/angular-pipe/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
-    
 
     
     
@@ -485,17 +271,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
-<p>Angular 有內建了一些 Pipe 像是 <code>DatePipe</code>、 <code>UpperCasePipe</code>、<code>LowerCasePipe</code>、 <code>CurrencyPipe</code> 和 <code>PercentPipe</code>及其他的 <a href="https://angular.io/docs/ts/latest/api/#!?query=pipe" target="_blank" rel="noopener">Pipe</a>。當然 Angular 也允許讓我們自訂 Pipe 的功能。</p>
+<p>Angular 有內建了一些 Pipe 像是 <code>DatePipe</code>、 <code>UpperCasePipe</code>、<code>LowerCasePipe</code>、 <code>CurrencyPipe</code> 和 <code>PercentPipe</code>及其他的 <a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/api/#!?query=pipe">Pipe</a>。當然 Angular 也允許讓我們自訂 Pipe 的功能。</p>
 <a id="more"></a>
 <p>先從內建的 Pipe 介紹起</p>
-<h1 id="內建-pipe"><a class="header-anchor" href="#內建-pipe"> </a>內建 Pipe</h1>
-<p>在詳細介紹內建 <code>Pipe</code>之前，有一點要注意的是，如果有使用到 <code>DatePipe</code> 和 <code>CurrencyPipe</code> 時，要在舊版瀏覽器上正常運作的話，需要額外再加上一個 polyfill 的 library</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="datepipe"><a class="header-anchor" href="#datepipe"> </a>DatePipe</h2>
+<h1 id="內建-Pipe"><a class="header-anchor" href="#內建-Pipe"> </a>內建 Pipe</h1>
+<p>在詳細介紹內建 <code>Pipe </code>之前，有一點要注意的是，如果有使用到 <code>DatePipe</code> 和 <code>CurrencyPipe</code> 時，要在舊版瀏覽器上正常運作的話，需要額外再加上一個 polyfill 的 library</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="DatePipe"><a class="header-anchor" href="#DatePipe"> </a>DatePipe</h2>
 <h3 id="功能"><a class="header-anchor" href="#功能"> </a>功能</h3>
 <p>將日期根據當地的顯示規則顯示</p>
 <h3 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h3>
@@ -505,24 +288,24 @@
 <h3 id="說明"><a class="header-anchor" href="#說明"> </a>說明</h3>
 <ul>
 <li>
-<p><code>date_expression</code> 必須是日期型別的物件或是數字(milliseconds) 或是 <a href="https://www.w3.org/TR/NOTE-datetime" target="_blank" rel="noopener">ISO文字</a></p>
+<p><code>date_expression</code> 必須是日期型別的物件或是數字(milliseconds) 或是 <a target="_blank" rel="noopener" href="https://www.w3.org/TR/NOTE-datetime">ISO 文字</a></p>
 </li>
 <li>
 <p><code>format</code> 可以用來調整要顯示的日期格式，可以使用的格式說明如下</p>
 <ul>
-<li><code>'short'</code>: 相當於  <code>'yMdjm'</code> (例如  <code>9/3/2010, 12:05 PM</code> for <code>en-US</code>)</li>
+<li><code>'short'</code>: 相當於 <code>'yMdjm'</code> (例如 <code>9/3/2010, 12:05 PM</code> for <code>en-US</code>)</li>
 <li><code>'medium'</code>: 相當於 <code>'yMMMdjms'</code> (例如 <code>Sep 3, 2010, 12:05:08 PM</code> for <code>en-US</code>)</li>
 <li><code>long</code>: 相當於 <code>MMMM d, y, h:mm:ss a z</code> (例如 <code>June 15, 2015 at 9:03:01 AM GMT+1</code>)</li>
 <li><code>'full'</code>: 相當於 <code>'EEEE, MMMM d, y, h:mm:ss a zzzz'</code> (例如 <code>Monday, June 15, 2015 at 9:03:01 AM GMT+01:00</code>)</li>
-<li><code>'fullDate'</code>: 相當於  <code>'yMMMMEEEEd'</code> (例如  <code>Friday, September 3, 2010</code> for <code>en-US</code>)</li>
-<li><code>'shortDate'</code>: 相當於  <code>'yMd'</code> (例如  <code>9/3/2010</code> for <code>en-US</code>)</li>
-<li><code>'longDate'</code>: 相當於  <code>'yMMMMd'</code> (例如  <code>September 3, 2010</code> for <code>en-US</code>)</li>
-<li><code>'mediumDate'</code>: 相當於 <code>'yMMMd'</code> (例如  <code>Sep 3, 2010</code> for <code>en-US</code>)</li>
-<li><code>'fullDate'</code>: 相當於  <code>'EEEE, MMMM d, y'</code> (例如   <code>Monday, June 15, 2015</code>)</li>
-<li><code>'shortTime'</code>: 相當於  <code>'jm'</code> (例如  <code>12:05 PM</code> for <code>en-US</code>)</li>
-<li><code>'mediumTime'</code>: 相當於 <code>jms'</code> (例如  <code>12:05:08 PM</code> for <code>en-US</code>)</li>
-<li><code>'longTime'</code>: 相當於  <code>'h:mm:ss a z'</code> (例如 <code>9:03:01 AM GMT+1</code>)</li>
-<li><code>'fullTime'</code>: 相當於  <code>'h:mm:ss a zzzz'</code> (例如 <code>9:03:01 AM GMT+01:00</code>)</li>
+<li><code>'fullDate'</code>: 相當於 <code>'yMMMMEEEEd'</code> (例如 <code>Friday, September 3, 2010</code> for <code>en-US</code>)</li>
+<li><code>'shortDate'</code>: 相當於 <code>'yMd'</code> (例如 <code>9/3/2010</code> for <code>en-US</code>)</li>
+<li><code>'longDate'</code>: 相當於 <code>'yMMMMd'</code> (例如 <code>September 3, 2010</code> for <code>en-US</code>)</li>
+<li><code>'mediumDate'</code>: 相當於 <code>'yMMMd'</code> (例如 <code>Sep 3, 2010</code> for <code>en-US</code>)</li>
+<li><code>'fullDate'</code>: 相當於 <code>'EEEE, MMMM d, y'</code> (例如 <code>Monday, June 15, 2015</code>)</li>
+<li><code>'shortTime'</code>: 相當於 <code>'jm'</code> (例如 <code>12:05 PM</code> for <code>en-US</code>)</li>
+<li><code>'mediumTime'</code>: 相當於 <code>jms'</code> (例如 <code>12:05:08 PM</code> for <code>en-US</code>)</li>
+<li><code>'longTime'</code>: 相當於 <code>'h:mm:ss a z'</code> (例如 <code>9:03:01 AM GMT+1</code>)</li>
+<li><code>'fullTime'</code>: 相當於 <code>'h:mm:ss a zzzz'</code> (例如 <code>9:03:01 AM GMT+01:00</code>)</li>
 </ul>
 <table>
 <thead>
@@ -532,7 +315,7 @@
 <th>短表示</th>
 <th>長表示</th>
 <th>數值</th>
-<th>2位數</th>
+<th>2 位數</th>
 </tr>
 </thead>
 <tbody>
@@ -540,7 +323,7 @@
 <td>ear</td>
 <td>G</td>
 <td>GGG(AD)</td>
-<td>GGGG<br>(Anno Domini)</td>
+<td>GGGG<br/>(Anno Domini)</td>
 <td></td>
 <td></td>
 </tr>
@@ -556,7 +339,7 @@
 <td>month</td>
 <td>M</td>
 <td>MMM(Sep)</td>
-<td>MMMM<br>(September)</td>
+<td>MMMM<br/>(September)</td>
 <td>M(9)</td>
 <td>MM(09)</td>
 </tr>
@@ -572,7 +355,7 @@
 <td>weekday</td>
 <td>E</td>
 <td>EEE(Sun)</td>
-<td>EEEE<br>(Sunday)</td>
+<td>EEEE<br/>(Sunday)</td>
 <td></td>
 <td></td>
 </tr>
@@ -620,7 +403,7 @@
 <td>timezone</td>
 <td>z</td>
 <td></td>
-<td>z <br>(Pacific Standard Time)</td>
+<td>z <br/>(Pacific Standard Time)</td>
 <td></td>
 <td></td>
 </tr>
@@ -645,10 +428,10 @@
 </li>
 </ul>
 <h3 id="範例"><a class="header-anchor" href="#範例"> </a>範例</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;DatePipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; dateObj | date &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; dateObj | date:'medium' &#125;&#125; &lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; dateObj | date:'shortTime' &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; dateObj | date:'mmss' &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  dateObj = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;DatePipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; dateObj | date &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; dateObj | date: &#x27;medium&#x27; &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; dateObj | date: &#x27;shortTime&#x27; &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; dateObj | date: &#x27;mmss&#x27; &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  dateObj = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4159/34581824156_b21fe3eecf_o.png" alt></p>
-<h2 id="uppercasepipe"><a class="header-anchor" href="#uppercasepipe"> </a>UpperCasePipe</h2>
+<p><img src="https://farm5.staticflickr.com/4159/34581824156_b21fe3eecf_o.png" alt=""></p>
+<h2 id="UpperCasePipe"><a class="header-anchor" href="#UpperCasePipe"> </a>UpperCasePipe</h2>
 <h3 id="功能-v2"><a class="header-anchor" href="#功能-v2"> </a>功能</h3>
 <p>將所有英文字轉換成大寫</p>
 <h3 id="使用方式-v2"><a class="header-anchor" href="#使用方式-v2"> </a>使用方式</h3>
@@ -656,28 +439,28 @@
 <p>string_expression | uppercase</p>
 </blockquote>
 <h3 id="範例-v2"><a class="header-anchor" href="#範例-v2"> </a>範例</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;UpperCase&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; display | uppercase &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  display = <span class="string">'this is upperCase testcase'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;UpperCase&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; display | uppercase &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  display = <span class="string">&#x27;this is upperCase testcase&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4187/33813227533_255dea8cb8_o.png" alt></p>
-<h2 id="lowercasepipe"><a class="header-anchor" href="#lowercasepipe"> </a>LowerCasePipe</h2>
+<p><img src="https://farm5.staticflickr.com/4187/33813227533_255dea8cb8_o.png" alt=""></p>
+<h2 id="LowerCasePipe"><a class="header-anchor" href="#LowerCasePipe"> </a>LowerCasePipe</h2>
 <h3 id="功能-v3"><a class="header-anchor" href="#功能-v3"> </a>功能</h3>
 <p>將所有英文字轉換成小寫</p>
 <h3 id="使用方式-v3"><a class="header-anchor" href="#使用方式-v3"> </a>使用方式</h3>
 <p>string_expression | lowercase</p>
 <h3 id="範例-v3"><a class="header-anchor" href="#範例-v3"> </a>範例</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;LowerCasePipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; display | lowercase &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  display = <span class="string">'this is LOWERCASE testcase'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;LowerCasePipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; display | lowercase &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  display = <span class="string">&#x27;this is LOWERCASE testcase&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4165/34623295465_458e50f4b6_o.png" alt></p>
-<h2 id="titlecasepipe"><a class="header-anchor" href="#titlecasepipe"> </a>TitleCasePipe</h2>
+<p><img src="https://farm5.staticflickr.com/4165/34623295465_458e50f4b6_o.png" alt=""></p>
+<h2 id="TitleCasePipe"><a class="header-anchor" href="#TitleCasePipe"> </a>TitleCasePipe</h2>
 <h3 id="功能-v4"><a class="header-anchor" href="#功能-v4"> </a>功能</h3>
 <p>將每一個英文單字的第一個字母變成大寫</p>
 <h3 id="使用方式-v4"><a class="header-anchor" href="#使用方式-v4"> </a>使用方式</h3>
 <p>string_expression | titlecase</p>
 <h3 id="範例-v4"><a class="header-anchor" href="#範例-v4"> </a>範例</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;TitleCasePipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; display | titlecase &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  display = <span class="string">'this is TILECASE testcase'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;TitleCasePipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123; display | titlecase &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  display = <span class="string">&#x27;this is TILECASE testcase&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4183/34581944296_a977159858_o.png" alt></p>
-<h2 id="currencypipe"><a class="header-anchor" href="#currencypipe"> </a>CurrencyPipe</h2>
+<p><img src="https://farm5.staticflickr.com/4183/34581944296_a977159858_o.png" alt=""></p>
+<h2 id="CurrencyPipe"><a class="header-anchor" href="#CurrencyPipe"> </a>CurrencyPipe</h2>
 <h3 id="功能-v5"><a class="header-anchor" href="#功能-v5"> </a>功能</h3>
 <p>將數字根據當地貨幣的顯示規則顯示</p>
 <h3 id="使用方式-v5"><a class="header-anchor" href="#使用方式-v5"> </a>使用方式</h3>
@@ -687,20 +470,20 @@
 <h3 id="說明-v2"><a class="header-anchor" href="#說明-v2"> </a>說明</h3>
 <ul>
 <li>只接收數字型別的資料</li>
-<li><code>currencyCode</code> 是 <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank" rel="noopener">ISO 4217</a> 貨幣代碼，例如  <code>USD</code> 代表美金， <code>TWD</code> 代表新台幣。</li>
+<li><code>currencyCode</code> 是 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> 貨幣代碼，例如 <code>USD</code> 代表美金， <code>TWD</code> 代表新台幣。</li>
 <li><code>symbolDisplay</code> 是布林值，用來決定是否顯示貨幣符號或是貨幣代碼
 <ul>
 <li><code>true</code> 使用符號 (例如 <code>$</code>).</li>
 <li><code>false</code> (預設): 使用貨幣代碼 (e.g. <code>USD</code>).</li>
 </ul>
 </li>
-<li><code>digitInfo</code> 請參閱<a href="https://angular.io/docs/ts/latest/api/common/index/DecimalPipe-pipe.html" target="_blank" rel="noopener"><code>DecimalPipe</code></a> 的說明.</li>
+<li><code>digitInfo</code> 請參閱<a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/api/common/index/DecimalPipe-pipe.html"><code>DecimalPipe</code></a> 的說明.</li>
 </ul>
 <h3 id="範例-v5"><a class="header-anchor" href="#範例-v5"> </a>範例</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;CurrencyPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;A: &#123;&#123;a | currency:'USD':false&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;B: &#123;&#123;b | currency:'USD':true:'4.2-2'&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;C: &#123;&#123;c | currency:'TWD':false&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;D: &#123;&#123;d | currency:'TWD':true:'4.2-2'&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  a: <span class="built_in">number</span> = <span class="number">0.259</span>;</span><br><span class="line">  b: <span class="built_in">number</span> = <span class="number">1.3495</span>;</span><br><span class="line">  c: <span class="built_in">number</span> = <span class="number">15000</span>;</span><br><span class="line">  d: <span class="built_in">number</span> = <span class="number">20000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;CurrencyPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;A: &#123;&#123; a | currency: &#x27;USD&#x27;:false &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;B: &#123;&#123; b | currency: &#x27;USD&#x27;:true:&#x27;4.2-2&#x27; &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;C: &#123;&#123; c | currency: &#x27;TWD&#x27;:false &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;D: &#123;&#123; d | currency: &#x27;TWD&#x27;:true:&#x27;4.2-2&#x27; &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  a: <span class="built_in">number</span> = <span class="number">0.259</span>;</span><br><span class="line">  b: <span class="built_in">number</span> = <span class="number">1.3495</span>;</span><br><span class="line">  c: <span class="built_in">number</span> = <span class="number">15000</span>;</span><br><span class="line">  d: <span class="built_in">number</span> = <span class="number">20000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4178/34623423285_752310283f_o.png" alt></p>
-<h2 id="percentpipe"><a class="header-anchor" href="#percentpipe"> </a>PercentPipe</h2>
+<p><img src="https://farm5.staticflickr.com/4178/34623423285_752310283f_o.png" alt=""></p>
+<h2 id="PercentPipe"><a class="header-anchor" href="#PercentPipe"> </a>PercentPipe</h2>
 <h3 id="功能-v6"><a class="header-anchor" href="#功能-v6"> </a>功能</h3>
 <p>將數字根據當地顯示規則顯示百分比</p>
 <h3 id="使用方式-v6"><a class="header-anchor" href="#使用方式-v6"> </a>使用方式</h3>
@@ -710,13 +493,13 @@
 <h3 id="說明-v3"><a class="header-anchor" href="#說明-v3"> </a>說明</h3>
 <ul>
 <li>只接收數字型別的資料</li>
-<li><code>digitInfo</code> 請參閱<a href="https://angular.io/docs/ts/latest/api/common/index/DecimalPipe-pipe.html" target="_blank" rel="noopener"><code>DecimalPipe</code></a> 的說明.</li>
+<li><code>digitInfo</code> 請參閱<a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/api/common/index/DecimalPipe-pipe.html"><code>DecimalPipe</code></a> 的說明.</li>
 </ul>
 <h3 id="範例-v6"><a class="header-anchor" href="#範例-v6"> </a>範例</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;PercentPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;A: &#123;&#123;a | percent&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;B: &#123;&#123;b | percent:'4.3-5'&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  a: <span class="built_in">number</span> = <span class="number">0.259</span>;</span><br><span class="line">  b: <span class="built_in">number</span> = <span class="number">1.3495</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;PercentPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;A: &#123;&#123; a | percent &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;B: &#123;&#123; b | percent: &#x27;4.3-5&#x27; &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  a: <span class="built_in">number</span> = <span class="number">0.259</span>;</span><br><span class="line">  b: <span class="built_in">number</span> = <span class="number">1.3495</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4175/34582068606_8f95ef28c1_o.png" alt></p>
-<h2 id="decimalpipe"><a class="header-anchor" href="#decimalpipe"> </a>DecimalPipe</h2>
+<p><img src="https://farm5.staticflickr.com/4175/34582068606_8f95ef28c1_o.png" alt=""></p>
+<h2 id="DecimalPipe"><a class="header-anchor" href="#DecimalPipe"> </a>DecimalPipe</h2>
 <h3 id="功能-v7"><a class="header-anchor" href="#功能-v7"> </a>功能</h3>
 <p>將數字根據當地顯示規則顯示</p>
 <h3 id="使用方式-v7"><a class="header-anchor" href="#使用方式-v7"> </a>使用方式</h3>
@@ -732,17 +515,17 @@
 <p><code>digitInfo</code> 以文字形式來設定數字顯示規則</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;minIntegerDigits&#125;.&#123;minFractionDigits&#125;-&#123;maxFractionDigits&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>minIntegerDigits</code>  是整數最小顯示位數，預設為 <code>1</code>.</li>
+<li><code>minIntegerDigits</code> 是整數最小顯示位數，預設為 <code>1</code>.</li>
 <li><code>minFractionDigits</code> 是小數點後最小顯示位數，預設為 <code>0</code>.</li>
 <li><code>maxFractionDigits</code> 是小數點後最大顯示位數，預設為 <code>3</code></li>
 </ul>
 </li>
 </ul>
 <h3 id="範例-v7"><a class="header-anchor" href="#範例-v7"> </a>範例</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;DecimalPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;e (no formatting): &#123;&#123;e&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;e (3.1-5): &#123;&#123;e | number:'3.1-5'&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;pi (no formatting): &#123;&#123;pi&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;pi (3.5-5): &#123;&#123;pi | number:'3.5-5'&#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  pi: <span class="built_in">number</span> = <span class="number">3.141592</span>;</span><br><span class="line">  e: <span class="built_in">number</span> = <span class="number">2.718281828459045</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h1&gt;DecimalPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;e (no formatting): &#123;&#123; e &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;e (3.1-5): &#123;&#123; e | number: &#x27;3.1-5&#x27; &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;pi (no formatting): &#123;&#123; pi &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;pi (3.5-5): &#123;&#123; pi | number: &#x27;3.5-5&#x27; &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  pi: <span class="built_in">number</span> = <span class="number">3.141592</span>;</span><br><span class="line">  e: <span class="built_in">number</span> = <span class="number">2.718281828459045</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4157/34461393612_3e66c3de42_o.png" alt></p>
-<h2 id="jsonpipe"><a class="header-anchor" href="#jsonpipe"> </a>JsonPipe</h2>
+<p><img src="https://farm5.staticflickr.com/4157/34461393612_3e66c3de42_o.png" alt=""></p>
+<h2 id="JsonPipe"><a class="header-anchor" href="#JsonPipe"> </a>JsonPipe</h2>
 <h3 id="功能-v8"><a class="header-anchor" href="#功能-v8"> </a>功能</h3>
 <p>將值轉換成 JSON 文字</p>
 <h3 id="使用方式-v8"><a class="header-anchor" href="#使用方式-v8"> </a>使用方式</h3>
@@ -752,10 +535,10 @@
 <li>使用 <code>JSON.stringify</code> 的方法將值轉換成文字</li>
 </ul>
 <h3 id="範例-v8"><a class="header-anchor" href="#範例-v8"> </a>範例</h3>
-<p>​<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;JsonPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Without JSON pipe:&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;pre&gt;&#123;&#123;object&#125;&#125;&lt;/pre&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;With JSON pipe:&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;pre&gt;&#123;&#123;object | json&#125;&#125;&lt;/pre&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  object: <span class="built_in">Object</span> = &#123;</span><br><span class="line">    foo: <span class="string">'bar'</span>,</span><br><span class="line">    baz: <span class="string">'qux'</span>,</span><br><span class="line">    nested: &#123;xyz: <span class="number">3</span>, numbers: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]&#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;div&gt;</span></span><br><span class="line"><span class="string">      &lt;h1&gt;JsonPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;Without JSON pipe:&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;pre&gt;&#123;&#123; object &#125;&#125;&lt;/pre&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;With JSON pipe:&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;pre&gt;&#123;&#123; object | json &#125;&#125;&lt;/pre&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  <span class="built_in">object</span>: <span class="built_in">Object</span> = &#123;</span><br><span class="line">    foo: <span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">    baz: <span class="string">&#x27;qux&#x27;</span>,</span><br><span class="line">    nested: &#123; <span class="attr">xyz</span>: <span class="number">3</span>, <span class="attr">numbers</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>] &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4180/34288536410_a1b29ab000_o.png" alt></p>
-<h2 id="slicepipe"><a class="header-anchor" href="#slicepipe"> </a>SlicePipe</h2>
+<p><img src="https://farm5.staticflickr.com/4180/34288536410_a1b29ab000_o.png" alt=""></p>
+<h2 id="SlicePipe"><a class="header-anchor" href="#SlicePipe"> </a>SlicePipe</h2>
 <h3 id="功能-v9"><a class="header-anchor" href="#功能-v9"> </a>功能</h3>
 <p>建立新的清單或是切割後的部分文字</p>
 <h3 id="使用方式-v9"><a class="header-anchor" href="#使用方式-v9"> </a>使用方式</h3>
@@ -775,7 +558,7 @@
 <ul>
 <li>如果是沒有給予任何數字時，則回傳到結尾的所有資料。</li>
 <li>如果是 <code>正整數</code> 則回傳結束位置前的所有資料或文字。</li>
-<li>如果是 <code>負整數</code>  則會從資料或文字結尾往回計算結束位置，並回傳結束位置前的所有資料或文字。</li>
+<li>如果是 <code>負整數</code> 則會從資料或文字結尾往回計算結束位置，並回傳結束位置前的所有資料或文字。</li>
 </ul>
 </li>
 <li>所有的行為都是基於 <code>Array.prototype.slice()</code> 和 <code>String.prototype.slice()</code> 的基礎上。</li>
@@ -783,10 +566,10 @@
 <li>如果操作的資料是空值，Pipe 會回傳空值</li>
 </ul>
 <h3 id="範例-v9"><a class="header-anchor" href="#範例-v9"> </a>範例</h3>
-<p>​<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;SlicePipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;h2&gt;操作陣列&lt;/h2&gt;</span></span><br><span class="line"><span class="string">    &lt;ul&gt;</span></span><br><span class="line"><span class="string">      &lt;li *ngFor="let i of collection | slice:1:3"&gt;&#123;&#123;i&#125;&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;</span></span><br><span class="line"><span class="string">    &lt;h2&gt;操作文字&lt;/h2&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123;str&#125;&#125;[0:4]: '&#123;&#123;str | slice:0:4&#125;&#125;' - 預期輸出為 'abcd'&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123;str&#125;&#125;[4:0]: '&#123;&#123;str | slice:4:0&#125;&#125;' - 預期輸出為 ''&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123;str&#125;&#125;[-4]: '&#123;&#123;str | slice:-4&#125;&#125;' - 預期輸出為 'ghij'&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123;str&#125;&#125;[-4:-2]: '&#123;&#123;str | slice:-4:-2&#125;&#125;' - 預期輸出為 'gh'&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123;str&#125;&#125;[-100]: '&#123;&#123;str | slice:-100&#125;&#125;' - 預期輸出為 'abcdefghij'&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&#123;&#123;str&#125;&#125;[100]: '&#123;&#123;str | slice:100&#125;&#125;' - 預期輸出為 ''&lt;/p&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  collection: <span class="built_in">string</span>[] = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>];</span><br><span class="line">  str: <span class="built_in">string</span> = <span class="string">'abcdefghij'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;div&gt;</span></span><br><span class="line"><span class="string">      &lt;h1&gt;SlicePipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">      &lt;h2&gt;操作陣列&lt;/h2&gt;</span></span><br><span class="line"><span class="string">      &lt;ul&gt;</span></span><br><span class="line"><span class="string">        &lt;li *ngFor=&quot;let i of collection | slice: 1:3&quot;&gt;&#123;&#123; i &#125;&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="string">      &lt;/ul&gt;</span></span><br><span class="line"><span class="string">      &lt;h2&gt;操作文字&lt;/h2&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;&#123;&#123; str &#125;&#125;[0:4]: &#x27;&#123;&#123; str | slice: 0:4 &#125;&#125;&#x27; - 預期輸出為 &#x27;abcd&#x27;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;&#123;&#123; str &#125;&#125;[4:0]: &#x27;&#123;&#123; str | slice: 4:0 &#125;&#125;&#x27; - 預期輸出為 &#x27;&#x27;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;&#123;&#123; str &#125;&#125;[-4]: &#x27;&#123;&#123; str | slice: -4 &#125;&#125;&#x27; - 預期輸出為 &#x27;ghij&#x27;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;&#123;&#123; str &#125;&#125;[-4:-2]: &#x27;&#123;&#123; str | slice: -4:-2 &#125;&#125;&#x27; - 預期輸出為 &#x27;gh&#x27;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;&#123;&#123; str &#125;&#125;[-100]: &#x27;&#123;&#123; str | slice: -100 &#125;&#125;&#x27; - 預期輸出為 &#x27;abcdefghij&#x27;&lt;/p&gt;</span></span><br><span class="line"><span class="string">      &lt;p&gt;&#123;&#123; str &#125;&#125;[100]: &#x27;&#123;&#123; str | slice: 100 &#125;&#125;&#x27; - 預期輸出為 &#x27;&#x27;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  collection: <span class="built_in">string</span>[] = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>];</span><br><span class="line">  str: <span class="built_in">string</span> = <span class="string">&#x27;abcdefghij&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4170/34512030522_8b45394b1e_o.png" alt></p>
-<h2 id="asyncpipe"><a class="header-anchor" href="#asyncpipe"> </a>AsyncPipe</h2>
+<p><img src="https://farm5.staticflickr.com/4170/34512030522_8b45394b1e_o.png" alt=""></p>
+<h2 id="AsyncPipe"><a class="header-anchor" href="#AsyncPipe"> </a>AsyncPipe</h2>
 <h3 id="功能-v10"><a class="header-anchor" href="#功能-v10"> </a>功能</h3>
 <p>從非同步動作 (Promise/Observable) 中取出資料</p>
 <h3 id="使用方式-v10"><a class="header-anchor" href="#使用方式-v10"> </a>使用方式</h3>
@@ -795,576 +578,263 @@
 <p><code>async</code> pipe 會訂閱一個 <code>Observable</code> 或是 <code>Promise</code> 物件，並獲取最後發生的資料。當有新的資料產生時，<code>async</code> pipe 會提示 <code>ChangeDetector</code> 要檢查 <code>Component</code> 的值。</p>
 <p>當 <code>Comoponent</code> 被摧毀時，通常是離開該 <code>Component</code>的時候，<code>async</code> 會自動取消訂閱 ( unsubscribe)，避免潛在的記憶體洩漏問題。</p>
 <h3 id="範例-v10"><a class="header-anchor" href="#範例-v10"> </a>範例</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Subscriber&#125; <span class="keyword">from</span> <span class="string">'rxjs/Subscriber'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;AsyncPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;div&gt;&lt;code&gt;observable|async&lt;/code&gt;: Time: &#123;&#123; time | async &#125;&#125;&lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  time = <span class="keyword">new</span> Observable&lt;<span class="built_in">string</span>&gt;<span class="function">(<span class="params">(<span class="params">observer: Subscriber&lt;<span class="built_in">string</span>&gt;</span>) =&gt; &#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    setInterval(<span class="params">(<span class="params"></span>) =&gt; observer.next(<span class="params"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="params"></span>).toString(<span class="params"></span>)</span>), 1000</span>);</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;</span>);</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Subscriber &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Subscriber&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;div&gt;</span></span><br><span class="line"><span class="string">      &lt;h1&gt;AsyncPipe&lt;/h1&gt;</span></span><br><span class="line"><span class="string">      &lt;div&gt;&lt;code&gt;observable|async&lt;/code&gt;: Time: &#123;&#123; time | async &#125;&#125;&lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  time = <span class="keyword">new</span> Observable&lt;<span class="built_in">string</span>&gt;(<span class="function">(<span class="params">observer: Subscriber&lt;<span class="built_in">string</span>&gt;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> observer.next(<span class="keyword">new</span> <span class="built_in">Date</span>().toString()), <span class="number">1000</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顯示結果</p>
-<p><img src="https://farm5.staticflickr.com/4191/34673947075_be9600bd26_o.png" alt></p>
-<h2 id="i18npluralpipe-i18nselectpipe"><a class="header-anchor" href="#i18npluralpipe-i18nselectpipe"> </a>I18nPluralPipe &amp; I18nSelectPipe</h2>
+<p><img src="https://farm5.staticflickr.com/4191/34673947075_be9600bd26_o.png" alt=""></p>
+<h2 id="I18nPluralPipe-I18nSelectPipe"><a class="header-anchor" href="#I18nPluralPipe-I18nSelectPipe"> </a>I18nPluralPipe &amp; I18nSelectPipe</h2>
 <p>由於這兩個 Pipe 跟多國語系功能有關係，且皆處於 <code>Experimental</code> 階段，故在次先不做說明。</p>
-<h1 id="自訂-pipe"><a class="header-anchor" href="#自訂-pipe"> </a>自訂 Pipe</h1>
+<h1 id="自訂-Pipe"><a class="header-anchor" href="#自訂-Pipe"> </a>自訂 Pipe</h1>
 <p>透過 CLI 產生 <code>Pipe</code> 是最快的，指令是</p>
-<p>​<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g p <span class="string">"pipeName"</span></span><br></pre></td></tr></table></figure></p>
-<p>所產生出來的基本架構是</p>
-<p>​<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Pipe, PipeTransform &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span>(&#123;</span><br><span class="line">  name: <span class="string">'exponential'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ExponentialPipe <span class="keyword">implements</span> PipeTransform &#123;</span><br><span class="line"></span><br><span class="line">  transform(value: <span class="built_in">number</span>, exponent: <span class="built_in">string</span>): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> exp = <span class="built_in">parseFloat</span>(exponent);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.pow(value, <span class="built_in">isNaN</span>(exp) ? <span class="number">1</span> : exp);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>​```typescript
+ng g p 「pipeName」</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">所產生出來的基本架構是</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​&#96;&#96;&#96;typescript</span><br><span class="line">import &#123; Pipe, PipeTransform &#125; from &#39;@angular&#x2F;core&#39;;</span><br><span class="line"></span><br><span class="line">@Pipe(&#123;</span><br><span class="line">  name: &#39;exponential&#39;</span><br><span class="line">&#125;)</span><br><span class="line">export class ExponentialPipe implements PipeTransform &#123;</span><br><span class="line"></span><br><span class="line">  transform(value: number, exponent: string): number &#123;</span><br><span class="line">    let exp &#x3D; parseFloat(exponent);</span><br><span class="line">    return Math.pow(value, isNaN(exp) ? 1 : exp);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>transform</code> function 所回傳的值，會用來顯示在畫面上</li>
 <li>第一個參數 <code>value</code> 是所要轉換的資料來源</li>
 <li>第二個之後的參數可以用來接 Template 傳給 <code>pipe</code> 的參數值</li>
 </ul>
-<p>如果要傳入多個參數的時後，transform 的地方值直接加上第3的參數或是使用 …args 也是可以，而在 template 的使用方式則是 {{ value | xxpipe: 1_arg: 2_arg: 3:arg }} 以此類推。</p>
-<h1 id="pipe-與-changedetection"><a class="header-anchor" href="#pipe-與-changedetection"> </a>Pipe 與 ChangeDetection</h1>
-<p>Angular 會透過 <code>change detection</code> 方法執行的過程中，去檢查 data-bound值的變化，而 <code>change detection</code> 會在每一次 DOM Eevent 後被觸發，例如按下鍵盤的鍵，滑鼠的移動，伺服器的回應等事件，這個過程是需要付出相對的成本，為了效能，Angular會盡量降低 <code>change detection</code> 的次數</p>
-<p>所以 Pipe 會採用最簡單又快速的判斷規則，<a href="https://angular.io/docs/ts/latest/api/core/index/ChangeDetectionStrategy-enum.html" target="_blank" rel="noopener">ChangeDetectionStrategy.OnPush</a>。</p>
+<p>如果要傳入多個參數的時後，transform 的地方值直接加上第 3 的參數或是使用 …args 也是可以，而在 template 的使用方式則是 {{ value | xxpipe: 1_arg: 2_arg: 3:arg }} 以此類推。</p>
+<h1 id="Pipe-與-ChangeDetection"><a class="header-anchor" href="#Pipe-與-ChangeDetection"> </a>Pipe 與 ChangeDetection</h1>
+<p>Angular 會透過 <code>change detection</code> 方法執行的過程中，去檢查 data-bound 值的變化，而 <code>change detection</code> 會在每一次 DOM Eevent 後被觸發，例如按下鍵盤的鍵，滑鼠的移動，伺服器的回應等事件，這個過程是需要付出相對的成本，為了效能，Angular 會盡量降低 <code>change detection</code> 的次數</p>
+<p>所以 Pipe 會採用最簡單又快速的判斷規則，<a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/api/core/index/ChangeDetectionStrategy-enum.html">ChangeDetectionStrategy.OnPush</a>。</p>
 <p>這表示當 Pipe 如果用在陣列上，就有機會出現不在預期內的顯示結果，如以下的範例</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Pipe, PipeTransform&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;Flyer&#125; <span class="keyword">from</span> <span class="string">'./app.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span>(&#123;name: <span class="string">'flyingHeroes'</span>&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> FlyingHeroesPipe <span class="keyword">implements</span> PipeTransform &#123;</span><br><span class="line">  transform(allHeroes: Flyer[]) &#123;</span><br><span class="line">    <span class="keyword">return</span> allHeroes.filter(<span class="function"><span class="params">hero</span> =&gt;</span> hero.canFly);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Pipe, PipeTransform &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Flyer &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;flyingHeroes&#x27;</span> &#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyingHeroesPipe</span> <span class="title">implements</span> <span class="title">PipeTransform</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">transform</span>(<span class="params">allHeroes: Flyer[]</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> allHeroes.filter(<span class="function">(<span class="params">hero</span>) =&gt;</span> hero.canFly);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>component</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">     &lt;input type="text" #box</span></span><br><span class="line"><span class="string">          (keyup.enter)="addHero(box.value); box.value=''"</span></span><br><span class="line"><span class="string">          placeholder="hero name"&gt;</span></span><br><span class="line"><span class="string">    &lt;button (click)="reset()"&gt;Reset&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;div *ngFor="let hero of heroes | flyingHeroes"&gt;</span></span><br><span class="line"><span class="string">      &#123;&#123;hero.name&#125;&#125;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  heroes: <span class="built_in">any</span>[] = [];</span><br><span class="line">  canFly = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.reset();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addHero(name: <span class="built_in">string</span>) &#123;</span><br><span class="line">    name = name.trim();</span><br><span class="line">    <span class="keyword">if</span> (!name) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> hero = &#123;name, canFly: <span class="keyword">this</span>.canFly&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// this.heroes.push(hero); // 這個不會更新畫面，因為不符合 OnPush 的條件</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.heroes = [...this.heroes, hero]; <span class="comment">// 因會產生一個新的 Array Object, 所以會觸發 CD</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  reset() &#123;</span><br><span class="line">    <span class="keyword">this</span>.heroes = HEROS.slice();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="pure-and-impure-pipes"><a class="header-anchor" href="#pure-and-impure-pipes"> </a>Pure and Impure Pipes</h1>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;input type=&quot;text&quot; #box (keyup.enter)=&quot;addHero(box.value); box.value = &#x27;&#x27;&quot; placeholder=&quot;hero name&quot; /&gt;</span></span><br><span class="line"><span class="string">    &lt;button (click)=&quot;reset()&quot;&gt;Reset&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;div *ngFor=&quot;let hero of heroes | flyingHeroes&quot;&gt;</span></span><br><span class="line"><span class="string">      &#123;&#123; hero.name &#125;&#125;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  heroes: <span class="built_in">any</span>[] = [];</span><br><span class="line">  canFly = <span class="literal">true</span>;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.reset();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">addHero</span>(<span class="params">name: <span class="built_in">string</span></span>)</span> &#123;</span><br><span class="line">    name = name.trim();</span><br><span class="line">    <span class="keyword">if</span> (!name) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> hero = &#123; name, <span class="attr">canFly</span>: <span class="built_in">this</span>.canFly &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// this.heroes.push(hero); // 這個不會更新畫面，因為不符合 OnPush 的條件</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">this</span>.heroes = [...this.heroes, hero]; <span class="comment">// 因會產生一個新的 Array Object, 所以會觸發 CD</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">reset</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.heroes = HEROS.slice();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Pure-and-Impure-Pipes"><a class="header-anchor" href="#Pure-and-Impure-Pipes"> </a>Pure and Impure Pipes</h1>
 <p>Angular 的 Pipe 預設皆為 <code>Pure</code>，如果需要設定為 <code>Impure</code>的話，請這樣子設定</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Pipe</span>(&#123;</span><br><span class="line">  name: <span class="string">'flyingHeroesImpure'</span>,</span><br><span class="line">  pure: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Pipe</span>(&#123;</span><br><span class="line">  name: <span class="string">&#x27;flyingHeroesImpure&#x27;</span>,</span><br><span class="line">  pure: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>至於什麼是 <code>Pure Pipe</code> ，什麼是 <code>Impure Pipe</code></p>
-<h2 id="pure-pipe"><a class="header-anchor" href="#pure-pipe"> </a>Pure Pipe</h2>
-<p>這裡所指的 <code>Pure</code>，至針對 <code>Pipe</code> 所要轉換的值是否為 <code>Pure Change</code>，所謂的 <code>Pure Change</code> 是改變 primitive input value( String, Number, Boolean, Symbol) 或是改變  Object 參考的位址 (Date, Array, Function, Object)。</p>
-<p>這規則與 <a href="https://angular.io/docs/ts/latest/api/core/index/ChangeDetectionStrategy-enum.html" target="_blank" rel="noopener">ChangeDetectionStrategy.OnPush</a> 是一樣的。在上面的例子中，因為 <code>heroes</code> 是一個陣列物件，如果是 <code>push</code>的行為並不會改變該陣列所參考的位址 (ByReference)，必須重新建立一個新的陣列物件，才會改變參考位址。</p>
-<h2 id="impure-pipe"><a class="header-anchor" href="#impure-pipe"> </a>Impure Pipe</h2>
+<h2 id="Pure-Pipe"><a class="header-anchor" href="#Pure-Pipe"> </a>Pure Pipe</h2>
+<p>這裡所指的 <code>Pure</code>，至針對 <code>Pipe</code> 所要轉換的值是否為 <code>Pure Change</code>，所謂的 <code>Pure Change</code> 是改變 primitive input value( String, Number, Boolean, Symbol) 或是改變 Object 參考的位址 (Date, Array, Function, Object)。</p>
+<p>這規則與 <a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/api/core/index/ChangeDetectionStrategy-enum.html">ChangeDetectionStrategy.OnPush</a> 是一樣的。在上面的例子中，因為 <code>heroes</code> 是一個陣列物件，如果是 <code>push</code>的行為並不會改變該陣列所參考的位址 (ByReference)，必須重新建立一個新的陣列物件，才會改變參考位址。</p>
+<h2 id="Impure-Pipe"><a class="header-anchor" href="#Impure-Pipe"> </a>Impure Pipe</h2>
 <p><code>Impure Pipe</code> 就是 <code>Pure</code>的相反，也是 <code>ChangeDetectionStrategy</code> 預設的執行方式，只要有資料異動，就會觸發改變。</p>
 <p>來調整一下上面的範例，來讓 array.push 也可以做到畫面更新顯示的功能。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Pipe, PipeTransform&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;Flyer&#125; <span class="keyword">from</span> <span class="string">'./app.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span>(&#123;name: <span class="string">'flyingHeroes'</span>, pure: <span class="literal">false</span>&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> FlyingHeroesPipe <span class="keyword">implements</span> PipeTransform &#123;</span><br><span class="line">  transform(allHeroes: Flyer[]) &#123;</span><br><span class="line">    <span class="keyword">return</span> allHeroes.filter(<span class="function"><span class="params">hero</span> =&gt;</span> hero.canFly);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Pipe, PipeTransform &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Flyer &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;flyingHeroes&#x27;</span>, <span class="attr">pure</span>: <span class="literal">false</span> &#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyingHeroesPipe</span> <span class="title">implements</span> <span class="title">PipeTransform</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">transform</span>(<span class="params">allHeroes: Flyer[]</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> allHeroes.filter(<span class="function">(<span class="params">hero</span>) =&gt;</span> hero.canFly);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>當這樣子設定為 <code>Impure</code>時，下面的 <code>push</code> 就可以使用而且畫面也會更新</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">addHero(name: <span class="built_in">string</span>) &#123;</span><br><span class="line">    name = name.trim();</span><br><span class="line">    <span class="keyword">if</span> (!name) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> hero = &#123;name, canFly: <span class="keyword">this</span>.canFly&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.heroes.push(hero); </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="title">addHero</span>(<span class="params">name: <span class="built_in">string</span></span>)</span> &#123;</span><br><span class="line">    name = name.trim();</span><br><span class="line">    <span class="keyword">if</span> (!name) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> hero = &#123;name, <span class="attr">canFly</span>: <span class="built_in">this</span>.canFly&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">this</span>.heroes.push(hero);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://angular.io/docs/ts/latest/guide/pipes.html" target="_blank" rel="noopener">官方文件</a></li>
-<li><a href="http://www.ngx-translate.com/" target="_blank" rel="noopener">ngx-translate</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/guide/pipes.html">官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ngx-translate.com/">ngx-translate</a></li>
 </ul>
 
-      
     </div>
 
     
-
-    
-    
-    
-
-    
-
-    
-      
     
     
 
-    
-
-    <footer class="post-footer">
-      
-        
-          
-        
-        <div class="post-tags">
-          
-            <a href="/tags/Angular/" rel="tag"># Angular</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/04/20/angular-meta/" rel="next" title="[Angular] Meta 與 Route">
-                <i class="fa fa-chevron-left"></i> [Angular] Meta 與 Route
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/14/core-environment-setup/" rel="prev" title="[.NET Core] DotNet Core 基本環境設定">
-                [.NET Core] DotNet Core 基本環境設定 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/04/20/angular-meta/" rel="prev" title="[Angular] Meta 與 Route">
+      <i class="fa fa-chevron-left"></i> [Angular] Meta 與 Route
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/05/14/core-environment-setup/" rel="next" title="[.NET Core] DotNet Core 基本環境設定">
+      [.NET Core] DotNet Core 基本環境設定 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
 
     
       <div>
-        <div class="addthis_inline_share_toolbox">
-  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
-</div>
-
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
       </div>
-    
-  </div>
-
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
 
           </div>
           
-
-  
-    <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-      </div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
+  
 
-  <aside id="sidebar" class="sidebar">
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目錄
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            本站概要
-          </li>
-        </ul>
-      
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A7%E5%BB%BA-Pipe"><span class="nav-number">1.</span> <span class="nav-text">內建 Pipe</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DatePipe"><span class="nav-number">1.1.</span> <span class="nav-text">DatePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">1.1.4.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UpperCasePipe"><span class="nav-number">1.2.</span> <span class="nav-text">UpperCasePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v2"><span class="nav-number">1.2.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v2"><span class="nav-number">1.2.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v2"><span class="nav-number">1.2.3.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LowerCasePipe"><span class="nav-number">1.3.</span> <span class="nav-text">LowerCasePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v3"><span class="nav-number">1.3.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v3"><span class="nav-number">1.3.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v3"><span class="nav-number">1.3.3.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TitleCasePipe"><span class="nav-number">1.4.</span> <span class="nav-text">TitleCasePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v4"><span class="nav-number">1.4.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v4"><span class="nav-number">1.4.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v4"><span class="nav-number">1.4.3.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CurrencyPipe"><span class="nav-number">1.5.</span> <span class="nav-text">CurrencyPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v5"><span class="nav-number">1.5.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v5"><span class="nav-number">1.5.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E-v2"><span class="nav-number">1.5.3.</span> <span class="nav-text">說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v5"><span class="nav-number">1.5.4.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PercentPipe"><span class="nav-number">1.6.</span> <span class="nav-text">PercentPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v6"><span class="nav-number">1.6.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v6"><span class="nav-number">1.6.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E-v3"><span class="nav-number">1.6.3.</span> <span class="nav-text">說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v6"><span class="nav-number">1.6.4.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DecimalPipe"><span class="nav-number">1.7.</span> <span class="nav-text">DecimalPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v7"><span class="nav-number">1.7.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v7"><span class="nav-number">1.7.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E-v4"><span class="nav-number">1.7.3.</span> <span class="nav-text">說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v7"><span class="nav-number">1.7.4.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JsonPipe"><span class="nav-number">1.8.</span> <span class="nav-text">JsonPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v8"><span class="nav-number">1.8.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v8"><span class="nav-number">1.8.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E-v5"><span class="nav-number">1.8.3.</span> <span class="nav-text">說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v8"><span class="nav-number">1.8.4.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SlicePipe"><span class="nav-number">1.9.</span> <span class="nav-text">SlicePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v9"><span class="nav-number">1.9.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v9"><span class="nav-number">1.9.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E-v6"><span class="nav-number">1.9.3.</span> <span class="nav-text">說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v9"><span class="nav-number">1.9.4.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AsyncPipe"><span class="nav-number">1.10.</span> <span class="nav-text">AsyncPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-v10"><span class="nav-number">1.10.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F-v10"><span class="nav-number">1.10.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E-v7"><span class="nav-number">1.10.3.</span> <span class="nav-text">說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-v10"><span class="nav-number">1.10.4.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I18nPluralPipe-I18nSelectPipe"><span class="nav-number">1.11.</span> <span class="nav-text">I18nPluralPipe &amp; I18nSelectPipe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E8%A8%82-Pipe"><span class="nav-number">2.</span> <span class="nav-text">自訂 Pipe</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pipe-%E8%88%87-ChangeDetection"><span class="nav-number">3.</span> <span class="nav-text">Pipe 與 ChangeDetection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pure-and-Impure-Pipes"><span class="nav-number">4.</span> <span class="nav-text">Pure and Impure Pipes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pure-Pipe"><span class="nav-number">4.1.</span> <span class="nav-text">Pure Pipe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Impure-Pipe"><span class="nav-number">4.2.</span> <span class="nav-text">Impure Pipe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
-            
-              <p class="site-author-name" itemprop="name">KevinYang</p>
-              <div class="site-description motion-element" itemprop="description"></div>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">300</span>
-                    <span class="site-state-item-name">文章</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                      <a href="/categories/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">33</span>
-                    <span class="site-state-item-name">分類</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                      <a href="/tags/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">64</span>
-                    <span class="site-state-item-name">標籤</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-block">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                友情連結
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">300</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
 
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
 
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#內建-pipe"><span class="nav-number">1.</span> <span class="nav-text"> 內建 Pipe</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#datepipe"><span class="nav-number">1.1.</span> <span class="nav-text"> DatePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能"><span class="nav-number">1.1.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式"><span class="nav-number">1.1.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#說明"><span class="nav-number">1.1.3.</span> <span class="nav-text"> 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例"><span class="nav-number">1.1.4.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uppercasepipe"><span class="nav-number">1.2.</span> <span class="nav-text"> UpperCasePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v2"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v2"><span class="nav-number">1.2.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v2"><span class="nav-number">1.2.3.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lowercasepipe"><span class="nav-number">1.3.</span> <span class="nav-text"> LowerCasePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v3"><span class="nav-number">1.3.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v3"><span class="nav-number">1.3.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v3"><span class="nav-number">1.3.3.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#titlecasepipe"><span class="nav-number">1.4.</span> <span class="nav-text"> TitleCasePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v4"><span class="nav-number">1.4.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v4"><span class="nav-number">1.4.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v4"><span class="nav-number">1.4.3.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#currencypipe"><span class="nav-number">1.5.</span> <span class="nav-text"> CurrencyPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v5"><span class="nav-number">1.5.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v5"><span class="nav-number">1.5.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#說明-v2"><span class="nav-number">1.5.3.</span> <span class="nav-text"> 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v5"><span class="nav-number">1.5.4.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#percentpipe"><span class="nav-number">1.6.</span> <span class="nav-text"> PercentPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v6"><span class="nav-number">1.6.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v6"><span class="nav-number">1.6.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#說明-v3"><span class="nav-number">1.6.3.</span> <span class="nav-text"> 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v6"><span class="nav-number">1.6.4.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decimalpipe"><span class="nav-number">1.7.</span> <span class="nav-text"> DecimalPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v7"><span class="nav-number">1.7.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v7"><span class="nav-number">1.7.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#說明-v4"><span class="nav-number">1.7.3.</span> <span class="nav-text"> 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v7"><span class="nav-number">1.7.4.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jsonpipe"><span class="nav-number">1.8.</span> <span class="nav-text"> JsonPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v8"><span class="nav-number">1.8.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v8"><span class="nav-number">1.8.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#說明-v5"><span class="nav-number">1.8.3.</span> <span class="nav-text"> 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v8"><span class="nav-number">1.8.4.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slicepipe"><span class="nav-number">1.9.</span> <span class="nav-text"> SlicePipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v9"><span class="nav-number">1.9.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v9"><span class="nav-number">1.9.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#說明-v6"><span class="nav-number">1.9.3.</span> <span class="nav-text"> 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v9"><span class="nav-number">1.9.4.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#asyncpipe"><span class="nav-number">1.10.</span> <span class="nav-text"> AsyncPipe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能-v10"><span class="nav-number">1.10.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式-v10"><span class="nav-number">1.10.2.</span> <span class="nav-text"> 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#說明-v7"><span class="nav-number">1.10.3.</span> <span class="nav-text"> 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-v10"><span class="nav-number">1.10.4.</span> <span class="nav-text"> 範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i18npluralpipe-i18nselectpipe"><span class="nav-number">1.11.</span> <span class="nav-text"> I18nPluralPipe &amp; I18nSelectPipe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自訂-pipe"><span class="nav-number">2.</span> <span class="nav-text"> 自訂 Pipe</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pipe-與-changedetection"><span class="nav-number">3.</span> <span class="nav-text"> Pipe 與 ChangeDetection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pure-and-impure-pipes"><span class="nav-number">4.</span> <span class="nav-text"> Pure and Impure Pipes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pure-pipe"><span class="nav-number">4.1.</span> <span class="nav-text"> Pure Pipe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#impure-pipe"><span class="nav-number">4.2.</span> <span class="nav-text"> Impure Pipe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">5.</span> <span class="nav-text"> 參考資料</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
+      </div>
 
     </div>
     <div class="gooAd sidebar-inner" style="display: block;">
         <!-- Google AdSense start -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <!-- blog-sidebar -->
-<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<ins
+  class="adsbygoogle"
+  style="display: block"
+  data-ad-client="ca-pub-7997572949867824"
+  data-ad-slot="3959999538"
+  data-ad-format="auto"
+  data-full-width-responsive="true"
+></ins>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
      </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">KevinYang</span>
-
-  
-
-  
 </div>
-
-
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
-
-
-
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
 
         
 
@@ -1375,7 +845,6 @@
 
 
 
-        
       </div>
     </footer>
 
@@ -1392,25 +861,30 @@
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<script src="/js/utils.js"></script>
 
-
-
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
 
-
-
+<script src="/js/next-boot.js"></script>
 
 
 
 
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
@@ -1425,54 +899,9 @@
 
 
   
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 
   
 
-
-  <script src="/js/utils.js?v=7.2.0"></script>
-
-  <script src="/js/motion.js?v=7.2.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/affix.js?v=7.2.0"></script>
-
-  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
-
-
-
-  
-  <script src="/js/scrollspy.js?v=7.2.0"></script>
-<script src="/js/post-details.js?v=7.2.0"></script>
-
-
-
-  
-
-
-  <script src="/js/next-boot.js?v=7.2.0"></script>
-
-
-  
-
-  
-
-  
-
-  
-  
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -1483,384 +912,26 @@
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
 </script>
-
-
 <script>
   var disqus_config = function() {
     this.page.url = "http://blog.kevinyang.net/2017/05/13/angular-pipe/";
     this.page.identifier = "2017/05/13/angular-pipe/";
-    this.page.title = '[Angular] Pipe';
+    this.page.title = "[Angular] Pipe";
     };
-  function loadComments() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://cksnotepad.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', '' + +new Date());
-    (d.head || d.body).appendChild(s);
-  }
-  
-    window.addEventListener('load', loadComments, false);
-  
-</script>
-
-
-
-
-
-  
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
       });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
     }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+  });
+</script>
 
 </body>
 </html>

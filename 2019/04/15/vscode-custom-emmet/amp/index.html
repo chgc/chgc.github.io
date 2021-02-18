@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/04/15/vscode-custom-emmet/"
 			},
 			"datePublished": "2019-04-15T04:01:13.000Z",
-			"dateModified": "2021-02-18T02:39:29.040Z",
+			"dateModified": "2021-02-18T04:09:34.917Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,19 +1850,19 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>今天朋友問到，要如何修改 VS Code 內 Emmet 的預設範本。一開始想說是沒有辦法修改預設的，應該也沒有辦法覆蓋吧，所以稍微在網路上找了一下，果然沒有找到相關的資料，但其實在官方文件內有提到自訂範本的事情，那就來看看怎麼修改吧</p>
 <a id="more"></a>
-<p>首先，先根據<a href="https://code.visualstudio.com/docs/editor/emmet#_using-custom-emmet-snippets" target="_blank" rel="noopener">這裡</a>的說明，將自訂 <code>snippet.json</code> 檔案所處的資料夾位置，設定到 <code>settings</code> 裡 <code>emmet.extensionsPath</code> 的地方</p>
+<p>首先，先根據<a href="https://code.visualstudio.com/docs/editor/emmet#_using-custom-emmet-snippets">這裡</a>的說明，將自訂 <code>snippet.json</code> 檔案所處的資料夾位置，設定到 <code>settings</code> 裡 <code>emmet.extensionsPath</code> 的地方</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/04/15/vscode-custom-emmet/1555301445272.png" width="956" height="423" layout="responsive"></amp-img></div>
-<p>我這裡先用 html 的部分做說明，CSS 依循一樣的規則，VS Code Emmet 內建所使用的 HTML Snippet 是使用這一份 <a href="https://github.com/emmetio/snippets/blob/master/html.json" target="_blank" rel="noopener">html.json</a>，假設我們想要修改 <code>!</code> 所產生出來的預設 html 範本內容，我們只需要重新定義一個 <code>doc</code> 即可 (原始定義如下)</p>
+<p>我這裡先用 html 的部分做說明，CSS 依循一樣的規則，VS Code Emmet 內建所使用的 HTML Snippet 是使用這一份 <a href="https://github.com/emmetio/snippets/blob/master/html.json">html.json</a>，假設我們想要修改 <code>!</code> 所產生出來的預設 html 範本內容，我們只需要重新定義一個 <code>doc</code> 即可 (原始定義如下)</p>
 <figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">"doc": "html[lang=<!--figure0-->#123;lang}]&gt;(head&gt;meta[charset=<!--figure0-->#123;charset}]+meta:vp+meta:edge+title{<!--figure0-->#123;1:Document}})+body",</span><br><span class="line">	"!|html:5": "!!!+doc",</span><br></pre></td></tr></tbody></table></figure>
 <p>而自訂 <code>snippet.json</code> 的內容如下</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"html"</span>: {</span><br><span class="line">    <span class="attr">"snippets"</span>: {</span><br><span class="line">      <span class="attr">"doc"</span>: <span class="string">"html[lang=<!--figure1-->#123;lang}]&gt;(head&gt;meta[charset=<!--figure1-->#123;charset}]+meta:vp+meta:edge+title{<!--figure1-->#123;1:Documentttt}})+body"</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"html"</span>: {</span><br><span class="line">    <span class="attr">"snippets"</span>: {</span><br><span class="line">      <span class="attr">"doc"</span>: <span class="string">"html[lang=<!--figure1-->#123;lang}]&gt;(head&gt;meta[charset=<!--figure1-->#123;charset}]+meta:vp+meta:edge+title{<!--figure1-->#123;1:Documentttt}})+body"</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>我們只需要重新定義 <code>doc</code> 即可達到我們的需求，同樣的，如果想要擴充 Emmet 的功能，直接在此編寫即可</p>
 <p>剩下的就看各位的想像力了</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://github.com/emmetio/snippets/blob/master/html.json" target="_blank" rel="noopener">html.json</a></li>
-<li><a href="https://github.com/emmetio/snippets/blob/master/css.json" target="_blank" rel="noopener">css.json</a></li>
-<li><a href="https://code.visualstudio.com/docs/editor/emmet#_using-custom-emmet-snippets" target="_blank" rel="noopener">VS Code - Using custom Emmet snippets</a></li>
+<li><a href="https://github.com/emmetio/snippets/blob/master/html.json">html.json</a></li>
+<li><a href="https://github.com/emmetio/snippets/blob/master/css.json">css.json</a></li>
+<li><a href="https://code.visualstudio.com/docs/editor/emmet#_using-custom-emmet-snippets">VS Code - Using custom Emmet snippets</a></li>
 </ul>
 
 			  		

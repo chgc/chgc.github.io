@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/05/flutter-layout-01/"
 			},
 			"datePublished": "2019-10-05T00:21:17.000Z",
-			"dateModified": "2021-02-18T02:39:29.080Z",
+			"dateModified": "2021-02-18T04:09:34.953Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,15 +1850,15 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>這一類的 UI Framework 最需要掌握的是 UI Component (Widget) 的操作，尤其是排版的部分，要如何生出自己想要的畫面，就決定於排版技巧的熟悉度，就像網頁切版，如果 CSS 不熟，就無法切出漂亮有可用的版型，同理，Flutter 也需要先從 Layout Widget 跟設計思維學起</p>
 <a id="more"></a>
-<h1 id="layout-思維"><a class="header-anchor" href="#layout-思維"> </a>Layout 思維</h1>
+<h1 id="Layout-思維"><a class="header-anchor" href="#Layout-思維"> </a>Layout 思維</h1>
 <p>Flutter 有提供很多種用來排版的 Widget，但要使用哪一種會比較合適，這既需要對每一個 Layout Widget 的特性做深入的了解，但這之前，總要知道如何安排畫面，才能選到對的 Widget。這裡有一個官網文件提供的圖</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570243349615.png" width="986" height="484" layout="responsive"></amp-img></div>
 <p>這是一個算常見的產品介紹畫面，當看到這畫面時，會思考要怎麼呈現。根據圖上面所標示的，可以知道第一層是使用 <code>Row</code> 來呈顯左右兩欄的畫面，而第一欄使用 <code>Column Widget</code> 來顯示其他資訊，而第二欄是使用 <code>Image Widget</code> 來顯示畫面。</p>
 <p>再來第一欄的產品資訊使用 <code>Column Widget</code> ，所以物件會是由上而下的呈現，細節設計思維的部分可以參閱下圖</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570243368663.png" width="1006" height="425" layout="responsive"></amp-img></div>
 <p>所以綜合這些資訊，我們可以理解成 Flutter 的畫面是從左上到右下，由上而下，由左而右採 S 型移動。這樣理解後，就可以幫我們選擇合適的 layout widget 了</p>
-<h1 id="layout-widget-屬性"><a class="header-anchor" href="#layout-widget-屬性"> </a>Layout Widget 屬性</h1>
-<h2 id="aligning-widgets"><a class="header-anchor" href="#aligning-widgets"> </a>Aligning Widgets</h2>
+<h1 id="Layout-Widget-屬性"><a class="header-anchor" href="#Layout-Widget-屬性"> </a>Layout Widget 屬性</h1>
+<h2 id="Aligning-Widgets"><a class="header-anchor" href="#Aligning-Widgets"> </a>Aligning Widgets</h2>
 <p><code>Row</code> 和 <code>Column</code> widget 內有可以設定排序物件的屬性，<code>mainAxisAligment</code> 和 ``crossAxisAlignment`</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-01/1570243387835.png" width="594" height="330" layout="responsive"></amp-img></div>
 <p>而 <code>mainAxisAlignment</code> 有提供下列的選項可以使用</p>
@@ -1914,7 +1914,7 @@ h6.categories {
 <p>stretch: 塞滿畫面</p>
 </li>
 </ul>
-<h2 id="sizing"><a class="header-anchor" href="#sizing"> </a>Sizing</h2>
+<h2 id="Sizing"><a class="header-anchor" href="#Sizing"> </a>Sizing</h2>
 <p>使用 <code>Expanded widget</code> 可以避免原始圖檔太大造成 App 產生畫面時的錯誤</p>
 <ul>
 <li>

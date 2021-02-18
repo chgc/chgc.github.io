@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/07/flutter-responsive-app/"
 			},
 			"datePublished": "2019-10-07T04:00:21.000Z",
-			"dateModified": "2021-02-18T02:39:29.092Z",
+			"dateModified": "2021-02-18T04:09:34.965Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>由於手機或是相關的設備，螢幕尺寸都不一樣，這時候就必須有所謂的響應式的設計，而 Flutter 內野有提供相對應的方法來幫助我們完成這件事情</p>
 <a id="more"></a>
-<h1 id="layoutbuilder"><a class="header-anchor" href="#layoutbuilder"> </a>LayoutBuilder</h1>
+<h1 id="LayoutBuilder"><a class="header-anchor" href="#LayoutBuilder"> </a>LayoutBuilder</h1>
 <p><code>LayoutBuilder</code> 起手式</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LayoutBuilder(builder: (context, constraints) {</span><br><span class="line">    <span class="comment">// Code here</span></span><br><span class="line">},)</span><br></pre></td></tr></tbody></table></figure>
 <ul>
@@ -1859,11 +1859,11 @@ h6.categories {
 </ul>
 <p>範例程式</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LayoutBuilder(</span><br><span class="line">    builder: (context, constraints) {</span><br><span class="line">        <span class="keyword">if</span>(constraints.maxWidth &gt; <span class="number">600</span>) {</span><br><span class="line">            getWideLayout();</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            getNormalLayout();</span><br><span class="line">        }</span><br><span class="line">    },</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="mediaquery"><a class="header-anchor" href="#mediaquery"> </a>MediaQuery</h1>
+<h1 id="MediaQuery"><a class="header-anchor" href="#MediaQuery"> </a>MediaQuery</h1>
 <p>如果不透過 LayoutBuilder，也可以透過 <code>MediaQuery.of</code> 的方法來取得相關資訊</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Widget build(BuildContext context) {    </span><br><span class="line">    MediaQueryData media = MediaQuery.of(context);</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>MediaQueryData 包含許多資訊，細節內容可以參閱<a href="https://api.flutter.dev/flutter/widgets/MediaQueryData-class.html" target="_blank" rel="noopener">官方文件</a></p>
-<h1 id="aspectratio"><a class="header-anchor" href="#aspectratio"> </a>AspectRatio</h1>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Widget build(BuildContext context) {    </span><br><span class="line">    MediaQueryData media = MediaQuery.of(context);</span><br><span class="line">    ...</span><br><span class="line">}        </span><br></pre></td></tr></tbody></table></figure>
+<p>MediaQueryData 包含許多資訊，細節內容可以參閱<a href="https://api.flutter.dev/flutter/widgets/MediaQueryData-class.html">官方文件</a></p>
+<h1 id="AspectRatio"><a class="header-anchor" href="#AspectRatio"> </a>AspectRatio</h1>
 <p>另外一個很實用的 widget，顯示圖片時，因為圖片本身有所謂的長寬比例，而在做放大縮小時，理論上也應該按一定比例做縮放，這時候就可以使用 <code>AspectRatio</code> 來完成</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AspectRation(</span><br><span class="line">	aspectRatio: <span class="number">3</span> / <span class="number">2</span>,</span><br><span class="line">    child: MyWidget()</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
 <ul>
@@ -1874,9 +1874,9 @@ h6.categories {
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> Orientation orientation = MediaQuery.of(context).orientation;</span><br><span class="line">...</span><br><span class="line">GridView.count(</span><br><span class="line">    crossAxisCount: (orientation == Orientation.portrait) ? <span class="number">2</span> : <span class="number">3</span>,</span><br><span class="line">    mainAxisSpacing: <span class="number">4.0</span>,</span><br><span class="line">    crossAxisSpacing: <span class="number">4.0</span>,</span><br><span class="line">    padding: <span class="keyword">const</span> EdgeInsets.all(<span class="number">4.0</span>),</span><br><span class="line">    childAspectRatio: (orientation == Orientation.portrait) ? <span class="number">1.0</span> : <span class="number">1.3</span>,</span><br><span class="line">    children: photos.map&lt;Widget&gt;((Photo photo) {</span><br><span class="line">        <span class="keyword">return</span> GridDemoPhotoItem(</span><br><span class="line">            photo: photo,</span><br><span class="line">            tileStyle: _tileStyle,</span><br><span class="line">            onBannerTap: (Photo photo) {</span><br><span class="line">                setState(() {</span><br><span class="line">                    photo.isFavorite = !photo.isFavorite;</span><br><span class="line">                });</span><br><span class="line">            },</span><br><span class="line">        );</span><br><span class="line">    }).toList(),</span><br><span class="line">),</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://api.flutter.dev/flutter/widgets/LayoutBuilder-class.html" target="_blank" rel="noopener">LayoutBuilder</a></li>
-<li><a href="https://api.flutter.dev/flutter/widgets/MediaQuery-class.html" target="_blank" rel="noopener">MediaQuery</a></li>
-<li><a href="https://api.flutter.dev/flutter/widgets/AspectRatio-class.html" target="_blank" rel="noopener">AspectRatio</a></li>
+<li><a href="https://api.flutter.dev/flutter/widgets/LayoutBuilder-class.html">LayoutBuilder</a></li>
+<li><a href="https://api.flutter.dev/flutter/widgets/MediaQuery-class.html">MediaQuery</a></li>
+<li><a href="https://api.flutter.dev/flutter/widgets/AspectRatio-class.html">AspectRatio</a></li>
 </ul>
 
 			  		

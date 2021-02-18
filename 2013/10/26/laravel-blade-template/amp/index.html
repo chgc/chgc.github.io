@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/10/26/laravel-blade-template/"
 			},
 			"datePublished": "2013-10-26T00:42:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.000Z",
+			"dateModified": "2021-02-18T04:09:34.877Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1845,7 +1845,7 @@ h6.categories {
 			  		<p>two ways to use it</p>
 <p>#1 use blade on controller</p>
 <p>in controller, you need to assign a template for controller.</p>
-<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> $layout = <span class="string">'layouts.master'</span>;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="variable">$layout</span> = <span class="string">'layouts.master'</span>;</span><br></pre></td></tr></tbody></table></figure>
 <p>and then in each function action. assign whatever need to assign for show content on template. like in blade template. I have a content section. Therefore, i need to set a value or view to 「Content」</p>
 <figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;layout-&gt;content = something <span class="keyword">or</span> View::make(<span class="string">'something'</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>in blade template. there are 2 ways to define var.</p>

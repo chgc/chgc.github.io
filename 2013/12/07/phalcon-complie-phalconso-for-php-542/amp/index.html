@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/12/07/phalcon-complie-phalconso-for-php-542/"
 			},
 			"datePublished": "2013-12-07T08:10:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.000Z",
+			"dateModified": "2021-02-18T04:09:34.877Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,46 +1842,29 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>緣由：Bluhost決定將所有的php版本升級到5.4.20, <a href="http://xn--phalcon-325mq38fs4girtdmq0q8cxujd6qc6b.so" target="_blank" rel="noopener">那這樣子的行為會讓phalcon.so</a>（php 5.3.27版本) 失效，然後問Bluehost, 他們不會提供降級的服務，也不會幫忙complie <a href="http://phalcon.so" target="_blank" rel="noopener">phalcon.so</a>…所以，自己做。</p>
+			  		<p>緣由：Bluhost決定將所有的php版本升級到5.4.20, <a href="http://xn--phalcon-325mq38fs4girtdmq0q8cxujd6qc6b.so">那這樣子的行為會讓phalcon.so</a>（php 5.3.27版本) 失效，然後問Bluehost, 他們不會提供降級的服務，也不會幫忙complie <a href="http://phalcon.so">phalcon.so</a>…所以，自己做。</p>
 <p>作法：設定一個跟網頁空間一樣的環境, same os and php version, 然後在編譯phalcon, 成功編譯後上傳phalcon.so到主機上面。</p>
 <p>步驟：
 我是選擇centos6版，下載與主機服務商一樣作業位元的作業系統. (64bit or 32bit)</p>
 <ol>
-<li>
-<p><a href="http://isoredirect.centos.org/centos/6/isos/x86_64/" target="_blank" rel="noopener">http://isoredirect.centos.org/centos/6/isos/x86_64/</a> &lt;= 64位元的版本</p>
-</li>
-<li>
-<p>用Vmware將centos裝起來.</p>
-</li>
-<li>
-<p>安裝完成後，用root的帳號登入，開啟terminal window</p>
-</li>
-<li>
-<p>由於第一次安裝，所以先執行 </p><figure class="highlight plain"><figcaption><span>update``` 讓系統先將所有的套件更新到最新的狀態</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">5. ```yum groupinstall "Development Tools"``` 安裝一些跟開發有關係的元件，例如 git (必須安裝)</span><br><span class="line">6. 安裝rpm yum repository information, 因為php5.4是在不同的repository. 安裝方式如下</span><br><span class="line">   ```rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>可以用 </p><figure class="highlight plain"><figcaption><span>list | grep php``` 顯示跟php有關的套件。php54w就是我們要安裝的套件</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8. 要安裝以下套件 ```yum install php54w php54w-mysql php54w-devel</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>利用git取得phalcon </p><figure class="highlight plain"><figcaption><span>clone --depth</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10. ```cd cphalcon/build</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p><code>./install</code></p>
-</li>
-<li>
-<p>如果complie成功, 會出現下面的畫面
-</p><div class="amp-img-wrapper"><amp-img src="http://user-image.logdown.io/user/4862/blog/4871/post/165992/pIQa0NU7TnS8y1vSpiA5_2013-12-8%20%E4%B8%8A%E5%8D%88%2012-38-32.png" width="649" height="466" layout="responsive"></amp-img></div>
-</li>
-<li>
-<p>complie完後的檔案可以在build/modules/紅色框起來的資料夾下面看到
-</p><div class="amp-img-wrapper"><amp-img src="http://user-image.logdown.io/user/4862/blog/4871/post/165992/Qbwn0tyLTWqy6AOx2dGO_2013-12-8%20%E4%B8%8A%E5%8D%88%2012-39-07.png" width="543" height="102" layout="responsive"></amp-img></div>
-</li>
-<li>
-<p>將phalcon.so複製到網頁空間主機php放extensions的資料夾下，<a href="http://xn--php-158d869sixva.xn--iniphalcon-kj3qx7v.so" target="_blank" rel="noopener">並編輯php.ini啟動phalcon.so</a></p>
-</li>
-<li>
-<p>打完收工</p>
-</li>
+<li><a href="http://isoredirect.centos.org/centos/6/isos/x86_64/">http://isoredirect.centos.org/centos/6/isos/x86_64/</a> &lt;= 64位元的版本</li>
+<li>用Vmware將centos裝起來.</li>
+<li>安裝完成後，用root的帳號登入，開啟terminal window</li>
+<li>由於第一次安裝，所以先執行 <code>yum update</code> 讓系統先將所有的套件更新到最新的狀態</li>
+<li><code>yum groupinstall "Development Tools"</code> 安裝一些跟開發有關係的元件，例如 git (必須安裝)</li>
+<li>安裝rpm yum repository information, 因為php5.4是在不同的repository. 安裝方式如下
+<code>rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm</code></li>
+<li>可以用 <code>yum list | grep php</code> 顯示跟php有關的套件。php54w就是我們要安裝的套件</li>
+<li>要安裝以下套件 <code>yum install php54w php54w-mysql php54w-devel</code></li>
+<li>利用git取得phalcon <code>git clone --depth=1 git://github.com/phalcon/cphalcon.git</code></li>
+<li><code>cd cphalcon/build</code></li>
+<li><code>./install</code></li>
+<li>如果complie成功, 會出現下面的畫面
+<div class="amp-img-wrapper"><amp-img src="http://user-image.logdown.io/user/4862/blog/4871/post/165992/pIQa0NU7TnS8y1vSpiA5_2013-12-8%20%E4%B8%8A%E5%8D%88%2012-38-32.png" width="649" height="466" layout="responsive"></amp-img></div></li>
+<li>complie完後的檔案可以在build/modules/紅色框起來的資料夾下面看到
+<div class="amp-img-wrapper"><amp-img src="http://user-image.logdown.io/user/4862/blog/4871/post/165992/Qbwn0tyLTWqy6AOx2dGO_2013-12-8%20%E4%B8%8A%E5%8D%88%2012-39-07.png" width="543" height="102" layout="responsive"></amp-img></div></li>
+<li>將phalcon.so複製到網頁空間主機php放extensions的資料夾下，<a href="http://xn--php-158d869sixva.xn--iniphalcon-kj3qx7v.so">並編輯php.ini啟動phalcon.so</a></li>
+<li>打完收工</li>
 </ol>
 
 			  		

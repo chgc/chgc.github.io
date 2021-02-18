@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/02/23/laravel-laravel-50-with-angular/"
 			},
 			"datePublished": "2015-02-23T19:57:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,7 +1842,7 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>之前有寫過一篇有關<a href="http://cky.logdown.com/posts/248326/laravel-laravel-with-angular" title="[Laravel] Laravel with Angular" target="_blank" rel="noopener">[Laravel] Laravel with Angular</a>, 但是這個方法在Laravel 5.0裡面是不合用的</p>
+			  		<p>之前有寫過一篇有關<a href="http://cky.logdown.com/posts/248326/laravel-laravel-with-angular" title="[Laravel] Laravel with Angular">[Laravel] Laravel with Angular</a>, 但是這個方法在Laravel 5.0裡面是不合用的</p>
 <p>所以laravel 5.0的作法如下
 在 app/Exceptions/Handler.php 裡修改render function</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public function render($request, Exception $e)</span><br><span class="line">	{</span><br><span class="line">		if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)</span><br><span class="line">			return response()-&gt;view('index')-&gt;header('Content-Type', 'text/html');</span><br><span class="line">		return parent::render($request, $e);</span><br><span class="line">	}</span><br></pre></td></tr></tbody></table></figure>

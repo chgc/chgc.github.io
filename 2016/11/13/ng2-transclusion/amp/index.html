@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/11/13/ng2-transclusion/"
 			},
 			"datePublished": "2016-11-13T01:52:31.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,17 +1850,17 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Angular1有Transclusion, 那Angular2該怎麼做呢?</p>
 <a id="more"></a>
-<h1 id="view-content"><a class="header-anchor" href="#view-content"> </a>View &amp; Content</h1>
+<h1 id="View-Content"><a class="header-anchor" href="#View-Content"> </a>View &amp; Content</h1>
 <p>在介紹Angular2的Projection之前，有兩個名詞要介紹，就是 <code>View</code> 和 <code>Content</code></p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-card</span>&gt;</span> <span class="comment">&lt;!-- View --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">card-header</span>&gt;</span><span class="tag">&lt;/<span class="name">card-header</span>&gt;</span> <span class="comment">&lt;!-- one of the Contents --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-footer"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- one of the Contents --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">app-card</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>所以 <code>View</code>和 <code>Content</code> 的關係是 <code>Content</code> 是存在於 <code>View</code> 裡面，而 <code>View</code> 就是最外層的 element</p>
-<h1 id="ngcontent"><a class="header-anchor" href="#ngcontent"> </a>ngContent</h1>
+<h1 id="ngContent"><a class="header-anchor" href="#ngContent"> </a>ngContent</h1>
 <p>而Angular2的Transclusion就是利用Contents來完成，先來看一段程式碼</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>({</span><br><span class="line">  selector: <span class="string">'app-card'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;ng-content select="card-header"&gt;&lt;/ng-content&gt;</span></span><br><span class="line"><span class="string">    &lt;h2&gt;Card Info &lt;/h2&gt;    </span></span><br><span class="line"><span class="string">    &lt;ng-content select=".card-footer"&gt;&lt;/ng-content&gt;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> HeroParentComponent{}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>({</span><br><span class="line">  selector: <span class="string">'app-card'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;ng-content select="card-header"&gt;&lt;/ng-content&gt;</span></span><br><span class="line"><span class="string">    &lt;h2&gt;Card Info &lt;/h2&gt;    </span></span><br><span class="line"><span class="string">    &lt;ng-content select=".card-footer"&gt;&lt;/ng-content&gt;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">HeroParentComponent</span></span>{}</span><br></pre></td></tr></tbody></table></figure>
 <p>介紹 <code>&lt;ng-content select="&lt;selector&gt;"&gt;&lt;/ng-content&gt;</code>，Angular2透過偉大的selector，就可以將資料或是要顯示的內容放到對的位置</p>
-<p>app-card這個component的template, 我們定義了兩個ng-content，分別是針對<code>&lt;card-header&gt;</code> tag element, 另外一個是針對claass含有<code>card-footer</code>的element. 而在外部使這<code>app-card</code> 就可以在content area來提供這部分的資料，使用範例</p>
+<p>app-card這個component的template, 我們定義了兩個ng-content，分別是針對<code>&lt;card-header&gt;</code> tag element, 另外一個是針對claass含有<code> card-footer</code>的element. 而在外部使這<code>app-card</code> 就可以在content area來提供這部分的資料，使用範例</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-card</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">card-header</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>This is Card Header<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">card-header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-footer"</span>&gt;</span></span><br><span class="line">      This is a card footer</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">app-card</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<h1 id="no-errors-schema"><a class="header-anchor" href="#no-errors-schema"> </a>NO_ERRORS_SCHEMA</h1>
+<h1 id="NO-ERRORS-SCHEMA"><a class="header-anchor" href="#NO-ERRORS-SCHEMA"> </a>NO_ERRORS_SCHEMA</h1>
 <p>這時候到頁面上觀看結果時，在Console的地方會出現錯誤訊息</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm6.staticflickr.com/5831/22770583938_e741cf1f0a_o.png" width="1873" height="347" layout="responsive"></amp-img></div>
 <p>這裡的錯誤訊息是指，template parser不認識 <code>&lt;card-header&gt;</code> 這個標籤，所以丟出錯誤訊息。這裡需要再 ngModule的地方再多設定一個參數</p>
@@ -1870,8 +1870,8 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="https://farm6.staticflickr.com/5651/25313550289_bd9a2cf181_o.png" width="1180" height="536" layout="responsive"></amp-img></div>
 <h1 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h1>
 <ul>
-<li><a href="https://scotch.io/tutorials/angular-2-transclusion-using-ng-content" target="_blank" rel="noopener">Angular 2 Transclusion using ng-content</a></li>
-<li><a href="https://github.com/angular/angular/blob/1cf5f5fa38ea672a972313049c9de2db6024441d/modules/%40angular/core/src/metadata/ng_module.ts" target="_blank" rel="noopener">ng_module metadata</a></li>
+<li><a href="https://scotch.io/tutorials/angular-2-transclusion-using-ng-content">Angular 2 Transclusion using ng-content</a></li>
+<li><a href="https://github.com/angular/angular/blob/1cf5f5fa38ea672a972313049c9de2db6024441d/modules/%40angular/core/src/metadata/ng_module.ts">ng_module metadata</a></li>
 </ul>
 
 			  		

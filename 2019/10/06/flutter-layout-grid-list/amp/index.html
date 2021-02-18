@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/06/flutter-layout-grid-list/"
 			},
 			"datePublished": "2019-10-06T12:40:16.000Z",
-			"dateModified": "2021-02-18T02:39:29.088Z",
+			"dateModified": "2021-02-18T04:09:34.961Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>當畫面內容很長時，既需要可以滾動 (scrollable)，基本上有兩種可以用 <code>Gridview</code> 和 <code>ListView</code>，稍微紀錄一下使用的方式</p>
 <a id="more"></a>
-<h1 id="gridview"><a class="header-anchor" href="#gridview"> </a>GridView</h1>
+<h1 id="GridView"><a class="header-anchor" href="#GridView"> </a>GridView</h1>
 <p>GridView 有兩種決定每一列能放多少項目的方式</p>
 <ol>
 <li>GridView.count: 設定 <code>crossAxisCount</code> 來指定每一列要放多少欄，</li>
@@ -1865,7 +1865,7 @@ h6.categories {
 <li><code>childAspectRatio</code> 放大比例</li>
 <li><code>dragStartBehavior</code> 設定活動的觸發時間點
 <ol>
-<li><code>DragStartBehavior.start</code>: 當拖拉事件發生時才設定初始位置</li>
+<li><code>DragStartBehavior.start </code>: 當拖拉事件發生時才設定初始位置</li>
 <li><code>DragStartBehaviro.down</code> : 當按到畫面時就設定初始位置</li>
 </ol>
 </li>
@@ -1873,7 +1873,7 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="/2019/10/06/flutter-layout-grid-list/1570370406789.png" width="491" height="870" layout="responsive"></amp-img></div>
 <h2 id="範例程式"><a class="header-anchor" href="#範例程式"> </a>範例程式</h2>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Widget _buildGrid() =&gt; GridView.extent(</span><br><span class="line">    maxCrossAxisExtent: <span class="number">150</span>,</span><br><span class="line">    padding: <span class="keyword">const</span> EdgeInsets.all(<span class="number">4</span>),</span><br><span class="line">    mainAxisSpacing: <span class="number">4</span>,</span><br><span class="line">    crossAxisSpacing: <span class="number">4</span>,</span><br><span class="line">    children: _buildGridTileList(<span class="number">30</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">List</span>&lt;Container&gt; _buildGridTileList(<span class="built_in">int</span> count) =&gt; <span class="built_in">List</span>.generate(</span><br><span class="line">    count, (i) =&gt; Container(child: Image.asset(<span class="string">'images/pic<span class="subst">$i</span>.jpg'</span>)));</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="listview"><a class="header-anchor" href="#listview"> </a>ListView</h1>
+<h1 id="ListView"><a class="header-anchor" href="#ListView"> </a>ListView</h1>
 <p>ListView 就很單純是清單列表</p>
 <ol>
 <li><code>scrollDirection</code> :  設定滾動方向
@@ -1886,16 +1886,16 @@ h6.categories {
 <p>假設在每一個 listItem 中間顯示分隔線，ListView 也有提供方法做到這件事情，範例程式碼如下</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ListView.separated(</span><br><span class="line">        shrinkWrap: <span class="keyword">true</span>,</span><br><span class="line">        itemCount: <span class="number">15</span>,</span><br><span class="line">        itemBuilder: (BuildContext context, <span class="built_in">int</span> index) =&gt;</span><br><span class="line">            Container(child: Image.network(<span class="string">'https://picsum.photos/400'</span>)),</span><br><span class="line">        separatorBuilder: (BuildContext context, <span class="built_in">int</span> index) =&gt; <span class="keyword">const</span> Divider(</span><br><span class="line">          color: Colors.red,</span><br><span class="line">          thickness: <span class="number">8</span>,</span><br><span class="line">        ),</span><br><span class="line">      );</span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/06/flutter-layout-grid-list/1570371431161.png" width="503" height="863" layout="responsive"></amp-img></div>
-<h2 id="lifecycle"><a class="header-anchor" href="#lifecycle"> </a>Lifecycle</h2>
-<p>ListView 有一個需要注意的地方是，他並不是所有的清單內的項目都會被建立，只有在顯示範圍內的才會變建立出來，而離開視線範圍的，就會被摧毀，細節說明可以參閱[此文件 的 Child elements’ lifecycle section] (<a href="https://api.flutter.dev/flutter/widgets/ListView-class.html" target="_blank" rel="noopener">https://api.flutter.dev/flutter/widgets/ListView-class.html</a>)</p>
+<h2 id="Lifecycle"><a class="header-anchor" href="#Lifecycle"> </a>Lifecycle</h2>
+<p>ListView 有一個需要注意的地方是，他並不是所有的清單內的項目都會被建立，只有在顯示範圍內的才會變建立出來，而離開視線範圍的，就會被摧毀，細節說明可以參閱[此文件 的 Child elements’ lifecycle section] (<a href="https://api.flutter.dev/flutter/widgets/ListView-class.html">https://api.flutter.dev/flutter/widgets/ListView-class.html</a>)</p>
 <h2 id="範例程式-v2"><a class="header-anchor" href="#範例程式-v2"> </a>範例程式</h2>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Widget _buildList() =&gt; ListView(</span><br><span class="line">      children: [</span><br><span class="line">        _tile(<span class="string">'CineArts at the Empire'</span>, <span class="string">'85 W Portal Ave'</span>, Icons.theaters),</span><br><span class="line">        _tile(<span class="string">'The Castro Theater'</span>, <span class="string">'429 Castro St'</span>, Icons.theaters),</span><br><span class="line">        _tile(<span class="string">'Alamo Drafthouse Cinema'</span>, <span class="string">'2550 Mission St'</span>, Icons.theaters),</span><br><span class="line">        _tile(<span class="string">'Roxie Theater'</span>, <span class="string">'3117 16th St'</span>, Icons.theaters),</span><br><span class="line">        _tile(<span class="string">'United Artists Stonestown Twin'</span>, <span class="string">'501 Buckingham Way'</span>,</span><br><span class="line">            Icons.theaters),</span><br><span class="line">        _tile(<span class="string">'AMC Metreon 16'</span>, <span class="string">'135 4th St #3000'</span>, Icons.theaters),</span><br><span class="line">        Divider(),</span><br><span class="line">        _tile(<span class="string">'Kescaped_code#39;s Kitchen'</span>, <span class="string">'757 Monterey Blvd'</span>, Icons.restaurant),</span><br><span class="line">        _tile(<span class="string">'Emmyescaped_code#39;s Restaurant'</span>, <span class="string">'1923 Ocean Ave'</span>, Icons.restaurant),</span><br><span class="line">        _tile(</span><br><span class="line">            <span class="string">'Chaiya Thai Restaurant'</span>, <span class="string">'272 Claremont Blvd'</span>, Icons.restaurant),</span><br><span class="line">        _tile(<span class="string">'La Ciccia'</span>, <span class="string">'291 30th St'</span>, Icons.restaurant),</span><br><span class="line">      ],</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">ListTile _tile(<span class="built_in">String</span> title, <span class="built_in">String</span> subtitle, IconData icon) =&gt; ListTile(</span><br><span class="line">      title: Text(title,</span><br><span class="line">          style: TextStyle(</span><br><span class="line">            fontWeight: FontWeight.w500,</span><br><span class="line">            fontSize: <span class="number">20</span>,</span><br><span class="line">          )),</span><br><span class="line">      subtitle: Text(subtitle),</span><br><span class="line">      leading: Icon(</span><br><span class="line">        icon,</span><br><span class="line">        color: Colors.blue[<span class="number">500</span>],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
-<p>當然除了這兩個 widget 之外，其他還有所謂的 <code>table</code> 或是 <code>DataTable</code> widget，但這部分就留到後面在探索了，關於 Layout 相關的 widget，就可參閱這份<a href="https://flutter.dev/docs/development/ui/widgets/layout" target="_blank" rel="noopener">文件</a>，裡面有更詳細的說明</p>
+<p>當然除了這兩個 widget 之外，其他還有所謂的 <code>table</code> 或是 <code>DataTable</code> widget，但這部分就留到後面在探索了，關於 Layout 相關的 widget，就可參閱這份<a href="https://flutter.dev/docs/development/ui/widgets/layout">文件</a>，裡面有更詳細的說明</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="">GridView</a>(<a href="https://api.flutter.dev/flutter/widgets/GridView-class.html" target="_blank" rel="noopener">https://api.flutter.dev/flutter/widgets/GridView-class.html</a>)</li>
-<li><a href="https://api.flutter.dev/flutter/widgets/ListView-class.html" target="_blank" rel="noopener">ListView</a></li>
+<li><a href="">GridView</a>(<a href="https://api.flutter.dev/flutter/widgets/GridView-class.html">https://api.flutter.dev/flutter/widgets/GridView-class.html</a>)</li>
+<li><a href="https://api.flutter.dev/flutter/widgets/ListView-class.html">ListView</a></li>
 </ul>
 
 			  		

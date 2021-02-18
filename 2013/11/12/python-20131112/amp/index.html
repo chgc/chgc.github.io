@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/11/12/python-20131112/"
 			},
 			"datePublished": "2013-11-12T04:41:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.000Z",
+			"dateModified": "2021-02-18T04:09:34.877Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1853,8 +1853,8 @@ h6.categories {
 <h2 id="range"><a class="header-anchor" href="#range"> </a>range()</h2>
 <p>range()主要的目的是要創造一個連續值的list, 例如 range(10)=[0,1,2,3,4,5,6,8,9]</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; for i in range(5): # range(5) = range(0,5)</span><br><span class="line">...     print(i)</span><br><span class="line">... </span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; for i in range(5,9):</span><br><span class="line">...     print(i)</span><br><span class="line">... </span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; for i in range(0,10,2): # = for(i=0;i&lt;10;i=i+2) step 2</span><br><span class="line">...     print(i)</span><br><span class="line">...     </span><br><span class="line">0</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line"></span><br><span class="line"># 使用在文字陣列上</span><br><span class="line">&gt;&gt;&gt; a = ['Mary', 'had', 'a', 'little', 'lamb']</span><br><span class="line">&gt;&gt;&gt; for i in range(len(a)):</span><br><span class="line">...     print(i,a[i])</span><br><span class="line">... </span><br><span class="line">0 Mary</span><br><span class="line">1 had</span><br><span class="line">2 a</span><br><span class="line">3 little</span><br><span class="line">4 lamb</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="break-continue-else-in-loops"><a class="header-anchor" href="#break-continue-else-in-loops"> </a>break, continue, else in Loops</h2>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for n in range(2,10):</span><br><span class="line">    for x in range(2,n):</span><br><span class="line">        if n%x ==0:</span><br><span class="line">            print(n, 'equals', x, '*', n//x)</span><br><span class="line">            break</span><br><span class="line">    else:</span><br><span class="line">        print(n, 'is a prime number')</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="break-continue-else-in-Loops"><a class="header-anchor" href="#break-continue-else-in-Loops"> </a>break, continue, else in Loops</h2>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for n in range(2,10):</span><br><span class="line">    for x in range(2,n):</span><br><span class="line">        if n%x ==0:</span><br><span class="line">            print(n, 'equals', x, '*', n//x)</span><br><span class="line">            break</span><br><span class="line">    else:</span><br><span class="line">        print(n, 'is a prime number')        </span><br></pre></td></tr></tbody></table></figure>
 <p>else: 是對應到 for x in range(2,n):
 意義: a try statement’s else clause runs when no exception occurs</p>
 <p>#python coding style</p>
@@ -1875,7 +1875,7 @@ h6.categories {
 </li>
 <li>
 <p>Use docstrings.
-""" something something something 「」"
+「」" something something something 「」"
 可以被呼叫by function.<strong>doc</strong></p>
 </li>
 <li>

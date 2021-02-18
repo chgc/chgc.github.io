@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/05/13/ef6-bulkinsert/"
 			},
 			"datePublished": "2014-05-13T07:30:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1847,9 +1847,9 @@ h6.categories {
 所以需要透過BulkInsert的方式處理，但是又不想自己另外寫ado的方式處理，所以就要透過extenstion的方式，
 讓EF的功能加強一下</p>
 <p>##安裝 EntityFramework.BulkInsert-ef6</p>
-<p><a href="https://www.nuget.org/packages/EntityFramework.BulkInsert-ef6/6.0.2.7" target="_blank" rel="noopener">Nuget</a></p>
+<p><a href="https://www.nuget.org/packages/EntityFramework.BulkInsert-ef6/6.0.2.7">Nuget</a></p>
 <p>##參考文件</p>
-<p><a href="http://efbulkinsert.codeplex.com/" target="_blank" rel="noopener">http://efbulkinsert.codeplex.com/</a></p>
+<p><a href="http://efbulkinsert.codeplex.com/">http://efbulkinsert.codeplex.com/</a></p>
 <p>##(用法)Demo Code</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">using(context db = new context()){</span><br><span class="line">     // 原本會用</span><br><span class="line">     // db.tables.AddRange(entities);</span><br><span class="line">     // 改用</span><br><span class="line">     db.BulkInsert(entities);</span><br><span class="line">     </span><br><span class="line">     db.SaveChanges();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>##執行結果

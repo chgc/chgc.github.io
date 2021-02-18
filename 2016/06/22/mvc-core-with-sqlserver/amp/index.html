@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/06/22/mvc-core-with-sqlserver/"
 			},
 			"datePublished": "2016-06-22T11:34:01.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>.Net Core 終於支援使用SqlClien的物件了(但不確定是從什麼時候開始的), 那就來試試看怎麼在mac的環境上連到sql server撈資料了</p>
 <a id="more"></a>
-<h1 id="使用library"><a class="header-anchor" href="#使用library"> </a>使用Library</h1>
+<h1 id="使用Library"><a class="header-anchor" href="#使用Library"> </a>使用Library</h1>
 <ul>
 <li>「System.Data.SqlClient」: 「4.1.0-rc2-24027」</li>
 <li>「Dapper」: 「1.50.0-rc2b」</li>
@@ -1860,11 +1860,11 @@ h6.categories {
 <p>同原本在.Net4.x的用法 with Dapper</p>
 <figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (SqlConnection cn = <span class="keyword">new</span> SqlConnection(_config.Default))</span><br><span class="line">{</span><br><span class="line">  <span class="keyword">var</span> data = <span class="keyword">await</span> cn.QueryAsync&lt;Supplier&gt;(<span class="string">"select top 10 * from Suppliers"</span>);</span><br><span class="line">  <span class="keyword">return</span> View(data);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="所遇到的問題"><a class="header-anchor" href="#所遇到的問題"> </a>所遇到的問題</h1>
-<h2 id="無法連線到sqlserver"><a class="header-anchor" href="#無法連線到sqlserver"> </a>無法連線到SqlServer</h2>
+<h2 id="無法連線到SqlServer"><a class="header-anchor" href="#無法連線到SqlServer"> </a>無法連線到SqlServer</h2>
 <div class="amp-img-wrapper"><amp-img src="https://c2.staticflickr.com/8/7676/27223659083_0af2217275_o.png" width="1279" height="276" layout="responsive"></amp-img></div>
 <p><strong>問題描述</strong> : 發生連線字串正確，卻沒有辦法連線到sql server, 但是透過navicat卻可以正常的瀏覽該資料庫的內容</p>
 <p><strong>主機環境:</strong> SQL Server R2 2008 Express，沒有更新到最新的SP</p>
-<p><strong>解決方式:</strong>  將SQL Server R2 2008 更新到SP3即可修正問題，參考資料<a href="https://github.com/dotnet/corefx/issues/6467" target="_blank" rel="noopener">github issue</a></p>
+<p><strong>解決方式:</strong>  將SQL Server R2 2008 更新到SP3即可修正問題，參考資料<a href="https://github.com/dotnet/corefx/issues/6467">github issue</a></p>
 
 			  		
 			  		<!-- google Adsense -->

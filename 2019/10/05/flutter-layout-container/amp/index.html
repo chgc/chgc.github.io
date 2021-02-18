@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/05/flutter-layout-container/"
 			},
 			"datePublished": "2019-10-05T09:34:39.000Z",
-			"dateModified": "2021-02-18T02:39:29.088Z",
+			"dateModified": "2021-02-18T04:09:34.961Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Flutter 有幾個基本的 Layout Widget ，例如 <code>Container</code>、<code>GridView</code>、<code>ListView</code>、<code>Stack</code>，Material Wdigets 也有 <code>Card</code> 和 <code>ListTile</code> 這幾種，這一篇先探索 <code>Container</code>，<code>Container</code> 算是最常使用的 layout widget，因為像是 padding、margins、borders 等效果都是由這一個 widget 來設定的</p>
 <a id="more"></a>
-<h1 id="container"><a class="header-anchor" href="#container"> </a>Container</h1>
+<h1 id="Container"><a class="header-anchor" href="#Container"> </a>Container</h1>
 <p>Container 的設定項目有</p>
 <ul>
 <li>
@@ -1864,10 +1864,8 @@ h6.categories {
 </li>
 <li>
 <p>constraints: 屬性限制</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Container(</span><br><span class="line">  constraints: BoxConstraints.expand(</span><br><span class="line">    height: Theme.of(context).textTheme.display1.fontSize * <span class="number">1.1</span> + <span class="number">200.0</span>,</span><br><span class="line">  ),</span><br><span class="line"> ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Container(</span><br><span class="line">  constraints: BoxConstraints.expand(</span><br><span class="line">    height: Theme.of(context).textTheme.display1.fontSize * <span class="number">1.1</span> + <span class="number">200.0</span>,</span><br><span class="line">  ),</span><br><span class="line"> ...</span><br><span class="line">}    </span><br></pre></td></tr></tbody></table></figure>
 </li>
-</ul>
-<ul>
 <li>
 <p>width: 寬度</p>
 </li>
@@ -1902,13 +1900,13 @@ h6.categories {
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Container(</span><br><span class="line">       color: Colors.pink[<span class="number">100</span>],</span><br><span class="line">       child: Container(</span><br><span class="line">         alignment: Alignment.bottomRight, <span class="comment">// 右下對齊</span></span><br><span class="line">         decoration: BoxDecoration(</span><br><span class="line">           color: Colors.blue, <span class="comment">// 背景顏色</span></span><br><span class="line">           image: DecorationImage(</span><br><span class="line">             image: NetworkImage(<span class="string">'https://picsum.photos/300'</span>), <span class="comment">// 背景圖</span></span><br><span class="line">           ),</span><br><span class="line">           border: Border.all(color: Colors.yellow, width: <span class="number">5</span>), <span class="comment">// 邊框線</span></span><br><span class="line">           borderRadius: BorderRadius.all(Radius.circular(<span class="number">10</span>)), <span class="comment">// 邊框圓角</span></span><br><span class="line">         ),</span><br><span class="line">         foregroundDecoration: BoxDecoration(</span><br><span class="line">           color: Colors.green[<span class="number">50</span>].withOpacity(<span class="number">0.5</span>) <span class="comment">// 前景蓋了一層綠色半透明</span></span><br><span class="line">         ),</span><br><span class="line">         height: <span class="number">400</span>, <span class="comment">// 高度</span></span><br><span class="line">         width: <span class="number">400</span>, <span class="comment">// 寬度</span></span><br><span class="line">         padding: EdgeInsets.all(<span class="number">50</span>), <span class="comment">// 上下左右各 padding 50</span></span><br><span class="line">         margin: EdgeInsets.fromLTRB(<span class="number">50</span>, <span class="number">40</span>, <span class="number">30</span>, <span class="number">20</span>), <span class="comment">// Margin 邊框設定</span></span><br><span class="line">         child: Image.network(<span class="string">'https://picsum.photos/150'</span>), <span class="comment">// context widget</span></span><br><span class="line">         transform: Matrix4.rotationZ(<span class="number">0.1</span>), <span class="comment">// 轉換效果</span></span><br><span class="line">       ),</span><br><span class="line">     );</span><br></pre></td></tr></tbody></table></figure>
 <p>顯示效果</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-container/1570274905690.png" width="503" height="669" layout="responsive"></amp-img></div>
-<h2 id="margin-padding-border-關係圖"><a class="header-anchor" href="#margin-padding-border-關係圖"> </a>Margin Padding Border 關係圖</h2>
+<h2 id="Margin-Padding-Border-關係圖"><a class="header-anchor" href="#Margin-Padding-Border-關係圖"> </a>Margin Padding Border 關係圖</h2>
 <div class="amp-img-wrapper"><amp-img src="/2019/10/05/flutter-layout-container/1570272641129.png" width="242" height="171" layout="responsive"></amp-img></div>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://api.flutter.dev/flutter/widgets/Container-class.html" target="_blank" rel="noopener">Container Class</a></li>
-<li><a href="https://api.flutter.dev/flutter/painting/BoxDecoration-class.html" target="_blank" rel="noopener">BoxDecoration</a></li>
-<li><a href="https://api.flutter.dev/flutter/painting/DecorationImage-class.html" target="_blank" rel="noopener">DecorationImage</a></li>
+<li><a href="https://api.flutter.dev/flutter/widgets/Container-class.html">Container Class</a></li>
+<li><a href="https://api.flutter.dev/flutter/painting/BoxDecoration-class.html">BoxDecoration</a></li>
+<li><a href="https://api.flutter.dev/flutter/painting/DecorationImage-class.html">DecorationImage</a></li>
 </ul>
 
 			  		

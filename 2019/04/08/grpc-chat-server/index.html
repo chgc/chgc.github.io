@@ -1,116 +1,33 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-TW">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-TW">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
 
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-<link rel="stylesheet" href="/css/main.css?v=7.2.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.2.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
-    back2top: true,
-    back2top_sidebar: false,
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
- <script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-     google_ad_client: "ca-pub-7997572949867824",
-     enable_page_level_ads: true
-   });
- </script>
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content="微軟在去年年底發出一篇關於 .NET Core 3.0 會包含哪些新功能 (文章由此去)，而其中提到了 gRPC 專案將會成為 first-class support for .NET developers.  A common question from customers is how to have an RPC (as in .NET Remoting and Windows Commun">
-<meta name="keywords" content=".NET Core">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[.NET Core] gRPC with Visual Studio 2019 and .NET Core 3">
 <meta property="og:url" content="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/index.html">
 <meta property="og:site_name" content="CK&#39;s Notepad">
 <meta property="og:description" content="微軟在去年年底發出一篇關於 .NET Core 3.0 會包含哪些新功能 (文章由此去)，而其中提到了 gRPC 專案將會成為 first-class support for .NET developers.  A common question from customers is how to have an RPC (as in .NET Remoting and Windows Commun">
-<meta property="og:locale" content="zh-TW">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/landing-2.svg">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/1554781422715.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/1554781465103.png">
@@ -124,49 +41,37 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/1554782483949.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/1554783284157.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/2019-04-09_14-00-48.gif">
-<meta property="og:updated_time" content="2021-02-18T02:39:29.032Z">
+<meta property="article:published_time" content="2019-04-08T01:10:44.000Z">
+<meta property="article:modified_time" content="2021-02-18T04:09:34.909Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content=".NET Core">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[.NET Core] gRPC with Visual Studio 2019 and .NET Core 3">
-<meta name="twitter:description" content="微軟在去年年底發出一篇關於 .NET Core 3.0 會包含哪些新功能 (文章由此去)，而其中提到了 gRPC 專案將會成為 first-class support for .NET developers.  A common question from customers is how to have an RPC (as in .NET Remoting and Windows Commun">
 <meta name="twitter:image" content="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/landing-2.svg">
 
+<link rel="canonical" href="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/">
 
 
-  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
-
-
-
-  
-  
-  <link rel="canonical" href="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
   };
 </script>
 
   <title>[.NET Core] gRPC with Visual Studio 2019 and .NET Core 3 | CK's Notepad</title>
   
-
-
-
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-56711593-1');
-    }
-  </script>
-
-
-
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
 
 
 
@@ -175,7 +80,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -184,9 +88,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -198,289 +101,172 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">CK's Notepad</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="切換導航欄">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
             
 
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/04/08/grpc-chat-server/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="CK's Notepad">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">[.NET Core] gRPC with Visual Studio 2019 and .NET Core 3
-
-              
-            
-          </h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          [.NET Core] gRPC with Visual Studio 2019 and .NET Core 3
+        </h1>
 
         <div class="post-meta">
-
-          
-          
-          
-
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">發表於</span>
 
               <time title="創建時間：2019-04-08 09:10:44" itemprop="dateCreated datePublished" datetime="2019-04-08T09:10:44+08:00">2019-04-08</time>
             </span>
-          
-
-          
-
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NET-Core/" itemprop="url" rel="index"><span itemprop="name">.NET Core</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NET-Core/" itemprop="url" rel="index"><span itemprop="name">.NET Core</span></a>
                 </span>
-            
-                <span class="post-meta-item-text">評論數：</span>
-                <a href="/2019/04/08/grpc-chat-server/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/08/grpc-chat-server/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
+            </span>
 
           
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/04/08/grpc-chat-server/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/08/grpc-chat-server/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
-    
 
     
     
@@ -488,28 +274,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        <p>微軟在去年年底發出一篇關於 .NET Core 3.0 會包含哪些新功能 (<a href="https://msdn.microsoft.com/en-us/magazine/mt848631.aspx" target="_blank" rel="noopener">文章由此去</a>)，而其中提到了 gRPC 專案將會成為 first-class support for .NET developers.</p>
+        <p>微軟在去年年底發出一篇關於 .NET Core 3.0 會包含哪些新功能 (<a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/magazine/mt848631.aspx">文章由此去</a>)，而其中提到了 gRPC 專案將會成為 first-class support for .NET developers.</p>
 <blockquote>
-<p>A common question from customers is how to have an RPC (as in .NET Remoting and Windows Communication Foundation) experience on .NET Core. We are contributing to the gRPC (<a href="http://grpc.io/" target="_blank" rel="noopener">grpc.io</a>) project to ensure gRPC will have first-class support for .NET developers.</p>
+<p>A common question from customers is how to have an RPC (as in .NET Remoting and Windows Communication Foundation) experience on .NET Core. We are contributing to the gRPC (<a target="_blank" rel="noopener" href="http://grpc.io/">grpc.io</a>) project to ensure gRPC will have first-class support for .NET developers.</p>
 </blockquote>
 <p>而在 2019 年 .NET Core 3.0 preview 及 Visual Studio 2019 的釋出 (註: 必須使用 Visual Studio 2019 開發)，就將 gRPC Service 的專案範本內建了，真的從零到一個可以運行的 gRPC service 只需要幾個步驟就完成了，與早期那個什麼都需要自己刻的時代，整個幸福太多了。</p>
 <a id="more"></a>
-<h1 id="grpc-簡介"><a class="header-anchor" href="#grpc-簡介"> </a>gRPC 簡介</h1>
+<h1 id="gRPC-簡介"><a class="header-anchor" href="#gRPC-簡介"> </a>gRPC 簡介</h1>
 <p>但開始介紹如何開發 gRPC 前，要先稍微了解 gRPC 是什麼?</p>
-<p><a href="http://www.grpc.io/" target="_blank" rel="noopener">gRPC</a>是一個高性能、通用的開源RPC框架，其由Google主要面向移動應用開發並基於HTTP/2協議標準而設計，基於ProtoBuf (Protocol Buffers)序列化協議開發，且支持眾多開發語言。</p>
+<p><a target="_blank" rel="noopener" href="http://www.grpc.io/">gRPC</a>是一個高性能、通用的開源RPC框架，其由Google主要面向移動應用開發並基於HTTP/2協議標準而設計，基於ProtoBuf (Protocol Buffers)序列化協議開發，且支持眾多開發語言。</p>
 <p><img src="landing-2.svg" alt="Concept Diagram"></p>
-<p>更多的細節，可以在 <a href="https://grpc.io/docs/guides/" target="_blank" rel="noopener">grpc.io</a> 的網站上找到，建議可以好好的閱讀過後，在進行開發會比較順利</p>
+<p>更多的細節，可以在 <a target="_blank" rel="noopener" href="https://grpc.io/docs/guides/">grpc.io</a> 的網站上找到，建議可以好好的閱讀過後，在進行開發會比較順利</p>
 <h1 id="開發"><a class="header-anchor" href="#開發"> </a>開發</h1>
 <h2 id="環境準備"><a class="header-anchor" href="#環境準備"> </a>環境準備</h2>
 <ul>
 <li>
-<p>.NET Core 3.0 ：要安裝 preview 3 的版本，支援程度會比較高，<a href="https://dotnet.microsoft.com/download/dotnet-core/3.0" target="_blank" rel="noopener">下載網頁</a></p>
+<p>.NET Core 3.0 ：要安裝 preview 3 的版本，支援程度會比較高，<a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/download/dotnet-core/3.0">下載網頁</a></p>
 </li>
 <li>
-<p>Visual Studio 2019: <a href="https://visualstudio.microsoft.com/zh-hant/vs/" target="_blank" rel="noopener">下載網址</a>，可以下載 Community 版本的 (免費)</p>
+<p>Visual Studio 2019: <a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/zh-hant/vs/">下載網址</a>，可以下載 Community 版本的 (免費)</p>
 <ul>
 <li>
 <p>因為 Visual Studio 2019 正式版預設是不支援使用 .NET Core SDK Preview 版本，所以要手動開啟</p>
@@ -532,7 +315,7 @@
 <p><img src="1554781107356.png" alt="1554781107356"></p>
 </li>
 <li>
-<p>選擇 【<a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core Web 應用程式】，下一步</p>
+<p>選擇 【<a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core Web 應用程式】，下一步</p>
 <p><img src="1554781164014.png" alt="1554781164014"></p>
 </li>
 <li>
@@ -540,7 +323,7 @@
 <p><img src="1554781245650.png" alt="1554781245650"></p>
 </li>
 <li>
-<p>選擇 【<a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core 3.0】，方可看到 gRPC Service 專案範本</p>
+<p>選擇 【<a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core 3.0】，方可看到 gRPC Service 專案範本</p>
 <p><img src="1554781566463.png" alt="1554781566463"></p>
 </li>
 <li>
@@ -566,7 +349,7 @@
 <ul>
 <li>經保哥提醒，在 VS2017 就有這個功能了，看我多久沒寫後端了</li>
 </ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">"Microsoft.NET.Sdk.Web"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp3.0<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   // 定義 proto 檔案的讀取位置</span><br><span class="line">   // 在 Client 端也有此設定，所以 server 與 client 是共用同一份 proto 檔案</span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Protobuf</span> <span class="attr">Include</span>=<span class="string">"..\Protos\*.proto"</span> <span class="attr">GrpcServices</span>=<span class="string">"Server"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Content</span> <span class="attr">Include</span>=<span class="string">"@(Protobuf)"</span> <span class="attr">LinkBase</span>=<span class="string">""</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    // gRPC 相關的套件</span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">"Grpc.AspNetCore.Server"</span> <span class="attr">Version</span>=<span class="string">"0.1.19-pre1"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">"Google.Protobuf"</span> <span class="attr">Version</span>=<span class="string">"3.6.1"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">"Grpc.Tools"</span> <span class="attr">Version</span>=<span class="string">"1.19.0-pre1"</span> <span class="attr">PrivateAssets</span>=<span class="string">"All"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">&quot;Microsoft.NET.Sdk.Web&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp3.0<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   // 定義 proto 檔案的讀取位置</span><br><span class="line">   // 在 Client 端也有此設定，所以 server 與 client 是共用同一份 proto 檔案</span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Protobuf</span> <span class="attr">Include</span>=<span class="string">&quot;..\Protos\*.proto&quot;</span> <span class="attr">GrpcServices</span>=<span class="string">&quot;Server&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Content</span> <span class="attr">Include</span>=<span class="string">&quot;@(Protobuf)&quot;</span> <span class="attr">LinkBase</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    // gRPC 相關的套件</span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">&quot;Grpc.AspNetCore.Server&quot;</span> <span class="attr">Version</span>=<span class="string">&quot;0.1.19-pre1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">&quot;Google.Protobuf&quot;</span> <span class="attr">Version</span>=<span class="string">&quot;3.6.1&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">&quot;Grpc.Tools&quot;</span> <span class="attr">Version</span>=<span class="string">&quot;1.19.0-pre1&quot;</span> <span class="attr">PrivateAssets</span>=<span class="string">&quot;All&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><img src="1554782483949.png" alt="1554782483949"></p>
 </li>
 <li>
@@ -575,19 +358,19 @@
 </li>
 <li>
 <p><code>greet.proto</code>：gRPC  通訊的合約規範檔，當每次重建專案時，Visual Studio 會依據此檔案將相關的程式碼產生出來 (Code Gen)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">package Greet;</span><br><span class="line"></span><br><span class="line">// 定義 Greeter service 內有哪些方法可以使用</span><br><span class="line">// 可依 gRPC 的各種溝通模式定義之</span><br><span class="line">service Greeter &#123;</span><br><span class="line">  // Sends a greeting</span><br><span class="line">  rpc SayHello (HelloRequest) returns (HelloReply) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 定義 Response 與 Request 的資料型別及結構</span><br><span class="line">// The request message containing the user&apos;s name.</span><br><span class="line">message HelloRequest &#123;</span><br><span class="line">  string name = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// The response message containing the greetings.</span><br><span class="line">message HelloReply &#123;</span><br><span class="line">  string message = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">syntax &#x3D; &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">package Greet;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 定義 Greeter service 內有哪些方法可以使用</span><br><span class="line">&#x2F;&#x2F; 可依 gRPC 的各種溝通模式定義之</span><br><span class="line">service Greeter &#123;</span><br><span class="line">  &#x2F;&#x2F; Sends a greeting</span><br><span class="line">  rpc SayHello (HelloRequest) returns (HelloReply) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 定義 Response 與 Request 的資料型別及結構</span><br><span class="line">&#x2F;&#x2F; The request message containing the user&#39;s name.</span><br><span class="line">message HelloRequest &#123;</span><br><span class="line">  string name &#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The response message containing the greetings.</span><br><span class="line">message HelloReply &#123;</span><br><span class="line">  string message &#x3D; 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p><code>Services/GreeterService.cs</code> ： 實做部分</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Greet;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">gRPCDemo</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 繼承 Greeter.GreeterBase (根據 proto 檔案所產生的檔案)</span></span><br><span class="line">    public class GreeterService : Greeter.GreeterBase</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> Task&lt;HelloReply&gt; <span class="title">SayHello</span>(<span class="params">HelloRequest request, ServerCallContext context</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">return</span> Task.FromResult(<span class="keyword">new</span> HelloReply</span><br><span class="line">            &#123;</span><br><span class="line">                Message = <span class="string">"Hello "</span> + request.Name</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Greet;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">gRPCDemo</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 繼承 Greeter.GreeterBase (根據 proto 檔案所產生的檔案)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GreeterService</span> : <span class="title">Greeter.GreeterBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> Task&lt;HelloReply&gt; <span class="title">SayHello</span>(<span class="params">HelloRequest request, ServerCallContext context</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">return</span> Task.FromResult(<span class="keyword">new</span> HelloReply</span><br><span class="line">            &#123;</span><br><span class="line">                Message = <span class="string">&quot;Hello &quot;</span> + request.Name</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="1554783284157.png" alt="1554783284157"></p>
 </li>
 <li>
 <p>Client 端的使用方式</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Greet;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">gRPCDemo</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="comment">// Include port of the gRPC server as an application argument</span></span><br><span class="line">            <span class="keyword">var</span> port = args.Length &gt; <span class="number">0</span> ? args[<span class="number">0</span>] : <span class="string">"50051"</span>; <span class="comment">// 預設連接 port</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 建立連接頻道</span></span><br><span class="line">            <span class="keyword">var</span> channel = <span class="keyword">new</span> Channel(<span class="string">"localhost:"</span> + port, ChannelCredentials.Insecure);</span><br><span class="line">            <span class="comment">// 建立 client 實體</span></span><br><span class="line">            <span class="keyword">var</span> client = <span class="keyword">new</span> Greeter.GreeterClient(channel);</span><br><span class="line">		   </span><br><span class="line">            <span class="comment">// 呼叫使用 client 的方法</span></span><br><span class="line">            <span class="comment">// service Greeter &#123;</span></span><br><span class="line"> 		   <span class="comment">//   rpc SayHello (HelloRequest) returns (HelloReply) &#123;&#125;</span></span><br><span class="line">		   <span class="comment">// &#125;</span></span><br><span class="line">            <span class="keyword">var</span> reply = <span class="keyword">await</span> client.SayHelloAsync(<span class="keyword">new</span> HelloRequest &#123; Name = <span class="string">"GreeterClient"</span> &#125;);</span><br><span class="line">            Console.WriteLine(<span class="string">"Greeting: "</span> + reply.Message);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 關閉連線</span></span><br><span class="line">            <span class="keyword">await</span> channel.ShutdownAsync();</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(<span class="string">"Press any key to exit..."</span>);</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Greet;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">gRPCDemo</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="comment">// Include port of the gRPC server as an application argument</span></span><br><span class="line">            <span class="keyword">var</span> port = args.Length &gt; <span class="number">0</span> ? args[<span class="number">0</span>] : <span class="string">&quot;50051&quot;</span>; <span class="comment">// 預設連接 port</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 建立連接頻道</span></span><br><span class="line">            <span class="keyword">var</span> channel = <span class="keyword">new</span> Channel(<span class="string">&quot;localhost:&quot;</span> + port, ChannelCredentials.Insecure);</span><br><span class="line">            <span class="comment">// 建立 client 實體</span></span><br><span class="line">            <span class="keyword">var</span> client = <span class="keyword">new</span> Greeter.GreeterClient(channel);</span><br><span class="line">		   </span><br><span class="line">            <span class="comment">// 呼叫使用 client 的方法</span></span><br><span class="line">            <span class="comment">// service Greeter &#123;</span></span><br><span class="line"> 		   <span class="comment">//   rpc SayHello (HelloRequest) returns (HelloReply) &#123;&#125;</span></span><br><span class="line">		   <span class="comment">// &#125;</span></span><br><span class="line">            <span class="keyword">var</span> reply = <span class="keyword">await</span> client.SayHelloAsync(<span class="keyword">new</span> HelloRequest &#123; Name = <span class="string">&quot;GreeterClient&quot;</span> &#125;);</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Greeting: &quot;</span> + reply.Message);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 關閉連線</span></span><br><span class="line">            <span class="keyword">await</span> channel.ShutdownAsync();</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Press any key to exit...&quot;</span>);</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="實做-chat-server"><a class="header-anchor" href="#實做-chat-server"> </a>實做 Chat Server</h1>
+<h1 id="實做-Chat-Server"><a class="header-anchor" href="#實做-Chat-Server"> </a>實做 Chat Server</h1>
 <p>既然已經知道基本 gRPC Server 與 Client 端的檔案結構，那就來弄一個簡單的通訊軟體</p>
 <ol>
 <li>
@@ -595,11 +378,11 @@
 </li>
 <li>
 <p>修改 chat.proto 內容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">package Chat;</span><br><span class="line"></span><br><span class="line">service ChatRoom &#123;</span><br><span class="line">  rpc join (stream Message) returns (stream Message) &#123;&#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message Message &#123;</span><br><span class="line">  string user = 1;</span><br><span class="line">  string text = 2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">syntax &#x3D; &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">package Chat;</span><br><span class="line"></span><br><span class="line">service ChatRoom &#123;</span><br><span class="line">  rpc join (stream Message) returns (stream Message) &#123;&#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message Message &#123;</span><br><span class="line">  string user &#x3D; 1;</span><br><span class="line">  string text &#x3D; 2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>在 Services 資料夾下，新增 <code>ChatService.cs</code> 檔案</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Chat;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">chatwithgrpc</span></span><br><span class="line">&#123;</span><br><span class="line">    public class ChatService: ChatRoom.ChatRoomBase</span><br><span class="line">    &#123;        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">join</span>(<span class="params">IAsyncStreamReader&lt;Message&gt; requestStream, IServerStreamWriter&lt;Message&gt; responseStream, ServerCallContext context</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">await</span> requestStream.MoveNext()) <span class="keyword">return</span>;            </span><br><span class="line"></span><br><span class="line">            <span class="keyword">do</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// <span class="doctag">TODO:</span> handle request chat message</span></span><br><span class="line">            &#125; <span class="keyword">while</span> (<span class="keyword">await</span> requestStream.MoveNext());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Services 資料夾下，新增 <code>ChatService.cs </code> 檔案</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Chat;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">chatwithgrpc</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChatService</span>: <span class="title">ChatRoom.ChatRoomBase</span></span><br><span class="line">    &#123;        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">join</span>(<span class="params">IAsyncStreamReader&lt;Message&gt; requestStream, IServerStreamWriter&lt;Message&gt; responseStream, ServerCallContext context</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">await</span> requestStream.MoveNext()) <span class="keyword">return</span>;            </span><br><span class="line"></span><br><span class="line">            <span class="keyword">do</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// <span class="doctag">TODO:</span> handle request chat message</span></span><br><span class="line">            &#125; <span class="keyword">while</span> (<span class="keyword">await</span> requestStream.MoveNext());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>因為要記錄連上 gRPC 服務的連線 (就是  <code>IServerStreamWriter&lt;Message&gt; responseStream</code> 的部分)，所以需要另外建立一個 service 並註冊成 <code>Singleton</code> 模式，這裡就先建立一個服務叫做 <code>ChatRoom.cs</code></p>
@@ -607,11 +390,11 @@
 <ul>
 <li><code>ChatRoom.cs</code></li>
 </ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Chat;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Concurrent;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">chatwithgrpc.Server</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChatRoom</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> ConcurrentDictionary&lt;<span class="keyword">string</span>, IServerStreamWriter&lt;Message&gt;&gt; users = <span class="keyword">new</span> ConcurrentDictionary&lt;<span class="keyword">string</span>, IServerStreamWriter&lt;Message&gt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">join</span>(<span class="params"><span class="keyword">string</span> name, IServerStreamWriter&lt;Message&gt; response</span>)</span> =&gt; users.TryAdd(name, response);</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Remove</span>(<span class="params"><span class="keyword">string</span> name</span>)</span>  =&gt; users.TryRemove(name, <span class="keyword">out</span> <span class="keyword">var</span> s);</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">BroadcastMessageAsync</span>(<span class="params">Message message</span>)</span> =&gt; <span class="keyword">await</span> BroadcastMessages(message);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 將某 Client 的請求內容，傳送到其他 Client 端去</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">async</span> Task <span class="title">BroadcastMessages</span>(<span class="params">Message message</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> user <span class="keyword">in</span> users.Where(x =&gt; x.Key != message.User))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">var</span> item = <span class="keyword">await</span> SendMessageToSubscriber(user, message);</span><br><span class="line">                <span class="keyword">if</span> (item != <span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    Remove(item?.Key);</span><br><span class="line">                &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">	           </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">async</span> Task&lt;Nullable&lt;KeyValuePair&lt;<span class="keyword">string</span>, IServerStreamWriter&lt;Message&gt;&gt;&gt;&gt; SendMessageToSubscriber(KeyValuePair&lt;<span class="keyword">string</span>, IServerStreamWriter&lt;Message&gt;&gt; user, Message message)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 將訊息送到 Client 端</span></span><br><span class="line">                <span class="keyword">await</span> user.Value.WriteAsync(message);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(ex);</span><br><span class="line">                <span class="keyword">return</span> user;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Chat;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Concurrent;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">chatwithgrpc.Server</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChatRoom</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="title">ConcurrentDictionary</span>&lt;<span class="title">string</span>, <span class="title">IServerStreamWriter</span>&lt;<span class="title">Message</span>&gt;&gt; users</span> = <span class="keyword">new</span> ConcurrentDictionary&lt;<span class="built_in">string</span>, IServerStreamWriter&lt;Message&gt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">join</span>(<span class="params"><span class="built_in">string</span> name, IServerStreamWriter&lt;Message&gt; response</span>)</span> =&gt; users.TryAdd(name, response);</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Remove</span>(<span class="params"><span class="built_in">string</span> name</span>)</span>  =&gt; users.TryRemove(name, <span class="keyword">out</span> <span class="keyword">var</span> s);</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task <span class="title">BroadcastMessageAsync</span>(<span class="params">Message message</span>)</span> =&gt; <span class="keyword">await</span> BroadcastMessages(message);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 將某 Client 的請求內容，傳送到其他 Client 端去</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">async</span> Task <span class="title">BroadcastMessages</span>(<span class="params">Message message</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> user <span class="keyword">in</span> users.Where(x =&gt; x.Key != message.User))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">var</span> item = <span class="keyword">await</span> SendMessageToSubscriber(user, message);</span><br><span class="line">                <span class="keyword">if</span> (item != <span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    Remove(item?.Key);</span><br><span class="line">                &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">	           </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">async</span> Task&lt;Nullable&lt;KeyValuePair&lt;<span class="built_in">string</span>, IServerStreamWriter&lt;Message&gt;&gt;&gt;&gt; SendMessageToSubscriber(KeyValuePair&lt;<span class="built_in">string</span>, IServerStreamWriter&lt;Message&gt;&gt; user, Message message)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 將訊息送到 Client 端</span></span><br><span class="line">                <span class="keyword">await</span> user.Value.WriteAsync(message);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            catch (Exception ex)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(ex);</span><br><span class="line">                <span class="keyword">return</span> user;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>在 <code>ChatService.cs</code> 內注入 <code>ChatRoom</code> 並完成相關實做</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Chat;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">chatwithgrpc</span></span><br><span class="line">&#123;</span><br><span class="line">    public class ChatService: ChatRoom.ChatRoomBase</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> Server.ChatRoom _chatroomService;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ChatService</span>(<span class="params">Server.ChatRoom chatRoomService</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            _chatroomService = chatRoomService;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">join</span>(<span class="params">IAsyncStreamReader&lt;Message&gt; requestStream, IServerStreamWriter&lt;Message&gt; responseStream, ServerCallContext context</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">await</span> requestStream.MoveNext()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">do</span></span><br><span class="line">            &#123;</span><br><span class="line">                _chatroomService.Join(requestStream.Current.User, responseStream);</span><br><span class="line">                <span class="keyword">await</span> _chatroomService.BroadcastMessageAsync(requestStream.Current);</span><br><span class="line">            &#125; <span class="keyword">while</span> (<span class="keyword">await</span> requestStream.MoveNext());</span><br><span class="line"></span><br><span class="line">            _chatroomService.Remove(context.Peer);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Chat;</span><br><span class="line"><span class="keyword">using</span> Grpc.Core;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">chatwithgrpc</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChatService</span>: <span class="title">ChatRoom.ChatRoomBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> Server.ChatRoom _chatroomService;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ChatService</span>(<span class="params">Server.ChatRoom chatRoomService</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            _chatroomService = chatRoomService;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">async</span> Task <span class="title">join</span>(<span class="params">IAsyncStreamReader&lt;Message&gt; requestStream, IServerStreamWriter&lt;Message&gt; responseStream, ServerCallContext context</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">await</span> requestStream.MoveNext()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">do</span></span><br><span class="line">            &#123;</span><br><span class="line">                _chatroomService.Join(requestStream.Current.User, responseStream);</span><br><span class="line">                <span class="keyword">await</span> _chatroomService.BroadcastMessageAsync(requestStream.Current);</span><br><span class="line">            &#125; <span class="keyword">while</span> (<span class="keyword">await</span> requestStream.MoveNext());</span><br><span class="line"></span><br><span class="line">            _chatroomService.Remove(context.Peer);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>line 19: 第一次 join 時，並不會收到任何由 client 傳來的請求，所以就加個條件排除第一次</li>
 <li>line 21~25 : 當 client 發出任何請求時，處理其請求內容，這裡就是廣播到其他有連線到 gRPC 服務的 client 端</li>
@@ -622,7 +405,7 @@
 </li>
 <li>
 <p><code>Program.cs</code></p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">"請輸入使用者姓名"</span>);</span><br><span class="line">            <span class="keyword">var</span> userName = Console.ReadLine();</span><br><span class="line">            <span class="comment">// Include port of the gRPC server as an application argument</span></span><br><span class="line">            <span class="keyword">var</span> port = args.Length &gt; <span class="number">0</span> ? args[<span class="number">0</span>] : <span class="string">"50051"</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> channel = <span class="keyword">new</span> Channel(<span class="string">"localhost:"</span> + port, ChannelCredentials.Insecure);</span><br><span class="line">            <span class="keyword">var</span> client = <span class="keyword">new</span> ChatRoom.ChatRoomClient(channel);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">using</span> (<span class="keyword">var</span> chat = client.<span class="keyword">join</span>())</span><br><span class="line">            &#123;               </span><br><span class="line">                _ = Task.Run(<span class="keyword">async</span> () =&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">while</span> (<span class="keyword">await</span> chat.ResponseStream.MoveNext(cancellationToken: CancellationToken.None))</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">var</span> response = chat.ResponseStream.Current;</span><br><span class="line">                        Console.WriteLine(<span class="string">$"<span class="subst">&#123;response.User&#125;</span>: <span class="subst">&#123;response.Text&#125;</span>"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">				                </span><br><span class="line">                <span class="keyword">await</span> chat.RequestStream.WriteAsync(<span class="keyword">new</span> Message &#123; User = userName, Text = <span class="string">$"<span class="subst">&#123;userName&#125;</span> has joined the room"</span> &#125;);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">string</span> line;</span><br><span class="line">                <span class="keyword">while</span> ((line = Console.ReadLine()) != <span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (line.ToLower() == <span class="string">"bye"</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">await</span> chat.RequestStream.WriteAsync(<span class="keyword">new</span> Message &#123; User = userName, Text = line &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">await</span> chat.RequestStream.CompleteAsync();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(<span class="string">"Disconnecting"</span>);</span><br><span class="line">            <span class="keyword">await</span> channel.ShutdownAsync();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;請輸入使用者姓名&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> userName = Console.ReadLine();</span><br><span class="line">            <span class="comment">// Include port of the gRPC server as an application argument</span></span><br><span class="line">            <span class="keyword">var</span> port = args.Length &gt; <span class="number">0</span> ? args[<span class="number">0</span>] : <span class="string">&quot;50051&quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> channel = <span class="keyword">new</span> Channel(<span class="string">&quot;localhost:&quot;</span> + port, ChannelCredentials.Insecure);</span><br><span class="line">            <span class="keyword">var</span> client = <span class="keyword">new</span> ChatRoom.ChatRoomClient(channel);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">using</span> (<span class="keyword">var</span> chat = client.<span class="keyword">join</span>())</span><br><span class="line">            &#123;               </span><br><span class="line">                _ = Task.Run(<span class="keyword">async</span> () =&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">while</span> (<span class="keyword">await</span> chat.ResponseStream.MoveNext(cancellationToken: CancellationToken.None))</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">var</span> response = chat.ResponseStream.Current;</span><br><span class="line">                        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;response.User&#125;</span>: <span class="subst">&#123;response.Text&#125;</span>&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">				                </span><br><span class="line">                <span class="keyword">await</span> chat.RequestStream.WriteAsync(<span class="keyword">new</span> Message &#123; User = userName, Text = <span class="string">$&quot;<span class="subst">&#123;userName&#125;</span> has joined the room&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line">                <span class="built_in">string</span> line;</span><br><span class="line">                <span class="keyword">while</span> ((line = Console.ReadLine()) != <span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (line.ToLower() == <span class="string">&quot;bye&quot;</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">await</span> chat.RequestStream.WriteAsync(<span class="keyword">new</span> Message &#123; User = userName, Text = line &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">await</span> chat.RequestStream.CompleteAsync();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Disconnecting&quot;</span>);</span><br><span class="line">            <span class="keyword">await</span> channel.ShutdownAsync();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>line 13: 建立與 server 端串流 (streaming) 連線</li>
 <li>line 15~22: 處理由 server 端回傳的訊息，這裡是由其他 Client 端所傳送的聊天訊息</li>
@@ -634,547 +417,234 @@
 </li>
 <li>
 <p>如果這時後直接執行 Server 與 Client 端時，會發現 Client 會很容易斷線。這是因為 gRPC 有預設 request timeout 的時間，這可以在 Server 端的 <code>Program.cs</code> 內做設定</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IHostBuilder <span class="title">CreateHostBuilder</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span> =&gt;</span><br><span class="line">           Host.CreateDefaultBuilder(args)</span><br><span class="line">               .ConfigureWebHostDefaults(webBuilder =&gt;</span><br><span class="line">               &#123;</span><br><span class="line">                   webBuilder.UseStartup&lt;Startup&gt;();</span><br><span class="line">                   webBuilder.ConfigureKestrel((context, options) =&gt;</span><br><span class="line">                   &#123;</span><br><span class="line">                       <span class="comment">// 增加此設定避免閒置斷線的問題</span></span><br><span class="line">                       options.Limits.MinRequestBodyDataRate = <span class="literal">null</span>;</span><br><span class="line">                   &#125;);</span><br><span class="line">               &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IHostBuilder <span class="title">CreateHostBuilder</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span> =&gt;</span><br><span class="line">           Host.CreateDefaultBuilder(args)</span><br><span class="line">               .ConfigureWebHostDefaults(webBuilder =&gt;</span><br><span class="line">               &#123;</span><br><span class="line">                   webBuilder.UseStartup&lt;Startup&gt;();</span><br><span class="line">                   webBuilder.ConfigureKestrel((context, options) =&gt;</span><br><span class="line">                   &#123;</span><br><span class="line">                       <span class="comment">// 增加此設定避免閒置斷線的問題</span></span><br><span class="line">                       options.Limits.MinRequestBodyDataRate = <span class="literal">null</span>;</span><br><span class="line">                   &#125;);</span><br><span class="line">               &#125;);</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h2 id="執行效果"><a class="header-anchor" href="#執行效果"> </a>執行效果</h2>
 <p><img src="2019-04-09_14-00-48.gif" alt="2019-04-09_14-00-48"></p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://grpc.io/" target="_blank" rel="noopener">grpc.io</a></li>
-<li><a href="https://grpc.io/docs/quickstart/csharp.html" target="_blank" rel="noopener">gRPC C# Quick Start</a></li>
-<li><a href="https://github.com/grpc/grpc-dotnet" target="_blank" rel="noopener">gRPC for .NET GitHub</a></li>
-<li><a href="https://github.com/chgc/grpc-dotnetcore-3-chat" target="_blank" rel="noopener">簡單聊天功能 Repo</a></li>
+<li><a target="_blank" rel="noopener" href="https://grpc.io/">grpc.io</a></li>
+<li><a target="_blank" rel="noopener" href="https://grpc.io/docs/quickstart/csharp.html">gRPC C# Quick Start</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/grpc/grpc-dotnet">gRPC for .NET GitHub</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chgc/grpc-dotnetcore-3-chat">簡單聊天功能 Repo</a></li>
 </ul>
 
-      
     </div>
 
     
-
-    
-    
-    
-
-    
-
-    
-      
     
     
 
-    
-
-    <footer class="post-footer">
-      
-        
-          
-        
-        <div class="post-tags">
-          
-            <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/03/26/ngdart-httpclient/" rel="next" title="[AngularDart] HttpClient">
-                <i class="fa fa-chevron-left"></i> [AngularDart] HttpClient
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/11/ng-windows-auth/" rel="prev" title="[Angular] 使用 Windows 驗證 (Windows Authentication)">
-                [Angular] 使用 Windows 驗證 (Windows Authentication) <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/26/ngdart-httpclient/" rel="prev" title="[AngularDart] HttpClient">
+      <i class="fa fa-chevron-left"></i> [AngularDart] HttpClient
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/11/ng-windows-auth/" rel="next" title="[Angular] 使用 Windows 驗證 (Windows Authentication)">
+      [Angular] 使用 Windows 驗證 (Windows Authentication) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
 
     
       <div>
-        <div class="addthis_inline_share_toolbox">
-  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
-</div>
-
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
       </div>
-    
-  </div>
-
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
 
           </div>
           
-
-  
-    <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-      </div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
+  
 
-  <aside id="sidebar" class="sidebar">
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目錄
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            本站概要
-          </li>
-        </ul>
-      
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gRPC-%E7%B0%A1%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">gRPC 簡介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%96%8B%E7%99%BC"><span class="nav-number">2.</span> <span class="nav-text">開發</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E6%BA%96%E5%82%99"><span class="nav-number">2.1.</span> <span class="nav-text">環境準備</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E6%96%B0%E5%B0%88%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">建立新專案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E6%AA%94%E6%A1%88%E8%A7%A3%E8%AA%AA"><span class="nav-number">4.</span> <span class="nav-text">專案檔案解說</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%A6%E5%81%9A-Chat-Server"><span class="nav-number">5.</span> <span class="nav-text">實做 Chat Server</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%B7%E8%A1%8C%E6%95%88%E6%9E%9C"><span class="nav-number">5.1.</span> <span class="nav-text">執行效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
-            
-              <p class="site-author-name" itemprop="name">KevinYang</p>
-              <div class="site-description motion-element" itemprop="description"></div>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">300</span>
-                    <span class="site-state-item-name">文章</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                      <a href="/categories/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">33</span>
-                    <span class="site-state-item-name">分類</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                      <a href="/tags/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">64</span>
-                    <span class="site-state-item-name">標籤</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-block">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                友情連結
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">300</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
 
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
 
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#grpc-簡介"><span class="nav-number">1.</span> <span class="nav-text"> gRPC 簡介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#開發"><span class="nav-number">2.</span> <span class="nav-text"> 開發</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#環境準備"><span class="nav-number">2.1.</span> <span class="nav-text"> 環境準備</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建立新專案"><span class="nav-number">3.</span> <span class="nav-text"> 建立新專案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#專案檔案解說"><span class="nav-number">4.</span> <span class="nav-text"> 專案檔案解說</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#實做-chat-server"><span class="nav-number">5.</span> <span class="nav-text"> 實做 Chat Server</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#執行效果"><span class="nav-number">5.1.</span> <span class="nav-text"> 執行效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">6.</span> <span class="nav-text"> 參考資料</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
+      </div>
 
     </div>
     <div class="gooAd sidebar-inner" style="display: block;">
         <!-- Google AdSense start -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <!-- blog-sidebar -->
-<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<ins
+  class="adsbygoogle"
+  style="display: block"
+  data-ad-client="ca-pub-7997572949867824"
+  data-ad-slot="3959999538"
+  data-ad-format="auto"
+  data-full-width-responsive="true"
+></ins>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
      </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">KevinYang</span>
-
-  
-
-  
 </div>
-
-
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
-
-
-
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
 
         
 
@@ -1185,7 +655,6 @@
 
 
 
-        
       </div>
     </footer>
 
@@ -1202,25 +671,30 @@
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<script src="/js/utils.js"></script>
 
-
-
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
 
-
-
+<script src="/js/next-boot.js"></script>
 
 
 
 
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
@@ -1235,54 +709,9 @@
 
 
   
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 
   
 
-
-  <script src="/js/utils.js?v=7.2.0"></script>
-
-  <script src="/js/motion.js?v=7.2.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/affix.js?v=7.2.0"></script>
-
-  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
-
-
-
-  
-  <script src="/js/scrollspy.js?v=7.2.0"></script>
-<script src="/js/post-details.js?v=7.2.0"></script>
-
-
-
-  
-
-
-  <script src="/js/next-boot.js?v=7.2.0"></script>
-
-
-  
-
-  
-
-  
-
-  
-  
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -1293,384 +722,26 @@
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
 </script>
-
-
 <script>
   var disqus_config = function() {
     this.page.url = "http://blog.kevinyang.net/2019/04/08/grpc-chat-server/";
     this.page.identifier = "2019/04/08/grpc-chat-server/";
-    this.page.title = '[.NET Core] gRPC with Visual Studio 2019 and .NET Core 3';
+    this.page.title = "[.NET Core] gRPC with Visual Studio 2019 and .NET Core 3";
     };
-  function loadComments() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://cksnotepad.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', '' + +new Date());
-    (d.head || d.body).appendChild(s);
-  }
-  
-    window.addEventListener('load', loadComments, false);
-  
-</script>
-
-
-
-
-
-  
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
       });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
     }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+  });
+</script>
 
 </body>
 </html>

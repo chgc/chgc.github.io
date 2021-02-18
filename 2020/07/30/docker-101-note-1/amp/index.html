@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/07/30/docker-101-note-1/"
 			},
 			"datePublished": "2020-07-30T05:42:30.000Z",
-			"dateModified": "2021-02-18T02:39:29.136Z",
+			"dateModified": "2021-02-18T04:09:35.005Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1859,7 +1859,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>閃避多年的主題，容器技術，到最後還是閃不到，只好乖乖的面對它。首先先針對比較常見的容器技術 Docker，將一些比較概念性的東西整理在這邊筆記內。</p>
 <a id="more"></a>
-<h1 id="與-virtual-machine-的差異"><a class="header-anchor" href="#與-virtual-machine-的差異"> </a>與 Virtual Machine 的差異</h1>
+<h1 id="與-Virtual-Machine-的差異"><a class="header-anchor" href="#與-Virtual-Machine-的差異"> </a>與 Virtual Machine 的差異</h1>
 <p>Docker 與虛擬機器(Virtual Machine)的差異</p>
 <ul>
 <li>Docker 容器與容器間共用相同的 OS Kernel，虛擬機器是各自擁有自己的 OS，這表示 Docker Server 如果是跑 Linux 版本(通常也是這個)，就不能跑 Windows 的容器。虛擬機器只是共用硬體資源，所以在 VM Server 上就可以並存 Linux base 和 Windows Base</li>
@@ -1876,7 +1876,7 @@ h6.categories {
 <li>Registry: 放 Image 的地方，有公用的服務，例如 Docker Hub，當然也可以自己架</li>
 </ul>
 <h2 id="安裝"><a class="header-anchor" href="#安裝"> </a>安裝</h2>
-<p>Windows 10 的電腦可以安裝下載 <a href="https://www.docker.com/products/docker-desktop" target="_blank" rel="noopener">Docker desktop for Windows</a> 的穩定版，但須具有 Hyper-V 的功能才能啟動 Docker 的服務。如果能安裝 <a href="https://docs.microsoft.com/zh-tw/windows/wsl/install-win10" target="_blank" rel="noopener">WSL 2</a> 及 <a href="https://www.microsoft.com/zh-tw/p/windows-terminal/9n0dx20hk701" target="_blank" rel="noopener">Windows Terminal</a> 的，之後的操作上會更加友善</p>
+<p>Windows 10 的電腦可以安裝下載 <a href="https://www.docker.com/products/docker-desktop">Docker desktop for Windows</a> 的穩定版，但須具有 Hyper-V 的功能才能啟動 Docker 的服務。如果能安裝 <a href="https://docs.microsoft.com/zh-tw/windows/wsl/install-win10">WSL 2</a> 及 <a href="https://www.microsoft.com/zh-tw/p/windows-terminal/9n0dx20hk701">Windows Terminal</a> 的，之後的操作上會更加友善</p>
 <p>至於其他作業系統的安裝方式，官網或是網路上有很多文件，這邊就不多贅述</p>
 <h2 id="網路"><a class="header-anchor" href="#網路"> </a>網路</h2>
 <p><strong>None</strong>: 沒有網路功能，簡單說就是一個沒有網卡的 Container</p>
@@ -1887,7 +1887,7 @@ h6.categories {
 <p><strong>Container Mode</strong>: Container 共用同一個 Network Interface</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/07/30/docker-101-note-1/container-mode.png" width="599" height="399" layout="responsive"></amp-img></div>
 <p><strong>Overlay</strong>: Container 可以與跑在不同 Docker Server 上的 Container 做溝通，類似 VPN Site to Site 的概念?</p>
-<h1 id="overview-流程圖"><a class="header-anchor" href="#overview-流程圖"> </a>Overview 流程圖</h1>
+<h1 id="Overview-流程圖"><a class="header-anchor" href="#Overview-流程圖"> </a>Overview 流程圖</h1>
 <div class="amp-img-wrapper"><amp-img src="/2020/07/30/docker-101-note-1/screen-shot-2020-03-19-at-9.01.25-am.png" width="1920" height="981" layout="responsive"></amp-img></div>
 
 			  		

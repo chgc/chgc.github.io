@@ -14,14 +14,14 @@
 	
 	<meta property="og:site_name" content="CK&#39;s Notepad">
 	
-		<meta property="og:description" content="&lt;p&gt;Flutter 內狀態管理的方法很多種，先從包裝好的 &lt;code&gt;provider&lt;/code&gt; package 先研究起，&lt;a href=&#34;https://pub.dev/packages/provider&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pub 網址&lt;/a&gt;&lt;/p&gt;">
+		<meta property="og:description" content="&lt;p&gt;Flutter 內狀態管理的方法很多種，先從包裝好的 &lt;code&gt;provider&lt;/code&gt; package 先研究起，&lt;a href=&#34;https://pub.dev/packages/provider&#34;&gt;pub 網址&lt;/a&gt;&lt;/p&gt;">
 	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="CK&#39;s Notepad">
 	<meta name="twitter:url" content="http://blog.kevinyang.net/2019/10/12/flutter-provider/">
 	<meta name="twitter:title" content="[Flutter] Provider - CK&#39;s Notepad">
 	
-		<meta name="twitter:description" content="&lt;p&gt;Flutter 內狀態管理的方法很多種，先從包裝好的 &lt;code&gt;provider&lt;/code&gt; package 先研究起，&lt;a href=&#34;https://pub.dev/packages/provider&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pub 網址&lt;/a&gt;&lt;/p&gt;">
+		<meta name="twitter:description" content="&lt;p&gt;Flutter 內狀態管理的方法很多種，先從包裝好的 &lt;code&gt;provider&lt;/code&gt; package 先研究起，&lt;a href=&#34;https://pub.dev/packages/provider&#34;&gt;pub 網址&lt;/a&gt;&lt;/p&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -51,14 +51,14 @@
 			"@type": "BlogPosting",
 			"headline": "[Flutter] Provider",
 			
-			"description": "&lt;p&gt;Flutter 內狀態管理的方法很多種，先從包裝好的 &lt;code&gt;provider&lt;/code&gt; package 先研究起，&lt;a href=&#34;https://pub.dev/packages/provider&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pub 網址&lt;/a&gt;&lt;/p&gt;",
+			"description": "&lt;p&gt;Flutter 內狀態管理的方法很多種，先從包裝好的 &lt;code&gt;provider&lt;/code&gt; package 先研究起，&lt;a href=&#34;https://pub.dev/packages/provider&#34;&gt;pub 網址&lt;/a&gt;&lt;/p&gt;",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"http://blog.kevinyang.net/2019/10/12/flutter-provider/"
 			},
 			"datePublished": "2019-10-12T04:45:44.000Z",
-			"dateModified": "2021-02-18T02:39:29.092Z",
+			"dateModified": "2021-02-18T04:09:34.965Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,9 +1848,9 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Flutter 內狀態管理的方法很多種，先從包裝好的 <code>provider</code> package 先研究起，<a href="https://pub.dev/packages/provider" target="_blank" rel="noopener">pub 網址</a></p>
+			  		<p>Flutter 內狀態管理的方法很多種，先從包裝好的 <code>provider</code> package 先研究起，<a href="https://pub.dev/packages/provider">pub 網址</a></p>
 <a id="more"></a>
-<h1 id="basic"><a class="header-anchor" href="#basic"> </a>Basic</h1>
+<h1 id="Basic"><a class="header-anchor" href="#Basic"> </a>Basic</h1>
 <p>Provider 是 Dependency injection 和 state manager 的混和體，使用 provider 可以讓我們很容易的重複使用 wigdet class，並確保幾件事情</p>
 <ol>
 <li>維護姓，單一方向的資料流</li>
@@ -1891,7 +1891,7 @@ h6.categories {
 </ol>
 <p>假設同時需要存取多個 provider 時，可以這樣子寫，以此類推，最多到 6 個</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Widget titleWidget = Consumer2&lt;<span class="built_in">String</span>, AppConfig&gt;(</span><br><span class="line">  builder: (context, title, appConfig, child) =&gt; Text(title),</span><br><span class="line">);</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="其他-provider-類型"><a class="header-anchor" href="#其他-provider-類型"> </a>其他 Provider 類型</h1>
+<h1 id="其他-Provider-類型"><a class="header-anchor" href="#其他-Provider-類型"> </a>其他 Provider 類型</h1>
 <p>除了 Provider 外，還有其他延伸變化類型的 provider</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1902,37 +1902,37 @@ h6.categories {
 </thead>
 <tbody>
 <tr>
-<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/Provider-class.html" target="_blank" rel="noopener">Provider</a></td>
+<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/Provider-class.html">Provider</a></td>
 <td>The most basic form of provider. It takes a value and exposes it, whatever the value is.</td>
 </tr>
 <tr>
-<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/ListenableProvider-class.html" target="_blank" rel="noopener">ListenableProvider</a></td>
+<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/ListenableProvider-class.html">ListenableProvider</a></td>
 <td>A specific provider for Listenable object. ListenableProvider will listen to the object and ask widgets which depend on it to rebuild whenever the listener is called.</td>
 </tr>
 <tr>
-<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/ChangeNotifierProvider-class.html" target="_blank" rel="noopener">ChangeNotifierProvider</a></td>
+<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/ChangeNotifierProvider-class.html">ChangeNotifierProvider</a></td>
 <td>A specification of ListenableProvider for ChangeNotifier. It will automatically call <code>ChangeNotifier.dispose</code> when needed.</td>
 </tr>
 <tr>
-<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/ValueListenableProvider-class.html" target="_blank" rel="noopener">ValueListenableProvider</a></td>
+<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/ValueListenableProvider-class.html">ValueListenableProvider</a></td>
 <td>Listen to a ValueListenable and only expose <code>ValueListenable.value</code>.</td>
 </tr>
 <tr>
-<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/StreamProvider-class.html" target="_blank" rel="noopener">StreamProvider</a></td>
+<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/StreamProvider-class.html">StreamProvider</a></td>
 <td>Listen to a Stream and expose the latest value emitted.</td>
 </tr>
 <tr>
-<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/FutureProvider-class.html" target="_blank" rel="noopener">FutureProvider</a></td>
+<td><a href="https://pub.dartlang.org/documentation/provider/latest/provider/FutureProvider-class.html">FutureProvider</a></td>
 <td>Takes a <code>Future</code> and updates dependents when the future completes.</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/documentation/provider/latest/provider/ProxyProvider-class.html" target="_blank" rel="noopener">ProxyProvider</a></td>
+<td><a href="https://pub.dev/documentation/provider/latest/provider/ProxyProvider-class.html">ProxyProvider</a></td>
 <td>A provider that builds a value based on other providers.(3.0 版新增功能)</td>
 </tr>
 </tbody>
 </table></div>
 <ul>
-<li><a href="https://pub.dev/documentation/provider/latest/provider/provider-library.html" target="_blank" rel="noopener">完整的 list</a></li>
+<li><a href="https://pub.dev/documentation/provider/latest/provider/provider-library.html">完整的 list</a></li>
 </ul>
 
 			  		

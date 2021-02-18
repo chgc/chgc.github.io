@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/02/19/nx-create-app/"
 			},
 			"datePublished": "2018-02-19T01:01:44.000Z",
-			"dateModified": "2021-02-18T02:39:29.008Z",
+			"dateModified": "2021-02-18T04:09:34.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,14 +1850,14 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Nx 工具提供兩個建立新範本的指令、<code>ng g app &lt;&lt;name&gt;&gt;</code> 和 <code>ng g lib &lt;&lt;name&gt;&gt;</code>，這一篇文章來看建立 application 的命令</p>
 <a id="more"></a>
-<h1 id="create-app"><a class="header-anchor" href="#create-app"> </a>Create App</h1>
+<h1 id="Create-App"><a class="header-anchor" href="#Create-App"> </a>Create App</h1>
 <p>在建立 Application 時，可以有以下的參數可以使用</p>
 <p>(注意：透過 <code>ng g app -h</code> 取得說明，其中有些參數是無法使用的)</p>
 <ul>
 <li>name (必填)：要建立的 Application 名稱</li>
 <li>npmScope</li>
-<li>directory：如果有設定 directory，application的建立路徑為 <code>/</code> 如果沒有設定，建立路徑則是 <code></code></li>
-<li>sourceDir：預設值為 <code>src</code>，程式碼產生位置，例如: <code>apps//src</code></li>
+<li>directory：如果有設定 directory，application的建立路徑為 <code>{{direcotry}}/{{name}}</code> 如果沒有設定，建立路徑則是 <code>{{name}}</code></li>
+<li>sourceDir：預設值為 <code>src</code>，程式碼產生位置，例如: <code>apps/{{ directory }}/src</code></li>
 <li>inlineStyle：設定使用 <code>inlineStyle</code></li>
 <li>inlineTemplate：設定使用 <code>inlineTemplate</code></li>
 <li>viewEncapsulation：設定 <code>viewEncapsulation</code>，可設定 <code>Emulated</code>、<code>Native</code> 和 <code>None</code></li>
@@ -1878,7 +1878,7 @@ h6.categories {
 </li>
 <li>
 <p>apps section</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"client/dashboard"</span>,</span><br><span class="line">      <span class="attr">"root"</span>: <span class="string">"apps/client/dashboard/src"</span>,</span><br><span class="line">      <span class="attr">"outDir"</span>: <span class="string">"dist/apps/client/dashboard"</span>,</span><br><span class="line">      <span class="attr">"assets"</span>: [</span><br><span class="line">        <span class="string">"assets"</span>,</span><br><span class="line">        <span class="string">"favicon.ico"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"index"</span>: <span class="string">"index.html"</span>,</span><br><span class="line">      <span class="attr">"main"</span>: <span class="string">"main.ts"</span>,</span><br><span class="line">      <span class="attr">"polyfills"</span>: <span class="string">"polyfills.ts"</span>,</span><br><span class="line">      <span class="attr">"test"</span>: <span class="string">"../../../../test.js"</span>,</span><br><span class="line">      <span class="attr">"tsconfig"</span>: <span class="string">"tsconfig.app.json"</span>,</span><br><span class="line">      <span class="attr">"testTsconfig"</span>: <span class="string">"../../../../tsconfig.spec.json"</span>,</span><br><span class="line">      <span class="attr">"prefix"</span>: <span class="string">"app"</span>,</span><br><span class="line">      <span class="attr">"styles"</span>: [</span><br><span class="line">        <span class="string">"styles.css"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"scripts"</span>: [],</span><br><span class="line">      <span class="attr">"environmentSource"</span>: <span class="string">"environments/environment.ts"</span>,</span><br><span class="line">      <span class="attr">"environments"</span>: {</span><br><span class="line">        <span class="attr">"dev"</span>: <span class="string">"environments/environment.ts"</span>,</span><br><span class="line">        <span class="attr">"prod"</span>: <span class="string">"environments/environment.prod.ts"</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"client/dashboard"</span>,</span><br><span class="line">      <span class="attr">"root"</span>: <span class="string">"apps/client/dashboard/src"</span>,</span><br><span class="line">      <span class="attr">"outDir"</span>: <span class="string">"dist/apps/client/dashboard"</span>,</span><br><span class="line">      <span class="attr">"assets"</span>: [</span><br><span class="line">        <span class="string">"assets"</span>,</span><br><span class="line">        <span class="string">"favicon.ico"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"index"</span>: <span class="string">"index.html"</span>,</span><br><span class="line">      <span class="attr">"main"</span>: <span class="string">"main.ts"</span>,</span><br><span class="line">      <span class="attr">"polyfills"</span>: <span class="string">"polyfills.ts"</span>,</span><br><span class="line">      <span class="attr">"test"</span>: <span class="string">"../../../../test.js"</span>,</span><br><span class="line">      <span class="attr">"tsconfig"</span>: <span class="string">"tsconfig.app.json"</span>,</span><br><span class="line">      <span class="attr">"testTsconfig"</span>: <span class="string">"../../../../tsconfig.spec.json"</span>,</span><br><span class="line">      <span class="attr">"prefix"</span>: <span class="string">"app"</span>,</span><br><span class="line">      <span class="attr">"styles"</span>: [</span><br><span class="line">        <span class="string">"styles.css"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"scripts"</span>: [],</span><br><span class="line">      <span class="attr">"environmentSource"</span>: <span class="string">"environments/environment.ts"</span>,</span><br><span class="line">      <span class="attr">"environments"</span>: {</span><br><span class="line">        <span class="attr">"dev"</span>: <span class="string">"environments/environment.ts"</span>,</span><br><span class="line">        <span class="attr">"prod"</span>: <span class="string">"environments/environment.prod.ts"</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>新增檔案清單</p>
@@ -1887,13 +1887,13 @@ h6.categories {
 </li>
 <li>
 <p>app.module.ts：預設載入 <code>NxModule.forRoot()</code>，預設注入 <code>DataPersistence</code> provider</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>({})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NxModule {</span><br><span class="line">  <span class="keyword">static</span> forRoot(): ModuleWithProviders {</span><br><span class="line">    <span class="keyword">return</span> { ngModule: NxModule, providers: [DataPersistence] };</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>({})</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">NxModule</span> </span>{</span><br><span class="line">  <span class="keyword">static</span> forRoot(): ModuleWithProviders {</span><br><span class="line">    <span class="keyword">return</span> { <span class="attr">ngModule</span>: NxModule, <span class="attr">providers</span>: [DataPersistence] };</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>​</p>
 </li>
 </ul>
 <h1 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h1>
 <ul>
-<li><a href="https://nrwl.io/nx/guide-data-persistence" target="_blank" rel="noopener">DataPersistence</a></li>
+<li><a href="https://nrwl.io/nx/guide-data-persistence">DataPersistence</a></li>
 </ul>
 
 			  		

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/05/14/core-environment-setup/"
 			},
 			"datePublished": "2017-05-14T05:49:51.000Z",
-			"dateModified": "2021-02-18T02:39:29.008Z",
+			"dateModified": "2021-02-18T04:09:34.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1855,15 +1855,15 @@ h6.categories {
 <ol>
 <li>使用 IDE
 <ol>
-<li>windows版本，直接上 <a href="https://www.visualstudio.com/zh-hant/vs/whatsnew/" target="_blank" rel="noopener">visual studio 2017</a></li>
-<li>mac 版本，可以使用 <a href="https://www.visualstudio.com/zh-hant/vs/visual-studio-mac/?rr=https%3A%2F%2Fwww.google.com.tw%2F" target="_blank" rel="noopener">visual studio for mac</a></li>
-<li><a href="https://www.jetbrains.com/rider/" target="_blank" rel="noopener">Jetbrains Rider</a></li>
+<li>windows版本，直接上 <a href="https://www.visualstudio.com/zh-hant/vs/whatsnew/">visual studio 2017</a></li>
+<li>mac 版本，可以使用 <a href="https://www.visualstudio.com/zh-hant/vs/visual-studio-mac/?rr=https%3A%2F%2Fwww.google.com.tw%2F">visual studio for mac</a></li>
+<li><a href="https://www.jetbrains.com/rider/">Jetbrains Rider</a></li>
 </ol>
 </li>
-<li>使用 CLI + <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Core</a>
+<li>使用 CLI + <a href="https://code.visualstudio.com/">Visual Studio Core</a>
 <ol>
-<li><a href="https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.0-preview1-download.md" target="_blank" rel="noopener">CLI on GitHub</a></li>
-<li><a href="https://www.microsoft.com/net/core#windowscmd" target="_blank" rel="noopener">穩定版</a></li>
+<li><a href="https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.0-preview1-download.md">CLI on GitHub</a></li>
+<li><a href="https://www.microsoft.com/net/core#windowscmd">穩定版</a></li>
 </ol>
 </li>
 </ol>
@@ -1888,9 +1888,9 @@ h6.categories {
 <p>專案的檔案結構</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm5.staticflickr.com/4179/34260096790_fdc395ba3f_o.png" width="382" height="368" layout="responsive"></amp-img></div>
 <p><code>programs.cs</code> 是專案的進入點</p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">study_001</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        {</span><br><span class="line">            Console.WriteLine(<span class="string">"Hello World!"</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">study_001</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    {</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        {</span><br><span class="line">            Console.WriteLine(<span class="string">"Hello World!"</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p><code>xxx.csproj</code> 是專案檔，用來管理該專案的狀態，例如 package 的使用等</p>
-<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">"Microsoft.NET.Sdk"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">OutputType</span>&gt;</span>Exe<span class="tag">&lt;/<span class="name">OutputType</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp2.0<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">"Microsoft.NET.Sdk"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">OutputType</span>&gt;</span>Exe<span class="tag">&lt;/<span class="name">OutputType</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp2.0<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <h2 id="執行"><a class="header-anchor" href="#執行"> </a>執行</h2>
 <p>透過 CLI 將 .NET Core 的程式執行起來，可以下 <code>dotnet run</code> 就可以執行了。</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm5.staticflickr.com/4175/34483688792_7ff357d932_o.png" width="330" height="73" layout="responsive"></amp-img></div>
@@ -1899,7 +1899,7 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="https://farm5.staticflickr.com/4180/33836146513_1b2aebd573_o.png" width="927" height="271" layout="responsive"></amp-img></div>
 <p>執行該 dll 的方式，執行 <code>dotnet xxx.dll</code></p>
 <div class="amp-img-wrapper"><amp-img src="https://farm5.staticflickr.com/4177/33803404014_d244fc65f7_o.png" width="472" height="89" layout="responsive"></amp-img></div>
-<h1 id="recap"><a class="header-anchor" href="#recap"> </a>Recap</h1>
+<h1 id="Recap"><a class="header-anchor" href="#Recap"> </a>Recap</h1>
 <ul>
 <li><code>dotnet --help</code> 查詢可使用的指令</li>
 <li><code>dotnet --info</code> 查詢目前 CLI 版本</li>

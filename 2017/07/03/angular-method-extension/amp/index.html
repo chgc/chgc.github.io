@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/07/03/angular-method-extension/"
 			},
 			"datePublished": "2017-07-03T02:55:12.000Z",
-			"dateModified": "2021-02-18T02:39:29.008Z",
+			"dateModified": "2021-02-18T04:09:34.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1856,22 +1856,22 @@ h6.categories {
 </ul>
 <p>我目前想到的寫法有以下三種</p>
 <h2 id="寫法一-直接擴充-prototype"><a class="header-anchor" href="#寫法一-直接擴充-prototype"> </a>寫法一 直接擴充 prototype</h2>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.prototype.toNumber = <span class="function"><span class="keyword">function</span>(<span class="params"></span>):<span class="title">number</span> </span>{</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="keyword">this</span>);</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.prototype.toNumber = <span class="function"><span class="keyword">function</span>(<span class="params"></span>):<span class="title">number</span> </span>{</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="built_in">this</span>);</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 <p>這樣的寫法作為直接</p>
-<h2 id="寫法二-object-assign"><a class="header-anchor" href="#寫法二-object-assign"> </a>寫法二 Object.assign</h2>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(<span class="built_in">String</span>.prototype, {</span><br><span class="line">  toNumber(): <span class="built_in">number</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="keyword">this</span>);</span><br><span class="line">  }</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="寫法三-object-defineproperty"><a class="header-anchor" href="#寫法三-object-defineproperty"> </a>寫法三 Object.defineProperty</h2>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">String</span>.prototype, <span class="string">'toNumber'</span>, {</span><br><span class="line">  value(): <span class="built_in">number</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="keyword">this</span>);</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
-<p>使用這種方式，可以有更多的彈性來設定物件的功能。可參閱<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">API</a>文件</p>
-<h1 id="加入至-angular-專案中"><a class="header-anchor" href="#加入至-angular-專案中"> </a>加入至 Angular 專案中</h1>
+<h2 id="寫法二-Object-assign"><a class="header-anchor" href="#寫法二-Object-assign"> </a>寫法二 Object.assign</h2>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(<span class="built_in">String</span>.prototype, {</span><br><span class="line">  toNumber(): <span class="built_in">number</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="built_in">this</span>);</span><br><span class="line">  }</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="寫法三-Object-defineProperty"><a class="header-anchor" href="#寫法三-Object-defineProperty"> </a>寫法三 Object.defineProperty</h2>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">String</span>.prototype, <span class="string">'toNumber'</span>, {</span><br><span class="line">  value(): <span class="built_in">number</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(<span class="built_in">this</span>);</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<p>使用這種方式，可以有更多的彈性來設定物件的功能。可參閱<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">API</a>文件</p>
+<h1 id="加入至-Angular-專案中"><a class="header-anchor" href="#加入至-Angular-專案中"> </a>加入至 Angular 專案中</h1>
 <p>以上的三種方式都可以達到目的，就依個人喜好選擇了。現在問題是，如何將寫好的擴充方法，加入至 Angular 專案裡。</p>
 <p>基本上，只要有網站也載入該擴充功能，整個網站底層就會直接生效，但在開發時期，會遇到的錯誤提示是 <code>TypeScript</code> 編譯器不認識擴充的功能，這時候，就需要再 <code>typings.d.ts</code> 內加上所擴充的功能</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> String {</span><br><span class="line">  toNumber(): <span class="built_in">number</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>當這樣子將擴充方法的定義補上後，TypeScript 編譯器就會認識我們所擴充的功能了，之後就是開心的寫程式了。</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign()</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">Object.defineProperty()</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign()</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty()</a></li>
 </ul>
 
 			  		

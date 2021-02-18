@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/03/27/685100/"
 			},
 			"datePublished": "2016-03-27T04:18:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,11 +1842,11 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>###今天下載了docker Toolbox for windows ，根據<a href="https://docs.docker.com/windows/step_one/" target="_blank" rel="noopener">安裝指示</a>安裝後，在執行時出現了一個錯誤訊息</p>
+			  		<p>###今天下載了docker Toolbox for windows ，根據<a href="https://docs.docker.com/windows/step_one/">安裝指示</a>安裝後，在執行時出現了一個錯誤訊息</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hyper-v is installed. virtualbox won't boot a 64 bits vm in hyper-v is activated ....</span><br></pre></td></tr></tbody></table></figure>
-<p>排除方式為:修改 Program Files\Docker Toolbox\<a href="http://start.sh" target="_blank" rel="noopener">start.sh</a>
+<p>排除方式為:修改 Program Files\Docker Toolbox\<a href="http://start.sh">start.sh</a>
 在start.sh檔裡面，尋找</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<!--figure1-->#123;DOCKER_MACHINE}" create -d virtualbox "<!--figure1-->#123;VM}"</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<!--figure1-->#123;DOCKER_MACHINE}" create -d virtualbox "<!--figure1-->#123;VM}" </span><br></pre></td></tr></tbody></table></figure>
 <p>更改成</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<!--figure2-->#123;DOCKER_MACHINE}" create --virtualbox-no-vtx-check -d virtualbox "<!--figure2-->#123;VM}"</span><br></pre></td></tr></tbody></table></figure>
 <p>即可排除此錯誤訊息</p>

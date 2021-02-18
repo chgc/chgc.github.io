@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/06/15/angular-schematics-ng-add/"
 			},
 			"datePublished": "2018-06-15T02:09:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Angular CLI 6 新增了一個指令 <code>ng add &lt;library&gt;</code> ，我們可以透過這個指令來安裝各式各樣的 schematics 套件，進而擴充 Angular CLI 的功能。如果想要寫一個自己的 schematics 又可以透過 <code>ng add</code> 來安裝。這一篇文章的內容或許是一個開始</p>
 <a id="more"></a>
-<h1 id="angular-cli"><a class="header-anchor" href="#angular-cli"> </a>Angular CLI</h1>
+<h1 id="Angular-CLI"><a class="header-anchor" href="#Angular-CLI"> </a>Angular CLI</h1>
 <p><code>schematics</code> 可以視為一個指令產生範本的任務集合，所以 Angular CLI 也是透過指令的方式去執行某一個 schematics 裡面的某一個動作。所以在開始寫之前，須了解 Angular CLI 的 ng add 到底做了哪些動作</p>
 <p>預設 CLI 所使用的命令清單中，有一個 <code>add.ts</code> ，這個命令就是這次的主角，他的執行步驟有</p>
 <ol>
@@ -1865,13 +1865,13 @@ h6.categories {
 </li>
 <li>
 <p>建立執行命令設定</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> runOptions = {</span><br><span class="line">   schematicOptions: options, </span><br><span class="line">   workingDir: <span class="keyword">this</span>.project.root,</span><br><span class="line">   collectionName, <span class="comment">// 集合名稱</span></span><br><span class="line">   schematicName: <span class="string">'ng-add'</span>, <span class="comment">// 執行命令</span></span><br><span class="line">   allowPrivate: <span class="literal">true</span>,</span><br><span class="line">   dryRun: <span class="literal">false</span>, <span class="comment">// 實際產生檔案</span></span><br><span class="line">   force: <span class="literal">false</span>,</span><br><span class="line"> };</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> runOptions = {</span><br><span class="line">   schematicOptions: options, </span><br><span class="line">   workingDir: <span class="built_in">this</span>.project.root,</span><br><span class="line">   collectionName, <span class="comment">// 集合名稱</span></span><br><span class="line">   schematicName: <span class="string">'ng-add'</span>, <span class="comment">// 執行命令</span></span><br><span class="line">   allowPrivate: <span class="literal">true</span>,</span><br><span class="line">   dryRun: <span class="literal">false</span>, <span class="comment">// 實際產生檔案</span></span><br><span class="line">   force: <span class="literal">false</span>,</span><br><span class="line"> };</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>執行 schematics 命令</p>
 </li>
 </ol>
-<h1 id="自訂-schematics"><a class="header-anchor" href="#自訂-schematics"> </a>自訂 Schematics</h1>
+<h1 id="自訂-Schematics"><a class="header-anchor" href="#自訂-Schematics"> </a>自訂 Schematics</h1>
 <p>根據上面的執行命令，可以得知 CLI 的 ng add 是會執行 <code>ng-add</code> 的指令，所以只要在自己的 schematics collection 內新增 ng-add 就可以了，但在哪之前，先建立一個全新空的 schematics 吧</p>
 <ol>
 <li>
@@ -1911,13 +1911,13 @@ h6.categories {
 </li>
 </ol>
 <h1 id="加碼補充"><a class="header-anchor" href="#加碼補充"> </a>加碼補充</h1>
-<p>Angular CLI 的另外一個指令 <code>ng update</code> ，做法類似，詳細的設計可以參考 Angular Material 2 的 schematics update，<a href="https://github.com/angular/material2/blob/master/src/lib/schematics/update/update.ts" target="_blank" rel="noopener">source code</a></p>
+<p>Angular CLI 的另外一個指令 <code>ng update</code> ，做法類似，詳細的設計可以參考 Angular Material 2 的 schematics update，<a href="https://github.com/angular/material2/blob/master/src/lib/schematics/update/update.ts">source code</a></p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/e0hmtRV.png" width="331" height="735" layout="responsive"></amp-img></div>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://github.com/chgc/ngcli-wallaby" target="_blank" rel="noopener">ngcli-wallaby</a></li>
-<li><a href="https://github.com/angular/material2/blob/master/src/lib/schematics/update/update.ts" target="_blank" rel="noopener">Angular Material 2</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/master/packages/schematics/schematics/blank/project-files/README.md" target="_blank" rel="noopener">schematics README</a></li>
+<li><a href="https://github.com/chgc/ngcli-wallaby">ngcli-wallaby</a></li>
+<li><a href="https://github.com/angular/material2/blob/master/src/lib/schematics/update/update.ts">Angular Material 2</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/master/packages/schematics/schematics/blank/project-files/README.md">schematics README</a></li>
 </ul>
 
 			  		

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/12/27/dart-reduce-fold/"
 			},
 			"datePublished": "2020-12-27T15:26:33.000Z",
-			"dateModified": "2021-02-18T02:39:29.144Z",
+			"dateModified": "2021-02-18T04:09:35.013Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>每一個語言對於清單的操作，一直都是必須要掌握的能力之一，在 dart 裡面的 List 的操作方法常見又有幾種，而其中的 reduce 與 fold 這兩個操作方式，對我來說是有點特殊的，在此筆記一下</p>
 <a id="more"></a>
-<h1 id="list-的操作"><a class="header-anchor" href="#list-的操作"> </a>List   的操作</h1>
+<h1 id="List-的操作"><a class="header-anchor" href="#List-的操作"> </a>List   的操作</h1>
 <h2 id="reduce"><a class="header-anchor" href="#reduce"> </a>reduce</h2>
 <p>Dart 裡的 <code>reduce</code> 行為跟 <code>JavaScript</code> 的有點差異，先看程式碼再來說明</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span>&lt;<span class="built_in">int</span>&gt; list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]; </span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> result = list.reduce((value, element) {</span><br><span class="line">    <span class="keyword">return</span> value + element;</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(result);</span><br></pre></td></tr></tbody></table></figure>

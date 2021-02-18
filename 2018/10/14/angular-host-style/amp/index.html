@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/10/14/angular-host-style/"
 			},
 			"datePublished": "2018-10-14T12:26:20.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.889Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1856,20 +1856,20 @@ h6.categories {
 <p>這樣就可以針對 <code>Component</code> 本身做樣式設定</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/5AWX7Fv.png" width="527" height="169" layout="responsive"></amp-img></div>
 <p>如果想要透過外部做額外的樣式複寫，這時候可以搭配 <code>:host(selector)</code> 的方式做設定</p>
-<figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:host(.active)</span>{</span><br><span class="line">  <span class="attribute">background</span>: red;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span>(<span class="selector-class">.active</span>){</span><br><span class="line">  <span class="attribute">background</span>: red;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>外部 html 的部分，當加上 <code>class="active"</code> 時，就會套用此樣式規則</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-counter</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span><span class="tag">&lt;/<span class="name">app-counter</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/OzWjUMT.png" width="531" height="138" layout="responsive"></amp-img></div>
 <h1 id="host-context"><a class="header-anchor" href="#host-context"> </a>:host-context</h1>
 <p>進一步來看，如果想要依更外層的 <code>class</code> 來做判斷呢? 這時候可以使用 <code>:host-context(selector)</code> 的方式做設定</p>
-<figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:host-context(.theme-light)</span> {</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#eef</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span>-context(<span class="selector-class">.theme-light</span>) {</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#eef</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"theme-light"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">app-counter</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span><span class="tag">&lt;/<span class="name">app-counter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Du1T9Ah.png" width="662" height="135" layout="responsive"></amp-img></div>
 <h1 id="套用順序"><a class="header-anchor" href="#套用順序"> </a>套用順序</h1>
 <p><code>:host</code> 與 <code>:host-context</code> 的樣式會依 css 優先權規則套用。</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://stackblitz.com/edit/angular-host-style?file=src%2Fapp%2Fcounter%2Fcounter.component.css" target="_blank" rel="noopener">範例程式</a></li>
+<li><a href="https://stackblitz.com/edit/angular-host-style?file=src%2Fapp%2Fcounter%2Fcounter.component.css">範例程式</a></li>
 </ul>
 
 			  		

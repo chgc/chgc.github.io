@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/01/15/angular2-laravel/"
 			},
 			"datePublished": "2017-01-15T08:04:06.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1854,20 +1854,20 @@ h6.categories {
 			  		<p>Laravel 5.x版以後樣板的部分就內建使用Vue.js的方法。</p>
 <p>假設今天我想要使用Angular CLI方式搭配Laravel的方式來開發，那又應該怎麼做呢，以下提供一個方式，歡迎討論</p>
 <a id="more"></a>
-<h1 id="建立laravel專案"><a class="header-anchor" href="#建立laravel專案"> </a>建立Laravel專案</h1>
+<h1 id="建立Laravel專案"><a class="header-anchor" href="#建立Laravel專案"> </a>建立Laravel專案</h1>
 <ul>
 <li>
 <p>修改路由設定檔，routes/web.php</p>
-<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the "web" middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// put all your REST routes inside api-group</span></span><br><span class="line">Route::group([<span class="string">'prefix'</span> =&gt; <span class="string">'api'</span>], <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</span><br><span class="line">  </span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">Auth::routes();</span><br><span class="line"><span class="comment">// this route is for Angular and it should be placed after all other back end routes</span></span><br><span class="line"><span class="comment">// just keep it at the bottom</span></span><br><span class="line">Route::get(<span class="string">'/{any}'</span>, <span class="function"><span class="keyword">function</span> <span class="params">($any)</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">'welcome'</span>);</span><br><span class="line">})-&gt;where(<span class="string">'any'</span>, <span class="string">'.*'</span>);</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Web Routes</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Here is where you can register web routes for your application. These</span></span><br><span class="line"><span class="comment">| routes are loaded by the RouteServiceProvider within a group which</span></span><br><span class="line"><span class="comment">| contains the "web" middleware group. Now create something great!</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// put all your REST routes inside api-group</span></span><br><span class="line">Route::group([<span class="string">'prefix'</span> =&gt; <span class="string">'api'</span>], <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">  </span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">Auth::routes();</span><br><span class="line"><span class="comment">// this route is for Angular and it should be placed after all other back end routes</span></span><br><span class="line"><span class="comment">// just keep it at the bottom</span></span><br><span class="line">Route::get(<span class="string">'/{any}'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"><span class="variable">$any</span></span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">'welcome'</span>);</span><br><span class="line">})-&gt;where(<span class="string">'any'</span>, <span class="string">'.*'</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>​</p>
 </li>
 </ul>
-<h1 id="建立angular專案"><a class="header-anchor" href="#建立angular專案"> </a>建立Angular專案</h1>
-<h2 id="使用cli來建立專案"><a class="header-anchor" href="#使用cli來建立專案"> </a>使用CLI來建立專案</h2>
+<h1 id="建立Angular專案"><a class="header-anchor" href="#建立Angular專案"> </a>建立Angular專案</h1>
+<h2 id="使用CLI來建立專案"><a class="header-anchor" href="#使用CLI來建立專案"> </a>使用CLI來建立專案</h2>
 <p>在laravel的根目錄下，執行以下指令</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
 <p>或是，自己新增一個存放的資料夾後並切換到該資料夾下，執行以下指令</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng init &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng init &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
 <p>執行完後，一個Angular的專案就建置完成了</p>
 <h2 id="設定proxy-conf-json"><a class="header-anchor" href="#設定proxy-conf-json"> </a>設定proxy.conf.json</h2>
 <ul>
@@ -1900,11 +1900,11 @@ h6.categories {
 <li>Angular的網站可以透過npm start的方式去執行ng serve with proxy config的動作，由於proxy會將api相關的呼叫，對應到laravel的網站去，所以在呼叫api的部分，就不需要額外去指定host url的部分</li>
 <li>Laravel後端的部分，就專心於API資料的提供等動作</li>
 </ul>
-<h1 id="部屬laravel專案"><a class="header-anchor" href="#部屬laravel專案"> </a>部屬Laravel專案</h1>
+<h1 id="部屬Laravel專案"><a class="header-anchor" href="#部屬Laravel專案"> </a>部屬Laravel專案</h1>
 <ul>
 <li>
 <p>如果要部署的時候，Angular可以透過以下的指令將Angular的程式bundle/AOT輸出到所設定的輸出目錄下</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng build --prod --aot --output-hashing=media</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng build --prod --aot --output-hashing=media</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>—output-hasing的參數是在angular-cli beta25.5版以後提供的，可以設定所輸出的bundle是否要加上hash值</li>
 </ul>

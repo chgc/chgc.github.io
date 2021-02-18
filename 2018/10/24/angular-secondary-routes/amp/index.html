@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/10/24/angular-secondary-routes/"
 			},
 			"datePublished": "2018-10-24T01:49:08.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.889Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1857,7 +1857,7 @@ h6.categories {
 <li>可以結合其他路由使用</li>
 <li>會顯示在指定的 names outlet 裡</li>
 </ol>
-<h2 id="設定-routes"><a class="header-anchor" href="#設定-routes"> </a>設定 Routes</h2>
+<h2 id="設定-Routes"><a class="header-anchor" href="#設定-Routes"> </a>設定 Routes</h2>
 <p>但要怎麼設定使用呢? 首先針對路由設定的部分</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  path: <span class="string">'compose'</span>,</span><br><span class="line">  component: ComposeMessageComponent,</span><br><span class="line">  outlet: <span class="string">'popup'</span></span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
 <ul>
@@ -1874,8 +1874,8 @@ h6.categories {
 <h2 id="清空-secondary-routes"><a class="header-anchor" href="#清空-secondary-routes"> </a>清空 secondary routes</h2>
 <p>要如何清除呢? 單純的將 outlets 裡的 names 指定的路徑清空即可</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"[{ outlets: { popup: null } }]"</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">closePopup() {</span><br><span class="line">  <span class="comment">// Providing a `null` value to the named outlet</span></span><br><span class="line">  <span class="comment">// clears the contents of the named outlet</span></span><br><span class="line">  <span class="keyword">this</span>.router.navigate([{ outlets: { popup: <span class="literal">null</span> }}]);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>更多的細節，可以參考我準備稍微複雜的範例程式碼，<a href="https://stackblitz.com/edit/multi-router-outlet" target="_blank" rel="noopener">連結在此</a></p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">closePopup</span>(<span class="params"></span>)</span> {</span><br><span class="line">  <span class="comment">// Providing a `null` value to the named outlet</span></span><br><span class="line">  <span class="comment">// clears the contents of the named outlet</span></span><br><span class="line">  <span class="built_in">this</span>.router.navigate([{ <span class="attr">outlets</span>: { <span class="attr">popup</span>: <span class="literal">null</span> }}]);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>更多的細節，可以參考我準備稍微複雜的範例程式碼，<a href="https://stackblitz.com/edit/multi-router-outlet">連結在此</a></p>
 
 			  		
 			  		<!-- google Adsense -->

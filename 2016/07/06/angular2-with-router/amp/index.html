@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/07/06/angular2-with-router/"
 			},
 			"datePublished": "2016-07-06T02:33:22.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1854,7 +1854,7 @@ h6.categories {
 <ol>
 <li>
 <p>新增一個app.routers.ts檔案</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { provideRouter, RouterConfig } <span class="keyword">from</span> <span class="string">'@angular/router'</span>;</span><br><span class="line"><span class="keyword">import</span> { ProfileComponent } <span class="keyword">from</span> <span class="string">'./profile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: RouterConfig = [</span><br><span class="line">  { path: <span class="string">'profile'</span>, component: ProfileComponent },</span><br><span class="line">  {</span><br><span class="line">    path: <span class="string">''</span>,</span><br><span class="line">    redirectTo: <span class="string">'/profile'</span>,</span><br><span class="line">  }</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> APP_ROUTER_PROVIDERS = [</span><br><span class="line">  provideRouter(routes)</span><br><span class="line">];</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { provideRouter, RouterConfig } <span class="keyword">from</span> <span class="string">'@angular/router'</span>;</span><br><span class="line"><span class="keyword">import</span> { ProfileComponent } <span class="keyword">from</span> <span class="string">'./profile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: RouterConfig = [</span><br><span class="line">  { <span class="attr">path</span>: <span class="string">'profile'</span>, <span class="attr">component</span>: ProfileComponent },</span><br><span class="line">  {</span><br><span class="line">    path: <span class="string">''</span>,</span><br><span class="line">    redirectTo: <span class="string">'/profile'</span>,</span><br><span class="line">  }</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> APP_ROUTER_PROVIDERS = [</span><br><span class="line">  provideRouter(routes)</span><br><span class="line">];	</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>手動更新 index.ts 檔案，將app.routers加入</p>
@@ -1870,14 +1870,14 @@ h6.categories {
 </li>
 </ol>
 <h1 id="注意事項"><a class="header-anchor" href="#注意事項"> </a>注意事項</h1>
-<p>因為Angular CLI(Beta9)的@Angular/Router版本目前是在alpha階段，所以文件裡面有些Router的設定有可能還不存在，例如說 <code>pathMatch: 'full'</code> 但基本的設定方式都是沒有問題的</p>
+<p>因為Angular CLI(Beta9)的@Angular/Router版本目前是在alpha階段，所以文件裡面有些Router的設定有可能還不存在，例如說 <code> pathMatch: 'full'</code> 但基本的設定方式都是沒有問題的</p>
 <p>實際跑起來的畫面如下</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm8.staticflickr.com/7291/28040799221_43163b7050_o.png" width="1381" height="600" layout="responsive"></amp-img></div>
-<h1 id="進一步的看-angular-router"><a class="header-anchor" href="#進一步的看-angular-router"> </a>進一步的看@Angular/Router</h1>
+<h1 id="進一步的看-Angular-Router"><a class="header-anchor" href="#進一步的看-Angular-Router"> </a>進一步的看@Angular/Router</h1>
 <p>新版的Router在讀取html/css檔案時，是採lazyLoading，表示除非到那個頁面，不然不會事先下載該檔案。(前提: 是使用systemjs的方式)請看下面的影片</p>
-<p><a href="https://www.youtube.com/watch?v=6OWRPws68Uw" target="_blank" rel="noopener"></a></p><div class="amp-img-wrapper"><a href="https://www.youtube.com/watch?v=6OWRPws68Uw" target="_blank" rel="noopener"><amp-img src="https://img.youtube.com/vi/6OWRPws68Uw/0.jpg" width="480" height="360" layout="responsive"></amp-img></a></div>
-<h1 id="如何將router-directives註冊成全域"><a class="header-anchor" href="#如何將router-directives註冊成全域"> </a>如何將<code>ROUTER_DIRECTIVES</code>註冊成全域</h1>
-<p>為了要完成這個動作，我們需要兩個東西 『provide<code>,</code>PLATFORM_DIRECTIVES』</p>
+<p><a href="https://www.youtube.com/watch?v=6OWRPws68Uw"></a></p><div class="amp-img-wrapper"><a href="https://www.youtube.com/watch?v=6OWRPws68Uw"><amp-img src="https://img.youtube.com/vi/6OWRPws68Uw/0.jpg" width="480" height="360" layout="responsive"></amp-img></a></div>
+<h1 id="如何將ROUTER-DIRECTIVES註冊成全域"><a class="header-anchor" href="#如何將ROUTER-DIRECTIVES註冊成全域"> </a>如何將<code>ROUTER_DIRECTIVES</code>註冊成全域</h1>
+<p>為了要完成這個動作，我們需要兩個東西 『provide<code>, </code>PLATFORM_DIRECTIVES』</p>
 <ul>
 <li>provide的功能是建立一個Proivder</li>
 <li>PLATFORM_DIRECTIVES的功能是一個Directives容器，可以供應在專案下所有的Components可以使用</li>
@@ -1890,12 +1890,12 @@ h6.categories {
 <p>完成後，以後再components裡面就不用在<code>import { ROUTER_DIRECTIVES } from '@angular/router'</code>了</p>
 <h1 id="相關連結"><a class="header-anchor" href="#相關連結"> </a>相關連結</h1>
 <ul>
-<li><a href="https://angular.io/docs/ts/latest/guide/router.html" target="_blank" rel="noopener">官方文件</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/v1.0.0-beta.9/addon/ng2/blueprints/ng2/files/package.json" target="_blank" rel="noopener">CLI-package.json - beta9</a></li>
-<li><a href="https://github.com/angular/angular/blob/master/modules/%40angular/router/CHANGELOG.md" target="_blank" rel="noopener">@Agnular/Route - Changelog</a></li>
-<li><a href="https://angular.io/docs/ts/latest/api/core/index/provide-function.html" target="_blank" rel="noopener">API DOC- provide</a></li>
-<li><a href="https://angular.io/docs/ts/latest/api/core/index/PLATFORM_DIRECTIVES-let.html" target="_blank" rel="noopener">API DOC- PLATFORM_DIRECTIVES</a></li>
-<li><a href="https://github.com/chgc/demo-angular2-router" target="_blank" rel="noopener">github repo</a></li>
+<li><a href="https://angular.io/docs/ts/latest/guide/router.html">官方文件</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v1.0.0-beta.9/addon/ng2/blueprints/ng2/files/package.json">CLI-package.json - beta9</a></li>
+<li><a href="https://github.com/angular/angular/blob/master/modules/%40angular/router/CHANGELOG.md">@Agnular/Route - Changelog</a></li>
+<li><a href="https://angular.io/docs/ts/latest/api/core/index/provide-function.html">API DOC- provide</a></li>
+<li><a href="https://angular.io/docs/ts/latest/api/core/index/PLATFORM_DIRECTIVES-let.html">API DOC- PLATFORM_DIRECTIVES</a></li>
+<li><a href="https://github.com/chgc/demo-angular2-router">github repo</a></li>
 </ul>
 
 			  		

@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/05/10/angular2-structural-directives/"
 			},
 			"datePublished": "2016-05-10T12:10:18.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1855,7 +1855,7 @@ h6.categories {
 用法如下.</p>
 <a id="more"></a>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">"hero"</span>&gt;</span>{{ hero }}<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngFor</span>=<span class="string">"let hero of heroes"</span>&gt;</span>{{ hero }}<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> [<span class="attr">ngSwitch</span>]=<span class="string">"status"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> [<span class="attr">ngSwitchWhen</span>]=<span class="string">"'in-mission'"</span>&gt;</span>In Mission<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> [<span class="attr">ngSwitchWhen</span>]=<span class="string">"'ready'"</span>&gt;</span>Ready<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">ngSwitchDefault</span>&gt;</span>Unknown<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 id="template-tag"><a class="header-anchor" href="#template-tag"> </a><code>Template</code> Tag</h2>
+<h2 id="Template-Tag"><a class="header-anchor" href="#Template-Tag"> </a><code>Template</code> Tag</h2>
 <p>在Angular2外，<code>&lt;template&gt;</code>預設CSS是設定為display: none. 其內容是不會顯示，在Angular2內是會被移除然後被該位置會被置換成<code>&lt;script&gt;&lt;/script&gt;</code></p>
 <p>在一開始的Code裡，ngIf和ngFor的前面有一個<code>*</code>, 而在<code>ngSwitchWhen</code>卻是用 <code>&lt;template&gt;</code>和<code>[ngSwitchWhen]</code>組合要顯示的文字。而這一個 <code>*</code> 的使用會帶來一些神奇的效果。下面繼續來研究</p>
 <h2 id="星號-的效果"><a class="header-anchor" href="#星號-的效果"> </a>星號 (*) 的效果</h2>
@@ -1870,7 +1870,7 @@ h6.categories {
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> [<span class="attr">ngSwitch</span>]=<span class="string">"status"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> *<span class="attr">ngSwitchWhen</span>=<span class="string">"'in-mission'"</span>&gt;</span>In Mission<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> *<span class="attr">ngSwitchWhen</span>=<span class="string">"'ready'"</span>&gt;</span>Ready<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> *<span class="attr">ngSwitchDefault</span>&gt;</span>Unknown<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <h2 id="參考"><a class="header-anchor" href="#參考"> </a>參考</h2>
 <ul>
-<li><a href="https://angular.io/docs/ts/latest/guide/structural-directives.html" target="_blank" rel="noopener">Angular2 Doc: Structural Directives</a></li>
+<li><a href="https://angular.io/docs/ts/latest/guide/structural-directives.html">Angular2 Doc: Structural Directives</a></li>
 </ul>
 
 			  		

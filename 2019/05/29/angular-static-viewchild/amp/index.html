@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/05/29/angular-static-viewchild/"
 			},
 			"datePublished": "2019-05-29T14:00:12.000Z",
-			"dateModified": "2021-02-18T02:39:29.048Z",
+			"dateModified": "2021-02-18T04:09:34.925Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1862,13 +1862,13 @@ h6.categories {
 </ol>
 <div class="amp-img-wrapper"><amp-img src="/2019/05/29/angular-static-viewchild/1559139445907.png" width="1220" height="663" layout="responsive"></amp-img></div>
 <p>以上就是同一種寫法卻有可能在兩種地方取得物件，這一個問題 Angular 團隊想要透過手動設定的方式來告訴底層的 compiler 在何時取得物件</p>
-<h1 id="在-version-8-過度時期"><a class="header-anchor" href="#在-version-8-過度時期"> </a>在 Version 8 (過度時期)</h1>
+<h1 id="在-Version-8-過度時期"><a class="header-anchor" href="#在-Version-8-過度時期"> </a>在 Version 8 (過度時期)</h1>
 <p>當在寫 <code>@ViewChild</code> 或是 <code>@ContentChild</code> 時，就必須明確的標示第二個參數 <code>{ static: true | false}</code>，這參數的設定意義分別為</p>
 <ul>
 <li>
 <p>當設定為 <code>true</code> 時，只會在 <code>ngOnInit</code> 的地方取得 Element 物件</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/05/29/angular-static-viewchild/1559139827426.png" width="1549" height="874" layout="responsive"></amp-img></div>
-<p>當設定為 <code>{ static: true }</code> 時，在加上 <code>ngIf</code> 的條件，在 <code>ngAfterViewInit</code> 的地方依舊取不到該 Element 物件，原因是 Angular Compiler 認定該 Element 為 static ，所以只會在 OnInit 的地方取一次，之後就不會被執行</p>
+<p>當設定為 <code>{ static: true }</code> 時，在加上 <code> ngIf</code> 的條件，在 <code>ngAfterViewInit</code> 的地方依舊取不到該 Element 物件，原因是 Angular Compiler 認定該 Element 為 static ，所以只會在 OnInit 的地方取一次，之後就不會被執行</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/05/29/angular-static-viewchild/1559140008278.png" width="1446" height="906" layout="responsive"></amp-img></div>
 <p>所以當遇到這種情形，就必須將 <code>static</code> 設定為 <code>false</code></p>
 </li>
@@ -1881,7 +1881,7 @@ h6.categories {
 <p>而這一個 API 改變是暫時性的，在 Angular 9 這一個參數的預設值會是 <code>false</code>，之後就又會回到一般的使用方式。在下面的參考文件中的後半段，有一些 QA 的內容，如果對於這樣子的設定有問題的，也可以閱讀那邊的回答</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://angular.io/guide/static-query-migration" target="_blank" rel="noopener">Static Query Migration Guide</a></li>
+<li><a href="https://angular.io/guide/static-query-migration">Static Query Migration Guide</a></li>
 </ul>
 
 			  		

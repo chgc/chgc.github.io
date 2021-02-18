@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/04/24/angular2-css-style/"
 			},
 			"datePublished": "2016-04-24T17:40:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1861,12 +1861,12 @@ h6.categories {
 定義的style加上該名稱，讓css不會互相影響</li>
 </ol>
 <figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Component({</span><br><span class="line">    selector: <span class="string">'ck-book'</span>,</span><br><span class="line">    template: <span class="built_in">require</span>(<span class="string">'./book.html'</span>),</span><br><span class="line">    styles: [<span class="string">`</span></span><br><span class="line"><span class="string">        h3 {</span></span><br><span class="line"><span class="string">           color: red</span></span><br><span class="line"><span class="string">        }</span></span><br><span class="line"><span class="string">    `</span>],</span><br><span class="line">    encapsulation: ViewEncapsulation.Emulated</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span>h3[_ngcontent-jfs-3] {</span><br><span class="line">         color: red</span><br><span class="line">   }<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">_ngcontent-jfs-3</span> <span class="attr">class</span>=<span class="string">"clearfix mx-auto col-8"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span> <span class="attr">_ngcontent-jfs-3</span>&gt;</span>Booking<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">		....</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"><span class="selector-tag">h3</span><span class="selector-attr">[_ngcontent-jfs-3]</span> {</span></span><br><span class="line"><span class="css">         <span class="attribute">color</span>: red</span></span><br><span class="line">   }<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">_ngcontent-jfs-3</span> <span class="attr">class</span>=<span class="string">"clearfix mx-auto col-8"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span> <span class="attr">_ngcontent-jfs-3</span>&gt;</span>Booking<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">		....</span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="https://farm2.staticflickr.com/1489/26534950052_6d97a87c71_o.png" width="1680" height="925" layout="responsive"></amp-img></div>
 <h2 id="參考"><a class="header-anchor" href="#參考"> </a>參考</h2>
 <ul>
-<li><a href="http://blog.thoughtram.io/angular/2015/06/29/shadow-dom-strategies-in-angular2.html" target="_blank" rel="noopener">shadow-dom-strategies-in-angular2</a></li>
-<li><a href="https://egghead.io/lessons/angular-2-controlling-how-styles-are-shared-with-view-encapsulation" target="_blank" rel="noopener">Controlling how Styles are Shared with View Encapsulation</a></li>
+<li><a href="http://blog.thoughtram.io/angular/2015/06/29/shadow-dom-strategies-in-angular2.html">shadow-dom-strategies-in-angular2</a></li>
+<li><a href="https://egghead.io/lessons/angular-2-controlling-how-styles-are-shared-with-view-encapsulation">Controlling how Styles are Shared with View Encapsulation</a></li>
 </ul>
 
 			  		

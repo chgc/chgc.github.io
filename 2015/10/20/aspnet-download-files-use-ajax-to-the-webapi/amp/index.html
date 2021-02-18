@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/"
 			},
 			"datePublished": "2015-10-20T02:53:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1843,7 +1843,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>現在SPA的網站越來越盛行，下載檔案的功能在ajax下是有點麻煩，但是感謝HTML5下的Blob功能。網路上就有相對應的js功能出來
-所以，引用這位大大的程式 (<a href="https://github.com/eligrey/FileSaver.js" target="_blank" rel="noopener">https://github.com/eligrey/FileSaver.js</a>)，其相關限制都有在該專案上描述</p>
+所以，引用這位大大的程式 (<a href="https://github.com/eligrey/FileSaver.js">https://github.com/eligrey/FileSaver.js</a>)，其相關限制都有在該專案上描述</p>
 <p>所以使用方法如下
 (Client端)</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$http.post('api url', query, { responseType: 'arraybuffer' }).then(function (response) {        </span><br><span class="line">            var filename = (filename);</span><br><span class="line">            var expectedMediaType = (file-Content-Type);</span><br><span class="line">            openSaveAsDialog(filename, response.data, expectedMediaType);</span><br><span class="line">});      </span><br><span class="line">                </span><br><span class="line">function openSaveAsDialog(filename, content, mediaType) {</span><br><span class="line">        var blob = new Blob([content], { type: mediaType });</span><br><span class="line">        saveAs(blob, filename);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

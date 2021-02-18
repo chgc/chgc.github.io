@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/12/30/angular-in-cleanArchitecture/"
 			},
 			"datePublished": "2019-12-30T02:18:07.000Z",
-			"dateModified": "2021-02-18T02:39:29.108Z",
+			"dateModified": "2021-02-18T04:09:34.977Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1856,7 +1856,7 @@ h6.categories {
 <ul>
 <li>
 <p>要建立一個 <code>UserManager</code> ，需要一個 Configuration</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);</span><br><span class="line"><span class="keyword">if</span> (!response.ok) {</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`Could not load settings for '<span class="subst"><!--figure0-->#123;ApplicationName}</span>'`</span>);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> settings: <span class="built_in">any</span> = <span class="keyword">await</span> response.json();</span><br><span class="line">settings.automaticSilentRenew = <span class="literal">true</span>;</span><br><span class="line">settings.includeIdTokenInSilentRenew = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">this</span>.userManager = <span class="keyword">new</span> UserManager(settings);</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);</span><br><span class="line"><span class="keyword">if</span> (!response.ok) {</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`Could not load settings for '<span class="subst"><!--figure0-->#123;ApplicationName}</span>'`</span>);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">const</span> settings: <span class="built_in">any</span> = <span class="keyword">await</span> response.json();</span><br><span class="line">settings.automaticSilentRenew = <span class="literal">true</span>;</span><br><span class="line">settings.includeIdTokenInSilentRenew = <span class="literal">true</span>;</span><br><span class="line"><span class="built_in">this</span>.userManager = <span class="keyword">new</span> UserManager(settings);</span><br></pre></td></tr></tbody></table></figure>
 <ol>
 <li>
 <p>line 1: 跟後端要 Configuration 設定檔，回傳結果如下</p>
@@ -1868,18 +1868,18 @@ h6.categories {
 </ol>
 </li>
 <li>
-<p><code>UserManager</code> 有許多 events 可以掛 callback (<a href="https://github.com/IdentityModel/oidc-client-js/wiki#events" target="_blank" rel="noopener">API</a>)，而這邊是針對 <code>userSignedOut</code> 的部分做了一些處理</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.userManager.events.addUserSignedOut(<span class="keyword">async</span> () =&gt; {</span><br><span class="line">      <span class="keyword">await</span> <span class="keyword">this</span>.userManager.removeUser();</span><br><span class="line">      <span class="keyword">this</span>.userSubject.next(<span class="literal">null</span>);</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+<p><code>UserManager</code> 有許多 events 可以掛 callback (<a href="https://github.com/IdentityModel/oidc-client-js/wiki#events">API</a>)，而這邊是針對 <code>userSignedOut</code> 的部分做了一些處理</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.userManager.events.addUserSignedOut(<span class="keyword">async</span> () =&gt; {</span><br><span class="line">      <span class="keyword">await</span> <span class="built_in">this</span>.userManager.removeUser();</span><br><span class="line">      <span class="built_in">this</span>.userSubject.next(<span class="literal">null</span>);</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>關於使用者的登入及註冊都交給後端的 <code>ASP.NET Core Idenetity</code> 去處理了 (這是另外一個大坑要填)</p>
 </li>
 </ul>
-<h2 id="logincomponent"><a class="header-anchor" href="#logincomponent"> </a>LoginComponent</h2>
+<h2 id="LoginComponent"><a class="header-anchor" href="#LoginComponent"> </a>LoginComponent</h2>
 <p><code>LoginComponent</code> 的目的並不是用來顯示而是負責處理相對應的行為，例如登入應該要顯示後端的登入畫面等，而因為網址會有分前端管理的跟後端管理的區別，而 Angular 內建的 Router 並沒有辦法直接導覽到非 Angular 網址的地方，所以這裡的處理方式為</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> redirectToApiAuthorizationPath(apiAuthorizationPath: <span class="built_in">string</span>) {    </span><br><span class="line">  <span class="keyword">const</span> redirectUrl = <span class="string">`<span class="subst"><!--figure3-->#123;<span class="built_in">window</span>.location.origin}</span><span class="subst"><!--figure3-->#123;apiAuthorizationPath}</span>`</span>;</span><br><span class="line">  <span class="built_in">window</span>.location.replace(redirectUrl);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="title">redirectToApiAuthorizationPath</span>(<span class="params">apiAuthorizationPath: <span class="built_in">string</span></span>)</span> {    </span><br><span class="line">  <span class="keyword">const</span> redirectUrl = <span class="string">`<span class="subst"><!--figure3-->#123;<span class="built_in">window</span>.location.origin}</span><span class="subst"><!--figure3-->#123;apiAuthorizationPath}</span>`</span>;</span><br><span class="line">  <span class="built_in">window</span>.location.replace(redirectUrl);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>這裡使用 <code>window.location.replace</code> 的目的是為了確保使用者按下返回鍵是回到正確的位置而不是 <code>loginComponent</code> 的對應網址</p>
-<h2 id="logoutcomponent"><a class="header-anchor" href="#logoutcomponent"> </a>LogoutComponent</h2>
+<h2 id="LogoutComponent"><a class="header-anchor" href="#LogoutComponent"> </a>LogoutComponent</h2>
 <ul>
 <li>
 <p>透過 <code>[state]='{ local: true }'</code>來傳遞額外的狀態，而在程式碼內則需要從 <code>window.history.state</code> 中取得</p>
@@ -1887,12 +1887,12 @@ h6.categories {
 </li>
 </ul>
 <p>如果想要學習如何在後端網頁跟 Angular 間做網頁切換的， 是可以從 <code>LoginComponent</code> 和 <code>LogoutComponent</code> 學習，因為這兩個 Component 本身不做任何顯示，所有的動作在 <code>ngOnInit</code> 就被執行了</p>
-<h1 id="api-service"><a class="header-anchor" href="#api-service"> </a>API Service</h1>
+<h1 id="API-Service"><a class="header-anchor" href="#API-Service"> </a>API Service</h1>
 <p>這專案範本的 API Service 是由 <code>NSwag toolchain</code> 根據 Swagger 的 API JSON 自動產生的，這部分就看個人喜好了，但我個人的偏好是喜歡自己寫，至少程式碼看起來會乾淨很多</p>
-<p>關於 NSwag 的資訊，可以 <a href="https://github.com/RicoSuter/NSwag" target="_blank" rel="noopener">參考此網站</a></p>
+<p>關於 NSwag 的資訊，可以 <a href="https://github.com/RicoSuter/NSwag">參考此網站</a></p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://github.com/IdentityModel/oidc-client-js" target="_blank" rel="noopener">oidc-client</a></li>
+<li><a href="https://github.com/IdentityModel/oidc-client-js">oidc-client</a></li>
 </ul>
 
 			  		

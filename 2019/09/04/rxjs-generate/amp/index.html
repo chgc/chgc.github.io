@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/09/04/rxjs-generate/"
 			},
 			"datePublished": "2019-09-04T05:55:48.000Z",
-			"dateModified": "2021-02-18T02:39:29.076Z",
+			"dateModified": "2021-02-18T04:09:34.945Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1858,7 +1858,7 @@ h6.categories {
 <p>generate 介面</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">generate&lt;T, S&gt;(initialStateOrOptions: S | GenerateOptions&lt;T, S&gt;, condition?: ConditionFunc&lt;S&gt;, iterate?: IterateFunc&lt;S&gt;, resultSelectorOrObservable?: (ResultFunc&lt;S, T&gt;) | SchedulerLike, scheduler?: SchedulerLike): Observable&lt;T&gt;</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="變化用法"><a class="header-anchor" href="#變化用法"> </a>變化用法</h1>
-<h2 id="with-resultselector"><a class="header-anchor" href="#with-resultselector"> </a>with resultSelector</h2>
+<h2 id="with-resultSelector"><a class="header-anchor" href="#with-resultSelector"> </a>with resultSelector</h2>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source = generate(<span class="number">0</span>, <span class="function"><span class="params">x</span> =&gt;</span> x &lt; <span class="number">10</span>, <span class="function"><span class="params">x</span> =&gt;</span> ++x, <span class="function"><span class="params">x</span> =&gt;</span> x + <span class="string">'!!'</span>);</span><br><span class="line"></span><br><span class="line">source.subscribe({</span><br><span class="line">  next: <span class="function"><span class="params">v</span> =&gt;</span> <span class="built_in">console</span>.log(v)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 <p>輸出結果</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/09/04/rxjs-generate/1567578743411.png" width="1124" height="607" layout="responsive"></amp-img></div>
@@ -1871,7 +1871,7 @@ h6.categories {
 </li>
 <li>
 <p>double generate</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source = of([<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>]).pipe(</span><br><span class="line">  concatMap(<span class="function">(<span class="params">value</span>) =&gt;</span> generate(<span class="number">0</span>, <span class="function"><span class="params">x</span> =&gt;</span> x &lt; value.length, <span class="function"><span class="params">x</span> =&gt;</span> ++x, <span class="function"><span class="params">x</span> =&gt;</span> value[x] + <span class="string">'-'</span> + x)),</span><br><span class="line">  concatMap(<span class="function">(<span class="params">value</span>) =&gt;</span> generate(<span class="number">0</span>, <span class="function"><span class="params">y</span> =&gt;</span> y &lt; <span class="number">3</span>, <span class="function"><span class="params">y</span> =&gt;</span> ++y, <span class="function"><span class="params">y</span> =&gt;</span> value + <span class="string">'-'</span> + y))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">source.subscribe({</span><br><span class="line">  next: <span class="function"><span class="params">v</span> =&gt;</span> <span class="built_in">console</span>.log(v)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source = <span class="keyword">of</span>([<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>]).pipe(</span><br><span class="line">  concatMap(<span class="function">(<span class="params">value</span>) =&gt;</span> generate(<span class="number">0</span>, <span class="function"><span class="params">x</span> =&gt;</span> x &lt; value.length, <span class="function"><span class="params">x</span> =&gt;</span> ++x, <span class="function"><span class="params">x</span> =&gt;</span> value[x] + <span class="string">'-'</span> + x)),</span><br><span class="line">  concatMap(<span class="function">(<span class="params">value</span>) =&gt;</span> generate(<span class="number">0</span>, <span class="function"><span class="params">y</span> =&gt;</span> y &lt; <span class="number">3</span>, <span class="function"><span class="params">y</span> =&gt;</span> ++y, <span class="function"><span class="params">y</span> =&gt;</span> value + <span class="string">'-'</span> + y))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">source.subscribe({</span><br><span class="line">  next: <span class="function"><span class="params">v</span> =&gt;</span> <span class="built_in">console</span>.log(v)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 <div class="amp-img-wrapper"><amp-img src="/2019/09/04/rxjs-generate/1567579775214.png" width="957" height="614" layout="responsive"></amp-img></div>
 </li>
 </ul>
@@ -1881,7 +1881,7 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="/2019/09/04/rxjs-generate/1567580096145.png" width="934" height="557" layout="responsive"></amp-img></div>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://rxjs.dev/api/index/function/generate" target="_blank" rel="noopener">Generate API</a></li>
+<li><a href="https://rxjs.dev/api/index/function/generate">Generate API</a></li>
 </ul>
 
 			  		

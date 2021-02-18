@@ -14,14 +14,14 @@
 	
 	<meta property="og:site_name" content="CK&#39;s Notepad">
 	
-		<meta property="og:description" content="&lt;p&gt;Angular2裡面有用到&lt;a href=&#34;https://github.com/Reactive-Extensions/RxJS&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RxJS&lt;/a&gt;的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧&lt;/p&gt;">
+		<meta property="og:description" content="&lt;p&gt;Angular2裡面有用到&lt;a href=&#34;https://github.com/Reactive-Extensions/RxJS&#34;&gt;RxJS&lt;/a&gt;的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧&lt;/p&gt;">
 	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="CK&#39;s Notepad">
 	<meta name="twitter:url" content="http://blog.kevinyang.net/2016/05/10/angular2-rxjs-observers/">
 	<meta name="twitter:title" content="[Angular]Rxjs的Observers - CK&#39;s Notepad">
 	
-		<meta name="twitter:description" content="&lt;p&gt;Angular2裡面有用到&lt;a href=&#34;https://github.com/Reactive-Extensions/RxJS&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RxJS&lt;/a&gt;的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧&lt;/p&gt;">
+		<meta name="twitter:description" content="&lt;p&gt;Angular2裡面有用到&lt;a href=&#34;https://github.com/Reactive-Extensions/RxJS&#34;&gt;RxJS&lt;/a&gt;的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧&lt;/p&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -51,14 +51,14 @@
 			"@type": "BlogPosting",
 			"headline": "[Angular]Rxjs的Observers",
 			
-			"description": "&lt;p&gt;Angular2裡面有用到&lt;a href=&#34;https://github.com/Reactive-Extensions/RxJS&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RxJS&lt;/a&gt;的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧&lt;/p&gt;",
+			"description": "&lt;p&gt;Angular2裡面有用到&lt;a href=&#34;https://github.com/Reactive-Extensions/RxJS&#34;&gt;RxJS&lt;/a&gt;的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧&lt;/p&gt;",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"http://blog.kevinyang.net/2016/05/10/angular2-rxjs-observers/"
 			},
 			"datePublished": "2016-05-10T08:59:03.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,13 +1848,13 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular2裡面有用到<a href="https://github.com/Reactive-Extensions/RxJS" target="_blank" rel="noopener">RxJS</a>的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧</p>
+			  		<p>Angular2裡面有用到<a href="https://github.com/Reactive-Extensions/RxJS">RxJS</a>的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧</p>
 <a id="more"></a>
-<h2 id="angular2-http-code"><a class="header-anchor" href="#angular2-http-code"> </a>Angular2 Http Code</h2>
-<p><a href="https://github.com/angular/angular/blob/master/modules/%40angular/http/src/http.ts" target="_blank" rel="noopener">source code - http.ts</a></p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> {Response} <span class="keyword">from</span> <span class="string">'./static_response'</span>;</span><br><span class="line"><span class="keyword">import</span> {Observable} <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Http</span> </span>{</span><br><span class="line">  <span class="keyword">constructor</span>(protected _backend: ConnectionBackend, protected _defaultOptions: RequestOptions) {}</span><br><span class="line">	<span class="keyword">get</span>(url: string, options?: RequestOptionsArgs): Observable&lt;Response&gt; {</span><br><span class="line">         ....</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>所以在執行Http.get(…)所回傳的結果是<code>Observable&lt;Response&gt;</code>，因為這樣子的關係，我們就可以使用RxJS Observers的方法 <a href="http://reactivex.io/documentation/observable.html" target="_blank" rel="noopener">參考網址</a></p>
-<h2 id="subscribe-method"><a class="header-anchor" href="#subscribe-method"> </a>Subscribe Method</h2>
+<h2 id="Angular2-Http-Code"><a class="header-anchor" href="#Angular2-Http-Code"> </a>Angular2 Http Code</h2>
+<p><a href="https://github.com/angular/angular/blob/master/modules/%40angular/http/src/http.ts">source code - http.ts</a></p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> {Response} <span class="keyword">from</span> <span class="string">'./static_response'</span>;</span><br><span class="line"><span class="keyword">import</span> {Observable} <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Http</span> </span>{</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">protected _backend: ConnectionBackend, protected _defaultOptions: RequestOptions</span>)</span> {}</span><br><span class="line">	get(url: string, options?: RequestOptionsArgs): Observable&lt;Response&gt; {</span><br><span class="line">         ....</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>所以在執行Http.get(…)所回傳的結果是<code> Observable&lt;Response&gt;</code>，因為這樣子的關係，我們就可以使用RxJS Observers的方法 <a href="http://reactivex.io/documentation/observable.html">參考網址</a></p>
+<h2 id="Subscribe-Method"><a class="header-anchor" href="#Subscribe-Method"> </a>Subscribe Method</h2>
 <figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myObservable.subscribe(OnNext,onError,onCompleted);</span><br></pre></td></tr></tbody></table></figure>
 <p><strong><code>onNext</code></strong></p>
 <p>An Observable calls this method whenever the Observable emits an item. This method takes as a parameter the item emitted by the Observable.</p>
@@ -1863,11 +1863,11 @@ h6.categories {
 <p><strong><code>onCompleted</code></strong></p>
 <p>An Observable calls this method after it has called&nbsp;<code>onNext</code>&nbsp;for the final time, if it has not encountered any errors.</p>
 <h2 id="應用方式"><a class="header-anchor" href="#應用方式"> </a>應用方式</h2>
-<p>Http.call完之後，也可以加工response的結果。<a href="http://reactivex.io/documentation/operators.html" target="_blank" rel="noopener">方法</a>可以串聯起來, Demo Code如下</p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.http.get(<span class="string">'xxx'</span>)</span><br><span class="line">    .map(<span class="function"><span class="params">res</span> =&gt;</span> res.text())</span><br><span class="line">    .subscribe(</span><br><span class="line">      data =&gt; <span class="keyword">this</span>.randomQuote = data,</span><br><span class="line">      err =&gt; <span class="keyword">this</span>.logError(err),</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">'Random Quote Complete'</span>)</span><br><span class="line">    );</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="多個http-request時的處理方式"><a class="header-anchor" href="#多個http-request時的處理方式"> </a>多個Http Request時的處理方式</h2>
+<p>Http.call完之後，也可以加工response的結果。<a href="http://reactivex.io/documentation/operators.html">方法</a>可以串聯起來, Demo Code如下</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.http.get(<span class="string">'xxx'</span>)</span><br><span class="line">    .map(<span class="function"><span class="params">res</span> =&gt;</span> res.text())</span><br><span class="line">    .subscribe(</span><br><span class="line">      data =&gt; <span class="built_in">this</span>.randomQuote = data,</span><br><span class="line">      err =&gt; <span class="built_in">this</span>.logError(err),</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">'Random Quote Complete'</span>)</span><br><span class="line">    );</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="多個Http-Request時的處理方式"><a class="header-anchor" href="#多個Http-Request時的處理方式"> </a>多個Http Request時的處理方式</h2>
 <p>如果想要同時間執行多個Http Request，但是又要等所有的Request都完成後再將資料對應到變數上，那要怎麼寫，這時候就需要使用 <strong>Observable.forkJoin</strong>，程式碼如下</p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Observable.forkJoin(</span><br><span class="line">        <span class="keyword">this</span>.http.get(<span class="string">'/app/books.json'</span>).map(<span class="function">(<span class="params">res:Response</span>) =&gt;</span> res.json()),</span><br><span class="line">        <span class="keyword">this</span>.http.get(<span class="string">'/app/movies.json'</span>).map(<span class="function">(<span class="params">res:Response</span>) =&gt;</span> res.json())</span><br><span class="line">    ).subscribe(</span><br><span class="line">      data =&gt; {</span><br><span class="line">        <span class="keyword">this</span>.books = data[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">this</span>.movies = data[<span class="number">1</span>]</span><br><span class="line">      },</span><br><span class="line">      err =&gt; <span class="built_in">console</span>.error(err)</span><br><span class="line">    );</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Observable.forkJoin(</span><br><span class="line">        <span class="built_in">this</span>.http.get(<span class="string">'/app/books.json'</span>).map(<span class="function">(<span class="params">res:Response</span>) =&gt;</span> res.json()),</span><br><span class="line">        <span class="built_in">this</span>.http.get(<span class="string">'/app/movies.json'</span>).map(<span class="function">(<span class="params">res:Response</span>) =&gt;</span> res.json())</span><br><span class="line">    ).subscribe(</span><br><span class="line">      data =&gt; {</span><br><span class="line">        <span class="built_in">this</span>.books = data[<span class="number">0</span>]</span><br><span class="line">        <span class="built_in">this</span>.movies = data[<span class="number">1</span>]</span><br><span class="line">      },</span><br><span class="line">      err =&gt; <span class="built_in">console</span>.error(err)</span><br><span class="line">    );</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/07/19/angular-app-shell/"
 			},
 			"datePublished": "2018-07-19T02:42:06.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.889Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1876,11 +1876,11 @@ h6.categories {
 </li>
 <li>
 <p><code>main.ts</code> 修改 <code>bootstrap</code> 的時機點，會等 index.html 頁面內容讀取完成後再啟動 Angular App</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="params">()</span> =&gt;</span> {</span><br><span class="line">  platformBrowserDynamic().bootstrapModule(AppModule)</span><br><span class="line">  .catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err));</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function">() =&gt;</span> {</span><br><span class="line">  platformBrowserDynamic().bootstrapModule(AppModule)</span><br><span class="line">  .catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err));</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p><code>app.module.ts</code> 新增 universal 相關的 NgModule 設定</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">   BrowserModule.withServerTransition({ appId: <span class="string">'serverApp'</span> }),</span><br><span class="line">   AppRoutingModule,</span><br><span class="line">   RouterModule</span><br><span class="line"> ],</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">   BrowserModule.withServerTransition({ <span class="attr">appId</span>: <span class="string">'serverApp'</span> }),</span><br><span class="line">   AppRoutingModule,</span><br><span class="line">   RouterModule</span><br><span class="line"> ],</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <p>比較重要的檔案變更就是上述的這幾的檔案</p>

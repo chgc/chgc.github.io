@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/11/02/azure-documentdb/"
 			},
 			"datePublished": "2014-11-02T20:53:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,25 +1848,25 @@ h6.categories {
 <li>DocumentDB裡面有分幾個元素 Database, DocumentCollection, document</li>
 </ul>
 <p>元素之間的關係</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Database -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">         -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">* 檢查database是否已存在</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Database -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">         -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">* 檢查database是否已存在</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>string dataBaseName = 「testDB」;
 var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);</p>
-<p>var database = client.CreateDatabaseQuery().FirstOrDefault(db =&gt; <a href="http://db.Id" target="_blank" rel="noopener">db.Id</a> == dataBaseName);</p>
+<p>var database = client.CreateDatabaseQuery().FirstOrDefault(db =&gt; <a href="http://db.Id">db.Id</a> == dataBaseName);</p>
 <p>if (database == null)
 {
-	database = await client.CreateDatabaseAsync(
-	new Database
-	{
-		Id = dataBaseName
-	});
+database = await client.CreateDatabaseAsync(
+new Database
+{
+Id = dataBaseName
+});
 }</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## 這個寫法如果用在webapi上面，會有出現等不到回應的情形發生，所以解決方法是變成同步, 寫法會變成</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 這個寫法如果用在webapi上面，會有出現等不到回應的情形發生，所以解決方法是變成同步, 寫法會變成</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>database = client.CreateDatabaseAsync(new Database{Id = dataBaseName}).Result;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 檢查DocumentCollection是否已經建立</span><br><span class="line"></span><br><span class="line">從上面知道如果要檢查Database是否已經建立, 要利用CreateDatabaseQuery(), </span><br><span class="line">同樣的， 如果要檢查Document是否已經建立, 就要用 CreateDocumentCollectionQuery(database.CollectionsLink)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDatabaseQuery](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdatabasequery.aspx)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDocumentCollectionQuery Method](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdocumentcollectionquery.aspx)</span><br><span class="line"></span><br><span class="line">* 建立Document</span><br><span class="line"></span><br><span class="line">new a class object and save into DocumentCollection</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 檢查DocumentCollection是否已經建立</span><br><span class="line"></span><br><span class="line">從上面知道如果要檢查Database是否已經建立, 要利用CreateDatabaseQuery(), </span><br><span class="line">同樣的， 如果要檢查Document是否已經建立, 就要用 CreateDocumentCollectionQuery(database.CollectionsLink)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDatabaseQuery](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdatabasequery.aspx)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDocumentCollectionQuery Method](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdocumentcollectionquery.aspx)</span><br><span class="line"></span><br><span class="line">* 建立Document</span><br><span class="line"></span><br><span class="line">new a class object and save into DocumentCollection</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>User _user = new User(){name=『abc』};
 var document1 = await client.CreateDocumentAsync(documentCollectionLink, _user);</p>
 <p>這裡的documentCollectionLink是指
-DocumentCollection collection = client.CreateDocumentCollectionQuery(database.SelfLink).FirstOrDefault(db =&gt; <a href="http://db.Id" target="_blank" rel="noopener">db.Id</a> == dataBaseName);
+DocumentCollection collection = client.CreateDocumentCollectionQuery(database.SelfLink).FirstOrDefault(db =&gt; <a href="http://db.Id">db.Id</a> == dataBaseName);
 或者是剛新增出來的collection
 DocumentCollection collection = client.CreateDocumentCollectionAsync(database.SelfLink,
 new DocumentCollection
@@ -1874,19 +1874,19 @@ new DocumentCollection
 Id = 「some name」
 });</p>
 <p>documentCollectionLink = collection.SelfLink;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 更新Document</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 更新Document</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>var doc = Client.CreateDocumentQuery<document>(Favorscollection.DocumentsLink)
-.Where(d =&gt; <a href="http://d.Id" target="_blank" rel="noopener">d.Id</a> == id)
+.Where(d =&gt; <a href="http://d.Id">d.Id</a> == id)
 .AsEnumerable()
 .FirstOrDefault();</document></p>
 <p>return Client.ReplaceDocumentAsync(doc.SelfLink, item);</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 刪除Document</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 刪除Document</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>var doc = Client.CreateDocumentQuery<document>(Favorscollection.DocumentsLink)
-.Where(d =&gt; <a href="http://d.Id" target="_blank" rel="noopener">d.Id</a> == id)
+.Where(d =&gt; <a href="http://d.Id">d.Id</a> == id)
 .AsEnumerable()
 .FirstOrDefault();</document></p>
 <p>return Client.DeleteDocumentAsync(doc.SelfLink);</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 查詢Document</span><br><span class="line"></span><br><span class="line">可以用Linq的語法來做查詢或是用sql的語法也可以</span><br><span class="line"></span><br><span class="line">[[DOC] Query DocumentDB](http://azure.microsoft.com/zh-tw/documentation/articles/documentdb-sql-query/)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 查詢Document</span><br><span class="line"></span><br><span class="line">可以用Linq的語法來做查詢或是用sql的語法也可以</span><br><span class="line"></span><br><span class="line">[[DOC] Query DocumentDB](http://azure.microsoft.com/zh-tw/documentation/articles/documentdb-sql-query/)</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>Client.CreateDocumentQuery<viewmodel>(Favorscollection.DocumentsLink)
 .Where(m =&gt; m.lastName == 「xxxx」)
 .ToList()</viewmodel></p>

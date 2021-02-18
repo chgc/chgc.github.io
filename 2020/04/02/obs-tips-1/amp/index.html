@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/02/obs-tips-1/"
 			},
 			"datePublished": "2020-04-02T01:51:18.000Z",
-			"dateModified": "2021-02-18T02:39:29.112Z",
+			"dateModified": "2021-02-18T04:09:34.981Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1854,11 +1854,11 @@ h6.categories {
 			  		<p>OBS 是一套功能強大而且免費的直播軟體，我會將一些我覺得不錯的功能寫成筆記分享出來，今天先介紹 OBS-NDI 這個擴充功能。</p>
 <p>NDI 是 NewTek 這間公司發展出來的一個網路協定，全名是 Network Device Interface，詳細功能就讓各位去查了，簡單的說，他可以將影像訊號透過網路的方式傳遞，而且中間的延遲非常的低</p>
 <a id="more"></a>
-<p>而 OBS 當然也有人寫擴充套件，讓 OBS 也能支援 NDI 這個功能，套件名稱是 <a href="https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/" target="_blank" rel="noopener">obs-ndi</a>，還沒有安裝的，就先按網站的步驟安裝下載吧，windows/mac 都可以使用</p>
+<p>而 OBS 當然也有人寫擴充套件，讓 OBS 也能支援 NDI 這個功能，套件名稱是 <a href="https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/">obs-ndi</a>，還沒有安裝的，就先按網站的步驟安裝下載吧，windows/mac 都可以使用</p>
 <p>當安裝完 OBS-NDI 後，OBS 就支援 Input/Output NDI Source 的功能了</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402100903559.png" width="605" height="263" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402100925719.png" width="427" height="558" layout="responsive"></amp-img></div>
-<h1 id="input"><a class="header-anchor" href="#input"> </a>Input</h1>
+<h1 id="Input"><a class="header-anchor" href="#Input"> </a>Input</h1>
 <p>當要將外部的 NDI Source 加到 OBS 內，可以透過 add NDI Source 的方式完成</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402102452683.png" width="722" height="612" layout="responsive"></amp-img></div>
 <p>當區域網路內有 NDI Source 存在時，Source name 的下拉選單就可以看到該來源的名稱</p>
@@ -1867,7 +1867,7 @@ h6.categories {
 <li>其他的設定基本上預設就可以了</li>
 </ul>
 <p>按下 Ok 完成後，剩下的操作就跟其他 OBS 的操作一樣，很簡單的</p>
-<h1 id="output"><a class="header-anchor" href="#output"> </a>Output</h1>
+<h1 id="Output"><a class="header-anchor" href="#Output"> </a>Output</h1>
 <p>如果想要讓 OBS 所設定好的畫面輸出給其他支援 NDI 的軟體或介面使用的話，可以開啟 output 的功能</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402101053363.png" width="472" height="219" layout="responsive"></amp-img></div>
 <p>當開啟 Output 時，OBS 也會認定目前處於直播的狀態，所以相關的設定也會被關起來不能被修改。以下為一些可以使用的情境</p>
@@ -1876,12 +1876,12 @@ h6.categories {
 <li>第二台電腦的直播訊號來源，因為直播需要消耗主機支援，可以透過使用第二台電腦來減少主電腦的資訊損耗，這時候透過 NDI 就可以很簡單的將訊號傳給第二台電腦</li>
 <li>擷取桌面。給直播主機使用，除了使用 OBS 擷取桌面外，也可以使用這一個軟體
 <ul>
-<li>VMIX Desktop capture 軟體 (<a href="https://www.vmix.com/software/download.aspx" target="_blank" rel="noopener">下載位置</a>)，使用方式很簡單，下載開啟就可以使用了</li>
+<li>VMIX Desktop capture 軟體 (<a href="https://www.vmix.com/software/download.aspx">下載位置</a>)，使用方式很簡單，下載開啟就可以使用了</li>
 <li>如果 NDI Source 抓不到，可能是防火牆的問題</li>
 </ul>
 </li>
 </ol>
-<h2 id="filter"><a class="header-anchor" href="#filter"> </a>Filter</h2>
+<h2 id="Filter"><a class="header-anchor" href="#Filter"> </a>Filter</h2>
 <p>OBS-NDI 還有另外一個很實用的功能，就是可以將某 Source 設定為單獨輸出的 NDI Source，但這邊就需要使用 Filter 的功能</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402103321321.png" width="862" height="1046" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2020/04/02/obs-tips-1/image-20200402103422148.png" width="863" height="758" layout="responsive"></amp-img></div>

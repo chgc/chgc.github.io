@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/12/24/ng-router-new-feature/"
 			},
 			"datePublished": "2018-12-24T02:46:19.000Z",
-			"dateModified": "2021-02-18T02:39:29.028Z",
+			"dateModified": "2021-02-18T04:09:34.905Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Angular 7 版以後 (7.1~7.2)，在 Router 的部份又新增了不少功能，一起來看看到底新增了那些功能吧</p>
 <a id="more"></a>
-<h1 id="allow-guards-to-return-urltree"><a class="header-anchor" href="#allow-guards-to-return-urltree"> </a>Allow guards to return UrlTree</h1>
+<h1 id="Allow-guards-to-return-UrlTree"><a class="header-anchor" href="#Allow-guards-to-return-UrlTree"> </a>Allow guards to return UrlTree</h1>
 <ul>
 <li>
 <p>適用版本: 7.1</p>
@@ -1860,25 +1860,25 @@ h6.categories {
 </li>
 <li>
 <p>Interface</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> CanActivate {</span><br><span class="line">  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable&lt;<span class="built_in">boolean</span> | UrlTree&gt; | <span class="built_in">Promise</span>&lt;<span class="built_in">boolean</span> | UrlTree&gt; | <span class="built_in">boolean</span> | UrlTree</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> CanActivate {</span><br><span class="line">  canActivate(route: ActivatedRouteSnapshot, <span class="attr">state</span>: RouterStateSnapshot): Observable&lt;<span class="built_in">boolean</span> | UrlTree&gt; | <span class="built_in">Promise</span>&lt;<span class="built_in">boolean</span> | UrlTree&gt; | <span class="built_in">boolean</span> | UrlTree</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>用法範例</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">class</span> CanActivateTeam <span class="keyword">implements</span> CanActivate {</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> permissions: Permissions, <span class="keyword">private</span> currentUser: UserToken, </span></span><br><span class="line"><span class="params">              <span class="keyword">private</span> router: Router</span>) {}</span><br><span class="line"> </span><br><span class="line">  canActivate(</span><br><span class="line">    route: ActivatedRouteSnapshot,</span><br><span class="line">    state: RouterStateSnapshot</span><br><span class="line">  ): Observable&lt;<span class="built_in">boolean</span>|UrlTree&gt;|<span class="built_in">Promise</span>&lt;<span class="built_in">boolean</span>|UrlTree&gt;|<span class="built_in">boolean</span>|UrlTree {</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>.permissions.canActivate(<span class="keyword">this</span>.currentUser, route.params.id))</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.router.createUrlTree([<span class="string">'/login'</span>]);   </span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;    </span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CanActivateTeam</span> <span class="title">implements</span> <span class="title">CanActivate</span> </span>{</span><br><span class="line">  <span class="title">constructor</span>(<span class="params"><span class="keyword">private</span> permissions: Permissions, <span class="keyword">private</span> currentUser: UserToken, </span></span><br><span class="line"><span class="params">              <span class="keyword">private</span> router: Router</span>) {}</span><br><span class="line"> </span><br><span class="line">  canActivate(</span><br><span class="line">    route: ActivatedRouteSnapshot,</span><br><span class="line">    state: RouterStateSnapshot</span><br><span class="line">  ): Observable&lt;<span class="built_in">boolean</span>|UrlTree&gt;|<span class="built_in">Promise</span>&lt;<span class="built_in">boolean</span>|UrlTree&gt;|<span class="built_in">boolean</span>|UrlTree {</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">this</span>.permissions.canActivate(<span class="built_in">this</span>.currentUser, route.params.id))</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.router.createUrlTree([<span class="string">'/login'</span>]);   </span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;    </span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
-<h1 id="runguardsandresolvers"><a class="header-anchor" href="#runguardsandresolvers"> </a>runGuardsAndResolvers</h1>
+<h1 id="runGuardsAndResolvers"><a class="header-anchor" href="#runGuardsAndResolvers"> </a>runGuardsAndResolvers</h1>
 <p>在設定 RouterConfig 時，可以設定何時要觸發 <code>Guards</code> 和 <code>Resolver</code> ，目前有的選項有</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> RunGuardsAndResolvers = <span class="string">'pathParamsChange'</span> | <span class="string">'paramsChange'</span> | <span class="string">'paramsOrQueryParamsChange'</span> | <span class="string">'always'</span> |  <span class="function">(<span class="params">(<span class="params"><span class="keyword">from</span>: ActivatedRouteSnapshot, to: ActivatedRouteSnapshot</span>) =&gt; <span class="built_in">boolean</span></span>);</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> RunGuardsAndResolvers = <span class="string">'pathParamsChange'</span> | <span class="string">'paramsChange'</span> | <span class="string">'paramsOrQueryParamsChange'</span> | <span class="string">'always'</span> |  (<span class="function">(<span class="params"><span class="keyword">from</span>: ActivatedRouteSnapshot, to: ActivatedRouteSnapshot</span>) =&gt;</span> <span class="built_in">boolean</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>設定方式</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes: Route[] = [</span><br><span class="line">  { path: <span class="string">''</span>, component: AppComponent, runGuardsAndResolvers: <span class="string">'always'</span> }</span><br><span class="line">];</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes: Route[] = [</span><br><span class="line">  { <span class="attr">path</span>: <span class="string">''</span>, <span class="attr">component</span>: AppComponent, <span class="attr">runGuardsAndResolvers</span>: <span class="string">'always'</span> }</span><br><span class="line">];</span><br></pre></td></tr></tbody></table></figure>
 <ul>
-<li><code>runGuardsAndResolvers: 'always'</code> 可以與 RouterModule 的 <code>onSameUrlNavigation: 'reload'</code> 搭配使用，即可做到同一網址瀏覽可以重跑 <code>Guards</code> 與 <code>Resolvers</code> 的動作</li>
+<li><code>runGuardsAndResolvers: 'always'</code> 可以與 RouterModule 的 <code> onSameUrlNavigation: 'reload'</code> 搭配使用，即可做到同一網址瀏覽可以重跑 <code>Guards</code> 與 <code>Resolvers</code> 的動作</li>
 <li>版本 7.1 新增 <code>pathParamsChange</code> 模式</li>
 <li>版本 7.2 新增 <code>pathParamsOrQueryParamsChange</code> 模式</li>
 <li>版本 7.2 新增 <code>predicate function</code> 模式: 可以自訂觸發規則</li>
 </ul>
-<h1 id="allow-passing-state-to-routerlink"><a class="header-anchor" href="#allow-passing-state-to-routerlink"> </a>Allow passing state to routerLink</h1>
+<h1 id="Allow-passing-state-to-routerLink"><a class="header-anchor" href="#Allow-passing-state-to-routerLink"> </a>Allow passing state to routerLink</h1>
 <ul>
 <li>
 <p>適用版本: 7.2</p>
@@ -1889,12 +1889,12 @@ h6.categories {
 <li>
 <p>用法:</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"['/user/bob']"</span> [<span class="attr">state</span>]=<span class="string">"{tracingId: 123}"</span>&gt;</span></span><br><span class="line">   link to user component</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">router.events.pipe(filter(<span class="function"><span class="params">e</span> =&gt;</span> e <span class="keyword">instanceof</span> NavigationStart)).subscribe(<span class="function"><span class="params">e</span> =&gt;</span> {</span><br><span class="line">    <span class="keyword">const</span> transition = router.getCurrentTransition();</span><br><span class="line">    tracingService.trace({id: transition.extras.state});</span><br><span class="line"> });</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">router.events.pipe(filter(<span class="function"><span class="params">e</span> =&gt;</span> e <span class="keyword">instanceof</span> NavigationStart)).subscribe(<span class="function"><span class="params">e</span> =&gt;</span> {</span><br><span class="line">    <span class="keyword">const</span> transition = router.getCurrentTransition();</span><br><span class="line">    tracingService.trace({<span class="attr">id</span>: transition.extras.state});</span><br><span class="line"> });</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://github.com/angular/angular/blob/master/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></li>
+<li><a href="https://github.com/angular/angular/blob/master/CHANGELOG.md">Changelog</a></li>
 </ul>
 
 			  		

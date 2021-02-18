@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/10/17/laravel-controllers/"
 			},
 			"datePublished": "2013-10-17T00:31:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.000Z",
+			"dateModified": "2021-02-18T04:09:34.877Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1842,17 +1842,17 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2 id="controller"><a class="header-anchor" href="#controller"> </a>Controller</h2>
+			  		<h2 id="Controller"><a class="header-anchor" href="#Controller"> </a>Controller</h2>
 <p>Controllers是用來處理商業邏輯及資料與view之間的介面(負責將資料input//output 給model，與資料庫的溝通就交給model去處理了)</p>
 <p>controller需要配合route的設定才可被view呼叫使用。</p>
 <p>例如:
 route::get(『something』,『someController@someaction』)</p>
-<p>當使用者跑到 <a href="http://website/something%E6%99%82" target="_blank" rel="noopener">http://website/something時</a>, 就會呼叫route內所對應的controller及action.</p>
+<p>當使用者跑到 <a href="http://website/something%E6%99%82">http://website/something時</a>, 就會呼叫route內所對應的controller及action.</p>
 <p>發現，這種指定的方式，當頁面很多的時候就會變得很麻煩。 所以laravel的route提供另外一種指定的方式</p>
 <p>route::controller(『something』,『someController』)</p>
 <p>此種設定的方式，適用於restFUL的controller, (get,post,put,delete)四種交換模式的相關動作。</p>
 <p>一般而言，只是讀取一個頁面的時候，都是透過 get的method取得回應的。所以在controller內action的命名，
-就是用getSomection()為命名的方式，網址就是http://website/something/someaction (小寫, Controller內的action name 是大寫). 如果action的名稱是SomeAction時，<strong>注意 是兩個大寫字母</strong> 網址就會變成 <a href="http://website/something/some-action" target="_blank" rel="noopener">http://website/something/some-action</a> (破折號作為連結的符號)</p>
+就是用getSomection()為命名的方式，網址就是http://website/something/someaction (小寫, Controller內的action name 是大寫). 如果action的名稱是SomeAction時，<strong>注意 是兩個大寫字母</strong> 網址就會變成 <a href="http://website/something/some-action">http://website/something/some-action</a> (破折號作為連結的符號)</p>
 <p>同理: 如果遇到form post時, 就是呼叫postSomeaction()</p>
 <p>以上為controller的基本呼叫方式。</p>
 

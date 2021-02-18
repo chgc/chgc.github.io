@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/02/14/rxjs-sequence/"
 			},
 			"datePublished": "2019-02-14T00:14:37.000Z",
-			"dateModified": "2021-02-18T02:39:29.028Z",
+			"dateModified": "2021-02-18T04:09:34.905Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1877,7 +1877,7 @@ h6.categories {
 <ul>
 <li>
 <p><code>bufferCount</code> :</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bufferCount&lt;T&gt;(bufferSize: <span class="built_in">number</span>, startBufferEvery: <span class="built_in">number</span> = <span class="literal">null</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bufferCount&lt;T&gt;(bufferSize: <span class="built_in">number</span>, <span class="attr">startBufferEvery</span>: <span class="built_in">number</span> = <span class="literal">null</span>)</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 </li>
@@ -1891,16 +1891,16 @@ h6.categories {
 <p>先來調整一下 <code>keyCorrection</code> 的寫法，讓在第一次收集完 <code>keyup</code> 事件後，之後每一次的<code>keyup</code> 事件都會送出值</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> keyCorrection = keys.pipe(</span><br><span class="line">    bufferCount(<span class="number">10</span>,<span class="number">1</span>)</span><br><span class="line">);</span><br></pre></td></tr></tbody></table></figure>
 <p>再來修正比較的部份，這裡介紹一個 operator, <code>sequenceEqual</code>，這一個方法的功用是比較兩個 Observable 的值發生的順序是否一樣</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sequenceEqual&lt;T&gt;<span class="function">(<span class="params">compareTo: Observable&lt;T&gt;, comparator?: (<span class="params">a: T, b: T</span>) =&gt; <span class="built_in">boolean</span></span>): <span class="params">OperatorFunction</span>&lt;<span class="params">T</span>, <span class="params">boolean</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sequenceEqual&lt;T&gt;(compareTo: Observable&lt;T&gt;, comparator?: <span class="function">(<span class="params">a: T, b: T</span>) =&gt;</span> <span class="built_in">boolean</span>): OperatorFunction&lt;T, <span class="built_in">boolean</span>&gt;</span><br></pre></td></tr></tbody></table></figure>
 <p>將 matches 的部份調整一下</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> matches = keyCorrection.pipe(</span><br><span class="line">  mergeMap(<span class="function"><span class="params">result</span> =&gt;</span> <span class="keyword">from</span>(result).pipe(sequenceEqual(<span class="keyword">from</span>(codes))))</span><br><span class="line">);</span><br></pre></td></tr></tbody></table></figure>
 <p>經過這樣子的修正後，一樣可以達到一樣的效果，最後在修飾一下，完整的程式碼如下</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { fromEvent, <span class="keyword">from</span> } <span class="keyword">from</span> <span class="string">'rxjs'</span>;</span><br><span class="line"><span class="keyword">import</span> { map, bufferCount, tap, mergeMap, sequenceEqual } <span class="keyword">from</span> <span class="string">'rxjs/operators'</span>;</span><br><span class="line"><span class="built_in">console</span>.clear();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> codes = <span class="keyword">from</span>([</span><br><span class="line">  <span class="string">'ArrowUp'</span>,</span><br><span class="line">  <span class="string">'ArrowUp'</span>,</span><br><span class="line">  <span class="string">'ArrowDown'</span>,</span><br><span class="line">  <span class="string">'ArrowDown'</span>,</span><br><span class="line">  <span class="string">'ArrowLeft'</span>,</span><br><span class="line">  <span class="string">'ArrowRight'</span>,</span><br><span class="line">  <span class="string">'ArrowLeft'</span>,</span><br><span class="line">  <span class="string">'ArrowRight'</span>,</span><br><span class="line">  <span class="string">'KeyB'</span>,</span><br><span class="line">  <span class="string">'KeyA'</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> keys = fromEvent(<span class="built_in">document</span>, <span class="string">'keyup'</span>).pipe(map(<span class="function">(<span class="params">e: KeyboardEvent</span>) =&gt;</span> e.code));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> matches = keys.pipe(</span><br><span class="line">  bufferCount(<span class="number">10</span>, <span class="number">1</span>),</span><br><span class="line">  tap(<span class="built_in">console</span>.log),</span><br><span class="line">  mergeMap(<span class="function"><span class="params">result</span> =&gt;</span> <span class="keyword">from</span>(result).pipe(sequenceEqual(codes)))</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">matches.subscribe(<span class="function"><span class="params">x</span> =&gt;</span> <span class="built_in">console</span>.log(x));</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="參考資訊"><a class="header-anchor" href="#參考資訊"> </a>參考資訊</h1>
 <ul>
-<li><a href="https://stackblitz.com/edit/sequenceequal?file=index.ts" target="_blank" rel="noopener">範例程式碼</a></li>
-<li><a href="https://rxjs.dev/api/operators/sequenceEqual" target="_blank" rel="noopener">RxJS API - sequenceEqual</a></li>
-<li><a href="https://rxjs.dev/api/operators/bufferCount" target="_blank" rel="noopener">RxJS API - bufferCount</a></li>
+<li><a href="https://stackblitz.com/edit/sequenceequal?file=index.ts">範例程式碼</a></li>
+<li><a href="https://rxjs.dev/api/operators/sequenceEqual">RxJS API - sequenceEqual</a></li>
+<li><a href="https://rxjs.dev/api/operators/bufferCount">RxJS API - bufferCount</a></li>
 </ul>
 
 			  		

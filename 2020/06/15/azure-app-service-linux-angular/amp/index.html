@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/06/15/azure-app-service-linux-angular/"
 			},
 			"datePublished": "2020-06-15T11:51:01.000Z",
-			"dateModified": "2021-02-18T02:39:29.120Z",
+			"dateModified": "2021-02-18T04:09:34.993Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1859,10 +1859,10 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>要將 Angular 放在 Azure 上面的方法有很多種，而今天要介紹的是其中一種，App Service(Linux Version)</p>
 <a id="more"></a>
-<p>在 Azure 上面，使用 Linux 版本的價錢可以比 Windows 版本便宜許多，但如果想要放靜態網站時又該怎麼呢? 其實可以簡單透過 npm 上面的一個套件 <a href="https://www.npmjs.com/package/serve" target="_blank" rel="noopener">serve</a> 來完成，這樣就不用自己寫一個 Http Server。但如果是要給 Production 環境使用，還是建議使用正統的 http server 寫法</p>
+<p>在 Azure 上面，使用 Linux 版本的價錢可以比 Windows 版本便宜許多，但如果想要放靜態網站時又該怎麼呢? 其實可以簡單透過 npm 上面的一個套件 <a href="https://www.npmjs.com/package/serve">serve</a> 來完成，這樣就不用自己寫一個 Http Server。但如果是要給 Production 環境使用，還是建議使用正統的 http server 寫法</p>
 <p>在 App Service 上面可以這樣子設定</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/06/15/azure-app-service-linux-angular/image-20200615211052044.png" width="1163" height="664" layout="responsive"></amp-img></div>
-<p>可以透過啟動指令的方式來啟動我們想要執行的程式，所以如果是 node epxress 的情況下，就會是 <code>node ./index.js</code> 之類的</p>
+<p>可以透過啟動指令的方式來啟動我們想要執行的程式，所以如果是 node epxress 的情況下，就會是 <code>node ./index.js </code> 之類的</p>
 <p>而部屬的動作就將 Angular build 出的專案資料夾內的檔案上傳到 App Service 即可</p>
 
 			  		

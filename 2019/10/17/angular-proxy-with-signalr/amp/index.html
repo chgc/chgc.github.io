@@ -14,14 +14,14 @@
 	
 	<meta property="og:site_name" content="CK&#39;s Notepad">
 	
-		<meta property="og:description" content="&lt;p&gt;Angular 在開發時期有提供 &lt;code&gt;proxy&lt;/code&gt; 的檔案供我們設定 &lt;code&gt;reverse proxy&lt;/code&gt; ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 &lt;code&gt;SignalR&lt;/code&gt; 又該怎麼辦呢?&lt;/p&gt;">
+		<meta property="og:description" content="&lt;p&gt;Angular 在開發時期有提供 &lt;code&gt;proxy&lt;/code&gt; 的檔案供我們設定 &lt;code&gt;reverse proxy&lt;/code&gt; ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 &lt;code&gt;SignalR &lt;/code&gt; 又該怎麼辦呢?&lt;/p&gt;">
 	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="CK&#39;s Notepad">
 	<meta name="twitter:url" content="http://blog.kevinyang.net/2019/10/17/angular-proxy-with-signalr/">
 	<meta name="twitter:title" content="[Angular] 如何設定開發時期的 SignalR proxy 檔 - CK&#39;s Notepad">
 	
-		<meta name="twitter:description" content="&lt;p&gt;Angular 在開發時期有提供 &lt;code&gt;proxy&lt;/code&gt; 的檔案供我們設定 &lt;code&gt;reverse proxy&lt;/code&gt; ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 &lt;code&gt;SignalR&lt;/code&gt; 又該怎麼辦呢?&lt;/p&gt;">
+		<meta name="twitter:description" content="&lt;p&gt;Angular 在開發時期有提供 &lt;code&gt;proxy&lt;/code&gt; 的檔案供我們設定 &lt;code&gt;reverse proxy&lt;/code&gt; ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 &lt;code&gt;SignalR &lt;/code&gt; 又該怎麼辦呢?&lt;/p&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -51,14 +51,14 @@
 			"@type": "BlogPosting",
 			"headline": "[Angular] 如何設定開發時期的 SignalR proxy 檔",
 			
-			"description": "&lt;p&gt;Angular 在開發時期有提供 &lt;code&gt;proxy&lt;/code&gt; 的檔案供我們設定 &lt;code&gt;reverse proxy&lt;/code&gt; ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 &lt;code&gt;SignalR&lt;/code&gt; 又該怎麼辦呢?&lt;/p&gt;",
+			"description": "&lt;p&gt;Angular 在開發時期有提供 &lt;code&gt;proxy&lt;/code&gt; 的檔案供我們設定 &lt;code&gt;reverse proxy&lt;/code&gt; ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 &lt;code&gt;SignalR &lt;/code&gt; 又該怎麼辦呢?&lt;/p&gt;",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"http://blog.kevinyang.net/2019/10/17/angular-proxy-with-signalr/"
 			},
 			"datePublished": "2019-10-17T02:13:35.000Z",
-			"dateModified": "2021-02-18T02:39:29.092Z",
+			"dateModified": "2021-02-18T04:09:34.965Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,10 +1848,10 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Angular 在開發時期有提供 <code>proxy</code> 的檔案供我們設定 <code>reverse proxy</code> ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 <code>SignalR</code> 又該怎麼辦呢?</p>
+			  		<p>Angular 在開發時期有提供 <code>proxy</code> 的檔案供我們設定 <code>reverse proxy</code> ，以避免 CORS 所產生的問題，而 API 的設定上是沒有問題的，那遇到 <code>SignalR </code> 又該怎麼辦呢?</p>
 <a id="more"></a>
 <p>首先要先了解 <code>SignalR</code> 是跑在什麼協定上，<code>SignalR</code> (這裡提的 <code>SignalR</code> 是用最新版的 <code>@microsoft/signalr</code>) 預設是跑在 <code>websocket</code> 上，既然知道是跑在 <code>websocket</code> 上，proxy 設定檔就變簡單了，以下是基本範例</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  ...</span><br><span class="line">  "/messageHub": {</span><br><span class="line">    "target": "&lt;your url&gt;",  </span><br><span class="line">    "ws": true // 這是關鍵設定</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  ...</span><br><span class="line">  "/messageHub": {</span><br><span class="line">    "target": "&lt;your url&gt;",  </span><br><span class="line">    "ws": true // 這是關鍵設定</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>當加上 line:5 後，一切問題就解決了。</p>
 <h1 id="進階設定"><a class="header-anchor" href="#進階設定"> </a>進階設定</h1>
 <p>當要設定的網址很多時，可以怎樣設定呢? 可以使用 <code>context</code> 來設定，範例如下</p>

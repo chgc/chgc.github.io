@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/05/04/angular2-upgrade-to-rc0/"
 			},
 			"datePublished": "2016-05-04T00:39:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,9 +1850,9 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Angular發佈RC了，來升級吧</p>
 <a id="more"></a>
-<p><a href="https://github.com/angular/angular/blob/master/CHANGELOG.md#200-rc0-2016-05-02" target="_blank" rel="noopener">Changelog</a></p>
-<h1 id="升級angular2-rc"><a class="header-anchor" href="#升級angular2-rc"> </a>升級Angular2 RC</h1>
-<h2 id="npm安裝命令"><a class="header-anchor" href="#npm安裝命令"> </a>NPM安裝命令</h2>
+<p><a href="https://github.com/angular/angular/blob/master/CHANGELOG.md#200-rc0-2016-05-02">Changelog</a></p>
+<h1 id="升級Angular2-RC"><a class="header-anchor" href="#升級Angular2-RC"> </a>升級Angular2 RC</h1>
+<h2 id="NPM安裝命令"><a class="header-anchor" href="#NPM安裝命令"> </a>NPM安裝命令</h2>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic rxjs@5.0.0-beta.6 zone.js@0.6.12</span><br></pre></td></tr></tbody></table></figure>
 <p>RC版本，將各Module都拆開了，這表示，可以只安裝自己需要的部分，就不用全部都包進來了</p>
 <p>如果出現下面的畫面，更新npm後就可以修正問題了</p>
@@ -1869,24 +1869,24 @@ h6.categories {
 <li><code>angular2/upgrade</code> -&gt; <code>@angular/upgrade</code></li>
 <li><code>angular2/http</code> -&gt; <code>@angular/http</code></li>
 <li><code>angular2/router</code> -&gt; <code>@angular/router-deprecated</code> (snapshot of the component router from beta.17 for backwards compatibility)</li>
-<li>new package: <code>@angular/router</code> - component router with several <a href="https://docs.google.com/document/d/1WLSNV3V1AKdwLwRiLuN7JqbPBKQ_S5quRlcT5LPIldw/edit#heading=h.blfh5ya9sf5r" target="_blank" rel="noopener">breaking changes</a></li>
+<li>new package: <code>@angular/router</code> - component router with several <a href="https://docs.google.com/document/d/1WLSNV3V1AKdwLwRiLuN7JqbPBKQ_S5quRlcT5LPIldw/edit#heading=h.blfh5ya9sf5r">breaking changes</a></li>
 </ul>
 <p>但是有些東西還是有換位置</p>
 <ul>
 <li>import { bootstrap }    from 『@angular/platform-browser-dynamic』; --&gt;『angular2/platform/browser』;</li>
 <li>import { APP_BASE_HREF } from 『@angular/common』; --&gt; from 『angular2/http』</li>
 </ul>
-<h2 id="更新其他有用到ng2的library"><a class="header-anchor" href="#更新其他有用到ng2的library"> </a>更新其他有用到ng2的Library</h2>
+<h2 id="更新其他有用到ng2的Library"><a class="header-anchor" href="#更新其他有用到ng2的Library"> </a>更新其他有用到ng2的Library</h2>
 <p>這部分可能會有些問題，因為RC是近期的發佈的，有可能部分的Library還沒有跟著更新，所以在使用上會出現問題。</p>
-<h2 id="更新build-tool-config-if-need"><a class="header-anchor" href="#更新build-tool-config-if-need"> </a>更新Build tool config if need</h2>
+<h2 id="更新Build-tool-config-if-need"><a class="header-anchor" href="#更新Build-tool-config-if-need"> </a>更新Build tool config if need</h2>
 <p>ex: Webpack</p>
 <h2 id="測試升級後的結果"><a class="header-anchor" href="#測試升級後的結果"> </a>測試升級後的結果</h2>
 <h1 id="語法調整"><a class="header-anchor" href="#語法調整"> </a>語法調整</h1>
-<h2 id="ngfor-change-in-2-0-0-beta-17"><a class="header-anchor" href="#ngfor-change-in-2-0-0-beta-17"> </a>*ngFor (change in 2.0.0-beta.17)</h2>
+<h2 id="ngFor-change-in-2-0-0-beta-17"><a class="header-anchor" href="#ngFor-change-in-2-0-0-beta-17"> </a>*ngFor (change in 2.0.0-beta.17)</h2>
 <figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原本的ngFor用法為</span></span><br><span class="line">*ngFor=<span class="string">"#item of items"</span></span><br><span class="line"><span class="comment">// 修正為</span></span><br><span class="line">*ngFor=<span class="string">"let item of items"</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 id="pipe-change-in-2-0-0-beta-16"><a class="header-anchor" href="#pipe-change-in-2-0-0-beta-16"> </a>Pipe (change in 2.0.0-beta.16)</h2>
+<h2 id="Pipe-change-in-2-0-0-beta-16"><a class="header-anchor" href="#Pipe-change-in-2-0-0-beta-16"> </a>Pipe (change in 2.0.0-beta.16)</h2>
 <p>針對Argument的處理方式改變</p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//原本的</span></span><br><span class="line"> transform(todos, args) {        </span><br><span class="line">    <span class="comment">// 傳進來的args為array</span></span><br><span class="line">    ...       </span><br><span class="line">}</span><br><span class="line"><span class="comment">// 升級後</span></span><br><span class="line">transform(todos, args) { </span><br><span class="line">  <span class="comment">// 傳進來的args變成傳給他什麼就是什麼</span></span><br><span class="line">  ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//原本的</span></span><br><span class="line"> <span class="function"><span class="title">transform</span>(<span class="params">todos, args</span>)</span> {        </span><br><span class="line">    <span class="comment">// 傳進來的args為array</span></span><br><span class="line">    ...       </span><br><span class="line">}</span><br><span class="line"><span class="comment">// 升級後</span></span><br><span class="line"><span class="function"><span class="title">transform</span>(<span class="params">todos, args</span>)</span> { </span><br><span class="line">  <span class="comment">// 傳進來的args變成傳給他什麼就是什麼</span></span><br><span class="line">  ...</span><br><span class="line">}</span><br><span class="line">    </span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

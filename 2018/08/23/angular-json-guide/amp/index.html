@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/08/23/angular-json-guide/"
 			},
 			"datePublished": "2018-08-23T03:08:08.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.889Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1940,7 +1940,7 @@ h6.categories {
 </ul>
 </li>
 </ul>
-<h3 id="cli-指令執行流程"><a class="header-anchor" href="#cli-指令執行流程"> </a>CLI 指令執行流程</h3>
+<h3 id="CLI-指令執行流程"><a class="header-anchor" href="#CLI-指令執行流程"> </a>CLI 指令執行流程</h3>
 <figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">"build": {</span><br><span class="line">    "builder": "@angular-devkit/build-angular:browser",</span><br><span class="line">    "options": {</span><br><span class="line">        "progress": false,</span><br><span class="line">        "outputPath": "www",</span><br><span class="line">        "index": "src/index.html",</span><br><span class="line">        "main": "src/main-user.ts",</span><br><span class="line">        "polyfills": "src/polyfills.ts",</span><br><span class="line">        "tsConfig": "src/tsconfig.app.json",</span><br><span class="line">        "assets": [</span><br><span class="line">            ...</span><br><span class="line">        ],</span><br><span class="line">            "styles": [</span><br><span class="line">            ...</span><br><span class="line">        ],</span><br><span class="line">        "scripts": []</span><br><span class="line">    },</span><br><span class="line">    "configurations": {</span><br><span class="line">        "production": {</span><br><span class="line">            ...</span><br><span class="line">        }</span><br><span class="line">        }</span><br><span class="line">    },</span><br><span class="line">    "serve": {</span><br><span class="line">        "builder": "@angular-devkit/build-angular:dev-server",</span><br><span class="line">        "options": {</span><br><span class="line">            "browserTarget": "app:build"</span><br><span class="line">        },</span><br><span class="line">        "configurations": {</span><br><span class="line">            "production": {</span><br><span class="line">                "browserTarget": "app:build:production"</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 <p>當我們下 <code>ng serve</code> 的指令時，Angular CLI 實際執行命令的流程如下</p>
 <ol>
@@ -1955,14 +1955,14 @@ h6.categories {
 </ol>
 <h3 id="內建-builder"><a class="header-anchor" href="#內建-builder"> </a>內建  builder</h3>
 <ul>
-<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L489-L520" target="_blank" rel="noopener">@angular-devkit/build-angular:app-shell</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L521-L906" target="_blank" rel="noopener">@angular-devkit/build-angular:browser</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L907-L1028" target="_blank" rel="noopener">@angular-devkit/build-angular:dev-server</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1029-L1064" target="_blank" rel="noopener">@angular-devkit/build-angular:extract-i18n</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1065-L1267" target="_blank" rel="noopener">@angular-devkit/build-angular:karma</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1268-L1323" target="_blank" rel="noopener">@angular-devkit/build-angular:protractor</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1324-L1518" target="_blank" rel="noopener">@angular-devkit/build-angular:server</a></li>
-<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1519-L1594" target="_blank" rel="noopener">@angular-devkit/build-angular:tslint</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L489-L520">@angular-devkit/build-angular:app-shell</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L521-L906">@angular-devkit/build-angular:browser</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L907-L1028">@angular-devkit/build-angular:dev-server</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1029-L1064">@angular-devkit/build-angular:extract-i18n</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1065-L1267">@angular-devkit/build-angular:karma</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1268-L1323">@angular-devkit/build-angular:protractor</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1324-L1518">@angular-devkit/build-angular:server</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/v6.0.0-rc.8/packages/%40angular/cli/lib/config/schema.json#L1519-L1594">@angular-devkit/build-angular:tslint</a></li>
 </ul>
 <h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
 <p>Angular CLI 新版的設定檔的架構，可以讓我們很容易的建立要執行的指令與工作流程，當然也可以自訂 <code>builder</code>，花點時間了解一下，在開發上會更順暢</p>

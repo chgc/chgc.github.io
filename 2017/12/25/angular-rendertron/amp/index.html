@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/12/25/angular-rendertron/"
 			},
 			"datePublished": "2017-12-25T02:38:34.000Z",
-			"dateModified": "2021-02-18T02:39:29.008Z",
+			"dateModified": "2021-02-18T04:09:34.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1853,18 +1853,18 @@ h6.categories {
 <h1 id="簡介"><a class="header-anchor" href="#簡介"> </a>簡介</h1>
 <p><code>rendertron</code> 是如何運作的呢? 其實 rendertron 是透過 Headless Chrome 來讀取 PWA 網站並回傳所產生出來的結果，因為是使用瀏覽器來產生 DOM，所以通常在實作 Server Side Rendering 時會遇到的問題都不會發生，例如 <code>document</code> 物件不存在。</p>
 <p>另外一個好處是，因為是使用瀏覽器來產生 DOM，所以任何前端技術都可以使用!! 因為是透過 proxy middleware 的方式來完成的，middleware 的設定方是根據文件，看起來並不複雜</p>
-<h1 id="middleware"><a class="header-anchor" href="#middleware"> </a>Middleware</h1>
+<h1 id="Middleware"><a class="header-anchor" href="#Middleware"> </a>Middleware</h1>
 <p>根據官方文件有 3 種設定使用的方式</p>
 <ol>
-<li><a href="https://github.com/GoogleChrome/rendertron/blob/master/middleware" target="_blank" rel="noopener">Express.js middleware</a></li>
-<li><a href="https://github.com/justinribeiro/pwa-firebase-functions-botrender" target="_blank" rel="noopener">Firebase functions</a> (Community maintained)</li>
-<li><a href="https://github.com/galamai/AspNetCore.Rendertron" target="_blank" rel="noopener">ASP.net core middleware</a> (Community maintained)</li>
+<li><a href="https://github.com/GoogleChrome/rendertron/blob/master/middleware">Express.js middleware</a></li>
+<li><a href="https://github.com/justinribeiro/pwa-firebase-functions-botrender">Firebase functions</a> (Community maintained)</li>
+<li><a href="https://github.com/galamai/AspNetCore.Rendertron">ASP.net core middleware</a> (Community maintained)</li>
 </ol>
 <p>上述的三種方式都是使用同一個原理，那就判斷發出請求的對象是使用者還是網路爬蟲，如果是網路爬蟲，則使用 rendertron 所生的內容，如果是使用者，則直接輸出預設的內容</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/zjfodpF.png" width="806" height="457" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KBQa1RE.png" width="778" height="457" layout="responsive"></amp-img></div>
-<h2 id="asp-net-core-mvc"><a class="header-anchor" href="#asp-net-core-mvc"> </a><a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC</h2>
-<p>就以 <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> Core MVC 來說，安裝使用方式如下</p>
+<h2 id="ASP-NET-Core-MVC"><a class="header-anchor" href="#ASP-NET-Core-MVC"> </a><a href="http://ASP.NET">ASP.NET</a> Core MVC</h2>
+<p>就以 <a href="http://ASP.NET">ASP.NET</a> Core MVC 來說，安裝使用方式如下</p>
 <ol>
 <li>
 <p>安裝 <code>Galamai.AspNetCore.Rendertron</code> 套件</p>
@@ -1878,7 +1878,7 @@ h6.categories {
 </li>
 <li>
 <p>設定並使用 <code>Rendertron</code></p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Use Rendertron middleware</span></span><br><span class="line"><span class="comment">// 指定 rendertron 服務的位置</span></span><br><span class="line">app.UseRendertron(proxyUrl: <span class="string">"http://rendertron:8080/render/"</span>); 成ㄕ</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Use Rendertron middleware</span></span><br><span class="line"><span class="comment">// 指定 rendertron 服務的位置</span></span><br><span class="line">app.UseRendertron(proxyUrl: <span class="string">"http://rendertron:8080/render/"</span>); 成ㄕ</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
 </li>
@@ -1899,7 +1899,7 @@ h6.categories {
 <p>清除 container</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f $(docker ps -a -q)</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
-<p><a href="https://github.com/GoogleChrome/rendertron" target="_blank" rel="noopener">rendertron</a></p>
+<p><a href="https://github.com/GoogleChrome/rendertron">rendertron</a></p>
 
 			  		
 			  		<!-- google Adsense -->

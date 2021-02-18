@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/10/10/phalcon-work-with-router/"
 			},
 			"datePublished": "2013-10-10T07:03:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.000Z",
+			"dateModified": "2021-02-18T04:09:34.877Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1844,7 +1844,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<h1 id="啟動方式"><a class="header-anchor" href="#啟動方式"> </a>啟動方式</h1>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$di-&gt;set('router', function () {</span><br><span class="line">    $router = new \Phalcon\Mvc\Router();</span><br><span class="line">    $router-&gt;add("/:controller/:action/:params", array(</span><br><span class="line">        'controller' =&gt; 1,</span><br><span class="line">        'action' =&gt; 2,</span><br><span class="line">        'params' =&gt; 3</span><br><span class="line">    ));</span><br><span class="line"></span><br><span class="line">    return $router;</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="defining-route"><a class="header-anchor" href="#defining-route"> </a>Defining  Route</h1>
+<h1 id="Defining-Route"><a class="header-anchor" href="#Defining-Route"> </a>Defining  Route</h1>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1890,7 +1890,7 @@ h6.categories {
 <p>#controller內取得route裡面參數的方式</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$this-&gt;dispatcher-&gt;getParam(0);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParam('paraName');</span><br><span class="line">$this-&gt;dispatcher-&gt;getParams(); &lt;=array</span><br></pre></td></tr></tbody></table></figure>
 <p>#如果是/?var=value</p>
-<p>就用原本$_GET[’’]的方式取值就可以了</p>
+<p>就用原本$_GET[『』]的方式取值就可以了</p>
 
 			  		
 			  		<!-- google Adsense -->

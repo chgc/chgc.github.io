@@ -14,14 +14,14 @@
 	
 	<meta property="og:site_name" content="CK&#39;s Notepad">
 	
-		<meta property="og:description" content="&lt;p&gt;其實 Angular Playground 出來已經有好一段時間了，但是之前的環境設定會讓人懶得用。現在可以簡單的透過 &lt;code&gt;ng add angular-playground&lt;/code&gt; 的方式完成整體的環境設定，這麼方便不用就說不過去了。&lt;/p&gt;">
+		<meta property="og:description" content="&lt;p&gt;其實 Angular Playground 出來已經有好一段時間了，但是之前的環境設定會讓人懶得用。現在可以簡單的透過 &lt;code&gt;ng add  angular-playground&lt;/code&gt; 的方式完成整體的環境設定，這麼方便不用就說不過去了。&lt;/p&gt;">
 	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="CK&#39;s Notepad">
 	<meta name="twitter:url" content="http://blog.kevinyang.net/2018/12/22/ng-playground/">
 	<meta name="twitter:title" content="[Angular] Angular Playground - CK&#39;s Notepad">
 	
-		<meta name="twitter:description" content="&lt;p&gt;其實 Angular Playground 出來已經有好一段時間了，但是之前的環境設定會讓人懶得用。現在可以簡單的透過 &lt;code&gt;ng add angular-playground&lt;/code&gt; 的方式完成整體的環境設定，這麼方便不用就說不過去了。&lt;/p&gt;">
+		<meta name="twitter:description" content="&lt;p&gt;其實 Angular Playground 出來已經有好一段時間了，但是之前的環境設定會讓人懶得用。現在可以簡單的透過 &lt;code&gt;ng add  angular-playground&lt;/code&gt; 的方式完成整體的環境設定，這麼方便不用就說不過去了。&lt;/p&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -51,14 +51,14 @@
 			"@type": "BlogPosting",
 			"headline": "[Angular] Angular Playground",
 			
-			"description": "&lt;p&gt;其實 Angular Playground 出來已經有好一段時間了，但是之前的環境設定會讓人懶得用。現在可以簡單的透過 &lt;code&gt;ng add angular-playground&lt;/code&gt; 的方式完成整體的環境設定，這麼方便不用就說不過去了。&lt;/p&gt;",
+			"description": "&lt;p&gt;其實 Angular Playground 出來已經有好一段時間了，但是之前的環境設定會讓人懶得用。現在可以簡單的透過 &lt;code&gt;ng add  angular-playground&lt;/code&gt; 的方式完成整體的環境設定，這麼方便不用就說不過去了。&lt;/p&gt;",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"http://blog.kevinyang.net/2018/12/22/ng-playground/"
 			},
 			"datePublished": "2018-12-22T13:26:45.000Z",
-			"dateModified": "2021-02-18T02:39:29.028Z",
+			"dateModified": "2021-02-18T04:09:34.905Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,7 +1848,7 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>其實 Angular Playground 出來已經有好一段時間了，但是之前的環境設定會讓人懶得用。現在可以簡單的透過 <code>ng add angular-playground</code> 的方式完成整體的環境設定，這麼方便不用就說不過去了。</p>
+			  		<p>其實 Angular Playground 出來已經有好一段時間了，但是之前的環境設定會讓人懶得用。現在可以簡單的透過 <code>ng add  angular-playground</code> 的方式完成整體的環境設定，這麼方便不用就說不過去了。</p>
 <a id="more"></a>
 <h1 id="簡介"><a class="header-anchor" href="#簡介"> </a>簡介</h1>
 <p>但什麼是 Angular Playground，如果你有聽過 React 的 Storybook ，那 Angular playground 也是要完成一樣的事情。簡單的說， Angular playground 提供一個乾淨的環境讓我們能就單一 Component 進行 UI 的測試。</p>
@@ -1885,9 +1885,9 @@ h6.categories {
 </ul>
 <h1 id="建立-sandbox"><a class="header-anchor" href="#建立-sandbox"> </a>建立 sandbox</h1>
 <p>既然能使用 <code>ng add</code> 的指令，playground 當然也提供了 schematics 的指令來建立 sandbox 檔案</p>
-<p><code>ng generate angular-playground:sandbox [path]/[component name]</code></p>
+<p><code> ng generate angular-playground:sandbox [path]/[component name]</code></p>
 <p>輸入這行指令就會根據所指定的 component 建立相對應的 sandbox 檔案，什麼是 sandbox 檔案，這個檔案的性質跟 spec 測試檔案性質一樣，只差在這裡並不寫讓任何的測試程式碼，只有測試環境的設定而已</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { sandboxOf } <span class="keyword">from</span> <span class="string">'angular-playground'</span>;</span><br><span class="line"><span class="keyword">import</span> { HelloWorldComponent } <span class="keyword">from</span> <span class="string">'../hello-world.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> sandboxOf(HelloWorldComponent)</span><br><span class="line">  .add(<span class="string">'default'</span>, {</span><br><span class="line">    template: <span class="string">`&lt;app-hello-world&gt;&lt;/app-hello-world&gt;`</span></span><br><span class="line">  });</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { sandboxOf } <span class="keyword">from</span> <span class="string">'angular-playground'</span>;</span><br><span class="line"><span class="keyword">import</span> { HelloWorldComponent } <span class="keyword">from</span> <span class="string">'../hello-world.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> sandboxOf(HelloWorldComponent)</span><br><span class="line">  .add(<span class="string">'default'</span>, {</span><br><span class="line">    template: <span class="string">`&lt;app-hello-world&gt;&lt;/app-hello-world&gt;`</span></span><br><span class="line">  });</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>一個基本的 sandbox 檔案大致上是長這個樣子的，會包含這些元素</p>
 <ol>
 <li>
@@ -1926,7 +1926,7 @@ h6.categories {
 <p>我先建立一個 <code>HelloWorldComponent</code> ，並建立相對應的 sandbox 檔案</p>
 <ul>
 <li>
-<p><code>ng g c hello-world</code> : 建立 HelloWorldComponent</p>
+<p><code>ng g c hello-world </code> : 建立 HelloWorldComponent</p>
 </li>
 <li>
 <p><code>ng g angular-playground:sandbox hello-world</code> : 為 HelloWorld 建立 sandbox 檔案</p>
@@ -1934,17 +1934,17 @@ h6.categories {
 <li>
 <p>執行 <code>npm run playground</code></p>
 <div class="amp-img-wrapper"><amp-img src="/2018/12/22/ng-playground/1545488873488.png" width="648" height="571" layout="responsive"></amp-img></div>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { sandboxOf } <span class="keyword">from</span> <span class="string">'angular-playground'</span>;</span><br><span class="line"><span class="keyword">import</span> { HelloWorldComponent } <span class="keyword">from</span> <span class="string">'./hello-world.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> sandboxOf(HelloWorldComponent)</span><br><span class="line">  .add(<span class="string">'default'</span>, {</span><br><span class="line">    template: <span class="string">`&lt;app-hello-world&gt;&lt;/app-hello-world&gt;`</span></span><br><span class="line">  })</span><br><span class="line">  .add(<span class="string">'with input'</span>, {</span><br><span class="line">    template: <span class="string">`&lt;app-hello-world [data]="data"&gt;&lt;/app-hello-world&gt;`</span>,</span><br><span class="line">    context: {</span><br><span class="line">      data: {</span><br><span class="line">        firstName: <span class="string">'Kevin'</span>,</span><br><span class="line">        lastName: <span class="string">'Yang'</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  });</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { sandboxOf } <span class="keyword">from</span> <span class="string">'angular-playground'</span>;</span><br><span class="line"><span class="keyword">import</span> { HelloWorldComponent } <span class="keyword">from</span> <span class="string">'./hello-world.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> sandboxOf(HelloWorldComponent)</span><br><span class="line">  .add(<span class="string">'default'</span>, {</span><br><span class="line">    template: <span class="string">`&lt;app-hello-world&gt;&lt;/app-hello-world&gt;`</span></span><br><span class="line">  })</span><br><span class="line">  .add(<span class="string">'with input'</span>, {</span><br><span class="line">    template: <span class="string">`&lt;app-hello-world [data]="data"&gt;&lt;/app-hello-world&gt;`</span>,</span><br><span class="line">    context: {</span><br><span class="line">      data: {</span><br><span class="line">        firstName: <span class="string">'Kevin'</span>,</span><br><span class="line">        lastName: <span class="string">'Yang'</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  });</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>當設定兩組場景時，命令視窗的選擇就可以看到這兩個場景，之後就可以透過 <code>↑</code>  /  <code>↓</code>  來選擇</p>
 <div class="amp-img-wrapper"><amp-img src="/2018/12/22/ng-playground/1545491052080.png" width="389" height="222" layout="responsive"></amp-img></div>
-</li>
-</ul>
 <h2 id="進階使用小技巧"><a class="header-anchor" href="#進階使用小技巧"> </a>進階使用小技巧</h2>
 <p>Component  的開發當然不可能這麼單純，如果有注入 Api Service 時，總不可能每次都去打真的 API，這時候就可以透過 provide DI 設定的技巧，有很多手法跟寫 spec 測試時是一樣的，簡單範例程式碼如下</p>
-  <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> sandboxOf(MyComponent, {</span><br><span class="line">    providers: [</span><br><span class="line">        { provide: myService, useValue: { doStuff: <span class="function"><span class="params">()</span> =&gt;</span> {} } }</span><br><span class="line">    ]</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> sandboxOf(MyComponent, {</span><br><span class="line">    providers: [</span><br><span class="line">        { <span class="attr">provide</span>: myService, <span class="attr">useValue</span>: { <span class="attr">doStuff</span>: <span class="function">() =&gt;</span> {} } }</span><br><span class="line">    ]</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="相關資源"><a class="header-anchor" href="#相關資源"> </a>相關資源</h1>
 <ul>
-<li><a href="http://www.angularplayground.it/" target="_blank" rel="noopener">Angular Playground</a></li>
+<li><a href="http://www.angularplayground.it/">Angular Playground</a></li>
+</ul>
+</li>
 </ul>
 
 			  		

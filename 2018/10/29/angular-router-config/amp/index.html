@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/10/29/angular-router-config/"
 			},
 			"datePublished": "2018-10-29T06:42:06.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.889Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,14 +1850,14 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Angular 的路由功能很強大，內建也提供很多路由上會用到的功能，但是你知道 <code>RouterModule</code> 有哪些選項可以設定嗎?</p>
 <a id="more"></a>
-<h1 id="routermodule-選項"><a class="header-anchor" href="#routermodule-選項"> </a>RouterModule 選項</h1>
-<h2 id="enabletracing"><a class="header-anchor" href="#enabletracing"> </a>enableTracing</h2>
+<h1 id="RouterModule-選項"><a class="header-anchor" href="#RouterModule-選項"> </a>RouterModule 選項</h1>
+<h2 id="enableTracing"><a class="header-anchor" href="#enableTracing"> </a>enableTracing</h2>
 <p><code>enabledTracing</code> 可以開啟路由變更時的所有事件，並 console.log 出來，設定方式是</p>
 <p><code>enabledTracking: true</code></p>
-<h2 id="usehash"><a class="header-anchor" href="#usehash"> </a>useHash</h2>
+<h2 id="useHash"><a class="header-anchor" href="#useHash"> </a>useHash</h2>
 <p>有時候主機環境不允許我們設定 rewrite URL 規則時，就必須使用 hash 的方式來呈現網址的變化，設定方式是</p>
 <p><code>useHash: true</code></p>
-<h2 id="initialnavigation"><a class="header-anchor" href="#initialnavigation"> </a>initialNavigation</h2>
+<h2 id="initialNavigation"><a class="header-anchor" href="#initialNavigation"> </a>initialNavigation</h2>
 <p>設定初始路由瀏覽是否要開啟，設定方式</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">initialNavigation:  true | false | 'enabled' | 'disabled' | 'legacy_enabled' | 'legacy_disabled';</span><br></pre></td></tr></tbody></table></figure>
 <ul>
@@ -1865,60 +1865,60 @@ h6.categories {
 <li><code>enabled</code>: 在 root component 建立前，會先開始初始瀏覽事件，在初始瀏覽事件未完成前，整個啟動流程會被 block 住</li>
 <li><code>disabled</code>: initial navigation 不會被執行，但是監聽 location 會在 root component 建立前設定好</li>
 </ul>
-<h2 id="errorhandler"><a class="header-anchor" href="#errorhandler"> </a>errorHandler</h2>
+<h2 id="errorHandler"><a class="header-anchor" href="#errorHandler"> </a>errorHandler</h2>
 <p>可以指定路由發生錯誤時，應該要如何處理的，設定自己的錯誤處理程序</p>
 <p><code>errorHandler: ErrorHandler</code></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">treatCertainErrorsAsCancelations</span>(<span class="params">error</span>) </span>{ </span><br><span class="line">    <span class="keyword">if</span> (error isntanceof CancelException) {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">//cancelation </span></span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">		<span class="keyword">throw</span> error; </span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>({</span><br><span class="line">  imports: [RouterModule.forRoot(ROUTES, {</span><br><span class="line">      errorHandler: treatCertainErrorsAsCancelations</span><br><span class="line">  })]</span><br><span class="line">})</span><br><span class="line"><span class="keyword">class</span> MailModule {}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="preloadingstrategy"><a class="header-anchor" href="#preloadingstrategy"> </a>preloadingStrategy</h2>
-<p>設定 preloading 策略，針對延遲載入模組的相關處理動做，詳細細節可以參閱 <a href="https://angular.io/api/router/PreloadingStrategy" target="_blank" rel="noopener">PreloadingStrategy</a></p>
-<h2 id="onsameurlnavigation"><a class="header-anchor" href="#onsameurlnavigation"> </a>onSameUrlNavigation</h2>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">treatCertainErrorsAsCancelations</span>(<span class="params">error</span>) </span>{ </span><br><span class="line">    <span class="keyword">if</span> (error isntanceof CancelException) {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">//cancelation </span></span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">		<span class="keyword">throw</span> error; </span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>({</span><br><span class="line">  imports: [RouterModule.forRoot(ROUTES, {</span><br><span class="line">      errorHandler: treatCertainErrorsAsCancelations</span><br><span class="line">  })]</span><br><span class="line">})</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MailModule</span> </span>{}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="preloadingStrategy"><a class="header-anchor" href="#preloadingStrategy"> </a>preloadingStrategy</h2>
+<p>設定 preloading 策略，針對延遲載入模組的相關處理動做，詳細細節可以參閱 <a href="https://angular.io/api/router/PreloadingStrategy">PreloadingStrategy</a></p>
+<h2 id="onSameUrlNavigation"><a class="header-anchor" href="#onSameUrlNavigation"> </a>onSameUrlNavigation</h2>
 <p>當瀏覽到相同網址時的處理行為，設定方式</p>
 <p><code>onSameUrlNavigation: 'reload' | 'ignore'</code></p>
 <p>預設的行為是當遇到相同網址時，並不會重新觸發重整動作，當有需要重整動作時，可以設定為 <code>reload</code></p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Page2Component <span class="keyword">implements</span> OnInit, OnDestroy {</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> router: Router</span>) {    </span><br><span class="line">    <span class="keyword">this</span>.router.events.subscribe(<span class="function">(<span class="params">event</span>) =&gt;</span> {</span><br><span class="line">      <span class="keyword">if</span> (event <span class="keyword">instanceof</span> NavigationEnd) {</span><br><span class="line">        <span class="built_in">console</span>.log(event);</span><br><span class="line">        <span class="comment">// when onSameUrlNavigation: 'reload'，會重新觸發 router event</span></span><br><span class="line">      }</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  ngOnInit() {</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'page2 init'</span>)</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  ngOnDestroy() {</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'page2 destroy'</span>)</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Page2Component</span> <span class="title">implements</span> <span class="title">OnInit</span>, <span class="title">OnDestroy</span> </span>{</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"><span class="keyword">private</span> router: Router</span>)</span> {    </span><br><span class="line">    <span class="built_in">this</span>.router.events.subscribe(<span class="function">(<span class="params">event</span>) =&gt;</span> {</span><br><span class="line">      <span class="keyword">if</span> (event <span class="keyword">instanceof</span> NavigationEnd) {</span><br><span class="line">        <span class="built_in">console</span>.log(event);</span><br><span class="line">        <span class="comment">// when onSameUrlNavigation: 'reload'，會重新觸發 router event</span></span><br><span class="line">      }</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> {</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'page2 init'</span>)</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">ngOnDestroy</span>(<span class="params"></span>)</span> {</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'page2 destroy'</span>)</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>這部分需要留意的是，只有 router 事件會被重新執行一次，而非整個 Component 被 destroy 掉在重新建立</li>
 </ul>
-<h2 id="scrollpositionrestoration"><a class="header-anchor" href="#scrollpositionrestoration"> </a>scrollPositionRestoration</h2>
-<p><code>scrollPositionRestoration?: 'disabled'|'enabled'|'top';</code></p>
+<h2 id="scrollPositionRestoration"><a class="header-anchor" href="#scrollPositionRestoration"> </a>scrollPositionRestoration</h2>
+<p><code> scrollPositionRestoration?: 'disabled'|'enabled'|'top';</code></p>
 <p>當開啟時，在操作瀏覽器上下頁時，會保留之前瀏覽畫面的位置</p>
-<h2 id="anchorscrolling"><a class="header-anchor" href="#anchorscrolling"> </a>anchorScrolling</h2>
+<h2 id="anchorScrolling"><a class="header-anchor" href="#anchorScrolling"> </a>anchorScrolling</h2>
 <p><code>anchorScrolling: 'disabled': 'enabled'</code></p>
 <p>目前預設值為 <code>disabled</code>，當開啟時，會有 anchor 的效果</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">"/page2"</span> [<span class="attr">fragment</span>]=<span class="string">"'a'"</span>&gt;</span>Page 2 with anchor A<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>這樣的連結會跳到 page2 頁 <code>id='2'</code> 的地方</p>
-<h2 id="scrolloffset"><a class="header-anchor" href="#scrolloffset"> </a>scrollOffset</h2>
+<h2 id="scrollOffset"><a class="header-anchor" href="#scrollOffset"> </a>scrollOffset</h2>
 <p>設定 scroll offset 的值，可以給予數字，或是 function</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrollOffset?: [<span class="built_in">number</span>, <span class="built_in">number</span>]|<span class="function">(<span class="params">(<span class="params"></span>) =&gt; [<span class="built_in">number</span>, <span class="built_in">number</span>]</span>);</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrollOffset?: [<span class="built_in">number</span>, <span class="built_in">number</span>]|(<span class="function">() =&gt;</span> [<span class="built_in">number</span>, <span class="built_in">number</span>]);</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>[number, number] =&gt; [left, top]</li>
 </ul>
-<p>這背後其實是去執行 <a href="https://angular.io/api/common/ViewportScroller" target="_blank" rel="noopener">ViewportScroller</a> 的 <code>setOffset</code> 的方法，當進行 <code>scrollToElement</code> 時，會將設定的 offset 值帶入進算</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> scrollToElement(el: <span class="built_in">any</span>): <span class="built_in">void</span> {</span><br><span class="line">  <span class="keyword">const</span> rect = el.getBoundingClientRect();</span><br><span class="line">  <span class="keyword">const</span> left = rect.left + <span class="keyword">this</span>.window.pageXOffset;</span><br><span class="line">  <span class="keyword">const</span> top = rect.top + <span class="keyword">this</span>.window.pageYOffset;</span><br><span class="line">  <span class="keyword">const</span> offset = <span class="keyword">this</span>.offset();</span><br><span class="line">  <span class="keyword">this</span>.window.scrollTo(left - offset[<span class="number">0</span>], top - offset[<span class="number">1</span>]);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="paramsinheritancestrategy"><a class="header-anchor" href="#paramsinheritancestrategy"> </a>paramsInheritanceStrategy</h2>
+<p>這背後其實是去執行 <a href="https://angular.io/api/common/ViewportScroller">ViewportScroller</a> 的 <code>setOffset</code> 的方法，當進行 <code>scrollToElement</code> 時，會將設定的 offset 值帶入進算</p>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> scrollToElement(el: <span class="built_in">any</span>): <span class="built_in">void</span> {</span><br><span class="line">  <span class="keyword">const</span> rect = el.getBoundingClientRect();</span><br><span class="line">  <span class="keyword">const</span> left = rect.left + <span class="built_in">this</span>.window.pageXOffset;</span><br><span class="line">  <span class="keyword">const</span> top = rect.top + <span class="built_in">this</span>.window.pageYOffset;</span><br><span class="line">  <span class="keyword">const</span> offset = <span class="built_in">this</span>.offset();</span><br><span class="line">  <span class="built_in">this</span>.window.scrollTo(left - offset[<span class="number">0</span>], top - offset[<span class="number">1</span>]);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="paramsInheritanceStrategy"><a class="header-anchor" href="#paramsInheritanceStrategy"> </a>paramsInheritanceStrategy</h2>
 <p><code>paramsInheritanceStrategy?: 'emptyOnly'|'always';</code></p>
 <p>設定路由 params 、data、resolve data 的合併方式</p>
 <ul>
 <li>
 <p><code>emptyOnly</code> 預設值，只會繼承沒有 path 或是 component 設定的路由</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      path: <span class="string">'page3/:id'</span>, children: [</span><br><span class="line">        { path: <span class="string">'b'</span>, component: Page3Component } <span class="comment">// 取得到 id</span></span><br><span class="line">      ]</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      path: <span class="string">'page3/:id'</span>, </span><br><span class="line">      component: EmptyComponent,</span><br><span class="line">      children: [</span><br><span class="line">        { path: <span class="string">'b'</span>, component: Page3Component } <span class="comment">// 取不到 id</span></span><br><span class="line">      ]</span><br><span class="line">    },</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      path: <span class="string">'page3/:id'</span>, <span class="attr">children</span>: [</span><br><span class="line">        { <span class="attr">path</span>: <span class="string">'b'</span>, <span class="attr">component</span>: Page3Component } <span class="comment">// 取得到 id</span></span><br><span class="line">      ]</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      path: <span class="string">'page3/:id'</span>, </span><br><span class="line">      component: EmptyComponent,</span><br><span class="line">      children: [</span><br><span class="line">        { <span class="attr">path</span>: <span class="string">'b'</span>, <span class="attr">component</span>: Page3Component } <span class="comment">// 取不到 id</span></span><br><span class="line">      ]</span><br><span class="line">    },</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p><code>always</code> 一律繼承</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      path: <span class="string">'page3/:id'</span>, </span><br><span class="line">      component: EmptyComponent,</span><br><span class="line">      children: [</span><br><span class="line">        { path: <span class="string">'b'</span>, component: Page3Component } <span class="comment">// 取得到 id</span></span><br><span class="line">      ]</span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">      path: <span class="string">'page3/:id'</span>, </span><br><span class="line">      component: EmptyComponent,</span><br><span class="line">      children: [</span><br><span class="line">        { <span class="attr">path</span>: <span class="string">'b'</span>, <span class="attr">component</span>: Page3Component } <span class="comment">// 取得到 id</span></span><br><span class="line">      ]</span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
-<h2 id="urlupdatestrategy"><a class="header-anchor" href="#urlupdatestrategy"> </a>urlUpdateStrategy</h2>
+<h2 id="urlUpdateStrategy"><a class="header-anchor" href="#urlUpdateStrategy"> </a>urlUpdateStrategy</h2>
 <p>何時更新瀏覽器 URL</p>
-<p><code>urlUpdateStrategy?: 'deferred'|'eager';</code></p>
+<p><code>  urlUpdateStrategy?: 'deferred'|'eager';</code></p>
 <ul>
 <li>deferred 預設值，當路由事件跑完後才會更新瀏覽器網址</li>
 <li><code>eager</code> 在事前開始前更新瀏覽器網址</li>
 </ul>
-<h2 id="malformedurierrorhandler"><a class="header-anchor" href="#malformedurierrorhandler"> </a>malformedUriErrorHandler</h2>
+<h2 id="malformedUriErrorHandler"><a class="header-anchor" href="#malformedUriErrorHandler"> </a>malformedUriErrorHandler</h2>
 <p>當網址瀏覽發生錯誤時，可以自訂 redirect 網址</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">malformedUriErrorHandler:</span><br><span class="line">     <span class="comment">// redirects the user to `/invalid-uri`</span></span><br><span class="line">     (error: <span class="built_in">URIError</span>, urlSerializer: UrlSerializer, url: <span class="built_in">string</span>) =&gt; urlSerializer.parse(<span class="string">'/invalid-uri'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">malformedUriErrorHandler:</span><br><span class="line">     <span class="comment">// redirects the user to `/invalid-uri`</span></span><br><span class="line">     (error: <span class="built_in">URIError</span>, <span class="attr">urlSerializer</span>: UrlSerializer, <span class="attr">url</span>: <span class="built_in">string</span>) =&gt; urlSerializer.parse(<span class="string">'/invalid-uri'</span>)</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="亮點設定"><a class="header-anchor" href="#亮點設定"> </a>亮點設定</h1>
 <ol>
 <li>onSameUrlNavigation</li>
@@ -1930,13 +1930,13 @@ h6.categories {
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
 <li>
-<p><a href="https://stackblitz.com/edit/angular-router-option" target="_blank" rel="noopener">範例程式碼</a></p>
+<p><a href="https://stackblitz.com/edit/angular-router-option">範例程式碼</a></p>
 </li>
 <li>
-<p><a href="https://github.com/angular/angular/blob/master/packages/router/src/router_module.ts" target="_blank" rel="noopener">Angular Source Code</a></p>
+<p><a href="https://github.com/angular/angular/blob/master/packages/router/src/router_module.ts">Angular Source Code</a></p>
 </li>
 <li>
-<p><a href="https://blog.ninja-squad.com/2018/07/26/what-is-new-angular-6.1/" target="_blank" rel="noopener">What’s new in Angular 6.1?</a></p>
+<p><a href="https://blog.ninja-squad.com/2018/07/26/what-is-new-angular-6.1/">What’s new in Angular 6.1?</a></p>
 </li>
 </ul>
 

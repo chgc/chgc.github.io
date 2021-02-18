@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/11/11/angular-chaos-html5mode/"
 			},
 			"datePublished": "2014-11-11T18:32:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1844,7 +1844,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Angular裡面有一個方法可以把# (hash tag) 給拿掉，那就是將html5mode開啟</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$locationProvider.html5Mode(true).hashPrefix('!')</span><br><span class="line"></span><br><span class="line">// 這應該會要求設定&lt;base href="/"&gt;</span><br></pre></td></tr></tbody></table></figure>
-<p>但是如果angular <a href="http://xn--routeasp-v86nf61j5rd02h.net" target="_blank" rel="noopener">route是架構在asp.net</a> mvc上面，那就會有route打架的情形發生, 或著reload page會出現頁面錯誤的訊息
+<p>但是如果angular <a href="http://xn--routeasp-v86nf61j5rd02h.net">route是架構在asp.net</a> mvc上面，那就會有route打架的情形發生, 或著reload page會出現頁面錯誤的訊息
 網路上面的資訊也有很多種版本，以下我也提供一下我的版本</p>
 <p>主要重點, asp.net的routeConfig裡面也要同時間定義angular route的部份，但是controller/action是指到index page</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">routes.MapRoute("member_edit",</span><br><span class="line">             "member/edit/{.Catchall}",</span><br><span class="line">             new { controller = "Home", action = "Index" },</span><br><span class="line">             namespaces: new[] { "Demo.Areas.member.Controllers" });</span><br></pre></td></tr></tbody></table></figure>

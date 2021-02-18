@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/06/05/angular2-ChangeDetectionStrategy/"
 			},
 			"datePublished": "2016-06-05T02:30:35.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Angular2裡面偵測改變的方法有全新的方式，用來提升整體的效能，那針對Component對於偵測改變有一個屬性可以設定，那就是透過 <code>ChangeDetectionStrategy</code></p>
 <a id="more"></a>
-<p>根據<a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html" target="_blank" rel="noopener">官方文件</a>, ChangeDetectionStrategy有幾種方式</p>
+<p>根據<a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html">官方文件</a>, ChangeDetectionStrategy有幾種方式</p>
 <ol>
 <li>CheckOnce</li>
 <li>Checked</li>
@@ -1860,25 +1860,25 @@ h6.categories {
 <li>Default</li>
 </ol>
 <p>這篇只專注於Default與OnPush這兩種</p>
-<h1 id="change-detection-strategy"><a class="header-anchor" href="#change-detection-strategy"> </a>Change Detection Strategy</h1>
-<h2 id="default"><a class="header-anchor" href="#default"> </a>Default</h2>
+<h1 id="Change-Detection-Strategy"><a class="header-anchor" href="#Change-Detection-Strategy"> </a>Change Detection Strategy</h1>
+<h2 id="Default"><a class="header-anchor" href="#Default"> </a>Default</h2>
 <p>Example Code</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">movie</span> [<span class="attr">title</span>]=<span class="string">"title"</span> [<span class="attr">actor</span>]=<span class="string">"actor"</span>&gt;</span><span class="tag">&lt;/<span class="name">movie</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: <span class="built_in">string</span> = <span class="string">"Movie 1"</span>;</span><br><span class="line">actor: Actor =<span class="keyword">new</span> Actor( <span class="string">'Bruce'</span>, <span class="string">'Willis'</span>);</span><br></pre></td></tr></tbody></table></figure>
 <p>針對movie這個component, 它接收兩種值，一個是string型別的title, 另外一個是Actor型別的物件。</p>
 <p>Movie Component會在什麼時機點更新要顯示的內容呢? 如果 ChangeDetectionStrategy是設定在Default的時候，那就是只要傳入的值有異動時，就更新顯示的內容。換句話說, 即使修改actor物件裡面的property, 也會觸發。</p>
-<h2 id="onpush"><a class="header-anchor" href="#onpush"> </a>onPush</h2>
+<h2 id="onPush"><a class="header-anchor" href="#onPush"> </a>onPush</h2>
 <p>可是換到onPush的時候就有點不一樣了，他不會將修改actor屬性視為值的異動，只會當一個全新的Actor物件被建立時，才會觸發更新。</p>
 <p>這樣的好處是，減少detect Dirty Change的次數. 就預設的方式，如果我的Actor物件裡面有很多屬性，那當每一次其中一個屬性的值被異動時，都會觸發畫面的更新，那就太累了。而onPush是會等一個全新物件被建立時，才會出發。所以只要用要更新的值去建立一個新的物件就好了，這樣子只會被觸發一次。當然效能就會大大的提升</p>
-<h1 id="immutable"><a class="header-anchor" href="#immutable"> </a>Immutable</h1>
-<p>Immuatable是另外一個議題。他的主要精神是。每一次的動作，都會產生一個新的物件，並不會直接修改原始物件內的值，或是使用參址的方式處理資料. 更詳細的內容可以參閱<a href="http://reactivex.io/rxjs/" target="_blank" rel="noopener">RxJS</a>和<a href="https://facebook.github.io/immutable-js/" target="_blank" rel="noopener">Immutable</a></p>
+<h1 id="Immutable"><a class="header-anchor" href="#Immutable"> </a>Immutable</h1>
+<p>Immuatable是另外一個議題。他的主要精神是。每一次的動作，都會產生一個新的物件，並不會直接修改原始物件內的值，或是使用參址的方式處理資料. 更詳細的內容可以參閱<a href="http://reactivex.io/rxjs/">RxJS</a>和<a href="https://facebook.github.io/immutable-js/">Immutable</a></p>
 <h1 id="參考文件"><a class="header-anchor" href="#參考文件"> </a>參考文件</h1>
 <ul>
 <li>
-<p><a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html" target="_blank" rel="noopener">ChangeDetectionStrategy</a></p>
+<p><a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html">ChangeDetectionStrategy</a></p>
 </li>
 <li>
-<p><a href="http://ngcourse.rangle.io/handout/change-detection/change_detection_strategy_onpush.html" target="_blank" rel="noopener">Change Detection Strategy: OnPush</a></p>
+<p><a href="http://ngcourse.rangle.io/handout/change-detection/change_detection_strategy_onpush.html">Change Detection Strategy: OnPush</a></p>
 <p>​</p>
 </li>
 </ul>

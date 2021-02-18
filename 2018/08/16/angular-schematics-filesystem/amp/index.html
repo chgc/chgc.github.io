@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/"
 			},
 			"datePublished": "2018-08-16T01:02:11.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.889Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1860,7 +1860,7 @@ h6.categories {
 <li>Rule： 是描述要如何改變 <code>Tree</code>，所以 <code>Rule</code> 會回傳一個包含改變規則的 <code>Tree</code></li>
 </ul>
 <h2 id="方法"><a class="header-anchor" href="#方法"> </a>方法</h2>
-<h3 id="tree"><a class="header-anchor" href="#tree"> </a>Tree</h3>
+<h3 id="Tree"><a class="header-anchor" href="#Tree"> </a>Tree</h3>
 <p>當第一次建立空的 schematics 時，會看到這一段程式碼</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">blogdemo</span>(<span class="params">options: <span class="built_in">any</span></span>): <span class="title">Rule</span> </span>{</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">tree: Tree, _context: SchematicContext</span>) =&gt;</span> {</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>這裡取得的 <code>Tree</code> 會是當下的檔案系統，所以會包含目前目錄下的所有檔案與資料夾，當然也可以針對那些檔案去做操作，可使用的方法有</p>
@@ -1871,7 +1871,7 @@ h6.categories {
 <li><code>MergeStrategy</code> 有以下選項
 <ul>
 <li><code>AllowOverwriteConflict</code></li>
-<li><code>AllowCreationConflict</code></li>
+<li><code>AllowCreationConflict </code></li>
 <li><code>AllowDeleteConflict</code></li>
 <li><code>Default</code></li>
 <li><code>Error</code>：如果2個檔案存在於相同的位置就會丟出錯誤訊息</li>
@@ -1911,7 +1911,7 @@ h6.categories {
 </li>
 </ul>
 <p>基本上，屬於 <code>Tree</code> 型別的資料，都有上述的方法可以使用。在操作檔案系統時，<code>Tree</code> 是一個很重要的觀念，可以想像程他跟 Git 的 commit history 有雷同的運作方式。而所有的異動與規則，最終都得回到 Tree 上</p>
-<h3 id="source"><a class="header-anchor" href="#source"> </a>Source</h3>
+<h3 id="Source"><a class="header-anchor" href="#Source"> </a>Source</h3>
 <p>Source 如上頭所介紹的，是用來建立一個全新空的檔案系統，有以下的方法可以產生 Source</p>
 <ul>
 <li>
@@ -1938,29 +1938,29 @@ h6.categories {
 </ul>
 <p>這邊會發現我在 <code>source</code> 物件後面加上 <code>(context)</code> ，這個動作是將 <code>source</code> 型別進行處理並會回傳 <code>Tree | Observable&lt;Tree&gt;</code> 型別的資料，之後的操作就跟操作 <code>Tree</code> 是一模一樣的</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Source = <span class="function">(<span class="params">context: SchematicContext</span>) =&gt;</span> Tree | Observable&lt;Tree&gt;;</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="rule"><a class="header-anchor" href="#rule"> </a>Rule</h3>
+<h3 id="Rule"><a class="header-anchor" href="#Rule"> </a>Rule</h3>
 <ul>
 <li><code>chain(rules: Rule[]): Rule</code> ： 將 Rule 串接在一起</li>
-<li><code>mergeWith(source: Source, strategy: MergeStrategy = MergeStrategy.Default): Rule</code> 將 <code>source</code> 與 <code>Tree</code> 做合併 (直接修改)</li>
+<li><code>mergeWith(source: Source, strategy: MergeStrategy = MergeStrategy.Default): Rule </code> 將 <code>source</code> 與 <code>Tree</code> 做合併 (直接修改)</li>
 <li><code>noop() : Rule</code>：回傳沒有任何動作的 <code>Rule</code></li>
-<li><code>filter(predicate: FilePredicate&lt;boolean&gt;): Rule</code>：過濾規則</li>
-<li><code>branchAndMerge(rule: Rule, strategy = MergeStrategy.Default): Rule</code>：與目前的 Tree (複製) 合併並回傳一份新的 Tree</li>
+<li><code>filter(predicate: FilePredicate&lt;boolean&gt;): Rule </code>：過濾規則</li>
+<li><code>branchAndMerge(rule: Rule, strategy = MergeStrategy.Default): Rule </code>：與目前的 Tree (複製) 合併並回傳一份新的 Tree</li>
 <li><code>partitionApplyMerge(predicate: FilePredicate&lt;boolean&gt;, ruleYes: Rule , ruleNo?: Rule): Rule</code>：根據條件執行對應的 <code>Rule</code></li>
-<li><code>forEach(operator: FileOperator): Rule</code>：批次直型傳進的 <code>FileOperator</code></li>
-<li><code>move(from: string, to?: string): Rule</code>：移動檔案至資料夾</li>
-<li><code>rename(match: FilePredicate&lt;boolean&gt;, to: FilePredicate&lt;string&gt;): Rule</code>：將符合條件的檔案更換名稱</li>
-<li><code>externalSchematic&lt;OptionT extends object&gt;(collectionName: string, schematicName: string, options: OptionT): Rule</code>：執行第三方 schematics 的命令</li>
-<li><code>schematic&lt;OptionT extends object&gt;(schematicName: string, options: OptionT): Rule</code>：執行其他的 schematics 命令</li>
-<li><code>template&lt;T&gt;(options: T): Rule</code>：樣板套用，包含檔案內容與檔名路徑的部分轉換</li>
-<li><code>pathTemplate&lt;T extends PathTemplateData&gt;(options: T): Rule</code>：轉換檔名路徑至對應的內容</li>
-<li><code>contentTemplate&lt;T&gt;(options: T): Rule</code>：轉換檔名內容的變數至對應的內容</li>
+<li><code>forEach(operator: FileOperator): Rule </code>：批次直型傳進的 <code>FileOperator </code></li>
+<li><code>move(from: string, to?: string): Rule </code>：移動檔案至資料夾</li>
+<li><code>rename(match: FilePredicate&lt;boolean&gt;, to: FilePredicate&lt;string&gt;): Rule </code>：將符合條件的檔案更換名稱</li>
+<li><code>externalSchematic&lt;OptionT extends object&gt;(collectionName: string, schematicName: string, options: OptionT): Rule </code>：執行第三方 schematics 的命令</li>
+<li><code>schematic&lt;OptionT extends object&gt;(schematicName: string, options: OptionT): Rule </code>：執行其他的 schematics 命令</li>
+<li><code>template&lt;T&gt;(options: T): Rule </code>：樣板套用，包含檔案內容與檔名路徑的部分轉換</li>
+<li><code>pathTemplate&lt;T extends PathTemplateData&gt;(options: T): Rule </code>：轉換檔名路徑至對應的內容</li>
+<li><code>contentTemplate&lt;T&gt;(options: T): Rule </code>：轉換檔名內容的變數至對應的內容</li>
 </ul>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Rule = <span class="function">(<span class="params">tree: Tree, context: SchematicContext</span>) =&gt;</span> Tree | Observable&lt;Tree&gt; | Rule | <span class="built_in">void</span>;</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
 <p><code>Tree</code>、<code>source</code> 與 <code>Rule</code> 間的關係其實很密切，將這三者的控制弄熟之後，就可以寫出功能很強大的 schematics，而不是單純的從別人的 schematics 複製貼上，卻不懂每一個動作的意義。</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://github.com/angular/angular-cli/blob/master/packages/angular_devkit/schematics/README.md" target="_blank" rel="noopener">Schematics</a></li>
+<li><a href="https://github.com/angular/angular-cli/blob/master/packages/angular_devkit/schematics/README.md">Schematics</a></li>
 </ul>
 
 			  		

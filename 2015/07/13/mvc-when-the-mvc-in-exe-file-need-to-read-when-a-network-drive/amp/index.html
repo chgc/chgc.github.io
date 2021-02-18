@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/07/13/mvc-when-the-mvc-in-exe-file-need-to-read-when-a-network-drive/"
 			},
 			"datePublished": "2015-07-13T03:15:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1846,7 +1846,7 @@ h6.categories {
 但是該執行檔又需要讀取網路磁碟機的檔案。這IIS就會卡住了。不管權限怎麼設定都過不去。</p>
 <p>所以只好繞路解決了. 解法是: 建立另外一個selfhost的webapi (console mode), 在該api下執行該執行檔就可以正常運作了，因為不是透過IIS. 然後網站去呼叫那個自行運作的webapi取回結果.</p>
 <p>雖然有點麻煩，但是至少解決問題了。(浪費我兩天的生命)</p>
-<p>關於selft的webapi建立方式，請參考<a href="http://www.asp.net/web-api/overview/older-versions/self-host-a-web-api" target="_blank" rel="noopener">webapi selfhost</a></p>
+<p>關於selft的webapi建立方式，請參考<a href="http://www.asp.net/web-api/overview/older-versions/self-host-a-web-api">webapi selfhost</a></p>
 
 			  		
 			  		<!-- google Adsense -->

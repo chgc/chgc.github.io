@@ -64,7 +64,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/06/02/angular2-angularfire2/"
 			},
 			"datePublished": "2016-06-02T07:44:30.000Z",
-			"dateModified": "2021-02-18T02:39:29.004Z",
+			"dateModified": "2021-02-18T04:09:34.881Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1861,7 +1861,7 @@ h6.categories {
 <h1 id="前置"><a class="header-anchor" href="#前置"> </a>前置</h1>
 <p>Demo的專案都是以Angular CLI所產生出來的架構</p>
 <h1 id="安裝"><a class="header-anchor" href="#安裝"> </a>安裝</h1>
-<p><a href="https://github.com/angular/angularfire2/blob/master/docs/1-install-and-setup.md" target="_blank" rel="noopener">安裝文件</a></p>
+<p><a href="https://github.com/angular/angularfire2/blob/master/docs/1-install-and-setup.md">安裝文件</a></p>
 <h2 id="修正項目"><a class="header-anchor" href="#修正項目"> </a>修正項目</h2>
 <p>開啟 <code>angular-cli-build.js</code> 檔案，這修正是為了build for production時會產生的錯誤</p>
 <figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'angularfire2/**/*.js'</span>,</span><br><span class="line"> 修改成</span><br><span class="line"><span class="string">'angularfire2/**/*.+(js|js.map)'</span>,</span><br></pre></td></tr></tbody></table></figure>
@@ -1872,16 +1872,16 @@ h6.categories {
 <p>這段設定碼可以透過新版的console畫面裡取得</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm8.staticflickr.com/7452/27614778484_7de85115f2_o.png" width="1098" height="562" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://farm8.staticflickr.com/7507/28126334652_1dbd045533_o.png" width="853" height="546" layout="responsive"></amp-img></div>
-<h3 id="app-component-js"><a class="header-anchor" href="#app-component-js"> </a>App.Component.js</h3>
+<h3 id="App-Component-js"><a class="header-anchor" href="#App-Component-js"> </a>App.Component.js</h3>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { AngularFire, FirebaseListObservable } <span class="keyword">from</span> <span class="string">'angularfire2'</span>;</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> AppComponent{</span><br><span class="line">   items: FirebaseListObservable&lt;<span class="built_in">any</span>[]&gt;;</span><br><span class="line">   <span class="keyword">constructor</span>(<span class="params">af: AngularFire</span>) {</span><br><span class="line">       <span class="keyword">this</span>.items = af.database.list(<span class="string">'/items'</span>);</span><br><span class="line">   }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span></span>{</span><br><span class="line">   items: FirebaseListObservable&lt;<span class="built_in">any</span>[]&gt;;</span><br><span class="line">   <span class="function"><span class="title">constructor</span>(<span class="params">af: AngularFire</span>)</span> {</span><br><span class="line">       <span class="built_in">this</span>.items = af.database.list(<span class="string">'/items'</span>);</span><br><span class="line">   }</span><br><span class="line">} </span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>AngularFire所取回的list是Observable的物件，所以也可以套用RxJS的Operator. 基本上Firebase的運作方式是沒有改變的</p>
 <p>由於<code>this.items</code>屬Obserable，在畫面上要顯示時，可以透過 <code>async</code>幫忙來簡化程式碼</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngFor</span>=<span class="string">"let item in items | async"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>如果不想要用<code>async</code>的話，那在程式碼裡面就需要加上<code>subscribe(....)</code>將AngularFire所取回的資料放到變數裡</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.sub = af.database.list(<span class="string">'/items'</span>);</span><br><span class="line"><span class="keyword">this</span>.sub.subscribe(<span class="function"><span class="params">data</span>=&gt;</span>{</span><br><span class="line">  <span class="keyword">this</span>.items = data;</span><br><span class="line">},<span class="function"><span class="params">err</span>=&gt;</span>{</span><br><span class="line"> ... </span><br><span class="line">},<span class="function"><span class="params">()</span>=&gt;</span>{</span><br><span class="line">  <span class="comment">//when complete</span></span><br><span class="line">  ....</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.sub = af.database.list(<span class="string">'/items'</span>);</span><br><span class="line"><span class="built_in">this</span>.sub.subscribe(<span class="function"><span class="params">data</span>=&gt;</span>{</span><br><span class="line">  <span class="built_in">this</span>.items = data;</span><br><span class="line">},<span class="function"><span class="params">err</span>=&gt;</span>{</span><br><span class="line"> ... </span><br><span class="line">},<span class="function">()=&gt;</span>{</span><br><span class="line">  <span class="comment">//when complete</span></span><br><span class="line">  ....</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngFor</span>=<span class="string">"let item in items"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 id="api"><a class="header-anchor" href="#api"> </a>API</h2>
+<h2 id="API"><a class="header-anchor" href="#API"> </a>API</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1905,7 +1905,7 @@ h6.categories {
 </tbody>
 </table></div>
 <p>上述的三種Method都會回傳Promise, 所以後續的接法為 then((data)=&gt;{…}).catch((err)=&gt;{…})</p>
-<h2 id="authentication"><a class="header-anchor" href="#authentication"> </a>Authentication</h2>
+<h2 id="Authentication"><a class="header-anchor" href="#Authentication"> </a>Authentication</h2>
 <p>FireBase提供多種使用者認證的方式，從基本的Email/password, 到各個大型的OAuth
 </p><div class="amp-img-wrapper"><amp-img src="https://farm8.staticflickr.com/7500/27341215391_a7899fa7ea_o.png" width="1071" height="423" layout="responsive"></amp-img></div>
 <p>在程式裡面也可以同時間存在多種登入的方式，只要配合後台的設定</p>
@@ -1917,9 +1917,9 @@ h6.categories {
 <p>AngularFire2在使用上非常的直覺，彈性也很大。先不論Firebase這個強大的後端服務，就前端可以搭配RxJS的操作，就讓人覺得很快樂。</p>
 <h1 id="參考文件"><a class="header-anchor" href="#參考文件"> </a>參考文件</h1>
 <ul>
-<li><a href="https://github.com/angular/angularfire2" target="_blank" rel="noopener">Angularfire2</a></li>
-<li><a href="https://www.firebase.com/" target="_blank" rel="noopener">Firebase</a></li>
-<li><a href="http://reactivex.io/rxjs/" target="_blank" rel="noopener">RxJS</a></li>
+<li><a href="https://github.com/angular/angularfire2">Angularfire2</a></li>
+<li><a href="https://www.firebase.com/">Firebase</a></li>
+<li><a href="http://reactivex.io/rxjs/">RxJS</a></li>
 </ul>
 
 			  		

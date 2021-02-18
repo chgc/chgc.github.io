@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/02/24/nx-create-lib/"
 			},
 			"datePublished": "2018-02-24T10:10:06.000Z",
-			"dateModified": "2021-02-18T02:39:29.008Z",
+			"dateModified": "2021-02-18T04:09:34.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1876,7 +1876,7 @@ h6.categories {
 <p><strong>parent-module</strong>：將建立的 Library import 到某一個 NgModule 內，需指定所要注入的 NgModule 實際的檔案位置</p>
 </li>
 </ul>
-<h1 id="建立-library"><a class="header-anchor" href="#建立-library"> </a>建立 Library</h1>
+<h1 id="建立-Library"><a class="header-anchor" href="#建立-Library"> </a>建立 Library</h1>
 <p>預設建立 Library 都會以 <code>NgModule</code> 的方式呈現，這表示，任何所建立的 Library 都會是一個 NgModule，以方便 import 到其他 Module 內。當然也可以設定 <code>--nomodule</code> 即可建立沒有 NgModule 的 library</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Bv1lSnR.png" width="975" height="233" layout="responsive"></amp-img></div>
 <p>所建立的 library 都會放到 <code>libs</code> 資料夾下，這時會發現 Nx 有多產生一個 index.ts 檔案，而這一個 index.ts 檔案會 export NgModule 的內容，之所以會這樣子設定，是方便我們在其他地方進行 imports 時，只需要指到 library 的最上層位置，即可取得內部所開放出來的所有功能，例如 <code>import { ... } from '@nxdemo/backend'</code></p>
@@ -1885,7 +1885,7 @@ h6.categories {
 <p>這個動作的用意，這方便我們使用 Angular CLI 的 generator 功能，Angular CLI generator 可以指定所產生的範本是要輸出到哪一個 apps 下</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g service ticket -a=backend</span><br></pre></td></tr></tbody></table></figure>
 <p>上列的指令就可以在剛剛建立的 <code>BackendModule</code> 裡，新增一個 <code>ticket service</code></p>
-<h2 id="ngmodule-with-routing"><a class="header-anchor" href="#ngmodule-with-routing"> </a>NgModule with routing</h2>
+<h2 id="NgModule-with-routing"><a class="header-anchor" href="#NgModule-with-routing"> </a>NgModule with routing</h2>
 <p>我們也可以透過 <code>--routing</code> 的參數，來產生一個含有路由設定檔的 NgModule</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g lib account --routing</span><br></pre></td></tr></tbody></table></figure>
 <p>所產生的 NgModule 會長這樣</p>
@@ -1893,7 +1893,7 @@ h6.categories {
 <p>會建立一個路由設定檔，並注入 <code>RouterModule</code> 而上一層的 <code>index.ts</code> 檔案內，也同時會輸出路由設定檔</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KNin2x1.png" width="966" height="98" layout="responsive"></amp-img></div>
 <p>這個動作允許其他 NgModule 可以很容易地取得目前 NgModule 內的路由設定檔</p>
-<h2 id="parentmodule-設定"><a class="header-anchor" href="#parentmodule-設定"> </a>parentModule 設定</h2>
+<h2 id="parentModule-設定"><a class="header-anchor" href="#parentModule-設定"> </a>parentModule 設定</h2>
 <p><code>parentModule</code> 參數的設定，可以將目前要建立的 library 注入到其他 NgModule 裡</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g lib profile-setting --routing --parent-module=apps/client/dashboard/src/app/app.module.ts</span><br></pre></td></tr></tbody></table></figure>
 <p><code>--parent-module</code> 需要指定所要注入的 NgModule 實際的檔案位置</p>
@@ -1906,7 +1906,7 @@ h6.categories {
 <p><code>parent-module</code> 的路由設定檔會採 <code>loadChildren</code> 的方式將該 NgModule 載入</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KUrjeux.png" width="1261" height="490" layout="responsive"></amp-img></div>
 <p>因為 <code>lazy</code> 的關係，新增的 NgModule 路由設定檔的呈現方式也會有所不同，會直接以 <code>RouterModule.forChild([])</code> 的方式呈現</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>({</span><br><span class="line">  imports: [</span><br><span class="line">    CommonModule,</span><br><span class="line">    RouterModule.forChild([</span><br><span class="line">      <span class="comment">/* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */</span></span><br><span class="line">    ])</span><br><span class="line">  ]</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ProfileSettingModule {}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>({</span><br><span class="line">  imports: [</span><br><span class="line">    CommonModule,</span><br><span class="line">    RouterModule.forChild([</span><br><span class="line">      <span class="comment">/* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */</span></span><br><span class="line">    ])</span><br><span class="line">  ]</span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">ProfileSettingModule</span> </span>{}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>
 <p><code>tslin.json</code> 檔案也會被異動，會將 lazy load module 新增到 <code>lazyload</code> 陣列中以避免該 module 以非 lazy load 的方式被載入</p>
@@ -1921,8 +1921,8 @@ h6.categories {
 <p>透過以上建立的方式，可以重新思考 <code>Feature module</code>  的規劃方式，也可以將一些與 Angular 無關的商業邏輯獨立成單一 Library，以便之後的重複利用性</p>
 <h1 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h1>
 <ul>
-<li><a href="https://angular.io/guide/feature-modules" target="_blank" rel="noopener">Feature Modules</a></li>
-<li><a href="https://angular.io/guide/lazy-loading-ngmodules" target="_blank" rel="noopener">Lazy Loading Feature Modules</a></li>
+<li><a href="https://angular.io/guide/feature-modules">Feature Modules</a></li>
+<li><a href="https://angular.io/guide/lazy-loading-ngmodules">Lazy Loading Feature Modules</a></li>
 </ul>
 
 			  		

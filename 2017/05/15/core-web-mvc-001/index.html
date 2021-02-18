@@ -1,160 +1,66 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-TW">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-TW">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
 
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-<link rel="stylesheet" href="/css/main.css?v=7.2.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.2.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
-    back2top: true,
-    back2top_sidebar: false,
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
- <script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-     google_ad_client: "ca-pub-7997572949867824",
-     enable_page_level_ads: true
-   });
- </script>
-
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
   <meta name="description" content=".NET Core 的專案的底層，都是從 Console Program 開始的。就稍微比較一下透過 dotnet cli 所產生的 console program 和 empty web program 的檔案差異。">
-<meta name="keywords" content=".NET Core,Core MVC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[.NET Core] Web MVC 001 - program.cs">
 <meta property="og:url" content="http://blog.kevinyang.net/2017/05/15/core-web-mvc-001/index.html">
 <meta property="og:site_name" content="CK&#39;s Notepad">
 <meta property="og:description" content=".NET Core 的專案的底層，都是從 Console Program 開始的。就稍微比較一下透過 dotnet cli 所產生的 console program 和 empty web program 的檔案差異。">
-<meta property="og:locale" content="zh-TW">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://farm5.staticflickr.com/4156/34635488816_b7a08aefd6_o.png">
-<meta property="og:updated_time" content="2021-02-18T02:39:29.008Z">
+<meta property="article:published_time" content="2017-05-15T15:00:36.000Z">
+<meta property="article:modified_time" content="2021-02-18T04:09:34.885Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content=".NET Core">
+<meta property="article:tag" content="Core MVC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[.NET Core] Web MVC 001 - program.cs">
-<meta name="twitter:description" content=".NET Core 的專案的底層，都是從 Console Program 開始的。就稍微比較一下透過 dotnet cli 所產生的 console program 和 empty web program 的檔案差異。">
 <meta name="twitter:image" content="https://farm5.staticflickr.com/4156/34635488816_b7a08aefd6_o.png">
 
+<link rel="canonical" href="http://blog.kevinyang.net/2017/05/15/core-web-mvc-001/">
 
 
-  <link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
-
-
-
-  
-  
-  <link rel="canonical" href="http://blog.kevinyang.net/2017/05/15/core-web-mvc-001/">
-
-
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
   };
 </script>
 
   <title>[.NET Core] Web MVC 001 - program.cs | CK's Notepad</title>
   
-
-
-
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-56711593-1');
-    }
-  </script>
-
-
-
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
 
 
 
@@ -163,7 +69,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -172,9 +77,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -186,289 +90,172 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">CK's Notepad</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    
-    
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="切換導航欄">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
   </div>
 </div>
+
 
 
 
 <nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首頁</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分類</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>歸檔</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
 
-    
-    
-      
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>標籤</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
 
   </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜尋</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜尋..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
 </nav>
 
 
 
-  
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
 
-
+    </div>
+  </div>
 
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
             
 
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/05/15/core-web-mvc-001/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="CK's Notepad">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">[.NET Core] Web MVC 001 - program.cs
-
-              
-            
-          </h1>
-        
+        <h1 class="post-title" itemprop="name headline">
+          [.NET Core] Web MVC 001 - program.cs
+        </h1>
 
         <div class="post-meta">
-
-          
-          
-          
-
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-
-              
-                
-              
+              <span class="post-meta-item-text">發表於</span>
 
               <time title="創建時間：2017-05-15 23:00:36" itemprop="dateCreated datePublished" datetime="2017-05-15T23:00:36+08:00">2017-05-15</time>
             </span>
-          
-
-          
-
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NET-Core/" itemprop="url" rel="index"><span itemprop="name">.NET Core</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NET-Core/" itemprop="url" rel="index"><span itemprop="name">.NET Core</span></a>
                 </span>
-            
-                <span class="post-meta-item-text">評論數：</span>
-                <a href="/2017/05/15/core-web-mvc-001/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/15/core-web-mvc-001/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
+            </span>
 
           
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/05/15/core-web-mvc-001/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/15/core-web-mvc-001/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
-    
 
     
     
@@ -476,30 +263,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <p>.NET Core 的專案的底層，都是從 Console Program 開始的。就稍微比較一下透過 dotnet cli 所產生的 console program 和 empty web program 的檔案差異。</p>
 <a id="more"></a>
 <h1 id="檔案差異"><a class="header-anchor" href="#檔案差異"> </a>檔案差異</h1>
-<h2 id="program-cs"><a class="header-anchor" href="#program-cs"> </a>Program.cs</h2>
-<h3 id="console"><a class="header-anchor" href="#console"> </a>Console</h3>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> study_001</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> Program</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">static</span> <span class="built_in">void</span> Main(<span class="built_in">string</span>[] args)</span><br><span class="line">        &#123;           </span><br><span class="line">            Console.WriteLine(<span class="string">"Hello World"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="web"><a class="header-anchor" href="#web"> </a>Web</h3>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="keyword">namespace</span> <span class="title">study_002</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            BuildWebHost(args).Run();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IWebHost <span class="title">BuildWebHost</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span> =&gt;</span><br><span class="line">            WebHost.CreateDefaultBuilder(args)</span><br><span class="line">                .UseStartup&lt;Startup&gt;()</span><br><span class="line">                .Build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Program-cs"><a class="header-anchor" href="#Program-cs"> </a>Program.cs</h2>
+<h3 id="Console"><a class="header-anchor" href="#Console"> </a>Console</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> study_001</span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Program</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> <span class="built_in">void</span> Main(<span class="built_in">string</span>[] args)</span><br><span class="line">        &#123;           </span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Web"><a class="header-anchor" href="#Web"> </a>Web</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="keyword">namespace</span> <span class="title">study_002</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            BuildWebHost(args).Run();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IWebHost <span class="title">BuildWebHost</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span> =&gt;</span><br><span class="line">            WebHost.CreateDefaultBuilder(args)</span><br><span class="line">                .UseStartup&lt;Startup&gt;()</span><br><span class="line">                .Build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="差異"><a class="header-anchor" href="#差異"> </a>差異</h3>
 <p><code>Console</code> 與 <code>Web</code> 專案架構基本上是一樣的，唯一有差異的是，Web 專案需要跑 WebHost Builder 來建立網站。</p>
 <h2 id="csproj"><a class="header-anchor" href="#csproj"> </a>.csproj</h2>
-<h3 id="console-v2"><a class="header-anchor" href="#console-v2"> </a>Console</h3>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">"Microsoft.NET.Sdk"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">OutputType</span>&gt;</span>Exe<span class="tag">&lt;/<span class="name">OutputType</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp2.0<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span>    </span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="web-v2"><a class="header-anchor" href="#web-v2"> </a>Web</h3>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">"Microsoft.NET.Sdk.Web"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp2.0<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">UserSecretsId</span>&gt;</span>aspnet-study_002-741020AF-3B35-4E03-A07A-E2EFF47D6CCA<span class="tag">&lt;/<span class="name">UserSecretsId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Folder</span> <span class="attr">Include</span>=<span class="string">"wwwroot\"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">"Microsoft.AspNetCore.All"</span> <span class="attr">Version</span>=<span class="string">"2.0.0-preview1-final"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Console-v2"><a class="header-anchor" href="#Console-v2"> </a>Console</h3>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">&quot;Microsoft.NET.Sdk&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">OutputType</span>&gt;</span>Exe<span class="tag">&lt;/<span class="name">OutputType</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp2.0<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span>    </span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Web-v2"><a class="header-anchor" href="#Web-v2"> </a>Web</h3>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">&quot;Microsoft.NET.Sdk.Web&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>netcoreapp2.0<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">UserSecretsId</span>&gt;</span>aspnet-study_002-741020AF-3B35-4E03-A07A-E2EFF47D6CCA<span class="tag">&lt;/<span class="name">UserSecretsId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Folder</span> <span class="attr">Include</span>=<span class="string">&quot;wwwroot\&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PackageReference</span> <span class="attr">Include</span>=<span class="string">&quot;Microsoft.AspNetCore.All&quot;</span> <span class="attr">Version</span>=<span class="string">&quot;2.0.0-preview1-final&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ItemGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="差異-v2"><a class="header-anchor" href="#差異-v2"> </a>差異</h3>
 <p><code>web</code> 專案多包含了一個 <code>wwwroot</code> 資料夾，及 <code>Microsoft.AspNetCore.All</code> 的 package。</p>
-<h1 id="建立webhost"><a class="header-anchor" href="#建立webhost"> </a>建立WebHost</h1>
-<h2 id="webhost"><a class="header-anchor" href="#webhost"> </a>WebHost</h2>
-<p>透過 <code>WebHost.CreateDefaultBuilder</code> 建立一個 <code>Microsoft.AspNetCore.Hosting.IWebHost</code> 並在 <code>Main</code> 下執行</p>
-<h3 id="createdefaultbuilder"><a class="header-anchor" href="#createdefaultbuilder"> </a>CreateDefaultBuilder</h3>
+<h1 id="建立WebHost"><a class="header-anchor" href="#建立WebHost"> </a>建立WebHost</h1>
+<h2 id="WebHost"><a class="header-anchor" href="#WebHost"> </a>WebHost</h2>
+<p>透過 <code>WebHost.CreateDefaultBuilder</code> 建立一個 <code>Microsoft.AspNetCore.Hosting.IWebHost </code> 並在 <code>Main</code> 下執行</p>
+<h3 id="CreateDefaultBuilder"><a class="header-anchor" href="#CreateDefaultBuilder"> </a>CreateDefaultBuilder</h3>
 <p>執行<code>CreateDefaultBuilder(args)</code> 時， <code>WebHostBuilder</code> 會有以下的預設值</p>
 <ol>
 <li>使用 Kestrel 為網站伺服器</li>
@@ -512,34 +296,34 @@
 <li>開啟 <code>IISIntegration</code></li>
 <li>如果是開發模式，新增例外狀況頁面</li>
 </ol>
-<h3 id="usestartup"><a class="header-anchor" href="#usestartup"> </a>UseStartup</h3>
-<p><code>UseStartUp</code> 是 <code>IWebHostBuilder</code> 的擴充功能，接受一個 AssemblyName 並使用 <code>IWebHostBuilder</code> 內部的 <code>UseSetting</code> 的方法新增或更新 <code>_config</code> 裡鍵值為<code>WebHostDefaults.ApplicationKey</code> 與 <code>WebHostDefaults.StartupAssemblyKey</code> 下，<code>_config</code>為一個 <code>IConfiguration</code> 物件。建立程式碼如下，僅供參考使用</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> IConfiguration _config;</span><br><span class="line"></span><br><span class="line">_config = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">                .AddEnvironmentVariables(prefix: <span class="string">"ASPNETCORE_"</span>)</span><br><span class="line">                .Build();</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">public</span> IWebHostBuilder <span class="title">UseSetting</span>(<span class="params"><span class="keyword">string</span> key, <span class="keyword">string</span> <span class="keyword">value</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   _config[key] = <span class="keyword">value</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="UseStartup"><a class="header-anchor" href="#UseStartup"> </a>UseStartup</h3>
+<p><code>UseStartUp</code> 是 <code>IWebHostBuilder</code> 的擴充功能，接受一個 AssemblyName 並使用 <code>IWebHostBuilder</code> 內部的 <code>UseSetting</code> 的方法新增或更新 <code>_config</code> 裡鍵值為<code>WebHostDefaults.ApplicationKey</code> 與 <code>WebHostDefaults.StartupAssemblyKey</code> 下，<code>_config</code>為一個 <code>IConfiguration </code> 物件。建立程式碼如下，僅供參考使用</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> IConfiguration _config;</span><br><span class="line"></span><br><span class="line">_config = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">                .AddEnvironmentVariables(prefix: <span class="string">&quot;ASPNETCORE_&quot;</span>)</span><br><span class="line">                .Build();</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">public</span> IWebHostBuilder <span class="title">UseSetting</span>(<span class="params"><span class="built_in">string</span> key, <span class="built_in">string</span> <span class="keyword">value</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   _config[key] = <span class="keyword">value</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
 <h3 id="build"><a class="header-anchor" href="#build"> </a>build</h3>
 <p>建立 <code>WebHost</code> 物件</p>
-<h2 id="startup"><a class="header-anchor" href="#startup"> </a>Startup</h2>
+<h2 id="Startup"><a class="header-anchor" href="#Startup"> </a>Startup</h2>
 <p><code>Startup</code> 用來設定網站會使用到的 <code>service</code>，<code>參數</code>、<code>middleware</code> 等。基本上都在這支程式內搞定</p>
-<h3 id="configureservices"><a class="header-anchor" href="#configureservices"> </a>ConfigureServices</h3>
+<h3 id="ConfigureServices"><a class="header-anchor" href="#ConfigureServices"> </a>ConfigureServices</h3>
 <p><strong>設定有哪些服務可以使用</strong></p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Add framework services.</span></span><br><span class="line">    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;</span><br><span class="line">        options.UseSqlServer(Configuration.GetConnectionString(<span class="string">"DefaultConnection"</span>)));</span><br><span class="line"></span><br><span class="line">    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;()</span><br><span class="line">        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()</span><br><span class="line">        .AddDefaultTokenProviders();</span><br><span class="line"></span><br><span class="line">    services.AddMvc();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add application services.</span></span><br><span class="line">    services.AddTransient&lt;IEmailSender, AuthMessageSender&gt;();</span><br><span class="line">    services.AddTransient&lt;ISmsSender, AuthMessageSender&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Add framework services.</span></span><br><span class="line">    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;</span><br><span class="line">        options.UseSqlServer(Configuration.GetConnectionString(<span class="string">&quot;DefaultConnection&quot;</span>)));</span><br><span class="line"></span><br><span class="line">    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;()</span><br><span class="line">        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()</span><br><span class="line">        .AddDefaultTokenProviders();</span><br><span class="line"></span><br><span class="line">    services.AddMvc();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add application services.</span></span><br><span class="line">    services.AddTransient&lt;IEmailSender, AuthMessageSender&gt;();</span><br><span class="line">    services.AddTransient&lt;ISmsSender, AuthMessageSender&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li><code>ConfigureServices</code>不一定要存在，如果有，他會在 <code>Configure</code>前被執行</li>
-<li>如果要設定 <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration" target="_blank" rel="noopener">Configuration options</a>，需要在此設定</li>
+<li>如果要設定 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration">Configuration options</a>，需要在此設定</li>
 <li>使用的服務需要設定時，可透過<code>IServiceCollection</code>的 <code>Add[Service]</code> 的方式註冊
 <ol>
 <li>如上述範例為註冊 Entity Framework、Identity、MVC</li>
 </ol>
 </li>
-<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="noopener">DI</a> 也會在 <code>ConfigureServices</code>裡設定</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection">DI</a> 也會在 <code>ConfigureServices</code>裡設定</li>
 </ol>
-<h3 id="configure"><a class="header-anchor" href="#configure"> </a>Configure</h3>
+<h3 id="Configure"><a class="header-anchor" href="#Configure"> </a>Configure</h3>
 <p><strong>設定使用哪些服務</strong></p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    loggerFactory.AddConsole(Configuration.GetSection(<span class="string">"Logging"</span>));</span><br><span class="line">    loggerFactory.AddDebug();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (env.IsDevelopment())</span><br><span class="line">    &#123;</span><br><span class="line">        app.UseDeveloperExceptionPage();</span><br><span class="line">        app.UseDatabaseErrorPage();</span><br><span class="line">        app.UseBrowserLink();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        app.UseExceptionHandler(<span class="string">"/Home/Error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    app.UseStaticFiles();</span><br><span class="line"></span><br><span class="line">    app.UseIdentity();</span><br><span class="line"></span><br><span class="line">    app.UseMvc(routes =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        routes.MapRoute(</span><br><span class="line">            name: <span class="string">"default"</span>,</span><br><span class="line">            template: <span class="string">"&#123;controller=Home&#125;/&#123;action=Index&#125;/&#123;id?&#125;"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    loggerFactory.AddConsole(Configuration.GetSection(<span class="string">&quot;Logging&quot;</span>));</span><br><span class="line">    loggerFactory.AddDebug();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (env.IsDevelopment())</span><br><span class="line">    &#123;</span><br><span class="line">        app.UseDeveloperExceptionPage();</span><br><span class="line">        app.UseDatabaseErrorPage();</span><br><span class="line">        app.UseBrowserLink();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        app.UseExceptionHandler(<span class="string">&quot;/Home/Error&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    app.UseStaticFiles();</span><br><span class="line"></span><br><span class="line">    app.UseIdentity();</span><br><span class="line"></span><br><span class="line">    app.UseMvc(routes =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        routes.MapRoute(</span><br><span class="line">            name: <span class="string">&quot;default&quot;</span>,</span><br><span class="line">            template: <span class="string">&quot;&#123;controller=Home&#125;/&#123;action=Index&#125;/&#123;id?&#125;&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
-<li><code>Congiure</code> 是用來設定 <a href="http://ASP.NET" target="_blank" rel="noopener">ASP.NET</a> 應用程式會對請求，透過 <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware" target="_blank" rel="noopener">middleware</a> 組合的方式，做出一系列的動作與回應。</li>
+<li><code>Congiure</code> 是用來設定 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> 應用程式會對請求，透過 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware">middleware</a> 組合的方式，做出一系列的動作與回應。</li>
 <li><code>middleware</code> 物件使用 <code>Use</code> 的方法，將物件家到在 <code>IApplicationBuilder</code> 上</li>
 </ol>
-<p><img src="https://farm5.staticflickr.com/4156/34635488816_b7a08aefd6_o.png" alt></p>
+<p><img src="https://farm5.staticflickr.com/4156/34635488816_b7a08aefd6_o.png" alt=""></p>
 <h3 id="初始服務"><a class="header-anchor" href="#初始服務"> </a>初始服務</h3>
 <p>在一開始就有一些初始服務的存在，分別為</p>
 <ul>
@@ -547,8 +331,8 @@
 <li>ConfigureServices: <code>IServiceCollecton</code></li>
 <li><code>Configure</code>: <code>IApplicationBuilder</code>、<code>IHostingEnvironment</code>、<code>ILoggerFactory</code>、<code>IApplicationLifetime</code></li>
 </ul>
-<h3 id="empty-web-template-的-startup-cs"><a class="header-anchor" href="#empty-web-template-的-startup-cs"> </a>Empty Web Template 的 startup.cs</h3>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">    &#123;      </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">        &#125;</span><br><span class="line">     </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">if</span> (env.IsDevelopment())</span><br><span class="line">            &#123;</span><br><span class="line">                app.UseDeveloperExceptionPage();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            app.Run(<span class="keyword">async</span> (context) =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">"Hello World!"</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Empty-Web-Template-的-startup-cs"><a class="header-anchor" href="#Empty-Web-Template-的-startup-cs"> </a>Empty Web Template 的 startup.cs</h3>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">    &#123;      </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">        &#125;</span><br><span class="line">     </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">if</span> (env.IsDevelopment())</span><br><span class="line">            &#123;</span><br><span class="line">                app.UseDeveloperExceptionPage();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            app.Run(<span class="keyword">async</span> (context) =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">await</span> context.Response.WriteAsync(<span class="string">&quot;Hello World!&quot;</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>在初始的專案範本裡，只有在 <code>Configure</code> 的地方寫了兩個功能</p>
 <ol>
 <li>注入 <code>IApplicationHilder</code> 與 <code>IHostingEnvironment</code> 兩個服務</li>
@@ -566,543 +350,229 @@
 </ul>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://github.com/aspnet/MetaPackages/blob/f245512f6e68d65309b65528d479f32b34c67718/src/Microsoft.AspNetCore/WebHost.cs#L150-L196" target="_blank" rel="noopener">WebHost -  CreateDefaultBuilder</a></li>
-<li><a href="https://github.com/aspnet/Hosting/blob/3485a04ea184cb7410d3432b497873af3f2d912c/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs" target="_blank" rel="noopener">WebHostBuilder</a></li>
-<li><a href="https://github.com/aspnet/Hosting/blob/58cc0bc3f98398089df28f1a00f44b5f31edb15a/src/Microsoft.AspNetCore.Hosting.Abstractions/HostingAbstractionsWebHostBuilderExtensions.cs#L51-L62" target="_blank" rel="noopener">WbeHostBuilderExtensions - UseStartup</a></li>
-<li><a href="https://github.com/aspnet/Hosting/blob/c1949b340a5755c96632679ba2a1feb8f59bb655/src/Microsoft.AspNetCore.Hosting/Internal/WebHost.cs" target="_blank" rel="noopener">WebHost</a></li>
-<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup" target="_blank" rel="noopener">Startup Class</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aspnet/MetaPackages/blob/f245512f6e68d65309b65528d479f32b34c67718/src/Microsoft.AspNetCore/WebHost.cs#L150-L196">WebHost -  CreateDefaultBuilder</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aspnet/Hosting/blob/3485a04ea184cb7410d3432b497873af3f2d912c/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs">WebHostBuilder</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aspnet/Hosting/blob/58cc0bc3f98398089df28f1a00f44b5f31edb15a/src/Microsoft.AspNetCore.Hosting.Abstractions/HostingAbstractionsWebHostBuilderExtensions.cs#L51-L62">WbeHostBuilderExtensions - UseStartup</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aspnet/Hosting/blob/c1949b340a5755c96632679ba2a1feb8f59bb655/src/Microsoft.AspNetCore.Hosting/Internal/WebHost.cs">WebHost</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup">Startup Class</a></li>
 </ul>
 
-      
     </div>
 
     
-
-    
-    
-    
-
-    
-
-    
-      
     
     
 
-    
-
-    <footer class="post-footer">
-      
-        
-          
-        
-        <div class="post-tags">
-          
-            <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
-          
-            <a href="/tags/Core-MVC/" rel="tag"># Core MVC</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/05/14/core-environment-setup/" rel="next" title="[.NET Core] DotNet Core 基本環境設定">
-                <i class="fa fa-chevron-left"></i> [.NET Core] DotNet Core 基本環境設定
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
+              <a href="/tags/Core-MVC/" rel="tag"># Core MVC</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/28/angular-excel-addins/" rel="prev" title="[Angular] 開發 Excel 增益集">
-                [Angular] 開發 Excel 增益集 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/05/14/core-environment-setup/" rel="prev" title="[.NET Core] DotNet Core 基本環境設定">
+      <i class="fa fa-chevron-left"></i> [.NET Core] DotNet Core 基本環境設定
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/05/28/angular-excel-addins/" rel="next" title="[Angular] 開發 Excel 增益集">
+      [Angular] 開發 Excel 增益集 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
 
     
       <div>
-        <div class="addthis_inline_share_toolbox">
-  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
-</div>
-
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
       </div>
-    
-  </div>
-
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
 
           </div>
           
-
-  
-    <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-      </div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
+  
 
-  <aside id="sidebar" class="sidebar">
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目錄
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            本站概要
-          </li>
-        </ul>
-      
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AA%94%E6%A1%88%E5%B7%AE%E7%95%B0"><span class="nav-number">1.</span> <span class="nav-text">檔案差異</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Program-cs"><span class="nav-number">1.1.</span> <span class="nav-text">Program.cs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Console"><span class="nav-number">1.1.1.</span> <span class="nav-text">Console</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web"><span class="nav-number">1.1.2.</span> <span class="nav-text">Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%AE%E7%95%B0"><span class="nav-number">1.1.3.</span> <span class="nav-text">差異</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#csproj"><span class="nav-number">1.2.</span> <span class="nav-text">.csproj</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Console-v2"><span class="nav-number">1.2.1.</span> <span class="nav-text">Console</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-v2"><span class="nav-number">1.2.2.</span> <span class="nav-text">Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%AE%E7%95%B0-v2"><span class="nav-number">1.2.3.</span> <span class="nav-text">差異</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8BWebHost"><span class="nav-number">2.</span> <span class="nav-text">建立WebHost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WebHost"><span class="nav-number">2.1.</span> <span class="nav-text">WebHost</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CreateDefaultBuilder"><span class="nav-number">2.1.1.</span> <span class="nav-text">CreateDefaultBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UseStartup"><span class="nav-number">2.1.2.</span> <span class="nav-text">UseStartup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build"><span class="nav-number">2.1.3.</span> <span class="nav-text">build</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Startup"><span class="nav-number">2.2.</span> <span class="nav-text">Startup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ConfigureServices"><span class="nav-number">2.2.1.</span> <span class="nav-text">ConfigureServices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configure"><span class="nav-number">2.2.2.</span> <span class="nav-text">Configure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E6%9C%8D%E5%8B%99"><span class="nav-number">2.2.3.</span> <span class="nav-text">初始服務</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Empty-Web-Template-%E7%9A%84-startup-cs"><span class="nav-number">2.2.4.</span> <span class="nav-text">Empty Web Template 的 startup.cs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9E%E9%A1%A7"><span class="nav-number">3.</span> <span class="nav-text">回顧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/4550568.jpg" alt="KevinYang">
-            
-              <p class="site-author-name" itemprop="name">KevinYang</p>
-              <div class="site-description motion-element" itemprop="description"></div>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">300</span>
-                    <span class="site-state-item-name">文章</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                      <a href="/categories/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">33</span>
-                    <span class="site-state-item-name">分類</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                      <a href="/tags/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">64</span>
-                    <span class="site-state-item-name">標籤</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/chgc" title="GitHub &rarr; https://github.com/chgc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://twitter.com/yoKevinYang" title="Twitter &rarr; https://twitter.com/yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://www.facebook.com/CKNotepad" title="FB Page &rarr; https://www.facebook.com/CKNotepad" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-block">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                友情連結
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://blog.miniasp.com/" title="https://blog.miniasp.com/" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://wellwind.idv.tw/blog/" title="https://wellwind.idv.tw/blog/" rel="noopener" target="_blank">全端開發人員天梯</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://poychang.github.io/" title="https://poychang.github.io/" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://jeffwu85182.github.io/" title="https://jeffwu85182.github.io/" rel="noopener" target="_blank">Jeffs WebTech Note</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">300</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
 
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
 
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#檔案差異"><span class="nav-number">1.</span> <span class="nav-text"> 檔案差異</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#program-cs"><span class="nav-number">1.1.</span> <span class="nav-text"> Program.cs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#console"><span class="nav-number">1.1.1.</span> <span class="nav-text"> Console</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web"><span class="nav-number">1.1.2.</span> <span class="nav-text"> Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#差異"><span class="nav-number">1.1.3.</span> <span class="nav-text"> 差異</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#csproj"><span class="nav-number">1.2.</span> <span class="nav-text"> .csproj</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#console-v2"><span class="nav-number">1.2.1.</span> <span class="nav-text"> Console</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web-v2"><span class="nav-number">1.2.2.</span> <span class="nav-text"> Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#差異-v2"><span class="nav-number">1.2.3.</span> <span class="nav-text"> 差異</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建立webhost"><span class="nav-number">2.</span> <span class="nav-text"> 建立WebHost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#webhost"><span class="nav-number">2.1.</span> <span class="nav-text"> WebHost</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#createdefaultbuilder"><span class="nav-number">2.1.1.</span> <span class="nav-text"> CreateDefaultBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#usestartup"><span class="nav-number">2.1.2.</span> <span class="nav-text"> UseStartup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build"><span class="nav-number">2.1.3.</span> <span class="nav-text"> build</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#startup"><span class="nav-number">2.2.</span> <span class="nav-text"> Startup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#configureservices"><span class="nav-number">2.2.1.</span> <span class="nav-text"> ConfigureServices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configure"><span class="nav-number">2.2.2.</span> <span class="nav-text"> Configure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始服務"><span class="nav-number">2.2.3.</span> <span class="nav-text"> 初始服務</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#empty-web-template-的-startup-cs"><span class="nav-number">2.2.4.</span> <span class="nav-text"> Empty Web Template 的 startup.cs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回顧"><span class="nav-number">3.</span> <span class="nav-text"> 回顧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">4.</span> <span class="nav-text"> 參考資料</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
+      </div>
 
     </div>
     <div class="gooAd sidebar-inner" style="display: block;">
         <!-- Google AdSense start -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <!-- blog-sidebar -->
-<ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-7997572949867824" data-ad-slot="3959999538" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<ins
+  class="adsbygoogle"
+  style="display: block"
+  data-ad-client="ca-pub-7997572949867824"
+  data-ad-slot="3959999538"
+  data-ad-format="auto"
+  data-full-width-responsive="true"
+></ins>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
      </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">KevinYang</span>
-
-  
-
-  
 </div>
-
-
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
-
-
-
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
 
         
 
@@ -1113,7 +583,6 @@
 
 
 
-        
       </div>
     </footer>
 
@@ -1130,25 +599,30 @@
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<script src="/js/utils.js"></script>
 
-
-
+<script src="/js/motion.js"></script>
 
 
+<script src="/js/schemes/pisces.js"></script>
 
 
-
-
+<script src="/js/next-boot.js"></script>
 
 
 
 
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
@@ -1163,54 +637,9 @@
 
 
   
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 
   
 
-
-  <script src="/js/utils.js?v=7.2.0"></script>
-
-  <script src="/js/motion.js?v=7.2.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/affix.js?v=7.2.0"></script>
-
-  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
-
-
-
-  
-  <script src="/js/scrollspy.js?v=7.2.0"></script>
-<script src="/js/post-details.js?v=7.2.0"></script>
-
-
-
-  
-
-
-  <script src="/js/next-boot.js?v=7.2.0"></script>
-
-
-  
-
-  
-
-  
-
-  
-  
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
@@ -1221,384 +650,26 @@
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
 </script>
-
-
 <script>
   var disqus_config = function() {
     this.page.url = "http://blog.kevinyang.net/2017/05/15/core-web-mvc-001/";
     this.page.identifier = "2017/05/15/core-web-mvc-001/";
-    this.page.title = '[.NET Core] Web MVC 001 - program.cs';
+    this.page.title = "[.NET Core] Web MVC 001 - program.cs";
     };
-  function loadComments() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://cksnotepad.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', '' + +new Date());
-    (d.head || d.body).appendChild(s);
-  }
-  
-    window.addEventListener('load', loadComments, false);
-  
-</script>
-
-
-
-
-
-  
-
-
-  
-  <script>
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
       });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
     }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+  });
+</script>
 
 </body>
 </html>

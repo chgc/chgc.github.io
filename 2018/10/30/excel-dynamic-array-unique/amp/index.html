@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/10/30/excel-dynamic-array-unique/"
 			},
 			"datePublished": "2018-10-30T05:52:00.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.889Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,7 +1851,7 @@ h6.categories {
 			  		<p>使用 O365 的好處是，所使用的 Excel 等相關應用程式， 都是處於最新的功能狀態。如果心臟夠大顆，也可以加入 Insider 計畫取得更新的功能，例如這篇文章要介紹的 Dynamic Array Function。</p>
 <a id="more"></a>
 <p>介紹幾個跟 Dynamic Array 相關的新函數 ，這些新函數能在篩選資料上可以簡化以往要用很複雜的公式才能完成的功能</p>
-<h1 id="unique"><a class="header-anchor" href="#unique"> </a>UNIQUE</h1>
+<h1 id="UNIQUE"><a class="header-anchor" href="#UNIQUE"> </a>UNIQUE</h1>
 <p>顧名思義，根據清單排除重複出現的資料，留下沒有重複的清單</p>
 <p>函示的使用方法</p>
 <p><code>=UNIQUE(array,[by_col],[occurs_once])</code></p>
@@ -1864,7 +1864,7 @@ h6.categories {
 <p>如果在篩選後的清單中，誤輸入不存在的項目時，會出現 <code>#SPILL!</code> 的錯誤訊息</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/5FuoosW.png" width="259" height="194" layout="responsive"></amp-img></div>
 <p>排除的方法是將顯示的文字刪除後即可恢復正常</p>
-<h1 id="sort"><a class="header-anchor" href="#sort"> </a>SORT</h1>
+<h1 id="SORT"><a class="header-anchor" href="#SORT"> </a>SORT</h1>
 <p><code>=SORT(array, [sort_index], [sort_order],[by_col])</code></p>
 <ul>
 <li>array: 設定要排序的清單</li>
@@ -1872,17 +1872,17 @@ h6.categories {
 <li>[sort_order]: 排序方法，1 : 遞增; -1: 遞減</li>
 <li>[by-col]: 設定比較條件，根據 row 時為 FALSE，根據 col 時為 TRUE</li>
 </ul>
-<p>如果 Array 是動態產生出來的，可以搭配 <code>#</code> 使用 (Dynamic Array Reference)，這樣子當動態清單長度改變時，函示所使用的清單範圍也會跟著改變</p>
+<p>如果 Array 是動態產生出來的，可以搭配 <code># </code> 使用 (Dynamic Array Reference)，這樣子當動態清單長度改變時，函示所使用的清單範圍也會跟著改變</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/pkXYNfE.png" width="392" height="215" layout="responsive"></amp-img></div>
-<h1 id="filter"><a class="header-anchor" href="#filter"> </a>FILTER</h1>
+<h1 id="FILTER"><a class="header-anchor" href="#FILTER"> </a>FILTER</h1>
 <p>FILTER 提供動態過濾資料來源的功能，過濾的清單的欄位會跟資料來源一樣，而且是動態的列出清單。</p>
 <p><code>=FILTER(資料來源，資料來源內要比較的欄位)</code></p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/KCzXifB.png" width="1003" height="204" layout="responsive"></amp-img></div>
-<h1 id="randarray"><a class="header-anchor" href="#randarray"> </a>RANDARRAY</h1>
+<h1 id="RANDARRAY"><a class="header-anchor" href="#RANDARRAY"> </a>RANDARRAY</h1>
 <p><code>=RANDARRAY([row],[col])</code></p>
 <p>回傳設定介於 0 和 1 之間的亂數陣列清單</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/mNms3ZU.png" width="441" height="165" layout="responsive"></amp-img></div>
-<h1 id="sequence"><a class="header-anchor" href="#sequence"> </a>SEQUENCE</h1>
+<h1 id="SEQUENCE"><a class="header-anchor" href="#SEQUENCE"> </a>SEQUENCE</h1>
 <p><code>=SEQUENCE(row,[col],[start],[step])</code></p>
 <p>根據設定產生數字序列表</p>
 <ul>
@@ -1896,8 +1896,8 @@ h6.categories {
 <p>要請留意的是，本篇文章所介紹的功能，在這個時間點(2018/10/30) 都還是屬於 insider 的範圍內，尚未正式釋出到正式版中</p>
 <h1 id="參考文件"><a class="header-anchor" href="#參考文件"> </a>參考文件</h1>
 <ul>
-<li><a href="https://support.office.com/zh-tw/article/sortby-%E5%87%BD%E6%95%B8-cd2d7a62-1b93-435c-b561-d6a35134f28f?NS=EXCEL&amp;Version=90&amp;SysLcid=1028&amp;UiLcid=1028&amp;AppVer=ZXL900&amp;HelpId=xlmain11.chm60678&amp;ui=zh-TW&amp;rs=zh-TW&amp;ad=TW" target="_blank" rel="noopener">SORTBY</a></li>
-<li><a href="https://support.office.com/zh-tw/article/%E5%96%AE%E4%B8%80%E5%87%BD%E6%95%B8-7ca229ca-13ae-420b-928e-2ef52a3805ff?NS=EXCEL&amp;Version=90&amp;SysLcid=1028&amp;UiLcid=1028&amp;AppVer=ZXL900&amp;HelpId=xlmain11.chm60657&amp;ui=zh-TW&amp;rs=zh-TW&amp;ad=TW" target="_blank" rel="noopener">SINGLE</a></li>
+<li><a href="https://support.office.com/zh-tw/article/sortby-%E5%87%BD%E6%95%B8-cd2d7a62-1b93-435c-b561-d6a35134f28f?NS=EXCEL&amp;Version=90&amp;SysLcid=1028&amp;UiLcid=1028&amp;AppVer=ZXL900&amp;HelpId=xlmain11.chm60678&amp;ui=zh-TW&amp;rs=zh-TW&amp;ad=TW">SORTBY</a></li>
+<li><a href="https://support.office.com/zh-tw/article/%E5%96%AE%E4%B8%80%E5%87%BD%E6%95%B8-7ca229ca-13ae-420b-928e-2ef52a3805ff?NS=EXCEL&amp;Version=90&amp;SysLcid=1028&amp;UiLcid=1028&amp;AppVer=ZXL900&amp;HelpId=xlmain11.chm60657&amp;ui=zh-TW&amp;rs=zh-TW&amp;ad=TW">SINGLE</a></li>
 </ul>
 
 			  		

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/02/13/angular-keyvaluepipe/"
 			},
 			"datePublished": "2020-02-13T00:32:18.000Z",
-			"dateModified": "2021-02-18T02:39:29.108Z",
+			"dateModified": "2021-02-18T04:09:34.981Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1866,7 +1866,7 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="/2020/02/13/angular-keyvaluepipe/image-20200213085812920.png" width="369" height="355" layout="responsive"></amp-img></div>
 <p>可以發現物件的顯示順序已經依 key 值的字母做排序了</p>
 <p>這時候加入 compareFn 看看，可以取到哪些資訊</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> compareFn(a, b) {</span><br><span class="line">    <span class="built_in">console</span>.log(a, b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="title">compareFn</span>(<span class="params">a, b</span>)</span> {</span><br><span class="line">    <span class="built_in">console</span>.log(a, b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>template 的地方也將 compareFn 加上</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> *<span class="attr">ngFor</span>=<span class="string">"let item of (data | keyvalue: compareFn)"</span>&gt;</span></span><br><span class="line">        {{ item.key }}</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>console.log 出來的結果是</p>
@@ -1881,10 +1881,10 @@ h6.categories {
 <p>使用之前詳讀使用說明書</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/sort" target="_blank" rel="noopener">Arrary.prototype.sort</a></li>
-<li><a href="https://angular.io/api/common/KeyValue" target="_blank" rel="noopener">KeyValue</a></li>
-<li><a href="https://angular.io/api/common/KeyValuePipe" target="_blank" rel="noopener">KeyValuePipe</a></li>
-<li><a href="https://stackblitz.com/edit/angular-94dxtk?file=src%2Fapp%2Fapp.component.ts" target="_blank" rel="noopener">範例程式碼</a></li>
+<li><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/sort">Arrary.prototype.sort</a></li>
+<li><a href="https://angular.io/api/common/KeyValue">KeyValue</a></li>
+<li><a href="https://angular.io/api/common/KeyValuePipe">KeyValuePipe</a></li>
+<li><a href="https://stackblitz.com/edit/angular-94dxtk?file=src%2Fapp%2Fapp.component.ts">範例程式碼</a></li>
 </ul>
 
 			  		

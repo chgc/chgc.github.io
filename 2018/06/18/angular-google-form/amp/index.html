@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/06/18/angular-google-form/"
 			},
 			"datePublished": "2018-06-18T12:30:52.000Z",
-			"dateModified": "2021-02-18T02:39:29.012Z",
+			"dateModified": "2021-02-18T04:09:34.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,10 +1851,10 @@ h6.categories {
 			  		<p>網路上有許多文章介紹如何自訂表單並與Google Form 串接，很有趣的做法，但 Angular 該怎麼做呢? 這篇文章來整理一下做法</p>
 <a id="more"></a>
 <p>Google Form 是一個方便又快速的表單服務，但因為樣式很陽春，相信許多網頁設計師是無法接受的，所以才會有自訂 Google Form 表單樣式的教學出來。而 Angular 也可以做到類似的功能，但有幾個小地方要注意。</p>
-<h1 id="建立-google-表單"><a class="header-anchor" href="#建立-google-表單"> </a>建立 Google 表單</h1>
+<h1 id="建立-Google-表單"><a class="header-anchor" href="#建立-Google-表單"> </a>建立 Google 表單</h1>
 <ol>
 <li>
-<p>前往 <a href="https://www.google.com.tw" target="_blank" rel="noopener">Google 表單</a>，建立一個新表單</p>
+<p>前往 <a href="https://www.google.com.tw">Google 表單</a>，建立一個新表單</p>
 </li>
 <li>
 <p>設計表單</p>
@@ -1867,7 +1867,7 @@ h6.categories {
 <p>這個 Excel 資料表會存放所有的表單結果</p>
 </li>
 </ol>
-<h1 id="angular-自訂表單"><a class="header-anchor" href="#angular-自訂表單"> </a>Angular 自訂表單</h1>
+<h1 id="Angular-自訂表單"><a class="header-anchor" href="#Angular-自訂表單"> </a>Angular 自訂表單</h1>
 <p>使用 Angular 的表單功能設計一個我們想要的表單，當設計好之後，就需要將 Google 表單的欄位定應到自訂的欄位了，在 Google 表單欄位的名稱，都是以 <code>entry.xxxx</code> 命名的，所以我們只要將 Google 表單的 HTML 拿來分析，並將欄位名稱對應上，送到 <code>&lt;form&gt;</code> 的網址，就可以了</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Rdi3Pss.png" width="1269" height="349" layout="responsive"></amp-img></div>
 <p>要送出的網址如上圖</p>
@@ -1877,16 +1877,16 @@ h6.categories {
 <ol>
 <li>要使用 <code>http.post</code> 送出</li>
 <li>要將表單資料使用 <code>HttpParams</code> 包裝起來</li>
-<li>post header 的 <code>Content-Type</code> 要改成 <code>application/x-www-form-urlencoded</code></li>
+<li>post header 的 <code>Content-Type</code> 要改成 <code>application/x-www-form-urlencoded </code></li>
 <li>如果是多選的 <code>checkbox</code>，送出的欄位名稱是一樣的</li>
 <li>要使用 <code>HttpParams.append</code></li>
 <li><code>radio</code> 或是 <code>checkbox</code> 資料即顯示名稱</li>
 </ol>
-<p>剩下的可以參考 <a href="https://stackblitz.com/edit/google-form?file=src%2Fapp%2Fapp.component.html" target="_blank" rel="noopener">Sample Code</a></p>
+<p>剩下的可以參考 <a href="https://stackblitz.com/edit/google-form?file=src%2Fapp%2Fapp.component.html">Sample Code</a></p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://stackblitz.com/edit/google-form?file=src%2Fapp%2Fapp.component.html" target="_blank" rel="noopener">Sample Code</a></li>
-<li><a href="https://blog.webjeda.com/google-form-customize/" target="_blank" rel="noopener">Google Form Customization</a></li>
+<li><a href="https://stackblitz.com/edit/google-form?file=src%2Fapp%2Fapp.component.html">Sample Code</a></li>
+<li><a href="https://blog.webjeda.com/google-form-customize/">Google Form Customization</a></li>
 </ul>
 
 			  		

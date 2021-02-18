@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/"
 			},
 			"datePublished": "2019-08-13T01:40:46.000Z",
-			"dateModified": "2021-02-18T02:39:29.064Z",
+			"dateModified": "2021-02-18T04:09:34.937Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1850,7 +1850,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>上一篇提到使用 Deployment with GitHub，Azure 當然要整合自家的 DevOps 才能將效益最大化，這一篇就來看看整合 DevOps 後能做到那些事情</p>
 <a id="more"></a>
-<h1 id="串接-devops"><a class="header-anchor" href="#串接-devops"> </a>串接 DevOps</h1>
+<h1 id="串接-DevOps"><a class="header-anchor" href="#串接-DevOps"> </a>串接 DevOps</h1>
 <p>假設大家都知道如何在 Azure DevOps 上面開專案跟將程式 Push 到上面，這時 App Service 要串接步驟就很簡單</p>
 <ol>
 <li>
@@ -1897,9 +1897,9 @@ h6.categories {
 <p>在 Pipelines -&gt; Releases 的第一個畫面，可以透過 <code>Stages</code> 的顯示方式來得知目前的版本</p>
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565662562904.png" width="1220" height="419" layout="responsive"></amp-img></div>
 <p>目前所在版本會用有背景色做標示</p>
-<h1 id="多-stage-設定"><a class="header-anchor" href="#多-stage-設定"> </a>多 Stage 設定</h1>
+<h1 id="多-Stage-設定"><a class="header-anchor" href="#多-Stage-設定"> </a>多 Stage 設定</h1>
 <p>如果我們想要做多 Stage 的 release 設定又要搭配 App Services 時，基本要求方案是基本以上(Standard)，先來將 App Service 使用的方案升級一下</p>
-<h2 id="app-service-部分"><a class="header-anchor" href="#app-service-部分"> </a>App Service 部分</h2>
+<h2 id="App-Service-部分"><a class="header-anchor" href="#App-Service-部分"> </a>App Service 部分</h2>
 <ol>
 <li>升級方案 (如果原本方案不支援部署位置功能)</li>
 </ol>
@@ -1929,7 +1929,7 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="/2019/08/13/azure-app-service-deployment-with-devops/1565663434551.png" width="1335" height="311" layout="responsive"></amp-img></div>
 </li>
 </ul>
-<h2 id="devops-部分"><a class="header-anchor" href="#devops-部分"> </a>DevOps 部分</h2>
+<h2 id="DevOps-部分"><a class="header-anchor" href="#DevOps-部分"> </a>DevOps 部分</h2>
 <p>當 App Service 環節設定完成後，即可到 Azure DevOps 編輯 release pipeline</p>
 <ol>
 <li>
@@ -1985,7 +1985,7 @@ h6.categories {
 <p>Multi-stage 的設定當然沒有那麼簡單，而 App Service 的部署位置也可以玩一些不同的東西，但這一切就留在後面在玩吧。</p>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <ul>
-<li><a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/release/define-multistage-release-process?view=azure-devops" target="_blank" rel="noopener">Define your multi-stage continuous deployment (CD) pipeline</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/release/define-multistage-release-process?view=azure-devops">Define your multi-stage continuous deployment (CD) pipeline</a></li>
 </ul>
 
 			  		
