@@ -13,7 +13,6 @@ Angular 有內建了一些 Pipe 像是 `DatePipe`、 `UpperCasePipe`、`LowerCas
 
 <!-- more -->
 
-
 先從內建的 Pipe 介紹起
 
 # 內建 Pipe
@@ -23,8 +22,6 @@ Angular 有內建了一些 Pipe 像是 `DatePipe`、 `UpperCasePipe`、`LowerCas
 ```html
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
 ```
-
-
 
 ## DatePipe
 
@@ -38,25 +35,25 @@ Angular 有內建了一些 Pipe 像是 `DatePipe`、 `UpperCasePipe`、`LowerCas
 
 ### 說明
 
-- `date_expression` 必須是日期型別的物件或是數字(milliseconds) 或是 [ISO文字](https://www.w3.org/TR/NOTE-datetime)
+- `date_expression` 必須是日期型別的物件或是數字(milliseconds) 或是 [ISO 文字](https://www.w3.org/TR/NOTE-datetime)
 
 - `format` 可以用來調整要顯示的日期格式，可以使用的格式說明如下
 
-  - `'short'`: 相當於  `'yMdjm'` (例如  `9/3/2010, 12:05 PM` for `en-US`)
+  - `'short'`: 相當於 `'yMdjm'` (例如 `9/3/2010, 12:05 PM` for `en-US`)
   - `'medium'`: 相當於 `'yMMMdjms'` (例如 `Sep 3, 2010, 12:05:08 PM` for `en-US`)
   - `long`: 相當於 `MMMM d, y, h:mm:ss a z` (例如 `June 15, 2015 at 9:03:01 AM GMT+1`)
   - `'full'`: 相當於 `'EEEE, MMMM d, y, h:mm:ss a zzzz'` (例如 `Monday, June 15, 2015 at 9:03:01 AM GMT+01:00`)
-  - `'fullDate'`: 相當於  `'yMMMMEEEEd'` (例如  `Friday, September 3, 2010` for `en-US`)
-  - `'shortDate'`: 相當於  `'yMd'` (例如  `9/3/2010` for `en-US`)
-  - `'longDate'`: 相當於  `'yMMMMd'` (例如  `September 3, 2010` for `en-US`)
-  - `'mediumDate'`: 相當於 `'yMMMd'` (例如  `Sep 3, 2010` for `en-US`)
-  - `'fullDate'`: 相當於  `'EEEE, MMMM d, y'` (例如   `Monday, June 15, 2015`)
-  - `'shortTime'`: 相當於  `'jm'` (例如  `12:05 PM` for `en-US`)
-  - `'mediumTime'`: 相當於 `jms'` (例如  `12:05:08 PM` for `en-US`)
-  - `'longTime'`: 相當於  `'h:mm:ss a z'` (例如 `9:03:01 AM GMT+1`)
-  - `'fullTime'`: 相當於  `'h:mm:ss a zzzz'` (例如 `9:03:01 AM GMT+01:00`)
+  - `'fullDate'`: 相當於 `'yMMMMEEEEd'` (例如 `Friday, September 3, 2010` for `en-US`)
+  - `'shortDate'`: 相當於 `'yMd'` (例如 `9/3/2010` for `en-US`)
+  - `'longDate'`: 相當於 `'yMMMMd'` (例如 `September 3, 2010` for `en-US`)
+  - `'mediumDate'`: 相當於 `'yMMMd'` (例如 `Sep 3, 2010` for `en-US`)
+  - `'fullDate'`: 相當於 `'EEEE, MMMM d, y'` (例如 `Monday, June 15, 2015`)
+  - `'shortTime'`: 相當於 `'jm'` (例如 `12:05 PM` for `en-US`)
+  - `'mediumTime'`: 相當於 `jms'` (例如 `12:05:08 PM` for `en-US`)
+  - `'longTime'`: 相當於 `'h:mm:ss a z'` (例如 `9:03:01 AM GMT+1`)
+  - `'fullTime'`: 相當於 `'h:mm:ss a zzzz'` (例如 `9:03:01 AM GMT+01:00`)
 
-  | 描述       | 符號   | 短表示         | 長表示                            | 數值      | 2位數       |
+  | 描述     | 符號 | 短表示      | 長表示                         | 數值    | 2 位數    |
   | -------- | ---- | ----------- | ------------------------------ | ------- | --------- |
   | ear      | G    | GGG(AD)     | GGGG<br/>(Anno Domini)         |         |           |
   | year     | y    |             |                                | y(2015) | yy(15)    |
@@ -75,18 +72,18 @@ Angular 有內建了一些 Pipe 像是 `DatePipe`、 `UpperCasePipe`、`LowerCas
 ### 範例
 
 ```typescript
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <h1>DatePipe</h1>
     <p>{{ dateObj | date }}</p>
-    <p>{{ dateObj | date:'medium' }} </p>
-    <p>{{ dateObj | date:'shortTime' }}</p>
-    <p>{{ dateObj | date:'mmss' }}</p>
-`,
-  styleUrls: ['./app.component.css']
+    <p>{{ dateObj | date: 'medium' }}</p>
+    <p>{{ dateObj | date: 'shortTime' }}</p>
+    <p>{{ dateObj | date: 'mmss' }}</p>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   dateObj = new Date();
@@ -104,20 +101,21 @@ export class AppComponent {
 將所有英文字轉換成大寫
 
 ### 使用方式
+
 > string_expression | uppercase
 
 ### 範例
 
 ```typescript
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <h1>UpperCase</h1>
     <p>{{ display | uppercase }}</p>
-`,
-  styleUrls: ['./app.component.css']
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   display = 'this is upperCase testcase';
@@ -141,15 +139,15 @@ string_expression | lowercase
 ### 範例
 
 ```typescript
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <h1>LowerCasePipe</h1>
     <p>{{ display | lowercase }}</p>
-`,
-  styleUrls: ['./app.component.css']
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   display = 'this is LOWERCASE testcase';
@@ -159,8 +157,6 @@ export class AppComponent {
 顯示結果
 
 ![](https://farm5.staticflickr.com/4165/34623295465_458e50f4b6_o.png)
-
-
 
 ## TitleCasePipe
 
@@ -175,15 +171,15 @@ string_expression | titlecase
 ### 範例
 
 ```typescript
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <h1>TitleCasePipe</h1>
     <p>{{ display | titlecase }}</p>
-`,
-  styleUrls: ['./app.component.css']
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   display = 'this is TILECASE testcase';
@@ -201,12 +197,13 @@ export class AppComponent {
 將數字根據當地貨幣的顯示規則顯示
 
 ### 使用方式
+
 > number_expression | currency[:currencyCode[:symbolDisplay[:digitInfo]]]
 
 ### 說明
 
 - 只接收數字型別的資料
-- `currencyCode` 是 [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) 貨幣代碼，例如  `USD` 代表美金， `TWD` 代表新台幣。
+- `currencyCode` 是 [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) 貨幣代碼，例如 `USD` 代表美金， `TWD` 代表新台幣。
 - `symbolDisplay` 是布林值，用來決定是否顯示貨幣符號或是貨幣代碼
   - `true` 使用符號 (例如 `$`).
   - `false` (預設): 使用貨幣代碼 (e.g. `USD`).
@@ -215,18 +212,18 @@ export class AppComponent {
 ### 範例
 
 ```typescript
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <h1>CurrencyPipe</h1>
-    <p>A: {{a | currency:'USD':false}}</p>
-    <p>B: {{b | currency:'USD':true:'4.2-2'}}</p>
-    <p>C: {{c | currency:'TWD':false}}</p>
-    <p>D: {{d | currency:'TWD':true:'4.2-2'}}</p>
-`,
-  styleUrls: ['./app.component.css']
+    <p>A: {{ a | currency: 'USD':false }}</p>
+    <p>B: {{ b | currency: 'USD':true:'4.2-2' }}</p>
+    <p>C: {{ c | currency: 'TWD':false }}</p>
+    <p>D: {{ d | currency: 'TWD':true:'4.2-2' }}</p>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   a: number = 0.259;
@@ -240,7 +237,6 @@ export class AppComponent {
 
 ![](https://farm5.staticflickr.com/4178/34623423285_752310283f_o.png)
 
-
 ## PercentPipe
 
 ### 功能
@@ -248,6 +244,7 @@ export class AppComponent {
 將數字根據當地顯示規則顯示百分比
 
 ### 使用方式
+
 > number_expression | percent[:digitInfo]
 
 ### 說明
@@ -258,16 +255,16 @@ export class AppComponent {
 ### 範例
 
 ```typescript
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <h1>PercentPipe</h1>
-    <p>A: {{a | percent}}</p>
-    <p>B: {{b | percent:'4.3-5'}}</p>
-`,
-  styleUrls: ['./app.component.css']
+    <p>A: {{ a | percent }}</p>
+    <p>B: {{ b | percent: '4.3-5' }}</p>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   a: number = 0.259;
@@ -279,7 +276,6 @@ export class AppComponent {
 
 ![](https://farm5.staticflickr.com/4175/34582068606_8f95ef28c1_o.png)
 
-
 ## DecimalPipe
 
 ### 功能
@@ -287,6 +283,7 @@ export class AppComponent {
 將數字根據當地顯示規則顯示
 
 ### 使用方式
+
 > number_expression | number[:digitInfo]
 
 ### 說明
@@ -299,25 +296,25 @@ export class AppComponent {
   {minIntegerDigits}.{minFractionDigits}-{maxFractionDigits}
   ```
 
-  - `minIntegerDigits`  是整數最小顯示位數，預設為 `1`.
+  - `minIntegerDigits` 是整數最小顯示位數，預設為 `1`.
   - `minFractionDigits` 是小數點後最小顯示位數，預設為 `0`.
   - `maxFractionDigits` 是小數點後最大顯示位數，預設為 `3`
 
 ### 範例
 
 ```typescript
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
     <h1>DecimalPipe</h1>
-    <p>e (no formatting): {{e}}</p>
-    <p>e (3.1-5): {{e | number:'3.1-5'}}</p>
-    <p>pi (no formatting): {{pi}}</p>
-    <p>pi (3.5-5): {{pi | number:'3.5-5'}}</p>
-`,
-  styleUrls: ['./app.component.css']
+    <p>e (no formatting): {{ e }}</p>
+    <p>e (3.1-5): {{ e | number: '3.1-5' }}</p>
+    <p>pi (no formatting): {{ pi }}</p>
+    <p>pi (3.5-5): {{ pi | number: '3.5-5' }}</p>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   pi: number = 3.141592;
@@ -328,7 +325,6 @@ export class AppComponent {
 顯示結果
 
 ![](https://farm5.staticflickr.com/4157/34461393612_3e66c3de42_o.png)
-
 
 ## JsonPipe
 
@@ -346,27 +342,27 @@ expression | json
 
 ### 範例
 
-​```typescript
-import {Component} from '@angular/core';
+```typescript
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
-  <div>
-    <h1>JsonPipe</h1>
-    <p>Without JSON pipe:</p>
-    <pre>{{object}}</pre>
-    <p>With JSON pipe:</p>
-    <pre>{{object | json}}</pre>
-  </div>
-`,
-  styleUrls: ['./app.component.css']
+    <div>
+      <h1>JsonPipe</h1>
+      <p>Without JSON pipe:</p>
+      <pre>{{ object }}</pre>
+      <p>With JSON pipe:</p>
+      <pre>{{ object | json }}</pre>
+    </div>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   object: Object = {
     foo: 'bar',
     baz: 'qux',
-    nested: {xyz: 3, numbers: [1, 2, 3, 4, 5]}
+    nested: { xyz: 3, numbers: [1, 2, 3, 4, 5] },
   };
 }
 ```
@@ -374,7 +370,6 @@ export class AppComponent {
 顯示結果
 
 ![](https://farm5.staticflickr.com/4180/34288536410_a1b29ab000_o.png)
-
 
 ## SlicePipe
 
@@ -397,35 +392,35 @@ array_or_string_expression | slice:start[:end]
 - `end` 是切割的結束位置
   - 如果是沒有給予任何數字時，則回傳到結尾的所有資料。
   - 如果是 `正整數` 則回傳結束位置前的所有資料或文字。
-  - 如果是 `負整數`  則會從資料或文字結尾往回計算結束位置，並回傳結束位置前的所有資料或文字。
+  - 如果是 `負整數` 則會從資料或文字結尾往回計算結束位置，並回傳結束位置前的所有資料或文字。
 - 所有的行為都是基於 `Array.prototype.slice()` 和 `String.prototype.slice()` 的基礎上。
 - 如果操作的對象是一個陣列，每次都會回傳一個全新的陣列
 - 如果操作的資料是空值，Pipe 會回傳空值
 
 ### 範例
 
-​```typescript
-import {Component} from '@angular/core';
+```typescript
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template: `
-  <div>
-    <h1>SlicePipe</h1>
-    <h2>操作陣列</h2>
-    <ul>
-      <li *ngFor="let i of collection | slice:1:3">{{i}}</li>
-    </ul>
-    <h2>操作文字</h2>
-    <p>{{str}}[0:4]: '{{str | slice:0:4}}' - 預期輸出為 'abcd'</p>
-    <p>{{str}}[4:0]: '{{str | slice:4:0}}' - 預期輸出為 ''</p>
-    <p>{{str}}[-4]: '{{str | slice:-4}}' - 預期輸出為 'ghij'</p>
-    <p>{{str}}[-4:-2]: '{{str | slice:-4:-2}}' - 預期輸出為 'gh'</p>
-    <p>{{str}}[-100]: '{{str | slice:-100}}' - 預期輸出為 'abcdefghij'</p>
-    <p>{{str}}[100]: '{{str | slice:100}}' - 預期輸出為 ''</p>
-  </div>
-`,
-  styleUrls: ['./app.component.css']
+    <div>
+      <h1>SlicePipe</h1>
+      <h2>操作陣列</h2>
+      <ul>
+        <li *ngFor="let i of collection | slice: 1:3">{{ i }}</li>
+      </ul>
+      <h2>操作文字</h2>
+      <p>{{ str }}[0:4]: '{{ str | slice: 0:4 }}' - 預期輸出為 'abcd'</p>
+      <p>{{ str }}[4:0]: '{{ str | slice: 4:0 }}' - 預期輸出為 ''</p>
+      <p>{{ str }}[-4]: '{{ str | slice: -4 }}' - 預期輸出為 'ghij'</p>
+      <p>{{ str }}[-4:-2]: '{{ str | slice: -4:-2 }}' - 預期輸出為 'gh'</p>
+      <p>{{ str }}[-100]: '{{ str | slice: -100 }}' - 預期輸出為 'abcdefghij'</p>
+      <p>{{ str }}[100]: '{{ str | slice: 100 }}' - 預期輸出為 ''</p>
+    </div>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   collection: string[] = ['a', 'b', 'c', 'd'];
@@ -436,8 +431,6 @@ export class AppComponent {
 顯示結果
 
 ![](https://farm5.staticflickr.com/4170/34512030522_8b45394b1e_o.png)
-
-
 
 ## AsyncPipe
 
@@ -458,26 +451,25 @@ observable_or_promise_expression | async
 ### 範例
 
 ```typescript
-import {Component} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subscriber} from 'rxjs/Subscriber';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
 
 @Component({
   selector: 'app-root',
   template: `
-  <div>
-    <h1>AsyncPipe</h1>
-    <div><code>observable|async</code>: Time: {{ time | async }}</div>
-  </div>
-`,
-  styleUrls: ['./app.component.css']
+    <div>
+      <h1>AsyncPipe</h1>
+      <div><code>observable|async</code>: Time: {{ time | async }}</div>
+    </div>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   time = new Observable<string>((observer: Subscriber<string>) => {
     setInterval(() => observer.next(new Date().toString()), 1000);
   });
 }
-
 ```
 
 顯示結果
@@ -488,14 +480,14 @@ export class AppComponent {
 
 由於這兩個 Pipe 跟多國語系功能有關係，且皆處於 `Experimental` 階段，故在次先不做說明。
 
-
 # 自訂 Pipe
 
 透過 CLI 產生 `Pipe` 是最快的，指令是
 
 ​```typescript
 ng g p "pipeName"
-```
+
+````
 
 所產生出來的基本架構是
 
@@ -513,32 +505,31 @@ export class ExponentialPipe implements PipeTransform {
     return Math.pow(value, isNaN(exp) ? 1 : exp);
   }
 }
-```
+````
 
 - `transform` function 所回傳的值，會用來顯示在畫面上
 - 第一個參數 `value` 是所要轉換的資料來源
 - 第二個之後的參數可以用來接 Template 傳給 `pipe` 的參數值
 
-如果要傳入多個參數的時後，transform 的地方值直接加上第3的參數或是使用 ...args 也是可以，而在 template 的使用方式則是 {% raw %}{{ value | xxpipe: 1_arg: 2_arg: 3:arg }}{% endraw %} 以此類推。
-
+如果要傳入多個參數的時後，transform 的地方值直接加上第 3 的參數或是使用 ...args 也是可以，而在 template 的使用方式則是 {% raw %}{{ value | xxpipe: 1_arg: 2_arg: 3:arg }}{% endraw %} 以此類推。
 
 # Pipe 與 ChangeDetection
 
-Angular 會透過 `change detection` 方法執行的過程中，去檢查 data-bound值的變化，而 `change detection` 會在每一次 DOM Eevent 後被觸發，例如按下鍵盤的鍵，滑鼠的移動，伺服器的回應等事件，這個過程是需要付出相對的成本，為了效能，Angular會盡量降低 `change detection` 的次數
+Angular 會透過 `change detection` 方法執行的過程中，去檢查 data-bound 值的變化，而 `change detection` 會在每一次 DOM Eevent 後被觸發，例如按下鍵盤的鍵，滑鼠的移動，伺服器的回應等事件，這個過程是需要付出相對的成本，為了效能，Angular 會盡量降低 `change detection` 的次數
 
 所以 Pipe 會採用最簡單又快速的判斷規則，[ChangeDetectionStrategy.OnPush](https://angular.io/docs/ts/latest/api/core/index/ChangeDetectionStrategy-enum.html)。
 
 這表示當 Pipe 如果用在陣列上，就有機會出現不在預期內的顯示結果，如以下的範例
 
 ```typescript
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
-import {Flyer} from './app.component';
+import { Flyer } from './app.component';
 
-@Pipe({name: 'flyingHeroes'})
+@Pipe({ name: 'flyingHeroes' })
 export class FlyingHeroesPipe implements PipeTransform {
   transform(allHeroes: Flyer[]) {
-    return allHeroes.filter(hero => hero.canFly);
+    return allHeroes.filter((hero) => hero.canFly);
   }
 }
 ```
@@ -549,15 +540,13 @@ component
 @Component({
   selector: 'app-root',
   template: `
-     <input type="text" #box
-          (keyup.enter)="addHero(box.value); box.value=''"
-          placeholder="hero name">
+    <input type="text" #box (keyup.enter)="addHero(box.value); box.value = ''" placeholder="hero name" />
     <button (click)="reset()">Reset</button>
     <div *ngFor="let hero of heroes | flyingHeroes">
-      {{hero.name}}
+      {{ hero.name }}
     </div>
-`,
-  styleUrls: ['./app.component.css']
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   heroes: any[] = [];
@@ -571,10 +560,10 @@ export class AppComponent {
     if (!name) {
       return;
     }
-    let hero = {name, canFly: this.canFly};
+    let hero = { name, canFly: this.canFly };
 
     // this.heroes.push(hero); // 這個不會更新畫面，因為不符合 OnPush 的條件
-    
+
     this.heroes = [...this.heroes, hero]; // 因會產生一個新的 Array Object, 所以會觸發 CD
   }
 
@@ -584,11 +573,10 @@ export class AppComponent {
 }
 ```
 
-
-
 # Pure and Impure Pipes
 
 Angular 的 Pipe 預設皆為 `Pure`，如果需要設定為 `Impure`的話，請這樣子設定
+
 ```typescript
 @Pipe({
   name: 'flyingHeroesImpure',
@@ -601,11 +589,9 @@ Angular 的 Pipe 預設皆為 `Pure`，如果需要設定為 `Impure`的話，�
 
 ## Pure Pipe
 
-這裡所指的 `Pure`，至針對 `Pipe` 所要轉換的值是否為 `Pure Change`，所謂的 `Pure Change` 是改變 primitive input value( String, Number, Boolean, Symbol) 或是改變  Object 參考的位址 (Date, Array, Function, Object)。
+這裡所指的 `Pure`，至針對 `Pipe` 所要轉換的值是否為 `Pure Change`，所謂的 `Pure Change` 是改變 primitive input value( String, Number, Boolean, Symbol) 或是改變 Object 參考的位址 (Date, Array, Function, Object)。
 
 這規則與 [ChangeDetectionStrategy.OnPush](https://angular.io/docs/ts/latest/api/core/index/ChangeDetectionStrategy-enum.html) 是一樣的。在上面的例子中，因為 `heroes` 是一個陣列物件，如果是 `push`的行為並不會改變該陣列所參考的位址 (ByReference)，必須重新建立一個新的陣列物件，才會改變參考位址。
-
-
 
 ## Impure Pipe
 
@@ -614,20 +600,19 @@ Angular 的 Pipe 預設皆為 `Pure`，如果需要設定為 `Impure`的話，�
 來調整一下上面的範例，來讓 array.push 也可以做到畫面更新顯示的功能。
 
 ```typescript
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
-import {Flyer} from './app.component';
+import { Flyer } from './app.component';
 
-@Pipe({name: 'flyingHeroes', pure: false})
+@Pipe({ name: 'flyingHeroes', pure: false })
 export class FlyingHeroesPipe implements PipeTransform {
   transform(allHeroes: Flyer[]) {
-    return allHeroes.filter(hero => hero.canFly);
+    return allHeroes.filter((hero) => hero.canFly);
   }
 }
 ```
 
 當這樣子設定為 `Impure`時，下面的 `push` 就可以使用而且畫面也會更新
-
 
 ```typescript
 
@@ -638,14 +623,12 @@ addHero(name: string) {
     }
     let hero = {name, canFly: this.canFly};
 
-    this.heroes.push(hero); 
+    this.heroes.push(hero);
   }
-  
+
 ```
 
 # 參考資料
 
 - [官方文件](https://angular.io/docs/ts/latest/guide/pipes.html)
 - [ngx-translate](http://www.ngx-translate.com/)
-
-
