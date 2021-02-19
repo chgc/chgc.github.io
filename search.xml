@@ -16938,6 +16938,121 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Rust] Rust 學習筆記 - 跟著文件寫猜數字</title>
+    <url>/2021/02/19/rust-note-1/</url>
+    <content><![CDATA[<p>Rust 這語言關注他有一段時間，但都沒有真正的動手寫看看，趁年後還沒那麼多事情時，來學習一下，或許日後可以用他來寫 web assembly</p>
+<a id="more"></a>
+<h1 id="環境安裝"><a class="header-anchor" href="#環境安裝"> </a>環境安裝</h1>
+<p>Rust 的執行環境基本上就依<a href="https://www.rust-lang.org/zh-TW/learn/get-started">官網</a>的安裝步驟做就可以了，如果是 Windows 的環境，當在執行 <code>cargo build</code> 時，有可能會出現 <code>link.exe</code> 找不到的錯誤訊息，通常這個問題跟電腦環境沒裝 <a href="https://visualstudio.microsoft.com/zh-hant/visual-cpp-build-tools/">C++ Build Tools</a> 有關</p>
+<p>開發工具的部分，選擇性還蠻多的，以我目前的環境，是直接選擇 VSCode + Rust 擴充套件進行學習環境</p>
+<h1 id="建立新專案"><a class="header-anchor" href="#建立新專案"> </a>建立新專案</h1>
+<p>安裝完 Rust 後，會有 <code>cargo</code> 的命令可以使用，跟 Angular CLI 的 <code>ng</code> 類似，可以用他來打包、開發、等工作</p>
+<p><img src="image-20210219120226176.png" alt="image-20210219120226176"></p>
+<p>建立專案的指令是 <code>cargo new &lt;project_name&gt;</code>，建立完成後專案資料夾下會有這些檔案</p>
+<p><img src="image-20210219120327131.png" alt="image-20210219120327131"></p>
+<ul>
+<li><code>Cargo.toml</code> : 用來記載專案資訊，相依套件等資訊，類似 <code>package.json</code></li>
+<li><code>Cargo.lock</code>: 用來紀錄套件安裝等資訊，類似 <code>package-lock.json</code></li>
+<li><code>target</code> 資料夾：建置後(<code>cargo build</code>) 的輸出資料夾</li>
+<li><code>src</code> 資料夾：程式放置位置</li>
+<li><code>src/main.rs</code> : 主要進入點</li>
+</ul>
+<p>想執行程式時，使用 <code>cargo run</code> 的指令就可以了</p>
+<h1 id="猜數字-官方範例"><a class="header-anchor" href="#猜數字-官方範例"> </a>猜數字(官方範例)</h1>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html">文件位置</a></li>
+</ul>
+<p>當打開 <code>main.rs</code> 檔案，裡面只有一個 function ，這個是程式的初始執行的方法</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hello, world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要從 console 上接收到使用者輸入得資料時，就要使用到內建的 <code>io</code> 方法</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::io; <span class="comment">// 引用 package, library, namespace (就那個意思)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Guess the number!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Please input your guess.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> guess = <span class="built_in">String</span>::new();</span><br><span class="line"></span><br><span class="line">    io::stdin()</span><br><span class="line">        .read_line(&amp;<span class="keyword">mut</span> guess)</span><br><span class="line">        .expect(<span class="string">&quot;Failed to read line&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;You guessed: &#123;&#125;&quot;</span>, guess);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>line 8: 建立一個可以被變更的文字型態的變數，</p>
+<ul>
+<li>使用 <code>mut</code> 關鍵字設定變數為可變更的</li>
+</ul>
+</li>
+<li>
+<p>line 10 ~ 11: 接收使用者輸入得資料，並存放到 <code>guess</code> 變數中</p>
+<ul>
+<li>使用 <code>&amp;</code> 建立一個 reference</li>
+</ul>
+</li>
+<li>
+<p>line 12: 需處理當 <code>read_line</code> 失敗時需要回傳什麼結果，這是 Rust 處理 Exception 的方式，可以思考成這樣</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> guess;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   guess = Console.Readline();   </span><br><span class="line">&#125; catch &#123;</span><br><span class="line">   guess = <span class="string">&quot;Failed to read line&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>必須處理 Error 的部分，不然 compiler 會跟你抱怨</p>
+<p><img src="image-20210219135909589.png" alt="image-20210219135909589"></p>
+</li>
+</ul>
+</li>
+<li>
+<p>line 14: 使用 <code>&#123;&#125;</code> 來空出變數要顯示的位置，當有多個時，會依序顯示</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;x: &#123;&#125;, y: &#123;&#125;&quot;</span>, x, y);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="引用套件"><a class="header-anchor" href="#引用套件"> </a>引用套件</h2>
+<p>使用其他相依套件的方式很簡單，就在 <code>Cargo.toml</code> 中將套件名稱與版本設定上去即可，類似 npm 的概念，rust 也有自己的 package 管理機制，可以上 <a href="https://crates.io/">crates.io</a> 搜尋套件，&lt;在這練習範例中，使用了 <code>rand</code> 這一個 package</p>
+<p><img src="image-20210219140316275.png" alt="image-20210219140316275"></p>
+<p>搜尋後再右邊有 install 的方式，只要複製貼到 <code>Cargo.toml</code> 的 <code>dependencies</code> 下即可</p>
+<h2 id="使用套件"><a class="header-anchor" href="#使用套件"> </a>使用套件</h2>
+<p>在 <code>main.rs</code>  裡要建立一個介於 1~ 100 的亂數，寫法如下</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">let</span> secret_number = rand::thread_rng().gen_range(<span class="number">1</span>..<span class="number">100</span>);</span><br><span class="line">    ...</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.rs/rand/0.8.3/rand/trait.Rng.html">gen_range API</a></li>
+</ul>
+<p>※備註一，Rust  不喜歡沒有使用的東西留在程式碼內，如果有那種沒使用的變數發生時，編譯時會出現下面的警示訊息</p>
+<p><img src="image-20210219141201642.png" alt="image-20210219141201642"></p>
+<h2 id="比較數字"><a class="header-anchor" href="#比較數字"> </a>比較數字</h2>
+<p>Rust 有內建比較數字的方法 <code>std::cmp::Ordering;</code></p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">   ...</span><br><span class="line">    <span class="keyword">let</span> secret_number = rand::thread_rng().gen_range(<span class="number">1</span>..<span class="number">100</span>);</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> guess = <span class="built_in">String</span>::new();</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">match</span> guess.cmp(&amp;secret_number) &#123;</span><br><span class="line">        Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too small!&quot;</span>),</span><br><span class="line">        Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too big!&quot;</span>),</span><br><span class="line">        Ordering::Equal =&gt; <span class="built_in">println!</span>(<span class="string">&quot;You win!&quot;</span>),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>match</code> : Pattern Matching 的關鍵字 (很常出現的一種寫法)</p>
+</li>
+<li>
+<p><code>secret_number</code> 為數字型，<code>guess</code> 為文字型，line 10 的比較會跳出錯誤訊息</p>
+<p><img src="image-20210219141553593.png" alt="image-20210219141553593"></p>
+</li>
+</ul>
+<p>基於上面的原因，我們需要將 guess 轉換成數字型</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> guess: <span class="built_in">u32</span> = guess.trim().parse().expect(<span class="string">&quot;Please type a number!&quot;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>trim()</code> 會將 <code>\n</code> 或是空白給清除掉</p>
+</li>
+<li>
+<p><code>parse()</code> 將文字轉換成數字，由於宣告變數時，有指定型別, <code>: u32</code> ，所以會轉換成 <code>u32</code> 型別</p>
+</li>
+<li>
+<p><code>expect(....)</code>，當發生 exception 時，會顯示裡面的文字</p>
+<p><img src="image-20210219142058900.png" alt="image-20210219142058900"></p>
+</li>
+</ul>
+<h2 id="持續進行遊戲直到猜對"><a class="header-anchor" href="#持續進行遊戲直到猜對"> </a>持續進行遊戲直到猜對</h2>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">loop</span> &#123;</span><br><span class="line">       <span class="built_in">println!</span>(<span class="string">&quot;Please input your guess.&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">let</span> <span class="keyword">mut</span> guess = <span class="built_in">String</span>::new();</span><br><span class="line"></span><br><span class="line">       io::stdin()</span><br><span class="line">           .read_line(&amp;<span class="keyword">mut</span> guess)</span><br><span class="line">           .expect(<span class="string">&quot;Failed to read line&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="built_in">println!</span>(<span class="string">&quot;You guessed: &#123;&#125;&quot;</span>, guess);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">let</span> guess: <span class="built_in">u32</span> = guess.trim().parse().expect(<span class="string">&quot;Please type a number!&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">match</span> guess.cmp(&amp;secret_number) &#123;</span><br><span class="line">           Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too small!&quot;</span>),</span><br><span class="line">           Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too big!&quot;</span>),</span><br><span class="line">           Ordering::Equal =&gt; &#123;</span><br><span class="line">               <span class="built_in">println!</span>(<span class="string">&quot;You win!&quot;</span>);</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 1：新增 loop 迴圈</li>
+<li>line 17: 猜對時跳出迴圈</li>
+</ul>
+<p>上面的寫法針對 <code>line 12</code> 輸入不是可轉換成數字的情況下，還是會被迫結束程式，所以要修正一下寫法</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> guess: <span class="built_in">u32</span> = <span class="keyword">match</span> guess.trim().parse() &#123;</span><br><span class="line">            <span class="literal">Ok</span>(num) =&gt; num,</span><br><span class="line">            <span class="literal">Err</span>(_) =&gt; <span class="keyword">continue</span>,</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
+<p>再次透過 pattern match 的方式，調整遇到 <code>Err</code> 時要做的行為，這樣就不會因為轉換失敗造成程式被強制中斷了。</p>
+<h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
+<p>到這邊是官網提供的一個算是完整的簡單範例，也可以從中觀察到 Rust 這語言的特性，自己在第一次寫時並沒有遇到太卡的地方，很多觀念都可以從其他語言延用，可以算是一個嚴謹但又不會讓你寫得很囉唆。第一印象是好的</p>
+<p>接下來就會往更深層去瞭解這語言的其他部分，例如型別、流程控制、跟程式結構等，下篇見。</p>
+]]></content>
+      <categories>
+        <category>Rust</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
