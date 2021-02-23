@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -29,7 +29,7 @@
 <meta property="og:description" content="Angular2裡面有用到RxJS的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2016-05-10T08:59:03.000Z">
-<meta property="article:modified_time" content="2021-02-19T06:31:02.496Z">
+<meta property="article:modified_time" content="2021-02-23T03:38:15.497Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -267,7 +267,7 @@
 
       
         <p>Angular2裡面有用到<a target="_blank" rel="noopener" href="https://github.com/Reactive-Extensions/RxJS">RxJS</a>的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="Angular2-Http-Code"><a class="header-anchor" href="#Angular2-Http-Code"> </a>Angular2 Http Code</h2>
 <p><a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/master/modules/%40angular/http/src/http.ts">source code - http.ts</a></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Response&#125; <span class="keyword">from</span> <span class="string">&#x27;./static_response&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Http</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">protected _backend: ConnectionBackend, protected _defaultOptions: RequestOptions</span>)</span> &#123;&#125;</span><br><span class="line">	get(url: string, options?: RequestOptionsArgs): Observable&lt;Response&gt; &#123;</span><br><span class="line">         ....</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -401,7 +401,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">301</span>
+          <span class="site-state-item-count">302</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

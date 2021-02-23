@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/01/01/angular-testing-debounceTime/"
 			},
 			"datePublished": "2019-01-01T03:16:00.000Z",
-			"dateModified": "2021-02-19T06:31:02.524Z",
+			"dateModified": "2021-02-23T03:38:15.525Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular 在測試非同步的程式碼，有提供 <code>fakeAsync</code> 與 <code>tick</code> 的方法，可以讓我們手動控制時間的快慢，進而做到程式碼的測試，可是，這個寫法遇到 RxJS 時間相關的 operators 就會出問題，那又該如何處理呢?</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>雖然在官方文件內寫了很多如何測試非同步的方法，但是我發現這一個方法比較不容易出錯，也可以在 wallaby.js 的測試環境下正常運作，在此筆記分享</p>
 <p>假設我有一段程式碼要測試</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.searchBox.valueChanges</span><br><span class="line">      .pipe(                </span><br><span class="line">        debounceTime(<span class="number">500</span>)        </span><br><span class="line">      )</span><br><span class="line">      .subscribe(<span class="function"><span class="params">value</span> =&gt;</span> {        </span><br><span class="line">        <span class="built_in">this</span>.searchInput = value;</span><br><span class="line">      });</span><br></pre></td></tr></tbody></table></figure>

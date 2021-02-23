@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/07/02/angular-component-outlet/"
 			},
 			"datePublished": "2017-07-02T13:49:42.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>原本 Angular 就提供動態載入 Component 的方式，但是 Angular 又提供另外一種更簡單的方式，<code>ngComponentOutlet</code>，簡單到一個變態的境界</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="Overview"><a class="header-anchor" href="#Overview"> </a>Overview</h1>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">directive NgComponentOutlet <span class="keyword">implements</span> OnChanges,  OnDestroy {</span><br><span class="line">  <span class="title">constructor</span>(<span class="params">_viewContainerRef: ViewContainerRef</span>)</span><br><span class="line">  <span class="title">ngComponentOutlet</span>: <span class="title">Type</span>&lt;<span class="title">any</span>&gt;</span><br><span class="line">  <span class="title">ngComponentOutletInjector</span>: <span class="title">Injector</span></span><br><span class="line">  <span class="title">ngComponentOutletContent</span>: <span class="title">any</span>[][]</span><br><span class="line">  <span class="title">ngComponentOutletNgModuleFactory</span>: <span class="title">NgModuleFactory</span>&lt;<span class="title">any</span>&gt;</span><br><span class="line">  <span class="title">ngOnChanges</span>(<span class="params">changes: SimpleChanges</span>)</span><br><span class="line">  <span class="title">ngOnDestroy</span>(<span class="params"></span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="基本款"><a class="header-anchor" href="#基本款"> </a>基本款</h1>

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/12/02/go-note-4-method/"
 			},
 			"datePublished": "2019-12-02T01:31:59.000Z",
-			"dateModified": "2021-02-19T06:31:02.604Z",
+			"dateModified": "2021-02-23T03:38:15.597Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Go 的 Methods 功能很強， 但也很多要注意的地方，就仔細地跟著官網的文件學習了。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="基本"><a class="header-anchor" href="#基本"> </a>基本</h1>
 <p>Go  本身沒有並沒有 Class 語法, 但我們卻可以針對型別去擴充功能。Method 也是一種 function 但有特定寫法</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v T)</span> &lt;<span class="title">func</span> <span class="title">name</span>&gt; &lt;<span class="title">return</span> <span class="title">type</span>&gt;</span> {</span><br><span class="line">    ....</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 範例</span></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> {</span><br><span class="line">	X, Y <span class="keyword">float64</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v Vertex)</span> <span class="title">Abs</span><span class="params">()</span> <span class="title">float64</span></span> {</span><br><span class="line">	<span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

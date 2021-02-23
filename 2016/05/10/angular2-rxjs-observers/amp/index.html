@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/05/10/angular2-rxjs-observers/"
 			},
 			"datePublished": "2016-05-10T08:59:03.000Z",
-			"dateModified": "2021-02-19T06:31:02.496Z",
+			"dateModified": "2021-02-23T03:38:15.497Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular2裡面有用到<a href="https://github.com/Reactive-Extensions/RxJS">RxJS</a>的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="Angular2-Http-Code"><a class="header-anchor" href="#Angular2-Http-Code"> </a>Angular2 Http Code</h2>
 <p><a href="https://github.com/angular/angular/blob/master/modules/%40angular/http/src/http.ts">source code - http.ts</a></p>
 <figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> {Response} <span class="keyword">from</span> <span class="string">'./static_response'</span>;</span><br><span class="line"><span class="keyword">import</span> {Observable} <span class="keyword">from</span> <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Http</span> </span>{</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">protected _backend: ConnectionBackend, protected _defaultOptions: RequestOptions</span>)</span> {}</span><br><span class="line">	get(url: string, options?: RequestOptionsArgs): Observable&lt;Response&gt; {</span><br><span class="line">         ....</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://farm8.staticflickr.com/7570/30062998941_a312d6c600_o.png">
 <meta property="og:image" content="https://farm6.staticflickr.com/5148/29518843843_e15cd6bc2e_o.png">
 <meta property="article:published_time" content="2016-10-06T07:25:12.000Z">
-<meta property="article:modified_time" content="2021-02-19T06:31:02.496Z">
+<meta property="article:modified_time" content="2021-02-23T03:38:15.497Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="RxJS">
 <meta name="twitter:card" content="summary">
@@ -271,7 +271,7 @@
 
       
         <p>我們都知道RxJS的Observeable會在subscribe的時候才會執行，所以每一次的subscribe都會執行一次，但是，某些情況下我們並不想要那樣子做，而在RxJS裡面有一個MultiCasting的觀念，主要是用來處理一個Observeable多個Observer的情況時，而不重複執行Observable.  這篇會整理一下關於MultiCasting的相關觀念</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>假設情境</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> source = Rx.Observable.interval(<span class="number">1000</span>).take(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ObserverA = &#123;</span><br><span class="line">  next: <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;A next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  error: <span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123; <span class="built_in">console</span>.error(<span class="string">&#x27;A error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  complete: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;A Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">source.subscribe(ObserverA);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ObserverB = &#123;</span><br><span class="line">  next: <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;B next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  error: <span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123; <span class="built_in">console</span>.error(<span class="string">&#x27;B error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  complete: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;B Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  	source.subscribe(ObserverB);</span><br><span class="line">&#125;,<span class="number">2000</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>這樣子跑出來的結果如下</p>
@@ -424,7 +424,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">301</span>
+          <span class="site-state-item-count">302</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

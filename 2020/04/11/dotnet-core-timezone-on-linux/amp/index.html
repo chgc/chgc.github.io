@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/11/dotnet-core-timezone-on-linux/"
 			},
 			"datePublished": "2020-04-11T16:57:25.000Z",
-			"dateModified": "2021-02-19T06:31:02.620Z",
+			"dateModified": "2021-02-23T03:38:15.613Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p><code>.NET Core</code> 在 Linux 環境上遇到設定時區時，會遇到這一個錯誤訊息 <code>The time zone ID 'Taipei Standard Time' was **not** found on the local computer.</code> ，這一個問題在 mac 上也會遇到，主要是因為以前 <code>.Net</code> 只能跑在 windows 上，所以不會遇到這個問題，而當現在 <code>.NET Core</code> 跑在 Linux 環境上就會遇到這類似的問題</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>解法很簡單，判斷目前跑的環境是什麼，然後給予正確的時區名稱即可</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Runtime.InteropServices;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> id = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?</span><br><span class="line">                <span class="string">"Taipei Standard Time"</span> : <span class="string">"Asia/Taipei"</span>;</span><br><span class="line">TimeZoneInfo tw = TimeZoneInfo.FindSystemTimeZoneById(id);</span><br></pre></td></tr></tbody></table></figure>
 <p>當這樣子寫完，問題就解決了</p>

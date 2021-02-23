@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/06/15/angular-aio-code-study-002/"
 			},
 			"datePublished": "2017-06-15T12:06:32.000Z",
-			"dateModified": "2021-02-19T06:31:02.496Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>繼續<a href="http://blog.kevinyang.net/2017/06/15/angular-aio-code-study-001/">筆記001</a>，繼續研究下去。這篇會研讀 <code>&lt;aio-top-menu&gt;</code> component</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="aio-top-menu"><a class="header-anchor" href="#aio-top-menu"> </a>aio-top-menu</h1>
 <p>component 所在路徑 <code>src/app/layout/top-menu</code></p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { Component, Input } <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> { NavigationNode } <span class="keyword">from</span> <span class="string">'app/navigation/navigation.service'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>({</span><br><span class="line">  selector: <span class="string">'aio-top-menu'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;ul role="navigation"&gt;</span></span><br><span class="line"><span class="string">      &lt;li *ngFor="let node of nodes"&gt;&lt;a class="nav-link" [href]="node.url" [title]="node.title"&gt;{{ node.title }}&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;`</span></span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">TopMenuComponent</span> </span>{</span><br><span class="line">  <span class="meta">@Input</span>() nodes: NavigationNode[];</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
@@ -1893,7 +1893,8 @@ We are not storing the subscription from connecting as we do not expect this ser
 <li>使用 <code>publishLast()</code> 跟 <code>connect()</code> 的理由同上一段</li>
 <li>回傳的結果，就只會剩下 <code>NavigationViews</code> 而已</li>
 </ul>
-<h2 id="code￼7"><a class="header-anchor" href="#code￼7"> </a><figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> NavigationViews {</span><br><span class="line">  [name: <span class="built_in">string</span>]: NavigationNode[];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></h2>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> NavigationViews {</span><br><span class="line">  [name: <span class="built_in">string</span>]: NavigationNode[];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<hr>
 <p>接著回到 <code>app.component.ts</code> ，在 subscribe 之後就可以取得 <code>NavigationViews</code> 了</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.navigationService.navigationViews.subscribe(<span class="function"><span class="params">views</span> =&gt;</span> {</span><br><span class="line">      ...</span><br><span class="line">      <span class="built_in">this</span>.topMenuNodes = views[<span class="string">'TopBar'</span>]  || [];</span><br><span class="line">      ...      </span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 <p>所以 <code>topmenuNodes</code> 就透過 KeyValue 的形式從 NavigationViews 中取出並讓 <code>&lt;aio-top-menu&gt;</code> 做顯示的動作</p>

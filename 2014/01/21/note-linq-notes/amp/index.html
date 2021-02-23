@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/01/21/note-linq-notes/"
 			},
 			"datePublished": "2014-01-21T23:32:00.000Z",
-			"dateModified": "2021-02-19T06:31:02.492Z",
+			"dateModified": "2021-02-23T03:38:15.497Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1844,6 +1844,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>目的： 取得最後一筆的聊天紀錄</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var result = (from o in db.messages</span><br><span class="line">							let msgFrom = o.fromUid == uid</span><br><span class="line">							let msgTo = o.toUid == uid</span><br><span class="line">							where msgFrom || msgTo</span><br><span class="line">							group o by msgTo ? o.fromUid : o.toUid into grp</span><br><span class="line">							let lastDate = grp.Max(m =&gt; m.createDate)</span><br><span class="line">							from p in grp</span><br><span class="line">							where p.createDate == lastDate</span><br><span class="line">							select new viewMessage</span><br><span class="line">							{</span><br><span class="line">								uid = p.fromUid == uid ? p.toUid : p.fromUid,</span><br><span class="line">								name = p.fromUid == uid ? p.toemployees.name : p.fromemployees.name,</span><br><span class="line">								msg = p.msg,</span><br><span class="line">								lastdate = p.createDate,</span><br><span class="line">								unread = p.unread</span><br><span class="line">							}).AsEnumerable();</span><br></pre></td></tr></tbody></table></figure>
+
 			  		
 			  		<!-- google Adsense -->
 			  		

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/03/23/material-datepicker-taiwan/"
 			},
 			"datePublished": "2020-03-23T00:33:51.000Z",
-			"dateModified": "2021-02-19T06:31:02.612Z",
+			"dateModified": "2021-02-23T03:38:15.605Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>上周接到一個很討厭的需求，對方想要日期選擇時可以用民國年，其實有在處理日期選擇元件的人多少都會遇到這個需求，基本上就是討厭，但該做的還是要做，那 Angular Material Datepicker 要怎麼處理呢?</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>其實也不複雜，因為 Angular Material Datepicker 有提供 <code>DateAdapter</code> 的介面可以實做，但又因為從頭做起太痛苦了，只好借用現有的 <code>MomenetDateAdapter</code> 來擴充了，以下是幾個地方需要調整</p>
 <ol>
 <li>parse: 處理使用者輸入日期時，要轉換成對的時間</li>

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/20/angular-form-valuechanges/"
 			},
 			"datePublished": "2020-04-20T01:49:44.000Z",
-			"dateModified": "2021-02-19T06:31:02.620Z",
+			"dateModified": "2021-02-23T03:38:15.617Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular Reacitve Form 內有一套值的更新流程，從 FormGroup 到 FormControl 間到底是如何進行資料的更新，有什麼要留意的地方，在這篇筆記內我盡量整理 (會持續潤稿)</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>首先先將重點放在 <code>FormGroup</code> 和 <code>FormControl</code> 這兩個主體上就好，我們都知道 <code>FormGroup</code> 和 <code>FormControl</code> 都是繼承 <code>AbstractControl</code>，不同的部分就在各 class 上重新撰寫 ，好加在的是這篇文章要看的程是碼都在同一個<a href="https://github.com/angular/angular/blob/d7e9d8746a47c689fd8014f3913c47c4d6692709/packages/forms/src/model.ts">檔案</a>上</p>
 <p>而此篇要探討的是 <code>setValue</code>、<code>patchValue</code> 和 <code>valuechanges</code> 這三件事情，到底更新的流程是什麼，為什麼這件事情很重要，當在寫連動表單或是物件時，流程一但搞錯就會讓你除錯除到死</p>
 <h1 id="原始碼解析"><a class="header-anchor" href="#原始碼解析"> </a>原始碼解析</h1>

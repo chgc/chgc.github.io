@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/11/05/rxjs-subscription/"
 			},
 			"datePublished": "2018-11-05T00:27:07.000Z",
-			"dateModified": "2021-02-19T06:31:02.504Z",
+			"dateModified": "2021-02-23T03:38:15.505Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>在 RxJS  裡在建立 Observable 時，都會回傳一個 subscription 物件，而這一個物件允許我們手動取消 Observable 的動作，其實 Subscription 裡還有其他細節的。這一篇文章就來探討 Subscription。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="介面"><a class="header-anchor" href="#介面"> </a>介面</h1>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> SubscriptionLike <span class="keyword">extends</span> Unsubscribable {</span><br><span class="line">  unsubscribe(): <span class="built_in">void</span>;</span><br><span class="line">  <span class="keyword">readonly</span> closed: <span class="built_in">boolean</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>這一個介面定義是 RxJS 6.x 版，也是我們常見的使用方法，但事實上在 Subscription 內還有兩個 method 是沒有定義，而這一個問題在 RxJS 7 版有被修正</p>

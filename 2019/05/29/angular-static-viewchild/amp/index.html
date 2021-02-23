@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/05/29/angular-static-viewchild/"
 			},
 			"datePublished": "2019-05-29T14:00:12.000Z",
-			"dateModified": "2021-02-19T06:31:02.548Z",
+			"dateModified": "2021-02-23T03:38:15.545Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular 8 在五月底正式釋出，而這次的釋出裡面有一個更新屬於新設定，觀念上是有需要調整的，所以寫了這篇文章釐清一下</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>所謂的 Query 上的改變，是針對 <code>ViewChild</code> / <code>ContentChild</code> 這一類的 decorator 做額外的設定，以前我們的程式碼會這樣子寫</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ViewChild</span>(<span class="string">'foo'</span>) foo: ElementRef</span><br></pre></td></tr></tbody></table></figure>
 <p>這樣子寫在取得內容的時間點，有時候會是在 <code>Oninit</code> 有時候需要在 <code>ngAfterViewInit</code> 時才可以取得。稍微分析一下為什麼會有這樣子的時間點上的差異性</p>

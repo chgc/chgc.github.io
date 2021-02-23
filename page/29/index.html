@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -196,6 +196,96 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/01/21/note-linq-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/01/21/note-linq-notes/" class="post-title-link" itemprop="url">[工作筆記] Linq筆記 - 取得最後一筆的聊天紀錄</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-01-22 07:32:00" itemprop="dateCreated datePublished" datetime="2014-01-22T07:32:00+08:00">2014-01-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/01/21/note-linq-notes/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/21/note-linq-notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>目的： 取得最後一筆的聊天紀錄</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var result &#x3D; (from o in db.messages</span><br><span class="line">							let msgFrom &#x3D; o.fromUid &#x3D;&#x3D; uid</span><br><span class="line">							let msgTo &#x3D; o.toUid &#x3D;&#x3D; uid</span><br><span class="line">							where msgFrom || msgTo</span><br><span class="line">							group o by msgTo ? o.fromUid : o.toUid into grp</span><br><span class="line">							let lastDate &#x3D; grp.Max(m &#x3D;&gt; m.createDate)</span><br><span class="line">							from p in grp</span><br><span class="line">							where p.createDate &#x3D;&#x3D; lastDate</span><br><span class="line">							select new viewMessage</span><br><span class="line">							&#123;</span><br><span class="line">								uid &#x3D; p.fromUid &#x3D;&#x3D; uid ? p.toUid : p.fromUid,</span><br><span class="line">								name &#x3D; p.fromUid &#x3D;&#x3D; uid ? p.toemployees.name : p.fromemployees.name,</span><br><span class="line">								msg &#x3D; p.msg,</span><br><span class="line">								lastdate &#x3D; p.createDate,</span><br><span class="line">								unread &#x3D; p.unread</span><br><span class="line">							&#125;).AsEnumerable();</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
       
   
   
@@ -1279,127 +1369,6 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/11/python-note-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/11/11/python-note-1/" class="post-title-link" itemprop="url">[python]筆記1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-11-11 14:47:00" itemprop="dateCreated datePublished" datetime="2013-11-11T14:47:00+08:00">2013-11-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/11/11/python-note-1/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/11/python-note-1/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>#String</p>
-<p>string可以用 『』 or 「」 在 '『裡面可以用&quot;, 在&quot;&quot; 裡面可以用』</p>
-<p>string連結的方式 + or 空白</p>
-<p>但是如果是要連結變數和文字，則需要使用 +。數字和文字不可以做連接。</p>
-<p>string[x] 可以直接將文字轉成陣列, 然後直接讀取</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>word = <span class="string">&#x27;Python&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[<span class="number">0</span>]  <span class="comment"># character in position 0</span></span><br><span class="line"><span class="string">&#x27;P&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[<span class="number">5</span>]  <span class="comment"># character in position 5</span></span><br><span class="line"><span class="string">&#x27;n&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[-<span class="number">1</span>]  <span class="comment"># last character</span></span><br><span class="line"><span class="string">&#x27;n&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[-<span class="number">2</span>]  <span class="comment"># second-last character</span></span><br><span class="line"><span class="string">&#x27;o&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[-<span class="number">6</span>]</span><br><span class="line"><span class="string">&#x27;P&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[<span class="number">0</span>:<span class="number">2</span>]  <span class="comment"># characters from position 0 (included) to 2 (excluded)</span></span><br><span class="line"><span class="string">&#x27;Py&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[<span class="number">2</span>:<span class="number">5</span>]  <span class="comment"># characters from position 2 (included) to 5 (excluded)</span></span><br><span class="line"><span class="string">&#x27;tho&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[:<span class="number">2</span>] + word[<span class="number">2</span>:]</span><br><span class="line"><span class="string">&#x27;Python&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[:<span class="number">4</span>] + word[<span class="number">4</span>:]</span><br><span class="line"><span class="string">&#x27;Python&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[:<span class="number">2</span>]  <span class="comment"># character from the beginning to position 2 (excluded)</span></span><br><span class="line"><span class="string">&#x27;Py&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[<span class="number">4</span>:]  <span class="comment"># characters from position 4 (included) to the end</span></span><br><span class="line"><span class="string">&#x27;on&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[-<span class="number">2</span>:] <span class="comment"># characters from the second-last (included) to the end</span></span><br><span class="line"><span class="string">&#x27;on&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[::-<span class="number">1</span>] <span class="comment"># reverse a string</span></span><br><span class="line"><span class="string">&#x27;nohtyp&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(word) <span class="comment"># length of a string</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"></span><br><span class="line">+---+---+---+---+---+---+</span><br><span class="line"> | P | y | t | h | o | n |</span><br><span class="line"> +---+---+---+---+---+---+</span><br><span class="line"> <span class="number">0</span>   <span class="number">1</span>   <span class="number">2</span>   <span class="number">3</span>   <span class="number">4</span>   <span class="number">5</span>   <span class="number">6</span></span><br><span class="line">-<span class="number">6</span>  -<span class="number">5</span>  -<span class="number">4</span>  -<span class="number">3</span>  -<span class="number">2</span>  -<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>輸出文字:</p>
-<ol>
-<li>v2.7 : print 『xxxxx』</li>
-<li>v3.3 : print(『xxxx』)</li>
-</ol>
-<p>文字重複顯示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#39;something&#39;*3</span><br><span class="line">&#39;somethingsomethingsomething&#39;</span><br></pre></td></tr></table></figure>
-<p>#Number
-計算方式: 先乘除後加減，有內算到外，有左到右</p>
-<p>number分interger and float, 區分方法是有沒有使用小數點</p>
-<p>+ - * : 加，減，乘</p>
-<p>除有兩個方法:</p>
-<ol>
-<li>/ : 傳回 float</li>
-<li>//: 傳回 integer</li>
-</ol>
-<p>% : 傳回餘數
-** : 次方</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 7&#x2F;4</span><br><span class="line">1.75</span><br><span class="line">&gt;&gt;&gt; 7&#x2F;&#x2F;4</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; 7%4</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 2**10</span><br><span class="line">1024</span><br></pre></td></tr></table></figure>
-<p>a = b: 將b值指定給a</p>
-<p>在interactive mode，可以利用 _ 取得上次的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 1+2</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 1+_</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<h1 id="Lists"><a class="header-anchor" href="#Lists"> </a>Lists</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; squares &#x3D; [1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares</span><br><span class="line">[1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares[1]</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; squares[-1]</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
-<p>基本操作可以參考string的部分，一樣可以使用 + 做lists的連結</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.append(value) # add value to the list</span><br></pre></td></tr></table></figure>
-<p>二維陣列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span><br><span class="line">&gt;&gt;&gt; n &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; x &#x3D; [a, n]</span><br><span class="line">&gt;&gt;&gt; x</span><br><span class="line">[[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], [1, 2, 3]]</span><br><span class="line">&gt;&gt;&gt; x[0]</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span><br><span class="line">&gt;&gt;&gt; x[0][1]</span><br><span class="line">&#39;b&#39;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1471,7 +1440,7 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">301</span>
+          <span class="site-state-item-count">302</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

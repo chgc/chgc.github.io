@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/09/24/angular-injector/"
 			},
 			"datePublished": "2017-09-24T03:35:35.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular 有內建一套 Dependency Injection 框架，可以讓我們簡單的完成 DI 的相關行為，Angular 內部是如何運作建置 Injector 的呢? 讓我們來研究一下</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="Angular-建立-Injector-的方式"><a class="header-anchor" href="#Angular-建立-Injector-的方式"> </a>Angular 建立 Injector 的方式</h1>
 <p>從 <code>platformBrowserDynamic()</code> 執行時，就會開始一系列的初始建置 platform 的動作，這其中包含 Injector 的設定，從原始碼整理出的順序是執行 <code>platformBrowerDynamic()</code> 事實上就是執行 <code>createPlatformFactory</code>的動作。</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 進入點</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> platformBrowserDynamic = createPlatformFactory(</span><br><span class="line">    platformCoreDynamic, <span class="string">'browserDynamic'</span>, INTERNAL_BROWSER_DYNAMIC_PLATFORM_PROVIDERS);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二層的 platformCoreDynamic</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> platformCoreDynamic = createPlatformFactory(platformCore, <span class="string">'coreDynamic'</span>, [</span><br><span class="line">  {<span class="attr">provide</span>: COMPILER_OPTIONS, <span class="attr">useValue</span>: {}, <span class="attr">multi</span>: <span class="literal">true</span>},</span><br><span class="line">  {<span class="attr">provide</span>: CompilerFactory, <span class="attr">useClass</span>: JitCompilerFactory, <span class="attr">deps</span>: [COMPILER_OPTIONS]},</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最底層的 platformCore</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> platformCore = createPlatformFactory(<span class="literal">null</span>, <span class="string">'core'</span>, _CORE_PLATFORM_PROVIDERS);</span><br></pre></td></tr></tbody></table></figure>

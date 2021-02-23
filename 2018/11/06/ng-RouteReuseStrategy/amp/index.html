@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/11/06/ng-RouteReuseStrategy/"
 			},
 			"datePublished": "2018-11-06T00:23:52.000Z",
-			"dateModified": "2021-02-19T06:31:02.504Z",
+			"dateModified": "2021-02-23T03:38:15.505Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular 路由機制中，有一個選項是 <code>routeReuseStrategy</code>，這一個設定可以讓我們設定路由轉換的過程中，是否要保留 component 並重複使用，而相關的使用方式如下</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="設定"><a class="header-anchor" href="#設定"> </a>設定</h1>
 <p>首先，先建立一個 Class 並實作 <code>RouteReuseStrategy</code> 介面，<code>RouteReuseStrategy</code> 介面包含了五個方法需要被實作</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">RouteReuseStrategy</span> </span>{</span><br><span class="line">  <span class="keyword">abstract</span> shouldDetach(route: ActivatedRouteSnapshot): <span class="built_in">boolean</span></span><br><span class="line">  <span class="keyword">abstract</span> store(route: ActivatedRouteSnapshot, <span class="attr">handle</span>: DetachedRouteHandle): <span class="built_in">void</span></span><br><span class="line">  <span class="keyword">abstract</span> shouldAttach(route: ActivatedRouteSnapshot): <span class="built_in">boolean</span></span><br><span class="line">  <span class="keyword">abstract</span> retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | <span class="literal">null</span></span><br><span class="line">  <span class="keyword">abstract</span> shouldReuseRoute(future: ActivatedRouteSnapshot, <span class="attr">curr</span>: ActivatedRouteSnapshot): <span class="built_in">boolean</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

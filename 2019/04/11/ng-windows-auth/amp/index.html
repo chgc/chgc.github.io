@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/04/11/ng-windows-auth/"
 			},
 			"datePublished": "2019-04-11T02:52:41.000Z",
-			"dateModified": "2021-02-19T06:31:02.536Z",
+			"dateModified": "2021-02-23T03:38:15.537Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1853,7 +1853,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Angular 使用 Windows Authentication，聽起來沒什麼，但是加上 CORS 就是不同的故事了</p>
 <p>※ 這篇文章的後端是使用 <a href="http://ASP.NET">ASP.NET</a> Core MVC ，但要處理的問題是一樣的，觀念通用</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>Angular 的 HttpClient 在發送請求時，如果在同一個網址下 (同一個網站)，自然會付上 cookie，但遇到不同站點下時又想要帶 cookie 時，該怎麼處理，這時候就必須將 <code>withCredentials</code> 開啟，這是 <code>XMLHttpRequest</code> 內建屬性，用途為判斷是否該使用類似 cookies, authorization headers 或者 TLS 客戶端認證這一類資格證書來建立一個跨站點訪問控制（cross-site <code>Access-Control</code>）請求。這裡是基本用法，當然如果要全域套用時，就會寫成 Http interceptor</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.http.get(<span class="string">'https://localhost:44369/api/values'</span>, {</span><br><span class="line">        withCredentials: <span class="literal">true</span></span><br><span class="line">      })</span><br><span class="line">      .subscribe(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></tbody></table></figure>
 <p>Angular 端這樣子就可以算是設定完成了</p>

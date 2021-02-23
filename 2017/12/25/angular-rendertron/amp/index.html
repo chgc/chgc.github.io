@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/12/25/angular-rendertron/"
 			},
 			"datePublished": "2017-12-25T02:38:34.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>什麼是 <code>rendertron</code> ? <code>rendertron</code> 是 Google Chrome 團隊推出的另外一個新工具，這工具可以讓 PWA 網站遇到網路爬蟲或是分享到 twitter/Facebook 時，可以產出靜態頁面的效果。換句算說，這工具可以讓我們不用額外處理 Service Side Rendering 卻可以得到相同的效果 (僅局限於網路爬蟲或是 Rich Content Sharing時)。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="簡介"><a class="header-anchor" href="#簡介"> </a>簡介</h1>
 <p><code>rendertron</code> 是如何運作的呢? 其實 rendertron 是透過 Headless Chrome 來讀取 PWA 網站並回傳所產生出來的結果，因為是使用瀏覽器來產生 DOM，所以通常在實作 Server Side Rendering 時會遇到的問題都不會發生，例如 <code>document</code> 物件不存在。</p>
 <p>另外一個好處是，因為是使用瀏覽器來產生 DOM，所以任何前端技術都可以使用!! 因為是透過 proxy middleware 的方式來完成的，middleware 的設定方是根據文件，看起來並不複雜</p>

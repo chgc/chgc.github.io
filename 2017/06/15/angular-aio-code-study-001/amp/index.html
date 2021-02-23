@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/06/15/angular-aio-code-study-001/"
 			},
 			"datePublished": "2017-06-15T02:01:35.000Z",
-			"dateModified": "2021-02-19T06:31:02.496Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>近期 <a href="https://angular.io">angular.io</a> 換新版，使用 Angular 4 重新撰寫官方網站，網站開啟速度非常的快 (PWA)，所以就想要從官方出手寫的程式碼學習 Angular 程式碼可以怎麼寫，接下來的一系列學習筆記將圍繞的這個主題，程式碼可以從 <a href="https://github.com/angular/angular">github</a> 下載</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="main-ts"><a class="header-anchor" href="#main-ts"> </a>main.ts</h1>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">platformBrowserDynamic().bootstrapModule(AppModule).then(<span class="function"><span class="params">ref</span> =&gt;</span> {</span><br><span class="line">  <span class="keyword">if</span> (environment.production &amp;&amp; <span class="string">'serviceWorker'</span> <span class="keyword">in</span> (navigator <span class="keyword">as</span> <span class="built_in">any</span>)) {</span><br><span class="line">    <span class="keyword">const</span> appRef: ApplicationRef = ref.injector.get(ApplicationRef);</span><br><span class="line">    appRef.isStable.first().subscribe(<span class="function">() =&gt;</span> {</span><br><span class="line">      (navigator <span class="keyword">as</span> <span class="built_in">any</span>).serviceWorker.register(<span class="string">'/worker-basic.min.js'</span>);</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 <p><code>bootstrapModule</code> 完成後會回傳一個 <code>NgModuleRef</code>，可以透過 <code>ngModuleRef</code> 的  <code>injector</code> 取得 <code>ApplicationRef</code>，利用這樣子的寫法，可以將 <code>service-worker</code> 注入到網頁裡。原本這一段是寫在 index.html 裡，但透過這樣子的方式註冊，更有彈性，例如我們可以設定只有在 <code>production</code>模式下才要註冊 <code>service-worker</code>。</p>

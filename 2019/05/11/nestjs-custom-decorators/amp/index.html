@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/05/11/nestjs-custom-decorators/"
 			},
 			"datePublished": "2019-05-11T08:01:23.000Z",
-			"dateModified": "2021-02-19T06:31:02.548Z",
+			"dateModified": "2021-02-23T03:38:15.545Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>NestJS 裡大量使用 Decorators 來設定相關的功能，類似 Filter、Pipe、Interceptors、Req、Body 等，當然也可以自訂 Decorators 來做一些我們想要簡化的功能</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>在 NestJS 內要自訂 Decorators 很單純，NestJS 為我們準備好 <code>createParamDecorator</code> ，可以透過此方法來建立 decorator。這裡有一個官網提供的範例</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { createParamDecorator } <span class="keyword">from</span> <span class="string">'@nestjs/common'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> User = createParamDecorator(<span class="function">(<span class="params">data, req</span>) =&gt;</span> {</span><br><span class="line">  <span class="keyword">return</span> req.user;</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 <p>當建立完成後，就可以在需要的地方使用</p>

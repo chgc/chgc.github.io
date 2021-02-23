@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -200,6 +200,126 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/09/phalcon-using-model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/10/09/phalcon-using-model/" class="post-title-link" itemprop="url">[Phalcon] Using Model</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-10-09 11:47:00" itemprop="dateCreated datePublished" datetime="2013-10-09T11:47:00+08:00">2013-10-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Phalcon/" itemprop="url" rel="index"><span itemprop="name">Phalcon</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/10/09/phalcon-using-model/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/09/phalcon-using-model/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>In Phalcon Model system. 是根據ORM的架構，讓資料表物件化，讓在資料讀取或是寫入的動作上，可以利用物件的特性去操作。</p>
+<h1 id="初始設定"><a class="header-anchor" href="#初始設定"> </a>初始設定</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Database connection is created based in the parameters defined in the configuration file</span><br><span class="line"> *&#x2F;</span><br><span class="line">$di-&gt;set(&#39;db&#39;, function() use ($config) &#123;</span><br><span class="line">	return new DbAdapter(array(</span><br><span class="line">		&#39;host&#39; &#x3D;&gt; $config-&gt;database-&gt;host,</span><br><span class="line">		&#39;username&#39; &#x3D;&gt; $config-&gt;database-&gt;username,</span><br><span class="line">		&#39;password&#39; &#x3D;&gt; $config-&gt;database-&gt;password,</span><br><span class="line">		&#39;dbname&#39; &#x3D;&gt; $config-&gt;database-&gt;dbname</span><br><span class="line">	));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上列的動作會開啟與資料庫中間的連線關係，$config會去讀取所指定的設定文件</p>
+<p>Model文件預設的命名方式為table名稱，例如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Rebots extends \Phalcon\Mvc\Model</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>官方文件建議，要在Model文件中描述資料表的欄位，以減少使用伺服器的記憶體資源。</p>
+<p>如果Model的名稱與資料庫資料表名稱不同時，可以透過以下的方式重新設定所關聯的資料表名稱</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">&#123;</span><br><span class="line">	$this-&gt;setSource(&#39;Rebots&#39;);</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;    </span><br><span class="line"></span><br><span class="line">#於Controller中使用Model讀取資料</span><br><span class="line"></span><br><span class="line">讀取清單的方式有幾種</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>ModelName::find(condition)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">當找到筆資料時，所回傳的物件可以直接修改後，並儲存(Update)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$result = ModelName::find(『id=1』);
+$result-&gt;fieldName = 「something something」;
+$result-&gt;save(); &lt;=將資料回傳至資料庫中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">新增動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$result = new ModelName();
+$result-&gt;fieldName = 「something something」;
+$result-&gt;save();</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">刪除動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$result = ModelName::find(condition);
+if ($result != false) {
+// 執行刪除
+if ($result-&gt;delete() == false) {<br>
+echo 「Delete Failed」;
+foreach ($result-&gt;getMessages() as $message) {
+echo $message, 「\n」;
+}
+} else {
+echo 「Deleted successfully!」;
+}
+}</p>
+<pre><code></code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/08/study-note-phalcon-using-view/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -384,7 +504,7 @@ app/views/{{controllerName}}/xxx.volt
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">301</span>
+          <span class="site-state-item-count">302</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

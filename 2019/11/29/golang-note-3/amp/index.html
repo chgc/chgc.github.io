@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/11/29/golang-note-3/"
 			},
 			"datePublished": "2019-11-29T06:53:14.000Z",
-			"dateModified": "2021-02-19T06:31:02.604Z",
+			"dateModified": "2021-02-23T03:38:15.597Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>繼續研究 Go，這次會涵蓋 <code>Map</code> 和 <code>Functions</code></p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="Map"><a class="header-anchor" href="#Map"> </a>Map</h1>
 <p>Map 是一個 Key Value 形式的格式，當沒有給予初始值時，預設值為 <code>nil</code>，一樣可以使用 <code>make</code> 建立</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> {</span><br><span class="line">	<span class="keyword">var</span> m <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></span><br><span class="line">	<span class="keyword">if</span> m == <span class="literal">nil</span> {</span><br><span class="line">        fmt.Println(<span class="string">"is nil"</span>) <span class="comment">// output: is nil</span></span><br><span class="line">	}</span><br><span class="line">    m = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">    fmt.Println(m) <span class="comment">// output: map[]</span></span><br><span class="line">	</span><br><span class="line">    m[<span class="string">"first"</span>] = <span class="number">1</span></span><br><span class="line">    fmt.Println(m) <span class="comment">// output: map[first:1]</span></span><br><span class="line">    fmt.Println(m[<span class="string">"first"</span>]) <span class="comment">// output: 1</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

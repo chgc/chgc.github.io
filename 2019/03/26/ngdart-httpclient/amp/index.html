@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/03/26/ngdart-httpclient/"
 			},
 			"datePublished": "2019-03-26T06:05:22.000Z",
-			"dateModified": "2021-02-19T06:31:02.528Z",
+			"dateModified": "2021-02-23T03:38:15.529Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>當需要呼叫 API  時，該如何處理? Angular  有 HttpClient 可以使用，那 AngularDart 呢? 好家在的是 Dart 有 <code>http</code> 的 library 可以使用，只要在 <code>pubspec.yaml</code> 裡面加上 <code>http: ^0.11.0</code> 的 package，再調整一下程式碼，就可以呼叫 API 了</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="設定"><a class="header-anchor" href="#設定"> </a>設定</h1>
 <p>設定 HTTP Service 的方式很簡單，只要在 <code>main.dart</code> 做一下設定即可完成</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:angular/angular.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:http/browser_client.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:http/http.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:helloNgDart/app_component.template.dart'</span> <span class="keyword">as</span> ng;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'main.template.dart'</span> <span class="keyword">as</span> self;</span><br><span class="line"></span><br><span class="line"><span class="meta">@GenerateInjector</span>([</span><br><span class="line">  ClassProvider(Client, useClass: BrowserClient),</span><br><span class="line">])</span><br><span class="line"><span class="keyword">final</span> InjectorFactory injector = self.injector$Injector;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() {</span><br><span class="line">  runApp(ng.AppComponentNgFactory, createInjector: injector);</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>

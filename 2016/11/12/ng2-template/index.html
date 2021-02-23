@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://farm6.staticflickr.com/5442/22755425268_a8f09f0faf_o.png">
 <meta property="og:image" content="https://farm6.staticflickr.com/5655/25298597749_867061bf20_o.png">
 <meta property="article:published_time" content="2016-11-12T12:04:00.000Z">
-<meta property="article:modified_time" content="2021-02-19T06:31:02.496Z">
+<meta property="article:modified_time" content="2021-02-23T03:38:15.497Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -270,7 +270,7 @@
 
       
         <p>Angular2裡面有提供一個 <code>*</code> 的語法糖, 這個語法糖是用來表示 <code>&lt;template&gt;</code> 標籤. 例如  <code>*ngIf</code> 、 <code>*ngFor</code> 等, 而這篇就來討論怎麼利用 <code>&lt;template&gt;</code></p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="Template-Tag"><a class="header-anchor" href="#Template-Tag"> </a>Template Tag</h1>
 <p>來先看一段Code吧</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, ComponentFactoryResolver, ViewChild, ViewContainerRef &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;my-dynamic-component&#x27;</span>,</span><br><span class="line">  template: <span class="string">`&lt;div&gt;Hello world&lt;/div&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDynamicComponent</span></span>&#123;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;app-root&#x27;</span>,  </span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;template #target&gt;&lt;/template&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">`</span> </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  <span class="meta">@ViewChild</span>(<span class="string">&#x27;target&#x27;</span>, &#123;<span class="attr">read</span>: ViewContainerRef&#125;) target: ViewContainerRef;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">&#x27;app works!&#x27;</span>;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"><span class="keyword">private</span> cfr: ComponentFactoryResolver</span>)</span>&#123;   </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">ngAfterViewInit</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">let</span> myFactory = <span class="built_in">this</span>.cfr.resolveComponentFactory(MyDynamicComponent);</span><br><span class="line">     <span class="keyword">let</span> compRef = <span class="built_in">this</span>.target.createComponent(myFactory);</span><br><span class="line">     </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -437,7 +437,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">301</span>
+          <span class="site-state-item-count">302</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

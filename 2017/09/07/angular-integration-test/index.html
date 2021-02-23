@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -29,7 +29,7 @@
 <meta property="og:description" content="整合測試主要的目的，是要測試 Component 的 template 的動作是否能如我們所預期的方式運作，而這是單元測試無法涵的範圍 Angular 也貼心準備小幫手，TestBed，來協助我們完成整合測試">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2017-09-07T14:30:58.000Z">
-<meta property="article:modified_time" content="2021-02-19T06:31:02.500Z">
+<meta property="article:modified_time" content="2021-02-23T03:38:15.501Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta property="article:tag" content="測試">
@@ -269,7 +269,7 @@
       
         <p>整合測試主要的目的，是要測試 Component 的 template 的動作是否能如我們所預期的方式運作，而這是單元測試無法涵的範圍</p>
 <p>Angular 也貼心準備小幫手，<code>TestBed</code>，來協助我們完成整合測試</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="TestBed"><a class="header-anchor" href="#TestBed"> </a>TestBed</h1>
 <p>TestBed 是 Angular 提供的小幫手來建立測試用的 Module 環境，基本的用法如下</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">async</span>, ComponentFixture, TestBed &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core/testing&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; By &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/platform-browser&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DebugElement &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">let</span> component: VoteComponent;</span><br><span class="line"><span class="keyword">let</span> fixture: ComponentFixture&lt;VoteComponent&gt;;</span><br><span class="line"><span class="keyword">let</span> de: DebugElement;</span><br><span class="line"><span class="keyword">let</span> el: HTMLElement;</span><br><span class="line">... </span><br><span class="line">beforeEach(<span class="keyword">async</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">   TestBed.configureTestingModule(&#123;</span><br><span class="line">     declarations: [ VoteComponent ]  <span class="comment">// declare the test component</span></span><br><span class="line">   &#125;)</span><br><span class="line">   .compileComponents(); <span class="comment">// compile template and css</span></span><br><span class="line"> &#125;));</span><br><span class="line"></span><br><span class="line">beforeEach(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    fixture = TestBed.createComponent(VoteComponent);</span><br><span class="line">    component = fixture.componentInstance; <span class="comment">// 取得 component instance</span></span><br><span class="line">    fixture.detectChanges(); <span class="comment">// 執行 CD，這行會觸發 ngOnInit()，僅限第一次執行</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// query for the title &lt;h1&gt; by CSS element selector</span></span><br><span class="line">    de = fixture.debugElement.query(By.css(<span class="string">&#x27;p&#x27;</span>)); <span class="comment">// 使用標轉的 CSS Selector 尋找並取得 debugElement</span></span><br><span class="line">    el = de.nativeElement;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
@@ -468,7 +468,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">301</span>
+          <span class="site-state-item-count">302</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

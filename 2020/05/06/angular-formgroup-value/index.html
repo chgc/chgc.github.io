@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -29,7 +29,7 @@
 <meta property="og:description" content="當在操作 Angular  表單時，於最後送出表單資料到 API 時，常見的使用方法為 formGroup.value 或是 formGroup.getRawValue() 兩種方法，關於 getRawValue() 大概也不用多贅述了。但你知道 FormGroup 的 value 取得資料的規則嗎 ?">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-05-06T07:57:13.000Z">
-<meta property="article:modified_time" content="2021-02-19T06:31:02.624Z">
+<meta property="article:modified_time" content="2021-02-23T03:38:15.617Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -267,7 +267,7 @@
 
       
         <p>當在操作 Angular  表單時，於最後送出表單資料到 API 時，常見的使用方法為 <code>formGroup.value</code> 或是 <code>formGroup.getRawValue()</code> 兩種方法，關於 <code>getRawValue()</code> 大概也不用多贅述了。但你知道 <code>FormGroup</code> 的 value 取得資料的規則嗎 ?</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="FormGroup-value"><a class="header-anchor" href="#FormGroup-value"> </a>FormGroup.value</h1>
 <p>一般來說，<code>FormGroup</code> 的 value 會將該群組下的控制項資料取出，如下</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">formData1 = <span class="keyword">new</span> FormGroup(&#123;</span><br><span class="line">    firstName: <span class="keyword">new</span> FormControl(<span class="string">&quot;Kevin&quot;</span>),</span><br><span class="line">    lastName: <span class="keyword">new</span> FormControl(<span class="string">&quot;Yang&quot;</span>),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(formData1.value); <span class="comment">// &#123;firstName: &#x27;Kevin&#x27;, lastName: &#x27;Yang&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
@@ -412,7 +412,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">301</span>
+          <span class="site-state-item-count">302</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

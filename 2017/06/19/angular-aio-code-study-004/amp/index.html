@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/06/19/angular-aio-code-study-004/"
 			},
 			"datePublished": "2017-06-19T01:18:33.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1853,7 +1853,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>這篇會研讀 <code>&lt;aio-nav-menu&gt;</code> 及 <code>&lt;aio-select&gt;</code> component，就是這一區塊</p>
 <div class="amp-img-wrapper"><amp-img src="https://farm5.staticflickr.com/4234/35007784610_d8f3bb54a1_o.png" width="275" height="311" layout="responsive"></amp-img></div>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="template"><a class="header-anchor" href="#template"> </a>template</h1>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">md-sidenav</span> [<span class="attr">ngClass</span>]=<span class="string">"{'collapsed': !isSideBySide }"</span> #<span class="attr">sidenav</span> <span class="attr">class</span>=<span class="string">"sidenav"</span> [<span class="attr">opened</span>]=<span class="string">"isOpened"</span> [<span class="attr">mode</span>]=<span class="string">"mode"</span></span></span><br><span class="line"><span class="tag">    (<span class="attr">open</span>)=<span class="string">"updateHostClasses()"</span> (<span class="attr">close</span>)=<span class="string">"updateHostClasses()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aio-nav-menu</span> *<span class="attr">ngIf</span>=<span class="string">"!isSideBySide"</span> [<span class="attr">nodes</span>]=<span class="string">"topMenuNarrowNodes"</span> [<span class="attr">currentNode</span>]=<span class="string">"currentNodes?.TopBarNarrow"</span></span></span><br><span class="line"><span class="tag">      [<span class="attr">isWide</span>]=<span class="string">"false"</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-nav-menu</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aio-nav-menu</span> [<span class="attr">nodes</span>]=<span class="string">"sideNavNodes"</span> [<span class="attr">currentNode</span>]=<span class="string">"currentNodes?.SideNav"</span> [<span class="attr">isWide</span>]=<span class="string">"isSideBySide"</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-nav-menu</span>&gt;</span></span><br><span class="line">   ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">md-sidenav</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <ul>

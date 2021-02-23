@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/05/18/angualr-testing-delay/"
 			},
 			"datePublished": "2018-05-18T15:08:13.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.505Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular 內要測試 Observable 的方式有很多種，但有一種東西很難測，就是當遇到控制時間相關的 operators 出現時，測試就變得很有趣了。這篇文章整理一下如何測試這一類的 observable</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="前題"><a class="header-anchor" href="#前題"> </a>前題</h1>
 <p>這裡有一個需要被測試的動作，這裡我需要測試在 n 秒後，我一開始 push 到陣列裡面的資料，是否會被移出陣列，當 <code>this.message<amp-mathml layout="container" inline="" data-formula="\[.next(...)</code> 的時候，就會同時間觸發一個 <code>remover\]"></amp-mathml></code> (定時器，用來移除資料用)。所以問題是，我要如何測試這段程式碼邏輯呢?</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">message$ = <span class="built_in">this</span>.service.message$;</span><br><span class="line">messages: CommandModel[] = [];</span><br><span class="line">tasks$ = <span class="keyword">new</span> Subject&lt;Observable&lt;<span class="built_in">any</span>&gt;&gt;();</span><br><span class="line">remover$ = <span class="keyword">of</span>(<span class="string">''</span>).pipe(</span><br><span class="line">    delay(environment.delayTime),</span><br><span class="line">    tap(<span class="function">() =&gt;</span> <span class="built_in">this</span>.messages.shift())</span><br><span class="line">);</span><br><span class="line">...</span><br><span class="line"><span class="built_in">this</span>.tasks$.pipe(mergeMap(<span class="function"><span class="params">task</span> =&gt;</span> task)).subscribe();</span><br><span class="line"><span class="built_in">this</span>.message$</span><br><span class="line">    .pipe(tap(<span class="function"><span class="params">value</span> =&gt;</span> <span class="built_in">this</span>.messages.push({ ...value })))</span><br><span class="line">    .subscribe(<span class="function"><span class="params">value</span> =&gt;</span> {</span><br><span class="line">    <span class="built_in">this</span>.tasks$.next(<span class="built_in">this</span>.remover$);</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>

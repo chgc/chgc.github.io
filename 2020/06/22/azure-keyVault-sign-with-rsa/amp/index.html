@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/"
 			},
 			"datePublished": "2020-06-22T13:16:41.000Z",
-			"dateModified": "2021-02-19T06:31:02.624Z",
+			"dateModified": "2021-02-23T03:38:15.617Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1862,7 +1862,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>要使用 RSA Private Key 來做資料簽章表示我們需要將 Private Key 存放在某一個地方，但絕對不會在程式的參數設定檔內，其實在 <a href="http://ASP.NET">ASP.NET</a> Core 內提供很多方法可以存放設定檔，例如使用 user secret，更多資訊可以參閱<a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-3.1">此文件</a>。</p>
 <p>Azure 上面也有一個 Azure Key Vault 的服務，可以集中管理相關的金鑰 (Keys)、秘密 (Secret)、憑證 (Certificate) 等資訊，而相關的服務就可以連線到這一個 Key Vault 服務取得相關的資訊做進一步的使用，例如加解密等作業</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="秘密-Secret"><a class="header-anchor" href="#秘密-Secret"> </a>秘密 (Secret)</h1>
 <p>在一個網站會有一些設定檔會因為部屬環境而所異動，這一類的設定當然不可能寫死在程式裡，所以會將這一類的設定檔放在某一個設定檔類，例如 appsettings.json 或是 user secret 等地方，而像資料庫連線這種資料敏感的資料，存放在 appsettings.json 內就十分危險，會建議放在版控以外的地方或是 Hosting 的主機上，例如 Azure App Service 就有提供設定環境參數的地方。</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622213144659.png" width="1436" height="860" layout="responsive"></amp-img></div>

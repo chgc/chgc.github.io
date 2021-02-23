@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/10/07/flutter-interactivity/"
 			},
 			"datePublished": "2019-10-07T11:53:49.000Z",
-			"dateModified": "2021-02-19T06:31:02.592Z",
+			"dateModified": "2021-02-23T03:38:15.589Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>一個 App 加減都會有互動，有互動就需要面對狀態管理的課題，而 Flutter 針對狀態管理又有幾套實作的方式，這一個學習筆記將從基本元素開始看起，<code>stateful widget</code></p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="stateless-與-stateful-widgets"><a class="header-anchor" href="#stateless-與-stateful-widgets"> </a>stateless 與 stateful widgets</h1>
 <p>Flutter 內的 widget 有兩種，無狀態和有狀態的 widget，<code>stateless widget</code> 基本上會長這樣</p>
 <figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>{</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) {</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      title: <span class="string">'Flutter layout demo!'</span>,</span><br><span class="line">      home: Scaffold(</span><br><span class="line">        appBar: AppBar(</span><br><span class="line">          title: Text(<span class="string">'Flutter layout demo'</span>),</span><br><span class="line">        ),</span><br><span class="line">        <span class="comment">// Change to buildColumn() for the other column example</span></span><br><span class="line">        body: Center(child: buildRow()),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  }</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>

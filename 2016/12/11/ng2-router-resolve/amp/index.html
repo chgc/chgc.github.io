@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/12/11/ng2-router-resolve/"
 			},
 			"datePublished": "2016-12-11T14:10:39.000Z",
-			"dateModified": "2021-02-19T06:31:02.496Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular 2的Router Config的地方，可以設定data跟resolve. 這篇就簡單的紀錄一下怎麼寫resolve的部分跟怎麼在component裡取得資料</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="基本用法"><a class="header-anchor" href="#基本用法"> </a>基本用法</h1>
 <p>Routes設定的部分</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    path: <span class="string">'posts'</span>,</span><br><span class="line">    component: PostsComponent,</span><br><span class="line">    data : { <span class="attr">someProp</span>: propValue},</span><br><span class="line">    resolve: {</span><br><span class="line">        posts: PostsResolver  </span><br><span class="line">    }</span><br><span class="line">  ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

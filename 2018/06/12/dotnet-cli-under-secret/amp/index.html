@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/06/12/dotnet-cli-under-secret/"
 			},
 			"datePublished": "2018-06-12T03:36:08.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.505Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>如果長期有在追 dotnet cli 的人，就知道在某一個時間點，微軟將 dotnet cli 的設定檔從 project.json 轉回 project.csproj 的格式，主要是要讓建置的動作轉回使用 MSBuild 引擎</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>根據 <a href="https://docs.microsoft.com/zh-tw/dotnet/core/tools/cli-msbuild-architecture">文件</a> 有提到，雖然下的指令是 <code>dotnet publish -o pub -c Release</code> 但事實上是執行 <code>dotnet msbuild /t:Publish /p:OutputPath=pub /p:Configuration=Release </code>，這樣就引起我的好奇，其他的指令是否也是做同樣的事情。</p>
 <p>幸好現在 dotnet core 相關的程式都有放到 GitHub 上，我們可以很容易地了解整體的運作方式</p>
 <h1 id="執行"><a class="header-anchor" href="#執行"> </a>執行</h1>

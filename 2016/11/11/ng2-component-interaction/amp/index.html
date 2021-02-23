@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/11/11/ng2-component-interaction/"
 			},
 			"datePublished": "2016-11-11T13:42:08.000Z",
-			"dateModified": "2021-02-19T06:31:02.496Z",
+			"dateModified": "2021-02-23T03:38:15.497Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Component在Angular2的世界裡是很多變也很重要的。在一個網站裡會存在很多Component，如何讓Component與Component之間做交流，當然也是一個很重要的課題</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="從父元件傳資料至子元件"><a class="header-anchor" href="#從父元件傳資料至子元件"> </a>從父元件傳資料至子元件</h1>
 <p>Component可以對外定義可以接收資料的欄位. 利用<a href="https://angular.io/docs/ts/latest/guide/template-syntax.html#inputs-outputs">@Input decorations</a></p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>({</span><br><span class="line">  selector: <span class="string">'hero-child'</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;h3&gt;{{hero.name}} says:&lt;/h3&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;I, {{hero.name}}, am at your service, {{masterName}}.&lt;/p&gt;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">})</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">HeroChildComponent</span> </span>{</span><br><span class="line">  <span class="meta">@Input</span>() hero: Hero;</span><br><span class="line">  <span class="meta">@Input</span>(<span class="string">'master'</span>) masterName: <span class="built_in">string</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

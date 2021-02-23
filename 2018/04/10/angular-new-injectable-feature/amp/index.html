@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/04/10/angular-new-injectable-feature/"
 			},
 			"datePublished": "2018-04-10T12:26:14.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.505Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular 6 將 tree-shaking 觸手擴大到 provider 了，提供了新的設定方法讓 service 也可以被 tree-shaking 掉了，這對於最後產生出來的 bundle 檔案大小，會有很大的幫助。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="緣由"><a class="header-anchor" href="#緣由"> </a>緣由</h1>
 <p>根據官方文件的說法，註冊在 NgModule 下的 service 都無法被 tree-shaking 掉，主要是 Angular  無法判斷該 service 是否有在任何地方被使用著，任何地方都可能透過 <code>injector.get</code> 的方式取得 service，也是因為這個原因 Angular 必須把 service 包到 NgModule 裡。</p>
 <p>目前的寫法 ( Angular 5.x ~ 2 版 )，就是 non-tree-shakable service</p>

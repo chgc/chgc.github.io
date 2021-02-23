@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/02/14/ng-ngzone/"
 			},
 			"datePublished": "2019-02-14T00:14:19.000Z",
-			"dateModified": "2021-02-19T06:31:02.524Z",
+			"dateModified": "2021-02-23T03:38:15.525Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>昨天在討論區上面有人問了一個問題，「Angular 要如何做到檢查使用是否有在活動，如果一定時間內都沒有任何動作時，要自動登出系統」，這一個需求最直覺的方式是定時去檢查最後一次使用者有動作的時間，但使用 <code>setInterval</code> 會讓 Angular 的效能變差，這時候要怎麼解呢?</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>首先要先說明為什麼使用 <code>setInterval</code> 會讓 Angular 損失效能，主要的原因是 Angular 預設有使用 <code>zone.js</code> 來監控所有的事件，<code>zone.js</code> 會監測以下的事件，如果有發生時，就會觸發 <code>ChangeDetection</code>，進而更新整個畫面</p>
 <ol>
 <li><code>Events</code> - 使用者的行為，像是 <code>click</code>、<code>change</code>、<code>input</code>、<code>submit</code> 等</li>

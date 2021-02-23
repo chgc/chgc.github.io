@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/08/03/docker-101-note-3/"
 			},
 			"datePublished": "2020-08-03T05:36:31.000Z",
-			"dateModified": "2021-02-19T06:31:02.644Z",
+			"dateModified": "2021-02-23T03:38:15.641Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1858,7 +1858,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>前面兩篇筆記都在整理如何操作 docker container，要怎麼製作最重要的 Image 呢? 我會在這篇整理出來</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>要建立出一個可以用來執行的 Image，就必須透過 <code>Dockerfile</code> 來設定，<code>Dockerfile</code> 是一個類似文字檔的設定檔，docker 會依 <code>Dockerfile</code> 內的設定建立出一個可以部屬到 Registry 的 Image，其設定內容其實不複雜，以下為簡單語法介紹</p>
 <h1 id="Dockerfile-結構與使用語法"><a class="header-anchor" href="#Dockerfile-結構與使用語法"> </a>Dockerfile 結構與使用語法</h1>
 <p>如之前所說，Image 所能執行的 OS 必須跟底層 docker server 跑的 OS 一樣或是使用同種 Kernel，所以當 docker server 是跑在 Linux base 上，那 Dockerfile 能跑的環境也只能是 Linux base。下面是一個簡單的範例</p>

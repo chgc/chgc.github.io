@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/08/09/angular-changedetector-markforcheck/"
 			},
 			"datePublished": "2017-08-09T00:56:21.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Angular 的 Change Detection 機制，問題： 在使用 <code>onPush</code> 策略時，一定都要重新傳新物件才能出發更新嗎? 答案：<strong>不用</strong></p>
-<a id="more"></a>
+<span id="more"></span>
 <p>ChangeDetecotrRef 提供了一些方法，允許我們手動觸發檢查更新機制，而 <code>markForCheck</code> 是其中一個</p>
 <h1 id="markForCheck"><a class="header-anchor" href="#markForCheck"> </a>markForCheck</h1>
 <p><code>markForCheck</code> 的用途，當呼叫這個方法時，就是告訴 <code>ChangeDetector</code> ，請檢查我本身及我上頭的 <code>Component</code>。更新的方向性是往 <code>Root</code>  向上移動</p>

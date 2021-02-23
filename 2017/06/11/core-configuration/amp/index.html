@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/06/11/core-configuration/"
 			},
 			"datePublished": "2017-06-11T12:20:05.000Z",
-			"dateModified": "2021-02-19T06:31:02.496Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>.NET Core 提供多種參數設定資料的來源，例如: Json 檔案、ini 檔案或使用 Azure 的 KeyValue 設定檔。雖然預設啟動的 web 環境，已經有載入  <code>appsetting.json</code> 及 <code>appsettings.[environment].json</code> 設定檔，但是如果要自行設定，或是其他 Controller 要使用參數設定，又該怎麼處理呢?</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="Startup-cs"><a class="header-anchor" href="#Startup-cs"> </a>Startup.cs</h1>
 <p>設定檔可以透過 <code>ConfigurationBuilder</code>建立，以下為簡單的基本架構</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">{</span><br><span class="line">  <span class="keyword">public</span> IConfigurationRoot Configuration { <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Startup</span>(<span class="params">IHostingEnvironment env</span>)</span></span><br><span class="line"><span class="function"></span>  {            </span><br><span class="line">    <span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">      .SetBasePath(env.ContentRootPath)                        </span><br><span class="line">      .AddJsonFile(<span class="string">"appsettings.json"</span>, optional: <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    Configuration = builder.Build();    </span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

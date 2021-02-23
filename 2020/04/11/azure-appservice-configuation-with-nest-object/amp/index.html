@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/04/11/azure-appservice-configuation-with-nest-object/"
 			},
 			"datePublished": "2020-04-11T17:07:31.000Z",
-			"dateModified": "2021-02-19T06:31:02.620Z",
+			"dateModified": "2021-02-23T03:38:15.613Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1853,7 +1853,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>我們都知道 Production 的設定檔應該要放在 Azure App Service 或是其他相關的地方，不應該將該設定檔簽入到版控中，但是，當愈到這種設定檔時，App Service 該如何設定呢?</p>
 <figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">"AzureAdB2C": {</span><br><span class="line">   "Instance": "https://xxx.xxxx/",</span><br><span class="line">   "ClientId": "...",</span><br><span class="line">   "CallbackPath": "...",</span><br><span class="line">   "Domain": "...",</span><br><span class="line">   "SignUpSignInPolicyId": "..."</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
-<a id="more"></a>
+<span id="more"></span>
 <p>在 <code>.NET Core</code> 的程式碼內，可以透過 <code>:</code> 的方式取得階層型態的設定檔，例如 <code>AzureAdB2C:Instance</code>，但是在 Linux 的 App Service 是不能使用冒號，所以要用兩個底線代替冒號</p>
 <blockquote>
 <p>In a default Linux container or a custom Linux container, any nested JSON key structure in the app setting name like <code>ApplicationInsights:InstrumentationKey</code> needs to be configured in App Service as <code>ApplicationInsights__InstrumentationKey</code> for the key name. In other words, any <code>:</code> should be replaced by <code>__</code> (double underscore).</p>

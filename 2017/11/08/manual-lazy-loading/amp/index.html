@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/11/08/manual-lazy-loading/"
 			},
 			"datePublished": "2017-11-08T06:57:32.000Z",
-			"dateModified": "2021-02-19T06:31:02.500Z",
+			"dateModified": "2021-02-23T03:38:15.501Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>一般提起 Angular 的 Lazy Loading 時，第一個反應都是透過網址的方式來實作，但是否有方法可以借用 <code>RouterModule</code> 的幫助來產生 chunk 檔案，然後手動作載入的動作呢? 答案是可以的</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="環境設定"><a class="header-anchor" href="#環境設定"> </a>環境設定</h1>
 <p>其實在 <code>RouterModule</code> 底層在執行 Lazy Loading 效果的方法，是藉由 <a href="https://angular.io/api/core/NgModuleFactoryLoader">NgModuleFactoryLoader</a> 來完成的， 而底下有一個 subclass 叫做 <a href="https://angular.io/api/core/SystemJsNgModuleLoader">SystemJsNgModuleLoader</a>，這一個是我們所需要的 <code>NgModuleLoader</code>，<strong>將其註冊在 module providers 區區塊內</strong>，所以 Module Loader 有了，那要怎麼註冊 module 成為可以延遲載入的 module 呢?</p>
 <p>方法有兩個</p>

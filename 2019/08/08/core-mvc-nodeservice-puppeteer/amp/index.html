@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/08/08/core-mvc-nodeservice-puppeteer/"
 			},
 			"datePublished": "2019-08-08T05:30:48.000Z",
-			"dateModified": "2021-02-19T06:31:02.556Z",
+			"dateModified": "2021-02-23T03:38:15.553Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1853,7 +1853,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p><a href="http://ASP.NET">ASP.NET</a> Core MVC 有提供一個 <code>nodeservice</code> 的服務，這一個服務可以將 .NET Core 與 JavaScript 的程式碼整個傳接起來，怎麼使用，下面再來介紹</p>
 <p>另外一個要使用的套件叫做 <code>Puppeteer</code>，這一個套件是 Google 出的，可以讓我們創造出 headless 的瀏覽器環境，功能之強大，需要另外寫文章介紹，這邊只是做個配角</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="NodeServices"><a class="header-anchor" href="#NodeServices"> </a>NodeServices</h1>
 <p>不管底層怎麼運作，先來知道怎麼使用吧，如果你的 .NET Core  版本有維持在最新版的話，在建立一個 MVC  專案時，只需要在 <code>startup.cs</code> 內新增這一行即可完成加入 <code>NodeServices</code> 的功能</p>
 <figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    ...</span><br><span class="line">    services.AddNodeServices();</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

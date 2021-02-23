@@ -60,7 +60,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/08/31/rxjs-scheduler/"
 			},
 			"datePublished": "2018-08-31T00:37:59.000Z",
-			"dateModified": "2021-02-19T06:31:02.504Z",
+			"dateModified": "2021-02-23T03:38:15.505Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,7 +1851,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>來探討 RxJS 的 Scheduler 吧</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="前言"><a class="header-anchor" href="#前言"> </a>前言</h1>
 <p>在開始探討 RxJS 的 scheduler 機制之前，要先談談 JavaScript 本身的三個機制 <code>Event Loop</code> 、<code>Micro Task</code> 和 <code>Macro Task</code>。</p>
 <p>我們知道 JavaScript 處理 <code>function </code> 的方式是將要執行的 <code>function </code> 放到 stack 中，如果遇到非同步動作時，JavaScript 會將其非同步執行結束後的 <code>callback function</code> 放到 <code>Queue</code> 中，等待 stack 的動作全部完成後(即清空)，再來執行 queue 裡的工作，而將 queue 裡的工作轉到 stack 的人就是 <code>event loop</code>。所以我們可以說 <code>event loop</code> 的工作是監控 <code>stack</code> 與 <code>queue</code> ，並決定什麼時候要將 queue 的工作拉到 stack 內處理。</p>

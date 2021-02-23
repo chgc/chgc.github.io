@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/08/28/rxjs-custom-operator/"
 			},
 			"datePublished": "2018-08-28T01:37:53.000Z",
-			"dateModified": "2021-02-19T06:31:02.504Z",
+			"dateModified": "2021-02-23T03:38:15.505Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>RxJS 6.x 使用 <code>pipe</code> 之後，建立 operators 的方法就又更簡單了。不論是重構將部分的動作成一個自訂 operator ，或是整合其他 library 成為另外一個新的 operator，都遠比之前版本簡單，以下提供一些方法及方向供參考</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="重構抽離"><a class="header-anchor" href="#重構抽離"> </a>重構抽離</h1>
 <p>以常見的 autocomplete 的功能來說，以下是範例程式碼</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.clients = <span class="built_in">this</span>.searchTerms</span><br><span class="line">    .pipe(</span><br><span class="line">    	debounceTime(<span class="number">300</span>),</span><br><span class="line">      distinctUntilChanged(),</span><br><span class="line">      switchMap(<span class="function"><span class="params">term</span> =&gt;</span> <span class="built_in">this</span>.clientSearchService.search(term)),</span><br><span class="line">      catchError(<span class="function"><span class="params">error</span> =&gt;</span> <span class="keyword">of</span>([]))</span><br><span class="line">    );  </span><br></pre></td></tr></tbody></table></figure>

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/08/19/angular-rxjs-practice-2/"
 			},
 			"datePublished": "2019-08-19T01:36:06.000Z",
-			"dateModified": "2021-02-19T06:31:02.568Z",
+			"dateModified": "2021-02-23T03:38:15.565Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,7 +1849,7 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>昨天在重構手上一個案子的程式碼，其中有一個功能是在讀取資料時，要顯示 loading 的圖示，這算是一個很常見的需求，但要怎麼寫才能寫得漂亮，這是我目前得到的答案</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="LoadingComponent"><a class="header-anchor" href="#LoadingComponent"> </a>LoadingComponent</h1>
 <p>這個案子我使用 Angular Material (<code>MatProgressSpinnerModule</code> ) 的 <code>mat-progress-spinner</code> 和 <code>MatDialog</code> 來完成，簡單的說，就是當讀取時，使用 <code>MatDialog</code> 來開啟 <code>LoadingComponent</code>，沒什麼特殊的技巧，最多是 css 的設定</p>
 <figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.transparent</span> <span class="selector-class">.mat-dialog-container</span> {</span><br><span class="line">  <span class="attribute">box-shadow</span>: none;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.0</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

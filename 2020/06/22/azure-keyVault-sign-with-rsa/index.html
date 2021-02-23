@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622225114968.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622220802801.png">
 <meta property="article:published_time" content="2020-06-22T13:16:41.000Z">
-<meta property="article:modified_time" content="2021-02-19T06:31:02.624Z">
+<meta property="article:modified_time" content="2021-02-23T03:38:15.617Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Azure">
 <meta property="article:tag" content=".NET Core">
@@ -281,7 +281,7 @@
       
         <p>要使用 RSA Private Key 來做資料簽章表示我們需要將 Private Key 存放在某一個地方，但絕對不會在程式的參數設定檔內，其實在 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core 內提供很多方法可以存放設定檔，例如使用 user secret，更多資訊可以參閱<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-3.1">此文件</a>。</p>
 <p>Azure 上面也有一個 Azure Key Vault 的服務，可以集中管理相關的金鑰 (Keys)、秘密 (Secret)、憑證 (Certificate) 等資訊，而相關的服務就可以連線到這一個 Key Vault 服務取得相關的資訊做進一步的使用，例如加解密等作業</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="秘密-Secret"><a class="header-anchor" href="#秘密-Secret"> </a>秘密 (Secret)</h1>
 <p>在一個網站會有一些設定檔會因為部屬環境而所異動，這一類的設定當然不可能寫死在程式裡，所以會將這一類的設定檔放在某一個設定檔類，例如 appsettings.json 或是 user secret 等地方，而像資料庫連線這種資料敏感的資料，存放在 appsettings.json 內就十分危險，會建議放在版控以外的地方或是 Hosting 的主機上，例如 Azure App Service 就有提供設定環境參數的地方。</p>
 <p><img src="image-20200622213144659.png" alt="image-20200622213144659"></p>
@@ -475,7 +475,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">301</span>
+          <span class="site-state-item-count">302</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
