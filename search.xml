@@ -17230,6 +17230,34 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Azure DevOps] Pipeline 建置時跨 Repo 情境下該如何處理呢?</title>
+    <url>/2021/03/17/azure-devops-build-pipeline-resource/</url>
+    <content><![CDATA[<p>在工作上遇到一個情況就是一個系統的前後端是分在兩個 Repository 的，但前端的檔案需要被包進後端的程式中做後續的發佈，就在思考該如何處理這個問題，終於想出一個還不錯簡單的方式</p>
+<span id="more"></span>
+<p>在 Pipeline 建置時，可以將打包出來的結果 Publish 成 Pipeline Artifact，yaml 的寫法如下</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">task:</span> <span class="string">PublishBuildArtifacts@1</span></span><br><span class="line">  <span class="attr">inputs:</span></span><br><span class="line">    <span class="attr">artifactName:</span> <span class="string">&#x27;ngApp&#x27;</span></span><br><span class="line">    <span class="attr">PathtoPublish:</span> <span class="string">&#x27;$(System.DefaultWorkingDirectory)/dist/front-website&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>artifactName</code> : 打包出來的檔案名稱</li>
+<li><code>PathtoPublish</code>：要打包的檔案資料夾位置</li>
+</ul>
+<p>到後端的 Repository 的 Pipeline 的 Task 中，可以利用 <code>Download Pipeline Artifact</code> 的 Task 來下載某一個專案下的某一個 Pipeline 發佈的 Artifact，這一個任務可以將編譯建置後的結果跨專案的使用，真的很方便</p>
+<p><img src="image-20210317230842327.png" alt="image-20210317230842327"></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">steps:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">task:</span> <span class="string">DownloadPipelineArtifact@2</span></span><br><span class="line">  <span class="attr">displayName:</span> <span class="string">&#x27;Download Pipeline Artifact&#x27;</span></span><br><span class="line">  <span class="attr">inputs:</span></span><br><span class="line">    <span class="attr">buildType:</span> <span class="string">specific</span></span><br><span class="line">    <span class="attr">project:</span> <span class="string">&#x27;&lt;project-id&gt;&#x27;</span></span><br><span class="line">    <span class="attr">definition:</span> <span class="number">13</span></span><br><span class="line">    <span class="attr">specificBuildWithTriggering:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">allowPartiallySucceededBuilds:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">artifactName:</span> <span class="string">ngAPP</span></span><br><span class="line">    <span class="attr">targetPath:</span> <span class="string">&#x27;$(System.DefaultWorkingDirectory)/backend/wwwroot&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>targetPath</code> 下載目標路徑</li>
+</ul>
+<p>由於可能會有先後順序的問題，這時候也可以搭配 Triggers 中的 <code>Build completion </code> 來做到 Pipeline 間的連動</p>
+<p><img src="image-20210317231019398.png" alt="image-20210317231019398"></p>
+<p>途中的設定執行的順序是，當 <code>FrontCode</code> Pipeline 完成後會觸發執行 <code>PipelineTest</code> 的 Pipeline 。</p>
+]]></content>
+      <categories>
+        <category>Azure DevOps</category>
+      </categories>
+      <tags>
+        <tag>Azure DevOps</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
