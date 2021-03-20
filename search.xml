@@ -17258,6 +17258,177 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Teams] 訊息傳遞 - webhooks and connectors</title>
+    <url>/2021/03/20/teams-and-messages/</url>
+    <content><![CDATA[<p>Teams 可透過 webhook and connectors 的方式來做訊息的交換，但對於每一種的使用及限制真的很不熟，所以將透過此筆記來釐清其中的關係</p>
+<span id="more"></span>
+<p>Teams 的應用程式中可以看到**連接器(connector)**的項目可以新增，其中有很多與第三方服務的連接器，而 <code>Incoming WebHook</code> 是我們一定要加入的功能，畢竟想要傳訊息到 Teams，這一條路是要開通的</p>
+<h1 id="Webhooks-and-Connectors"><a class="header-anchor" href="#Webhooks-and-Connectors"> </a>Webhooks and Connectors</h1>
+<p>根據官網文件指出，webhooks and connectors 有以下四種</p>
+<h2 id="Outgoing-webhooks"><a class="header-anchor" href="#Outgoing-webhooks"> </a>Outgoing webhooks</h2>
+<p>使用者可以透過 <code>Outgoing webhooks</code> 送 request 到自己設定的服務，並取回相對應的回應。以下重點整理</p>
+<ul>
+<li>
+<p><strong>Scoped configuration</strong>: scoped on a team-by-team basis</p>
+</li>
+<li>
+<p><strong>Reacive messaging</strong>: 透過 <code>@mentioned</code> 的方式啟動 <code>Outgoing webooks</code></p>
+</li>
+<li>
+<p>被呼叫的服務只有 5 秒鐘可以回應</p>
+</li>
+<li>
+<p><strong>Standard HTTP message exchange</strong>: 回傳的訊息會加在原本的訊息下 (as reply)</p>
+</li>
+<li>
+<p>可回傳 message, 例如 單純文字或卡片</p>
+</li>
+<li>
+<p>不能被包在 Teams app 內</p>
+</li>
+<li>
+<p>適用情境特地的團隊工作流程，但不適用於資料量比較大的事件上，因為有回應時間上的限制</p>
+</li>
+<li>
+<p>運作方式跟寫 bots 很像，但不一定要使用 Bot Framework</p>
+</li>
+<li>
+<p><strong>Litmited Microsoft Teams API Message support</strong>: messages send to web service, but don’t have access to APIs like list of chnnels or the channel roster in team</p>
+</li>
+<li>
+<p>註冊 Outgoing Webhooks 的地方</p>
+<ul>
+<li>
+<p>在團隊 -&gt; 管理團隊 -&gt; 應用程式</p>
+<p><img src="SNAGHTML1767ab8d.PNG" alt="img"></p>
+<p><img src="image-20210320104530920.png" alt="image-20210320104530920"></p>
+<p>建立完成後，會取得一個安全性金鑰，需要之後用來驗證資訊安全性使用，更多細節請參閱下一點</p>
+</li>
+<li>
+<p>安全性</p>
+<p><img src="image-20210320104740607.png" alt="image-20210320104740607"></p>
+<p><a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-outgoing-webhook#2-create-a-method-to-verify-the-outgoing-webhook-hmac-token">文件</a></p>
+<p><a href="https://youtu.be/EqodWkS5PYM?t=358">Live Demo</a></p>
+</li>
+<li>
+<p>參考文件</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-outgoing-webhook">Create an outgoing webhook</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Connectors"><a class="header-anchor" href="#Connectors"> </a>Connectors</h2>
+<p>允許使用者訂閱服務的通知訊息</p>
+<ul>
+<li>會有對應的 https 網址</li>
+</ul>
+<h2 id="Incoming-webhooks"><a class="header-anchor" href="#Incoming-webhooks"> </a>Incoming webhooks</h2>
+<ul>
+<li>
+<p>最單純的 Connector</p>
+</li>
+<li>
+<p>Incoming webhooks 是根據團隊開放使用 (新增應用程式)</p>
+</li>
+<li>
+<p>Independent HTTPs messaging support: present clear &amp; consisten messages with cards</p>
+</li>
+<li>
+<p>Secure resource definition: message included as JSON paylods; prevents malicious code injetion</p>
+</li>
+<li>
+<p>Actionable messaging support: send messages as text-based or rich cards</p>
+</li>
+<li>
+<p>Markdown Support，不支援 HTML 語法</p>
+</li>
+<li>
+<p>範例回應樣式</p>
+<p><img src="image-20210320110740485.png" alt="image-20210320110740485"></p>
+<p><img src="image-20210320110803618.png" alt="image-20210320110803618"></p>
+</li>
+<li>
+<p>參考資料</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using">Sending messages to connectors and webhooks</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Office-365-Connectors"><a class="header-anchor" href="#Office-365-Connectors"> </a>Office 365 Connectors</h2>
+<ul>
+<li>可以被打包上架的 Connectors</li>
+<li>可以有自己的設定頁面</li>
+<li>messages type: Office 365 Connector cards</li>
+<li>可以收集安裝 Connectors 的設定資料以供後續發訊息使用</li>
+<li>參考資料
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-creating">Creating Office 365 Connectors for Microsoft Teams</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Rate-limiting-for-Connectors"><a class="header-anchor" href="#Rate-limiting-for-Connectors"> </a>Rate limiting for Connectors</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Time (seconds)</th>
+<th style="text-align:left">Maximum allowed requests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left">30</td>
+<td style="text-align:left">60</td>
+</tr>
+<tr>
+<td style="text-align:left">3600</td>
+<td style="text-align:left">100</td>
+</tr>
+<tr>
+<td style="text-align:left">7200</td>
+<td style="text-align:left">150</td>
+</tr>
+<tr>
+<td style="text-align:left">86400</td>
+<td style="text-align:left">1800</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/rate-limit#best-practices">Best Practice Doc</a></li>
+</ul>
+<h1 id="Cards"><a class="header-anchor" href="#Cards"> </a>Cards</h1>
+<p>卡片訊息在 Teams 內很常見，而 Adaptive cards 算是比較新的卡片格式，但在 Connectors、Bots、Messaging extension 下分別有些限制</p>
+<ul>
+<li>Adaptive cards in incoming webhooks 的限制
+<ul>
+<li>All native adaptive card schema elements, except <code>Action.Submit</code>, are fully supported.</li>
+<li>The supported actions are <a href="https://adaptivecards.io/explorer/Action.OpenUrl.html"><strong>Action.OpenURL</strong></a>, <a href="https://adaptivecards.io/explorer/Action.ShowCard.html"><strong>Action.ShowCard</strong></a>, and <a href="https://adaptivecards.io/explorer/Action.ToggleVisibility.html"><strong>Action.ToggleVisibility</strong></a>.</li>
+</ul>
+</li>
+<li>更多卡片類型及限制的說明文件: <a href="https://docs.microsoft.com/zh-tw/microsoftteams/platform/task-modules-and-cards/cards/cards-reference#adaptive-card">網址</a></li>
+</ul>
+<p>目前的狀態: Adaptive Cards 遇上 Incoming webhooks 的支援度基本上是不能用的，支援完整度最好的是 Bots in Teams，只能透過 message 附件的方式包進去，可是這樣子的作法畫面就很醜 (<a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using#the-flow-for-sending-adaptive-cards-via-an-incoming-webhook-is-as-follows">範例</a>)，可惜</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/what-are-webhooks-and-connectors">文件: What are webhooks and connectors?</a></li>
+<li><a href="https://www.youtube.com/watch?v=EqodWkS5PYM">影片: Connect web services to Microsoft Teams with webhooks and Office 3655 Connectors</a></li>
+<li><a href="https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/what-are-cards">文件: Cards</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Teams</category>
+      </categories>
+      <tags>
+        <tag>Teams</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

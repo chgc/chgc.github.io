@@ -200,6 +200,109 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/10/15/cordova-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/10/15/cordova-file/" class="post-title-link" itemprop="url">[ngCordova] Move File</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-10-16 03:37:00" itemprop="dateCreated datePublished" datetime="2014-10-16T03:37:00+08:00">2014-10-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Library/" itemprop="url" rel="index"><span itemprop="name">Library</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/10/15/cordova-file/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/15/cordova-file/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>When move file in ngCordova or Cordova, it will need 2 plugins.</p>
+<ol>
+<li>cordova plugin add org.apache.cordova.file</li>
+<li>cordova plugin add org.apache.cordova.file-transfer</li>
+</ol>
+<p>basic usage.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.downloadFile(source, filepath, true, &#123;&#125;).then(function(result) &#123;</span><br><span class="line">            &#x2F;&#x2F; Success! </span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            &#x2F;&#x2F; Error</span><br><span class="line">        &#125;, function(progress) &#123;</span><br><span class="line">            &#x2F;&#x2F; constant progress updates</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<p>it’s same as</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fileTransfer &#x3D; new FileTransfer();</span><br><span class="line">var uri &#x3D; encodeURI(source);</span><br><span class="line">fileTransfer.download(uri,filePath,</span><br><span class="line">function (entry) &#123;</span><br><span class="line">&#x2F;&#x2F; success</span><br><span class="line">&#125;,</span><br><span class="line">function (error) &#123;</span><br><span class="line">&#x2F;&#x2F; error</span><br><span class="line">&#125;,</span><br><span class="line">trustAllHosts, options);</span><br></pre></td></tr></table></figure>
+<p>if you want to use it with $cordovaCamera.getPicture(), you will need to resolve FILE_URI first, and use it as source.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function getImageFileName(image) &#123;</span><br><span class="line">        window.resolveLocalFileSystemURL(image,</span><br><span class="line">            function(entry) &#123;</span><br><span class="line">                var uri &#x3D; entry.toURL();</span><br><span class="line">                entry.file(function(file) &#123;</span><br><span class="line">                    var fileName &#x3D; file.name;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://docs.phonegap.com/en/3.3.0/cordova_file_file.md.html#FileEntry">API Document#File Entry</a></p>
+<p>another problem is filepath.
+basePath can find it by below code. and filepath need a filename at the end.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.createDir(directory, false).then(function(entry) &#123;</span><br><span class="line">            &#x2F;&#x2F; Success! </span><br><span class="line">            alert(entry.toURL());</span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            &#x2F;&#x2F; An error occured. Show a message to the user</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/10/08/azure-sql-azure-specs-adjusted/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1094,96 +1197,6 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/" class="post-title-link" itemprop="url">[ASP.NET MVC]HTMLHelper work with AngularJs</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-05-01 07:58:00" itemprop="dateCreated datePublished" datetime="2014-05-01T07:58:00+08:00">2014-05-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>當要在htmlHelper裡面使用angularjs的屬性時, 原本的ng-model變成ng_model, 將 <strong>-</strong> 變成 <strong>_</strong> 即可</p>
-<p>例如:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Html.DropDownList(&quot;dropdown&quot;, (IEnumerable&lt;SelectListItem&gt;)ViewBag.items, new &#123; ng_model &#x3D; &quot;currentSelect&quot;, ng_change &#x3D; &quot;selectChanges()&quot; &#125;)</span><br><span class="line"></span><br><span class="line">會產生</span><br><span class="line">&lt;select id&#x3D;&quot;dropdown&quot; name&#x3D;&quot;dropdown&quot; ng-change&#x3D;&quot;selectChanges()&quot; ng-model&#x3D;&quot;currentSelect&quot;&gt;</span><br><span class="line">  &lt;options&gt;something&lt;&#x2F;options&gt;*n</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1255,20 +1268,20 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">303</span>
+          <span class="site-state-item-count">304</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
