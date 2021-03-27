@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/trello-example-explained.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/twitter-example-explained.png">
 <meta property="article:published_time" content="2021-03-26T23:48:54.000Z">
-<meta property="article:modified_time" content="2021-03-27T03:06:05.626Z">
+<meta property="article:modified_time" content="2021-03-27T04:32:32.287Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Teams">
 <meta name="twitter:card" content="summary">
@@ -324,9 +324,9 @@
 <p>當被呼叫的服務執行完動作時，需要給 Teams 一些回應，以下有幾點文件上提到的小叮嚀</p>
 <ul>
 <li>Response 的 header 中，要加入 <code>CARD-ACTION-STATUS</code>，而資訊應清晰，不需要加呼叫者的名字或是執行時間，因為這部分的資訊會被自動加上</li>
-<li>回傳 <code>Refresh Cards</code> 更新使用者的卡片資訊，例如移除原本卡片中的動作項目
+<li>Refresh Card: 可回傳一個完整的 MessageCard 內容來更新使用者發出動作的同一卡片資訊，例如移除原本卡片中的動作項目，或是更新同張卡片上的資訊內容
 <ul>
-<li>header 加入 <code>CARD-UPDATE-IN-BODY: TRUE</code></li>
+<li>重點: 在 Header 加入 <code>CARD-UPDATE-IN-BODY: TRUE</code></li>
 <li>不要使用 Refresh Cards 做精靈式回答的工作</li>
 <li>至少包含一個 <code>OpenUri</code> 連結回原本系統</li>
 </ul>
