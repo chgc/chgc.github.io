@@ -100,8 +100,8 @@ Action 可以有下列幾種行為模式
 當被呼叫的服務執行完動作時，需要給 Teams 一些回應，以下有幾點文件上提到的小叮嚀
 
 * Response 的 header 中，要加入 `CARD-ACTION-STATUS`，而資訊應清晰，不需要加呼叫者的名字或是執行時間，因為這部分的資訊會被自動加上
-* 回傳 `Refresh Cards` 更新使用者的卡片資訊，例如移除原本卡片中的動作項目
-  * header 加入 `CARD-UPDATE-IN-BODY: TRUE`
+* Refresh Card: 可回傳一個完整的 MessageCard 內容來更新使用者發出動作的同一卡片資訊，例如移除原本卡片中的動作項目，或是更新同張卡片上的資訊內容
+  * 重點: 在 Header 加入 `CARD-UPDATE-IN-BODY: TRUE`
   * 不要使用 Refresh Cards 做精靈式回答的工作
   * 至少包含一個 `OpenUri` 連結回原本系統
 
