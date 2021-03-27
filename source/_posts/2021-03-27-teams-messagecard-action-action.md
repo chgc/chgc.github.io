@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Teams] Teams 的 MessageCard 裡面的 Action 是怎樣運作的?'
+title: '[Teams] 關於 MessageCard Action 的一些事情'
 comments: true
 typora-root-url: 2021-03-27-teams-messagecard-action-action/
 typora-copy-images-to: 2021-03-27-teams-messagecard-action-action/
