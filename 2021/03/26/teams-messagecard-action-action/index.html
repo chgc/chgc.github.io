@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Teams 可以讓使用者透過 Incoming Webhooks 的方式將資訊以 JSON 的方式傳入並用卡片的形式呈現，而卡片的內容也可以定義一些動作讓使用者做操作，例如收集資訊並回傳到指定的服務去(API)，但到底要怎麼傳，跟怎麼驗證，這部分的文件被藏在我認為還蠻角落的地方，透過這篇筆記稍微整理一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Teams] Teams 的 MessageCard 裡面的 Action 是怎樣運作的?">
+<meta property="og:url" content="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Teams 可以讓使用者透過 Incoming Webhooks 的方式將資訊以 JSON 的方式傳入並用卡片的形式呈現，而卡片的內容也可以定義一些動作讓使用者做操作，例如收集資訊並回傳到指定的服務去(API)，但到底要怎麼傳，跟怎麼驗證，這部分的文件被藏在我認為還蠻角落的地方，透過這篇筆記稍微整理一下">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/trello-example-expanded-explained.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/trello-example-explained.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/twitter-example-explained.png">
+<meta property="article:published_time" content="2021-03-26T23:48:54.000Z">
+<meta property="article:modified_time" content="2021-03-27T02:56:04.815Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Teams">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/trello-example-expanded-explained.png">
+
+<link rel="canonical" href="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[Teams] Teams 的 MessageCard 裡面的 Action 是怎樣運作的? | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-7997572949867824',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Teams] Teams 的 MessageCard 裡面的 Action 是怎樣運作的?
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-03-27 07:48:54" itemprop="dateCreated datePublished" datetime="2021-03-27T07:48:54+08:00">2021-03-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Teams/" itemprop="url" rel="index"><span itemprop="name">Teams</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/03/26/teams-messagecard-action-action/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/26/teams-messagecard-action-action/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Teams 可以讓使用者透過 Incoming Webhooks 的方式將資訊以 JSON 的方式傳入並用卡片的形式呈現，而卡片的內容也可以定義一些動作讓使用者做操作，例如收集資訊並回傳到指定的服務去(API)，但到底要怎麼傳，跟怎麼驗證，這部分的文件被藏在我認為還蠻角落的地方，透過這篇筆記稍微整理一下</p>
+<span id="more"></span>
+<blockquote>
+<p>注意: 這邊所紀錄的內容的資料來源是 <code>Legacy actionable message card reference </code></p>
+</blockquote>
+<h1 id="MessageCard"><a class="header-anchor" href="#MessageCard"> </a>MessageCard</h1>
+<p>挑幾個跟 Action 比較有關的欄位出來</p>
+<ul>
+<li><code>correlationId</code> : log 使用，在 HttpPost 時，會以 <code>Card-Correlation-Id</code> 紀錄，應和 <code>Action-Request-Id</code> 一同被紀錄起來供後續使用，<code>Action-Request-Id</code> 由 Office 365 產生，可以用來查使用者的執行哪一個動作</li>
+<li><code>potentialAction</code> ：希望操作的動作會定義在這一個區塊，數量最多能放 4 個動作。在 Section 裡也可以放 <code>potentialAction</code></li>
+</ul>
+<h2 id="Action-行為"><a class="header-anchor" href="#Action-行為"> </a>Action 行為</h2>
+<p>Action 可以有下列幾種行為模式</p>
+<ul>
+<li>OpenUri</li>
+<li>HttpPost</li>
+<li>ActionCard</li>
+<li>InvokeAddInCommand</li>
+</ul>
+<h3 id="OpenUri"><a class="header-anchor" href="#OpenUri"> </a>OpenUri</h3>
+<p><strong>功能</strong>: 打開網址或 APP</p>
+<p><strong>建議</strong>:</p>
+<ol>
+<li>使用此方式提供使用者另開網站，而非將連結放到主文內</li>
+<li>至少附上一個連結，讓使用者可以看到更多資訊</li>
+<li>應為 <code>potentialAction</code> 的最後一個動作</li>
+</ol>
+<p><strong>格式</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;OpenUri&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Learn More&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;targets&quot;</span>: [&#123;</span><br><span class="line">        <span class="attr">&quot;os&quot;</span>: <span class="string">&quot;default&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;uri&quot;</span>: <span class="string">&quot;https://docs.microsoft.com/outlook/actionable-messages&quot;</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>name</code> : 按鈕顯示名稱，使用動詞命名</p>
+</li>
+<li>
+<p><code>targets</code>: 可以針對使用者設備的作業系統版本提供對應的連結</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;targets&quot;: [</span><br><span class="line">    &#123; &quot;os&quot;: &quot;default&quot;, &quot;uri&quot;: &quot;https://yammer.com/.../123&quot; &#125;,</span><br><span class="line">    &#123; &quot;os&quot;: &quot;iOS&quot;, &quot;uri&quot;: &quot;yammer://u/123&quot; &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;os&quot;</span>: <span class="string">&quot;android&quot;</span>, <span class="attr">&quot;uri&quot;</span>: <span class="string">&quot;yammer://u/123&quot;</span> &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="HttpPost"><a class="header-anchor" href="#HttpPost"> </a>HttpPost</h3>
+<p>這一個應該會是最常用的行為，基本上就是做一個 API 呼叫</p>
+<p><strong>功能</strong>: 呼叫外部 web 服務</p>
+<p><strong>驗證</strong>: 如需驗證發送者的身份，除了可以在 URL 後面掛 token 驗證外，也可以參考此<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/outlook/actionable-messages/security-requirements#verifying-that-requests-come-from-microsoft">文件</a>內的方式</p>
+<p><strong>格式</strong>:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Save&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://docs.microsoft.com/outlook/actionable-messages&quot;</span></span><br><span class="line">    <span class="string">&quot;body&quot;</span> : <span class="string">&quot;payload content&quot;</span></span><br><span class="line">    <span class="string">&quot;headers&quot;</span>: [...],</span><br><span class="line">    <span class="attr">&quot;bodyContentType&quot;</span>: <span class="string">&quot;application/json&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>body</strong> 是呼叫 HttpPost 要傳的內容，下面會介紹搭配 <code>ActionCard</code> 的方式做出動態收集資料的行為</li>
+<li><strong>bodyContentType</strong>: 預設為 <code>application/json</code> ，另外一個有效的設定值為 <code>application/x-www-form-urlencoded</code></li>
+<li><strong>headers</strong>: 就字面上意思，想要在發 HttpPost 時放在 header 區塊的資訊</li>
+</ul>
+<p><strong>執行過程</strong>: 整個 <code>HttpPost</code> 的發送行為會由微軟代為發送，並不是由 Client 端直接發送，這也是為什麼在驗證篇的文件中，提到可以驗證 http requests 是否來自微軟</p>
+<h3 id="被呼叫服務的回應方式"><a class="header-anchor" href="#被呼叫服務的回應方式"> </a>被呼叫服務的回應方式</h3>
+<p>當被呼叫的服務執行完動作時，需要給 Teams 一些回應，以下有幾點文件上提到的小叮嚀</p>
+<ul>
+<li>Response 的 header 中，要加入 <code>CARD-ACTION-STATUS</code>，而資訊應清晰，不需要加呼叫者的名字或是執行時間，因為這部分的資訊會被自動加上</li>
+<li>回傳 <code>Refresh Cards</code> 更新使用者的卡片資訊，例如移除原本卡片中的動作項目
+<ul>
+<li>header 加入 <code>CARD-UPDATE-IN-BODY: TRUE</code></li>
+<li>不要使用 Refresh Cards 做精靈式回答的工作</li>
+<li>至少包含一個 <code>OpenUri</code> 連結回原本系統</li>
+</ul>
+</li>
+</ul>
+<h3 id="ActionCard"><a class="header-anchor" href="#ActionCard"> </a>ActionCard</h3>
+<p><img src="trello-example-expanded-explained.png" alt="trello-example-expanded-explained"></p>
+<p><strong>功能</strong>: 收集使用者輸入資訊，收集到的資訊可用在 <code>HttpPost</code> 和 <code>OpenUri</code></p>
+<p><strong>格式</strong>:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;ActionCard&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Comment&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;inputs&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;TextInput&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;comment&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;isRequired&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;isMultiline&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Input&#x27;s title property&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Action&#x27;s name prop.&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://yammer.com/comment?postId=123&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;body&quot;</span>: <span class="string">&quot;comment=&#123;&#123;comment.value&#125;&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>isRequried</code> : 欄位是否必填</li>
+<li><code>value</code>: 預設值</li>
+<li>line 17: 使用大括弧包住變數，可使用變數的來源為 <code>inputs</code> 區塊定義的物件並以 input 的 <code>id</code> 為變數名稱，格式 <code>&#123;&#123;<id of input>.value&#125;&#125;</code></li>
+</ul>
+<p>可使用的輸入欄位型態有</p>
+<ul>
+<li>
+<p>TextInput</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;TextInput&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;comment&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;isMultiline&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;maxLength&quot;</span>: <span class="number">250</span>,</span><br><span class="line">  <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Input&#x27;s title property&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>isMultiline</code> : 為 true 時會顯示 textarea, 為 false 時會顯示 input</li>
+<li><code>maxLength</code>: 設定可輸入文字的上限值</li>
+</ul>
+</li>
+<li>
+<p>DateInput</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;DateInput&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;dueDate&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;includeTime&quot;</span>: <span class="literal">false</span></span><br><span class="line">  <span class="string">&quot;title&quot;</span>: <span class="string">&quot;Input&#x27;s title property&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>includeTime</code> : 是否要顯示時間設定</li>
+</ul>
+</li>
+<li>
+<p>MultichoiceInput</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;MultichoiceInput&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;list&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Pick an option&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;isMultiSelect&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;style&quot;</span>: <span class="string">&quot;expanded&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;choices&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;Choice 1&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;1&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;Choice 2&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;2&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;Choice 3&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;3&quot;</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>isMultiSelect</code>: 設定為 <code>true</code> 時，會顯示成 checkbox ，當設定為 <code>false</code> 時，會顯示成 radio 。預設值為 `false</li>
+<li><code>style</code>: 當 <code>isMultiSelect</code> 為 false 時且 style 設定為 <code>expanded</code> ，畫面會盡量將選項全部顯示。預設值為 <code>normal</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="InvokeAddInCommand"><a class="header-anchor" href="#InvokeAddInCommand"> </a>InvokeAddInCommand</h3>
+<p>這行為目前看起來只能用在 Offie Add-in，暫時不研究，Reference: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference?WT.mc_id=DOP-MVP-5002680#invokeaddincommand-action">InvokeAddInCommand action</a></p>
+<h2 id="範例"><a class="header-anchor" href="#範例"> </a>範例</h2>
+<p>範例一</p>
+<p><img src="trello-example-explained.png" alt="trello-example-explained"></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;summary&quot;</span>: <span class="string">&quot;Card \&quot;Test card\&quot;&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;themeColor&quot;</span>: <span class="string">&quot;0078D7&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Card created: \&quot;Name of card\&quot;&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;sections&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;activityTitle&quot;</span>: <span class="string">&quot;David Claux&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activitySubtitle&quot;</span>: <span class="string">&quot;9/13/2016, 3:34pm&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityImage&quot;</span>: <span class="string">&quot;https://connectorsdemo.azurewebsites.net/images/MSC12_Oscar_002.jpg&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;facts&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Board:&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;Name of board&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;List:&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;Name of list&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Assigned to:&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;(none)&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Due date:&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;(none)&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;text&quot;</span>: <span class="string">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;potentialAction&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;ActionCard&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Set due date&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;DateInput&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;dueDate&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Select a date&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;OK&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://...&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;ActionCard&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Move&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;MultichoiceInput&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;move&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Pick a list&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;choices&quot;</span>: [</span><br><span class="line">            &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;List 1&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;l1&quot;</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;List 2&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;l2&quot;</span> &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;OK&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://...&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;ActionCard&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Add a comment&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;TextInput&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;comment&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;isMultiline&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Enter your comment&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;OK&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://...&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;OpenUri&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;View in Trello&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;targets&quot;</span>: [</span><br><span class="line">        &#123; <span class="attr">&quot;os&quot;</span>: <span class="string">&quot;default&quot;</span>, <span class="attr">&quot;uri&quot;</span>: <span class="string">&quot;https://...&quot;</span> &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>範例二</p>
+<p><img src="twitter-example-explained.png" alt="twitter-example-explained"></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;themeColor&quot;</span>: <span class="string">&quot;0078D7&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;sections&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;activityTitle&quot;</span>: <span class="string">&quot;**Elon Musk**&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activitySubtitle&quot;</span>: <span class="string">&quot;@elonmusk - 9/12/2016 at 5:33pm&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityImage&quot;</span>: <span class="string">&quot;https://pbs.twimg.com/profile_images/782474226020200448/zDo-gAo0.jpg&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityText&quot;</span>: <span class="string">&quot;Climate change explained in comic book form by xkcd xkcd.com/1732&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;activityTitle&quot;</span>: <span class="string">&quot;**Mark Knopfler**&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activitySubtitle&quot;</span>: <span class="string">&quot;@MarkKnopfler - 9/12/2016 at 1:12pm&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityImage&quot;</span>: <span class="string">&quot;https://pbs.twimg.com/profile_images/378800000221985528/b2ebfafca6fd7b565fdf3bf4ccdb4dc9.jpeg&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityText&quot;</span>: <span class="string">&quot;Mark Knopfler features on B.B King&#x27;s all-star album of Blues greats, released on this day in 2005...&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="驗證"><a class="header-anchor" href="#驗證"> </a>驗證</h1>
+<ul>
+<li>
+<p>Action URL 必須是 HTTPS</p>
+</li>
+<li>
+<p>可以驗證 hearer token 是否合法</p>
+</li>
+<li>
+<p>可驗證 <code>aud</code> 是否與目前 service base URL 相符</p>
+</li>
+<li>
+<p>可使用 URL 掛載 token 的方式作驗證</p>
+</li>
+<li>
+<p>bearer token 包含了 AAD Office 365 User 資訊</p>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference?WT.mc_id=DOP-MVP-5002680">Legacy actionable message card reference</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/outlook/actionable-messages/security-requirements?WT.mc_id=DOP-MVP-5002680">Security requirements for actionable messages in Office 365</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Teams/" rel="tag"># Teams</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/20/teams-and-messages/" rel="prev" title="[Teams] 訊息傳遞 - webhooks and connectors">
+      <i class="fa fa-chevron-left"></i> [Teams] 訊息傳遞 - webhooks and connectors
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MessageCard"><span class="nav-number">1.</span> <span class="nav-text">MessageCard</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Action-%E8%A1%8C%E7%82%BA"><span class="nav-number">1.1.</span> <span class="nav-text">Action 行為</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenUri"><span class="nav-number">1.1.1.</span> <span class="nav-text">OpenUri</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpPost"><span class="nav-number">1.1.2.</span> <span class="nav-text">HttpPost</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A2%AB%E5%91%BC%E5%8F%AB%E6%9C%8D%E5%8B%99%E7%9A%84%E5%9B%9E%E6%87%89%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.3.</span> <span class="nav-text">被呼叫服務的回應方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ActionCard"><span class="nav-number">1.1.4.</span> <span class="nav-text">ActionCard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InvokeAddInCommand"><span class="nav-number">1.1.5.</span> <span class="nav-text">InvokeAddInCommand</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">1.2.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%97%E8%AD%89"><span class="nav-number">2.</span> <span class="nav-text">驗證</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">305</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <!--google_adsense-->
+        
+          <div class="links-of-blogroll-title">
+            <i class="fa fa-google"></i> 廣告
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-7997572949867824"
+                data-ad-slot="3959999538"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        
+        <!--/google_adsense-->
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>    
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/";
+    this.page.identifier = "2021/03/26/teams-messagecard-action-action/";
+    this.page.title = "[Teams] Teams 的 MessageCard 裡面的 Action 是怎樣運作的?";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

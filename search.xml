@@ -17429,6 +17429,147 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Teams] Teams 的 MessageCard 裡面的 Action 是怎樣運作的?</title>
+    <url>/2021/03/26/teams-messagecard-action-action/</url>
+    <content><![CDATA[<p>Teams 可以讓使用者透過 Incoming Webhooks 的方式將資訊以 JSON 的方式傳入並用卡片的形式呈現，而卡片的內容也可以定義一些動作讓使用者做操作，例如收集資訊並回傳到指定的服務去(API)，但到底要怎麼傳，跟怎麼驗證，這部分的文件被藏在我認為還蠻角落的地方，透過這篇筆記稍微整理一下</p>
+<span id="more"></span>
+<blockquote>
+<p>注意: 這邊所紀錄的內容的資料來源是 <code>Legacy actionable message card reference </code></p>
+</blockquote>
+<h1 id="MessageCard"><a class="header-anchor" href="#MessageCard"> </a>MessageCard</h1>
+<p>挑幾個跟 Action 比較有關的欄位出來</p>
+<ul>
+<li><code>correlationId</code> : log 使用，在 HttpPost 時，會以 <code>Card-Correlation-Id</code> 紀錄，應和 <code>Action-Request-Id</code> 一同被紀錄起來供後續使用，<code>Action-Request-Id</code> 由 Office 365 產生，可以用來查使用者的執行哪一個動作</li>
+<li><code>potentialAction</code> ：希望操作的動作會定義在這一個區塊，數量最多能放 4 個動作。在 Section 裡也可以放 <code>potentialAction</code></li>
+</ul>
+<h2 id="Action-行為"><a class="header-anchor" href="#Action-行為"> </a>Action 行為</h2>
+<p>Action 可以有下列幾種行為模式</p>
+<ul>
+<li>OpenUri</li>
+<li>HttpPost</li>
+<li>ActionCard</li>
+<li>InvokeAddInCommand</li>
+</ul>
+<h3 id="OpenUri"><a class="header-anchor" href="#OpenUri"> </a>OpenUri</h3>
+<p><strong>功能</strong>: 打開網址或 APP</p>
+<p><strong>建議</strong>:</p>
+<ol>
+<li>使用此方式提供使用者另開網站，而非將連結放到主文內</li>
+<li>至少附上一個連結，讓使用者可以看到更多資訊</li>
+<li>應為 <code>potentialAction</code> 的最後一個動作</li>
+</ol>
+<p><strong>格式</strong></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;OpenUri&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Learn More&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;targets&quot;</span>: [&#123;</span><br><span class="line">        <span class="attr">&quot;os&quot;</span>: <span class="string">&quot;default&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;uri&quot;</span>: <span class="string">&quot;https://docs.microsoft.com/outlook/actionable-messages&quot;</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>name</code> : 按鈕顯示名稱，使用動詞命名</p>
+</li>
+<li>
+<p><code>targets</code>: 可以針對使用者設備的作業系統版本提供對應的連結</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;targets&quot;: [</span><br><span class="line">    &#123; &quot;os&quot;: &quot;default&quot;, &quot;uri&quot;: &quot;https://yammer.com/.../123&quot; &#125;,</span><br><span class="line">    &#123; &quot;os&quot;: &quot;iOS&quot;, &quot;uri&quot;: &quot;yammer://u/123&quot; &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;os&quot;</span>: <span class="string">&quot;android&quot;</span>, <span class="attr">&quot;uri&quot;</span>: <span class="string">&quot;yammer://u/123&quot;</span> &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="HttpPost"><a class="header-anchor" href="#HttpPost"> </a>HttpPost</h3>
+<p>這一個應該會是最常用的行為，基本上就是做一個 API 呼叫</p>
+<p><strong>功能</strong>: 呼叫外部 web 服務</p>
+<p><strong>驗證</strong>: 如需驗證發送者的身份，除了可以在 URL 後面掛 token 驗證外，也可以參考此<a href="https://docs.microsoft.com/en-us/outlook/actionable-messages/security-requirements#verifying-that-requests-come-from-microsoft">文件</a>內的方式</p>
+<p><strong>格式</strong>:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Save&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://docs.microsoft.com/outlook/actionable-messages&quot;</span></span><br><span class="line">    <span class="string">&quot;body&quot;</span> : <span class="string">&quot;payload content&quot;</span></span><br><span class="line">    <span class="string">&quot;headers&quot;</span>: [...],</span><br><span class="line">    <span class="attr">&quot;bodyContentType&quot;</span>: <span class="string">&quot;application/json&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>body</strong> 是呼叫 HttpPost 要傳的內容，下面會介紹搭配 <code>ActionCard</code> 的方式做出動態收集資料的行為</li>
+<li><strong>bodyContentType</strong>: 預設為 <code>application/json</code> ，另外一個有效的設定值為 <code>application/x-www-form-urlencoded</code></li>
+<li><strong>headers</strong>: 就字面上意思，想要在發 HttpPost 時放在 header 區塊的資訊</li>
+</ul>
+<p><strong>執行過程</strong>: 整個 <code>HttpPost</code> 的發送行為會由微軟代為發送，並不是由 Client 端直接發送，這也是為什麼在驗證篇的文件中，提到可以驗證 http requests 是否來自微軟</p>
+<h3 id="被呼叫服務的回應方式"><a class="header-anchor" href="#被呼叫服務的回應方式"> </a>被呼叫服務的回應方式</h3>
+<p>當被呼叫的服務執行完動作時，需要給 Teams 一些回應，以下有幾點文件上提到的小叮嚀</p>
+<ul>
+<li>Response 的 header 中，要加入 <code>CARD-ACTION-STATUS</code>，而資訊應清晰，不需要加呼叫者的名字或是執行時間，因為這部分的資訊會被自動加上</li>
+<li>回傳 <code>Refresh Cards</code> 更新使用者的卡片資訊，例如移除原本卡片中的動作項目
+<ul>
+<li>header 加入 <code>CARD-UPDATE-IN-BODY: TRUE</code></li>
+<li>不要使用 Refresh Cards 做精靈式回答的工作</li>
+<li>至少包含一個 <code>OpenUri</code> 連結回原本系統</li>
+</ul>
+</li>
+</ul>
+<h3 id="ActionCard"><a class="header-anchor" href="#ActionCard"> </a>ActionCard</h3>
+<p><img src="trello-example-expanded-explained.png" alt="trello-example-expanded-explained"></p>
+<p><strong>功能</strong>: 收集使用者輸入資訊，收集到的資訊可用在 <code>HttpPost</code> 和 <code>OpenUri</code></p>
+<p><strong>格式</strong>:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;ActionCard&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Comment&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;inputs&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;TextInput&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;comment&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;isRequired&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;isMultiline&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Input&#x27;s title property&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Action&#x27;s name prop.&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://yammer.com/comment?postId=123&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;body&quot;</span>: <span class="string">&quot;comment=&#123;&#123;comment.value&#125;&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>isRequried</code> : 欄位是否必填</li>
+<li><code>value</code>: 預設值</li>
+<li>line 17: 使用大括弧包住變數，可使用變數的來源為 <code>inputs</code> 區塊定義的物件並以 input 的 <code>id</code> 為變數名稱，格式 <code>&#123;&#123;<id of input>.value&#125;&#125;</code></li>
+</ul>
+<p>可使用的輸入欄位型態有</p>
+<ul>
+<li>
+<p>TextInput</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;TextInput&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;comment&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;isMultiline&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;maxLength&quot;</span>: <span class="number">250</span>,</span><br><span class="line">  <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Input&#x27;s title property&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>isMultiline</code> : 為 true 時會顯示 textarea, 為 false 時會顯示 input</li>
+<li><code>maxLength</code>: 設定可輸入文字的上限值</li>
+</ul>
+</li>
+<li>
+<p>DateInput</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;DateInput&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;dueDate&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;includeTime&quot;</span>: <span class="literal">false</span></span><br><span class="line">  <span class="string">&quot;title&quot;</span>: <span class="string">&quot;Input&#x27;s title property&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>includeTime</code> : 是否要顯示時間設定</li>
+</ul>
+</li>
+<li>
+<p>MultichoiceInput</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;MultichoiceInput&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;list&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Pick an option&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;isMultiSelect&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;style&quot;</span>: <span class="string">&quot;expanded&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;choices&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;Choice 1&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;1&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;Choice 2&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;2&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;Choice 3&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;3&quot;</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>isMultiSelect</code>: 設定為 <code>true</code> 時，會顯示成 checkbox ，當設定為 <code>false</code> 時，會顯示成 radio 。預設值為 `false</li>
+<li><code>style</code>: 當 <code>isMultiSelect</code> 為 false 時且 style 設定為 <code>expanded</code> ，畫面會盡量將選項全部顯示。預設值為 <code>normal</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="InvokeAddInCommand"><a class="header-anchor" href="#InvokeAddInCommand"> </a>InvokeAddInCommand</h3>
+<p>這行為目前看起來只能用在 Offie Add-in，暫時不研究，Reference: <a href="https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference?WT.mc_id=DOP-MVP-5002680#invokeaddincommand-action">InvokeAddInCommand action</a></p>
+<h2 id="範例"><a class="header-anchor" href="#範例"> </a>範例</h2>
+<p>範例一</p>
+<p><img src="trello-example-explained.png" alt="trello-example-explained"></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;summary&quot;</span>: <span class="string">&quot;Card \&quot;Test card\&quot;&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;themeColor&quot;</span>: <span class="string">&quot;0078D7&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Card created: \&quot;Name of card\&quot;&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;sections&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;activityTitle&quot;</span>: <span class="string">&quot;David Claux&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activitySubtitle&quot;</span>: <span class="string">&quot;9/13/2016, 3:34pm&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityImage&quot;</span>: <span class="string">&quot;https://connectorsdemo.azurewebsites.net/images/MSC12_Oscar_002.jpg&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;facts&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Board:&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;Name of board&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;List:&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;Name of list&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Assigned to:&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;(none)&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Due date:&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;(none)&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;text&quot;</span>: <span class="string">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;potentialAction&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;ActionCard&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Set due date&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;DateInput&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;dueDate&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Select a date&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;OK&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://...&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;ActionCard&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Move&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;MultichoiceInput&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;move&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Pick a list&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;choices&quot;</span>: [</span><br><span class="line">            &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;List 1&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;l1&quot;</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;List 2&quot;</span>, <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;l2&quot;</span> &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;OK&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://...&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;ActionCard&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Add a comment&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;TextInput&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;comment&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;isMultiline&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Enter your comment&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;HttpPOST&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;OK&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;target&quot;</span>: <span class="string">&quot;https://...&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;@type&quot;</span>: <span class="string">&quot;OpenUri&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;View in Trello&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;targets&quot;</span>: [</span><br><span class="line">        &#123; <span class="attr">&quot;os&quot;</span>: <span class="string">&quot;default&quot;</span>, <span class="attr">&quot;uri&quot;</span>: <span class="string">&quot;https://...&quot;</span> &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>範例二</p>
+<p><img src="twitter-example-explained.png" alt="twitter-example-explained"></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;themeColor&quot;</span>: <span class="string">&quot;0078D7&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;sections&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;activityTitle&quot;</span>: <span class="string">&quot;**Elon Musk**&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activitySubtitle&quot;</span>: <span class="string">&quot;@elonmusk - 9/12/2016 at 5:33pm&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityImage&quot;</span>: <span class="string">&quot;https://pbs.twimg.com/profile_images/782474226020200448/zDo-gAo0.jpg&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityText&quot;</span>: <span class="string">&quot;Climate change explained in comic book form by xkcd xkcd.com/1732&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;activityTitle&quot;</span>: <span class="string">&quot;**Mark Knopfler**&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activitySubtitle&quot;</span>: <span class="string">&quot;@MarkKnopfler - 9/12/2016 at 1:12pm&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityImage&quot;</span>: <span class="string">&quot;https://pbs.twimg.com/profile_images/378800000221985528/b2ebfafca6fd7b565fdf3bf4ccdb4dc9.jpeg&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;activityText&quot;</span>: <span class="string">&quot;Mark Knopfler features on B.B King&#x27;s all-star album of Blues greats, released on this day in 2005...&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="驗證"><a class="header-anchor" href="#驗證"> </a>驗證</h1>
+<ul>
+<li>
+<p>Action URL 必須是 HTTPS</p>
+</li>
+<li>
+<p>可以驗證 hearer token 是否合法</p>
+</li>
+<li>
+<p>可驗證 <code>aud</code> 是否與目前 service base URL 相符</p>
+</li>
+<li>
+<p>可使用 URL 掛載 token 的方式作驗證</p>
+</li>
+<li>
+<p>bearer token 包含了 AAD Office 365 User 資訊</p>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference?WT.mc_id=DOP-MVP-5002680">Legacy actionable message card reference</a></li>
+<li><a href="https://docs.microsoft.com/en-us/outlook/actionable-messages/security-requirements?WT.mc_id=DOP-MVP-5002680">Security requirements for actionable messages in Office 365</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Teams</category>
+      </categories>
+      <tags>
+        <tag>Teams</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
