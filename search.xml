@@ -17429,7 +17429,7 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
-    <title>[Teams] Teams 的 MessageCard 裡面的 Action 是怎樣運作的?</title>
+    <title>[Teams] 關於 MessageCard Action 的一些事情</title>
     <url>/2021/03/26/teams-messagecard-action-action/</url>
     <content><![CDATA[<p>Teams 可以讓使用者透過 Incoming Webhooks 的方式將資訊以 JSON 的方式傳入並用卡片的形式呈現，而卡片的內容也可以定義一些動作讓使用者做操作，例如收集資訊並回傳到指定的服務去(API)，但到底要怎麼傳，跟怎麼驗證，這部分的文件被藏在我認為還蠻角落的地方，透過這篇筆記稍微整理一下</p>
 <span id="more"></span>
