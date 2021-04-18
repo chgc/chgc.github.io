@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="當網路速度慢遇上要大量開  Work Items 時，就會有一種想下班的念頭，還好 Azure DevOps 有提供 API 可以讓我們用程式來建立 Work Items，雖然剛開始有點小麻煩，但弄通後就還好，所以這邊就筆記一下起手式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Azure DevOps] 用 API 來建立 WorkItems - Angular 篇">
+<meta property="og:url" content="http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="當網路速度慢遇上要大量開  Work Items 時，就會有一種想下班的念頭，還好 Azure DevOps 有提供 API 可以讓我們用程式來建立 Work Items，雖然剛開始有點小麻煩，但弄通後就還好，所以這邊就筆記一下起手式">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/image-20210418201316995.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/image-20210418205023231.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/image-20210418205307166.png">
+<meta property="article:published_time" content="2021-04-18T12:01:51.000Z">
+<meta property="article:modified_time" content="2021-04-18T13:04:55.747Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Azure DevOps">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/image-20210418201316995.png">
+
+<link rel="canonical" href="http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[Azure DevOps] 用 API 來建立 WorkItems - Angular 篇 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-7997572949867824',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Azure DevOps] 用 API 來建立 WorkItems - Angular 篇
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-04-18 20:01:51" itemprop="dateCreated datePublished" datetime="2021-04-18T20:01:51+08:00">2021-04-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Azure-DevOps/" itemprop="url" rel="index"><span itemprop="name">Azure DevOps</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Azure-DevOps/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/04/18/devops-api-angular-version/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/18/devops-api-angular-version/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>當網路速度慢遇上要大量開  Work Items 時，就會有一種想下班的念頭，還好 Azure DevOps 有提供 API 可以讓我們用程式來建立 Work Items，雖然剛開始有點小麻煩，但弄通後就還好，所以這邊就筆記一下起手式</p>
+<span id="more"></span>
+<h1 id="OAuth"><a class="header-anchor" href="#OAuth"> </a>OAuth</h1>
+<p>當呼叫 API 時，還是得通過驗證才能操作 API，這邊可以簡單的透過建立 <code>Personal access tokens</code> 的方式來完成權限控管及驗證等功能，至於如何在 Azure DevOps 建立 PAT，我相信網路上已經有很多文章在講怎麼操作了</p>
+<p>每一個操作的 API 也有說明所需的權限，範例
+<img src="image-20210418201316995.png" alt="image-20210418201316995"></p>
+<h1 id="API-操作"><a class="header-anchor" href="#API-操作"> </a>API 操作</h1>
+<p>這邊我使用 Angular 作為範例程式 ，先用一個 API 的操作來說明</p>
+<h2 id="取得-iterations"><a class="header-anchor" href="#取得-iterations"> </a>取得 iterations</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/rest/api/azure/devops/work/iterations/list?view=azure-devops-rest-6.0">API - Work - Iterations</a></li>
+</ul>
+<p>根據 API 文件得知，呼叫 <code>https://dev.azure.com/&#123;organization&#125;/&#123;project&#125;/&#123;team&#125;/_apis/work/teamsettings/iterations?api-version=6.0</code> 可以取得開 project 下的 iterations 資訊，</p>
+<p>程式碼的部分如下(以下的程式碼會產生錯誤)</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">baseUrl = <span class="string">&#x27;`https://dev.azure.com/&#123;organization&#125;/&#123;project&#125;&#x27;</span>; </span><br><span class="line"><span class="function"><span class="title">getIterations</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.get(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.baseUrl&#125;</span>/work/teamsettings/iterations?api-version=<span class="subst">$&#123;<span class="built_in">this</span>.apiVersion&#125;</span>`</span>);    </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>organization</code> 和 <code>project</code> 請配合自己的 DevOps 專案修改</li>
+<li>這段程式碼當在呼叫 API 時會出現錯誤，原因是沒有授權的關係</li>
+</ul>
+<p>來調整一下呼叫的 header 資訊，加入之前所建立的 PAT</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getIterations</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="built_in">this</span>.http.get(</span><br><span class="line">     <span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.baseUrl&#125;</span>/work/teamsettings/iterations?api-version=<span class="subst">$&#123;<span class="built_in">this</span>.apiVersion&#125;</span>`</span>,</span><br><span class="line">     &#123;</span><br><span class="line">       headers: <span class="keyword">new</span> HttpHeaders(&#123;</span><br><span class="line">         Authorization: <span class="string">`Basic <span class="subst">$&#123;btoa(<span class="string">`PAT:<span class="subst">$&#123;<span class="built_in">this</span>.token&#125;</span>`</span>)&#125;</span>`</span>,</span><br><span class="line">       &#125;),</span><br><span class="line">     &#125;</span><br><span class="line">   );    </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Headers 的部分加入 <code>Authorization</code> 的內容</li>
+<li>PAT 需要轉換成 Base64 的格式</li>
+<li><code>PAT:$&#123;token&#125;</code> 的 <code>PAT:</code> 是必要的</li>
+<li>重新執行即可取回所要的資訊</li>
+</ul>
+<p>每次呼叫 API 時後面都要加上 <code>api-version</code> 資訊，其實有點麻煩，這資訊可以改放到 headers 內</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">new</span> HttpHeaders(&#123;</span><br><span class="line">      Authorization: <span class="string">`Basic <span class="subst">$&#123;btoa(<span class="string">`PAT:<span class="subst">$&#123;<span class="built_in">this</span>.token&#125;</span>`</span>)&#125;</span>`</span>,</span><br><span class="line">      <span class="string">&#x27;X-TFS-FedAuthRedirect&#x27;</span>: <span class="string">&#x27;Suppress&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;api-version&#x27;</span>: <span class="string">&#x27;6.0&#x27;</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="建立-Work-Item"><a class="header-anchor" href="#建立-Work-Item"> </a>建立 Work Item</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/work%20items/create?view=azure-devops-rest-6.0">API - Work Items - Create</a></li>
+</ul>
+<blockquote>
+<p>POST <a target="_blank" rel="noopener" href="https://dev.azure.com/%7Borganization%7D/%7Bproject%7D/_apis/wit/workitems/$%7Btype%7D?api-version=6.0">https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/${type}?api-version=6.0</a></p>
+</blockquote>
+<p>第一次看到 <code>$&#123;type&#125;</code> 的時候，我也搞不懂要放入什麼，經過一陣亂測試，終於知道要放什麼東西了 ，在網頁上面要新增一個 Work Item 時，可以選得類別會依開發模式來決定，基本操作都是一樣的</p>
+<p><img src="image-20210418205023231.png" alt="image-20210418205023231"></p>
+<p>如果要建立一個 <code>Task</code>，網址會是</p>
+<p><code>https://dev.azure.com/&#123;organization&#125;/&#123;project&#125;/_apis/wit/workitems/$Task</code></p>
+<p>如果是 <code>Issue</code>，網址則會是</p>
+<p><code>https://dev.azure.com/&#123;organization&#125;/&#123;project&#125;/_apis/wit/workitems/$Issue</code></p>
+<p>這樣子說明應該可以瞭解 <code>$&#123;type&#125;</code> 要怎麼改了</p>
+<p>另外一個要注意的地方是 Request Body 的 Content-Type 需要設定為 <code>application/json-patch+json</code></p>
+<p><img src="image-20210418205307166.png" alt="image-20210418205307166"></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> HttpHeaders(&#123;</span><br><span class="line">    Authorization: <span class="string">`Basic <span class="subst">$&#123;btoa(<span class="string">`PAT:<span class="subst">$&#123;<span class="built_in">this</span>.token&#125;</span>`</span>)&#125;</span>`</span>,</span><br><span class="line">    <span class="string">&#x27;api-version&#x27;</span>: <span class="built_in">this</span>.apiVersion,</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json-patch+json&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>範例程式</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">createWorkItem</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.post(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.baseUrl&#125;</span>/wit/workitems/$Task`</span>, [</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">&#x27;/fields/System.Title&#x27;</span>,</span><br><span class="line">        op: <span class="string">&#x27;add&#x27;</span>,</span><br><span class="line">        value: <span class="string">&#x27;Title here&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">&#x27;/fields/System.Description&#x27;</span>,</span><br><span class="line">        op: <span class="string">&#x27;add&#x27;</span>,</span><br><span class="line">        value: <span class="string">&#x27;desc here&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">&#x27;/fields/Microsoft.VSTS.Common.Priority&#x27;</span>,</span><br><span class="line">        op: <span class="string">&#x27;add&#x27;</span>,</span><br><span class="line">        value: <span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">&#x27;/fields/System.IterationPath&#x27;</span>,</span><br><span class="line">        op: <span class="string">&#x27;add&#x27;</span>,</span><br><span class="line">        value: <span class="string">&#x27;apiDemo\\w001&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ], &#123;</span><br><span class="line">        headers: <span class="keyword">new</span> HttpHeaders(&#123;</span><br><span class="line">            Authorization: <span class="string">`Basic <span class="subst">$&#123;btoa(<span class="string">`PAT:<span class="subst">$&#123;<span class="built_in">this</span>.token&#125;</span>`</span>)&#125;</span>`</span>,</span><br><span class="line">            <span class="string">&#x27;api-version&#x27;</span>: <span class="built_in">this</span>.apiVersion,</span><br><span class="line">            <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json-patch+json&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以修改的 path ，可參閱 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/work%20item%20types%20field/list?view=azure-devops-rest-6.0">API - work item fields</a>，但不是所有的欄位都可以設定，這部分就請各位自己測試了</li>
+</ul>
+<h2 id="Update-Work-Item"><a class="header-anchor" href="#Update-Work-Item"> </a>Update Work Item</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/work%20items/update?view=azure-devops-rest-6.0">API - Work Item Update</a></li>
+</ul>
+<blockquote>
+<p>PATCH <a target="_blank" rel="noopener" href="https://dev.azure.com/%7Borganization%7D/_apis/wit/workitems/%7Bid%7D?api-version=6.0">https://dev.azure.com/{organization}/_apis/wit/workitems/{id}?api-version=6.0</a></p>
+</blockquote>
+<p>用一個 Related Work 的範例來說明更新 Work Item</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">addLink</span>(<span class="params">parent, ...childrend</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>.http.patch(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.baseUrl&#125;</span>/wit/workitems/<span class="subst">$&#123;parent&#125;</span>`</span>, [</span><br><span class="line">    ...childrend.map(<span class="function">(<span class="params">id</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        op: <span class="string">&#x27;add&#x27;</span>,</span><br><span class="line">        path: <span class="string">&#x27;/relations/-&#x27;</span>,</span><br><span class="line">        value: &#123;</span><br><span class="line">          rel: <span class="string">&#x27;System.LinkTypes.Related&#x27;</span>,</span><br><span class="line">          url: <span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.baseUrl&#125;</span>/wit/workItems/<span class="subst">$&#123;id&#125;</span>`</span>,</span><br><span class="line">          attributes: &#123;</span><br><span class="line">            comment: <span class="string">&#x27;adding another task&#x27;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;),</span><br><span class="line">  ],  &#123;</span><br><span class="line">      headers: <span class="keyword">new</span> HttpHeaders(&#123;</span><br><span class="line">          Authorization: <span class="string">`Basic <span class="subst">$&#123;btoa(<span class="string">`PAT:<span class="subst">$&#123;<span class="built_in">this</span>.token&#125;</span>`</span>)&#125;</span>`</span>,</span><br><span class="line">          <span class="string">&#x27;api-version&#x27;</span>: <span class="built_in">this</span>.apiVersion,</span><br><span class="line">          <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json-patch+json&#x27;</span></span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 API 文件中有提供更多範例可以參考</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/?view=azure-devops-rest-6.0">azure-devops-rest</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Azure-DevOps/" rel="tag"># Azure DevOps</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/26/teams-messagecard-action-action/" rel="prev" title="[Teams] 關於 MessageCard Action 的一些事情">
+      <i class="fa fa-chevron-left"></i> [Teams] 關於 MessageCard Action 的一些事情
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OAuth"><span class="nav-number">1.</span> <span class="nav-text">OAuth</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API-%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">API 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E5%BE%97-iterations"><span class="nav-number">2.1.</span> <span class="nav-text">取得 iterations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-Work-Item"><span class="nav-number">2.2.</span> <span class="nav-text">建立 Work Item</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update-Work-Item"><span class="nav-number">2.3.</span> <span class="nav-text">Update Work Item</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <!--google_adsense-->
+        
+          <div class="links-of-blogroll-title">
+            <i class="fa fa-google"></i> 廣告
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-7997572949867824"
+                data-ad-slot="3959999538"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        
+        <!--/google_adsense-->
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>    
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/";
+    this.page.identifier = "2021/04/18/devops-api-angular-version/";
+    this.page.title = "[Azure DevOps] 用 API 來建立 WorkItems - Angular 篇";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
