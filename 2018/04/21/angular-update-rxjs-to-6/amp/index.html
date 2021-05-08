@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/04/21/angular-update-rxjs-to-6/"
 			},
 			"datePublished": "2018-04-21T01:06:01.000Z",
-			"dateModified": "2021-04-18T13:04:55.599Z",
+			"dateModified": "2021-05-08T08:23:13.102Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1880,7 +1880,7 @@ h6.categories {
 </li>
 <li>
 <p>執行 tslint-fix (可能需要多跑幾次)</p>
- <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/.bin/tslint -c migrate.tslint.json --project src/tsconfig.app.json --fix`</span><br></pre></td></tr></tbody></table></figure>
+ <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/.bin/tslint -c migrate.tslint.json --project src/tsconfig.app.json --fix`</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>修正 <code>tslint.json</code>，將 <code>rxjs</code> 從 <code>"import-blacklist"</code> 中移除</p>
@@ -1896,7 +1896,7 @@ h6.categories {
 <ol>
 <li>
 <p>全域安裝 <code>rxjs-tslint</code></p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g rxjs-tslint</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g rxjs-tslint</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>升級 RxJS 至 5.5.1 (最新版)</p>
@@ -1919,7 +1919,7 @@ h6.categories {
 </li>
 <li>
 <p>執行下列指令</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rxjs-5-to-6-migrate -p tsconfig.json</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rxjs-5-to-6-migrate -p tsconfig.json</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>建置整個專案確定升級成功</p>

@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/12/16/mvc-6-authorize-redirect-to-login-page/"
 			},
 			"datePublished": "2015-12-16T05:23:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.591Z",
+			"dateModified": "2021-05-08T08:23:13.098Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1848,7 +1848,7 @@ h6.categories {
 <ol>
 <li>startup.cs</li>
 </ol>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public void ConfigureServices(IServiceCollection services)</span><br><span class="line">{</span><br><span class="line">    services.AddAuthentication();           </span><br><span class="line">    .....</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"> public void Configure(IApplicationBuilder app, IHostingEnvironment env)</span><br><span class="line">{</span><br><span class="line">    app.UseCookieAuthentication(options =&gt;</span><br><span class="line">    {</span><br><span class="line">        options.LoginPath = "/Home/Login";</span><br><span class="line">        options.AutomaticAuthenticate = true;</span><br><span class="line">        options.AutomaticChallenge = true;</span><br><span class="line">    });</span><br><span class="line">    ....</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public void ConfigureServices(IServiceCollection services)</span><br><span class="line">{</span><br><span class="line">    services.AddAuthentication();           </span><br><span class="line">    .....</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"> public void Configure(IApplicationBuilder app, IHostingEnvironment env)</span><br><span class="line">{</span><br><span class="line">    app.UseCookieAuthentication(options =&gt;</span><br><span class="line">    {</span><br><span class="line">        options.LoginPath = "/Home/Login";</span><br><span class="line">        options.AutomaticAuthenticate = true;</span><br><span class="line">        options.AutomaticChallenge = true;</span><br><span class="line">    });</span><br><span class="line">    ....</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>到這裡為止就可以做出跟以前一樣遇到沒有授權的頁面就轉到登入畫面了</p>
 <p>###參數說明</p>
 <p>重點在於AutomaticAuthenticate 及 AutomaticChallenge 這兩個參數
@@ -1860,7 +1860,7 @@ h6.categories {
 <p>這裡出現另外一個參數 AuthenticationScheme
 AuthenticationScheme: The AuthenticationScheme in the options corresponds to the logical name for a particular authentication scheme. A different value may be assigned in order to use the same authentication middleware type more than once in a pipepline.</p>
 <p>這表示在Controller裡的[Authorize]可以指定AuthenticationScheme, 就可以做出很有彈性的權限設定轉址或是其他後續動作了</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Authorize(ActiveAuthenticationSchemes ="abc")]</span><br><span class="line">public IActionResult Index(){}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Authorize(ActiveAuthenticationSchemes ="abc")]</span><br><span class="line">public IActionResult Index(){}</span><br></pre></td></tr></tbody></table></figure>
 <p>##update
 設定頁面授權的方式在這裡 <a href="http://docs.asp.net/en/latest/security/authentication/cookie.html">http://docs.asp.net/en/latest/security/authentication/cookie.html</a></p>
 <h3 id="Reference"><a class="header-anchor" href="#Reference"> </a>Reference</h3>

@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2019/05/05/nestjs-middleware/1557061532063.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/05/05/nestjs-middleware/1557061556509.png">
 <meta property="article:published_time" content="2019-05-05T11:32:11.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.635Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.138Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta property="article:tag" content="NestJS">
@@ -284,7 +284,7 @@
 </ol>
 <h1 id="建立"><a class="header-anchor" href="#建立"> </a>建立</h1>
 <p>可以透過 CLI 的指令建立 <code>Middleware</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest g mi &lt;middleware-name&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest g mi &lt;middleware-name&gt;</span><br></pre></td></tr></table></figure>
 <p>當建立完成後，以下為基本的 middleware 程式碼架構</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable, NestMiddleware &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">CheckMiddleware</span> <span class="title">implements</span> <span class="title">NestMiddleware</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">use</span>(<span class="params">req: <span class="built_in">any</span>, res: <span class="built_in">any</span>, next: () =&gt; <span class="built_in">void</span></span>)</span> &#123;</span><br><span class="line">    next();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h1 id="設定"><a class="header-anchor" href="#設定"> </a>設定</h1>
@@ -295,7 +295,7 @@
 </li>
 <li>
 <p>建立 <code>configure</code> 方法</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Module, NestModule, MiddlewareConsumer &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppService &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.service&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ProductsController &#125; <span class="keyword">from</span> <span class="string">&#x27;./products/products.controller&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  imports: [],</span><br><span class="line">  controllers: [ProductsController],</span><br><span class="line">  providers: [AppService],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppModule</span> <span class="title">implements</span> <span class="title">NestModule</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">configure</span>(<span class="params">consumer: MiddlewareConsumer</span>)</span> &#123;&#125;</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Module, NestModule, MiddlewareConsumer &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppService &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.service&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ProductsController &#125; <span class="keyword">from</span> <span class="string">&#x27;./products/products.controller&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [],</span><br><span class="line">  <span class="attr">controllers</span>: [ProductsController],</span><br><span class="line">  <span class="attr">providers</span>: [AppService],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppModule</span> <span class="title">implements</span> <span class="title">NestModule</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">configure</span>(<span class="params">consumer: MiddlewareConsumer</span>)</span> &#123;&#125;</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>利用 consumer 來設定 middleware 適用的路由範圍</p>
@@ -315,7 +315,7 @@
 </li>
 <li>
 <p>如果要設定成全域使用的 middleware 時，可以在 <code>main.ts</code> 內設定</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const app &#x3D; await NestFactory.create(AppModule);</span><br><span class="line">app.use(CheckMiddleware);</span><br><span class="line">await app.listen(3000);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const app = await NestFactory.create(AppModule);</span><br><span class="line">app.use(CheckMiddleware);</span><br><span class="line">await app.listen(3000);</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h1 id="Middleware-進一步說明"><a class="header-anchor" href="#Middleware-進一步說明"> </a>Middleware 進一步說明</h1>
@@ -454,20 +454,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

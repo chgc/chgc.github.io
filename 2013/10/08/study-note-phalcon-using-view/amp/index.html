@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/10/08/study-note-phalcon-using-view/"
 			},
 			"datePublished": "2013-10-08T06:38:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.587Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1860,7 +1860,7 @@ app/views/{{controllerName}}/xxx.volt
 
 <p>在Controller裡面所設定的變數，則上述三種xxx.volt都可以用</p>
 <p>[1]: 如果要指定template時, 可以用下列的方式設定, 這樣子就會去讀取app/views/layouts/common.volt的內容了,</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">  {</span><br><span class="line">      $this-&gt;view-&gt;setTemplateAfter('common');</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">  {</span><br><span class="line">      $this-&gt;view-&gt;setTemplateAfter('common');</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
 
 這一個指定template的動作，執行順序會插在app/views/index.volt跟app/views/layouts/{{controllerName}}.volt中間
 
@@ -1868,9 +1868,9 @@ app/views/{{controllerName}}/xxx.volt
 <p>#Using Partials</p>
 <p>如果想要在view中間插入partials的方式很簡單</p>
 <p>如果是使用volt語法的:</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{{ partial(view path) }}</span><br><span class="line">//with parameters </span><br><span class="line">{{ partial(view path, ['links': $links]) }}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{{ partial(view path) }}</span><br><span class="line">//with parameters </span><br><span class="line">{{ partial(view path, ['links': $links]) }}</span><br></pre></td></tr></tbody></table></figure>
 <p>一般的語法</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $this-&gt;partial(view path) ?&gt;</span><br><span class="line">//with parameters </span><br><span class="line">&lt;?php $this-&gt;partial(view path, array('id' =&gt; $site-&gt;id, 'size' =&gt; 'big')) ?&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $this-&gt;partial(view path) ?&gt;</span><br><span class="line">//with parameters </span><br><span class="line">&lt;?php $this-&gt;partial(view path, array('id' =&gt; $site-&gt;id, 'size' =&gt; 'big')) ?&gt;</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

@@ -29,7 +29,7 @@
 <meta property="og:description" content="123456789101112131415161718192021************************讀取ini file************************function getinit(mfilename,msection,mentry)    local lcinifile,lcvalue,lcbuffer,luentryvalue,lnnumbytes*-- DE">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2015-06-24T17:31:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="VFP">
 <meta name="twitter:card" content="summary">
@@ -266,9 +266,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">********************</span><br><span class="line">****讀取ini file****</span><br><span class="line">********************</span><br><span class="line">function getinit(mfilename,msection,mentry)</span><br><span class="line">    local lcinifile,lcvalue,lcbuffer,luentryvalue,lnnumbytes</span><br><span class="line"></span><br><span class="line">*-- DECLARE DLL statements for reading&#x2F;writing to private INI files</span><br><span class="line">    declare integer GetPrivateProfileString in Win32API ;</span><br><span class="line">        string cSection, string cKey, string cDefault, string @cBuffer, ;</span><br><span class="line">        integer nBufferSize, string cINIFile</span><br><span class="line"></span><br><span class="line">    local minivalue, mresult, mbuffersize</span><br><span class="line">    mbuffersize &#x3D; 255</span><br><span class="line">    minivalue &#x3D; spac(mbuffersize)</span><br><span class="line">    mresult&#x3D;getprivateprofilestring(msection,mentry,&quot;*NULL*&quot;,@minivalue,mbuffersize,mfilename)</span><br><span class="line">    minivalue&#x3D;substr(minivalue,1,mresult)</span><br><span class="line">    if minivalue&#x3D;&quot;*NULL*&quot;</span><br><span class="line">        minivalue&#x3D;.null.</span><br><span class="line">    endif</span><br><span class="line">    return minivalue</span><br><span class="line">endfun</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">********************</span><br><span class="line">****讀取ini file****</span><br><span class="line">********************</span><br><span class="line">function getinit(mfilename,msection,mentry)</span><br><span class="line">    local lcinifile,lcvalue,lcbuffer,luentryvalue,lnnumbytes</span><br><span class="line"></span><br><span class="line">*-- DECLARE DLL statements for reading/writing to private INI files</span><br><span class="line">    declare integer GetPrivateProfileString in Win32API ;</span><br><span class="line">        string cSection, string cKey, string cDefault, string @cBuffer, ;</span><br><span class="line">        integer nBufferSize, string cINIFile</span><br><span class="line"></span><br><span class="line">    local minivalue, mresult, mbuffersize</span><br><span class="line">    mbuffersize = 255</span><br><span class="line">    minivalue = spac(mbuffersize)</span><br><span class="line">    mresult=getprivateprofilestring(msection,mentry,&quot;*NULL*&quot;,@minivalue,mbuffersize,mfilename)</span><br><span class="line">    minivalue=substr(minivalue,1,mresult)</span><br><span class="line">    if minivalue=&quot;*NULL*&quot;</span><br><span class="line">        minivalue=.null.</span><br><span class="line">    endif</span><br><span class="line">    return minivalue</span><br><span class="line">endfun</span><br></pre></td></tr></table></figure>
 <p>demo config ini file</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[section]</span><br><span class="line">entryName&#x3D;return value</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[section]</span><br><span class="line">entryName=return value</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -382,20 +382,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

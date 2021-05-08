@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/02/13/angular-keyvaluepipe/"
 			},
 			"datePublished": "2020-02-13T00:32:18.000Z",
-			"dateModified": "2021-04-18T13:04:55.699Z",
+			"dateModified": "2021-05-08T08:23:13.198Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1855,7 +1855,7 @@ h6.categories {
 <p>The output array will be ordered by keys. By default the comparator will be by Unicode point value. You can optionally pass a compareFn if your keys are complex types.</p>
 </blockquote>
 <p>在不讀文件就使用，會讓你 debug 到天荒地老。但這表示我們可以傳入排序的比較函式了，以下是使用方式</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{{ input_expression | keyvalue [: compareFn] }}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{{ input_expression | keyvalue [: compareFn] }}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>input 值須為 { [key: string | number] : V } | Map</li>
 <li>compareFn: (a:keyValue, b: keyValue) =&gt; number</li>

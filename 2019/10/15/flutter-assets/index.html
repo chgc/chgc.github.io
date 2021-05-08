@@ -29,7 +29,7 @@
 <meta property="og:description" content="Flutter 處理靜態檔案的方法，特別針對圖檔的處理算是很完整又簡單，筆記如下">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2019-10-15T05:58:43.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.683Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.182Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Flutter">
 <meta name="twitter:card" content="summary">
@@ -277,7 +277,7 @@
 </ul>
 <p>單針對影像檔的處理方式有更彈性的作法，由於手機設備的螢幕大小都不太一樣，為了讓圖片顯示得更清楚，都會針對不同的解析度而輸出相對應的圖檔，所以如果採用上述的打包規則，設定規則會超級囉嗦。</p>
 <p>針對這一塊，Flutter 的彈性處理方式是，他會根據圖檔的檔名，往下找一樣檔名的檔案並一起打包進來，假設圖檔的存放結構如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...&#x2F;assets&#x2F;images&#x2F;background.png</span><br><span class="line">...&#x2F;assets&#x2F;images&#x2F;dark&#x2F;background.png</span><br><span class="line">...&#x2F;assets&#x2F;images&#x2F;my_icon.png</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.../assets/images/background.png</span><br><span class="line">.../assets/images/dark/background.png</span><br><span class="line">.../assets/images/my_icon.png</span><br></pre></td></tr></table></figure>
 <p>這時候我的 <code>pubspec.yaml</code>  是這樣子設定</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">flutter:</span></span><br><span class="line">  <span class="attr">assets:</span></span><br><span class="line">  	<span class="bullet">-</span> <span class="string">assets/images/background.png</span></span><br></pre></td></tr></table></figure>
 <p>Flutter 會連同 <code>assets/images/dark/background.png</code> 檔案一起打包進來，同理套用在資料夾模式，真的很彈性。</p>
@@ -297,7 +297,7 @@
 </ul>
 <h2 id="打包-package-的靜態檔案"><a class="header-anchor" href="#打包-package-的靜態檔案"> </a>打包 package 的靜態檔案</h2>
 <p>當要使用 package 的圖檔時，則需要這樣子設定</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flutter:</span><br><span class="line">  assets:</span><br><span class="line">  	- backgrounds&#x2F;background1.png</span><br><span class="line">    - packages&#x2F;fancy_backgrounds&#x2F;backgrounds&#x2F;background1.png</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flutter:</span><br><span class="line">  assets:</span><br><span class="line">  	- backgrounds/background1.png</span><br><span class="line">    - packages/fancy_backgrounds/backgrounds/background1.png</span><br></pre></td></tr></table></figure>
 <p>當使用 <code>AssetImage</code> 時，就可以指定要載入哪一個 <code>package</code></p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AssetImage(<span class="string">&#x27;backgrounds/background1.png&#x27;</span>, package: <span class="string">&#x27;fancy_backgrounds&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
@@ -419,20 +419,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

@@ -29,7 +29,7 @@
 <meta property="og:description" content="When move file in ngCordova or Cordova, it will need 2 plugins.  cordova plugin add org.apache.cordova.file cordova plugin add org.apache.cordova.file-transfer  basic usage. 1234567$cordovaFile.downlo">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2014-10-15T19:37:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="ngCordova">
 <meta name="twitter:card" content="summary">
@@ -272,15 +272,15 @@
 <li>cordova plugin add org.apache.cordova.file-transfer</li>
 </ol>
 <p>basic usage.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.downloadFile(source, filepath, true, &#123;&#125;).then(function(result) &#123;</span><br><span class="line">            &#x2F;&#x2F; Success! </span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            &#x2F;&#x2F; Error</span><br><span class="line">        &#125;, function(progress) &#123;</span><br><span class="line">            &#x2F;&#x2F; constant progress updates</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.downloadFile(source, filepath, true, &#123;&#125;).then(function(result) &#123;</span><br><span class="line">            // Success! </span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            // Error</span><br><span class="line">        &#125;, function(progress) &#123;</span><br><span class="line">            // constant progress updates</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
 <p>it’s same as</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fileTransfer &#x3D; new FileTransfer();</span><br><span class="line">var uri &#x3D; encodeURI(source);</span><br><span class="line">fileTransfer.download(uri,filePath,</span><br><span class="line">function (entry) &#123;</span><br><span class="line">&#x2F;&#x2F; success</span><br><span class="line">&#125;,</span><br><span class="line">function (error) &#123;</span><br><span class="line">&#x2F;&#x2F; error</span><br><span class="line">&#125;,</span><br><span class="line">trustAllHosts, options);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fileTransfer = new FileTransfer();</span><br><span class="line">var uri = encodeURI(source);</span><br><span class="line">fileTransfer.download(uri,filePath,</span><br><span class="line">function (entry) &#123;</span><br><span class="line">// success</span><br><span class="line">&#125;,</span><br><span class="line">function (error) &#123;</span><br><span class="line">// error</span><br><span class="line">&#125;,</span><br><span class="line">trustAllHosts, options);</span><br></pre></td></tr></table></figure>
 <p>if you want to use it with $cordovaCamera.getPicture(), you will need to resolve FILE_URI first, and use it as source.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function getImageFileName(image) &#123;</span><br><span class="line">        window.resolveLocalFileSystemURL(image,</span><br><span class="line">            function(entry) &#123;</span><br><span class="line">                var uri &#x3D; entry.toURL();</span><br><span class="line">                entry.file(function(file) &#123;</span><br><span class="line">                    var fileName &#x3D; file.name;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function getImageFileName(image) &#123;</span><br><span class="line">        window.resolveLocalFileSystemURL(image,</span><br><span class="line">            function(entry) &#123;</span><br><span class="line">                var uri = entry.toURL();</span><br><span class="line">                entry.file(function(file) &#123;</span><br><span class="line">                    var fileName = file.name;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="http://docs.phonegap.com/en/3.3.0/cordova_file_file.md.html#FileEntry">API Document#File Entry</a></p>
 <p>another problem is filepath.
 basePath can find it by below code. and filepath need a filename at the end.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.createDir(directory, false).then(function(entry) &#123;</span><br><span class="line">            &#x2F;&#x2F; Success! </span><br><span class="line">            alert(entry.toURL());</span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            &#x2F;&#x2F; An error occured. Show a message to the user</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.createDir(directory, false).then(function(entry) &#123;</span><br><span class="line">            // Success! </span><br><span class="line">            alert(entry.toURL());</span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            // An error occured. Show a message to the user</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -395,20 +395,20 @@ basePath can find it by below code. and filepath need a filename at the end.</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

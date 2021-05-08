@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/02/26/c-work-with-xml-and-xsd/"
 			},
 			"datePublished": "2014-02-26T18:46:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.587Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1845,7 +1845,7 @@ h6.categories {
 			  		<h1 id="1-在xsd裡描述minOccurs-0-時-所建立的xml裡面要手動控制是否輸出value"><a class="header-anchor" href="#1-在xsd裡描述minOccurs-0-時-所建立的xml裡面要手動控制是否輸出value"> </a>1.在xsd裡描述minOccurs="0"時 , 所建立的xml裡面要手動控制是否輸出value</h1>
 <p>c#可以用class轉換成xml, 但是在class裡面的property並不是每一個都需要輸出，有些事非必要性的欄位。
 這需要在property欄位另外加上一個欄位來做設定</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class demo{</span><br><span class="line">	public string field1;</span><br><span class="line">  public string field2;</span><br><span class="line">  public customEnum field3;</span><br><span class="line">  // 以下這行是關鍵</span><br><span class="line">  [XmlIgnore]</span><br><span class="line">  public bool field3Specified;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class demo{</span><br><span class="line">	public string field1;</span><br><span class="line">  public string field2;</span><br><span class="line">  public customEnum field3;</span><br><span class="line">  // 以下這行是關鍵</span><br><span class="line">  [XmlIgnore]</span><br><span class="line">  public bool field3Specified;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="語法是-propertyNameSpecified"><a class="header-anchor" href="#語法是-propertyNameSpecified"> </a>語法是 propertyNameSpecified</h2>
 <p>[XmlIgnore] : 功用是在輸出xml時，忽略此欄位</p>
 <p>依上列的案例來說，如果 field3Specified=true, 則輸出field3欄位, 如果設定成false, 則不輸出field3</p>
@@ -1853,7 +1853,7 @@ h6.categories {
 <p>在visual studio tools下-&gt; 命令視窗 -&gt; xsd</p>
 <p>ref: <a href="http://msdn.microsoft.com/en-us/library/x6c1kb0s(v=vs.110).aspx">http://msdn.microsoft.com/en-us/library/x6c1kb0s(v=vs.110).aspx</a></p>
 <p>將.xsd檔案轉換成class的方式為</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xsd file.xsd /c</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xsd file.xsd /c</span><br></pre></td></tr></tbody></table></figure>
 			  		
 			  		<!-- google Adsense -->
 			  		

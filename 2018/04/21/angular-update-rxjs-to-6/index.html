@@ -29,7 +29,7 @@
 <meta property="og:description" content="RxJS 6 提供了更便利的 import 方式，而且套件檔案變小，也可以被 tree-shaking. 但是要如何快速地將 RxJS 5.x 版升級到 RxJS 6 版 ? 以下是升級步驟">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2018-04-21T01:06:01.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.599Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.102Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -298,7 +298,7 @@
 </li>
 <li>
 <p>執行 tslint-fix (可能需要多跑幾次)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;node_modules&#x2F;.bin&#x2F;tslint -c migrate.tslint.json --project src&#x2F;tsconfig.app.json --fix&#96;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/.bin/tslint -c migrate.tslint.json --project src/tsconfig.app.json --fix`</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>修正 <code>tslint.json</code>，將 <code>rxjs</code> 從 <code>&quot;import-blacklist&quot;</code> 中移除</p>
@@ -314,7 +314,7 @@
 <ol>
 <li>
 <p>全域安裝 <code>rxjs-tslint</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g rxjs-tslint</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g rxjs-tslint</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>升級 RxJS 至 5.5.1 (最新版)</p>
@@ -337,7 +337,7 @@
 </li>
 <li>
 <p>執行下列指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rxjs-5-to-6-migrate -p tsconfig.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rxjs-5-to-6-migrate -p tsconfig.json</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>建置整個專案確定升級成功</p>
@@ -461,20 +461,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/05/08/nestjs-guard/"
 			},
 			"datePublished": "2019-05-08T16:23:12.000Z",
-			"dateModified": "2021-04-18T13:04:55.639Z",
+			"dateModified": "2021-05-08T08:23:13.142Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1852,7 +1852,7 @@ h6.categories {
 <span id="more"></span>
 <p>Guard 的執行順序，會在每一個 middleware 之後，但在 interceptor 或是 pipe 之前，這順序要稍微記一下</p>
 <h1 id="建立"><a class="header-anchor" href="#建立"> </a>建立</h1>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest g gu &lt;guard name&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest g gu &lt;guard name&gt;</span><br></pre></td></tr></tbody></table></figure>
 <p>建立出來 Guard 的基本內容</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { CanActivate, ExecutionContext, Injectable } <span class="keyword">from</span> <span class="string">'@nestjs/common'</span>;</span><br><span class="line"><span class="keyword">import</span> { Observable } <span class="keyword">from</span> <span class="string">'rxjs'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AuthGuard</span> <span class="title">implements</span> <span class="title">CanActivate</span> </span>{</span><br><span class="line">  canActivate(</span><br><span class="line">    context: ExecutionContext,</span><br><span class="line">  ): <span class="built_in">boolean</span> | <span class="built_in">Promise</span>&lt;<span class="built_in">boolean</span>&gt; | Observable&lt;<span class="built_in">boolean</span>&gt; {</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
@@ -1872,7 +1872,7 @@ h6.categories {
 </li>
 <li>
 <p>當連線被拒絕時，會收到此訊息</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  statusCode: 403,</span><br><span class="line">  error: "Forbidden",</span><br><span class="line">  message: "Forbidden resource"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  statusCode: <span class="number">403</span>,</span><br><span class="line">  error: <span class="string">"Forbidden"</span>,</span><br><span class="line">  message: <span class="string">"Forbidden resource"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h1 id="ExecutionContext"><a class="header-anchor" href="#ExecutionContext"> </a>ExecutionContext</h1>

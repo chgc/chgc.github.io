@@ -29,7 +29,7 @@
 <meta property="og:description" content="節錄於MSDN  使用預設的程式碼編輯器設定 (智慧型縮排、四個字元縮排、將定位點儲存為空格)。 每行只撰寫一個陳述式。 每行只撰寫一個宣告。 如果連續行沒有自動縮排，則會將它們縮排一個定位停駐點 (四個空格)。 在方法定義與屬性定義之間加入至少一個空白行。 使用括號在運算式中撰寫子句，如下列程式碼所示。  1234if ((val1 &gt; val2) &amp;&amp; (val1 &amp;gt">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2014-02-18T21:35:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.587Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="C#">
 <meta name="twitter:card" content="summary">
@@ -275,7 +275,7 @@
 <li>在方法定義與屬性定義之間加入至少一個空白行。</li>
 <li>使用括號在運算式中撰寫子句，如下列程式碼所示。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if ((val1 &gt; val2) &amp;&amp; (val1 &gt; val3))</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; Take appropriate action.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if ((val1 &gt; val2) &amp;&amp; (val1 &gt; val3))</span><br><span class="line">&#123;</span><br><span class="line">    // Take appropriate action.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>#註解慣例</p>
 <ul>
 <li>將註解放到另一行，不放在程式碼行的結尾。</li>
@@ -283,7 +283,7 @@
 <li>以句號結束註解文字。</li>
 <li>在註解分隔符號 (//) 與註解文字之間插入一個空格，如下列範例所示。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; The following declaration creates a query. It does not run</span><br><span class="line">&#x2F;&#x2F; the query.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// The following declaration creates a query. It does not run</span><br><span class="line">// the query.</span><br></pre></td></tr></table></figure>
 <ul>
 <li>不在註解周圍建立格式化的星號區塊。</li>
 </ul>
@@ -298,7 +298,7 @@
 <li>使用簡潔的物件執行個體化形式搭配隱含型別，如以下宣告中所示。</li>
 <li>使用物件初始設定式簡化物件建立。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var instance1 &#x3D; new ExampleClass();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Object initializer.</span><br><span class="line">var instance3 &#x3D; new ExampleClass &#123; Name &#x3D; &quot;Desktop&quot;, ID &#x3D; 37414, </span><br><span class="line">    Location &#x3D; &quot;Redmond&quot;, Age &#x3D; 2.3 &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var instance1 = new ExampleClass();</span><br><span class="line"></span><br><span class="line">// Object initializer.</span><br><span class="line">var instance3 = new ExampleClass &#123; Name = &quot;Desktop&quot;, ID = 37414, </span><br><span class="line">    Location = &quot;Redmond&quot;, Age = 2.3 &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>#＃ LINQ查詢</p>
 <ul>
 <li>使用有意義的名稱做為查詢變數的名稱。 下列範例會使用 seattleCustomers 代表位於西雅圖的客戶。</li>
@@ -418,20 +418,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

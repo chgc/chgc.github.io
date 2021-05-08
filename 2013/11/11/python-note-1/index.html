@@ -29,7 +29,7 @@
 <meta property="og:description" content="#String string可以用 『』 or 「」 在 &#39;『裡面可以用&quot;, 在&quot;&quot; 裡面可以用』 string連結的方式 + or 空白 但是如果是要連結變數和文字，則需要使用 +。數字和文字不可以做連接。 string[x] 可以直接將文字轉成陣列, 然後直接讀取 12345678910111213141516171819202122232425262728293">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2013-11-11T06:47:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.587Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -278,7 +278,7 @@
 <li>v3.3 : print(『xxxx』)</li>
 </ol>
 <p>文字重複顯示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#39;something&#39;*3</span><br><span class="line">&#39;somethingsomethingsomething&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#x27;something&#x27;*3</span><br><span class="line">&#x27;somethingsomethingsomething&#x27;</span><br></pre></td></tr></table></figure>
 <p>#Number
 計算方式: 先乘除後加減，有內算到外，有左到右</p>
 <p>number分interger and float, 區分方法是有沒有使用小數點</p>
@@ -290,16 +290,16 @@
 </ol>
 <p>% : 傳回餘數
 ** : 次方</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 7&#x2F;4</span><br><span class="line">1.75</span><br><span class="line">&gt;&gt;&gt; 7&#x2F;&#x2F;4</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; 7%4</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 2**10</span><br><span class="line">1024</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 7/4</span><br><span class="line">1.75</span><br><span class="line">&gt;&gt;&gt; 7//4</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; 7%4</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 2**10</span><br><span class="line">1024</span><br></pre></td></tr></table></figure>
 <p>a = b: 將b值指定給a</p>
 <p>在interactive mode，可以利用 _ 取得上次的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 1+2</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 1+_</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 1+2</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 1+_</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
 <h1 id="Lists"><a class="header-anchor" href="#Lists"> </a>Lists</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; squares &#x3D; [1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares</span><br><span class="line">[1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares[1]</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; squares[-1]</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; squares = [1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares</span><br><span class="line">[1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares[1]</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; squares[-1]</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
 <p>基本操作可以參考string的部分，一樣可以使用 + 做lists的連結</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.append(value) # add value to the list</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.append(value) # add value to the list</span><br></pre></td></tr></table></figure>
 <p>二維陣列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span><br><span class="line">&gt;&gt;&gt; n &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; x &#x3D; [a, n]</span><br><span class="line">&gt;&gt;&gt; x</span><br><span class="line">[[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], [1, 2, 3]]</span><br><span class="line">&gt;&gt;&gt; x[0]</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span><br><span class="line">&gt;&gt;&gt; x[0][1]</span><br><span class="line">&#39;b&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]</span><br><span class="line">&gt;&gt;&gt; n = [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; x = [a, n]</span><br><span class="line">&gt;&gt;&gt; x</span><br><span class="line">[[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;], [1, 2, 3]]</span><br><span class="line">&gt;&gt;&gt; x[0]</span><br><span class="line">[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]</span><br><span class="line">&gt;&gt;&gt; x[0][1]</span><br><span class="line">&#x27;b&#x27;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -415,20 +415,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

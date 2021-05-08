@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2020/11/02/how-to-auto-version/image-20201102154101905.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2020/11/02/how-to-auto-version/image-20201102161627599.png">
 <meta property="article:published_time" content="2020-11-02T07:29:50.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.735Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.230Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="其他">
 <meta name="twitter:card" content="summary">
@@ -287,9 +287,9 @@
 <p>有時候我們也想要在前端網站給予設定版本，除了手動修改外，其實也可以透過 <code>npm version</code> 來完成，雖然有點奇怪，但還是可以運作啦</p>
 <h2 id="npm-version"><a class="header-anchor" href="#npm-version"> </a>npm version</h2>
 <p>這功能原本是用來更新 npm package 版本使用，指令如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm version [&lt;newversion&gt; | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid&#x3D;&lt;prerelease-id&gt;] | from-git]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm version [&lt;newversion&gt; | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=&lt;prerelease-id&gt;] | from-git]</span><br></pre></td></tr></table></figure>
 <p>這指令會同步更新 <code>package.json</code> 的 <code>version</code> 欄位值，這邊就快速列出我所使用的 script</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;prebuild&quot;: &quot;npm --no-git-tag-version version patch&quot;,</span><br><span class="line">&quot;postversion&quot;: &quot;git add package.json package-lock.json &amp;&amp; git commit -mv%npm_package_version%&quot;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;prebuild&quot;</span>: <span class="string">&quot;npm --no-git-tag-version version patch&quot;</span>,</span><br><span class="line"><span class="string">&quot;postversion&quot;</span>: <span class="string">&quot;git add package.json package-lock.json &amp;&amp; git commit -mv%npm_package_version%&quot;</span>,</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>prebuild</code> 這行為會發生在執行 <code>npm build</code> 之前
 <ul>
@@ -304,7 +304,7 @@
 </li>
 </ul>
 <p>當 <code>package.json</code> 內的 <code>version</code> 處理完後，就可以在 <code>environment.ts</code> 的地方引用 <code>package.json</code> 了</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> environment = &#123;</span><br><span class="line">  version: <span class="built_in">require</span>(<span class="string">&#x27;../../package.json&#x27;</span>).version,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> environment = &#123;</span><br><span class="line">  <span class="attr">version</span>: <span class="built_in">require</span>(<span class="string">&#x27;../../package.json&#x27;</span>).version,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>由於這邊有使用到 <code>node</code> 的 <code>required</code> ，在 <code>tsconfig.app.json</code> 及 <code>tsconfig.spec.json</code> 的 <code>compilerOptions.types</code> 內要加上 <code>node</code>，並安裝 <code>@types/node</code> 的型別定義檔，剩下就跟原來使用 environment 的方式一樣了</p>
 <h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
 <p>目前是我處理自動版號的方式，如果有其他更好的作法，也歡迎分享給我</p>
@@ -428,20 +428,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

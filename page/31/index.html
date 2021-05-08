@@ -200,6 +200,127 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/20/vfp-prog-cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/10/20/vfp-prog-cache/" class="post-title-link" itemprop="url">[VFP]Prog Cache </a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-10-21 03:47:00" itemprop="dateCreated datePublished" datetime="2013-10-21T03:47:00+08:00">2013-10-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VFP/" itemprop="url" rel="index"><span itemprop="name">VFP</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/10/20/vfp-prog-cache/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/20/vfp-prog-cache/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>From the VFP9 helpfile:</p>
+</blockquote>
+<blockquote>
+<p>Specifies the amount of memory (address space) in pages that Visual FoxPro allocates at startup or a Visual FoxPro MTDLL COM Server allocates per thread for the internal program cache (memory used to run programs). Each page of memory is equal to 64K so the default setting equates to an allocation a little over 9MB. As the cache is filled, Visual FoxPro will try to flush it to remove unused items. It is possible that Visual FoxPro cannot free enough memory in which case an Error 1202 is generated (Program is too large). Adjusting the PROGCACHE setting can prevent this error from occurring.</p>
+</blockquote>
+<blockquote>
+<p>Note:
+While this setting can be used for the Visual FoxPro development product or normal runtime applications, it is primarily intended for MTDLL COM Servers where many threads are often created for a single server. In Visual FoxPro 9.0, the default value for MTDLL COM Servers is -2.</p>
+</blockquote>
+<blockquote>
+<p>When the value of nMemoryPages is greater than 0, Visual FoxPro allocates a fixed program cache. You can specify between 1 and 65000.</p>
+</blockquote>
+<blockquote>
+<p>If you specify 0 for nMemoryPages, no program cache is used. Instead, Visual FoxPro uses dynamic memory allocation based on determinations made by the operating system.</p>
+</blockquote>
+<blockquote>
+<p>If you pass a value for nMemoryPages that is less than 0, Visual FoxPro uses dynamic memory allocation but is limited to the specified memory (nMemoryPages * 64K). When the limit is reach, Visual FoxPro will flush allocated programs to free memory.</p>
+</blockquote>
+<blockquote>
+<p>You can call SYS(3065) to determine the current PROGCACHE setting. CLEAR PROGRAM will attempt to clear unreferenced code regardless of this setting.</p>
+</blockquote>
+<blockquote>
+<p>Note:
+The Visual FoxPro OLE DB Provider ignores this setting since it uses dynamic memory allocation (PROGCACHE=0).</p>
+</blockquote>
+<blockquote>
+<p>Default: 144 (-2 for MTDLL)</p>
+</blockquote>
+<blockquote>
+<p>「The setting is the number of pages of memory you want allocated. Each page is equivalent to 64K of memory. You can set the PROGCACHE from 1 to 65,000 (positive or negative) to designate how much memory is allocated. If you specify zero, no program cache is used and VFP uses dynamic memory allocation determined by the operating system. If you set the PROGCACHE to a negative number, VFP uses dynamic memory allocation, but is limited to the number of memory pages you specified. The default setting is 144 (over 9 megabytes) for single-threaded EXEs and the VFP IDE, and -2 (128 kilobytes) for a multi-threaded DLL. The VFP OLE DB Provider does not use this setting because it uses dynamic memory allocation.」</p>
+</blockquote>
+<p>Ref: <a target="_blank" rel="noopener" href="http://fox.wikis.com/wc.dll?Wiki~ProgCache">http://fox.wikis.com/wc.dll?Wiki~ProgCache</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/17/laravel-controllers/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -469,7 +590,7 @@ route::get(『something』,『someController@someaction』)</p>
 
       
           <h1 id="啟動方式"><a class="header-anchor" href="#啟動方式"> </a>啟動方式</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$di-&gt;set(&#39;router&#39;, function () &#123;</span><br><span class="line">    $router &#x3D; new \Phalcon\Mvc\Router();</span><br><span class="line">    $router-&gt;add(&quot;&#x2F;:controller&#x2F;:action&#x2F;:params&quot;, array(</span><br><span class="line">        &#39;controller&#39; &#x3D;&gt; 1,</span><br><span class="line">        &#39;action&#39; &#x3D;&gt; 2,</span><br><span class="line">        &#39;params&#39; &#x3D;&gt; 3</span><br><span class="line">    ));</span><br><span class="line"></span><br><span class="line">    return $router;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$di-&gt;set(&#x27;router&#x27;, function () &#123;</span><br><span class="line">    $router = new \Phalcon\Mvc\Router();</span><br><span class="line">    $router-&gt;add(&quot;/:controller/:action/:params&quot;, array(</span><br><span class="line">        &#x27;controller&#x27; =&gt; 1,</span><br><span class="line">        &#x27;action&#x27; =&gt; 2,</span><br><span class="line">        &#x27;params&#x27; =&gt; 3</span><br><span class="line">    ));</span><br><span class="line"></span><br><span class="line">    return $router;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h1 id="Defining-Route"><a class="header-anchor" href="#Defining-Route"> </a>Defining  Route</h1>
 <table>
 <thead>
@@ -514,7 +635,7 @@ route::get(『something』,『someController@someaction』)</p>
 </table>
 <p>/:params : 只能放在router的最後面</p>
 <p>#controller內取得route裡面參數的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$this-&gt;dispatcher-&gt;getParam(0);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParam(&#39;paraName&#39;);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParams(); &lt;&#x3D;array</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$this-&gt;dispatcher-&gt;getParam(0);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParam(&#x27;paraName&#x27;);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParams(); &lt;=array</span><br></pre></td></tr></table></figure>
 <p>#如果是/?var=value</p>
 <p>就用原本$_GET[『』]的方式取值就可以了</p>
 
@@ -608,22 +729,22 @@ route::get(『something』,『someController@someaction』)</p>
           <ol>
 <li>commit your code</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;xxxx&quot; </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;xxxx&quot; </span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>merge your branch to master
 以master為主要branch</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge [module name]&lt;&#x3D; this should be branch name</span><br><span class="line">&#96;&#96;&#96;  </span><br><span class="line"></span><br><span class="line">3. update</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge [module name]&lt;= this should be branch name</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">3. update</span><br></pre></td></tr></table></figure>
 <p>git pull origin master</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">檢查是否有conflict要修</span><br><span class="line"></span><br><span class="line">4. push至origin</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">檢查是否有conflict要修</span><br><span class="line"></span><br><span class="line">4. push至origin</span><br></pre></td></tr></table></figure>
 <p>git push origin master:[module name]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">5. 通知alvin合併</span><br><span class="line"></span><br><span class="line">6. 拉別人的code</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">5. 通知alvin合併</span><br><span class="line"></span><br><span class="line">6. 拉別人的code</span><br></pre></td></tr></table></figure>
 <p>git add remote kyo /home/kyo/web/mc2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">7. 直接合併於目前的branch  EX. 拉KYO的master</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">7. 直接合併於目前的branch  EX. 拉KYO的master</span><br></pre></td></tr></table></figure>
 <p>git pull remote kyo master</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">8. 拉成新的branch EX. 拉KYO的master為自己的kyo branch </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">8. 拉成新的branch EX. 拉KYO的master為自己的kyo branch </span><br></pre></td></tr></table></figure>
 <p>git fetch remote kyo master:kyo</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">9. git 環境設定</span><br><span class="line"></span><br><span class="line">###設定個人資訊</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">9. git 環境設定</span><br><span class="line"></span><br><span class="line">###設定個人資訊</span><br></pre></td></tr></table></figure>
 <p>git config --global <a target="_blank" rel="noopener" href="http://user.name">user.name</a> 「Your Name」</p>
 <p>git config --global user.email <a href="mailto:you@example.com">you@example.com</a></p>
 <pre><code>
@@ -756,23 +877,23 @@ vi .gitconfig
       
           <p>In Phalcon Model system. 是根據ORM的架構，讓資料表物件化，讓在資料讀取或是寫入的動作上，可以利用物件的特性去操作。</p>
 <h1 id="初始設定"><a class="header-anchor" href="#初始設定"> </a>初始設定</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Database connection is created based in the parameters defined in the configuration file</span><br><span class="line"> *&#x2F;</span><br><span class="line">$di-&gt;set(&#39;db&#39;, function() use ($config) &#123;</span><br><span class="line">	return new DbAdapter(array(</span><br><span class="line">		&#39;host&#39; &#x3D;&gt; $config-&gt;database-&gt;host,</span><br><span class="line">		&#39;username&#39; &#x3D;&gt; $config-&gt;database-&gt;username,</span><br><span class="line">		&#39;password&#39; &#x3D;&gt; $config-&gt;database-&gt;password,</span><br><span class="line">		&#39;dbname&#39; &#x3D;&gt; $config-&gt;database-&gt;dbname</span><br><span class="line">	));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Database connection is created based in the parameters defined in the configuration file</span><br><span class="line"> */</span><br><span class="line">$di-&gt;set(&#x27;db&#x27;, function() use ($config) &#123;</span><br><span class="line">	return new DbAdapter(array(</span><br><span class="line">		&#x27;host&#x27; =&gt; $config-&gt;database-&gt;host,</span><br><span class="line">		&#x27;username&#x27; =&gt; $config-&gt;database-&gt;username,</span><br><span class="line">		&#x27;password&#x27; =&gt; $config-&gt;database-&gt;password,</span><br><span class="line">		&#x27;dbname&#x27; =&gt; $config-&gt;database-&gt;dbname</span><br><span class="line">	));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>上列的動作會開啟與資料庫中間的連線關係，$config會去讀取所指定的設定文件</p>
 <p>Model文件預設的命名方式為table名稱，例如:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Rebots extends \Phalcon\Mvc\Model</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Rebots extends \Phalcon\Mvc\Model</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>官方文件建議，要在Model文件中描述資料表的欄位，以減少使用伺服器的記憶體資源。</p>
 <p>如果Model的名稱與資料庫資料表名稱不同時，可以透過以下的方式重新設定所關聯的資料表名稱</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">&#123;</span><br><span class="line">	$this-&gt;setSource(&#39;Rebots&#39;);</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;    </span><br><span class="line"></span><br><span class="line">#於Controller中使用Model讀取資料</span><br><span class="line"></span><br><span class="line">讀取清單的方式有幾種</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">&#123;</span><br><span class="line">	$this-&gt;setSource(&#x27;Rebots&#x27;);</span><br><span class="line">&#125;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">#於Controller中使用Model讀取資料</span><br><span class="line"></span><br><span class="line">讀取清單的方式有幾種</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>ModelName::find(condition)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">當找到筆資料時，所回傳的物件可以直接修改後，並儲存(Update)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">當找到筆資料時，所回傳的物件可以直接修改後，並儲存(Update)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>$result = ModelName::find(『id=1』);
 $result-&gt;fieldName = 「something something」;
 $result-&gt;save(); &lt;=將資料回傳至資料庫中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">新增動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">新增動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>$result = new ModelName();
 $result-&gt;fieldName = 「something something」;
 $result-&gt;save();</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">刪除動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">刪除動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>$result = ModelName::find(condition);
 if ($result != false) {
 // 執行刪除
@@ -892,7 +1013,7 @@ app/views/{{controllerName}}/xxx.volt
 
 <p>在Controller裡面所設定的變數，則上述三種xxx.volt都可以用</p>
 <p>[1]: 如果要指定template時, 可以用下列的方式設定, 這樣子就會去讀取app/views/layouts/common.volt的內容了,</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">  &#123;</span><br><span class="line">      $this-&gt;view-&gt;setTemplateAfter(&#39;common&#39;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">  &#123;</span><br><span class="line">      $this-&gt;view-&gt;setTemplateAfter(&#x27;common&#x27;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 這一個指定template的動作，執行順序會插在app/views/index.volt跟app/views/layouts/{{controllerName}}.volt中間
 
@@ -900,9 +1021,9 @@ app/views/{{controllerName}}/xxx.volt
 <p>#Using Partials</p>
 <p>如果想要在view中間插入partials的方式很簡單</p>
 <p>如果是使用volt語法的:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; partial(view path) &#125;&#125;</span><br><span class="line">&#x2F;&#x2F;with parameters </span><br><span class="line">&#123;&#123; partial(view path, [&#39;links&#39;: $links]) &#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; partial(view path) &#125;&#125;</span><br><span class="line">//with parameters </span><br><span class="line">&#123;&#123; partial(view path, [&#x27;links&#x27;: $links]) &#125;&#125;</span><br></pre></td></tr></table></figure>
 <p>一般的語法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $this-&gt;partial(view path) ?&gt;</span><br><span class="line">&#x2F;&#x2F;with parameters </span><br><span class="line">&lt;?php $this-&gt;partial(view path, array(&#39;id&#39; &#x3D;&gt; $site-&gt;id, &#39;size&#39; &#x3D;&gt; &#39;big&#39;)) ?&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $this-&gt;partial(view path) ?&gt;</span><br><span class="line">//with parameters </span><br><span class="line">&lt;?php $this-&gt;partial(view path, array(&#x27;id&#x27; =&gt; $site-&gt;id, &#x27;size&#x27; =&gt; &#x27;big&#x27;)) ?&gt;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -997,20 +1118,20 @@ app/views/{{controllerName}}/xxx.volt
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

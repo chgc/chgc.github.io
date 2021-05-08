@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2019/05/04/nestjs-getting-start/1556962007650.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/05/04/nestjs-getting-start/1556962210719.png">
 <meta property="article:published_time" content="2019-05-04T08:27:33.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.635Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.138Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta property="article:tag" content="NestJS">
@@ -274,13 +274,13 @@
 <span id="more"></span>
 <h1 id="工具-環境"><a class="header-anchor" href="#工具-環境"> </a>工具/環境</h1>
 <p>NestJS 有提供 CLI 工具，可以讓我們透過指令的方式建立專案及其他的元件，就跟 Angular CLI 一樣，可以透過 npm/yarn 安裝成全域工具</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g @nestjs&#x2F;cli</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g @nestjs/cli</span><br></pre></td></tr></table></figure>
 <p>當安裝完成後，就可以使用 nest CLI 提供的指令建立 nest 專案了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest new &lt;project-name&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest new &lt;project-name&gt;</span><br></pre></td></tr></table></figure>
 <p>這行指令可以建立一個完整的 nest 專案，包含測試的環境等，最基礎的專案結構分為 <code>src</code> 與 <code>test</code> 兩個資料夾，分別放要執行的程式碼與測試碼，其他的就是一些執行要用的設定檔</p>
 <p><img src="1556962007650.png" alt="1556962007650"></p>
 <p>至於要怎麼將專案執行起來，在 <code>package.json</code> 內提供了一些 <code>script</code> 可以執行</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;build&quot;: &quot;tsc -p tsconfig.build.json&quot;,</span><br><span class="line">    &quot;format&quot;: &quot;prettier --write \&quot;src/**/*.ts\&quot;&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;ts-node -r tsconfig-paths/register src/main.ts&quot;,</span><br><span class="line">    &quot;start:dev&quot;: &quot;nodemon&quot;,</span><br><span class="line">    &quot;start:debug&quot;: &quot;nodemon --config nodemon-debug.json&quot;,</span><br><span class="line">    &quot;prestart:prod&quot;: &quot;rimraf dist &amp;&amp; npm run build&quot;,</span><br><span class="line">    &quot;start:prod&quot;: &quot;node dist/main.js&quot;,</span><br><span class="line">    &quot;lint&quot;: &quot;tslint -p tsconfig.json -c tslint.json&quot;,</span><br><span class="line">    &quot;test&quot;: &quot;jest&quot;,</span><br><span class="line">    &quot;test:watch&quot;: &quot;jest --watch&quot;,</span><br><span class="line">    &quot;test:cov&quot;: &quot;jest --coverage&quot;,</span><br><span class="line">    &quot;test:debug&quot;: &quot;node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand&quot;,</span><br><span class="line">    &quot;test:e2e&quot;: &quot;jest --config ./test/jest-e2e.json&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="attr">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;build&quot;</span>: <span class="string">&quot;tsc -p tsconfig.build.json&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;format&quot;</span>: <span class="string">&quot;prettier --write \&quot;src/**/*.ts\&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;start&quot;</span>: <span class="string">&quot;ts-node -r tsconfig-paths/register src/main.ts&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;start:dev&quot;</span>: <span class="string">&quot;nodemon&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;start:debug&quot;</span>: <span class="string">&quot;nodemon --config nodemon-debug.json&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;prestart:prod&quot;</span>: <span class="string">&quot;rimraf dist &amp;&amp; npm run build&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;start:prod&quot;</span>: <span class="string">&quot;node dist/main.js&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;lint&quot;</span>: <span class="string">&quot;tslint -p tsconfig.json -c tslint.json&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;test&quot;</span>: <span class="string">&quot;jest&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;test:watch&quot;</span>: <span class="string">&quot;jest --watch&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;test:cov&quot;</span>: <span class="string">&quot;jest --coverage&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;test:debug&quot;</span>: <span class="string">&quot;node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;test:e2e&quot;</span>: <span class="string">&quot;jest --config ./test/jest-e2e.json&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在命令視窗內執行 <code>npm start</code> 即可以將執行環境給跑起來，預設網站的連接埠為 3000，打開瀏覽器並輸入 <code>http://localhost:3000</code> 即可看到以下的畫面</p>
 <p><img src="1556962210719.png" alt="1556962210719"></p>
 <h1 id="基本架構"><a class="header-anchor" href="#基本架構"> </a>基本架構</h1>
@@ -501,20 +501,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

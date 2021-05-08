@@ -29,7 +29,7 @@
 <meta property="og:description" content="繼續筆記001，繼續研究下去。這篇會研讀 &lt;aio-top-menu&gt; component">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2017-06-15T12:06:32.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.595Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.098Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -270,7 +270,7 @@
 <span id="more"></span>
 <h1 id="aio-top-menu"><a class="header-anchor" href="#aio-top-menu"> </a>aio-top-menu</h1>
 <p>component 所在路徑 <code>src/app/layout/top-menu</code></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Input &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NavigationNode &#125; <span class="keyword">from</span> <span class="string">&#x27;app/navigation/navigation.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;aio-top-menu&#x27;</span>,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;ul role=&quot;navigation&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;li *ngFor=&quot;let node of nodes&quot;&gt;&lt;a class=&quot;nav-link&quot; [href]=&quot;node.url&quot; [title]=&quot;node.title&quot;&gt;&#123;&#123; node.title &#125;&#125;&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">TopMenuComponent</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Input</span>() nodes: NavigationNode[];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Input &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NavigationNode &#125; <span class="keyword">from</span> <span class="string">&#x27;app/navigation/navigation.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;aio-top-menu&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;ul role=&quot;navigation&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;li *ngFor=&quot;let node of nodes&quot;&gt;&lt;a class=&quot;nav-link&quot; [href]=&quot;node.url&quot; [title]=&quot;node.title&quot;&gt;&#123;&#123; node.title &#125;&#125;&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">TopMenuComponent</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Input</span>() nodes: NavigationNode[];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>由 <code>app.component.ts</code> 提供要顯示的資料</li>
 </ul>
@@ -435,20 +435,20 @@ We are not storing the subscription from connecting as we do not expect this ser
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/06/30/devexpress-how-to-bind-a-objec-to-bindingsource-in-web-xtrareport/"
 			},
 			"datePublished": "2015-06-30T17:00:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.591Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1844,7 +1844,7 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Bindingsource物件是屬於winform的，所以在web環境下的design time是沒有辦法直接設定物件到datasource的屬性裡
 所以這部分需要手動加進去，作法是進入 xxx.Designer.cs的InitializeComponent()加入</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.bindingSource1.DataSource = typeof(Object); // replace with the object you want</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.bindingSource1.DataSource = typeof(Object); // replace with the object you want</span><br></pre></td></tr></tbody></table></figure>
 <p>這樣子回到設計模式就會出現可以設定的binding物件了</p>
 <p>^^</p>
 

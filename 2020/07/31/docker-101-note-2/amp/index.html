@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/07/31/docker-101-note-2/"
 			},
 			"datePublished": "2020-07-31T09:10:13.000Z",
-			"dateModified": "2021-04-18T13:04:55.735Z",
+			"dateModified": "2021-05-08T08:23:13.230Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1863,7 +1863,7 @@ h6.categories {
 <ul>
 <li>
 <p>列出本機端擁有的 images</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>-a</code>：列出完整的映像檔層次資訊。每個映像檔是由不同層次組成的，我們會在稍後說明。</li>
 <li><code>-q</code>：只列出映像檔ID。這在做映像檔批次處理時很方便。</li>
@@ -1872,23 +1872,23 @@ h6.categories {
 </li>
 <li>
 <p>下載 Image</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull &lt;image name&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull &lt;image name&gt;</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>刪除 Image</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi &lt;image name&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi &lt;image name&gt;</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>幫 Image 上 Tag</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>建置 Image 檔</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>上傳 Image 檔</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h1 id="Container-相關"><a class="header-anchor" href="#Container-相關"> </a>Container 相關</h1>
@@ -1896,7 +1896,7 @@ h6.categories {
 <ul>
 <li>
 <p>建立 Container 並執行指令</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker create [OPTIONS] IMAGE [COMMAND] [ARG...] // 建立但不會啟動執行 Container </span><br><span class="line">docker run [OPTIONS] IMAGE [COMMAND] [ARG...] // 建立且啟動執行 Container</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker create [OPTIONS] IMAGE [COMMAND] [ARG...] // 建立但不會啟動執行 Container </span><br><span class="line">docker run [OPTIONS] IMAGE [COMMAND] [ARG...] // 建立且啟動執行 Container</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>-d</code> : 背景執行</li>
 <li><code>-i</code>: 輸入</li>
@@ -1910,14 +1910,14 @@ h6.categories {
 </li>
 <li>
 <p>刪除執行中的 Container，<strong>但 Container 還是存在，只是死了。</strong></p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker kill CONTAINER</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker kill CONTAINER</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>--signal, -s</code> : 送訊號到 Container</li>
 </ul>
 </li>
 <li>
 <p>移除 Container(停止或運行中都行)，Container就從這世上消失了</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm CONTAINER</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm CONTAINER</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>--force, -f</code> : 強制移除</li>
 <li><code>--link, -l</code> 移除特定連結</li>
@@ -1926,22 +1926,22 @@ h6.categories {
 </li>
 <li>
 <p>暫停執行中的 Container，<strong>仍暫有記憶體停，服務不中斷</strong></p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pause CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pause CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>恢復暫停中的 Container</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker unpause CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker unpause CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>停止執行中的 Container，<strong>但不暫有記憶體，服務中斷</strong></p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop [OPTIONS] CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop [OPTIONS] CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>--time, -t</code> 幾秒後停止 Container</li>
 </ul>
 </li>
 <li>
 <p>啟動停止中的 Container</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start [OPTIONS] CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start [OPTIONS] CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>--attach, -a</code> : Attach STDOUT/STDERR and forward signals</li>
 <li><code>--interactive, -i</code>: Attach container’s STDIN</li>
@@ -1949,18 +1949,18 @@ h6.categories {
 </li>
 <li>
 <p>重新啟動Container</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart [OPTIONS] CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart [OPTIONS] CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>--time, -t</code>: 幾秒後重啟 Container</li>
 </ul>
 </li>
 <li>
 <p>讓 Container 暫停直到 Container 停止為止</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker wait CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker wait CONTAINER [CONTAINER...]</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>更名 Container</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rename CONTAINER NEW_NAME</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rename CONTAINER NEW_NAME</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h2 id="狀態"><a class="header-anchor" href="#狀態"> </a>狀態</h2>
@@ -1996,22 +1996,22 @@ h6.categories {
 </li>
 <li>
 <p>cp: 複製檔案到 Container</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /path/to/file1 DOCKER_ID:/path/to/file2</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /path/to/file1 DOCKER_ID:/path/to/file2</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h1 id="Registry-相關"><a class="header-anchor" href="#Registry-相關"> </a>Registry 相關</h1>
 <ul>
 <li>
 <p>登入</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker login // 預設指向 public docker hub</span><br><span class="line">docker loing &lt;ip&gt; // 登入私有 docker registry</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker login // 預設指向 public docker hub</span><br><span class="line">docker loing &lt;ip&gt; // 登入私有 docker registry</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>登出</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logout</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logout</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>搜尋</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker search &lt;search word&gt;</span><br><span class="line">// 查詢星星數條件</span><br><span class="line">docker search -s &lt;n start&gt; &lt;search word&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker search &lt;search word&gt;</span><br><span class="line">// 查詢星星數條件</span><br><span class="line">docker search -s &lt;n start&gt; &lt;search word&gt;</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>n 是限定須有幾顆星以上的 image 才會被搜尋出來</li>
 </ul>

@@ -21,15 +21,15 @@
     var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Reference Website Url http:&#x2F;&#x2F;happyfunpartytime.com&#x2F;2012&#x2F;11&#x2F;azure-storage-2-0-some-blob-changes-to-be-aware-of&#x2F; 大綱: 如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用 1CloudBlob thumbnailBlob &amp;#x3">
+  <meta name="description" content="Reference Website Url http:&#x2F;&#x2F;happyfunpartytime.com&#x2F;2012&#x2F;11&#x2F;azure-storage-2-0-some-blob-changes-to-be-aware-of&#x2F; 大綱: 如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用 1CloudBlob thumbnailBlob &#x3D; ob">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Azure] Azure Storage 2.0 – Some blob changes to be aware of -Ref">
 <meta property="og:url" content="http://blog.kevinyang.net/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/index.html">
 <meta property="og:site_name" content="CK&#39;s Notepad">
-<meta property="og:description" content="Reference Website Url http:&#x2F;&#x2F;happyfunpartytime.com&#x2F;2012&#x2F;11&#x2F;azure-storage-2-0-some-blob-changes-to-be-aware-of&#x2F; 大綱: 如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用 1CloudBlob thumbnailBlob &amp;#x3">
+<meta property="og:description" content="Reference Website Url http:&#x2F;&#x2F;happyfunpartytime.com&#x2F;2012&#x2F;11&#x2F;azure-storage-2-0-some-blob-changes-to-be-aware-of&#x2F; 大綱: 如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用 1CloudBlob thumbnailBlob &#x3D; ob">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2014-11-06T07:29:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Azure">
 <meta name="twitter:card" content="summary">
@@ -270,18 +270,18 @@
 <a target="_blank" rel="noopener" href="http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/">http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/</a></p>
 <p>大綱:</p>
 <p>如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlob thumbnailBlob &#x3D; objContainer.GetBlobReference(filename);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlob thumbnailBlob = objContainer.GetBlobReference(filename);</span><br></pre></td></tr></table></figure>
 <p>換成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var thumbnailBlob &#x3D; objContainer.GetBlobReferenceFromServer(filename);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var thumbnailBlob = objContainer.GetBlobReferenceFromServer(filename);</span><br></pre></td></tr></table></figure>
 <p>結果，一直給我跑404.</p>
 <p>這GetBlobReserenceFromServer的用意是去server上面找filename的blob reference回來. 所以當我們要建立新的blob, 這就文不對題了。 所以要改用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob blob &#x3D; objContainer).GetBlockBlobReference(filename);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob blob = objContainer).GetBlockBlobReference(filename);</span><br></pre></td></tr></table></figure>
 <p>這樣子就okey了.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob.UploadFile(fileData.LocalFileName);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob.UploadFile(fileData.LocalFileName);</span><br></pre></td></tr></table></figure>
 <hr>
 <hr>
 <p>這個也改掉了, 要改成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob.UploadFromFile(filenameWithPath, FileMode)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob.UploadFromFile(filenameWithPath, FileMode)</span><br></pre></td></tr></table></figure>
 <p>CloudBlockBlob也有提供不同的上傳方式，請參閱<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/microsoft.windowsazure.storage.blob.cloudblockblob_methods.aspx">MSDN</a></p>
 
     </div>
@@ -397,20 +397,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

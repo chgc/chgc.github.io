@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/01/11/angular-create-schematics/"
 			},
 			"datePublished": "2018-01-11T03:13:09.000Z",
-			"dateModified": "2021-04-18T13:04:55.595Z",
+			"dateModified": "2021-05-08T08:23:13.102Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1857,7 +1857,7 @@ h6.categories {
 </li>
 <li>
 <p>新增 <code>package.json</code> 檔案，請依基本的 <code>npm</code> 專案方式設定，新增下列設定</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"schematics": "./collection.json",</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"schematics"</span>: <span class="string">"./collection.json"</span>,</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>建立 <code>collection.json</code> 檔案，並新增以下內容</p>
@@ -1865,17 +1865,17 @@ h6.categories {
 </li>
 </ol>
 <p>到這個步驟時，已經將 Angular CLI 既有的功能移植到我們的 collections 內了。接下來就將目前的檔案簽入到 GitHub 上，npm 可以設定 <code>devDependencies</code> 程式碼來源為 GitHub Repo，指定的方式是</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"&lt;&lt;package name&gt;&gt;": "&lt;&lt;GitHub account&gt;&gt;/&lt;&lt;repo name&gt;&gt;",</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&lt;&lt;package name&gt;&gt;"</span>: <span class="string">"&lt;&lt;GitHub account&gt;&gt;/&lt;&lt;repo name&gt;&gt;"</span>,</span><br></pre></td></tr></tbody></table></figure>
 <p>在新的或是既有的 Angular 專案，只要 Angular CLI 版本是在 1.4 版以上，都可以設定 <code>collection</code>，可修改 <code>.angular-cli.json</code> 檔案，設定方式如下</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">"defaults": {    </span><br><span class="line">   "schematics": {</span><br><span class="line">     "collection": "&lt;&lt;package name&gt;&gt;" // 這裡指定你所安裝的 package 名稱</span><br><span class="line">   }</span><br><span class="line">  ...</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"defaults"</span>: {    </span><br><span class="line">   <span class="attr">"schematics"</span>: {</span><br><span class="line">     <span class="attr">"collection"</span>: <span class="string">"&lt;&lt;package name&gt;&gt;"</span> <span class="comment">// 這裡指定你所安裝的 package 名稱</span></span><br><span class="line">   }</span><br><span class="line">  ...</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
 <p>當完成以上步驟時，我們還是可以正常的使用 Angular CLI 的指令，但是觸發的指令清單是根據我們版本的 collection，不在是預設的範本了，換句話說，我們可以更換指令，例如說 ng g component 的縮寫，希望從 <code>c</code> 改成 <code>comp</code> ，這是可行的，只要修改 <code>collection.json</code> 對應的 <code>alias</code> 即可</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改前</span></span><br><span class="line">"component": {</span><br><span class="line">      "aliases": ["c"],</span><br><span class="line">      "extends": "@schematics/angular:component"</span><br><span class="line">    },</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改後</span></span><br><span class="line"> "component": {</span><br><span class="line">      "aliases": ["comp"],</span><br><span class="line">      "extends": "@schematics/angular:component"</span><br><span class="line">    },</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改前</span></span><br><span class="line"><span class="string">"component"</span>: {</span><br><span class="line">      <span class="attr">"aliases"</span>: [<span class="string">"c"</span>],</span><br><span class="line">      <span class="attr">"extends"</span>: <span class="string">"@schematics/angular:component"</span></span><br><span class="line">    },</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改後</span></span><br><span class="line"> <span class="string">"component"</span>: {</span><br><span class="line">      <span class="attr">"aliases"</span>: [<span class="string">"comp"</span>],</span><br><span class="line">      <span class="attr">"extends"</span>: <span class="string">"@schematics/angular:component"</span></span><br><span class="line">    },</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="自訂範本"><a class="header-anchor" href="#自訂範本"> </a>自訂範本</h1>
 <p>上一段我們完成沿用 Angular CLI 所提供的功能，現在要來製作自己的樣板了，基本的操作步驟是</p>
 <ol>
 <li>
 <p>在 <code>collection.json</code> 內新增一個指令區塊</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"feature":{</span><br><span class="line">   "factory": "./src/feature",</span><br><span class="line">  "schema": "./src/feature/schema.json",</span><br><span class="line">  "description": "Create a feature module"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"feature"</span>:{</span><br><span class="line">   <span class="attr">"factory"</span>: <span class="string">"./src/feature"</span>,</span><br><span class="line">  <span class="attr">"schema"</span>: <span class="string">"./src/feature/schema.json"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"Create a feature module"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>建立 <code>feature</code> 資料夾，並在資料夾內新增 <code>index.ts</code> 和 <code>schema.json</code> 兩個檔案</p>

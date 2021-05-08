@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/07/15/angular-firebase-link-provide-to-same-account/1563155952362.png">
 <meta property="article:published_time" content="2019-07-15T01:05:23.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.647Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.150Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -283,11 +283,11 @@
 </li>
 <li>
 <p><code>AngularFireAuth</code>  的  <code>authState</code> 可以用來取得已登入 Firebase 的 User 物件資訊</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; User&#125; <span class="keyword">from</span> <span class="string">&#x27;firebase/app&#x27;</span>;</span><br><span class="line">...</span><br><span class="line">user: User;</span><br><span class="line"><span class="built_in">this</span>.afAuth.authState.subscribe(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(user);</span><br><span class="line">      <span class="built_in">this</span>.isLogin = user !== <span class="literal">null</span> &amp;&amp; !user.isAnonymous;</span><br><span class="line">      <span class="built_in">this</span>.user = user;      </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; User&#125; <span class="keyword">from</span> <span class="string">&#x27;firebase/app&#x27;</span>;</span><br><span class="line">...</span><br><span class="line"><span class="attr">user</span>: User;</span><br><span class="line"><span class="built_in">this</span>.afAuth.authState.subscribe(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(user);</span><br><span class="line">      <span class="built_in">this</span>.isLogin = user !== <span class="literal">null</span> &amp;&amp; !user.isAnonymous;</span><br><span class="line">      <span class="built_in">this</span>.user = user;      </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>刻一個表單用來取得使用者的 email 與 password 資訊</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">account = <span class="keyword">new</span> FormGroup(&#123;</span><br><span class="line">  email: <span class="keyword">new</span> FormControl(),</span><br><span class="line">  password: <span class="keyword">new</span> FormControl()</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">account = <span class="keyword">new</span> FormGroup(&#123;</span><br><span class="line">  <span class="attr">email</span>: <span class="keyword">new</span> FormControl(),</span><br><span class="line">  <span class="attr">password</span>: <span class="keyword">new</span> FormControl()</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> [<span class="attr">formGroup</span>]=<span class="string">&quot;account&quot;</span>&gt;</span></span><br><span class="line">      Email: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">formControlName</span>=<span class="string">&quot;email&quot;</span>&gt;</span></span><br><span class="line">      password: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">formControlName</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;linkWithEmail()&quot;</span>&gt;</span>Link With Email<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
@@ -427,20 +427,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

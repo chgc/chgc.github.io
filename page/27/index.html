@@ -200,6 +200,101 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/11/10/javsscript-for-loop-vs-foreach-when-there-is-async-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/11/10/javsscript-for-loop-vs-foreach-when-there-is-async-function/" class="post-title-link" itemprop="url">[Javsscript] for loop VS forEach when there is async function</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-11-11 04:05:00" itemprop="dateCreated datePublished" datetime="2014-11-11T04:05:00+08:00">2014-11-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/11/10/javsscript-for-loop-vs-foreach-when-there-is-async-function/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/10/javsscript-for-loop-vs-foreach-when-there-is-async-function/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天在檢查一段程式的時候，再跑一段根據array的資料新增或更新到資料庫中，卻發現都是更新同一筆紀錄
+原本的寫法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for(var i=0; i &lt; arr.length; i++)&#123;</span><br><span class="line">	db.insert(xxx).then(function()&#123;</span><br><span class="line">     ...</span><br><span class="line">     all insert the same record</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這是因為javascript async non-blocking的關係，所以資料庫新增自己跑自己的，for迴圈跑自己的，當新增時要取資料庫裡面資料時，會取到不對的值</p>
+<p>解法：用array.forEach來替代for loop</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr.forEach(function(item,idx)&#123;</span><br><span class="line">	db.insert(xxx).then(function()&#123;</span><br><span class="line">  		...</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>當我改寫成這樣子後，就正常了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -265,18 +360,18 @@
 <a target="_blank" rel="noopener" href="http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/">http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/</a></p>
 <p>大綱:</p>
 <p>如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlob thumbnailBlob &#x3D; objContainer.GetBlobReference(filename);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlob thumbnailBlob = objContainer.GetBlobReference(filename);</span><br></pre></td></tr></table></figure>
 <p>換成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var thumbnailBlob &#x3D; objContainer.GetBlobReferenceFromServer(filename);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var thumbnailBlob = objContainer.GetBlobReferenceFromServer(filename);</span><br></pre></td></tr></table></figure>
 <p>結果，一直給我跑404.</p>
 <p>這GetBlobReserenceFromServer的用意是去server上面找filename的blob reference回來. 所以當我們要建立新的blob, 這就文不對題了。 所以要改用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob blob &#x3D; objContainer).GetBlockBlobReference(filename);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob blob = objContainer).GetBlockBlobReference(filename);</span><br></pre></td></tr></table></figure>
 <p>這樣子就okey了.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob.UploadFile(fileData.LocalFileName);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob.UploadFile(fileData.LocalFileName);</span><br></pre></td></tr></table></figure>
 <hr>
 <hr>
 <p>這個也改掉了, 要改成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob.UploadFromFile(filenameWithPath, FileMode)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob.UploadFromFile(filenameWithPath, FileMode)</span><br></pre></td></tr></table></figure>
 <p>CloudBlockBlob也有提供不同的上傳方式，請參閱<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/microsoft.windowsazure.storage.blob.cloudblockblob_methods.aspx">MSDN</a></p>
 
       
@@ -372,7 +467,7 @@
 <li>DocumentDB裡面有分幾個元素 Database, DocumentCollection, document</li>
 </ul>
 <p>元素之間的關係</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Database -&gt; DocumentCollection(with id name&#x3D;xxxx)  -&gt; document(s)</span><br><span class="line">         -&gt; DocumentCollection(with id name&#x3D;xxxx)  -&gt; document(s)</span><br><span class="line">&#96;&#96;&#96;  </span><br><span class="line"></span><br><span class="line">* 檢查database是否已存在</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Database -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">         -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">* 檢查database是否已存在</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>string dataBaseName = 「testDB」;
 var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);</p>
 <p>var database = client.CreateDatabaseQuery().FirstOrDefault(db =&gt; <a target="_blank" rel="noopener" href="http://db.Id">db.Id</a> == dataBaseName);</p>
@@ -384,9 +479,9 @@ new Database
 Id = dataBaseName
 });
 }</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 這個寫法如果用在webapi上面，會有出現等不到回應的情形發生，所以解決方法是變成同步, 寫法會變成</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 這個寫法如果用在webapi上面，會有出現等不到回應的情形發生，所以解決方法是變成同步, 寫法會變成</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>database = client.CreateDatabaseAsync(new Database{Id = dataBaseName}).Result;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 檢查DocumentCollection是否已經建立</span><br><span class="line"></span><br><span class="line">從上面知道如果要檢查Database是否已經建立, 要利用CreateDatabaseQuery(), </span><br><span class="line">同樣的， 如果要檢查Document是否已經建立, 就要用 CreateDocumentCollectionQuery(database.CollectionsLink)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDatabaseQuery](http:&#x2F;&#x2F;msdn.microsoft.com&#x2F;en-us&#x2F;library&#x2F;azure&#x2F;microsoft.azure.documents.linq.documentservicequeryable.createdatabasequery.aspx)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDocumentCollectionQuery Method](http:&#x2F;&#x2F;msdn.microsoft.com&#x2F;en-us&#x2F;library&#x2F;azure&#x2F;microsoft.azure.documents.linq.documentservicequeryable.createdocumentcollectionquery.aspx)</span><br><span class="line"></span><br><span class="line">* 建立Document</span><br><span class="line"></span><br><span class="line">new a class object and save into DocumentCollection</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 檢查DocumentCollection是否已經建立</span><br><span class="line"></span><br><span class="line">從上面知道如果要檢查Database是否已經建立, 要利用CreateDatabaseQuery(), </span><br><span class="line">同樣的， 如果要檢查Document是否已經建立, 就要用 CreateDocumentCollectionQuery(database.CollectionsLink)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDatabaseQuery](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdatabasequery.aspx)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDocumentCollectionQuery Method](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdocumentcollectionquery.aspx)</span><br><span class="line"></span><br><span class="line">* 建立Document</span><br><span class="line"></span><br><span class="line">new a class object and save into DocumentCollection</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>User _user = new User(){name=『abc』};
 var document1 = await client.CreateDocumentAsync(documentCollectionLink, _user);</p>
 <p>這裡的documentCollectionLink是指
@@ -398,19 +493,19 @@ new DocumentCollection
 Id = 「some name」
 });</p>
 <p>documentCollectionLink = collection.SelfLink;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 更新Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 更新Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>var doc = Client.CreateDocumentQuery<Document>(Favorscollection.DocumentsLink)
 .Where(d =&gt; <a target="_blank" rel="noopener" href="http://d.Id">d.Id</a> == id)
 .AsEnumerable()
 .FirstOrDefault();</p>
 <p>return Client.ReplaceDocumentAsync(doc.SelfLink, item);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 刪除Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 刪除Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>var doc = Client.CreateDocumentQuery<Document>(Favorscollection.DocumentsLink)
 .Where(d =&gt; <a target="_blank" rel="noopener" href="http://d.Id">d.Id</a> == id)
 .AsEnumerable()
 .FirstOrDefault();</p>
 <p>return Client.DeleteDocumentAsync(doc.SelfLink);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 查詢Document</span><br><span class="line"></span><br><span class="line">可以用Linq的語法來做查詢或是用sql的語法也可以</span><br><span class="line"></span><br><span class="line">[[DOC] Query DocumentDB](http:&#x2F;&#x2F;azure.microsoft.com&#x2F;zh-tw&#x2F;documentation&#x2F;articles&#x2F;documentdb-sql-query&#x2F;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 查詢Document</span><br><span class="line"></span><br><span class="line">可以用Linq的語法來做查詢或是用sql的語法也可以</span><br><span class="line"></span><br><span class="line">[[DOC] Query DocumentDB](http://azure.microsoft.com/zh-tw/documentation/articles/documentdb-sql-query/)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>Client.CreateDocumentQuery<viewModel>(Favorscollection.DocumentsLink)
 .Where(m =&gt; m.lastName == 「xxxx」)
 .ToList()</p>
@@ -510,15 +605,15 @@ Id = 「some name」
 <li>cordova plugin add org.apache.cordova.file-transfer</li>
 </ol>
 <p>basic usage.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.downloadFile(source, filepath, true, &#123;&#125;).then(function(result) &#123;</span><br><span class="line">            &#x2F;&#x2F; Success! </span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            &#x2F;&#x2F; Error</span><br><span class="line">        &#125;, function(progress) &#123;</span><br><span class="line">            &#x2F;&#x2F; constant progress updates</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.downloadFile(source, filepath, true, &#123;&#125;).then(function(result) &#123;</span><br><span class="line">            // Success! </span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            // Error</span><br><span class="line">        &#125;, function(progress) &#123;</span><br><span class="line">            // constant progress updates</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
 <p>it’s same as</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fileTransfer &#x3D; new FileTransfer();</span><br><span class="line">var uri &#x3D; encodeURI(source);</span><br><span class="line">fileTransfer.download(uri,filePath,</span><br><span class="line">function (entry) &#123;</span><br><span class="line">&#x2F;&#x2F; success</span><br><span class="line">&#125;,</span><br><span class="line">function (error) &#123;</span><br><span class="line">&#x2F;&#x2F; error</span><br><span class="line">&#125;,</span><br><span class="line">trustAllHosts, options);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fileTransfer = new FileTransfer();</span><br><span class="line">var uri = encodeURI(source);</span><br><span class="line">fileTransfer.download(uri,filePath,</span><br><span class="line">function (entry) &#123;</span><br><span class="line">// success</span><br><span class="line">&#125;,</span><br><span class="line">function (error) &#123;</span><br><span class="line">// error</span><br><span class="line">&#125;,</span><br><span class="line">trustAllHosts, options);</span><br></pre></td></tr></table></figure>
 <p>if you want to use it with $cordovaCamera.getPicture(), you will need to resolve FILE_URI first, and use it as source.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function getImageFileName(image) &#123;</span><br><span class="line">        window.resolveLocalFileSystemURL(image,</span><br><span class="line">            function(entry) &#123;</span><br><span class="line">                var uri &#x3D; entry.toURL();</span><br><span class="line">                entry.file(function(file) &#123;</span><br><span class="line">                    var fileName &#x3D; file.name;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function getImageFileName(image) &#123;</span><br><span class="line">        window.resolveLocalFileSystemURL(image,</span><br><span class="line">            function(entry) &#123;</span><br><span class="line">                var uri = entry.toURL();</span><br><span class="line">                entry.file(function(file) &#123;</span><br><span class="line">                    var fileName = file.name;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="http://docs.phonegap.com/en/3.3.0/cordova_file_file.md.html#FileEntry">API Document#File Entry</a></p>
 <p>another problem is filepath.
 basePath can find it by below code. and filepath need a filename at the end.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.createDir(directory, false).then(function(entry) &#123;</span><br><span class="line">            &#x2F;&#x2F; Success! </span><br><span class="line">            alert(entry.toURL());</span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            &#x2F;&#x2F; An error occured. Show a message to the user</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$cordovaFile.createDir(directory, false).then(function(entry) &#123;</span><br><span class="line">            // Success! </span><br><span class="line">            alert(entry.toURL());</span><br><span class="line">        &#125;, function(err) &#123;</span><br><span class="line">            // An error occured. Show a message to the user</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -706,7 +801,7 @@ Web的速度只有Premium 2可以跟的上, 價錢就是一個不可思議</p>
 
       
           <p>angular在寫ng-repeat的時後, 因為想要利用 filter的功能將過濾後的資料集拿到不同區塊使用, 把function 寫到ng-repeat裡面。 像是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-repeat&#x3D;&quot;item in processData((items | filter: someCondition))&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-repeat=&quot;item in processData((items | filter: someCondition))&quot;</span><br></pre></td></tr></table></figure>
 <p>這一個粗心的錯誤會讓angular產生<strong>Error: error:infdig,Infinite $digest Loop</strong>的錯誤訊息</p>
 <p>這個訊息的產生原因是當ng-repeat每跑一次, 會觸發processData fuction =&gt; 因為值改變，所以又會觸發$digest. 然後當$digest的次數太多之後，就會發生錯誤訊息, 執行效率也會變得非常的不好。</p>
 <p>所以回到angularjs的頁面裡找到這個<a href="">https://docs.angularjs.org/error/$rootScope/infdig</a></p>
@@ -715,7 +810,7 @@ Web的速度只有Premium 2可以跟的上, 價錢就是一個不可思議</p>
 <p>Since getUsers() returns a new array, Angular determines that the model is different on each $digest cycle, resulting in the error. The solution is to return the same array object if the elements have not changed:</p>
 </blockquote>
 <p>解決的方式就是不要在ng-repeat裡面寫function. 但如果要達到相同的效果, 可以先將過濾後的結果存到一個變數中, 然後在去操作那個變數就不會產生這個錯誤了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-repeat&#x3D;&quot;item in (someVar &#x3D; items | filter: someCondition)&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-repeat=&quot;item in (someVar = items | filter: someCondition)&quot;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -906,9 +1001,9 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ODataHttpRequestMessageExtensions.GetNextPageLink 和 </span><br><span class="line">ODataHttpRequestMessageExtensions.GetInlineCount 都過時了..</span><br></pre></td></tr></table></figure>
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ODataHttpRequestMessageExtensions.GetNextPageLink 和 </span><br><span class="line">ODataHttpRequestMessageExtensions.GetInlineCount 都過時了..</span><br></pre></td></tr></table></figure>
 <p>要改用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Request.ODataProperties().NextLink,</span><br><span class="line">Request.ODataProperties().TotalCount</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Request.ODataProperties().NextLink,</span><br><span class="line">Request.ODataProperties().TotalCount</span><br></pre></td></tr></table></figure>
 <p>ODataProperties 需要使用
 <strong>System.Web.Http.OData.Extensions</strong> 或 <strong>System.Web.OData.Extensions</strong> 命名空間</p>
 
@@ -1116,103 +1211,12 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
       
           <p>javascript基本操作html5的 local storage方法
 <img src="http://user-image.logdown.io/user/4862/blog/4871/post/210650/xi3DOygTnagKxZHig8Yw_image_thumb.png" alt="image_thumb.png"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; set item val</span><br><span class="line">window.localstorage.setItem(key,value);</span><br><span class="line">window.localstorage.getItem(key);</span><br><span class="line">window.localstorage.removeItem(key);</span><br><span class="line">window.localstorage.clear();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// set item val</span><br><span class="line">window.localstorage.setItem(key,value);</span><br><span class="line">window.localstorage.getItem(key);</span><br><span class="line">window.localstorage.removeItem(key);</span><br><span class="line">window.localstorage.clear();</span><br></pre></td></tr></table></figure>
 <p>如果要把array object存入到localstorage裡面，需要把object轉換成文字.所以可透過json的方法來處理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JSON.stringify(object);</span><br><span class="line">JSON.parse(value);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JSON.stringify(object);</span><br><span class="line">JSON.parse(value);</span><br></pre></td></tr></table></figure>
 <p>ref:</p>
 <p><a target="_blank" rel="noopener" href="http://www.w3schools.com/html/html5_webstorage.asp">http://www.w3schools.com/html/html5_webstorage.asp</a></p>
 <p><a target="_blank" rel="noopener" href="http://blog.roodo.com/rocksaying/archives/15967715.html">http://blog.roodo.com/rocksaying/archives/15967715.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/07/07/reference-odata-101-using-the-notmapped-attribute-to-exclude-enum-properties/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/07/07/reference-odata-101-using-the-notmapped-attribute-to-exclude-enum-properties/" class="post-title-link" itemprop="url">[參考] OData 101: Using the [NotMapped] attribute to exclude Enum properties</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-07-08 03:38:00" itemprop="dateCreated datePublished" datetime="2014-07-08T03:38:00+08:00">2014-07-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/07/07/reference-odata-101-using-the-notmapped-attribute-to-exclude-enum-properties/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/07/reference-odata-101-using-the-notmapped-attribute-to-exclude-enum-properties/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>使用OData時如果遇到model裡面有自訂欄位是資料庫不存在時，就會出現錯誤</p>
-<p>解決方案請參閱此篇文章</p>
-<p><a target="_blank" rel="noopener" href="http://blogs.msdn.com/b/odatateam/archive/2012/08/29/odata-101-using-the-notmapped-attribute-to-exclude-enum-properties.aspx">OData 101: Using the [NotMapped] attribute to exclude Enum properties</a></p>
 
       
     </div>
@@ -1307,20 +1311,20 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

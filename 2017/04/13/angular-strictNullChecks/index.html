@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://farm3.staticflickr.com/2848/33878182561_27142d36fe_o.png">
 <meta property="og:image" content="https://farm3.staticflickr.com/2937/34007884075_3ffb7190eb_o.png">
 <meta property="article:published_time" content="2017-04-13T05:58:03.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.595Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.098Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta property="article:tag" content="Typescript">
@@ -286,7 +286,7 @@
 </blockquote>
 <h1 id="Angular-環境設定"><a class="header-anchor" href="#Angular-環境設定"> </a>Angular 環境設定</h1>
 <p>在 <code>tsconfig.json</code> 內開啟 strictNullChecks 功能，由於 Angular 主程式內還有部分的程式碼還沒有辦法通過 <code>strictNullChecks</code> 的檢查，所以必須再多開啟 <code>skipLibCheck</code> 的選項</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;compileOnSave&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">        ...</span><br><span class="line">        &quot;strictNullChecks&quot;: true,</span><br><span class="line">        &quot;skipLibCheck&quot;: true,</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;compileOnSave&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="attr">&quot;strictNullChecks&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">&quot;skipLibCheck&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="檢查開始"><a class="header-anchor" href="#檢查開始"> </a>檢查開始</h1>
 <p>當執行 <code>npm start</code> 時，Typescript 就會開始做檢查的動作了，在最近更新的 Visual Studio Code 支援從 Terminal 直接開啟該檔案的功能，<code>Ctrl + Click</code>  就可以開啟了。</p>
 <p>第一次的檢查，會跳出很多紅色的錯誤。就一個一個看吧</p>
@@ -302,7 +302,7 @@
 <p>這裡的 AuthConfig 接受的參數型別是 <code>IAuthConfigOptional</code>，而程式碼裡所傳入的 Object 並未指定型別。</p>
 <p><img src="https://farm3.staticflickr.com/2819/33966196546_d41c75867c_o.png" alt=""></p>
 <p><strong>修正方式 :</strong> 給予正確的型別</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> AuthHttp(<span class="keyword">new</span> AuthConfig(&lt;IAuthConfigOptional&gt;&#123;</span><br><span class="line">        tokenName: <span class="string">&#x27;token&#x27;</span>,</span><br><span class="line">        noJwtError: <span class="literal">true</span>,</span><br><span class="line">        tokenGetter: (<span class="function">() =&gt;</span> <span class="built_in">localStorage</span>.getItem(<span class="string">&#x27;token&#x27;</span>)),</span><br><span class="line">    &#125;), http, options);</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> AuthHttp(<span class="keyword">new</span> AuthConfig(&lt;IAuthConfigOptional&gt;&#123;</span><br><span class="line">        <span class="attr">tokenName</span>: <span class="string">&#x27;token&#x27;</span>,</span><br><span class="line">        <span class="attr">noJwtError</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">tokenGetter</span>: (<span class="function">() =&gt;</span> <span class="built_in">localStorage</span>.getItem(<span class="string">&#x27;token&#x27;</span>)),</span><br><span class="line">    &#125;), http, options);</span><br></pre></td></tr></table></figure>
 <h2 id="錯誤-3-Object-is-possibly-null"><a class="header-anchor" href="#錯誤-3-Object-is-possibly-null"> </a>錯誤 3: Object is possibly null</h2>
 <p><img src="https://farm3.staticflickr.com/2848/33878182561_27142d36fe_o.png" alt=""></p>
 <p>在這裡的錯誤訊息是指，這段程式碼有可能因為某一個Object是 null 時，後續的程式碼就無法繼續下去，所以必須先排除 null 的狀態，才能確保後續的動作是正常的。而這個行為，在 Typescript 2.0 稱為 <code>Control flow based type analysis</code> <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></p>
@@ -439,20 +439,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

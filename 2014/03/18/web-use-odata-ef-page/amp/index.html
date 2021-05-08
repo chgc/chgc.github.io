@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/03/18/web-use-odata-ef-page/"
 			},
 			"datePublished": "2014-03-18T17:31:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.587Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1845,11 +1845,11 @@ h6.categories {
 			  		<p>當網頁要讀取一個很大量的資料時，通常都會透過分頁的方式來顯示資料。
 如果透過WebApi+OData的特性來做分頁，作法很單純
 設定 WebApiConfig.cs</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//加入</span><br><span class="line">config.EnableQuerySupport();</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//加入</span><br><span class="line">config.EnableQuerySupport();</span><br></pre></td></tr></tbody></table></figure>
 <p>假設原本的API寫法如下</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Route("api/Customer")]</span><br><span class="line">public IEnumerable&lt;customers&gt; Getcustomers()</span><br><span class="line">{            </span><br><span class="line">   return db.customers.AsEnumerable();</span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Route("api/Customer")]</span><br><span class="line">public IEnumerable&lt;customers&gt; Getcustomers()</span><br><span class="line">{            </span><br><span class="line">   return db.customers.AsEnumerable();</span><br><span class="line">} </span><br></pre></td></tr></tbody></table></figure>
 <p>改成</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Route("api/Customer")]        </span><br><span class="line">public IQueryable&lt;customers&gt; Getcustomers()</span><br><span class="line">{            </span><br><span class="line">   return db.customers.AsQueryable();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Route("api/Customer")]        </span><br><span class="line">public IQueryable&lt;customers&gt; Getcustomers()</span><br><span class="line">{            </span><br><span class="line">   return db.customers.AsQueryable();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>那在client端要呼叫api的url中，在加上OData的查詢語法來取得所要的資料區段，來達成分頁的效果</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1914,13 +1914,13 @@ h6.categories {
 </table></div>
 <p>參考資料: <a href="http://msdn.microsoft.com/en-us/library/windowsazure/gg312156.aspx">http://msdn.microsoft.com/en-us/library/windowsazure/gg312156.aspx</a></p>
 <h4 id="如果要利用OData取得所有的資料筆數時，上述的寫法沒有辦法做到，所以要稍微改寫一下原本的寫法"><a class="header-anchor" href="#如果要利用OData取得所有的資料筆數時，上述的寫法沒有辦法做到，所以要稍微改寫一下原本的寫法"> </a>如果要利用OData取得所有的資料筆數時，上述的寫法沒有辦法做到，所以要稍微改寫一下原本的寫法</h4>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Route("api/Customer")]   </span><br><span class="line"> public PageResult&lt;customers&gt; Getcustomers(ODataQueryOptions&lt;customers&gt; options)</span><br><span class="line">     {           </span><br><span class="line">         var results = options.ApplyTo(db.customers.AsQueryable());</span><br><span class="line">         return new PageResult&lt;customers&gt;(</span><br><span class="line">            results as IEnumerable&lt;customers&gt;, // Items</span><br><span class="line">            Request.GetNextPageLink(), // NextPageLink</span><br><span class="line">            Request.GetInlineCount()); // Count</span><br><span class="line">     }        </span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Route("api/Customer")]   </span><br><span class="line"> public PageResult&lt;customers&gt; Getcustomers(ODataQueryOptions&lt;customers&gt; options)</span><br><span class="line">     {           </span><br><span class="line">         var results = options.ApplyTo(db.customers.AsQueryable());</span><br><span class="line">         return new PageResult&lt;customers&gt;(</span><br><span class="line">            results as IEnumerable&lt;customers&gt;, // Items</span><br><span class="line">            Request.GetNextPageLink(), // NextPageLink</span><br><span class="line">            Request.GetInlineCount()); // Count</span><br><span class="line">     }        </span><br></pre></td></tr></tbody></table></figure>
 <p>要傳入的東西是一樣的，但是回傳的結果會變成</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">   "Items":[data....],</span><br><span class="line">   "NextPageLink": null,</span><br><span class="line">   "Count": 12345</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">   "Items":[data....],</span><br><span class="line">   "NextPageLink": null,</span><br><span class="line">   "Count": 12345</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>所以在接收時要再調整</p>
 <h3 id="當-filter的查詢欄位是guid時"><a class="header-anchor" href="#當-filter的查詢欄位是guid時"> </a>當$filter的查詢欄位是guid時</h3>
 <p>所送出的值前面要加上 <strong>guid</strong> 的關鍵字</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?$filter=field eq guid'&lt;value&gt;'</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?$filter=field eq guid'&lt;value&gt;'</span><br></pre></td></tr></tbody></table></figure>
 			  		
 			  		<!-- google Adsense -->
 			  		

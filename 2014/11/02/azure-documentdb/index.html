@@ -21,15 +21,15 @@
     var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="使用Azure新的NoSQL – DocumentDB(還在preview版本中) 怎們建立網頁上面有說. 這裡只記錄一些操作上的動作  DocumentDB裡面有分幾個元素 Database, DocumentCollection, document  元素之間的關係 123456Database -&gt; DocumentCollection(with id name&#x3D;xxxx)">
+  <meta name="description" content="使用Azure新的NoSQL – DocumentDB(還在preview版本中) 怎們建立網頁上面有說. 這裡只記錄一些操作上的動作  DocumentDB裡面有分幾個元素 Database, DocumentCollection, document  元素之間的關係 123456Database -&gt; DocumentCollection(with id name&#x3D;xxxx)  -&amp;gt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Azure] DocumentDB">
 <meta property="og:url" content="http://blog.kevinyang.net/2014/11/02/azure-documentdb/index.html">
 <meta property="og:site_name" content="CK&#39;s Notepad">
-<meta property="og:description" content="使用Azure新的NoSQL – DocumentDB(還在preview版本中) 怎們建立網頁上面有說. 這裡只記錄一些操作上的動作  DocumentDB裡面有分幾個元素 Database, DocumentCollection, document  元素之間的關係 123456Database -&gt; DocumentCollection(with id name&#x3D;xxxx)">
+<meta property="og:description" content="使用Azure新的NoSQL – DocumentDB(還在preview版本中) 怎們建立網頁上面有說. 這裡只記錄一些操作上的動作  DocumentDB裡面有分幾個元素 Database, DocumentCollection, document  元素之間的關係 123456Database -&gt; DocumentCollection(with id name&#x3D;xxxx)  -&amp;gt">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2014-11-02T20:53:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Azure">
 <meta name="twitter:card" content="summary">
@@ -272,7 +272,7 @@
 <li>DocumentDB裡面有分幾個元素 Database, DocumentCollection, document</li>
 </ul>
 <p>元素之間的關係</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Database -&gt; DocumentCollection(with id name&#x3D;xxxx)  -&gt; document(s)</span><br><span class="line">         -&gt; DocumentCollection(with id name&#x3D;xxxx)  -&gt; document(s)</span><br><span class="line">&#96;&#96;&#96;  </span><br><span class="line"></span><br><span class="line">* 檢查database是否已存在</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Database -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">         -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">* 檢查database是否已存在</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>string dataBaseName = 「testDB」;
 var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);</p>
 <p>var database = client.CreateDatabaseQuery().FirstOrDefault(db =&gt; <a target="_blank" rel="noopener" href="http://db.Id">db.Id</a> == dataBaseName);</p>
@@ -284,9 +284,9 @@ new Database
 Id = dataBaseName
 });
 }</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 這個寫法如果用在webapi上面，會有出現等不到回應的情形發生，所以解決方法是變成同步, 寫法會變成</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 這個寫法如果用在webapi上面，會有出現等不到回應的情形發生，所以解決方法是變成同步, 寫法會變成</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>database = client.CreateDatabaseAsync(new Database{Id = dataBaseName}).Result;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 檢查DocumentCollection是否已經建立</span><br><span class="line"></span><br><span class="line">從上面知道如果要檢查Database是否已經建立, 要利用CreateDatabaseQuery(), </span><br><span class="line">同樣的， 如果要檢查Document是否已經建立, 就要用 CreateDocumentCollectionQuery(database.CollectionsLink)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDatabaseQuery](http:&#x2F;&#x2F;msdn.microsoft.com&#x2F;en-us&#x2F;library&#x2F;azure&#x2F;microsoft.azure.documents.linq.documentservicequeryable.createdatabasequery.aspx)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDocumentCollectionQuery Method](http:&#x2F;&#x2F;msdn.microsoft.com&#x2F;en-us&#x2F;library&#x2F;azure&#x2F;microsoft.azure.documents.linq.documentservicequeryable.createdocumentcollectionquery.aspx)</span><br><span class="line"></span><br><span class="line">* 建立Document</span><br><span class="line"></span><br><span class="line">new a class object and save into DocumentCollection</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 檢查DocumentCollection是否已經建立</span><br><span class="line"></span><br><span class="line">從上面知道如果要檢查Database是否已經建立, 要利用CreateDatabaseQuery(), </span><br><span class="line">同樣的， 如果要檢查Document是否已經建立, 就要用 CreateDocumentCollectionQuery(database.CollectionsLink)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDatabaseQuery](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdatabasequery.aspx)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDocumentCollectionQuery Method](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdocumentcollectionquery.aspx)</span><br><span class="line"></span><br><span class="line">* 建立Document</span><br><span class="line"></span><br><span class="line">new a class object and save into DocumentCollection</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>User _user = new User(){name=『abc』};
 var document1 = await client.CreateDocumentAsync(documentCollectionLink, _user);</p>
 <p>這裡的documentCollectionLink是指
@@ -298,19 +298,19 @@ new DocumentCollection
 Id = 「some name」
 });</p>
 <p>documentCollectionLink = collection.SelfLink;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 更新Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 更新Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>var doc = Client.CreateDocumentQuery<Document>(Favorscollection.DocumentsLink)
 .Where(d =&gt; <a target="_blank" rel="noopener" href="http://d.Id">d.Id</a> == id)
 .AsEnumerable()
 .FirstOrDefault();</p>
 <p>return Client.ReplaceDocumentAsync(doc.SelfLink, item);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 刪除Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 刪除Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>var doc = Client.CreateDocumentQuery<Document>(Favorscollection.DocumentsLink)
 .Where(d =&gt; <a target="_blank" rel="noopener" href="http://d.Id">d.Id</a> == id)
 .AsEnumerable()
 .FirstOrDefault();</p>
 <p>return Client.DeleteDocumentAsync(doc.SelfLink);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 查詢Document</span><br><span class="line"></span><br><span class="line">可以用Linq的語法來做查詢或是用sql的語法也可以</span><br><span class="line"></span><br><span class="line">[[DOC] Query DocumentDB](http:&#x2F;&#x2F;azure.microsoft.com&#x2F;zh-tw&#x2F;documentation&#x2F;articles&#x2F;documentdb-sql-query&#x2F;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 查詢Document</span><br><span class="line"></span><br><span class="line">可以用Linq的語法來做查詢或是用sql的語法也可以</span><br><span class="line"></span><br><span class="line">[[DOC] Query DocumentDB](http://azure.microsoft.com/zh-tw/documentation/articles/documentdb-sql-query/)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>Client.CreateDocumentQuery<viewModel>(Favorscollection.DocumentsLink)
 .Where(m =&gt; m.lastName == 「xxxx」)
 .ToList()</p>
@@ -430,20 +430,20 @@ Id = 「some name」
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

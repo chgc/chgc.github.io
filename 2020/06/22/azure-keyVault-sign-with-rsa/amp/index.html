@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/"
 			},
 			"datePublished": "2020-06-22T13:16:41.000Z",
-			"dateModified": "2021-04-18T13:04:55.711Z",
+			"dateModified": "2021-05-08T08:23:13.214Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1909,7 +1909,7 @@ h6.categories {
 </li>
 <li>
 <p>在 appsettings.json 的地方新增此資訊</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"KeyVault": {</span><br><span class="line">  "Vault": "xxx",</span><br><span class="line">  "ClientId": "xxx",</span><br><span class="line">  "ClientSecret": "xxx"</span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"KeyVault"</span>: {</span><br><span class="line">  <span class="attr">"Vault"</span>: <span class="string">"xxx"</span>,</span><br><span class="line">  <span class="attr">"ClientId"</span>: <span class="string">"xxx"</span>,</span><br><span class="line">  <span class="attr">"ClientSecret"</span>: <span class="string">"xxx"</span></span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
 <p>當然這邊的 <code>ClientId</code> 和 <code>ClientSecret</code> 會放在 <code>User secret</code> 下，而不會是 <code>appsettings.json</code> 內</p>
 </li>
 <li>

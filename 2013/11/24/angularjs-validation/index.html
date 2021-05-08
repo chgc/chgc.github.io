@@ -29,7 +29,7 @@
 <meta property="og:description" content="#Form Validation with angularJs Basic: in .js $scope.form &#x3D; {} $scope.form.$valid &#x3D;&#x3D;&gt; 判斷form(name&#x3D;「form」)內的物件是否有驗證有錯誤的物件存在 用法: formName.inputFieldName.property Unmodified form A boolean property th">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2013-11-24T22:10:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.587Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="AngularJS">
 <meta name="twitter:card" content="summary">
@@ -275,27 +275,27 @@ $scope.form.$valid ==&gt; 判斷form(name=「form」)內的物件是否有驗證
 formName.inputFieldName.property</p>
 <p><strong>Unmodified form</strong>
 A boolean property that tells us if the user has modified the form. This is true if the user hasn’t touched the form, and false if they have:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$pristine;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$pristine;</span><br></pre></td></tr></table></figure>
 <p><strong>Modified form</strong>
 A boolean property if and only if the user has actually modified the form. This is set regardless of validations on the form:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$dirty</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$dirty</span><br></pre></td></tr></table></figure>
 <p><strong>Valid form</strong>
 A boolean property that tells us that the form is valid or not. If the form is currently valid, then this will be true:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$valid</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$valid</span><br></pre></td></tr></table></figure>
 <p><strong>Invalid form</strong>
 A boolean property that tells us that the form is invalid. If the form is currently invalid, then this will be true:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$invalid</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$invalid</span><br></pre></td></tr></table></figure>
 <p>The last two properties are particularly useful for showing or hiding DOM elements. They are also very useful when setting a class on a particular form.</p>
 <p><strong>Errors</strong>
 Another useful property that AngularJS makes available to us is the $error object. This object contains all of the validations on a particular form and if they are valid or invalid. To get access to this property, use the following syntax:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputfieldName.$error</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputfieldName.$error</span><br></pre></td></tr></table></figure>
 <p>###Addtional CSS classes
 ng-valid Is set if the form is valid.
 ng-invalid Is set if the form is invalid.
 ng-pristine Is set if the form is pristine.
 ng-dirty Is set if the form is dirty.</p>
 <p>##Input Validation</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input</span><br><span class="line">       ng-model&#x3D;&quot;&#123;string&#125;&quot;</span><br><span class="line">       [name&#x3D;&quot;&#123;string&#125;&quot;]</span><br><span class="line">       [required]</span><br><span class="line">       [ng-required&#x3D;&quot;&#123;boolean&#125;&quot;]</span><br><span class="line">       [ng-minlength&#x3D;&quot;&#123;number&#125;&quot;]</span><br><span class="line">       [ng-maxlength&#x3D;&quot;&#123;number&#125;&quot;]</span><br><span class="line">       [ng-pattern&#x3D;&quot;&#123;string&#125;&quot;]</span><br><span class="line">       [ng-change&#x3D;&quot;&#123;string&#125;&quot;]&gt;</span><br><span class="line">&lt;&#x2F;input&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input</span><br><span class="line">       ng-model=&quot;&#123;string&#125;&quot;</span><br><span class="line">       [name=&quot;&#123;string&#125;&quot;]</span><br><span class="line">       [required]</span><br><span class="line">       [ng-required=&quot;&#123;boolean&#125;&quot;]</span><br><span class="line">       [ng-minlength=&quot;&#123;number&#125;&quot;]</span><br><span class="line">       [ng-maxlength=&quot;&#123;number&#125;&quot;]</span><br><span class="line">       [ng-pattern=&quot;&#123;string&#125;&quot;]</span><br><span class="line">       [ng-change=&quot;&#123;string&#125;&quot;]&gt;</span><br><span class="line">&lt;/input&gt;</span><br></pre></td></tr></table></figure>
 <p>####可驗證項目(內建)
 requried
 ng-minlength
@@ -418,20 +418,20 @@ formName.inputfieldName.$error.maxlength</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

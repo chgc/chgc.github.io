@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/11/24/angularjs-validation/"
 			},
 			"datePublished": "2013-11-24T22:10:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.587Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,27 +1851,27 @@ $scope.form = {}
 formName.inputFieldName.property</p>
 <p><strong>Unmodified form</strong>
 A boolean property that tells us if the user has modified the form. This is true if the user hasn’t touched the form, and false if they have:</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$pristine;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$pristine;</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>Modified form</strong>
 A boolean property if and only if the user has actually modified the form. This is set regardless of validations on the form:</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$dirty</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$dirty</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>Valid form</strong>
 A boolean property that tells us that the form is valid or not. If the form is currently valid, then this will be true:</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$valid</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$valid</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>Invalid form</strong>
 A boolean property that tells us that the form is invalid. If the form is currently invalid, then this will be true:</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$invalid</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$invalid</span><br></pre></td></tr></tbody></table></figure>
 <p>The last two properties are particularly useful for showing or hiding DOM elements. They are also very useful when setting a class on a particular form.</p>
 <p><strong>Errors</strong>
 Another useful property that AngularJS makes available to us is the $error object. This object contains all of the validations on a particular form and if they are valid or invalid. To get access to this property, use the following syntax:</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputfieldName.$error</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputfieldName.$error</span><br></pre></td></tr></tbody></table></figure>
 <p>###Addtional CSS classes
 ng-valid Is set if the form is valid.
 ng-invalid Is set if the form is invalid.
 ng-pristine Is set if the form is pristine.
 ng-dirty Is set if the form is dirty.</p>
 <p>##Input Validation</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input</span><br><span class="line">       ng-model="{string}"</span><br><span class="line">       [name="{string}"]</span><br><span class="line">       [required]</span><br><span class="line">       [ng-required="{boolean}"]</span><br><span class="line">       [ng-minlength="{number}"]</span><br><span class="line">       [ng-maxlength="{number}"]</span><br><span class="line">       [ng-pattern="{string}"]</span><br><span class="line">       [ng-change="{string}"]&gt;</span><br><span class="line">&lt;/input&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input</span><br><span class="line">       ng-model="{string}"</span><br><span class="line">       [name="{string}"]</span><br><span class="line">       [required]</span><br><span class="line">       [ng-required="{boolean}"]</span><br><span class="line">       [ng-minlength="{number}"]</span><br><span class="line">       [ng-maxlength="{number}"]</span><br><span class="line">       [ng-pattern="{string}"]</span><br><span class="line">       [ng-change="{string}"]&gt;</span><br><span class="line">&lt;/input&gt;</span><br></pre></td></tr></tbody></table></figure>
 <p>####可驗證項目(內建)
 requried
 ng-minlength

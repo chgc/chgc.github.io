@@ -29,7 +29,7 @@
 <meta property="og:description" content="Tuples 很像list,但是一旦建立後值就沒有辦法被更改 (ex. list[1]&#x3D; 『b』 &lt;&#x3D;會出錯) 用途: 用來儲存一些常用(const)變數  Set set會將重複得值給排除掉(有distinct的味道) 建立set的方式有set() 或 a&#x3D; {『something』,『something』} 如果要建立空的set，只能透過set()的方式 123456789101112">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2013-11-14T05:53:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.587Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -273,7 +273,7 @@
 <p>set會將重複得值給排除掉(有distinct的味道)
 建立set的方式有set() 或 a= {『something』,『something』}
 如果要建立空的set，只能透過set()的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; set(&#39;abracadabra&#39;)</span><br><span class="line">&gt;&gt;&gt; b &#x3D; set(&#39;alacazam&#39;)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&#123;&#39;d&#39;, &#39;r&#39;, &#39;a&#39;, &#39;c&#39;, &#39;b&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">&#123;&#39;m&#39;, &#39;l&#39;, &#39;a&#39;, &#39;c&#39;, &#39;z&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; a^b  # value in a or b not in both, 不含兩邊都有值</span><br><span class="line">&#123;&#39;r&#39;, &#39;z&#39;, &#39;d&#39;, &#39;b&#39;, &#39;m&#39;, &#39;l&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; a-b # value in a not b</span><br><span class="line">&#123;&#39;d&#39;, &#39;b&#39;, &#39;r&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; a|b # value in a or b</span><br><span class="line">&#123;&#39;r&#39;, &#39;z&#39;, &#39;d&#39;, &#39;a&#39;, &#39;c&#39;, &#39;b&#39;, &#39;m&#39;, &#39;l&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; a&amp;b # value in a and b</span><br><span class="line">&#123;&#39;a&#39;, &#39;c&#39;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = set(&#x27;abracadabra&#x27;)</span><br><span class="line">&gt;&gt;&gt; b = set(&#x27;alacazam&#x27;)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&#123;&#x27;d&#x27;, &#x27;r&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;b&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">&#123;&#x27;m&#x27;, &#x27;l&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;z&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a^b  # value in a or b not in both, 不含兩邊都有值</span><br><span class="line">&#123;&#x27;r&#x27;, &#x27;z&#x27;, &#x27;d&#x27;, &#x27;b&#x27;, &#x27;m&#x27;, &#x27;l&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a-b # value in a not b</span><br><span class="line">&#123;&#x27;d&#x27;, &#x27;b&#x27;, &#x27;r&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a|b # value in a or b</span><br><span class="line">&#123;&#x27;r&#x27;, &#x27;z&#x27;, &#x27;d&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;b&#x27;, &#x27;m&#x27;, &#x27;l&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a&amp;b # value in a and b</span><br><span class="line">&#123;&#x27;a&#x27;, &#x27;c&#x27;&#125;</span><br></pre></td></tr></table></figure>
 <p>#Dictionaries
 as c# Dictionary&lt;string, string&gt;
 操作方式</p>
@@ -284,9 +284,9 @@ as c# Dictionary&lt;string, string&gt;
 <li>排序: sorted(dict.key())</li>
 </ul>
 <p>建立的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dict([(&#39;sape&#39;, 4139), (&#39;guido&#39;, 4127), (&#39;jack&#39;, 4098)])</span><br><span class="line">&#123;&#39;sape&#39;: 4139, &#39;jack&#39;: 4098, &#39;guido&#39;: 4127&#125;</span><br><span class="line">&gt;&gt;&gt; dict(sape&#x3D;4139, guido&#x3D;4127, jack&#x3D;4098)</span><br><span class="line">&#123;&#39;sape&#39;: 4139, &#39;jack&#39;: 4098, &#39;guido&#39;: 4127&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dict([(&#x27;sape&#x27;, 4139), (&#x27;guido&#x27;, 4127), (&#x27;jack&#x27;, 4098)])</span><br><span class="line">&#123;&#x27;sape&#x27;: 4139, &#x27;jack&#x27;: 4098, &#x27;guido&#x27;: 4127&#125;</span><br><span class="line">&gt;&gt;&gt; dict(sape=4139, guido=4127, jack=4098)</span><br><span class="line">&#123;&#x27;sape&#x27;: 4139, &#x27;jack&#x27;: 4098, &#x27;guido&#x27;: 4127&#125;</span><br></pre></td></tr></table></figure>
 <p>##looping</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; knights &#x3D; &#123;&#39;gallahad&#39;: &#39;the pure&#39;, &#39;robin&#39;: &#39;the brave&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; for k, v in knights.items():</span><br><span class="line">...     print(k, v)</span><br><span class="line">...</span><br><span class="line">gallahad the pure</span><br><span class="line">robin the brave</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; knights = &#123;&#x27;gallahad&#x27;: &#x27;the pure&#x27;, &#x27;robin&#x27;: &#x27;the brave&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; for k, v in knights.items():</span><br><span class="line">...     print(k, v)</span><br><span class="line">...</span><br><span class="line">gallahad the pure</span><br><span class="line">robin the brave</span><br></pre></td></tr></table></figure>
 <p>#More on Conditions
 比較的方法:</p>
 <ul>
@@ -411,20 +411,20 @@ as c# Dictionary&lt;string, string&gt;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

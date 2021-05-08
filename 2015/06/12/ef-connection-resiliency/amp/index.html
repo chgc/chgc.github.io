@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2015/06/12/ef-connection-resiliency/"
 			},
 			"datePublished": "2015-06-12T01:50:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.591Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1852,7 +1852,7 @@ h6.categories {
 - throws RetryLimitExceededException
 </code></pre>
 <p>##Configuration</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class MyConfiguration : DbConfiguration </span><br><span class="line">{ </span><br><span class="line">    public MyConfiguration() </span><br><span class="line">    { </span><br><span class="line">        SetExecutionStrategy("System.Data.SqlClient", </span><br><span class="line">        () =&gt; new SqlAzureExecutionStrategy(1, TimeSpan.FromSeconds(30))); </span><br><span class="line">    } </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class MyConfiguration : DbConfiguration </span><br><span class="line">{ </span><br><span class="line">    public MyConfiguration() </span><br><span class="line">    { </span><br><span class="line">        SetExecutionStrategy("System.Data.SqlClient", </span><br><span class="line">        () =&gt; new SqlAzureExecutionStrategy(1, TimeSpan.FromSeconds(30))); </span><br><span class="line">    } </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><a href="https://msdn.microsoft.com/zh-tw/library/system.data.entity.sqlserver.sqlazureexecutionstrategy(v=vs.113).aspx">MSDB</a></p>
 <p><a href="https://msdn.microsoft.com/en-us/data/dn456835.aspx">參考網址</a></p>
 

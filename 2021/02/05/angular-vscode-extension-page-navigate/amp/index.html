@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2021/02/05/angular-vscode-extension-page-navigate/"
 			},
 			"datePublished": "2021-02-05T16:22:09.000Z",
-			"dateModified": "2021-04-18T13:04:55.735Z",
+			"dateModified": "2021-05-08T08:23:13.234Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,7 +1851,7 @@ h6.categories {
 			  		<p>繼上一篇環境基礎設定完成後，這篇先來筆記一下要如何做頁面切換，有哪些地方需要留意的</p>
 <span id="more"></span>
 <p>首先要知道在 VSCode Extension Webview 的環境並不是一個 web server 而是檔案，所以我們就不能使用預設的路由設定模式，而必須改為 hash 模式 (<code>HashLocationStrategy</code>)，設定方式如下</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> RouterModule.forRoot(routes, {</span><br><span class="line">      useHash: <span class="literal">true</span>,</span><br><span class="line">}),</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> RouterModule.forRoot(routes, {</span><br><span class="line">      <span class="attr">useHash</span>: <span class="literal">true</span>,</span><br><span class="line">}),</span><br></pre></td></tr></tbody></table></figure>
 <p>在到 <code>index.html</code> 的地方，調整 base 路徑的部分</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>到這邊基本上 Angular 的路由就可以正常運作了</p>

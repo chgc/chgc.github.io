@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://c2.staticflickr.com/8/7676/27223659083_0af2217275_o.png">
 <meta property="article:published_time" content="2016-06-22T11:34:01.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.098Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="MVC Core">
 <meta name="twitter:card" content="summary">
@@ -278,7 +278,7 @@
 <p>Yes. Dapper也支援CoreClr了，可喜可賀</p>
 <h1 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h1>
 <p>同原本在.Net4.x的用法 with Dapper</p>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> (SqlConnection cn = <span class="keyword">new</span> SqlConnection(_config.Default))</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">var</span> data = <span class="keyword">await</span> cn.QueryAsync&lt;Supplier&gt;(<span class="string">&quot;select top 10 * from Suppliers&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> View(data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">using (SqlConnection cn = new SqlConnection(_config.Default))</span><br><span class="line">&#123;</span><br><span class="line">  var data = await cn.QueryAsync&lt;Supplier&gt;(&quot;select top 10 * from Suppliers&quot;);</span><br><span class="line">  return View(data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="所遇到的問題"><a class="header-anchor" href="#所遇到的問題"> </a>所遇到的問題</h1>
 <h2 id="無法連線到SqlServer"><a class="header-anchor" href="#無法連線到SqlServer"> </a>無法連線到SqlServer</h2>
 <p><img src="https://c2.staticflickr.com/8/7676/27223659083_0af2217275_o.png" alt=""></p>
@@ -400,20 +400,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2020/01/18/angular-scully-jam/"
 			},
 			"datePublished": "2020-01-18T02:20:11.000Z",
-			"dateModified": "2021-04-18T13:04:55.695Z",
+			"dateModified": "2021-05-08T08:23:13.198Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1892,12 +1892,12 @@ h6.categories {
 <p>當建立完上列的 component 重新執行 build 和 scully 後，在 dist/static 的資料夾下應可看到這些內容</p>
 <div class="amp-img-wrapper"><amp-img src="/2020/01/18/angular-scully-jam/image-20200118111514190.png" width="455" height="636" layout="responsive"></amp-img></div>
 <p>但當執行到 <code>user/1</code> 時，會發現該頁面不存在，這是因為我們還沒有告訴 scully 有哪些對應的資料需要被產生，這裡需要多做一個設定，還記得一開始安裝 scully 時，會多產生一個 <code>scully.config.js</code> 檔案，我們可以從這邊設定相關的資訊</p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.config = {</span><br><span class="line">  projectRoot: <span class="string">"./src/app"</span>,</span><br><span class="line">  outFolder: <span class="string">'./dist/static'</span>,</span><br><span class="line">  routes: {</span><br><span class="line">  }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.config = {</span><br><span class="line">  <span class="attr">projectRoot</span>: <span class="string">"./src/app"</span>,</span><br><span class="line">  <span class="attr">outFolder</span>: <span class="string">'./dist/static'</span>,</span><br><span class="line">  <span class="attr">routes</span>: {</span><br><span class="line">  }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>在 routes 的地方告訴 scully 路由規則及處理方式</li>
 </ul>
 <p>例如</p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">routes: {</span><br><span class="line">    <span class="string">'/user/:id'</span>: {</span><br><span class="line">      type: <span class="string">'json'</span>,</span><br><span class="line">      id: {</span><br><span class="line">        url: <span class="string">'https://jsonplaceholder.typicode.com/users'</span>,</span><br><span class="line">        property: <span class="string">'id'</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">routes: {</span><br><span class="line">    <span class="string">'/user/:id'</span>: {</span><br><span class="line">      <span class="attr">type</span>: <span class="string">'json'</span>,</span><br><span class="line">      <span class="attr">id</span>: {</span><br><span class="line">        <span class="attr">url</span>: <span class="string">'https://jsonplaceholder.typicode.com/users'</span>,</span><br><span class="line">        <span class="attr">property</span>: <span class="string">'id'</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>/user/:id</code> 需要處理的路由</li>
 <li><code>type: 'json'</code> 回傳的資料格式</li>

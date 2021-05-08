@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2018/10/24/angular-secondary-routes/"
 			},
 			"datePublished": "2018-10-24T01:49:08.000Z",
-			"dateModified": "2021-04-18T13:04:55.599Z",
+			"dateModified": "2021-05-08T08:23:13.106Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1859,7 +1859,7 @@ h6.categories {
 </ol>
 <h2 id="設定-Routes"><a class="header-anchor" href="#設定-Routes"> </a>設定 Routes</h2>
 <p>但要怎麼設定使用呢? 首先針對路由設定的部分</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  path: <span class="string">'compose'</span>,</span><br><span class="line">  component: ComposeMessageComponent,</span><br><span class="line">  outlet: <span class="string">'popup'</span></span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">path</span>: <span class="string">'compose'</span>,</span><br><span class="line">  <span class="attr">component</span>: ComposeMessageComponent,</span><br><span class="line">  <span class="attr">outlet</span>: <span class="string">'popup'</span></span><br><span class="line">},</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>outlet</code>:  設定所歸屬的 names outlet，可以多組</li>
 </ul>
@@ -1867,10 +1867,10 @@ h6.categories {
 <p>網頁上連結的寫法</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"[{ outlets: { popup: ['compose'] } }]"</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>網址列的樣子會是這樣子呈現的</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.../details(popup: compose)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.../details(popup: compose)</span><br></pre></td></tr></tbody></table></figure>
 <p>在更複雜一點，假設有多個 names routes 時，又需要怎麼寫，即網址會怎麼呈現呢?</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"[{ outlets: { popup: ['compose'], detail: ['detail'] } }]"</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.../details(popup:compose//detail:detail)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.../details(popup:compose//detail:detail)</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="清空-secondary-routes"><a class="header-anchor" href="#清空-secondary-routes"> </a>清空 secondary routes</h2>
 <p>要如何清除呢? 單純的將 outlets 裡的 names 指定的路徑清空即可</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"[{ outlets: { popup: null } }]"</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>

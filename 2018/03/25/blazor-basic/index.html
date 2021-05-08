@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://i.imgur.com/R1btWD1.png">
 <meta property="og:image" content="https://i.imgur.com/EQE9Kqb.png">
 <meta property="article:published_time" content="2018-03-25T01:21:13.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.599Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.102Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content=".NET Core">
 <meta name="twitter:card" content="summary">
@@ -296,7 +296,7 @@
 </ol>
 <h1 id="專案檔案說明"><a class="header-anchor" href="#專案檔案說明"> </a>專案檔案說明</h1>
 <h2 id="program-cs"><a class="header-anchor" href="#program-cs"> </a>program.cs</h2>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">var</span> serviceProvider = <span class="keyword">new</span> BrowserServiceProvider(configure =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// Add any custom services here</span></span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">new</span> BrowserRenderer(serviceProvider).AddComponent&lt;App&gt;(<span class="string">&quot;root-app&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> serviceProvider = <span class="keyword">new</span> BrowserServiceProvider(configure =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// Add any custom services here</span></span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">new</span> BrowserRenderer(serviceProvider).AddComponent&lt;App&gt;(<span class="string">&quot;root-app&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>
 <p><code> new BrowserRenderer(serviceProvider).AddComponent&lt;App&gt;(&quot;root-app&quot;);</code> 這裡是啟動點，用來設定要將 <code>BlazorComponent</code> 產生在 <code>index.html</code> 上的哪一個節點，預設的 element 是 <code>app</code>，這是可以依 <code>index.html</code> 的設定做改變</p>
@@ -312,7 +312,7 @@
 </li>
 </ul>
 <h2 id="Counter-cshtml"><a class="header-anchor" href="#Counter-cshtml"> </a>Counter.cshtml</h2>
- <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@page <span class="string">&quot;/counter&quot;</span></span><br><span class="line">&lt;h1&gt;Counter&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;Current count: @currentCount&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;button @onclick(IncrementCount)&gt;Click me&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">@functions &#123;</span><br><span class="line">    <span class="built_in">int</span> currentCount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">IncrementCount</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        currentCount++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@page <span class="string">&quot;/counter&quot;</span></span><br><span class="line">&lt;h1&gt;Counter&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;Current count: @currentCount&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;button @onclick(IncrementCount)&gt;Click me&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">@functions &#123;</span><br><span class="line">    <span class="built_in">int</span> currentCount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">IncrementCount</span>(<span class="params"></span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        currentCount++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>@page &quot;/counter&quot;</code> ，<code>@page</code> 是用來設定此頁面的路由位置</li>
 <li><code>@functions&#123; ... &#125;</code> 是頁面功能程式碼撰寫的位置</li>
@@ -467,20 +467,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

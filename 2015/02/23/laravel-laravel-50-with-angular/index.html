@@ -29,7 +29,7 @@
 <meta property="og:description" content="之前有寫過一篇有關[Laravel] Laravel with Angular, 但是這個方法在Laravel 5.0裡面是不合用的 所以laravel 5.0的作法如下 在 app&#x2F;Exceptions&#x2F;Handler.php 裡修改render function 123456public function render($request, Exception $e)	&amp;#123;		if ($">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2015-02-23T19:57:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="laravel 5">
 <meta name="twitter:card" content="summary">
@@ -269,7 +269,7 @@
         <p>之前有寫過一篇有關<a target="_blank" rel="noopener" href="http://cky.logdown.com/posts/248326/laravel-laravel-with-angular" title="[Laravel] Laravel with Angular">[Laravel] Laravel with Angular</a>, 但是這個方法在Laravel 5.0裡面是不合用的</p>
 <p>所以laravel 5.0的作法如下
 在 app/Exceptions/Handler.php 裡修改render function</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public function render($request, Exception $e)</span><br><span class="line">	&#123;</span><br><span class="line">		if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)</span><br><span class="line">			return response()-&gt;view(&#39;index&#39;)-&gt;header(&#39;Content-Type&#39;, &#39;text&#x2F;html&#39;);</span><br><span class="line">		return parent::render($request, $e);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public function render($request, Exception $e)</span><br><span class="line">	&#123;</span><br><span class="line">		if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)</span><br><span class="line">			return response()-&gt;view(&#x27;index&#x27;)-&gt;header(&#x27;Content-Type&#x27;, &#x27;text/html&#x27;);</span><br><span class="line">		return parent::render($request, $e);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <p>這個效果等於laravel 4.x的app::missing</p>
 
     </div>
@@ -385,20 +385,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

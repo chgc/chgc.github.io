@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/11/17/ng2-3rdLibrary/"
 			},
 			"datePublished": "2016-11-17T14:16:54.000Z",
-			"dateModified": "2021-04-18T13:04:55.591Z",
+			"dateModified": "2021-05-08T08:23:13.098Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1856,20 +1856,20 @@ h6.categories {
 </ul>
 <h1 id="套件"><a class="header-anchor" href="#套件"> </a>套件</h1>
 <h2 id="Lodash"><a class="header-anchor" href="#Lodash"> </a>Lodash</h2>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install lodash --save</span><br><span class="line">npm install @types/lodash --save-dev</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install lodash --save</span><br><span class="line">npm install @types/lodash --save-dev</span><br></pre></td></tr></tbody></table></figure>
 <p>在需要使用到lodash的component裡，還需要做import的動作</p>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="Font-Awesome"><a class="header-anchor" href="#Font-Awesome"> </a>Font Awesome</h2>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install font-awesome --save</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install font-awesome --save</span><br></pre></td></tr></tbody></table></figure>
 <p>在Angular-cli.json下，將font-awesome的css及 font file都加進來</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">"apps":[{</span><br><span class="line">  ...</span><br><span class="line">   "styles": [</span><br><span class="line">              <span class="string">"../node_modules/font-awesome/css/font-awesome.css"</span></span><br><span class="line">          ],</span><br><span class="line">  ...</span><br><span class="line">  }]</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"addons": [</span><br><span class="line">       <span class="string">"../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"</span></span><br><span class="line">   ]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"apps"</span>:[{</span><br><span class="line">  ...</span><br><span class="line">   <span class="attr">"styles"</span>: [</span><br><span class="line">              <span class="string">"../node_modules/font-awesome/css/font-awesome.css"</span></span><br><span class="line">          ],</span><br><span class="line">  ...</span><br><span class="line">  }]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"addons"</span>: [</span><br><span class="line">       <span class="string">"../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"</span></span><br><span class="line">   ]</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="hammer-js"><a class="header-anchor" href="#hammer-js"> </a>hammer.js</h2>
 <p>angular materia 2 如果要使用 md-slide-toggle and md-slider, 需要額外再多安裝hammer.js</p>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hammerjs --save</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">"apps":[{</span><br><span class="line">  ...</span><br><span class="line">   "scripts": [</span><br><span class="line">            <span class="string">"../node_modules/hammerjs/hammer.min.js"</span></span><br><span class="line">        ]</span><br><span class="line">  ...</span><br><span class="line">  }]</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hammerjs --save</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"apps"</span>:[{</span><br><span class="line">  ...</span><br><span class="line">   <span class="attr">"scripts"</span>: [</span><br><span class="line">            <span class="string">"../node_modules/hammerjs/hammer.min.js"</span></span><br><span class="line">        ]</span><br><span class="line">  ...</span><br><span class="line">  }]</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="AngularFire2"><a class="header-anchor" href="#AngularFire2"> </a>AngularFire2</h2>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install firebase angularfire2 --save</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install firebase angularfire2 --save</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

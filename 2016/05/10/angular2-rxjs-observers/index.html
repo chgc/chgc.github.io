@@ -29,7 +29,7 @@
 <meta property="og:description" content="Angular2裡面有用到RxJS的Extensions. 那這個Extendsion會帶給Angular2怎樣的幫助，來研究一下Http的程式碼吧">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2016-05-10T08:59:03.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.098Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -282,10 +282,10 @@
 <p>An Observable calls this method after it has called <code>onNext</code> for the final time, if it has not encountered any errors.</p>
 <h2 id="應用方式"><a class="header-anchor" href="#應用方式"> </a>應用方式</h2>
 <p>Http.call完之後，也可以加工response的結果。<a target="_blank" rel="noopener" href="http://reactivex.io/documentation/operators.html">方法</a>可以串聯起來, Demo Code如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.http.get(<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">    .map(<span class="function"><span class="params">res</span> =&gt;</span> res.text())</span><br><span class="line">    .subscribe(</span><br><span class="line">      data =&gt; <span class="built_in">this</span>.randomQuote = data,</span><br><span class="line">      err =&gt; <span class="built_in">this</span>.logError(err),</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">&#x27;Random Quote Complete&#x27;</span>)</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.http.get(<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">    .map(<span class="function"><span class="params">res</span> =&gt;</span> res.text())</span><br><span class="line">    .subscribe(</span><br><span class="line">      <span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">this</span>.randomQuote = data,</span><br><span class="line">      <span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">this</span>.logError(err),</span><br><span class="line">      <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Random Quote Complete&#x27;</span>)</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
 <h2 id="多個Http-Request時的處理方式"><a class="header-anchor" href="#多個Http-Request時的處理方式"> </a>多個Http Request時的處理方式</h2>
 <p>如果想要同時間執行多個Http Request，但是又要等所有的Request都完成後再將資料對應到變數上，那要怎麼寫，這時候就需要使用 <strong>Observable.forkJoin</strong>，程式碼如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Observable.forkJoin(</span><br><span class="line">        <span class="built_in">this</span>.http.get(<span class="string">&#x27;/app/books.json&#x27;</span>).map(<span class="function">(<span class="params">res:Response</span>) =&gt;</span> res.json()),</span><br><span class="line">        <span class="built_in">this</span>.http.get(<span class="string">&#x27;/app/movies.json&#x27;</span>).map(<span class="function">(<span class="params">res:Response</span>) =&gt;</span> res.json())</span><br><span class="line">    ).subscribe(</span><br><span class="line">      data =&gt; &#123;</span><br><span class="line">        <span class="built_in">this</span>.books = data[<span class="number">0</span>]</span><br><span class="line">        <span class="built_in">this</span>.movies = data[<span class="number">1</span>]</span><br><span class="line">      &#125;,</span><br><span class="line">      err =&gt; <span class="built_in">console</span>.error(err)</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Observable.forkJoin(</span><br><span class="line">        <span class="built_in">this</span>.http.get(<span class="string">&#x27;/app/books.json&#x27;</span>).map(<span class="function">(<span class="params">res:Response</span>) =&gt;</span> res.json()),</span><br><span class="line">        <span class="built_in">this</span>.http.get(<span class="string">&#x27;/app/movies.json&#x27;</span>).map(<span class="function">(<span class="params">res:Response</span>) =&gt;</span> res.json())</span><br><span class="line">    ).subscribe(</span><br><span class="line">      <span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.books = data[<span class="number">0</span>]</span><br><span class="line">        <span class="built_in">this</span>.movies = data[<span class="number">1</span>]</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.error(err)</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -401,20 +401,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

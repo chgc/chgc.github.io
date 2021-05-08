@@ -29,7 +29,7 @@
 <meta property="og:description" content="#Hierarchical Rendering Phalcon當在使用View的時候，執行的順序是  app&#x2F;views&#x2F;index.volt app&#x2F;views&#x2F;layouts&#x2F;指定.volt(有[指定時][1]，才會發生)  app&#x2F;views&#x2F;layouts&#x2F;{{controllerName}}.volt    app&#x2F;views&#x2F;{{controllerName}}&#x2F;xxx.volt">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2013-10-08T06:38:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.587Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Phalcon">
 <meta name="twitter:card" content="summary">
@@ -284,7 +284,7 @@ app/views/{{controllerName}}/xxx.volt
 
 <p>在Controller裡面所設定的變數，則上述三種xxx.volt都可以用</p>
 <p>[1]: 如果要指定template時, 可以用下列的方式設定, 這樣子就會去讀取app/views/layouts/common.volt的內容了,</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">  &#123;</span><br><span class="line">      $this-&gt;view-&gt;setTemplateAfter(&#39;common&#39;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">  &#123;</span><br><span class="line">      $this-&gt;view-&gt;setTemplateAfter(&#x27;common&#x27;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 這一個指定template的動作，執行順序會插在app/views/index.volt跟app/views/layouts/{{controllerName}}.volt中間
 
@@ -292,9 +292,9 @@ app/views/{{controllerName}}/xxx.volt
 <p>#Using Partials</p>
 <p>如果想要在view中間插入partials的方式很簡單</p>
 <p>如果是使用volt語法的:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; partial(view path) &#125;&#125;</span><br><span class="line">&#x2F;&#x2F;with parameters </span><br><span class="line">&#123;&#123; partial(view path, [&#39;links&#39;: $links]) &#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; partial(view path) &#125;&#125;</span><br><span class="line">//with parameters </span><br><span class="line">&#123;&#123; partial(view path, [&#x27;links&#x27;: $links]) &#125;&#125;</span><br></pre></td></tr></table></figure>
 <p>一般的語法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $this-&gt;partial(view path) ?&gt;</span><br><span class="line">&#x2F;&#x2F;with parameters </span><br><span class="line">&lt;?php $this-&gt;partial(view path, array(&#39;id&#39; &#x3D;&gt; $site-&gt;id, &#39;size&#39; &#x3D;&gt; &#39;big&#39;)) ?&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $this-&gt;partial(view path) ?&gt;</span><br><span class="line">//with parameters </span><br><span class="line">&lt;?php $this-&gt;partial(view path, array(&#x27;id&#x27; =&gt; $site-&gt;id, &#x27;size&#x27; =&gt; &#x27;big&#x27;)) ?&gt;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -406,20 +406,20 @@ app/views/{{controllerName}}/xxx.volt
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

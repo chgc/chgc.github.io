@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/08/02/angular-protractor/"
 			},
 			"datePublished": "2017-08-02T01:07:47.000Z",
-			"dateModified": "2021-04-18T13:04:55.595Z",
+			"dateModified": "2021-05-08T08:23:13.102Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1938,7 +1938,7 @@ h6.categories {
 <p>以上的設定方式，當執行 <code>ng e2e</code>時，就只會單純跑測試了。</p>
 <h3 id="使用-chrome-headless"><a class="header-anchor" href="#使用-chrome-headless"> </a>使用 chrome headless</h3>
 <p>修改 protractor.conf.js，新增 <code>chromeOptions</code> 區塊內容，這樣的設定在執行 e2e 時，就不會跳出瀏覽器了</p>
-<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> capabilities: {</span><br><span class="line">    <span class="string">'browserName'</span>: <span class="string">'chrome'</span>,</span><br><span class="line">    chromeOptions: {</span><br><span class="line">      args: [ <span class="string">"--headless"</span>, <span class="string">"--disable-gpu"</span>, <span class="string">"--window-size=1920, 1080"</span> ]</span><br><span class="line">    }</span><br><span class="line"> },</span><br><span class="line"> ...</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> <span class="attr">capabilities</span>: {</span><br><span class="line">    <span class="string">'browserName'</span>: <span class="string">'chrome'</span>,</span><br><span class="line">    <span class="attr">chromeOptions</span>: {</span><br><span class="line">      <span class="attr">args</span>: [ <span class="string">"--headless"</span>, <span class="string">"--disable-gpu"</span>, <span class="string">"--window-size=1920, 1080"</span> ]</span><br><span class="line">    }</span><br><span class="line"> },</span><br><span class="line"> ...</span><br></pre></td></tr></tbody></table></figure>
 <p>詳細說明請參閱<a href="http://oomusou.io/protractor/protractor-headless-chrome/">燈哥的文章</a></p>
 <h2 id="使用-PageObject"><a class="header-anchor" href="#使用-PageObject"> </a>使用 PageObject</h2>
 <p>一個頁面上的 Element 很多，大多數的時間，這些 Element 都因為不同的操作流程而被重複操作著，這時候利用 PageObject 的方式將 Element 封裝。</p>

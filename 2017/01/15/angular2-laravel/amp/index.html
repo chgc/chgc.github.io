@@ -61,7 +61,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/01/15/angular2-laravel/"
 			},
 			"datePublished": "2017-01-15T08:04:06.000Z",
-			"dateModified": "2021-04-18T13:04:55.591Z",
+			"dateModified": "2021-05-08T08:23:13.098Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1865,9 +1865,9 @@ h6.categories {
 <h1 id="建立Angular專案"><a class="header-anchor" href="#建立Angular專案"> </a>建立Angular專案</h1>
 <h2 id="使用CLI來建立專案"><a class="header-anchor" href="#使用CLI來建立專案"> </a>使用CLI來建立專案</h2>
 <p>在laravel的根目錄下，執行以下指令</p>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
 <p>或是，自己新增一個存放的資料夾後並切換到該資料夾下，執行以下指令</p>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng init &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng init &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></tbody></table></figure>
 <p>執行完後，一個Angular的專案就建置完成了</p>
 <h2 id="設定proxy-conf-json"><a class="header-anchor" href="#設定proxy-conf-json"> </a>設定proxy.conf.json</h2>
 <ul>
@@ -1877,7 +1877,7 @@ h6.categories {
 </li>
 <li>
 <p>修改<code>pageage.json</code>的<code>scripts</code>部分</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": {</span><br><span class="line">    "start": "ng serve --proxy-config proxy.conf.json",</span><br><span class="line">    ...</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: {</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"ng serve --proxy-config proxy.conf.json"</span>,</span><br><span class="line">    ...</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
 <p>​</p>
 </li>
 </ul>
@@ -1904,7 +1904,7 @@ h6.categories {
 <ul>
 <li>
 <p>如果要部署的時候，Angular可以透過以下的指令將Angular的程式bundle/AOT輸出到所設定的輸出目錄下</p>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng build --prod --aot --output-hashing=media</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng build --prod --aot --output-hashing=media</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>—output-hasing的參數是在angular-cli beta25.5版以後提供的，可以設定所輸出的bundle是否要加上hash值</li>
 </ul>

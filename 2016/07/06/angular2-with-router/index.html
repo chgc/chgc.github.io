@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://farm8.staticflickr.com/7291/28040799221_43163b7050_o.png">
 <meta property="og:image" content="https://img.youtube.com/vi/6OWRPws68Uw/0.jpg">
 <meta property="article:published_time" content="2016-07-06T02:33:22.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.098Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -275,7 +275,7 @@
 <ol>
 <li>
 <p>新增一個app.routers.ts檔案</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; provideRouter, RouterConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ProfileComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;./profile&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: RouterConfig = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;profile&#x27;</span>, <span class="attr">component</span>: ProfileComponent &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    redirectTo: <span class="string">&#x27;/profile&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> APP_ROUTER_PROVIDERS = [</span><br><span class="line">  provideRouter(routes)</span><br><span class="line">];	</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; provideRouter, RouterConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ProfileComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;./profile&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: RouterConfig = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;profile&#x27;</span>, <span class="attr">component</span>: ProfileComponent &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">redirectTo</span>: <span class="string">&#x27;/profile&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> APP_ROUTER_PROVIDERS = [</span><br><span class="line">  provideRouter(routes)</span><br><span class="line">];	</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>手動更新 index.ts 檔案，將app.routers加入</p>
@@ -307,7 +307,7 @@
 <p>PLATFORM_DIRECTIVES: A token that can be provided when bootstrapping an application to make an array of directives available in every component of the application.</p>
 </blockquote>
 <p>利用上述的兩個東西，就可以在main.ts下，將<code>ROUTER_DIRECTIVES</code>給註冊到全域下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &#123; provide, PLATFORM_DIRECTIVES, enableProdMode &#125; from &#39;@angular&#x2F;core&#39;;</span><br><span class="line">...</span><br><span class="line">bootstrap(AppComponent,</span><br><span class="line">  [ provide(PLATFORM_DIRECTIVES,</span><br><span class="line">      &#123;</span><br><span class="line">        useValue: [ROUTER_DIRECTIVES],</span><br><span class="line">        multi: true</span><br><span class="line">      &#125;)</span><br><span class="line">  ]);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &#123; provide, PLATFORM_DIRECTIVES, enableProdMode &#125; from &#x27;@angular/core&#x27;;</span><br><span class="line">...</span><br><span class="line">bootstrap(AppComponent,</span><br><span class="line">  [ provide(PLATFORM_DIRECTIVES,</span><br><span class="line">      &#123;</span><br><span class="line">        useValue: [ROUTER_DIRECTIVES],</span><br><span class="line">        multi: true</span><br><span class="line">      &#125;)</span><br><span class="line">  ]);</span><br></pre></td></tr></table></figure>
 <p>完成後，以後再components裡面就不用在<code>import &#123; ROUTER_DIRECTIVES &#125; from '@angular/router'</code>了</p>
 <h1 id="相關連結"><a class="header-anchor" href="#相關連結"> </a>相關連結</h1>
 <ul>
@@ -433,20 +433,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

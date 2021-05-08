@@ -200,6 +200,132 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/24/angularjs-validation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/11/24/angularjs-validation/" class="post-title-link" itemprop="url">[AngularJS] Validation</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-11-25 06:10:00" itemprop="dateCreated datePublished" datetime="2013-11-25T06:10:00+08:00">2013-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AngularJS/" itemprop="url" rel="index"><span itemprop="name">AngularJS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/11/24/angularjs-validation/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/24/angularjs-validation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>#Form Validation with angularJs
+Basic:
+in .js
+$scope.form = {}
+$scope.form.$valid ==&gt; 判斷form(name=「form」)內的物件是否有驗證有錯誤的物件存在</p>
+<p>用法:
+formName.inputFieldName.property</p>
+<p><strong>Unmodified form</strong>
+A boolean property that tells us if the user has modified the form. This is true if the user hasn’t touched the form, and false if they have:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$pristine;</span><br></pre></td></tr></table></figure>
+<p><strong>Modified form</strong>
+A boolean property if and only if the user has actually modified the form. This is set regardless of validations on the form:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$dirty</span><br></pre></td></tr></table></figure>
+<p><strong>Valid form</strong>
+A boolean property that tells us that the form is valid or not. If the form is currently valid, then this will be true:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$valid</span><br></pre></td></tr></table></figure>
+<p><strong>Invalid form</strong>
+A boolean property that tells us that the form is invalid. If the form is currently invalid, then this will be true:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$invalid</span><br></pre></td></tr></table></figure>
+<p>The last two properties are particularly useful for showing or hiding DOM elements. They are also very useful when setting a class on a particular form.</p>
+<p><strong>Errors</strong>
+Another useful property that AngularJS makes available to us is the $error object. This object contains all of the validations on a particular form and if they are valid or invalid. To get access to this property, use the following syntax:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputfieldName.$error</span><br></pre></td></tr></table></figure>
+<p>###Addtional CSS classes
+ng-valid Is set if the form is valid.
+ng-invalid Is set if the form is invalid.
+ng-pristine Is set if the form is pristine.
+ng-dirty Is set if the form is dirty.</p>
+<p>##Input Validation</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input</span><br><span class="line">       ng-model=&quot;&#123;string&#125;&quot;</span><br><span class="line">       [name=&quot;&#123;string&#125;&quot;]</span><br><span class="line">       [required]</span><br><span class="line">       [ng-required=&quot;&#123;boolean&#125;&quot;]</span><br><span class="line">       [ng-minlength=&quot;&#123;number&#125;&quot;]</span><br><span class="line">       [ng-maxlength=&quot;&#123;number&#125;&quot;]</span><br><span class="line">       [ng-pattern=&quot;&#123;string&#125;&quot;]</span><br><span class="line">       [ng-change=&quot;&#123;string&#125;&quot;]&gt;</span><br><span class="line">&lt;/input&gt;</span><br></pre></td></tr></table></figure>
+<p>####可驗證項目(內建)
+requried
+ng-minlength
+ng-maxlength</p>
+<p>####$error所對應的項目
+formName.inputfieldName.$error.requried
+formName.inputfieldName.$error.minlength
+formName.inputfieldName.$error.maxlength</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/14/electronic-invoices-via-the-internet-opening-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -397,7 +523,7 @@
 <p>set會將重複得值給排除掉(有distinct的味道)
 建立set的方式有set() 或 a= {『something』,『something』}
 如果要建立空的set，只能透過set()的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; set(&#39;abracadabra&#39;)</span><br><span class="line">&gt;&gt;&gt; b &#x3D; set(&#39;alacazam&#39;)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&#123;&#39;d&#39;, &#39;r&#39;, &#39;a&#39;, &#39;c&#39;, &#39;b&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">&#123;&#39;m&#39;, &#39;l&#39;, &#39;a&#39;, &#39;c&#39;, &#39;z&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; a^b  # value in a or b not in both, 不含兩邊都有值</span><br><span class="line">&#123;&#39;r&#39;, &#39;z&#39;, &#39;d&#39;, &#39;b&#39;, &#39;m&#39;, &#39;l&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; a-b # value in a not b</span><br><span class="line">&#123;&#39;d&#39;, &#39;b&#39;, &#39;r&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; a|b # value in a or b</span><br><span class="line">&#123;&#39;r&#39;, &#39;z&#39;, &#39;d&#39;, &#39;a&#39;, &#39;c&#39;, &#39;b&#39;, &#39;m&#39;, &#39;l&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; a&amp;b # value in a and b</span><br><span class="line">&#123;&#39;a&#39;, &#39;c&#39;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = set(&#x27;abracadabra&#x27;)</span><br><span class="line">&gt;&gt;&gt; b = set(&#x27;alacazam&#x27;)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&#123;&#x27;d&#x27;, &#x27;r&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;b&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">&#123;&#x27;m&#x27;, &#x27;l&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;z&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a^b  # value in a or b not in both, 不含兩邊都有值</span><br><span class="line">&#123;&#x27;r&#x27;, &#x27;z&#x27;, &#x27;d&#x27;, &#x27;b&#x27;, &#x27;m&#x27;, &#x27;l&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a-b # value in a not b</span><br><span class="line">&#123;&#x27;d&#x27;, &#x27;b&#x27;, &#x27;r&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a|b # value in a or b</span><br><span class="line">&#123;&#x27;r&#x27;, &#x27;z&#x27;, &#x27;d&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;b&#x27;, &#x27;m&#x27;, &#x27;l&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a&amp;b # value in a and b</span><br><span class="line">&#123;&#x27;a&#x27;, &#x27;c&#x27;&#125;</span><br></pre></td></tr></table></figure>
 <p>#Dictionaries
 as c# Dictionary&lt;string, string&gt;
 操作方式</p>
@@ -408,9 +534,9 @@ as c# Dictionary&lt;string, string&gt;
 <li>排序: sorted(dict.key())</li>
 </ul>
 <p>建立的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dict([(&#39;sape&#39;, 4139), (&#39;guido&#39;, 4127), (&#39;jack&#39;, 4098)])</span><br><span class="line">&#123;&#39;sape&#39;: 4139, &#39;jack&#39;: 4098, &#39;guido&#39;: 4127&#125;</span><br><span class="line">&gt;&gt;&gt; dict(sape&#x3D;4139, guido&#x3D;4127, jack&#x3D;4098)</span><br><span class="line">&#123;&#39;sape&#39;: 4139, &#39;jack&#39;: 4098, &#39;guido&#39;: 4127&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dict([(&#x27;sape&#x27;, 4139), (&#x27;guido&#x27;, 4127), (&#x27;jack&#x27;, 4098)])</span><br><span class="line">&#123;&#x27;sape&#x27;: 4139, &#x27;jack&#x27;: 4098, &#x27;guido&#x27;: 4127&#125;</span><br><span class="line">&gt;&gt;&gt; dict(sape=4139, guido=4127, jack=4098)</span><br><span class="line">&#123;&#x27;sape&#x27;: 4139, &#x27;jack&#x27;: 4098, &#x27;guido&#x27;: 4127&#125;</span><br></pre></td></tr></table></figure>
 <p>##looping</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; knights &#x3D; &#123;&#39;gallahad&#39;: &#39;the pure&#39;, &#39;robin&#39;: &#39;the brave&#39;&#125;</span><br><span class="line">&gt;&gt;&gt; for k, v in knights.items():</span><br><span class="line">...     print(k, v)</span><br><span class="line">...</span><br><span class="line">gallahad the pure</span><br><span class="line">robin the brave</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; knights = &#123;&#x27;gallahad&#x27;: &#x27;the pure&#x27;, &#x27;robin&#x27;: &#x27;the brave&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; for k, v in knights.items():</span><br><span class="line">...     print(k, v)</span><br><span class="line">...</span><br><span class="line">gallahad the pure</span><br><span class="line">robin the brave</span><br></pre></td></tr></table></figure>
 <p>#More on Conditions
 比較的方法:</p>
 <ul>
@@ -530,15 +656,15 @@ L=list</p>
 先進先出 : deque
 deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), extendleft()的方法
 用法如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;from collections import deque</span><br><span class="line">&gt;&gt;&gt; queue &#x3D; deque([&quot;Eric&quot;, &quot;John&quot;, &quot;Michael&quot;])</span><br><span class="line">&gt;&gt;&gt; queue</span><br><span class="line">deque([&#39;Eric&#39;, &#39;John&#39;, &#39;Michael&#39;])</span><br><span class="line">&gt;&gt;&gt; queue.append(&quot;Kevin&quot;)</span><br><span class="line">deque([&#39;Eric&#39;, &#39;John&#39;, &#39;Michael&#39;, &#39;Kevin&#39;])</span><br><span class="line">&gt;&gt;&gt; queue.appendleft(&quot;Steve&quot;)</span><br><span class="line">deque([&#39;Steve&#39;, &#39;Eric&#39;, &#39;John&#39;, &#39;Michael&#39;, &#39;Kevin&#39;])</span><br><span class="line">&gt;&gt;&gt; queue.popleft()</span><br><span class="line">&#39;Steve&#39;</span><br><span class="line">&gt;&gt;&gt; queue</span><br><span class="line">deque([&#39;Eric&#39;, &#39;John&#39;, &#39;Michael&#39;, &#39;Kevin&#39;])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;from collections import deque</span><br><span class="line">&gt;&gt;&gt; queue = deque([&quot;Eric&quot;, &quot;John&quot;, &quot;Michael&quot;])</span><br><span class="line">&gt;&gt;&gt; queue</span><br><span class="line">deque([&#x27;Eric&#x27;, &#x27;John&#x27;, &#x27;Michael&#x27;])</span><br><span class="line">&gt;&gt;&gt; queue.append(&quot;Kevin&quot;)</span><br><span class="line">deque([&#x27;Eric&#x27;, &#x27;John&#x27;, &#x27;Michael&#x27;, &#x27;Kevin&#x27;])</span><br><span class="line">&gt;&gt;&gt; queue.appendleft(&quot;Steve&quot;)</span><br><span class="line">deque([&#x27;Steve&#x27;, &#x27;Eric&#x27;, &#x27;John&#x27;, &#x27;Michael&#x27;, &#x27;Kevin&#x27;])</span><br><span class="line">&gt;&gt;&gt; queue.popleft()</span><br><span class="line">&#x27;Steve&#x27;</span><br><span class="line">&gt;&gt;&gt; queue</span><br><span class="line">deque([&#x27;Eric&#x27;, &#x27;John&#x27;, &#x27;Michael&#x27;, &#x27;Kevin&#x27;])</span><br></pre></td></tr></table></figure>
 <p>#List Comprehensions
 ##(計算x) for x in list if condition</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; [x**2 for x in range(10)]</span><br><span class="line">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [x**2 for x in range(10) if x%2&#x3D;&#x3D;0]</span><br><span class="line">[0, 4, 16, 36, 64]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [(x, y) for x in [1,2,3] for y in [3,1,4] if x !&#x3D; y]</span><br><span class="line">[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; matrix &#x3D; [</span><br><span class="line">...     [1, 2, 3, 4],</span><br><span class="line">...     [5, 6, 7, 8],</span><br><span class="line">...     [9, 10, 11, 12],</span><br><span class="line">... ]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [[row[i] for row in matrix] for i in range(4)]</span><br><span class="line">[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; list(zip(*matrix))</span><br><span class="line">[(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; [x**2 for x in range(10)]</span><br><span class="line">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [x**2 for x in range(10) if x%2==0]</span><br><span class="line">[0, 4, 16, 36, 64]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]</span><br><span class="line">[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; matrix = [</span><br><span class="line">...     [1, 2, 3, 4],</span><br><span class="line">...     [5, 6, 7, 8],</span><br><span class="line">...     [9, 10, 11, 12],</span><br><span class="line">... ]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [[row[i] for row in matrix] for i in range(4)]</span><br><span class="line">[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; list(zip(*matrix))</span><br><span class="line">[(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]</span><br></pre></td></tr></table></figure>
 <p>#del
 移除list中的值by Index</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; [-1, 1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[0]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[2:4]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1, 66.25, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[:]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [-1, 1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[0]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[2:4]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1, 66.25, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[:]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
 <p>del can also be used to delete entire variables: 變數消滅</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; [-1, 1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">NameError: name &#39;a&#39; is not defined</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [-1, 1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">NameError: name &#x27;a&#x27; is not defined</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -627,18 +753,18 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
 
       
           <p>#demo program</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a,b&#x3D;0,1     # 指定值至變數中</span><br><span class="line">while b&lt;10:                 # 迴圈</span><br><span class="line">...     print(b, end&#x3D;&#39;,&#39;)   # 顯示文字，結尾加上,</span><br><span class="line">...     a,b&#x3D;b,a+b           # 指定值至變數中</span><br><span class="line"></span><br><span class="line">1,1,2,3,5,8,                # 輸出結果</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a,b=0,1     # 指定值至變數中</span><br><span class="line">while b&lt;10:                 # 迴圈</span><br><span class="line">...     print(b, end=&#x27;,&#x27;)   # 顯示文字，結尾加上,</span><br><span class="line">...     a,b=b,a+b           # 指定值至變數中</span><br><span class="line"></span><br><span class="line">1,1,2,3,5,8,                # 輸出結果</span><br></pre></td></tr></table></figure>
 <p>#Control Flow Tools</p>
 <h2 id="if"><a class="header-anchor" href="#if"> </a>if</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if x&lt;0:</span><br><span class="line">    something something</span><br><span class="line">elif condition:</span><br><span class="line">    something something</span><br><span class="line">else:</span><br><span class="line">    something something</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if x&lt;0:</span><br><span class="line">    something something</span><br><span class="line">elif condition:</span><br><span class="line">    something something</span><br><span class="line">else:</span><br><span class="line">    something something</span><br></pre></td></tr></table></figure>
 <h2 id="for"><a class="header-anchor" href="#for"> </a>for</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">words&#x3D;[&#39;cat&#39;,&#39;window&#39;,&#39;defenestrate&#39;]</span><br><span class="line">for w in words:</span><br><span class="line">    print(w,len(w))</span><br><span class="line"></span><br><span class="line">cat 3</span><br><span class="line">window 6</span><br><span class="line">defenestrate 12</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; for w in words[:]:  # Loop over a slice copy of the entire list.</span><br><span class="line">...     if len(w) &gt; 6:</span><br><span class="line">...         words.insert(0, w) # 將值插入至list中</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; words</span><br><span class="line">[&#39;defenestrate&#39;, &#39;cat&#39;, &#39;window&#39;, &#39;defenestrate&#39;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">words=[&#x27;cat&#x27;,&#x27;window&#x27;,&#x27;defenestrate&#x27;]</span><br><span class="line">for w in words:</span><br><span class="line">    print(w,len(w))</span><br><span class="line"></span><br><span class="line">cat 3</span><br><span class="line">window 6</span><br><span class="line">defenestrate 12</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; for w in words[:]:  # Loop over a slice copy of the entire list.</span><br><span class="line">...     if len(w) &gt; 6:</span><br><span class="line">...         words.insert(0, w) # 將值插入至list中</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; words</span><br><span class="line">[&#x27;defenestrate&#x27;, &#x27;cat&#x27;, &#x27;window&#x27;, &#x27;defenestrate&#x27;]</span><br></pre></td></tr></table></figure>
 <h2 id="range"><a class="header-anchor" href="#range"> </a>range()</h2>
 <p>range()主要的目的是要創造一個連續值的list, 例如 range(10)=[0,1,2,3,4,5,6,8,9]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; for i in range(5): # range(5) &#x3D; range(0,5)</span><br><span class="line">...     print(i)</span><br><span class="line">... </span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; for i in range(5,9):</span><br><span class="line">...     print(i)</span><br><span class="line">... </span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; for i in range(0,10,2): # &#x3D; for(i&#x3D;0;i&lt;10;i&#x3D;i+2) step 2</span><br><span class="line">...     print(i)</span><br><span class="line">...     </span><br><span class="line">0</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line"></span><br><span class="line"># 使用在文字陣列上</span><br><span class="line">&gt;&gt;&gt; a &#x3D; [&#39;Mary&#39;, &#39;had&#39;, &#39;a&#39;, &#39;little&#39;, &#39;lamb&#39;]</span><br><span class="line">&gt;&gt;&gt; for i in range(len(a)):</span><br><span class="line">...     print(i,a[i])</span><br><span class="line">... </span><br><span class="line">0 Mary</span><br><span class="line">1 had</span><br><span class="line">2 a</span><br><span class="line">3 little</span><br><span class="line">4 lamb</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; for i in range(5): # range(5) = range(0,5)</span><br><span class="line">...     print(i)</span><br><span class="line">... </span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; for i in range(5,9):</span><br><span class="line">...     print(i)</span><br><span class="line">... </span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; for i in range(0,10,2): # = for(i=0;i&lt;10;i=i+2) step 2</span><br><span class="line">...     print(i)</span><br><span class="line">...     </span><br><span class="line">0</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line"></span><br><span class="line"># 使用在文字陣列上</span><br><span class="line">&gt;&gt;&gt; a = [&#x27;Mary&#x27;, &#x27;had&#x27;, &#x27;a&#x27;, &#x27;little&#x27;, &#x27;lamb&#x27;]</span><br><span class="line">&gt;&gt;&gt; for i in range(len(a)):</span><br><span class="line">...     print(i,a[i])</span><br><span class="line">... </span><br><span class="line">0 Mary</span><br><span class="line">1 had</span><br><span class="line">2 a</span><br><span class="line">3 little</span><br><span class="line">4 lamb</span><br></pre></td></tr></table></figure>
 <h2 id="break-continue-else-in-Loops"><a class="header-anchor" href="#break-continue-else-in-Loops"> </a>break, continue, else in Loops</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for n in range(2,10):</span><br><span class="line">    for x in range(2,n):</span><br><span class="line">        if n%x &#x3D;&#x3D;0:</span><br><span class="line">            print(n, &#39;equals&#39;, x, &#39;*&#39;, n&#x2F;&#x2F;x)</span><br><span class="line">            break</span><br><span class="line">    else:</span><br><span class="line">        print(n, &#39;is a prime number&#39;)        </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for n in range(2,10):</span><br><span class="line">    for x in range(2,n):</span><br><span class="line">        if n%x ==0:</span><br><span class="line">            print(n, &#x27;equals&#x27;, x, &#x27;*&#x27;, n//x)</span><br><span class="line">            break</span><br><span class="line">    else:</span><br><span class="line">        print(n, &#x27;is a prime number&#x27;)        </span><br></pre></td></tr></table></figure>
 <p>else: 是對應到 for x in range(2,n):
 意義: a try statement’s else clause runs when no exception occurs</p>
 <p>#python coding style</p>
@@ -775,7 +901,7 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
 <li>v3.3 : print(『xxxx』)</li>
 </ol>
 <p>文字重複顯示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#39;something&#39;*3</span><br><span class="line">&#39;somethingsomethingsomething&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#x27;something&#x27;*3</span><br><span class="line">&#x27;somethingsomethingsomething&#x27;</span><br></pre></td></tr></table></figure>
 <p>#Number
 計算方式: 先乘除後加減，有內算到外，有左到右</p>
 <p>number分interger and float, 區分方法是有沒有使用小數點</p>
@@ -787,16 +913,16 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
 </ol>
 <p>% : 傳回餘數
 ** : 次方</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 7&#x2F;4</span><br><span class="line">1.75</span><br><span class="line">&gt;&gt;&gt; 7&#x2F;&#x2F;4</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; 7%4</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 2**10</span><br><span class="line">1024</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 7/4</span><br><span class="line">1.75</span><br><span class="line">&gt;&gt;&gt; 7//4</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; 7%4</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 2**10</span><br><span class="line">1024</span><br></pre></td></tr></table></figure>
 <p>a = b: 將b值指定給a</p>
 <p>在interactive mode，可以利用 _ 取得上次的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 1+2</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 1+_</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 1+2</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 1+_</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
 <h1 id="Lists"><a class="header-anchor" href="#Lists"> </a>Lists</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; squares &#x3D; [1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares</span><br><span class="line">[1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares[1]</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; squares[-1]</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; squares = [1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares</span><br><span class="line">[1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares[1]</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; squares[-1]</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
 <p>基本操作可以參考string的部分，一樣可以使用 + 做lists的連結</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.append(value) # add value to the list</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.append(value) # add value to the list</span><br></pre></td></tr></table></figure>
 <p>二維陣列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span><br><span class="line">&gt;&gt;&gt; n &#x3D; [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; x &#x3D; [a, n]</span><br><span class="line">&gt;&gt;&gt; x</span><br><span class="line">[[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], [1, 2, 3]]</span><br><span class="line">&gt;&gt;&gt; x[0]</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span><br><span class="line">&gt;&gt;&gt; x[0][1]</span><br><span class="line">&#39;b&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]</span><br><span class="line">&gt;&gt;&gt; n = [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; x = [a, n]</span><br><span class="line">&gt;&gt;&gt; x</span><br><span class="line">[[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;], [1, 2, 3]]</span><br><span class="line">&gt;&gt;&gt; x[0]</span><br><span class="line">[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]</span><br><span class="line">&gt;&gt;&gt; x[0][1]</span><br><span class="line">&#x27;b&#x27;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1068,9 +1194,9 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
 
       
           <p>#BEFORE</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">window.BlobBuilder &#x3D; window.BlobBuilder || window.WebKitBlobBuilder ||</span><br><span class="line">                     window.MozBlobBuilder || window.MSBlobBuilder;</span><br><span class="line">window.URL &#x3D; window.URL || window.webkitURL;</span><br><span class="line"></span><br><span class="line">var bb &#x3D; new BlobBuilder();</span><br><span class="line">bb.append(&#39;body &#123; color: red; &#125;&#39;);</span><br><span class="line">var blob &#x3D; bb.getBlob(&#39;text&#x2F;css&#39;);</span><br><span class="line"></span><br><span class="line">var link &#x3D; document.createElement(&#39;link&#39;);</span><br><span class="line">link.rel &#x3D; &#39;stylesheet&#39;;</span><br><span class="line">link.href &#x3D; window.URL.createObjectURL(blob);</span><br><span class="line"></span><br><span class="line">document.body.appendChild(link);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||</span><br><span class="line">                     window.MozBlobBuilder || window.MSBlobBuilder;</span><br><span class="line">window.URL = window.URL || window.webkitURL;</span><br><span class="line"></span><br><span class="line">var bb = new BlobBuilder();</span><br><span class="line">bb.append(&#x27;body &#123; color: red; &#125;&#x27;);</span><br><span class="line">var blob = bb.getBlob(&#x27;text/css&#x27;);</span><br><span class="line"></span><br><span class="line">var link = document.createElement(&#x27;link&#x27;);</span><br><span class="line">link.rel = &#x27;stylesheet&#x27;;</span><br><span class="line">link.href = window.URL.createObjectURL(blob);</span><br><span class="line"></span><br><span class="line">document.body.appendChild(link);</span><br></pre></td></tr></table></figure>
 <p>#NOW</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">window.URL &#x3D; window.URL || window.webkitURL;</span><br><span class="line"></span><br><span class="line">var blob &#x3D; new Blob([&#39;body &#123; color: red; &#125;&#39;], &#123;type: &#39;text&#x2F;css&#39;&#125;);</span><br><span class="line"></span><br><span class="line">var link &#x3D; document.createElement(&#39;link&#39;);</span><br><span class="line">link.rel &#x3D; &#39;stylesheet&#39;;</span><br><span class="line">link.href &#x3D; window.URL.createObjectURL(blob);</span><br><span class="line">document.body.appendChild(link);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">window.URL = window.URL || window.webkitURL;</span><br><span class="line"></span><br><span class="line">var blob = new Blob([&#x27;body &#123; color: red; &#125;&#x27;], &#123;type: &#x27;text/css&#x27;&#125;);</span><br><span class="line"></span><br><span class="line">var link = document.createElement(&#x27;link&#x27;);</span><br><span class="line">link.rel = &#x27;stylesheet&#x27;;</span><br><span class="line">link.href = window.URL.createObjectURL(blob);</span><br><span class="line">document.body.appendChild(link);</span><br></pre></td></tr></table></figure>
 <p>#SO</p>
 <p>Just New Blob()…no more BlobBuilder()</p>
 
@@ -1177,129 +1303,8 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
 </li>
 </ol>
 <p>if use first method; then in view, it needs to create a section something. ex</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@section(&#39;content&#39;)</span><br><span class="line">xxxx</span><br><span class="line">@endsction</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@section(&#x27;content&#x27;)</span><br><span class="line">xxxx</span><br><span class="line">@endsction</span><br></pre></td></tr></table></figure>
 <p>for method 2. no need to create a section to contain page content.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/20/vfp-prog-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/10/20/vfp-prog-cache/" class="post-title-link" itemprop="url">[VFP]Prog Cache </a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-10-21 03:47:00" itemprop="dateCreated datePublished" datetime="2013-10-21T03:47:00+08:00">2013-10-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VFP/" itemprop="url" rel="index"><span itemprop="name">VFP</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/10/20/vfp-prog-cache/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/20/vfp-prog-cache/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>From the VFP9 helpfile:</p>
-</blockquote>
-<blockquote>
-<p>Specifies the amount of memory (address space) in pages that Visual FoxPro allocates at startup or a Visual FoxPro MTDLL COM Server allocates per thread for the internal program cache (memory used to run programs). Each page of memory is equal to 64K so the default setting equates to an allocation a little over 9MB. As the cache is filled, Visual FoxPro will try to flush it to remove unused items. It is possible that Visual FoxPro cannot free enough memory in which case an Error 1202 is generated (Program is too large). Adjusting the PROGCACHE setting can prevent this error from occurring.</p>
-</blockquote>
-<blockquote>
-<p>Note:
-While this setting can be used for the Visual FoxPro development product or normal runtime applications, it is primarily intended for MTDLL COM Servers where many threads are often created for a single server. In Visual FoxPro 9.0, the default value for MTDLL COM Servers is -2.</p>
-</blockquote>
-<blockquote>
-<p>When the value of nMemoryPages is greater than 0, Visual FoxPro allocates a fixed program cache. You can specify between 1 and 65000.</p>
-</blockquote>
-<blockquote>
-<p>If you specify 0 for nMemoryPages, no program cache is used. Instead, Visual FoxPro uses dynamic memory allocation based on determinations made by the operating system.</p>
-</blockquote>
-<blockquote>
-<p>If you pass a value for nMemoryPages that is less than 0, Visual FoxPro uses dynamic memory allocation but is limited to the specified memory (nMemoryPages * 64K). When the limit is reach, Visual FoxPro will flush allocated programs to free memory.</p>
-</blockquote>
-<blockquote>
-<p>You can call SYS(3065) to determine the current PROGCACHE setting. CLEAR PROGRAM will attempt to clear unreferenced code regardless of this setting.</p>
-</blockquote>
-<blockquote>
-<p>Note:
-The Visual FoxPro OLE DB Provider ignores this setting since it uses dynamic memory allocation (PROGCACHE=0).</p>
-</blockquote>
-<blockquote>
-<p>Default: 144 (-2 for MTDLL)</p>
-</blockquote>
-<blockquote>
-<p>「The setting is the number of pages of memory you want allocated. Each page is equivalent to 64K of memory. You can set the PROGCACHE from 1 to 65,000 (positive or negative) to designate how much memory is allocated. If you specify zero, no program cache is used and VFP uses dynamic memory allocation determined by the operating system. If you set the PROGCACHE to a negative number, VFP uses dynamic memory allocation, but is limited to the number of memory pages you specified. The default setting is 144 (over 9 megabytes) for single-threaded EXEs and the VFP IDE, and -2 (128 kilobytes) for a multi-threaded DLL. The VFP OLE DB Provider does not use this setting because it uses dynamic memory allocation.」</p>
-</blockquote>
-<p>Ref: <a target="_blank" rel="noopener" href="http://fox.wikis.com/wc.dll?Wiki~ProgCache">http://fox.wikis.com/wc.dll?Wiki~ProgCache</a></p>
 
       
     </div>
@@ -1394,20 +1399,20 @@ The Visual FoxPro OLE DB Provider ignores this setting since it uses dynamic mem
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

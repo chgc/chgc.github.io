@@ -21,15 +21,15 @@
     var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="目的： 取得最後一筆的聊天紀錄 12345678910111213141516var result &#x3D; (from o in db.messages							let msgFrom &#x3D; o.fromUid &#x3D;&#x3D; uid							let msgTo &#x3D; o.toUid &#x3D;&#x3D; uid							where msgFrom">
+  <meta name="description" content="目的： 取得最後一筆的聊天紀錄 12345678910111213141516var result &#x3D; (from o in db.messages							let msgFrom &#x3D; o.fromUid &#x3D;&#x3D; uid							let msgTo &#x3D; o.toUid &#x3D;&#x3D; uid							where msgFrom || msgTo							group o by msgTo ? o">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[工作筆記] Linq筆記 - 取得最後一筆的聊天紀錄">
 <meta property="og:url" content="http://blog.kevinyang.net/2014/01/21/note-linq-notes/index.html">
 <meta property="og:site_name" content="CK&#39;s Notepad">
-<meta property="og:description" content="目的： 取得最後一筆的聊天紀錄 12345678910111213141516var result &#x3D; (from o in db.messages							let msgFrom &#x3D; o.fromUid &#x3D;&#x3D; uid							let msgTo &#x3D; o.toUid &#x3D;&#x3D; uid							where msgFrom">
+<meta property="og:description" content="目的： 取得最後一筆的聊天紀錄 12345678910111213141516var result &#x3D; (from o in db.messages							let msgFrom &#x3D; o.fromUid &#x3D;&#x3D; uid							let msgTo &#x3D; o.toUid &#x3D;&#x3D; uid							where msgFrom || msgTo							group o by msgTo ? o">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2014-01-21T23:32:00.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.587Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.094Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Linq">
 <meta name="twitter:card" content="summary">
@@ -267,7 +267,7 @@
 
       
         <p>目的： 取得最後一筆的聊天紀錄</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var result &#x3D; (from o in db.messages</span><br><span class="line">							let msgFrom &#x3D; o.fromUid &#x3D;&#x3D; uid</span><br><span class="line">							let msgTo &#x3D; o.toUid &#x3D;&#x3D; uid</span><br><span class="line">							where msgFrom || msgTo</span><br><span class="line">							group o by msgTo ? o.fromUid : o.toUid into grp</span><br><span class="line">							let lastDate &#x3D; grp.Max(m &#x3D;&gt; m.createDate)</span><br><span class="line">							from p in grp</span><br><span class="line">							where p.createDate &#x3D;&#x3D; lastDate</span><br><span class="line">							select new viewMessage</span><br><span class="line">							&#123;</span><br><span class="line">								uid &#x3D; p.fromUid &#x3D;&#x3D; uid ? p.toUid : p.fromUid,</span><br><span class="line">								name &#x3D; p.fromUid &#x3D;&#x3D; uid ? p.toemployees.name : p.fromemployees.name,</span><br><span class="line">								msg &#x3D; p.msg,</span><br><span class="line">								lastdate &#x3D; p.createDate,</span><br><span class="line">								unread &#x3D; p.unread</span><br><span class="line">							&#125;).AsEnumerable();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var result = (from o in db.messages</span><br><span class="line">							let msgFrom = o.fromUid == uid</span><br><span class="line">							let msgTo = o.toUid == uid</span><br><span class="line">							where msgFrom || msgTo</span><br><span class="line">							group o by msgTo ? o.fromUid : o.toUid into grp</span><br><span class="line">							let lastDate = grp.Max(m =&gt; m.createDate)</span><br><span class="line">							from p in grp</span><br><span class="line">							where p.createDate == lastDate</span><br><span class="line">							select new viewMessage</span><br><span class="line">							&#123;</span><br><span class="line">								uid = p.fromUid == uid ? p.toUid : p.fromUid,</span><br><span class="line">								name = p.fromUid == uid ? p.toemployees.name : p.fromemployees.name,</span><br><span class="line">								msg = p.msg,</span><br><span class="line">								lastdate = p.createDate,</span><br><span class="line">								unread = p.unread</span><br><span class="line">							&#125;).AsEnumerable();</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -382,20 +382,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

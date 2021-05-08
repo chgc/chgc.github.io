@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2016/03/27/685100/"
 			},
 			"datePublished": "2016-03-27T04:18:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.591Z",
+			"dateModified": "2021-05-08T08:23:13.098Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1843,15 +1843,15 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>###今天下載了docker Toolbox for windows ，根據<a href="https://docs.docker.com/windows/step_one/">安裝指示</a>安裝後，在執行時出現了一個錯誤訊息</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hyper-v is installed. virtualbox won't boot a 64 bits vm in hyper-v is activated ....</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hyper-v is installed. virtualbox won't boot a 64 bits vm in hyper-v is activated ....</span><br></pre></td></tr></tbody></table></figure>
 <p>排除方式為:修改 Program Files\Docker Toolbox\<a href="http://start.sh">start.sh</a>
 在start.sh檔裡面，尋找</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<!--figure1-->#123;DOCKER_MACHINE}" create -d virtualbox "<!--figure1-->#123;VM}" </span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<!--figure1-->#123;DOCKER_MACHINE}" create -d virtualbox "<!--figure1-->#123;VM}" </span><br></pre></td></tr></tbody></table></figure>
 <p>更改成</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<!--figure2-->#123;DOCKER_MACHINE}" create --virtualbox-no-vtx-check -d virtualbox "<!--figure2-->#123;VM}"</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<!--figure2-->#123;DOCKER_MACHINE}" create --virtualbox-no-vtx-check -d virtualbox "<!--figure2-->#123;VM}"</span><br></pre></td></tr></tbody></table></figure>
 <p>即可排除此錯誤訊息</p>
 <p>###當在command下docker command時，出現以下錯誤訊息</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An error occurred trying to connect: Get http://127.0.0.1:2375/v1.22/containers/json: dial tcp 127.0.0.1:2375: connectex: No connection could be made because the target machine actively refused it.</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An error occurred trying to connect: Get http://127.0.0.1:2375/v1.22/containers/json: dial tcp 127.0.0.1:2375: connectex: No connection could be made because the target machine actively refused it.</span><br></pre></td></tr></tbody></table></figure>
 <p>排除方式為</p>
 <ol>
 <li><strong>docker-machine start default</strong> or create new one</li>
@@ -1867,7 +1867,7 @@ REM Run this command to configure your shell:
 REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default』) DO %i</p>
 </blockquote>
 <p>4.Run</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FOR /f "tokens=*" %i IN ('docker-machine env --shell cmd default') DO %i</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FOR /f "tokens=*" %i IN ('docker-machine env --shell cmd default') DO %i</span><br></pre></td></tr></tbody></table></figure>
 <p>5.Enjoy. 就可以正常的下docker指令了</p>
 
 			  		

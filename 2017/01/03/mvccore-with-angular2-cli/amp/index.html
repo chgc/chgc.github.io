@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/01/03/mvccore-with-angular2-cli/"
 			},
 			"datePublished": "2017-01-03T08:13:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.591Z",
+			"dateModified": "2021-05-08T08:23:13.098Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1862,7 +1862,7 @@ h6.categories {
 <h2 id="設定路由"><a class="header-anchor" href="#設定路由"> </a>設定路由</h2>
 <p>在startup.cs裡，修改<code>Configure</code>的部分</p>
 <p>可能需要多安裝  <code>Microsoft.AspNetCore.StaticFiles</code>套件</p>
-<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    app.Use(<span class="keyword">async</span> (context, next)=&gt;{</span><br><span class="line">        <span class="keyword">await</span> next();</span><br><span class="line">        <span class="keyword">if</span> (context.Response.StatusCode == <span class="number">404</span> &amp;&amp;</span><br><span class="line">        !Path.HasExtension(context.Request.Path.Value) &amp;&amp;</span><br><span class="line">        !context.Request.Path.Value.StartsWith(<span class="string">"/api/"</span>))</span><br><span class="line">        {</span><br><span class="line">            context.Request.Path = <span class="string">"/index.html"</span>;</span><br><span class="line">            <span class="keyword">await</span> next();</span><br><span class="line">        }</span><br><span class="line">    });</span><br><span class="line"></span><br><span class="line">    app.UseMvc();</span><br><span class="line">    app.UseStaticFiles();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)</span><br><span class="line">{</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    app.Use(async (context, next)=&gt;{</span><br><span class="line">        await next();</span><br><span class="line">        if (context.Response.StatusCode == 404 &amp;&amp;</span><br><span class="line">        !Path.HasExtension(context.Request.Path.Value) &amp;&amp;</span><br><span class="line">        !context.Request.Path.Value.StartsWith("/api/"))</span><br><span class="line">        {</span><br><span class="line">            context.Request.Path = "/index.html";</span><br><span class="line">            await next();</span><br><span class="line">        }</span><br><span class="line">    });</span><br><span class="line"></span><br><span class="line">    app.UseMvc();</span><br><span class="line">    app.UseStaticFiles();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="建立一個空的專案，當Angular-CLI的家"><a class="header-anchor" href="#建立一個空的專案，當Angular-CLI的家"> </a>建立一個空的專案，當Angular CLI的家</h1>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/365/32072006795_56248d7537_o.png" width="520" height="446" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://farm1.staticflickr.com/262/31954080811_d36ea416b5_o.png" width="941" height="653" layout="responsive"></amp-img></div>
@@ -1875,7 +1875,7 @@ h6.categories {
 <ol>
 <li>
 <p>angular-cli.json的 outDir要修改到 mvc core project的wwwroot資料夾的位置</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"outDir": "../WebApplication1/wwwroot"</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"outDir": "../WebApplication1/wwwroot"</span><br></pre></td></tr></tbody></table></figure>
 <p>​</p>
 </li>
 <li>
@@ -1887,7 +1887,7 @@ h6.categories {
 </ol>
 <figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"/api"</span>: {</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"http://localhost:22846"</span>,</span><br><span class="line">    <span class="attr">"secure"</span>: <span class="literal">false</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>3 修改 package.json的Scripts的部分</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start": "ng serve --proxy-config proxy.conf.json",</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start": "ng serve --proxy-config proxy.conf.json",</span><br></pre></td></tr></tbody></table></figure>
 <h2 id=""><a class="header-anchor" href="#"> </a></h2>
 <h1 id="開發時期的執行方式"><a class="header-anchor" href="#開發時期的執行方式"> </a>開發時期的執行方式</h1>
 <p>執行的方式. 前端如果要開始開發的話，下指令 <code>npm start</code>，開發時期網頁的網址要以Angular CLI的網址為主</p>

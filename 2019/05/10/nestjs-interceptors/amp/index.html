@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2019/05/10/nestjs-interceptors/"
 			},
 			"datePublished": "2019-05-10T14:29:48.000Z",
-			"dateModified": "2021-04-18T13:04:55.639Z",
+			"dateModified": "2021-05-08T08:23:13.142Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1853,7 +1853,7 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="/2019/05/10/nestjs-interceptors/Interceptors_1.png" width="1800" height="850" layout="responsive"></amp-img></div>
 <h1 id="基本型"><a class="header-anchor" href="#基本型"> </a>基本型</h1>
 <p>Nest CLI 指令</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest g in &lt;interceptor name&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest g in &lt;interceptor name&gt;</span><br></pre></td></tr></tbody></table></figure>
 <figure class="highlight typescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { CallHandler, ExecutionContext, Injectable, NestInterceptor } <span class="keyword">from</span> <span class="string">'@nestjs/common'</span>;</span><br><span class="line"><span class="keyword">import</span> { Observable } <span class="keyword">from</span> <span class="string">'rxjs'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">LoggingInterceptor</span> <span class="title">implements</span> <span class="title">NestInterceptor</span> </span>{</span><br><span class="line">  intercept(context: ExecutionContext, <span class="attr">next</span>: CallHandler): Observable&lt;<span class="built_in">any</span>&gt; {</span><br><span class="line">    <span class="keyword">return</span> next.handle();</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>context: 內包含所接紹的 Request / Response 等資訊</li>

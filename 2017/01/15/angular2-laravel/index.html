@@ -29,7 +29,7 @@
 <meta property="og:description" content="Laravel 5.x版以後樣板的部分就內建使用Vue.js的方法。 假設今天我想要使用Angular CLI方式搭配Laravel的方式來開發，那又應該怎麼做呢，以下提供一個方式，歡迎討論">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2017-01-15T08:04:06.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.591Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.098Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta property="article:tag" content="Laravel5">
@@ -281,9 +281,9 @@
 <h1 id="建立Angular專案"><a class="header-anchor" href="#建立Angular專案"> </a>建立Angular專案</h1>
 <h2 id="使用CLI來建立專案"><a class="header-anchor" href="#使用CLI來建立專案"> </a>使用CLI來建立專案</h2>
 <p>在laravel的根目錄下，執行以下指令</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></table></figure>
 <p>或是，自己新增一個存放的資料夾後並切換到該資料夾下，執行以下指令</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng init &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng init &lt;projectName&gt; --routing --skip-commit</span><br></pre></td></tr></table></figure>
 <p>執行完後，一個Angular的專案就建置完成了</p>
 <h2 id="設定proxy-conf-json"><a class="header-anchor" href="#設定proxy-conf-json"> </a>設定proxy.conf.json</h2>
 <ul>
@@ -293,7 +293,7 @@
 </li>
 <li>
 <p>修改<code>pageage.json</code>的<code>scripts</code>部分</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;start&quot;: &quot;ng serve --proxy-config proxy.conf.json&quot;,</span><br><span class="line">    ...</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;start&quot;</span>: <span class="string">&quot;ng serve --proxy-config proxy.conf.json&quot;</span>,</span><br><span class="line">    ...</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>​</p>
 </li>
 </ul>
@@ -320,7 +320,7 @@
 <ul>
 <li>
 <p>如果要部署的時候，Angular可以透過以下的指令將Angular的程式bundle/AOT輸出到所設定的輸出目錄下</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng build --prod --aot --output-hashing=media</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng build --prod --aot --output-hashing=media</span><br></pre></td></tr></table></figure>
 <ul>
 <li>—output-hasing的參數是在angular-cli beta25.5版以後提供的，可以設定所輸出的bundle是否要加上hash值</li>
 </ul>
@@ -448,20 +448,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

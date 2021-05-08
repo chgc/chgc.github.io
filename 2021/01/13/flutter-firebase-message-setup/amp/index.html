@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2021/01/13/flutter-firebase-message-setup/"
 			},
 			"datePublished": "2021-01-13T04:18:55.000Z",
-			"dateModified": "2021-04-18T13:04:55.735Z",
+			"dateModified": "2021-05-08T08:23:13.234Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1869,11 +1869,11 @@ h6.categories {
 <ol>
 <li>
 <p><code>android/build.gradle</code></p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">buildscript {</span><br><span class="line">  dependencies {</span><br><span class="line">    // ... other dependencies</span><br><span class="line">    // 新增這一行</span><br><span class="line">    classpath 'com.google.gms:google-services:4.3.3'</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">buildscript {</span><br><span class="line">  dependencies {</span><br><span class="line">    // ... other dependencies</span><br><span class="line">    // 新增這一行</span><br><span class="line">    classpath 'com.google.gms:google-services:4.3.3'</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p><code>/android/app/build.gradle</code></p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: 'com.android.application'</span><br><span class="line">// 新增這一行</span><br><span class="line">apply plugin: 'com.google.gms.google-services'</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: 'com.android.application'</span><br><span class="line">// 新增這一行</span><br><span class="line">apply plugin: 'com.google.gms.google-services'</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
 <p>※如果 Flutter 專案的 Flutter 版本是 1.12 以上，則不需要額外新增任何檔案，如果是低於該版本，請依此<a href="https://firebase.flutter.dev/docs/messaging/overview#flutter-android-embedding-v1">文件</a>說明新增檔案</p>

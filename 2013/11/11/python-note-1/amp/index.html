@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2013/11/11/python-note-1/"
 			},
 			"datePublished": "2013-11-11T06:47:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.587Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1854,7 +1854,7 @@ h6.categories {
 <li>v3.3 : print(『xxxx』)</li>
 </ol>
 <p>文字重複顯示</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 'something'*3</span><br><span class="line">'somethingsomethingsomething'</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 'something'*3</span><br><span class="line">'somethingsomethingsomething'</span><br></pre></td></tr></tbody></table></figure>
 <p>#Number
 計算方式: 先乘除後加減，有內算到外，有左到右</p>
 <p>number分interger and float, 區分方法是有沒有使用小數點</p>
@@ -1866,16 +1866,16 @@ h6.categories {
 </ol>
 <p>% : 傳回餘數
 ** : 次方</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 7/4</span><br><span class="line">1.75</span><br><span class="line">&gt;&gt;&gt; 7//4</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; 7%4</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 2**10</span><br><span class="line">1024</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 7/4</span><br><span class="line">1.75</span><br><span class="line">&gt;&gt;&gt; 7//4</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; 7%4</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 2**10</span><br><span class="line">1024</span><br></pre></td></tr></tbody></table></figure>
 <p>a = b: 將b值指定給a</p>
 <p>在interactive mode，可以利用 _ 取得上次的值</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 1+2</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 1+_</span><br><span class="line">4</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 1+2</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; 1+_</span><br><span class="line">4</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="Lists"><a class="header-anchor" href="#Lists"> </a>Lists</h1>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; squares = [1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares</span><br><span class="line">[1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares[1]</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; squares[-1]</span><br><span class="line">25</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; squares = [1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares</span><br><span class="line">[1, 2, 4, 9, 16, 25]</span><br><span class="line">&gt;&gt;&gt; squares[1]</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; squares[-1]</span><br><span class="line">25</span><br></pre></td></tr></tbody></table></figure>
 <p>基本操作可以參考string的部分，一樣可以使用 + 做lists的連結</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.append(value) # add value to the list</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.append(value) # add value to the list</span><br></pre></td></tr></tbody></table></figure>
 <p>二維陣列</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = ['a', 'b', 'c']</span><br><span class="line">&gt;&gt;&gt; n = [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; x = [a, n]</span><br><span class="line">&gt;&gt;&gt; x</span><br><span class="line">[['a', 'b', 'c'], [1, 2, 3]]</span><br><span class="line">&gt;&gt;&gt; x[0]</span><br><span class="line">['a', 'b', 'c']</span><br><span class="line">&gt;&gt;&gt; x[0][1]</span><br><span class="line">'b'</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = ['a', 'b', 'c']</span><br><span class="line">&gt;&gt;&gt; n = [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; x = [a, n]</span><br><span class="line">&gt;&gt;&gt; x</span><br><span class="line">[['a', 'b', 'c'], [1, 2, 3]]</span><br><span class="line">&gt;&gt;&gt; x[0]</span><br><span class="line">['a', 'b', 'c']</span><br><span class="line">&gt;&gt;&gt; x[0][1]</span><br><span class="line">'b'</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

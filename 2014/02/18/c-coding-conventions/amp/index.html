@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/02/18/c-coding-conventions/"
 			},
 			"datePublished": "2014-02-18T21:35:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.587Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,7 +1851,7 @@ h6.categories {
 <li>在方法定義與屬性定義之間加入至少一個空白行。</li>
 <li>使用括號在運算式中撰寫子句，如下列程式碼所示。</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if ((val1 &gt; val2) &amp;&amp; (val1 &gt; val3))</span><br><span class="line">{</span><br><span class="line">    // Take appropriate action.</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if ((val1 &gt; val2) &amp;&amp; (val1 &gt; val3))</span><br><span class="line">{</span><br><span class="line">    // Take appropriate action.</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>#註解慣例</p>
 <ul>
 <li>將註解放到另一行，不放在程式碼行的結尾。</li>
@@ -1859,7 +1859,7 @@ h6.categories {
 <li>以句號結束註解文字。</li>
 <li>在註解分隔符號 (//) 與註解文字之間插入一個空格，如下列範例所示。</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// The following declaration creates a query. It does not run</span><br><span class="line">// the query.</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// The following declaration creates a query. It does not run</span><br><span class="line">// the query.</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>不在註解周圍建立格式化的星號區塊。</li>
 </ul>
@@ -1874,7 +1874,7 @@ h6.categories {
 <li>使用簡潔的物件執行個體化形式搭配隱含型別，如以下宣告中所示。</li>
 <li>使用物件初始設定式簡化物件建立。</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var instance1 = new ExampleClass();</span><br><span class="line"></span><br><span class="line">// Object initializer.</span><br><span class="line">var instance3 = new ExampleClass { Name = "Desktop", ID = 37414, </span><br><span class="line">    Location = "Redmond", Age = 2.3 };</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var instance1 = new ExampleClass();</span><br><span class="line"></span><br><span class="line">// Object initializer.</span><br><span class="line">var instance3 = new ExampleClass { Name = "Desktop", ID = 37414, </span><br><span class="line">    Location = "Redmond", Age = 2.3 };</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>#＃ LINQ查詢</p>
 <ul>
 <li>使用有意義的名稱做為查詢變數的名稱。 下列範例會使用 seattleCustomers 代表位於西雅圖的客戶。</li>

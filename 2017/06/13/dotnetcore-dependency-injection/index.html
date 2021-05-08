@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://farm5.staticflickr.com/4242/34890280460_72c9e84e8d_o.png">
 <meta property="article:published_time" content="2017-06-13T02:25:07.000Z">
-<meta property="article:modified_time" content="2021-04-18T13:04:55.595Z">
+<meta property="article:modified_time" content="2021-05-08T08:23:13.098Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content=".NET Core">
 <meta name="twitter:card" content="summary">
@@ -274,7 +274,7 @@
 <p>初始時，就已經有以下的服務</p>
 <p><img src="https://farm5.staticflickr.com/4242/34890280460_72c9e84e8d_o.png" alt=""></p>
 <p><a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> 也內建許多服務，像是 <code>MVC</code>, <code>EntityFramework</code>，而這一類的新增方式是透過 <code>AddServiceName</code> 的模式新增至 <code>IServiceCollection</code> 中。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This method gets called by the runtime. Use this method to add services to the container.</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Add framework services.</span></span><br><span class="line">    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;</span><br><span class="line">        options.UseSqlServer(Configuration.GetConnectionString(<span class="string">&quot;DefaultConnection&quot;</span>)));</span><br><span class="line"></span><br><span class="line">    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;()</span><br><span class="line">        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()</span><br><span class="line">        .AddDefaultTokenProviders();</span><br><span class="line"></span><br><span class="line">    services.AddMvc();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This method gets called by the runtime. Use this method to add services to the container.</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Add framework services.</span></span><br><span class="line">    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;</span><br><span class="line">        options.UseSqlServer(Configuration.GetConnectionString(<span class="string">&quot;DefaultConnection&quot;</span>)));</span><br><span class="line"></span><br><span class="line">    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;()</span><br><span class="line">        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()</span><br><span class="line">        .AddDefaultTokenProviders();</span><br><span class="line"></span><br><span class="line">    services.AddMvc();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="註冊服務"><a class="header-anchor" href="#註冊服務"> </a>註冊服務</h1>
 <p>當自己所開發的功能想要註冊系統內，也需要走一樣的路徑。是需要被加到 <code>ServiceCollection</code> 內。但根據生命週期的差異，所使用的註冊方式也會有所不一樣</p>
 <h2 id="AddTransient"><a class="header-anchor" href="#AddTransient"> </a>AddTransient</h2>
@@ -405,20 +405,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

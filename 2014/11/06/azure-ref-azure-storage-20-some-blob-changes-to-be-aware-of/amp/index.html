@@ -52,7 +52,7 @@
 			    "@id":"http://blog.kevinyang.net/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/"
 			},
 			"datePublished": "2014-11-06T07:29:00.000Z",
-			"dateModified": "2021-04-18T13:04:55.591Z",
+			"dateModified": "2021-05-08T08:23:13.094Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1846,18 +1846,18 @@ h6.categories {
 <a href="http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/">http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/</a></p>
 <p>大綱:</p>
 <p>如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlob thumbnailBlob = objContainer.GetBlobReference(filename);</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlob thumbnailBlob = objContainer.GetBlobReference(filename);</span><br></pre></td></tr></tbody></table></figure>
 <p>換成</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var thumbnailBlob = objContainer.GetBlobReferenceFromServer(filename);</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var thumbnailBlob = objContainer.GetBlobReferenceFromServer(filename);</span><br></pre></td></tr></tbody></table></figure>
 <p>結果，一直給我跑404.</p>
 <p>這GetBlobReserenceFromServer的用意是去server上面找filename的blob reference回來. 所以當我們要建立新的blob, 這就文不對題了。 所以要改用</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob blob = objContainer).GetBlockBlobReference(filename);</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob blob = objContainer).GetBlockBlobReference(filename);</span><br></pre></td></tr></tbody></table></figure>
 <p>這樣子就okey了.</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob.UploadFile(fileData.LocalFileName);</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob.UploadFile(fileData.LocalFileName);</span><br></pre></td></tr></tbody></table></figure>
 <hr>
 <hr>
 <p>這個也改掉了, 要改成</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob.UploadFromFile(filenameWithPath, FileMode)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob.UploadFromFile(filenameWithPath, FileMode)</span><br></pre></td></tr></tbody></table></figure>
 <p>CloudBlockBlob也有提供不同的上傳方式，請參閱<a href="http://msdn.microsoft.com/en-us/library/microsoft.windowsazure.storage.blob.cloudblockblob_methods.aspx">MSDN</a></p>
 
 			  		

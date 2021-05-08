@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2017/12/25/angular-rendertron/"
 			},
 			"datePublished": "2017-12-25T02:38:34.000Z",
-			"dateModified": "2021-04-18T13:04:55.595Z",
+			"dateModified": "2021-05-08T08:23:13.102Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1874,7 +1874,7 @@ h6.categories {
 <ol>
 <li>
 <p>services 加入 <code>AddRendertron</code></p>
-<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">// Add rendertron services</span></span><br><span class="line">    services.AddRendertron(options =&gt;</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">// use http compression</span></span><br><span class="line">        options.AcceptCompression = <span class="literal">true</span>;</span><br><span class="line">    });</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">// Add rendertron services</span></span><br><span class="line">    services.AddRendertron(options =&gt;</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">// use http compression</span></span><br><span class="line">        options.AcceptCompression = <span class="literal">true</span>;</span><br><span class="line">    });</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li>
 <p>設定並使用 <code>Rendertron</code></p>
@@ -1888,16 +1888,16 @@ h6.categories {
 </ol>
 <h1 id="安裝"><a class="header-anchor" href="#安裝"> </a>安裝</h1>
 <h2 id="本地端"><a class="header-anchor" href="#本地端"> </a>本地端</h2>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/GoogleChrome/rendertron.git</span><br><span class="line">cd rendertron</span><br><span class="line">npm install</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/GoogleChrome/rendertron.git</span><br><span class="line">cd rendertron</span><br><span class="line">npm install</span><br></pre></td></tr></tbody></table></figure>
 <p>從 Github 將程式碼抓下來後，執行 npm install 後，即可透過 <code>npm start</code> 將 rendertron 執行起來</p>
 <h2 id="使用-docker-image"><a class="header-anchor" href="#使用-docker-image"> </a>使用 docker image</h2>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t rendertron . --no-cache=true</span><br><span class="line">docker run -it -p 8080:8080 --name rendertron-container rendertron</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t rendertron . --no-cache=true</span><br><span class="line">docker run -it -p 8080:8080 --name rendertron-container rendertron</span><br></pre></td></tr></tbody></table></figure>
 <p>開啟網頁</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8080/</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8080/</span><br></pre></td></tr></tbody></table></figure>
 <p>停止 container</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker kill rendertron-container</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker kill rendertron-container</span><br></pre></td></tr></tbody></table></figure>
 <p>清除 container</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f $(docker ps -a -q)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f $(docker ps -a -q)</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
 <p><a href="https://github.com/GoogleChrome/rendertron">rendertron</a></p>
 
