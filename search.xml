@@ -17805,6 +17805,120 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>how-to-write-json-schema</title>
+    <url>/2021/06/06/how-to-write-json-schema/</url>
+    <content><![CDATA[<p>當要驗證 JSON 資料格式是否正確，有幾種做法</p>
+<ol>
+<li>丟給後端去驗證</li>
+<li>寫個 JSON Schema 做驗證(前端就可以先檢查了)</li>
+</ol>
+<p>JSON Schema 是什麼？他有點像以前 XSD (用來描述 XML 結構的檔案，也有驗證的效果)，除了可以用來驗證 JSON 資料格式是否正確，也可以用來驗證 YAML 檔案的格式。</p>
+<span id="more"></span>
+<h1 id="基本語法"><a class="header-anchor" href="#基本語法"> </a>基本語法</h1>
+<p>所以如何寫一個 JSON Schema，我們需要寫另外一份 JSON 來描述未來想要驗證的 JSON 資料格式為何，型態為何，可以輸入得資料有哪些等，下面就跟大家一起整理相關的語法筆記 (部分範例來自 JSON Schema 網站，連結在參考資料)</p>
+<p>假設有一個 JSON 資料長這樣</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;productId&quot;</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">&quot;productName&quot;</span>: <span class="string">&quot;A green door&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;price&quot;</span>: <span class="number">12.50</span>,</span><br><span class="line">  <span class="attr">&quot;tags&quot;</span>: [ <span class="string">&quot;home&quot;</span>, <span class="string">&quot;green&quot;</span> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一個基本的 JSON schema 長這樣</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;$schema&quot;</span>: <span class="string">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;$id&quot;</span>: <span class="string">&quot;https://example.com/product.schema.json&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Product&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;A product in the catalog&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;object&quot;</span></span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>keyword
+<ul>
+<li><code>$schema</code>: 參考的 JSON schema 是哪一個版本</li>
+<li><code>$id</code>: 這份 JSON schema 存放的位置</li>
+</ul>
+</li>
+<li>annotation
+<ul>
+<li><code>title</code>，<code>description</code> 描述說明此份 schema 的用途</li>
+</ul>
+</li>
+<li>validation keyword
+<ul>
+<li><code>type</code> : 資料格式型態，可以描述的型態有 <code>null</code>、 <code>boolean</code>、 <code>object</code>、 <code>array</code>、 <code>number</code>、 <code>string</code>、 <code>integer</code></li>
+</ul>
+</li>
+</ul>
+<p>上面是設定跟說明這份 schema 的用途，類似 metadata，至於如何描述資料結構，描述方法如下</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;productId&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;The unique identifier for a product&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;integer&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;productName&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;Name of the product&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;string&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;required&quot;</span>: [ <span class="string">&quot;productId&quot;</span>, <span class="string">&quot;productName&quot;</span> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>validation keyword
+<ul>
+<li><code>properties</code> 用來描述此 <code>Object</code> 內有哪些欄位</li>
+<li><code>required</code> 用來設定哪些欄位是必填的</li>
+</ul>
+</li>
+</ul>
+<h2 id="更多語法"><a class="header-anchor" href="#更多語法"> </a>更多語法</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;price&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;The price of the product&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;number&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;exclusiveMinimum&quot;</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>數字型別</li>
+<li>不能是 0 (用 <a href="https://json-schema.org/draft/2020-12/json-schema-validation.html#rfc.section.6.2.5"><code>exclusiveMinimum</code></a> 規則排除)</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;tags&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;Tags for the product&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;array&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;items&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;string&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;minItems&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">&quot;uniqueItems&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>此為陣列型別的欄位</li>
+<li>陣列 內得資料格式，使用 <a href="https://json-schema.org/draft/2020-12/json-schema-core.html#rfc.section.10.3.1.2"><code>items</code></a> 定義</li>
+<li>至少要有一筆資料 (<a href="https://json-schema.org/draft/2020-12/json-schema-validation.html#rfc.section.6.4.2"><code>minItems</code></a> 來設定最少筆數)</li>
+<li>且不能重複 (<a href="https://json-schema.org/draft/2020-12/json-schema-validation.html#rfc.section.6.4.3"><code>uniqueItems</code></a> 檢查)</li>
+</ul>
+<h2 id="Nesting-data-structures"><a class="header-anchor" href="#Nesting-data-structures"> </a>Nesting data structures</h2>
+<p>不難，一樣式套用上面的規則，做法是一樣的</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;dimensions&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;object&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;length&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;number&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;width&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;number&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;height&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;number&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;required&quot;</span>: [ <span class="string">&quot;length&quot;</span>, <span class="string">&quot;width&quot;</span>, <span class="string">&quot;height&quot;</span> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="References-schema"><a class="header-anchor" href="#References-schema"> </a>References schema</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;warehouseLocation&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;Coordinates of the warehouse where the product is located.&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;$ref&quot;</span>: <span class="string">&quot;https://example.com/geographical-location.schema.json&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>$ref</code> 指定 schema 的參考路徑，可以是外部或內部 (<a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-00#section-8.2.4">spec</a>)</p>
+<ul>
+<li>
+<p>外部參考: 使用 URI Reference</p>
+</li>
+<li>
+<p>內部參考: 使用 <code>#/路徑</code> 的方式，搭配 <code>$defs</code> 使用</p>
+<p><img src="image-20210606115417347.png" alt="image-20210606115417347"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="進階語法"><a class="header-anchor" href="#進階語法"> </a>進階語法</h1>
+<ul>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-core.html#rfc.section.10.3.2.3"><code>additionalProperties</code></a>: 是否有其他額外的欄位，<code>false</code> 時，JSON 得資料必須符合 schema 所定義的 <code>properties</code></li>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-core.html#rfc.section.10.3.2.2"><code>patternProperties</code></a>: 用 Regex 來描述 Property 名稱規則及對應得資料格式</li>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-core.html#rfc.section.10.2.1.3"><code>oneOf</code></a> 符合定義規則的其中一項
+<ul>
+<li>MUST be a non-empty array. Each item of the array MUST be a valid JSON Schema.</li>
+<li>An instance validates successfully against this keyword if it validates successfully against exactly one schema defined by this keyword’s value.</li>
+</ul>
+</li>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-core.html#rfc.section.8.2.4"><code>$defs</code></a> 搭配 <code>$ref</code> 使用 (舊版名稱為: <code>definitions</code>)
+<ul>
+<li>MUST be an object. Each member value of this object MUST be a valid JSON Schema.</li>
+<li>reserves a location for schema authors to inline re-usable JSON Schemas into a more general schema.</li>
+</ul>
+</li>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-validation.html#rfc.section.6.1.2"><code>enum</code></a>: 設定可以使用的值有哪些</li>
+<li>MUST be an array and at least one element.</li>
+<li>An instance validates successfully against this keyword if its value is equal to one of the elements in this keyword’s array value.</li>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-validation.html#rfc.section.6.3.3"><code>pattern</code></a>: 使用 Regex 設定可以輸入資料的格式 (format)</li>
+</ul>
+<p>完整範例</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;$id&quot;</span>: <span class="string">&quot;https://example.com/entry-schema&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;$schema&quot;</span>: <span class="string">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;JSON Schema for an fstab entry&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;object&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;required&quot;</span>: [ <span class="string">&quot;storage&quot;</span> ],</span><br><span class="line">  <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;storage&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;object&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;oneOf&quot;</span>: [</span><br><span class="line">        &#123; <span class="attr">&quot;$ref&quot;</span>: <span class="string">&quot;#/$defs/diskDevice&quot;</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">&quot;$ref&quot;</span>: <span class="string">&quot;#/$defs/diskUUID&quot;</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">&quot;$ref&quot;</span>: <span class="string">&quot;#/$defs/nfs&quot;</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">&quot;$ref&quot;</span>: <span class="string">&quot;#/$defs/tmpfs&quot;</span> &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;fstype&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;enum&quot;</span>: [ <span class="string">&quot;ext3&quot;</span>, <span class="string">&quot;ext4&quot;</span>, <span class="string">&quot;btrfs&quot;</span> ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;options&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;array&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;minItems&quot;</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">&quot;items&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;string&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;uniqueItems&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;readonly&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;boolean&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;$defs&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;diskDevice&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;type&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;enum&quot;</span>: [ <span class="string">&quot;disk&quot;</span> ]</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;device&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;string&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;pattern&quot;</span>: <span class="string">&quot;^/dev/[^/]+(/[^/]+)*$&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;required&quot;</span>: [ <span class="string">&quot;type&quot;</span>, <span class="string">&quot;device&quot;</span> ],</span><br><span class="line">      <span class="attr">&quot;additionalProperties&quot;</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;diskUUID&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;type&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;enum&quot;</span>: [ <span class="string">&quot;disk&quot;</span> ]</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;label&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;string&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;pattern&quot;</span>: <span class="string">&quot;^[a-fA-F0-9]&#123;8&#125;-[a-fA-F0-9]&#123;4&#125;-[a-fA-F0-9]&#123;4&#125;-[a-fA-F0-9]&#123;4&#125;-[a-fA-F0-9]&#123;12&#125;$&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;required&quot;</span>: [ <span class="string">&quot;type&quot;</span>, <span class="string">&quot;label&quot;</span> ],</span><br><span class="line">      <span class="attr">&quot;additionalProperties&quot;</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;nfs&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;type&quot;</span>: &#123; <span class="attr">&quot;enum&quot;</span>: [ <span class="string">&quot;nfs&quot;</span> ] &#125;,</span><br><span class="line">        <span class="attr">&quot;remotePath&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;string&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;pattern&quot;</span>: <span class="string">&quot;^(/[^/]+)+$&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;server&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;string&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;oneOf&quot;</span>: [</span><br><span class="line">            &#123; <span class="attr">&quot;format&quot;</span>: <span class="string">&quot;hostname&quot;</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">&quot;format&quot;</span>: <span class="string">&quot;ipv4&quot;</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">&quot;format&quot;</span>: <span class="string">&quot;ipv6&quot;</span> &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;required&quot;</span>: [ <span class="string">&quot;type&quot;</span>, <span class="string">&quot;server&quot;</span>, <span class="string">&quot;remotePath&quot;</span> ],</span><br><span class="line">      <span class="attr">&quot;additionalProperties&quot;</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;tmpfs&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;type&quot;</span>: &#123; <span class="attr">&quot;enum&quot;</span>: [ <span class="string">&quot;tmpfs&quot;</span> ] &#125;,</span><br><span class="line">        <span class="attr">&quot;sizeInMB&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;integer&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;minimum&quot;</span>: <span class="number">16</span>,</span><br><span class="line">          <span class="attr">&quot;maximum&quot;</span>: <span class="number">512</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;required&quot;</span>: [ <span class="string">&quot;type&quot;</span>, <span class="string">&quot;sizeInMB&quot;</span> ],</span><br><span class="line">      <span class="attr">&quot;additionalProperties&quot;</span>: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>想要知道更多 JSON Schema 語法的寫法，可以到 <code>JSON Schema Store</code> 內去瞭解，裡面列出很多現在常用的服務，很多都是用來驗證 YAML 格式是否正確，或是閱讀這篇<a href="https://json-schema.org/understanding-json-schema/">文件</a></p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ol>
+<li><a href="https://json-schema.org/">JSON Schema</a></li>
+<li><a href="https://json-schema.org/specification.html">JSON Schema specification</a></li>
+<li><a href="https://www.schemastore.org/json/">JSON Schema Store</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>綜合</category>
+      </categories>
+      <tags>
+        <tag>綜合</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

@@ -200,6 +200,102 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/07/17/web-local-storage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/07/17/web-local-storage/" class="post-title-link" itemprop="url">[Web] Local Storage</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-07-18 01:32:00" itemprop="dateCreated datePublished" datetime="2014-07-18T01:32:00+08:00">2014-07-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/07/17/web-local-storage/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/17/web-local-storage/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>javascript基本操作html5的 local storage方法
+<img src="http://user-image.logdown.io/user/4862/blog/4871/post/210650/xi3DOygTnagKxZHig8Yw_image_thumb.png" alt="image_thumb.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// set item val</span><br><span class="line">window.localstorage.setItem(key,value);</span><br><span class="line">window.localstorage.getItem(key);</span><br><span class="line">window.localstorage.removeItem(key);</span><br><span class="line">window.localstorage.clear();</span><br></pre></td></tr></table></figure>
+<p>如果要把array object存入到localstorage裡面，需要把object轉換成文字.所以可透過json的方法來處理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JSON.stringify(object);</span><br><span class="line">JSON.parse(value);</span><br></pre></td></tr></table></figure>
+<p>ref:</p>
+<p><a target="_blank" rel="noopener" href="http://www.w3schools.com/html/html5_webstorage.asp">http://www.w3schools.com/html/html5_webstorage.asp</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.roodo.com/rocksaying/archives/15967715.html">http://blog.roodo.com/rocksaying/archives/15967715.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/07/07/reference-odata-101-using-the-notmapped-attribute-to-exclude-enum-properties/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1184,150 +1280,6 @@ netsh firewall add portopening TCP 8080 IISExpressWeb enable ALL</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/02/20/note-capital-surplus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/02/20/note-capital-surplus/" class="post-title-link" itemprop="url">[工作筆記] 資本公積</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-02-21 05:59:00" itemprop="dateCreated datePublished" datetime="2014-02-21T05:59:00+08:00">2014-02-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/02/20/note-capital-surplus/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/20/note-capital-surplus/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="資本公積"><a class="header-anchor" href="#資本公積"> </a>資本公積</h1>
-<p>資本公積是指由股東投入、但不能構成股本或實收資本的資金部分，主要包括股本溢價、接受捐贈實物資產、投入資本匯兌損益、法定財產重估增值以及投資準備金等。</p>
-<p>資本公積的來源，按其用途主要包括兩類：
-一、超過票面金額發行股票所得之溢額。</p>
-<ol>
-<li>以超過面額發行普通股或特別股溢價：無。</li>
-<li>公司因企業合併而發行股票取得他公司股權或資產淨值所產生股本溢價：無。惟，合併基準日在97.12.31前案件，合併股本溢價來源屬消滅公司帳載未分配盈餘部分，如用以配發股票或現金給股東，仍屬股東股利所得。</li>
-<li>庫藏股票交易溢價：有。</li>
-<li>轉換公司債相關應付利息補償金於約定賣回期間屆滿日可換得普通股市價高於約定賣回價格時轉列金額：無。</li>
-<li>因認股權證行使所得股本發行價格超過面額部分：無。</li>
-<li>特別股或公司債轉換為普通股，原發行價格或帳面價值大於所轉換普通股面額差額：無。</li>
-<li>附認股權公司債行使普通股認股權證分攤價值：無。</li>
-<li>特別股收回價格低於發行價格差額：可能有。惟廣義而言，特別股的發行價格高於收回價格部分，也是股東的出資額，可否不視為股東有所得？</li>
-<li>認股權證逾期未行使而將其帳面餘額轉列者：有。</li>
-<li>因股東逾期未繳足股款而沒收已繳股款：可能有。惟廣義而言，沒收股款也是股東的出資額，可否不視為股東有所得？</li>
-<li>公司因企業分割而發行股票取得他公司營業或資產淨值所產生股本溢價：無。</li>
-<li>公司因股份轉換而發行股票取得他公司股份或股權所產生股本溢價：可能有。依財政部91.8.19台財稅第0910454466號涵意旨，股本溢價來源屬他公司轉換前帳載未分配餘者，如用以分配股票或現金給股東，屬股東股利所得，惟此函釋合理性，有待斟酌。</li>
-</ol>
-<p>二、受領贈與之所得。</p>
-<ol>
-<li>受領股東贈與本公司已發行股票：可能有。但廣義而言，此部分也是股東的出資額，可否不視為股東有所得？</li>
-<li>股東依股權比例放棄債權或依股權比例捐贈資產：可能無。</li>
-</ol>
-<p>資本公積的主要用途有兩個，</p>
-<ol>
-<li>轉增資本</li>
-<li>彌補虧損。</li>
-</ol>
-<h1 id="盈餘公積-公司法-237條"><a class="header-anchor" href="#盈餘公積-公司法-237條"> </a>盈餘公積(公司法:237條)</h1>
-<blockquote>
-<p>公司於完納一切稅捐後，分派盈餘時，應先提出百分之十為法定盈餘公積。但法定盈餘公積，已達資本總額時，不在此限。
-除前項法定盈餘公積外，公司得以章程訂定或股東會議決，另提特別盈餘公積。
-公司負責人違反第一項規定，不提法定盈餘公積時，各科新臺幣六萬元以下罰金。</p>
-</blockquote>
-<blockquote>
-<p>惟依據銀行法第50條規定，銀行於完納一切稅捐後分派盈餘時，應先提30％為法定盈餘公積，另證券金融公司亦比照銀行提列30％法定盈餘公積，此為較特殊處。</p>
-</blockquote>
-<h3 id="種類"><a class="header-anchor" href="#種類"> </a>種類</h3>
-<ol>
-<li>法定盈餘公積: 指依公司法或其他相關法令規定自盈餘中指撥之公積</li>
-<li>特別盈餘公積: 因特定目的（如平衡盈餘分派、擴充改良設備或作為償債準備）依公司章程或股東會決議提存之公積。</li>
-</ol>
-<h3 id="用途-公司法239條第1項暨232條第2項、241條第3項規定"><a class="header-anchor" href="#用途-公司法239條第1項暨232條第2項、241條第3項規定"> </a>用途 (公司法239條第1項暨232條第2項、241條第3項規定)</h3>
-<ul>
-<li>彌補虧損</li>
-<li>分配(僅限法定盈餘公積)</li>
-</ul>
-<ol>
-<li>為於公司無盈餘時，以法定盈餘公積超過實收資本額50％之部分派充股息及紅利</li>
-<li>為法定盈餘公積已達實收資本50％者，得保留法定盈餘公積達實收資本50％之半數，其餘部分得以撥充資本，而股東依原有股份比例發給新股。</li>
-</ol>
-<p>###其他備註</p>
-<ul>
-<li>補累積虧損之順序，宜先動用法定盈餘公積，次為特別盈餘公積，最後為資本公積。</li>
-<li>特別盈餘公積得用於彌補虧損，惟於原提列特別盈餘公積之原因消除前，如曾以特別盈餘公積彌補虧損者，於未來有盈餘之年度，應先就特別盈餘公積不足數額補足提列，始得分派盈餘</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1399,20 +1351,20 @@ netsh firewall add portopening TCP 8080 IISExpressWeb enable ALL</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">307</span>
+          <span class="site-state-item-count">308</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
