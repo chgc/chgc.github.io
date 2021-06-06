@@ -1,12 +1,12 @@
 ---
 layout: post
-title: how-to-write-json-schema
+title: '[How-to] 如何寫一份 JSON Schema'
 comments: true
 typora-root-url: 2021-06-06-how-to-write-json-schema/
 typora-copy-images-to: 2021-06-06-how-to-write-json-schema/
 date: 2021-06-06 10:49:01
-categories: 綜合
-tags: 綜合
+categories: How-to
+tags: How-to
 ---
 
 當要驗證 JSON 資料格式是否正確，有幾種做法  
