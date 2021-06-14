@@ -5,8 +5,8 @@ comments: true
 typora-root-url: 2019-12-30-angular-in-cleanArchitecture/
 typora-copy-images-to: 2019-12-30-angular-in-cleanArchitecture/
 date: 2019-12-30 10:18:07
-categories: .NET core
-tags: .NET core
+categories: .NET Core
+tags: .NET Core
 ---
 
 繼上一篇 [學習使用 CleanArchitecture 開發 -  筆記 1](https://blog.kevinyang.net/2019/12/27/asp-net-CleanArchitecture-note1/)，依習慣先從畫面往底層看回去，而這專案範本使用 Angular 作為前端開發框架，那就來看看裡面有哪些東西或是技巧是可以偷學的
