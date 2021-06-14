@@ -200,6 +200,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/02/26/c-work-with-xml-and-xsd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/02/26/c-work-with-xml-and-xsd/" class="post-title-link" itemprop="url">[C#] work with xml and xsd</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-02-27 02:46:00" itemprop="dateCreated datePublished" datetime="2014-02-27T02:46:00+08:00">2014-02-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/02/26/c-work-with-xml-and-xsd/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/26/c-work-with-xml-and-xsd/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-在xsd裡描述minOccurs-0-時-所建立的xml裡面要手動控制是否輸出value"><a class="header-anchor" href="#1-在xsd裡描述minOccurs-0-時-所建立的xml裡面要手動控制是否輸出value"> </a>1.在xsd裡描述minOccurs=&quot;0&quot;時 , 所建立的xml裡面要手動控制是否輸出value</h1>
+<p>c#可以用class轉換成xml, 但是在class裡面的property並不是每一個都需要輸出，有些事非必要性的欄位。
+這需要在property欄位另外加上一個欄位來做設定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class demo&#123;</span><br><span class="line">	public string field1;</span><br><span class="line">  public string field2;</span><br><span class="line">  public customEnum field3;</span><br><span class="line">  // 以下這行是關鍵</span><br><span class="line">  [XmlIgnore]</span><br><span class="line">  public bool field3Specified;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="語法是-propertyNameSpecified"><a class="header-anchor" href="#語法是-propertyNameSpecified"> </a>語法是 propertyNameSpecified</h2>
+<p>[XmlIgnore] : 功用是在輸出xml時，忽略此欄位</p>
+<p>依上列的案例來說，如果 field3Specified=true, 則輸出field3欄位, 如果設定成false, 則不輸出field3</p>
+<h1 id="2-使用xsd-exe將-xsd檔案轉換成class"><a class="header-anchor" href="#2-使用xsd-exe將-xsd檔案轉換成class"> </a>2.使用xsd.exe將.xsd檔案轉換成class</h1>
+<p>在visual studio tools下-&gt; 命令視窗 -&gt; xsd</p>
+<p>ref: <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/x6c1kb0s(v=vs.110).aspx">http://msdn.microsoft.com/en-us/library/x6c1kb0s(v=vs.110).aspx</a></p>
+<p>將.xsd檔案轉換成class的方式為</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xsd file.xsd /c</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/02/20/note-capital-surplus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1290,110 +1389,6 @@ b. 信件內容</li>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/26/aspnet-mvc-play-with-grunt/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/11/26/aspnet-mvc-play-with-grunt/" class="post-title-link" itemprop="url">[ASP.NET MVC] Play with Grunt (typescript ...)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-11-27 02:13:00" itemprop="dateCreated datePublished" datetime="2013-11-27T02:13:00+08:00">2013-11-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/11/26/aspnet-mvc-play-with-grunt/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/26/aspnet-mvc-play-with-grunt/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>#Grunt
-Need: Node.js installed</p>
-<p>Install Steps</p>
-<ol>
-<li>Installing the CLI
-run command</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g grunt-cli</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>edit package.json and Gruntfile.js</li>
-</ol>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;grunt&quot;</span>: <span class="string">&quot;0.4.1&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;grunt-ts&quot;</span>: <span class="string">&quot;latest&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="run-npm-install-in-command"><a class="header-anchor" href="#run-npm-install-in-command"> </a>run npm install in command</h3>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">grunt</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// load the task</span></span><br><span class="line">  grunt.loadNpmTasks(<span class="string">&#x27;grunt-ts&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Configure grunt here</span></span><br><span class="line"></span><br><span class="line">  grunt.initConfig(&#123;</span><br><span class="line">    <span class="attr">ts</span>: &#123;</span><br><span class="line">      <span class="attr">dev</span>: &#123;</span><br><span class="line">        <span class="comment">// a particular target</span></span><br><span class="line">        <span class="attr">src</span>: [<span class="string">&#x27;app/**/*.ts&#x27;</span>], <span class="comment">// The source typescript files, http://gruntjs.com/configuring-tasks#files</span></span><br><span class="line">        <span class="attr">html</span>: [<span class="string">&#x27;app/**/*.html&#x27;</span>], <span class="comment">// The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support</span></span><br><span class="line">        <span class="attr">reference</span>: <span class="string">&#x27;./reference.ts&#x27;</span>, <span class="comment">// If specified, generate this file that you can use for your reference management</span></span><br><span class="line">        <span class="attr">out</span>: <span class="string">&#x27;app/app.js&#x27;</span>, <span class="comment">// If specified, generate an out.js file which is the merged js file</span></span><br><span class="line">        <span class="attr">watch</span>: <span class="string">&#x27;app&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line">  grunt.registerTask(<span class="string">&#x27;default&#x27;</span>, [<span class="string">&#x27;ts:dev&#x27;</span>]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="run-grunt-in-command"><a class="header-anchor" href="#run-grunt-in-command"> </a>run grunt in command</h3>
-<p>這樣子 grunt 就會監控 在 app 資料夾下的 ts 檔案異動，並同時做 complie 的動作，如果有錯誤，會產生 complie error 的訊息。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1465,20 +1460,20 @@ run command</li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">308</span>
+          <span class="site-state-item-count">309</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

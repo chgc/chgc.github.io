@@ -17919,6 +17919,101 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Kotlin]學習筆記 - 001</title>
+    <url>/2021/06/14/kotlin-note-001/</url>
+    <content><![CDATA[<p>Kotlin 這語言名字最近一直出現在我的雷達中，但由於之前都不是走 Java 開發體系，當然就不會放在心上，但由於現在的工作基本上是走 Java 技術線，只好摸摸鼻子先來研究一下 Kotlin 這語言了</p>
+<span id="more"></span>
+<h1 id="What-is-Kotlin"><a class="header-anchor" href="#What-is-Kotlin"> </a>What is Kotlin?</h1>
+<ul>
+<li>跑在 JVM 上，是 JVM Language</li>
+<li>Object Oriented</li>
+<li>Functional, support Higher order function</li>
+<li>Less ceremony than Java, 語法比 Java 簡潔</li>
+</ul>
+<h2 id="建立學習環境"><a class="header-anchor" href="#建立學習環境"> </a>建立學習環境</h2>
+<p>這邊使用 IntelliJ 來做學習 Kotlin 的環境工具</p>
+<ol>
+<li>New Project with Kotlin Template
+<ol>
+<li>Project Name: 隨意</li>
+<li>Project Template: Application</li>
+<li>Project JSK 我選擇 1.8</li>
+</ol>
+</li>
+<li>Next -&gt; Finish 建立 Kotlin 專案</li>
+</ol>
+<p>在 <code>src</code> 資料夾下會看到 <code>main/kotlin</code> 得資料夾但沒有 kotlin 檔案，所以先增一個 <code>main.kt</code>  (<code>.kt</code> 為 Kotlin 檔案的附檔名)</p>
+<p><img src="image-20210614141411321.png" alt="image-20210614141411321"></p>
+<p>在該檔案內增加一個 main function</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span>&#123;</span><br><span class="line">    println(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要執行這一個檔案時， 需要先新增一個執行設定檔，Run -&gt; Edit Configurations -&gt; Add New Configuration</p>
+<p><img src="image-20210614141641413.png" alt="image-20210614141641413"></p>
+<p>以上設定完後就能執行了。</p>
+<p><img src="image-20210614141715897.png" alt="image-20210614141715897"></p>
+<h2 id="建立第一個-package"><a class="header-anchor" href="#建立第一個-package"> </a>建立第一個 package</h2>
+<p>一樣在 Source root 資料夾上新增一個 Kotlin 檔案，這時候可以連同輸入 package 的名稱，例如 <code>com.cky.Person</code></p>
+<p><img src="image-20210614142141788.png" alt="image-20210614142141788"></p>
+<p>這時候就會產生一個 <code>Person.kt</code> 檔案，並且建立 <code>com/cky</code> 得資料夾</p>
+<p><img src="image-20210614142331342.png" alt="image-20210614142331342"></p>
+<p>使用方式如其他 import package 一樣</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.cky.Person</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span>&#123;</span><br><span class="line"> println(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line"> <span class="keyword">val</span> person = Person(<span class="string">&quot;kevin&quot;</span>)</span><br><span class="line"> println(<span class="string">&quot;Name is <span class="subst">$&#123;kevin.Name&#125;</span>&quot;</span>)</span><br><span class="line"> person.display()    </span><br><span class="line"> person.displayWithLamda(::println) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String) &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(<span class="string">&quot;Display: <span class="variable">$name</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">displayWithLamda</span><span class="params">(func: (<span class="type">s</span>: <span class="type">String</span>) -&gt; <span class="type">Unit</span>)</span></span> &#123;</span><br><span class="line">        func(name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="筆記"><a class="header-anchor" href="#筆記"> </a>筆記</h1>
+<ol>
+<li>
+<p>建立一個 class instance  不需要 <code>new</code> keyword</p>
+</li>
+<li>
+<p>使用 <code>var</code> and <code>val</code> 來決定變數是否能被重新定義，就像 <code>let</code> 和 <code>const</code>，也可在 class 定義 property 時使用</p>
+<ul>
+<li><code>var</code> ==&gt; <code>let</code> : mutable</li>
+<li><code>val</code> ==&gt; <code>const</code> : immutable</li>
+</ul>
+</li>
+<li>
+<p>string template 的使用法，使用方法如下，這裡的寫法跟 Dart 一樣</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">(<span class="keyword">val</span> name: <span class="type">string</span>)</span></span>&#123;</span><br><span class="line">    println(<span class="string">&quot;display: <span class="variable">$name</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或是</span><br><span class="line">   println(<span class="string">&quot;display: <span class="subst">$&#123;person.name&#125;</span>&quot;</span>); <span class="comment">// 通常用於比較複雜的值，例如 $&#123;objectClass.prop&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>if expression</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> message = <span class="keyword">if</span>(q.answer == q.correctAnswer) &#123; <span class="string">&quot;Correct&quot;</span> &#125; <span class="keyword">else</span> &#123; <span class="string">&quot;Wrong&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>null handle, Kotlin 會盡量讓使用者不要遇到 null 的問題，所以例如 String 是一個 non-null value. 如果要讓 property 可以接受 null 時，就要搭配 <code>?</code></p>
+</li>
+</ol>
+   <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Question</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> answer: string? = <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同樣也可以使用 <code>?.</code> 的方式來判斷是否能繼續往下執行，這點跟 TypeScript 的 <code>?.</code> 是一樣的功能</p>
+   <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> q: Question? = Question()</span><br><span class="line">q?.answer = <span class="string">&quot;42&quot;</span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>
+<p>沒有 <code>switch</code> 只有 <code>when</code></p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Question</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> answer: String = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">val</span> correctAnswer = <span class="string">&quot;Answer&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">printResult</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// 等同 if(q.answer == q.correctAnswer) &#123; &quot;Correct&quot; &#125; else &#123; &quot;Wrong&quot; &#125; </span></span><br><span class="line">        <span class="keyword">when</span> (answer) &#123;</span><br><span class="line">            correctAnswer -&gt; print(<span class="string">&quot;Correct&quot;</span>)</span><br><span class="line">            <span class="keyword">else</span> -&gt; print(<span class="string">&quot;Wrong&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>基本概念跟 <code>switch</code> 一樣，也可以做到 pattern match 的效果</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">whatItIs</span><span class="params">(any: <span class="type">Any</span>)</span></span> = <span class="keyword">when</span> (any) &#123;</span><br><span class="line">    <span class="keyword">is</span> String -&gt; &#123;</span><br><span class="line">        <span class="keyword">val</span> firstLetter = any.first()        <span class="comment">// smart cast, any is String now</span></span><br><span class="line">        println(<span class="string">&quot;It seems like words, it is <span class="variable">$any</span> and the first word is <span class="variable">$firstLetter</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">is</span> <span class="built_in">Int</span> -&gt; &#123;</span><br><span class="line">        <span class="keyword">val</span> doubleValue = any * <span class="number">2</span>        <span class="comment">// smart cast, any is Int now</span></span><br><span class="line">        println(<span class="string">&quot;It seems like a number, <span class="variable">$any</span> and multiply 2 is <span class="variable">$doubleValue</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> -&gt; println(<span class="string">&quot;Whatever&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更多的寫法留在之後再深入研究</p>
+</li>
+<li>
+<p>try block 的寫法也可以跟 If Expression 一樣</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> number: <span class="built_in">Int</span>? = <span class="keyword">try</span> &#123; </span><br><span class="line">  Integer.parseInt(q.answer)</span><br><span class="line">&#125; <span class="keyword">catch</span>(e: NumberFormatException) &#123;</span><br><span class="line">  <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>looping</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">// range of value</span></span><br><span class="line"><span class="keyword">var</span> range = <span class="number">1.</span><span class="number">.10</span></span><br><span class="line"><span class="keyword">var</span> range = <span class="string">&#x27;a&#x27;</span>..<span class="string">&#x27;z&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// for loop</span></span><br><span class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.10</span>) &#123;</span><br><span class="line">    println(i) <span class="comment">// 1,2,3,4,5,6,7,8,9,10</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">10</span> downTo <span class="number">1</span> step <span class="number">2</span>) &#123;</span><br><span class="line">	println(i) <span class="comment">// 10,8,6,4,2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">1</span> until <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="comment">// 1 to 9 不包含 10</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// loop list</span></span><br><span class="line"><span class="keyword">var</span> numbers = listOf(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> numbers) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// loop list with index</span></span><br><span class="line"><span class="keyword">for</span>((index, element) <span class="keyword">in</span> numbers.withIndex()) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// loop through map</span></span><br><span class="line"><span class="keyword">for</span>((key, value) <span class="keyword">in</span> map) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>No Checked Exception，但仍可透過 try catch 的方式捕捉到 exception</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Kotlin</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

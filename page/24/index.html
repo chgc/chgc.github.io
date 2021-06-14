@@ -200,6 +200,98 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/01/14/angular2-outputs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/01/14/angular2-outputs/" class="post-title-link" itemprop="url">[Angular] Outputs & Inputs</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2016-01-14 15:15:00" itemprop="dateCreated datePublished" datetime="2016-01-14T15:15:00+08:00">2016-01-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/01/14/angular2-outputs/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/14/angular2-outputs/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Angular 在 Components之間的值得傳遞方式分割成Inputs和Outputs.
+寫法如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Components(&#123;</span><br><span class="line">     ....,</span><br><span class="line">     inputs:[&#x27;init&#x27;],</span><br><span class="line">     outputs:[&#x27;finish&#x27;] </span><br><span class="line">&#125;)</span><br><span class="line">export class xxx()&#123;</span><br><span class="line">	okEvent: EventEmitter&lt;any&gt; = new EventEmitter();</span><br><span class="line">  </span><br><span class="line">  ok()&#123;</span><br><span class="line">     // this should match the type define in EventEmitter</span><br><span class="line">     this.okEvent.emit(&#x27;the value want to pass&#x27;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// in another components</span><br><span class="line">&lt;ddd (finish)=&quot;finish($event)&quot; [init]=&quot;value pass in&quot;&gt;&lt;/ddd&gt;</span><br><span class="line"></span><br><span class="line">$event =&gt; will catch the return value</span><br></pre></td></tr></table></figure>
+<p>另外一種寫法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Component, View, Input, Output, EventEmitter &#125; from &#x27;angular2/angular2&#x27;;</span><br><span class="line"></span><br><span class="line">@Components(&#123;</span><br><span class="line">     ....</span><br><span class="line">&#125;)</span><br><span class="line">export class xxx()&#123;</span><br><span class="line">  @Input() init;</span><br><span class="line">  // @Output(alias name)</span><br><span class="line">  @Output(&#x27;finish&#x27;) okEvent:EventEmitter&lt;Any&gt; = new EventEmitter();</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  ok()&#123;</span><br><span class="line">     // this should match the type define in EventEmitter if use typescript</span><br><span class="line">     this.okEvent.emit(&#x27;the value want to pass&#x27;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// in another components</span><br><span class="line">&lt;ddd (finish)=&quot;finish($event)&quot; [init]=&quot;value pass in&quot;&gt;&lt;/ddd&gt;</span><br><span class="line"></span><br><span class="line">$event =&gt; will catch the return value</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/01/11/ef-entity-framework-7-migration-with-exist-database/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1146,120 +1238,6 @@ F7 切換鍵盤瀏覽</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/17/javascript-es6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/17/javascript-es6/" class="post-title-link" itemprop="url">[Javascript] 學ES2015(ES6) & Typescript - 環境準備</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-10-17 09:48:00" itemprop="dateCreated datePublished" datetime="2015-10-17T09:48:00+08:00">2015-10-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/10/17/javascript-es6/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/17/javascript-es6/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="準備練習環境"><a class="header-anchor" href="#準備練習環境"> </a>準備練習環境</h1>
-<ol>
-<li>VSCode</li>
-<li>Gulp</li>
-<li>browersync</li>
-<li>Typescript</li>
-</ol>
-<h2 id="設定項目"><a class="header-anchor" href="#設定項目"> </a>設定項目</h2>
-<ol>
-<li>tsconfig.json</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;compilerOptions&quot;: &#123;</span><br><span class="line">		&quot;target&quot;: &quot;ES5&quot;,</span><br><span class="line">		&quot;module&quot;: &quot;amd&quot;,</span><br><span class="line">		&quot;sourceMap&quot;: false,</span><br><span class="line">		&quot;watch&quot;: true,</span><br><span class="line">		&quot;outDir&quot;: &quot;public/&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>tasks.json</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;version&quot;: &quot;0.1.0&quot;,</span><br><span class="line">	&quot;command&quot;: &quot;gulp&quot;,</span><br><span class="line">	&quot;isShellCommand&quot;: true,</span><br><span class="line">	&quot;tasks&quot;: [</span><br><span class="line">		&#123;</span><br><span class="line">			&quot;taskName&quot;: &quot;watch&quot;,</span><br><span class="line">			&quot;isBuildCommand&quot;: true,</span><br><span class="line">			&quot;showOutput&quot;: &quot;silent&quot;,</span><br><span class="line">			&quot;problemMatcher&quot;: &quot;$tsc&quot;			</span><br><span class="line">		&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>gulpfile.js</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&#x27;gulp&#x27;),</span><br><span class="line">	browserSync = require(&#x27;browser-sync&#x27;).create(),</span><br><span class="line">	typescript = require(&#x27;gulp-tsc&#x27;);</span><br><span class="line">	</span><br><span class="line">gulp.task(&#x27;browser-sync&#x27;,function()&#123;</span><br><span class="line">	browserSync.init(&#123;</span><br><span class="line">		server:&#123;</span><br><span class="line">			baseDir:&quot;./&quot;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)	</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;compile&#x27;,function()&#123;</span><br><span class="line">	gulp.src([&#x27;src/**/*.ts&#x27;])</span><br><span class="line">	    .pipe(typescript())</span><br><span class="line">		.pipe(gulp.dest(&#x27;public/&#x27;))</span><br><span class="line">		.pipe(browserSync.reload(&#123;stream:true&#125;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;watch&#x27;,[&#x27;browser-sync&#x27;],function()&#123;</span><br><span class="line">	gulp.watch([&#x27;src/**/*.ts&#x27;],[&#x27;compile&#x27;]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;default&#x27;,[&#x27;watch&#x27;]);</span><br></pre></td></tr></table></figure>
-<p>gulpfile會做兩件事情</p>
-<ol>
-<li>當ts檔案有異動的時候做Compile並輸出到public的資料夾下</li>
-<li>透過browsersync更新瀏覽器</li>
-</ol>
-<p>這樣子就可以專心來練習javascript了</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1331,20 +1309,20 @@ F7 切換鍵盤瀏覽</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">308</span>
+          <span class="site-state-item-count">309</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

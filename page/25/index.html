@@ -200,6 +200,120 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/17/javascript-es6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/10/17/javascript-es6/" class="post-title-link" itemprop="url">[Javascript] 學ES2015(ES6) & Typescript - 環境準備</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-10-17 09:48:00" itemprop="dateCreated datePublished" datetime="2015-10-17T09:48:00+08:00">2015-10-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/10/17/javascript-es6/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/17/javascript-es6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="準備練習環境"><a class="header-anchor" href="#準備練習環境"> </a>準備練習環境</h1>
+<ol>
+<li>VSCode</li>
+<li>Gulp</li>
+<li>browersync</li>
+<li>Typescript</li>
+</ol>
+<h2 id="設定項目"><a class="header-anchor" href="#設定項目"> </a>設定項目</h2>
+<ol>
+<li>tsconfig.json</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;compilerOptions&quot;: &#123;</span><br><span class="line">		&quot;target&quot;: &quot;ES5&quot;,</span><br><span class="line">		&quot;module&quot;: &quot;amd&quot;,</span><br><span class="line">		&quot;sourceMap&quot;: false,</span><br><span class="line">		&quot;watch&quot;: true,</span><br><span class="line">		&quot;outDir&quot;: &quot;public/&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>tasks.json</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;version&quot;: &quot;0.1.0&quot;,</span><br><span class="line">	&quot;command&quot;: &quot;gulp&quot;,</span><br><span class="line">	&quot;isShellCommand&quot;: true,</span><br><span class="line">	&quot;tasks&quot;: [</span><br><span class="line">		&#123;</span><br><span class="line">			&quot;taskName&quot;: &quot;watch&quot;,</span><br><span class="line">			&quot;isBuildCommand&quot;: true,</span><br><span class="line">			&quot;showOutput&quot;: &quot;silent&quot;,</span><br><span class="line">			&quot;problemMatcher&quot;: &quot;$tsc&quot;			</span><br><span class="line">		&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>gulpfile.js</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&#x27;gulp&#x27;),</span><br><span class="line">	browserSync = require(&#x27;browser-sync&#x27;).create(),</span><br><span class="line">	typescript = require(&#x27;gulp-tsc&#x27;);</span><br><span class="line">	</span><br><span class="line">gulp.task(&#x27;browser-sync&#x27;,function()&#123;</span><br><span class="line">	browserSync.init(&#123;</span><br><span class="line">		server:&#123;</span><br><span class="line">			baseDir:&quot;./&quot;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)	</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;compile&#x27;,function()&#123;</span><br><span class="line">	gulp.src([&#x27;src/**/*.ts&#x27;])</span><br><span class="line">	    .pipe(typescript())</span><br><span class="line">		.pipe(gulp.dest(&#x27;public/&#x27;))</span><br><span class="line">		.pipe(browserSync.reload(&#123;stream:true&#125;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;watch&#x27;,[&#x27;browser-sync&#x27;],function()&#123;</span><br><span class="line">	gulp.watch([&#x27;src/**/*.ts&#x27;],[&#x27;compile&#x27;]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;default&#x27;,[&#x27;watch&#x27;]);</span><br></pre></td></tr></table></figure>
+<p>gulpfile會做兩件事情</p>
+<ol>
+<li>當ts檔案有異動的時候做Compile並輸出到public的資料夾下</li>
+<li>透過browsersync更新瀏覽器</li>
+</ol>
+<p>這樣子就可以專心來練習javascript了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/11/aspnet-reportviewer-remote-report-path-setting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1079,106 +1193,6 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/03/29/angular-aspnet-mvc-with-angular-html5mode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/03/29/angular-aspnet-mvc-with-angular-html5mode/" class="post-title-link" itemprop="url">[AngularJS] ASP.NET MVC with angular Html5Mode</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-03-29 09:30:00" itemprop="dateCreated datePublished" datetime="2015-03-29T09:30:00+08:00">2015-03-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AngularJS/" itemprop="url" rel="index"><span itemprop="name">AngularJS</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/03/29/angular-aspnet-mvc-with-angular-html5mode/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/29/angular-aspnet-mvc-with-angular-html5mode/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>經過一段時間的實驗. 在別的framework找到可以讓backend的route支援angular html5mode了.
-基本方式是如果我路由規則沒有定義的，全部指向index頁面(有ng-view的)</p>
-<p>所以基於這個原則. mvc的路由規則就要稍微調整一下.
-將原本的DefaultApp修改一下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 舊</span><br><span class="line"> routes.MapRoute(</span><br><span class="line">                name: &quot;DefaultApp&quot;,</span><br><span class="line">                url: &quot;&#123;controller&#125;/&#123;action&#125;/&#123;id&#125;&quot;,</span><br><span class="line">                defaults: new &#123; controller = &quot;Home&quot;, action = &quot;Index&quot;, id = UrlParameter.Optional &#125;</span><br><span class="line">            );</span><br><span class="line">// 新</span><br><span class="line"> routes.MapRoute(</span><br><span class="line">                name: &quot;DefaultApp&quot;,</span><br><span class="line">                url: &quot;app/&#123;controller&#125;/&#123;action&#125;/&#123;id&#125;&quot;,</span><br><span class="line">                defaults: new &#123; controller = &quot;Home&quot;, action = &quot;Index&quot;, id = UrlParameter.Optional &#125;</span><br><span class="line">            );</span><br></pre></td></tr></table></figure>
-<p>然後新增</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">routes.Add(new SingleRoute());</span><br></pre></td></tr></table></figure>
-<p>SingleRoute Class</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class SingleRoute : RouteBase</span><br><span class="line">    &#123;</span><br><span class="line">        public override RouteData GetRouteData(HttpContextBase httpContext)</span><br><span class="line">        &#123;</span><br><span class="line">            var data = new RouteData(this, new MvcRouteHandler());</span><br><span class="line">            data.Values.Add(&quot;controller&quot;, &quot;Home&quot;);</span><br><span class="line">            data.Values.Add(&quot;action&quot;, &quot;Index&quot;);</span><br><span class="line">            return data;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)</span><br><span class="line">        &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>Client angular side:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$stateProvider</span><br><span class="line">         .state(&#x27;state1&#x27;, &#123;</span><br><span class="line">             url: &quot;/state1&quot;,</span><br><span class="line">             templateUrl: &quot;app/Home/state1&quot; &lt;= mvc route rule</span><br><span class="line">        &#125;)</span><br><span class="line">$locationProvider.html5Mode(true).hashPrefix(&#x27;!&#x27;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以上</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1250,20 +1264,20 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">308</span>
+          <span class="site-state-item-count">309</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
