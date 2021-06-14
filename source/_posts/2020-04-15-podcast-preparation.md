@@ -5,8 +5,8 @@ comments: true
 typora-root-url: 2020-04-15-podcast-preparation/
 typora-copy-images-to: 2020-04-15-podcast-preparation/
 date: 2020-04-15 08:52:16
-categories: 其它
-tags: 其它
+categories: 其他
+tags: 其他
 ---
 
 收聽 Podcast 的人比你想像中的還多很多，在台灣也有很多有優質的 Podcast 節目，這裡我整理了一些開自己 Podcast 所需要準備的基本工作
