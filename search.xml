@@ -8899,64 +8899,6 @@ We are not storing the subscription from connecting as we do not expect this ser
       </tags>
   </entry>
   <entry>
-    <title>[Angular] CLI 進度顯示遇上字型的雷 (windows 限定)</title>
-    <url>/2018/06/19/angular-cli-progress-font/</url>
-    <content><![CDATA[<p>不確定從哪一版 CLI 開始，當執行 <code>ng serve</code> 時，命令視窗的進度表，就會出現很混亂的數字後，才會正常的顯示編譯結果，想說一開始就算了，GitHub 上也找不到相關的 Issue，就這樣子擺著。今天實在受不了，就開始追到底是什麼原因造成這神奇的現象</p>
-<span id="more"></span>
-<p>這神奇的現象，用簡單的影片表示一下 (使用字型: 細明體)</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/z_a13DhNcMI" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-<h1 id="開始追蹤"><a class="header-anchor" href="#開始追蹤"> </a>開始追蹤</h1>
-<p>當然一開始是從 Angular CLI 下手，但很不幸的，Angular CLI 所使用的進度顯示是透過 Webpack 的 <code>ProgressPlugin</code> 來完成的</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">const</span> ProgressPlugin = <span class="built_in">require</span>(<span class="string">&#x27;webpack/lib/ProgressPlugin&#x27;</span>);</span><br><span class="line">...</span><br><span class="line"><span class="keyword">if</span> (buildOptions.progress) &#123;</span><br><span class="line">    extraPlugins.push(<span class="keyword">new</span> ProgressPlugin(&#123; <span class="attr">profile</span>: buildOptions.verbose, <span class="attr">colors</span>: <span class="literal">true</span> &#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>只好前往 <code>ProgressPlugin</code> 探索了，還好 <code>ProgressPlugin</code>  只是單純一隻 js 檔案，應該很容易找 (才怪)</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> defaultHandler = <span class="function">(<span class="params">percentage, msg, ...args</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">let</span> state = msg;</span><br><span class="line">		<span class="keyword">const</span> details = args;</span><br><span class="line">		<span class="keyword">if</span> (percentage &lt; <span class="number">1</span>) &#123;</span><br><span class="line">			percentage = <span class="built_in">Math</span>.floor(percentage * <span class="number">100</span>);</span><br><span class="line">			msg = <span class="string">`<span class="subst">$&#123;percentage&#125;</span>% <span class="subst">$&#123;msg&#125;</span>`</span>;</span><br><span class="line">			<span class="keyword">if</span> (percentage &lt; <span class="number">100</span>) &#123;</span><br><span class="line">				msg = <span class="string">` <span class="subst">$&#123;msg&#125;</span>`</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (percentage &lt; <span class="number">10</span>) &#123;</span><br><span class="line">				msg = <span class="string">` <span class="subst">$&#123;msg&#125;</span>`</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">let</span> detail <span class="keyword">of</span> details) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!detail) <span class="keyword">continue</span>;</span><br><span class="line">				<span class="keyword">if</span> (detail.length &gt; <span class="number">40</span>) &#123;</span><br><span class="line">          detail = <span class="string">`…<span class="subst">$&#123;detail.substr(detail.length - <span class="number">39</span>)&#125;</span>`</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				msg += <span class="string">` <span class="subst">$&#123;detail&#125;</span>`</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (profile) &#123;</span><br><span class="line">			state = state.replace(<span class="regexp">/^\d+\/\d+\s+/</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">			<span class="keyword">if</span> (percentage === <span class="number">0</span>) &#123;</span><br><span class="line">				lastState = <span class="literal">null</span>;</span><br><span class="line">				lastStateTime = <span class="built_in">Date</span>.now();</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (state !== lastState || percentage === <span class="number">1</span>) &#123;</span><br><span class="line">				<span class="keyword">const</span> now = <span class="built_in">Date</span>.now();</span><br><span class="line">				<span class="keyword">if</span> (lastState) &#123;</span><br><span class="line">					<span class="keyword">const</span> stateMsg = <span class="string">`<span class="subst">$&#123;now - lastStateTime&#125;</span>ms <span class="subst">$&#123;lastState&#125;</span>`</span>;</span><br><span class="line">					goToLineStart(stateMsg);</span><br><span class="line">					process.stderr.write(stateMsg + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">					lineCaretPosition = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				lastState = state;</span><br><span class="line">				lastStateTime = now;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		goToLineStart(msg);</span><br><span class="line">		process.stderr.write(msg);</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> goToLineStart = <span class="function"><span class="params">nextMessage</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="keyword">for</span> (; lineCaretPosition &gt; nextMessage.length; lineCaretPosition--) &#123;</span><br><span class="line">			str += <span class="string">&quot;\b \b&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; lineCaretPosition; i++) &#123;</span><br><span class="line">			str += <span class="string">&quot;\b&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">    lineCaretPosition = nextMessage.length;</span><br><span class="line">		<span class="keyword">if</span> (str) process.stderr.write(str);</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> defaultHandler;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>這是很接近尾巴的搜尋結果，我知道畫面顯示出亂子，一定是這裡面的某一行有問題。經過 1 個小時的驗證，上述的程式碼並沒有錯，但是有抓到一個關鍵點，當我把 <code>…</code> 換成其他符號時，執行結果就會很漂亮的顯示進度表，</p>
-<p>這樣應該既是這個符號在作怪，但到底是哪裡出錯了。最後與保哥研究的結果，竟然是字型的關係</p>
-<h1 id="觀察結果"><a class="header-anchor" href="#觀察結果"> </a>觀察結果</h1>
-<p>我電腦 windows 下命令視窗所使用的字型是預設字型，<strong>細明體</strong>，就我自己的了解，細明體應該是等寬字型，所謂的等寬字型是指，英文數字在畫面上所顯示的寬度是一樣的，而中文字因為是兩個字元，所以是兩個英文字的寬度</p>
-<p><img src="https://i.imgur.com/ifbXijB.png" alt=""></p>
-<p>同樣的文字換成新細明體就會視不同的顯示方式</p>
-<p><img src="https://i.imgur.com/cnPiOzT.png" alt=""></p>
-<p><code>Fira Code</code> 字型</p>
-<p><img src="https://i.imgur.com/cDR8duI.png" alt=""></p>
-<p>到這裡，我們知道字型的不同，對於每一個字寬度的認定是不同的，而 webpack 的 <code>ProgressPlugin</code> 是使用字串長度做一些黑魔法的事情，(刪除原本的顯示文字，並在原本位置上顯示新的文字)</p>
-<p>而 <code>…</code> 在不同字體上的顯示方式又是如何呢?</p>
-<ul>
-<li>
-<p>新細明體</p>
-<p><img src="https://i.imgur.com/X4FzpxW.png" alt=""></p>
-</li>
-<li>
-<p>細明體</p>
-<p><img src="https://i.imgur.com/s7ZdpwO.png" alt=""></p>
-</li>
-<li>
-<p>Fira Code</p>
-<p><img src="https://i.imgur.com/RUB96ij.png" alt=""></p>
-</li>
-</ul>
-<p>沒錯，細明體的 <code>…</code> 竟然被判斷成全型字(兩個字元)，難怪在計算要刪除文字長度跟顯示時會出亂子，兇手就是你</p>
-<p>驗證一下，將命令視窗的字型改成【點陣字體】後再跑一次，看看會不會正常</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/eGH8dKdlB1I" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-<h1 id="解決方案"><a class="header-anchor" href="#解決方案"> </a>解決方案</h1>
-<ol>
-<li>無視他，既然知道是字型的問題而非程式問題，可以選擇無視他</li>
-<li>修正命令視窗的預設字體，設定方式可以參考保哥這篇 <a href="https://blog.miniasp.com/post/2017/12/06/Microsoft-YaHei-Mono-Chinese-Font-for-Command-Prompt-and-WSL.aspx">讓你的命令提示字元或 WSL 擁有一個美麗等寬的字型設定</a></li>
-</ol>
-<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
-<ul>
-<li><a href="http://funidea.shu.edu.tw/media/show/id/722">「細明體」和「新細明體」差在哪裡？</a></li>
-<li><a href="https://blog.miniasp.com/post/2017/12/06/Microsoft-YaHei-Mono-Chinese-Font-for-Command-Prompt-and-WSL.aspx">讓你的命令提示字元或 WSL 擁有一個美麗等寬的字型設定</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Angular</category>
-      </categories>
-      <tags>
-        <tag>Angular</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[Angular] NgModule</title>
     <url>/2018/06/26/angular-ngmodule/</url>
     <content><![CDATA[<p>Angular 的 NgModule 是架構中的核心元件，為什麼這麼說呢? 因為 NgModule 不論是要執行 AOT 或是 LazyLoading 或是製作Library ，都是以 NgModule 為單位，至於 NgModule 到底有哪些事情是我們需要知道的呢?</p>
@@ -9190,6 +9132,64 @@ We are not storing the subscription from connecting as we do not expect this ser
 <p><img src="https://i.imgur.com/ABjKM7S.gif" alt=""></p>
 <h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
 <p>透過 App-shell 對於使用者體驗，是有某種程度上的幫助，畢竟一開始就可以看到一些網站內容，而不是一個 loading 的畫面。</p>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Angular] CLI 進度顯示遇上字型的雷 (windows 限定)</title>
+    <url>/2018/06/19/angular-cli-progress-font/</url>
+    <content><![CDATA[<p>不確定從哪一版 CLI 開始，當執行 <code>ng serve</code> 時，命令視窗的進度表，就會出現很混亂的數字後，才會正常的顯示編譯結果，想說一開始就算了，GitHub 上也找不到相關的 Issue，就這樣子擺著。今天實在受不了，就開始追到底是什麼原因造成這神奇的現象</p>
+<span id="more"></span>
+<p>這神奇的現象，用簡單的影片表示一下 (使用字型: 細明體)</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/z_a13DhNcMI" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+<h1 id="開始追蹤"><a class="header-anchor" href="#開始追蹤"> </a>開始追蹤</h1>
+<p>當然一開始是從 Angular CLI 下手，但很不幸的，Angular CLI 所使用的進度顯示是透過 Webpack 的 <code>ProgressPlugin</code> 來完成的</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">const</span> ProgressPlugin = <span class="built_in">require</span>(<span class="string">&#x27;webpack/lib/ProgressPlugin&#x27;</span>);</span><br><span class="line">...</span><br><span class="line"><span class="keyword">if</span> (buildOptions.progress) &#123;</span><br><span class="line">    extraPlugins.push(<span class="keyword">new</span> ProgressPlugin(&#123; <span class="attr">profile</span>: buildOptions.verbose, <span class="attr">colors</span>: <span class="literal">true</span> &#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只好前往 <code>ProgressPlugin</code> 探索了，還好 <code>ProgressPlugin</code>  只是單純一隻 js 檔案，應該很容易找 (才怪)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> defaultHandler = <span class="function">(<span class="params">percentage, msg, ...args</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">let</span> state = msg;</span><br><span class="line">		<span class="keyword">const</span> details = args;</span><br><span class="line">		<span class="keyword">if</span> (percentage &lt; <span class="number">1</span>) &#123;</span><br><span class="line">			percentage = <span class="built_in">Math</span>.floor(percentage * <span class="number">100</span>);</span><br><span class="line">			msg = <span class="string">`<span class="subst">$&#123;percentage&#125;</span>% <span class="subst">$&#123;msg&#125;</span>`</span>;</span><br><span class="line">			<span class="keyword">if</span> (percentage &lt; <span class="number">100</span>) &#123;</span><br><span class="line">				msg = <span class="string">` <span class="subst">$&#123;msg&#125;</span>`</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (percentage &lt; <span class="number">10</span>) &#123;</span><br><span class="line">				msg = <span class="string">` <span class="subst">$&#123;msg&#125;</span>`</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">let</span> detail <span class="keyword">of</span> details) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!detail) <span class="keyword">continue</span>;</span><br><span class="line">				<span class="keyword">if</span> (detail.length &gt; <span class="number">40</span>) &#123;</span><br><span class="line">          detail = <span class="string">`…<span class="subst">$&#123;detail.substr(detail.length - <span class="number">39</span>)&#125;</span>`</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				msg += <span class="string">` <span class="subst">$&#123;detail&#125;</span>`</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (profile) &#123;</span><br><span class="line">			state = state.replace(<span class="regexp">/^\d+\/\d+\s+/</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">			<span class="keyword">if</span> (percentage === <span class="number">0</span>) &#123;</span><br><span class="line">				lastState = <span class="literal">null</span>;</span><br><span class="line">				lastStateTime = <span class="built_in">Date</span>.now();</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (state !== lastState || percentage === <span class="number">1</span>) &#123;</span><br><span class="line">				<span class="keyword">const</span> now = <span class="built_in">Date</span>.now();</span><br><span class="line">				<span class="keyword">if</span> (lastState) &#123;</span><br><span class="line">					<span class="keyword">const</span> stateMsg = <span class="string">`<span class="subst">$&#123;now - lastStateTime&#125;</span>ms <span class="subst">$&#123;lastState&#125;</span>`</span>;</span><br><span class="line">					goToLineStart(stateMsg);</span><br><span class="line">					process.stderr.write(stateMsg + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">					lineCaretPosition = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				lastState = state;</span><br><span class="line">				lastStateTime = now;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		goToLineStart(msg);</span><br><span class="line">		process.stderr.write(msg);</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> goToLineStart = <span class="function"><span class="params">nextMessage</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="keyword">for</span> (; lineCaretPosition &gt; nextMessage.length; lineCaretPosition--) &#123;</span><br><span class="line">			str += <span class="string">&quot;\b \b&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; lineCaretPosition; i++) &#123;</span><br><span class="line">			str += <span class="string">&quot;\b&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">    lineCaretPosition = nextMessage.length;</span><br><span class="line">		<span class="keyword">if</span> (str) process.stderr.write(str);</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> defaultHandler;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這是很接近尾巴的搜尋結果，我知道畫面顯示出亂子，一定是這裡面的某一行有問題。經過 1 個小時的驗證，上述的程式碼並沒有錯，但是有抓到一個關鍵點，當我把 <code>…</code> 換成其他符號時，執行結果就會很漂亮的顯示進度表，</p>
+<p>這樣應該既是這個符號在作怪，但到底是哪裡出錯了。最後與保哥研究的結果，竟然是字型的關係</p>
+<h1 id="觀察結果"><a class="header-anchor" href="#觀察結果"> </a>觀察結果</h1>
+<p>我電腦 windows 下命令視窗所使用的字型是預設字型，<strong>細明體</strong>，就我自己的了解，細明體應該是等寬字型，所謂的等寬字型是指，英文數字在畫面上所顯示的寬度是一樣的，而中文字因為是兩個字元，所以是兩個英文字的寬度</p>
+<p><img src="https://i.imgur.com/ifbXijB.png" alt=""></p>
+<p>同樣的文字換成新細明體就會視不同的顯示方式</p>
+<p><img src="https://i.imgur.com/cnPiOzT.png" alt=""></p>
+<p><code>Fira Code</code> 字型</p>
+<p><img src="https://i.imgur.com/cDR8duI.png" alt=""></p>
+<p>到這裡，我們知道字型的不同，對於每一個字寬度的認定是不同的，而 webpack 的 <code>ProgressPlugin</code> 是使用字串長度做一些黑魔法的事情，(刪除原本的顯示文字，並在原本位置上顯示新的文字)</p>
+<p>而 <code>…</code> 在不同字體上的顯示方式又是如何呢?</p>
+<ul>
+<li>
+<p>新細明體</p>
+<p><img src="https://i.imgur.com/X4FzpxW.png" alt=""></p>
+</li>
+<li>
+<p>細明體</p>
+<p><img src="https://i.imgur.com/s7ZdpwO.png" alt=""></p>
+</li>
+<li>
+<p>Fira Code</p>
+<p><img src="https://i.imgur.com/RUB96ij.png" alt=""></p>
+</li>
+</ul>
+<p>沒錯，細明體的 <code>…</code> 竟然被判斷成全型字(兩個字元)，難怪在計算要刪除文字長度跟顯示時會出亂子，兇手就是你</p>
+<p>驗證一下，將命令視窗的字型改成【點陣字體】後再跑一次，看看會不會正常</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/eGH8dKdlB1I" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+<h1 id="解決方案"><a class="header-anchor" href="#解決方案"> </a>解決方案</h1>
+<ol>
+<li>無視他，既然知道是字型的問題而非程式問題，可以選擇無視他</li>
+<li>修正命令視窗的預設字體，設定方式可以參考保哥這篇 <a href="https://blog.miniasp.com/post/2017/12/06/Microsoft-YaHei-Mono-Chinese-Font-for-Command-Prompt-and-WSL.aspx">讓你的命令提示字元或 WSL 擁有一個美麗等寬的字型設定</a></li>
+</ol>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="http://funidea.shu.edu.tw/media/show/id/722">「細明體」和「新細明體」差在哪裡？</a></li>
+<li><a href="https://blog.miniasp.com/post/2017/12/06/Microsoft-YaHei-Mono-Chinese-Font-for-Command-Prompt-and-WSL.aspx">讓你的命令提示字元或 WSL 擁有一個美麗等寬的字型設定</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>Angular</category>
@@ -18005,6 +18005,104 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 <p>No Checked Exception，但仍可透過 try catch 的方式捕捉到 exception</p>
 </li>
 </ol>
+]]></content>
+      <categories>
+        <category>Kotlin</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Kotlin]學習筆記 - 002</title>
+    <url>/2021/06/16/kotlin-note-002/</url>
+    <content><![CDATA[<p>繼續學習 Kotin，本篇筆記會紀錄 Functions</p>
+<h1 id="主要特性"><a class="header-anchor" href="#主要特性"> </a>主要特性</h1>
+<ol>
+<li>不需要存活在 Class 內</li>
+<li>使用 <code>fun</code> 關鍵字</li>
+<li>參數可以設定預設值</li>
+<li>可以使用 named parameters</li>
+<li>可以擴充既有 types</li>
+</ol>
+<span id="more"></span>
+<h1 id="筆記"><a class="header-anchor" href="#筆記"> </a>筆記</h1>
+<ol>
+<li>
+<p>Function 宣告</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">(message: <span class="type">String</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    ....</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>: String</code> 宣告變數或回傳型別為何</li>
+</ul>
+</li>
+<li>
+<p>支援 Expessions 型態</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> message = <span class="keyword">if</span>(a&gt;b) <span class="string">&quot;a&quot;</span> <span class="keyword">else</span> <span class="string">&quot;b&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>如何在 Java 內呼叫 Function</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cky</span><br><span class="line"><span class="comment">// Util.kt 檔案</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">(message: <span class="type">String</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    println(<span class="string">&quot;Hello <span class="variable">$message</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>編譯後，Java 會看成這樣，之後就跟使用其他 static function 的方法是一樣的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// class UtilKt() &#123;</span></span><br><span class="line"><span class="comment">//    static boolean display(String message) &#123; ... &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cky.UtilKt;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        UtilKt.display(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以透過 <code>@file:JvmName(&quot;SomeClassName&quot;)</code> 的方式來改變 Jvm 看 Kotlin function 的方式</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="meta">@file:JvmName</span>(<span class="string">&quot;SomeClassName&quot;</span>)</span><br><span class="line"><span class="keyword">package</span> com.cky</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">(message: <span class="type">String</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    println(<span class="string">&quot;Hello <span class="variable">$message</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>會轉換成</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// class SomeClassName &#123;</span></span><br><span class="line"><span class="comment">//    static boolean display(String message) &#123; ... &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cky.SomeClassName;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SomeClassName.display(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Default Parameters 在 C# 或是其他語言已經存在一段時間，但在 Java 並沒有這樣的觀念，而 Kotlin 的 Function 是可以設定預設值的</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">(message: <span class="type">String</span> = <span class="string">&quot;World&quot;</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    println(<span class="string">&quot;Hello <span class="variable">$message</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    display() <span class="comment">// 顯示 Hello world</span></span><br><span class="line">    display(<span class="string">&quot;Kevin&quot;</span>) <span class="comment">// 顯示 Hello Kevin</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>因為 Java 沒有 Defatul Parameters 的觀念，所以當上面的 function 要在 Java 中使用，有兩種方式，</p>
+<ol>
+<li>有多少參數傳就傳多少</li>
+<li>加上 <code>@JvmOverloads</code></li>
+</ol>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="meta">@JvmOverloads</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">(message: <span class="type">String</span> = <span class="string">&quot;World&quot;</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    println(<span class="string">&quot;Hello <span class="variable">$message</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Named Parameters，這一個觀念在其他語言也有存在， 正常在傳參數的時候，都是依 function 設計時的順序傳，而 Named Parameters 時，就可以使用指定名稱的方式傳</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">(message: <span class="type">String</span> = <span class="string">&quot;World&quot;</span>, logLevel: <span class="type">Int</span> = <span class="number">1</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    println(<span class="string">&quot;Hello <span class="variable">$message</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   display(logLevel = <span class="number">2</span>, message = <span class="string">&quot;Kevin&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Named Parameters 不能和 Position Parameters 混用</li>
+<li>Named Parameters 順序不重要</li>
+<li>Java 呼叫時，不能使用指定名稱傳值</li>
+</ul>
+</li>
+<li>
+<p>Extension Functions 的概念也存在於 C# 中，可以讓我們針對既有 Types / classes 擴充功能，例如: <code>&quot;abc&quot;.myCustomFunction()</code></p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> String.<span class="title">hello</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="string">&quot;Hello <span class="variable">$this</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    println(<span class="string">&quot;Kevin&quot;</span>.hello()) <span class="comment">// Hello Kevin</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>line2: this 表示此 extension function 所接收到的值，以此範例就是 line 6 的 <code>&quot;Kevin&quot;</code></li>
+</ul>
+</li>
+<li>
+<p>Infix Functions</p>
+<ul>
+<li>Member or extension function</li>
+<li>Have a single parameter</li>
+<li>Marked with infix keyword</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 沒有使用 infix</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> h1 = Header(<span class="string">&quot;H1&quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> h2 = Header(<span class="string">&quot;H2&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> h3 = h1.plus(h2)</span><br><span class="line">    println(h3.Name) <span class="comment">//H1H2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Header</span></span>(<span class="keyword">var</span> Name: String) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> Header.<span class="title">plus</span><span class="params">(other: <span class="type">Header</span>)</span></span>: Header &#123;</span><br><span class="line">    <span class="keyword">return</span> Header(<span class="keyword">this</span>.Name + other.Name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 infix</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> h1 = Header(<span class="string">&quot;H1&quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> h2 = Header(<span class="string">&quot;H2&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> h3 = h1 plus h2 <span class="comment">// &lt;= 主要差異</span></span><br><span class="line">    println(h3.Name) <span class="comment">//H1H2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Header</span></span>(<span class="keyword">var</span> Name: String) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">infix</span> <span class="function"><span class="keyword">fun</span> Header.<span class="title">plus</span><span class="params">(other: <span class="type">Header</span>)</span></span>: Header &#123;</span><br><span class="line">    <span class="keyword">return</span> Header(<span class="keyword">this</span>.Name + other.Name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>可以透過 infix 來 overloading operators (不建議大量使用)</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">infix</span> <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> Header.<span class="title">plus</span><span class="params">(other: <span class="type">Header</span>)</span></span>: Header &#123;</span><br><span class="line">    <span class="keyword">return</span> Header(<span class="keyword">this</span>.Name + other.Name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> h1 = Header(<span class="string">&quot;H1&quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> h2 = Header(<span class="string">&quot;H2&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> h3 = h1 + h2 <span class="comment">// 可以使用 + operator</span></span><br><span class="line">    println(h3.Name) <span class="comment">//H1H2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Tail Recursive Functions</p>
+<ol>
+<li>使用 <code>tailrec</code> keyword</li>
+<li>必須要是正確型態 (corret form)</li>
+<li>符合上面的條件，Kotlin 就會優化 Recursive Functions</li>
+</ol>
+</li>
+</ol>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li>Kotlin Fundamentals | Plurasight</li>
+</ul>
 ]]></content>
       <categories>
         <category>Kotlin</category>
