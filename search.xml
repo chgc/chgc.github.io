@@ -18219,6 +18219,101 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[K8S] 開始學習 Kubernetes - 001</title>
+    <url>/2021/07/07/k8s-note-001/</url>
+    <content><![CDATA[<p>終於有機會接觸 Kubernetes (K8S) ，但對於整體的掌握度並沒有很好，所以從頭學起</p>
+<span id="more"></span>
+<h1 id="Kubernetes-Big-Picutre"><a class="header-anchor" href="#Kubernetes-Big-Picutre"> </a>Kubernetes Big Picutre</h1>
+<p>Kubernetes 是一個控制中心，來控制 node，多個 nodes 成一個 clusters，簡單來說就是管理一堆 VM，而每一個 node 內可以跑很多 pod，每一個 pod 內可以跑 container(s)</p>
+<p><img src="image-20210707115306733.png" alt="image-20210707115306733"></p>
+<p><img src="image-20210707115328473.png" alt="image-20210707115328473"></p>
+<p>K8S 就是用來管理這些 Pod 的一種方式，搭配各種需求就會有各式的元素出現</p>
+<p><img src="image-20210707120143894.png" alt="image-20210707120143894"></p>
+<p>而大腦當然需要其他的服務來協助管理眾多的 node，而我們會透過 API Server 對 K8S 進行相關的操作</p>
+<p><img src="image-20210707120512377.png" alt="image-20210707120512377"></p>
+<p>node 當然也會有相關的服務人員跟上頭溝通</p>
+<p><img src="image-20210707120951569.png" alt="image-20210707120951569"></p>
+<ul>
+<li>Kubelet: Agent 與 master 做溝通</li>
+<li>Container Runtime: 用來跑 Pod 的</li>
+<li>Kube-Proxy: 負責網路的部分</li>
+</ul>
+<h1 id="kubectl-命令"><a class="header-anchor" href="#kubectl-命令"> </a>kubectl 命令</h1>
+<ul>
+<li>kubectl version: 檢查 Kubernetes 版本</li>
+<li>kubectl cluster-info: 顯示 Cluster 資訊</li>
+<li>kubectl get all: 取得目前在跑得 pods, deployments, services, etc.</li>
+<li>kubectl run [container-name] --image=[image-name]: 建立 deployement for pod</li>
+<li>kubectl port-forward [pod] [ports]: Forward a port to allow external access</li>
+<li>kubectl expose … : export port for a deployment/pod</li>
+<li>kubectl create [resource]: 建立 resouce</li>
+<li>kubectl apply [resource]: 套用 resouce</li>
+<li>kubectl --help : 顯示出可用的命令列表</li>
+</ul>
+<h1 id="Pods"><a class="header-anchor" href="#Pods"> </a>Pods</h1>
+<ul>
+<li>K8s 內的最小單位</li>
+<li>Container 的執行環境</li>
+<li>organize application 「parts」 into Pods</li>
+<li>擁有自己的 IP、記憶體等資源，Pod 內的 Container 會共用這些資源</li>
+<li>live or die</li>
+<li>can replicate</li>
+</ul>
+<h2 id="container"><a class="header-anchor" href="#container"> </a>container</h2>
+<ul>
+<li>share the same Network namespace</li>
+<li>have the loopback network interface (localhost)</li>
+<li>processes need to bind to different ports (in the same pod)</li>
+</ul>
+<h2 id="建立-Pod"><a class="header-anchor" href="#建立-Pod"> </a>建立 Pod</h2>
+<blockquote>
+<p>kubectl run [podname] --image=[image-name]</p>
+<p>範例: kubectl run webserver --image=nginx:alpine</p>
+</blockquote>
+<ul>
+<li>
+<p>kubectl get pods : List pods</p>
+</li>
+<li>
+<p>kubectl port-forward [name-of-pod] [external port]:[internal port]</p>
+<p><code>kubectl port-forward webserver 8080:80</code></p>
+</li>
+<li>
+<p>kubectl delete pod [name of pod] : 刪除 pod，但如果沒有刪除 deployment，pod 還會在長回來</p>
+</li>
+<li>
+<p>kubectl delete deployment [name of deployment]: 刪除 deployment</p>
+</li>
+</ul>
+<h1 id="使用-YAML"><a class="header-anchor" href="#使用-YAML"> </a>使用 YAML</h1>
+<p>Kubenetes 可以使用 YAML 的設定檔來作部屬</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">my-nginx</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">rel:</span> <span class="string">stable</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-ngminx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:alpine</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<p>儲存成 <code>xxx.yml</code> 檔後，可透過以下的指令來建立、修改或刪除相關的服務</p>
+<ul>
+<li>
+<p><code>kubectl create -f xxx.yml</code></p>
+</li>
+<li>
+<p><code>kubectl apply -f xxx.yml</code></p>
+</li>
+<li>
+<p><code>kubectl delete -f xxx.yml</code></p>
+</li>
+</ul>
+<p>更多相關的指令可到網路上查詢</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://www.pluralsight.com/courses/kubernetes-developers-core-concepts">Pluralsight -  Kubernetes for Deveopers: Core Concepts</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>K8S</category>
+      </categories>
+      <tags>
+        <tag>K8S</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
