@@ -18285,6 +18285,10 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 <p>kubectl delete deployment [name of deployment]: 刪除 deployment</p>
 </li>
 </ul>
+<p>Tips:</p>
+<ol>
+<li>如果要拉的 image 不在 dockerhub (預設會去那邊找) 而只有在本地時，需要掛上 <code>–-image-pull-policy=Never</code> <code>，這樣才不會出現 </code><em>ErrImagePull</em>  的錯誤訊息</li>
+</ol>
 <h1 id="使用-YAML"><a class="header-anchor" href="#使用-YAML"> </a>使用 YAML</h1>
 <p>Kubenetes 可以使用 YAML 的設定檔來作部屬</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">my-nginx</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">rel:</span> <span class="string">stable</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-ngminx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:alpine</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
