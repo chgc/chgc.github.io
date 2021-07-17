@@ -18318,6 +18318,103 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[K8S] 開始學習 Kubernetes - 002</title>
+    <url>/2021/07/16/k8s-note-002/</url>
+    <content><![CDATA[<p>Kubernetes  Deployments 功能很強，可以算是部屬中重要的一環，除了設定部屬的 Pod 資訊外，也可以透過他來做更新或退版的事情，以下是相關筆記</p>
+<span id="more"></span>
+<h1 id="Rolling-Update-Deployments"><a class="header-anchor" href="#Rolling-Update-Deployments"> </a>Rolling Update Deployments</h1>
+<ul>
+<li>
+<p>Deployments 內建有兩種更新方式： Rolling Update (Default) 和 Recreate (會有 down-time)</p>
+</li>
+<li>
+<p>spec 區塊</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">minReadySeconds:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">progressDeadlineSeconds:</span> <span class="number">60</span></span><br><span class="line">  <span class="attr">revisionHistoryLimit:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>replicas</code> : Number of Pod replicas</li>
+<li><code>minReadySeconds</code> : Seconds new Pod should be ready to be considered healthy. 預設值: 0 秒</li>
+<li><code>progressDeadlineSeconds</code>: Seconds to wait before reporting stalled Deployment</li>
+<li><code>revisionHistoryLimit</code>: Number of <code>ReplicaSets</code> that can be rolled back. 預設值 10</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">strategy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">RollingUpdate</span></span><br><span class="line">  <span class="attr">rollingUpdate:</span></span><br><span class="line">    <span class="attr">maxSurge:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">maxUnavailable:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>type</code> 有兩種設定 <code>RollingUpdate</code> 或 <code>Recreate</code></p>
+</li>
+<li>
+<p><code>maxSurge</code>:  Max Pods can exceed the replicas count，預設值: 25%</p>
+<p><img src="image-20210716212233001.png" alt="image-20210716212233001"></p>
+</li>
+<li>
+<p><code>maxUnavaible</code>: Max Pods that are not operational，預設值: 25%</p>
+<p><img src="image-20210716214416118.png" alt="image-20210716214416118"></p>
+</li>
+<li>
+<p>使用 <code>--record</code> 會將執行指令記錄在 Deployment revision history 內</p>
+</li>
+<li>
+<p><code>kubectl rollout status deployment [deployment name]</code> 查詢歷史部屬記錄</p>
+</li>
+<li>
+<p>rollout 相關命令</p>
+<ul>
+<li>rollout status: check deployment status</li>
+<li>rollout history deployment [deployment-name]: view history of a Deployment</li>
+<li>rollout undo -f [deployment file]: rollback a deployment</li>
+<li>rollout undo deployment [deployment-name] --to-revision=n : rollback to 某一版</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Canary-Deployments"><a class="header-anchor" href="#Canary-Deployments"> </a>Canary Deployments</h1>
+<ul>
+<li>
+<p>同一時間有兩個版本在線上，有主要版本跟要測試的版本，透過設定的方式將部分的流量導向測試版本</p>
+<p><img src="image-20210717094909454.png" alt="image-20210717094909454"></p>
+</li>
+<li>
+<p>分別有 Stable 和 Canary Deployment，有相同的 lable 但可透過第二個 label 來區分</p>
+</li>
+<li>
+<p>Service 只在乎符合 selector 的項目，所以可透過 Deployment 的 replicas 的數量來決定流量百分比</p>
+</li>
+<li>
+<p>如果測試版本通過測試，就將該版本的 replicas 設定為正式環境要的數量，確定有跑起來後，就將原版本的 Deployment 刪除後，就完成版本的轉換</p>
+</li>
+</ul>
+<h1 id="Blue-Green-Deployments"><a class="header-anchor" href="#Blue-Green-Deployments"> </a>Blue-Green Deployments</h1>
+<ul>
+<li>
+<p>新增 V2 版本</p>
+<p><img src="image-20210717113303908.png" alt="image-20210717113303908"></p>
+</li>
+<li>
+<p>測試完成後，將 Public Service 切換至 V2 版本</p>
+<p><img src="image-20210717113323817.png" alt="image-20210717113323817"></p>
+</li>
+<li>
+<p>移除 App V1</p>
+<p><img src="image-20210717113634670.png" alt="image-20210717113634670"></p>
+</li>
+<li>
+<p>需留意的是 Blue/Green 部屬時要留意是否有足夠的 resource 做這件事情</p>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://blog.container-solutions.com/kubernetes-deployment-strategies">Article: Kubernetes deployment strategies by Etienne Tremel</a></li>
+<li><a href="https://www.weave.works/blog/kubernetes-deployment-strategies">Article: Kubernetes Deployment Strategies by weaveworks</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>K8S</category>
+      </categories>
+      <tags>
+        <tag>K8S</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
