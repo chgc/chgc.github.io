@@ -18416,6 +18416,84 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[K8S] 開始學習 Kubernetes - Jobs</title>
+    <url>/2021/07/17/k8s-note-003/</url>
+    <content><![CDATA[<p>K8S 內也可以跑 Jobs 和 CronJobs，這一篇筆記就是在記錄此事</p>
+<span id="more"></span>
+<h1 id="什麼是-Jobs"><a class="header-anchor" href="#什麼是-Jobs"> </a>什麼是 Jobs</h1>
+<ul>
+<li>one time execution</li>
+<li>can run multiple Pods in parallel</li>
+<li>Successful completions are tracked</li>
+</ul>
+<h1 id="什麼是-CronJobs"><a class="header-anchor" href="#什麼是-CronJobs"> </a>什麼是 CronJobs</h1>
+<ul>
+<li>Cron Job creates Jobs on a time-based schedule</li>
+<li>scheduled using the Cron format</li>
+<li>names must be less than 52 characters</li>
+<li><code>* * * * *</code> 為標準 Cron format.
+<ul>
+<li>第一個 <code>*</code>: min (0~59)</li>
+<li>第二個 <code>*</code>: hour (0~23)</li>
+<li>第三個 <code>*</code>: day of month (1 - 31)</li>
+<li>第四個 <code>*</code>: month (1 - 12) 或 jan, fan, mar,…</li>
+<li>第五個 <code>*</code>: day of week (0 - 6, Sunday = 0 or 7) 或是 sun, mon, tue,…</li>
+</ul>
+</li>
+<li>範例：
+<ul>
+<li>每週一早上 3 點， <code>0 3 * * 1</code></li>
+<li>每小時: <code>0 * * * *</code> , <code>@hourly</code></li>
+<li>每天: <code>0 0 * * *</code>，<code>@daily</code></li>
+<li>每週: <code>0 0 1 * * </code>，<code>@monthly</code></li>
+<li>每年: <code>0 0 1 1 *</code> ，<code>@yearly</code></li>
+<li>每分鐘: <code>*/1 * * * * </code></li>
+</ul>
+</li>
+<li><a href="https://crontab.guru/">cron format editor 網站</a></li>
+</ul>
+<h1 id="如何建立-Jobs-和-CronJobs"><a class="header-anchor" href="#如何建立-Jobs-和-CronJobs"> </a>如何建立 Jobs 和 CronJobs</h1>
+<ul>
+<li>
+<p>先定義 Jobs</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">batch/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">job</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pie-counter</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">pie-counter</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">completions:</span> <span class="number">4</span></span><br><span class="line">      <span class="attr">parallelism:</span> <span class="number">2</span></span><br><span class="line">      <span class="attr">restartPolicy:</span> <span class="string">Never</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pie-counter</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">xxx</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;sh&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;-c&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;.....&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>apiVersion 和 kind  的設定方法如上</li>
+<li>completions: 需要成功執行 Job 的 Pods 數量</li>
+<li>parallelism: 平行執行 Job 的 Pods 數量</li>
+<li>restartPolicy 設定值有
+<ul>
+<li>Never : Never try to restart</li>
+<li>OnFailure: restart when job fail</li>
+</ul>
+</li>
+<li>command: 執行指令</li>
+</ul>
+</li>
+<li>
+<p>Crobjob YAML 樣本如下</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">batch/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CronJob</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pie-counter</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">concurrencyPolicy:</span> <span class="string">Allow</span> <span class="comment"># Allow, Forbid, Replace</span></span><br><span class="line">  <span class="attr">schedule:</span> <span class="string">&#x27;*/5 * * * *&#x27;</span></span><br><span class="line">  <span class="attr">jobTemplate:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">pie-counter</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">completions:</span> <span class="number">4</span></span><br><span class="line">      <span class="attr">parallelism:</span> <span class="number">2</span></span><br><span class="line">      <span class="attr">restartPolicy:</span> <span class="string">Never</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pie-counter</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">xxx</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;sh&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;-c&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;.....&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>concurrencyPolicy: 是否允許 cronjobs 重疊執行</li>
+<li>schedule: 設定執行時間表 (Cron format)</li>
+<li>使用 <code>jobTemplate</code> 來描述 <code>job</code> 的 template</li>
+</ul>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/job/">Jobs</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/">CrobJobs</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>K8S</category>
+      </categories>
+      <tags>
+        <tag>K8S</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
