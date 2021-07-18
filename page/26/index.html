@@ -200,6 +200,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/06/30/devexpress-how-to-bind-a-objec-to-bindingsource-in-web-xtrareport/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/06/30/devexpress-how-to-bind-a-objec-to-bindingsource-in-web-xtrareport/" class="post-title-link" itemprop="url">[Devexpress] How to bind a objec to bindingsource in WEB xtrareport</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-07-01 01:00:00" itemprop="dateCreated datePublished" datetime="2015-07-01T01:00:00+08:00">2015-07-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Library/" itemprop="url" rel="index"><span itemprop="name">Library</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/06/30/devexpress-how-to-bind-a-objec-to-bindingsource-in-web-xtrareport/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/30/devexpress-how-to-bind-a-objec-to-bindingsource-in-web-xtrareport/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Bindingsource物件是屬於winform的，所以在web環境下的design time是沒有辦法直接設定物件到datasource的屬性裡
+所以這部分需要手動加進去，作法是進入 xxx.Designer.cs的InitializeComponent()加入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.bindingSource1.DataSource = typeof(Object); // replace with the object you want</span><br></pre></td></tr></table></figure>
+<p>這樣子回到設計模式就會出現可以設定的binding物件了</p>
+<p>^^</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/06/24/vfp-read-ini-files/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1032,99 +1125,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/02/23/laravel-laravel-50-with-angular/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/02/23/laravel-laravel-50-with-angular/" class="post-title-link" itemprop="url">[Laravel] Laravel 5.0 with Angular</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-02-24 03:57:00" itemprop="dateCreated datePublished" datetime="2015-02-24T03:57:00+08:00">2015-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Laravel/" itemprop="url" rel="index"><span itemprop="name">Laravel</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/02/23/laravel-laravel-50-with-angular/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/23/laravel-laravel-50-with-angular/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前有寫過一篇有關<a target="_blank" rel="noopener" href="http://cky.logdown.com/posts/248326/laravel-laravel-with-angular" title="[Laravel] Laravel with Angular">[Laravel] Laravel with Angular</a>, 但是這個方法在Laravel 5.0裡面是不合用的</p>
-<p>所以laravel 5.0的作法如下
-在 app/Exceptions/Handler.php 裡修改render function</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public function render($request, Exception $e)</span><br><span class="line">	&#123;</span><br><span class="line">		if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)</span><br><span class="line">			return response()-&gt;view(&#x27;index&#x27;)-&gt;header(&#x27;Content-Type&#x27;, &#x27;text/html&#x27;);</span><br><span class="line">		return parent::render($request, $e);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>這個效果等於laravel 4.x的app::missing</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1196,7 +1196,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">314</span>
+          <span class="site-state-item-count">315</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

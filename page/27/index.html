@@ -200,6 +200,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/02/23/laravel-laravel-50-with-angular/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/02/23/laravel-laravel-50-with-angular/" class="post-title-link" itemprop="url">[Laravel] Laravel 5.0 with Angular</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-02-24 03:57:00" itemprop="dateCreated datePublished" datetime="2015-02-24T03:57:00+08:00">2015-02-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel/" itemprop="url" rel="index"><span itemprop="name">Laravel</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/02/23/laravel-laravel-50-with-angular/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/23/laravel-laravel-50-with-angular/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前有寫過一篇有關<a target="_blank" rel="noopener" href="http://cky.logdown.com/posts/248326/laravel-laravel-with-angular" title="[Laravel] Laravel with Angular">[Laravel] Laravel with Angular</a>, 但是這個方法在Laravel 5.0裡面是不合用的</p>
+<p>所以laravel 5.0的作法如下
+在 app/Exceptions/Handler.php 裡修改render function</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public function render($request, Exception $e)</span><br><span class="line">	&#123;</span><br><span class="line">		if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)</span><br><span class="line">			return response()-&gt;view(&#x27;index&#x27;)-&gt;header(&#x27;Content-Type&#x27;, &#x27;text/html&#x27;);</span><br><span class="line">		return parent::render($request, $e);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>這個效果等於laravel 4.x的app::missing</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/02/11/react-article-memo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1100,144 +1193,6 @@ Method binding (One-way Binding): &amp;</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/11/02/azure-documentdb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/11/02/azure-documentdb/" class="post-title-link" itemprop="url">[Azure] DocumentDB</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-11-03 04:53:00" itemprop="dateCreated datePublished" datetime="2014-11-03T04:53:00+08:00">2014-11-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Azure/" itemprop="url" rel="index"><span itemprop="name">Azure</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/11/02/azure-documentdb/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/02/azure-documentdb/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>使用Azure新的NoSQL – DocumentDB(還在preview版本中)</p>
-<p>怎們建立網頁上面有說. 這裡只記錄一些操作上的動作</p>
-<ul>
-<li>DocumentDB裡面有分幾個元素 Database, DocumentCollection, document</li>
-</ul>
-<p>元素之間的關係</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Database -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">         -&gt; DocumentCollection(with id name=xxxx)  -&gt; document(s)</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">* 檢查database是否已存在</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>string dataBaseName = 「testDB」;
-var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);</p>
-<p>var database = client.CreateDatabaseQuery().FirstOrDefault(db =&gt; <a target="_blank" rel="noopener" href="http://db.Id">db.Id</a> == dataBaseName);</p>
-<p>if (database == null)
-{
-database = await client.CreateDatabaseAsync(
-new Database
-{
-Id = dataBaseName
-});
-}</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 這個寫法如果用在webapi上面，會有出現等不到回應的情形發生，所以解決方法是變成同步, 寫法會變成</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>database = client.CreateDatabaseAsync(new Database{Id = dataBaseName}).Result;</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 檢查DocumentCollection是否已經建立</span><br><span class="line"></span><br><span class="line">從上面知道如果要檢查Database是否已經建立, 要利用CreateDatabaseQuery(), </span><br><span class="line">同樣的， 如果要檢查Document是否已經建立, 就要用 CreateDocumentCollectionQuery(database.CollectionsLink)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDatabaseQuery](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdatabasequery.aspx)</span><br><span class="line"></span><br><span class="line">[MSDN -- DocumentServiceQueryable.CreateDocumentCollectionQuery Method](http://msdn.microsoft.com/en-us/library/azure/microsoft.azure.documents.linq.documentservicequeryable.createdocumentcollectionquery.aspx)</span><br><span class="line"></span><br><span class="line">* 建立Document</span><br><span class="line"></span><br><span class="line">new a class object and save into DocumentCollection</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>User _user = new User(){name=『abc』};
-var document1 = await client.CreateDocumentAsync(documentCollectionLink, _user);</p>
-<p>這裡的documentCollectionLink是指
-DocumentCollection collection = client.CreateDocumentCollectionQuery(database.SelfLink).FirstOrDefault(db =&gt; <a target="_blank" rel="noopener" href="http://db.Id">db.Id</a> == dataBaseName);
-或者是剛新增出來的collection
-DocumentCollection collection = client.CreateDocumentCollectionAsync(database.SelfLink,
-new DocumentCollection
-{
-Id = 「some name」
-});</p>
-<p>documentCollectionLink = collection.SelfLink;</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 更新Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>var doc = Client.CreateDocumentQuery<Document>(Favorscollection.DocumentsLink)
-.Where(d =&gt; <a target="_blank" rel="noopener" href="http://d.Id">d.Id</a> == id)
-.AsEnumerable()
-.FirstOrDefault();</p>
-<p>return Client.ReplaceDocumentAsync(doc.SelfLink, item);</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 刪除Document</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>var doc = Client.CreateDocumentQuery<Document>(Favorscollection.DocumentsLink)
-.Where(d =&gt; <a target="_blank" rel="noopener" href="http://d.Id">d.Id</a> == id)
-.AsEnumerable()
-.FirstOrDefault();</p>
-<p>return Client.DeleteDocumentAsync(doc.SelfLink);</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 查詢Document</span><br><span class="line"></span><br><span class="line">可以用Linq的語法來做查詢或是用sql的語法也可以</span><br><span class="line"></span><br><span class="line">[[DOC] Query DocumentDB](http://azure.microsoft.com/zh-tw/documentation/articles/documentdb-sql-query/)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>Client.CreateDocumentQuery<viewModel>(Favorscollection.DocumentsLink)
-.Where(m =&gt; m.lastName == 「xxxx」)
-.ToList()</p>
-<pre><code>
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1309,7 +1264,7 @@ Id = 「some name」
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">314</span>
+          <span class="site-state-item-count">315</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

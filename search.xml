@@ -18494,6 +18494,84 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[K8S] 開始學習 Kubernetes - Multi-container Pods</title>
+    <url>/2021/07/18/k8s-note-004/</url>
+    <content><![CDATA[<p>Multi-container Pods 是另外一個很常見的使用方式，有 4 種模式 <code>Init Pattern</code> 、<code>Sidecar Pattern</code>、<code>Adapter Patter</code> 、<code>Ambassador Pattern</code>。</p>
+<span id="more"></span>
+<p>為什麼會出現這種模式，主要的目的是要讓 container 的工作可以單純化，透過組合的方式來完成原本應該要做的事情</p>
+<h1 id="Init-Pattern"><a class="header-anchor" href="#Init-Pattern"> </a>Init Pattern</h1>
+<ul>
+<li>
+<p>在主要 Container 前執行的 Container</p>
+</li>
+<li>
+<p>只會跑一次</p>
+</li>
+<li>
+<p>init container 完成後才會執行主要的 container</p>
+</li>
+<li>
+<p>基本寫法</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ps-init</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">initializer</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">initContainers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">init-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&#x27;sh&#x27;</span>, <span class="string">&#x27;-c&#x27;</span>, <span class="string">&#x27;until nslookup pluralsight-ftw; do echo waiting for pluralsight-ftw service; sleep 1; done; echo Service found!&#x27;</span>]</span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web-ctr</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nigelpoulton/web-app:1.0</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>initContainers</code> 區塊就是用來定義 init containers 的</li>
+<li>可以有多個 container</li>
+<li>會依序執行</li>
+<li>如果 init container 執行失敗，整個 Pod 會重新開始 (預設值)，可以被修改</li>
+<li>應設定 resource requests &amp; limits</li>
+</ul>
+<h1 id="Sidecar-Pattern"><a class="header-anchor" href="#Sidecar-Pattern"> </a>Sidecar Pattern</h1>
+<p><img src="image-20210718225552049.png" alt="image-20210718225552049"></p>
+<ul>
+<li>
+<p>與 main container 同時執行，平行運作</p>
+</li>
+<li>
+<p>寫法就是在 containers 下有第二個 image 時，基本上就是 sidecar pattern</p>
+</li>
+<li>
+<p>範例:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">git-syncer</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">git-syncer</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/usr/share/nginx/</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">k8s.gcr.io/git-sync:v3.1.5</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">init-sync-ctr</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/tmp/git</span></span><br><span class="line">    <span class="string">...</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">    <span class="attr">emptyDir:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>常見用法: Logging</p>
+</li>
+</ul>
+<h1 id="Adapter-Pattern"><a class="header-anchor" href="#Adapter-Pattern"> </a>Adapter Pattern</h1>
+<p><img src="image-20210718225620546.png" alt="image-20210718225620546"></p>
+<ul>
+<li>
+<p>範例</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nigelpoulton/nginxadapter:1.0</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">transformer</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx/nginx-prometheus-exporter</span></span><br><span class="line">    <span class="attr">args:</span> [<span class="string">&quot;-nginx.scrape-uri&quot;</span>,<span class="string">&quot;http://localhost/nginx_status&quot;</span>]</span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">9113</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用另外一個 container 做輸出資料轉換</p>
+</li>
+<li>
+<p>SRP</p>
+</li>
+</ul>
+<h1 id="Ambassador-Pattern"><a class="header-anchor" href="#Ambassador-Pattern"> </a>Ambassador Pattern</h1>
+<p><img src="image-20210718225658971.png" alt="image-20210718225658971"></p>
+<ul>
+<li>
+<p>在 Pod 內的建立起的 proxy</p>
+</li>
+<li>
+<p>Service 只對 Ambassador 做開放</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>K8S</category>
+      </categories>
+      <tags>
+        <tag>K8S</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
