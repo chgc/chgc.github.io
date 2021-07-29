@@ -18219,17 +18219,17 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
-    <title>[K8S] 開始學習 Kubernetes - Big Picture</title>
+    <title>[K8s] 開始學習 Kubernetes - Big Picture</title>
     <url>/2021/07/07/k8s-note-001/</url>
-    <content><![CDATA[<p>終於有機會接觸 Kubernetes (K8S) ，但對於整體的掌握度並沒有很好，所以從頭學起</p>
+    <content><![CDATA[<p>終於有機會接觸 Kubernetes (K8s) ，但對於整體的掌握度並沒有很好，所以從頭學起</p>
 <span id="more"></span>
 <h1 id="Kubernetes-Big-Picutre"><a class="header-anchor" href="#Kubernetes-Big-Picutre"> </a>Kubernetes Big Picutre</h1>
 <p>Kubernetes 是一個控制中心，來控制 node，多個 nodes 成一個 clusters，簡單來說就是管理一堆 VM，而每一個 node 內可以跑很多 pod，每一個 pod 內可以跑 container(s)</p>
 <p><img src="image-20210707115306733.png" alt="image-20210707115306733"></p>
 <p><img src="image-20210707115328473.png" alt="image-20210707115328473"></p>
-<p>K8S 就是用來管理這些 Pod 的一種方式，搭配各種需求就會有各式的元素出現</p>
+<p>K8s 就是用來管理這些 Pod 的一種方式，搭配各種需求就會有各式的元素出現</p>
 <p><img src="image-20210707120143894.png" alt="image-20210707120143894"></p>
-<p>而大腦當然需要其他的服務來協助管理眾多的 node，而我們會透過 API Server 對 K8S 進行相關的操作</p>
+<p>而大腦當然需要其他的服務來協助管理眾多的 node，而我們會透過 API Server 對 K8s 進行相關的操作</p>
 <p><img src="image-20210707120512377.png" alt="image-20210707120512377"></p>
 <p>node 當然也會有相關的服務人員跟上頭溝通</p>
 <p><img src="image-20210707120951569.png" alt="image-20210707120951569"></p>
@@ -18311,14 +18311,14 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 </ul>
 ]]></content>
       <categories>
-        <category>K8S</category>
+        <category>K8s</category>
       </categories>
       <tags>
-        <tag>K8S</tag>
+        <tag>K8s</tag>
       </tags>
   </entry>
   <entry>
-    <title>[K8S] 開始學習 Kubernetes - Deployment Strategies</title>
+    <title>[K8s] 開始學習 Kubernetes - Deployment Strategies</title>
     <url>/2021/07/16/k8s-note-002/</url>
     <content><![CDATA[<p>Kubernetes  Deployments 功能很強，可以算是部屬中重要的一環，除了設定部屬的 Pod 資訊外，也可以透過他來做更新或退版的事情，以下是相關筆記</p>
 <span id="more"></span>
@@ -18409,16 +18409,16 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 </ul>
 ]]></content>
       <categories>
-        <category>K8S</category>
+        <category>K8s</category>
       </categories>
       <tags>
-        <tag>K8S</tag>
+        <tag>K8s</tag>
       </tags>
   </entry>
   <entry>
-    <title>[K8S] 開始學習 Kubernetes - Jobs</title>
+    <title>[K8s] 開始學習 Kubernetes - Jobs</title>
     <url>/2021/07/17/k8s-note-003/</url>
-    <content><![CDATA[<p>K8S 內也可以跑 Jobs 和 CronJobs，這一篇筆記就是在記錄此事</p>
+    <content><![CDATA[<p>K8s 內也可以跑 Jobs 和 CronJobs，這一篇筆記就是在記錄此事</p>
 <span id="more"></span>
 <h1 id="什麼是-Jobs"><a class="header-anchor" href="#什麼是-Jobs"> </a>什麼是 Jobs</h1>
 <ul>
@@ -18487,14 +18487,14 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 </ul>
 ]]></content>
       <categories>
-        <category>K8S</category>
+        <category>K8s</category>
       </categories>
       <tags>
-        <tag>K8S</tag>
+        <tag>K8s</tag>
       </tags>
   </entry>
   <entry>
-    <title>[K8S] 開始學習 Kubernetes - Multi-container Pods</title>
+    <title>[K8s] 開始學習 Kubernetes - Multi-container Pods</title>
     <url>/2021/07/18/k8s-note-004/</url>
     <content><![CDATA[<p>Multi-container Pods 是另外一個很常見的使用方式，有 4 種模式 <code>Init Pattern</code> 、<code>Sidecar Pattern</code>、<code>Adapter Patter</code> 、<code>Ambassador Pattern</code>。</p>
 <span id="more"></span>
@@ -18565,14 +18565,14 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 </ul>
 ]]></content>
       <categories>
-        <category>K8S</category>
+        <category>K8s</category>
       </categories>
       <tags>
-        <tag>K8S</tag>
+        <tag>K8s</tag>
       </tags>
   </entry>
   <entry>
-    <title>[K8S 相關] 寫 Helm 技巧筆記</title>
+    <title>[K8s 相關] 寫 Helm 技巧筆記</title>
     <url>/2021/07/28/helm-tips/</url>
     <content><![CDATA[<p>Helm 或許不是現在最新最流行的工具，但公司用這個，所以還是得知道怎麼寫，這邊整理一些撰寫中一些實用小技巧。因為他底層是用 go template，有些語法會跟 Go 很像</p>
 <span id="more"></span>
@@ -18617,10 +18617,10 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 </ol>
 ]]></content>
       <categories>
-        <category>K8S</category>
+        <category>K8s</category>
       </categories>
       <tags>
-        <tag>K8S</tag>
+        <tag>K8s</tag>
       </tags>
   </entry>
   <entry>

@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <link rel="canonical" href="http://blog.kevinyang.net/2021/07/07/k8s-note-001/" >
-    <title>[K8S] 開始學習 Kubernetes - Big Picture - CK&#39;s Notepad</title>
+    <title>[K8s] 開始學習 Kubernetes - Big Picture - CK&#39;s Notepad</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     
-    <meta property="og:title" content="[K8S] 開始學習 Kubernetes - Big Picture">
+    <meta property="og:title" content="[K8s] 開始學習 Kubernetes - Big Picture">
 	<meta property="og:type" content="article">
 	<meta property="og:url" content="http://blog.kevinyang.net/2021/07/07/k8s-note-001/">
 	
@@ -14,14 +14,14 @@
 	
 	<meta property="og:site_name" content="CK&#39;s Notepad">
 	
-		<meta property="og:description" content="&lt;p&gt;終於有機會接觸 Kubernetes (K8S) ，但對於整體的掌握度並沒有很好，所以從頭學起&lt;/p&gt;">
+		<meta property="og:description" content="&lt;p&gt;終於有機會接觸 Kubernetes (K8s) ，但對於整體的掌握度並沒有很好，所以從頭學起&lt;/p&gt;">
 	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="CK&#39;s Notepad">
 	<meta name="twitter:url" content="http://blog.kevinyang.net/2021/07/07/k8s-note-001/">
-	<meta name="twitter:title" content="[K8S] 開始學習 Kubernetes - Big Picture - CK&#39;s Notepad">
+	<meta name="twitter:title" content="[K8s] 開始學習 Kubernetes - Big Picture - CK&#39;s Notepad">
 	
-		<meta name="twitter:description" content="&lt;p&gt;終於有機會接觸 Kubernetes (K8S) ，但對於整體的掌握度並沒有很好，所以從頭學起&lt;/p&gt;">
+		<meta name="twitter:description" content="&lt;p&gt;終於有機會接觸 Kubernetes (K8s) ，但對於整體的掌握度並沒有很好，所以從頭學起&lt;/p&gt;">
 	
     
     	<meta name="twitter:image" content="http://blog.kevinyang.net/2021/07/07/k8s-note-001/image-20210707115306733.png">
@@ -49,16 +49,16 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "BlogPosting",
-			"headline": "[K8S] 開始學習 Kubernetes - Big Picture",
+			"headline": "[K8s] 開始學習 Kubernetes - Big Picture",
 			
-			"description": "&lt;p&gt;終於有機會接觸 Kubernetes (K8S) ，但對於整體的掌握度並沒有很好，所以從頭學起&lt;/p&gt;",
+			"description": "&lt;p&gt;終於有機會接觸 Kubernetes (K8s) ，但對於整體的掌握度並沒有很好，所以從頭學起&lt;/p&gt;",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"http://blog.kevinyang.net/2021/07/07/k8s-note-001/"
 			},
 			"datePublished": "2021-07-07T03:24:25.000Z",
-			"dateModified": "2021-07-29T12:03:24.530Z",
+			"dateModified": "2021-07-29T12:09:11.608Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1789,11 +1789,11 @@ h6.categories {
 								
 						    		<li itemprop="itemListElement" itemscope
 									      itemtype="http://schema.org/ListItem">
-									    <a itemprop="item" href="/categories/K8S/">
+									    <a itemprop="item" href="/categories/K8s/">
 									      
 									      	<span class="sns-icon folder-icon"></span>
 									      
-									      <span itemprop="name">K8S</span>
+									      <span itemprop="name">K8s</span>
 									    </a>
 									    <meta itemprop="position" content="2" />
 									</li>
@@ -1821,7 +1821,7 @@ h6.categories {
 			            <div class="header-cap flx">
 							
 							  <h1 class="article-title entry-title" itemprop="name">
-							    <a href="http://blog.kevinyang.net/2021/07/07/k8s-note-001/" target="_blank" itemprop="url">[K8S] 開始學習 Kubernetes - Big Picture</a>
+							    <a href="http://blog.kevinyang.net/2021/07/07/k8s-note-001/" target="_blank" itemprop="url">[K8s] 開始學習 Kubernetes - Big Picture</a>
 							  </h1>
 							
 						</div>
@@ -1848,15 +1848,15 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>終於有機會接觸 Kubernetes (K8S) ，但對於整體的掌握度並沒有很好，所以從頭學起</p>
+			  		<p>終於有機會接觸 Kubernetes (K8s) ，但對於整體的掌握度並沒有很好，所以從頭學起</p>
 <span id="more"></span>
 <h1 id="Kubernetes-Big-Picutre"><a class="header-anchor" href="#Kubernetes-Big-Picutre"> </a>Kubernetes Big Picutre</h1>
 <p>Kubernetes 是一個控制中心，來控制 node，多個 nodes 成一個 clusters，簡單來說就是管理一堆 VM，而每一個 node 內可以跑很多 pod，每一個 pod 內可以跑 container(s)</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/07/07/k8s-note-001/image-20210707115306733.png" width="992" height="608" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2021/07/07/k8s-note-001/image-20210707115328473.png" width="466" height="383" layout="responsive"></amp-img></div>
-<p>K8S 就是用來管理這些 Pod 的一種方式，搭配各種需求就會有各式的元素出現</p>
+<p>K8s 就是用來管理這些 Pod 的一種方式，搭配各種需求就會有各式的元素出現</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/07/07/k8s-note-001/image-20210707120143894.png" width="1304" height="542" layout="responsive"></amp-img></div>
-<p>而大腦當然需要其他的服務來協助管理眾多的 node，而我們會透過 API Server 對 K8S 進行相關的操作</p>
+<p>而大腦當然需要其他的服務來協助管理眾多的 node，而我們會透過 API Server 對 K8s 進行相關的操作</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/07/07/k8s-note-001/image-20210707120512377.png" width="1157" height="326" layout="responsive"></amp-img></div>
 <p>node 當然也會有相關的服務人員跟上頭溝通</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/07/07/k8s-note-001/image-20210707120951569.png" width="1332" height="564" layout="responsive"></amp-img></div>
@@ -1963,8 +1963,8 @@ h6.categories {
 						<ul class="article-tag-list">
 							
 					    		<li class="article-tag-list-item">
-					    			<a class="article-tag-list-link" href="/tags/K8S/" class="link-gaTrack" data-linkType="link-tag">
-					    				K8S
+					    			<a class="article-tag-list-link" href="/tags/K8s/" class="link-gaTrack" data-linkType="link-tag">
+					    				K8s
 					    			</a>
 					    		</li>
 							
