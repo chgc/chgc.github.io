@@ -18624,6 +18624,91 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[dhall] 學習筆記 001 - 基本知識建立</title>
+    <url>/2021/08/15/dhall-note-001/</url>
+    <content><![CDATA[<p>Dhall is a <a href="https://docs.dhall-lang.org/discussions/Programmable-configuration-files.html#">programmable configuration language</a> that you can think of as: JSON + functions + types + imports，這樣應該就解釋了什麼是 Dhall 了吧</p>
+<span id="more"></span>
+<p>貼個範例聞香一下</p>
+<p><img src="image-20210815104539412.png" alt="image-20210815104539412"></p>
+<p>左邊是 dhall 的語法，右邊是輸出結果，看起來還簡單明瞭的，接下來就是基本語言的筆記了，至於如何安裝就請按照這<a href="https://docs.dhall-lang.org/tutorials/Getting-started_Generate-JSON-or-YAML.html#installation">文件</a>安裝</p>
+<h1 id="學習筆記"><a class="header-anchor" href="#學習筆記"> </a>學習筆記</h1>
+<ul>
+<li>
+<p>Dhall 是一個強型別語言，compiler 會檢查型別是否正確，會將失敗的理由吐回給你，也可以使用 <code>--explain</code> 的 flag 來取得更多的訊息</p>
+<p><img src="image-20210815105527602.png" alt="image-20210815105527602"></p>
+<p><img src="image-20210815105609372.png" alt="image-20210815105609372"></p>
+</li>
+<li>
+<p>支援 type annotations，類似 TypeScript 指定型別的方式</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dhall-to-json &lt;&lt;&lt; &#x27;&#123; foo = 1, bar = True &#125; : &#123; foo : Natural, bar : Bool &#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>Type annotations 也可以用指定檔案的方式</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dhall-to-json &lt;&lt;&lt; &#x27;&#123; foo = 1, bar = True &#125; : ./schema.dhall&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>變數宣告: 使用 <code>let</code> 來進行變數宣告，如上面範例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">let home = &#x27;/home/$&#123;user&#125;&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>dhall 是 whitespace-insensitive，不像 yaml 一個 space 錯位就壞掉了，因為這樣的特性會有這樣的寫法出現</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">1</span> <span class="keyword">let</span> y = <span class="number">2</span> <span class="keyword">in</span> [x, y]</span><br><span class="line"><span class="comment">// 等同於</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> y = <span class="number">2</span></span><br><span class="line"><span class="keyword">in</span>  [x, y]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>一個比較完整的使用範例 (檔案: <code>employee.dhall</code>)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> job = &#123; department = <span class="string">&quot;Data Platform&quot;</span>, title = <span class="string">&quot;Software Engineer&quot;</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> john = &#123; age = <span class="number">23</span>, name = <span class="string">&quot;John Doe&quot;</span>, position = job &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> alice = &#123; age = <span class="number">24</span>, name = <span class="string">&quot;Alice Smith&quot;</span>, position = job &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span>  [ john, alice ]</span><br></pre></td></tr></table></figure>
+<p>輸出結果 (執行命令: <code>dhall-to-json --file ./employee.dhall</code>)</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;age&quot;</span>: <span class="number">23</span>,</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;John Doe&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;position&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;department&quot;</span>: <span class="string">&quot;Data Platform&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Software Engineer&quot;</span>  </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;age&quot;</span>: <span class="number">24</span>,</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Alice Smith&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;position&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;department&quot;</span>: <span class="string">&quot;Data Platform&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;Software Engineer&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>可以寫 function，宣告方式: <code>\(inputName : inputType) -&gt; output</code>，範例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">let twice = \(x : Natural) -&gt; [x, x] </span><br><span class="line">in twice 2</span><br><span class="line"></span><br><span class="line">// 輸出結果</span><br><span class="line">[2, 2]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>record 可以透過 <code>/\</code> 來合併</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dhall-to-json &lt;&lt;&lt; &#x27;&#123; foo = 1 &#125; /\ &#123; bar = 2&#125;&#x27;</span><br><span class="line"></span><br><span class="line">// 輸出結果</span><br><span class="line">&#123;</span><br><span class="line">   &quot;bar&quot;: 2,</span><br><span class="line">   &quot;foo&quot;: 1, </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比較接近現實生活的範例</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> smallServer = &#123; cpus = <span class="number">1</span>, gigabytesOfRAM = <span class="number">1</span>, terabytesOfDisk = <span class="number">1</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mediumServer = &#123; cpus = <span class="number">8</span>, gigabytesOfRAM = <span class="number">16</span>, terabytesOfDisk = <span class="number">4</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> largeServer = &#123; cpus = <span class="number">64</span>, gigabytesOfRAM = <span class="number">256</span>, terabytesOfDisk = <span class="number">16</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span>  [ smallServer /\ &#123; hostName = <span class="string">&quot;eu-west.example.com&quot;</span> &#125;</span><br><span class="line">    , largeServer /\ &#123; hostName = <span class="string">&quot;us-east.example.com&quot;</span> &#125;</span><br><span class="line">    , largeServer /\ &#123; hostName = <span class="string">&quot;ap-northeast.example.com&quot;</span> &#125;</span><br><span class="line">    , mediumServer /\ &#123; hostName = <span class="string">&quot;us-west.example.com&quot;</span> &#125;</span><br><span class="line">    , smallServer /\ &#123; hostName = <span class="string">&quot;sa-east.example.com&quot;</span> &#125;</span><br><span class="line">    , largeServer /\ &#123; hostName = <span class="string">&quot;ca-central.example.com&quot;</span> &#125;</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Operators</p>
+<ul>
+<li><code>++</code> 連接兩個字串</li>
+<li><code>#</code> 連接兩個 List</li>
+</ul>
+</li>
+<li>
+<p><code>Optional</code> ，有時候會遇到缺欄位的資料，這時候就要使用 <code>Optional</code> 的表示法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ </span><br><span class="line">  &#123; x = 1, y = None Natural &#125; ,</span><br><span class="line">  &#123; x = 2, y = Some 3 &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Some -&gt; 表示這個欄位有可能有 Null 值出現</li>
+<li>None <type> -&gt; 視為 Null 空值</li>
+<li>指令多下 <code>--preserve-null</code> 參數，會將空值輸出 (null)</li>
+</ul>
+</li>
+<li>
+<p>使用 <code>Unions</code> 的方式可以讓清單內有不同型別得資料存在</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- ./package.dhall</span><br><span class="line"></span><br><span class="line">let Package =</span><br><span class="line">      &lt; Local : &#123; relativePath : Text &#125;</span><br><span class="line">      | GitHub : &#123; repository : Text, revision : Text &#125;</span><br><span class="line">      | Hackage : &#123; package : Text, version : Text &#125;</span><br><span class="line">      &gt;</span><br><span class="line"></span><br><span class="line">in  [ Package.GitHub</span><br><span class="line">        &#123; repository =</span><br><span class="line">            &quot;https://github.com/Gabriel439/Haskell-Turtle-Library.git&quot;</span><br><span class="line">        , revision = &quot;ae5edf227b515b34c1cb6c89d9c58ea0eece12d5&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    , Package.Local &#123; relativePath = &quot;~/proj/optparse-applicative&quot; &#125;</span><br><span class="line">    , Package.Local &#123; relativePath = &quot;~/proj/discrimination&quot; &#125;</span><br><span class="line">    , Package.Hackage &#123; package = &quot;lens&quot;, version = &quot;4.15.4&quot; &#125;</span><br><span class="line">    , Package.GitHub</span><br><span class="line">        &#123; repository = &quot;https://github.com/haskell/text.git&quot;</span><br><span class="line">        , revision = &quot;ccbfabedea1cf5b38ff19f37549feaf01225e537&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    , Package.Local &#123; relativePath = &quot;~/proj/servant-swagger&quot; &#125;</span><br><span class="line">    , Package.Hackage &#123; package = &quot;aeson&quot;, version = &quot;1.2.3.0&quot; &#125;</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用 <code>mapKey</code> 和 <code>mapValue</code> 就可以做出動態資料，而指令參數 <code>--noMaps</code> 就會單純輸出結果不轉換</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ &#123; mapKey = &quot;daniel&quot;, mapValue = &#123; age = 17 &#125; &#125;</span><br><span class="line">, &#123; mapKey = &quot;rebecca&quot;, mapValue = &#123; age = 17 &#125; &#125;</span><br><span class="line">, &#123; mapKey = &quot;aiden&quot;, mapValue = &#123; age = 16 &#125; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>如果要輸出 yaml ，就使用 <code>dhall-to-yaml</code> 來跑 <code>dhall</code> 檔案</p>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://docs.dhall-lang.org/index.html">Dhall 官方文件</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>其他</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

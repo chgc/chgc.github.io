@@ -200,6 +200,132 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/24/angularjs-validation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/11/24/angularjs-validation/" class="post-title-link" itemprop="url">[AngularJS] Validation</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-11-25 06:10:00" itemprop="dateCreated datePublished" datetime="2013-11-25T06:10:00+08:00">2013-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AngularJS/" itemprop="url" rel="index"><span itemprop="name">AngularJS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/11/24/angularjs-validation/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/24/angularjs-validation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>#Form Validation with angularJs
+Basic:
+in .js
+$scope.form = {}
+$scope.form.$valid ==&gt; 判斷form(name=「form」)內的物件是否有驗證有錯誤的物件存在</p>
+<p>用法:
+formName.inputFieldName.property</p>
+<p><strong>Unmodified form</strong>
+A boolean property that tells us if the user has modified the form. This is true if the user hasn’t touched the form, and false if they have:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$pristine;</span><br></pre></td></tr></table></figure>
+<p><strong>Modified form</strong>
+A boolean property if and only if the user has actually modified the form. This is set regardless of validations on the form:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$dirty</span><br></pre></td></tr></table></figure>
+<p><strong>Valid form</strong>
+A boolean property that tells us that the form is valid or not. If the form is currently valid, then this will be true:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$valid</span><br></pre></td></tr></table></figure>
+<p><strong>Invalid form</strong>
+A boolean property that tells us that the form is invalid. If the form is currently invalid, then this will be true:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputFieldName.$invalid</span><br></pre></td></tr></table></figure>
+<p>The last two properties are particularly useful for showing or hiding DOM elements. They are also very useful when setting a class on a particular form.</p>
+<p><strong>Errors</strong>
+Another useful property that AngularJS makes available to us is the $error object. This object contains all of the validations on a particular form and if they are valid or invalid. To get access to this property, use the following syntax:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formName.inputfieldName.$error</span><br></pre></td></tr></table></figure>
+<p>###Addtional CSS classes
+ng-valid Is set if the form is valid.
+ng-invalid Is set if the form is invalid.
+ng-pristine Is set if the form is pristine.
+ng-dirty Is set if the form is dirty.</p>
+<p>##Input Validation</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input</span><br><span class="line">       ng-model=&quot;&#123;string&#125;&quot;</span><br><span class="line">       [name=&quot;&#123;string&#125;&quot;]</span><br><span class="line">       [required]</span><br><span class="line">       [ng-required=&quot;&#123;boolean&#125;&quot;]</span><br><span class="line">       [ng-minlength=&quot;&#123;number&#125;&quot;]</span><br><span class="line">       [ng-maxlength=&quot;&#123;number&#125;&quot;]</span><br><span class="line">       [ng-pattern=&quot;&#123;string&#125;&quot;]</span><br><span class="line">       [ng-change=&quot;&#123;string&#125;&quot;]&gt;</span><br><span class="line">&lt;/input&gt;</span><br></pre></td></tr></table></figure>
+<p>####可驗證項目(內建)
+requried
+ng-minlength
+ng-maxlength</p>
+<p>####$error所對應的項目
+formName.inputfieldName.$error.requried
+formName.inputfieldName.$error.minlength
+formName.inputfieldName.$error.maxlength</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/14/electronic-invoices-via-the-internet-opening-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1202,127 +1328,6 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/20/vfp-prog-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/10/20/vfp-prog-cache/" class="post-title-link" itemprop="url">[VFP]Prog Cache </a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-10-21 03:47:00" itemprop="dateCreated datePublished" datetime="2013-10-21T03:47:00+08:00">2013-10-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VFP/" itemprop="url" rel="index"><span itemprop="name">VFP</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/10/20/vfp-prog-cache/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/20/vfp-prog-cache/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>From the VFP9 helpfile:</p>
-</blockquote>
-<blockquote>
-<p>Specifies the amount of memory (address space) in pages that Visual FoxPro allocates at startup or a Visual FoxPro MTDLL COM Server allocates per thread for the internal program cache (memory used to run programs). Each page of memory is equal to 64K so the default setting equates to an allocation a little over 9MB. As the cache is filled, Visual FoxPro will try to flush it to remove unused items. It is possible that Visual FoxPro cannot free enough memory in which case an Error 1202 is generated (Program is too large). Adjusting the PROGCACHE setting can prevent this error from occurring.</p>
-</blockquote>
-<blockquote>
-<p>Note:
-While this setting can be used for the Visual FoxPro development product or normal runtime applications, it is primarily intended for MTDLL COM Servers where many threads are often created for a single server. In Visual FoxPro 9.0, the default value for MTDLL COM Servers is -2.</p>
-</blockquote>
-<blockquote>
-<p>When the value of nMemoryPages is greater than 0, Visual FoxPro allocates a fixed program cache. You can specify between 1 and 65000.</p>
-</blockquote>
-<blockquote>
-<p>If you specify 0 for nMemoryPages, no program cache is used. Instead, Visual FoxPro uses dynamic memory allocation based on determinations made by the operating system.</p>
-</blockquote>
-<blockquote>
-<p>If you pass a value for nMemoryPages that is less than 0, Visual FoxPro uses dynamic memory allocation but is limited to the specified memory (nMemoryPages * 64K). When the limit is reach, Visual FoxPro will flush allocated programs to free memory.</p>
-</blockquote>
-<blockquote>
-<p>You can call SYS(3065) to determine the current PROGCACHE setting. CLEAR PROGRAM will attempt to clear unreferenced code regardless of this setting.</p>
-</blockquote>
-<blockquote>
-<p>Note:
-The Visual FoxPro OLE DB Provider ignores this setting since it uses dynamic memory allocation (PROGCACHE=0).</p>
-</blockquote>
-<blockquote>
-<p>Default: 144 (-2 for MTDLL)</p>
-</blockquote>
-<blockquote>
-<p>「The setting is the number of pages of memory you want allocated. Each page is equivalent to 64K of memory. You can set the PROGCACHE from 1 to 65,000 (positive or negative) to designate how much memory is allocated. If you specify zero, no program cache is used and VFP uses dynamic memory allocation determined by the operating system. If you set the PROGCACHE to a negative number, VFP uses dynamic memory allocation, but is limited to the number of memory pages you specified. The default setting is 144 (over 9 megabytes) for single-threaded EXEs and the VFP IDE, and -2 (128 kilobytes) for a multi-threaded DLL. The VFP OLE DB Provider does not use this setting because it uses dynamic memory allocation.」</p>
-</blockquote>
-<p>Ref: <a target="_blank" rel="noopener" href="http://fox.wikis.com/wc.dll?Wiki~ProgCache">http://fox.wikis.com/wc.dll?Wiki~ProgCache</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1394,7 +1399,7 @@ The Visual FoxPro OLE DB Provider ignores this setting since it uses dynamic mem
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">316</span>
+          <span class="site-state-item-count">317</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
