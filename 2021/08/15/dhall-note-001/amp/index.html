@@ -58,7 +58,7 @@
 			    "@id":"http://blog.kevinyang.net/2021/08/15/dhall-note-001/"
 			},
 			"datePublished": "2021-08-15T02:38:34.000Z",
-			"dateModified": "2021-08-15T04:17:06.905Z",
+			"dateModified": "2021-08-15T05:58:34.126Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1855,6 +1855,10 @@ h6.categories {
 <p>左邊是 dhall 的語法，右邊是輸出結果，看起來還簡單明瞭的，接下來就是基本語言的筆記了，至於如何安裝就請按照這<a href="https://docs.dhall-lang.org/tutorials/Getting-started_Generate-JSON-or-YAML.html#installation">文件</a>安裝</p>
 <h1 id="學習筆記"><a class="header-anchor" href="#學習筆記"> </a>學習筆記</h1>
 <ul>
+<li>
+<p>Dhall 要轉換成不同格式，會透過不同的執行程式完成，例如 Dhall -&gt; JSON 就要用 dhall-to-json，要轉換成 YAML 就會用 dhall-to-yaml，這篇筆記看到 dhall-to-json 輸出結果就會是 JSON 格式</p>
+<div class="amp-img-wrapper"><amp-img src="/2021/08/15/dhall-note-001/image-20210815135615904.png" width="491" height="839" layout="responsive"></amp-img></div>
+</li>
 <li>
 <p>Dhall 是一個強型別語言，compiler 會檢查型別是否正確，會將失敗的理由吐回給你，也可以使用 <code>--explain</code> 的 flag 來取得更多的訊息</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/08/15/dhall-note-001/image-20210815105527602.png" width="1026" height="257" layout="responsive"></amp-img></div>
