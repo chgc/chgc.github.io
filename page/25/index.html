@@ -200,6 +200,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/01/11/ef-entity-framework-7-migration-with-exist-database/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/01/11/ef-entity-framework-7-migration-with-exist-database/" class="post-title-link" itemprop="url">[EF] Entity Framework Core 1.0 - Migration with Exist Database</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2016-01-12 02:12:00" itemprop="dateCreated datePublished" datetime="2016-01-12T02:12:00+08:00">2016-01-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Entity-Framework/" itemprop="url" rel="index"><span itemprop="name">Entity Framework</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/01/11/ef-entity-framework-7-migration-with-exist-database/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/11/ef-entity-framework-7-migration-with-exist-database/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>After Scaffold from existing datbase, and then add migration at first time.</p>
+<p><img src="https://farm2.staticflickr.com/1598/24326751835_e0c5dcabcc_o.png" alt=""></p>
+<p>EF will create something like above. But in first migration will have everything that already existed in database. therefore, delete that file and add migration again. Now this time. you will get an empty migration file. WHy? because ContextModelSnapShot. It seems EF will compare all model files with snapshot file. and find the differences to create migration content file.</p>
+<p>And Now it switch to Code first mode. ^^</p>
+<p><a target="_blank" rel="noopener" href="https://ef.readthedocs.org/en/latest/getting-started/index.html">EF 7 Doc</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/12/16/mvc-6-authorize-redirect-to-login-page/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1167,113 +1260,6 @@ F7 切換鍵盤瀏覽</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/11/aspnet-reportviewer-remote-report-path-setting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/11/aspnet-reportviewer-remote-report-path-setting/" class="post-title-link" itemprop="url">[ASP.NET] ReportViewer的遠端報表路徑設定</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-10-12 06:58:00" itemprop="dateCreated datePublished" datetime="2015-10-12T06:58:00+08:00">2015-10-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/10/11/aspnet-reportviewer-remote-report-path-setting/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/11/aspnet-reportviewer-remote-report-path-setting/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>###ReportViewer的遠端報表的設定方式</p>
-<ol>
-<li>如果需要設定登入使用者的權限時, 需要實作IReportServerCredentials, 但是如果需要就抄下面的Code
-用法:</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReportViewer1.ServerReport.ReportServerCredentials = New CustomReportCredentials(username, password, domain)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Imports System.Net</span><br><span class="line">Public Class CustomReportCredentials</span><br><span class="line">    Implements Microsoft.Reporting.WebForms.IReportServerCredentials</span><br><span class="line"></span><br><span class="line">    &#x27; local variable for network credential</span><br><span class="line">    Private strUserName As String</span><br><span class="line">    Private strPassWord As String</span><br><span class="line">    Private strDomainName As String</span><br><span class="line">    Public Sub New(ByVal UserName As String, ByVal PassWord As String, ByVal DomainName As String)</span><br><span class="line">        strUserName = UserName</span><br><span class="line">        strPassWord = PassWord</span><br><span class="line">        strDomainName = DomainName</span><br><span class="line">    End Sub</span><br><span class="line">    Public ReadOnly Property ImpersonationUser() As System.Security.Principal.WindowsIdentity Implements Microsoft.Reporting.WebForms.IReportServerCredentials.ImpersonationUser</span><br><span class="line">        Get</span><br><span class="line">            &#x27; not use ImpersonationUser</span><br><span class="line">            Return Nothing</span><br><span class="line">        End Get</span><br><span class="line">    End Property</span><br><span class="line">    Public ReadOnly Property NetworkCredentials() As System.Net.ICredentials Implements Microsoft.Reporting.WebForms.IReportServerCredentials.NetworkCredentials</span><br><span class="line">        Get</span><br><span class="line">            &#x27; use NetworkCredentials</span><br><span class="line">            Return New NetworkCredential(strUserName, strPassWord, strDomainName)</span><br><span class="line">        End Get</span><br><span class="line">    End Property</span><br><span class="line">    Public Function GetFormsCredentials(ByRef authCookie As System.Net.Cookie, ByRef userName As String, ByRef password As String, ByRef authority As String) As Boolean Implements Microsoft.Reporting.WebForms.IReportServerCredentials.GetFormsCredentials</span><br><span class="line">        &#x27; not use FormsCredentials unless you have implements a custom autentication.</span><br><span class="line">        authCookie = Nothing</span><br><span class="line">        password = authority = Nothing</span><br><span class="line">        Return False</span><br><span class="line">    End Function</span><br><span class="line">End Class</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>
-<p>ServerReportUrl要指定SSRS的Report Server URL, 而不是Report Manager URL。因為這個URL的錯誤，讓我一直遇到404的錯誤.
-ex: <a target="_blank" rel="noopener" href="http://serverIP/ReportServer">http://serverIP/ReportServer</a></p>
-</li>
-<li>
-<p>ReportPath就是根據Root的相對應位置而設定，不需要.rdlc(localReport就需要搭配附檔名)</p>
-</li>
-<li>
-<p>如果有參數要設定, 使用方式如下</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Dim objParms As New System.Collections.ObjectModel.Collection(Of ReportParameter)</span><br><span class="line">objParms.Add(New ReportParameter(&quot;param1&quot;, &quot;param1 value&quot;))</span><br><span class="line">ReportViewer1.ServerReport.SetParameters(objParms)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1345,7 +1331,7 @@ ex: <a target="_blank" rel="noopener" href="http://serverIP/ReportServer">http:/
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">317</span>
+          <span class="site-state-item-count">318</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

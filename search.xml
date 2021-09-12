@@ -18713,6 +18713,79 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Angular] Microfrontend with Module Federation 筆記</title>
+    <url>/2021/09/12/ng-microfrontend-with-webpack-federation/</url>
+    <content><![CDATA[<p>其實這觀念在去年由 Manfred Steyer (Angular GDE) 提出來，並花很多心力在研究這一塊的作法，一年過去後因為公司上有可能會使用到這樣的情境，所以就先來研究一下，但也因為晚了一年，現在很多工具和環境上已經好很多，而且該採的雷很多前輩都踩過了，這一篇筆記就是稍微整理一下如何從無到有的將 Angular 環境給設定起來</p>
+<span id="more"></span>
+<h1 id="Requirement"><a class="header-anchor" href="#Requirement"> </a>Requirement</h1>
+<ul>
+<li>Angular 12</li>
+</ul>
+<h1 id="設定"><a class="header-anchor" href="#設定"> </a>設定</h1>
+<ol>
+<li>
+<p>建立一個空的 ng application。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ng new ng-mfe --create-application=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>建立一個 host (shell) application</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ng g application shell --routing</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>建立一個 remote application</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ng g application mfe1 --routing</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>為這兩個 application 加入 <code>@angular-architects/module-federation</code> 套件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng add @angular-architects/module-federation --project shell --port 5000</span><br><span class="line">ng add @angular-architects/module-federation --project mfe1 --port 3000</span><br></pre></td></tr></table></figure>
+<ol>
+<li>這時候會產生 webpack.config.js 檔案: 用來設定 remote module 使用</li>
+</ol>
+</li>
+</ol>
+<p>到這邊算是基本完成套件的安裝，接下來就是一些 module/component 的設定</p>
+<ol>
+<li>
+<p>在 <code>mfe1</code> application 中新增一個 <code>FlightsModule</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng g m flights --project=mfe --routing</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>設定 <code>webpack.config.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> ModuleFederationPlugin = <span class="built_in">require</span>(<span class="string">&quot;webpack/lib/container/ModuleFederationPlugin&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> mf = <span class="built_in">require</span>(<span class="string">&quot;@angular-architects/module-federation/webpack&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> share = mf.share;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sharedMappings = <span class="keyword">new</span> mf.SharedMappings();</span><br><span class="line">sharedMappings.register(</span><br><span class="line">  path.join(__dirname, <span class="string">&#x27;../../tsconfig.json&#x27;</span>),</span><br><span class="line">  [<span class="comment">/* mapped paths to share */</span>]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">uniqueName</span>: <span class="string">&quot;mfe1&quot;</span>,</span><br><span class="line">    <span class="attr">publicPath</span>: <span class="string">&quot;auto&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">optimization</span>: &#123;</span><br><span class="line">    <span class="attr">runtimeChunk</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,   </span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">      ...sharedMappings.getAliases(),</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> ModuleFederationPlugin(&#123;</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// For remotes (please adjust)</span></span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;mfe1&quot;</span>,</span><br><span class="line">        <span class="attr">filename</span>: <span class="string">&quot;remoteEntry.js&quot;</span>,</span><br><span class="line">        <span class="attr">exposes</span>: &#123;</span><br><span class="line">          <span class="string">&quot;./flightModules&quot;</span>: <span class="string">&quot;./projects/mfe1/src/app/flights/flights.module.ts&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        </span><br><span class="line">        <span class="attr">shared</span>: share(&#123;</span><br><span class="line">          <span class="string">&quot;@angular/core&quot;</span>: &#123; <span class="attr">singleton</span>: <span class="literal">true</span>, <span class="attr">strictVersion</span>: <span class="literal">true</span>, <span class="attr">requiredVersion</span>: <span class="string">&#x27;auto&#x27;</span> &#125;, </span><br><span class="line">          <span class="string">&quot;@angular/common&quot;</span>: &#123; <span class="attr">singleton</span>: <span class="literal">true</span>, <span class="attr">strictVersion</span>: <span class="literal">true</span>, <span class="attr">requiredVersion</span>: <span class="string">&#x27;auto&#x27;</span> &#125;, </span><br><span class="line">          <span class="string">&quot;@angular/common/http&quot;</span>: &#123; <span class="attr">singleton</span>: <span class="literal">true</span>, <span class="attr">strictVersion</span>: <span class="literal">true</span>, <span class="attr">requiredVersion</span>: <span class="string">&#x27;auto&#x27;</span> &#125;, </span><br><span class="line">          <span class="string">&quot;@angular/router&quot;</span>: &#123; <span class="attr">singleton</span>: <span class="literal">true</span>, <span class="attr">strictVersion</span>: <span class="literal">true</span>, <span class="attr">requiredVersion</span>: <span class="string">&#x27;auto&#x27;</span> &#125;,</span><br><span class="line"></span><br><span class="line">          ...sharedMappings.getDescriptors()</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">    &#125;),</span><br><span class="line">    sharedMappings.getPlugin()</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 28: host 載入時的 <code>remoteName</code></li>
+<li>line 29: webpack 要產生的 file name</li>
+<li>line 31: expose 的 <code>module</code> 名稱及對應的 module 檔案</li>
+</ul>
+</li>
+<li>
+<p>在 host (shell) 的路由檔設定要 <code>lazyloading</code> 路徑</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; loadRemoteModule &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular-architects/module-federation&#x27;</span>;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">const</span> URL = <span class="string">&#x27;http://localhost:3000/remoteEntry.js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">component</span>: HomeComponent, <span class="attr">pathMatch</span>: <span class="string">&#x27;full&#x27;</span> &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;flights&#x27;</span>,</span><br><span class="line">    <span class="attr">loadChildren</span>: <span class="function">() =&gt;</span></span><br><span class="line">      loadRemoteModule(&#123;</span><br><span class="line">        <span class="attr">remoteEntry</span>: URL,</span><br><span class="line">        <span class="attr">remoteName</span>: <span class="string">&#x27;mfe1&#x27;</span>,</span><br><span class="line">        <span class="attr">exposedModule</span>: <span class="string">&#x27;./flightModule&#x27;</span>,</span><br><span class="line">      &#125;).then(<span class="function">(<span class="params">m</span>) =&gt;</span> m.FlightsModule),</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [RouterModule.forRoot(routes)],</span><br><span class="line">  <span class="attr">exports</span>: [RouterModule],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppRoutingModule</span> </span>&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 7 ~ 15 是標準 Lazy loading 的寫法，而 line 10 從原本的 <code>import</code> 改寫成 <code>loadRemoteModule</code> 即可載入遠端的 module 檔案</li>
+<li><code>remoteEmtry</code> 設定遠端主機位置及參考檔案，檔名為上一個步驟中所設定的檔名</li>
+<li><code>remoteName</code> 為上一步驟所設定的 <code>name</code></li>
+<li><code>exposedModule</code> 為上一步驟所設定的 exposes 內的某一個 <code>key</code></li>
+</ul>
+</li>
+</ol>
+<p>最後在調整一下 host 的 <code>AppComponent</code> 的 HTML 內容，例如加上連結到 flights module 等，到這邊算完成一個最小完成單位，可以將兩個 applications 跑起來後看一下執行結果</p>
+<p><img src="image-20210912145552814.png" alt="image-20210912145552814"></p>
+<h1 id="問題探討"><a class="header-anchor" href="#問題探討"> </a>問題探討</h1>
+<p>看起來一起都很簡單，但仔細思考後，其實還有很多東西要考慮，例如各 module 間的版本如何控制、如何共用狀態、部屬的相依性等，這些都是很實際的問題，等著下一篇筆記再來研究吧</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/"><strong>The Microfrontend Revolution: Module Federation with Angular</strong></a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
