@@ -200,6 +200,121 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/07/30/aspnet-mvc-webapi-return-worth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/07/30/aspnet-mvc-webapi-return-worth/" class="post-title-link" itemprop="url">[ASP.NET MVC]WebApi回傳值得表示</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-07-31 01:42:00" itemprop="dateCreated datePublished" datetime="2014-07-31T01:42:00+08:00">2014-07-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/07/30/aspnet-mvc-webapi-return-worth/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/30/aspnet-mvc-webapi-return-worth/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="http://asp.net">asp.net</a> mvc webapi 2 提供了 IHttpActionResult 這個界面</p>
+<p>這個界面的效果基本上是跟HttpResponseMessage是一樣的
+但是在回傳值的表示有些微的不一樣,以下是整理表</p>
+<table>
+<thead>
+<tr>
+<th>IHttpActionResult</th>
+<th>HttpResponseMessage Request.CreateResponse(HttpStatusCode)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ok()</td>
+<td>HttpStatusCode.OK</td>
+</tr>
+<tr>
+<td>InternalServerError()</td>
+<td>HttpStatusCode.InternalServerError</td>
+</tr>
+<tr>
+<td>NotFound()</td>
+<td>HttpStatusCode.NotFound</td>
+</tr>
+</tbody>
+</table>
+<p>more on <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-tw/library/system.web.http.apicontroller_methods(v=vs.118).aspx">http://msdn.microsoft.com/zh-tw/library/system.web.http.apicontroller_methods(v=vs.118).aspx</a></p>
+<p>這樣子寫起來就乾淨很多了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/07/17/web-local-storage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1181,105 +1296,6 @@ netsh firewall add portopening TCP 8080 IISExpressWeb enable ALL</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/02/26/c-work-with-xml-and-xsd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/02/26/c-work-with-xml-and-xsd/" class="post-title-link" itemprop="url">[C#] work with xml and xsd</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-02-27 02:46:00" itemprop="dateCreated datePublished" datetime="2014-02-27T02:46:00+08:00">2014-02-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/02/26/c-work-with-xml-and-xsd/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/26/c-work-with-xml-and-xsd/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-在xsd裡描述minOccurs-0-時-所建立的xml裡面要手動控制是否輸出value"><a class="header-anchor" href="#1-在xsd裡描述minOccurs-0-時-所建立的xml裡面要手動控制是否輸出value"> </a>1.在xsd裡描述minOccurs=&quot;0&quot;時 , 所建立的xml裡面要手動控制是否輸出value</h1>
-<p>c#可以用class轉換成xml, 但是在class裡面的property並不是每一個都需要輸出，有些事非必要性的欄位。
-這需要在property欄位另外加上一個欄位來做設定</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class demo&#123;</span><br><span class="line">	public string field1;</span><br><span class="line">  public string field2;</span><br><span class="line">  public customEnum field3;</span><br><span class="line">  // 以下這行是關鍵</span><br><span class="line">  [XmlIgnore]</span><br><span class="line">  public bool field3Specified;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="語法是-propertyNameSpecified"><a class="header-anchor" href="#語法是-propertyNameSpecified"> </a>語法是 propertyNameSpecified</h2>
-<p>[XmlIgnore] : 功用是在輸出xml時，忽略此欄位</p>
-<p>依上列的案例來說，如果 field3Specified=true, 則輸出field3欄位, 如果設定成false, 則不輸出field3</p>
-<h1 id="2-使用xsd-exe將-xsd檔案轉換成class"><a class="header-anchor" href="#2-使用xsd-exe將-xsd檔案轉換成class"> </a>2.使用xsd.exe將.xsd檔案轉換成class</h1>
-<p>在visual studio tools下-&gt; 命令視窗 -&gt; xsd</p>
-<p>ref: <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/x6c1kb0s(v=vs.110).aspx">http://msdn.microsoft.com/en-us/library/x6c1kb0s(v=vs.110).aspx</a></p>
-<p>將.xsd檔案轉換成class的方式為</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xsd file.xsd /c</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1351,7 +1367,7 @@ netsh firewall add portopening TCP 8080 IISExpressWeb enable ALL</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">318</span>
+          <span class="site-state-item-count">319</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

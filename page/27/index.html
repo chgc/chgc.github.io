@@ -200,6 +200,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/03/29/angular-aspnet-mvc-with-angular-html5mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/03/29/angular-aspnet-mvc-with-angular-html5mode/" class="post-title-link" itemprop="url">[AngularJS] ASP.NET MVC with angular Html5Mode</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-03-29 09:30:00" itemprop="dateCreated datePublished" datetime="2015-03-29T09:30:00+08:00">2015-03-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AngularJS/" itemprop="url" rel="index"><span itemprop="name">AngularJS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/03/29/angular-aspnet-mvc-with-angular-html5mode/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/29/angular-aspnet-mvc-with-angular-html5mode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>經過一段時間的實驗. 在別的framework找到可以讓backend的route支援angular html5mode了.
+基本方式是如果我路由規則沒有定義的，全部指向index頁面(有ng-view的)</p>
+<p>所以基於這個原則. mvc的路由規則就要稍微調整一下.
+將原本的DefaultApp修改一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 舊</span><br><span class="line"> routes.MapRoute(</span><br><span class="line">                name: &quot;DefaultApp&quot;,</span><br><span class="line">                url: &quot;&#123;controller&#125;/&#123;action&#125;/&#123;id&#125;&quot;,</span><br><span class="line">                defaults: new &#123; controller = &quot;Home&quot;, action = &quot;Index&quot;, id = UrlParameter.Optional &#125;</span><br><span class="line">            );</span><br><span class="line">// 新</span><br><span class="line"> routes.MapRoute(</span><br><span class="line">                name: &quot;DefaultApp&quot;,</span><br><span class="line">                url: &quot;app/&#123;controller&#125;/&#123;action&#125;/&#123;id&#125;&quot;,</span><br><span class="line">                defaults: new &#123; controller = &quot;Home&quot;, action = &quot;Index&quot;, id = UrlParameter.Optional &#125;</span><br><span class="line">            );</span><br></pre></td></tr></table></figure>
+<p>然後新增</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">routes.Add(new SingleRoute());</span><br></pre></td></tr></table></figure>
+<p>SingleRoute Class</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class SingleRoute : RouteBase</span><br><span class="line">    &#123;</span><br><span class="line">        public override RouteData GetRouteData(HttpContextBase httpContext)</span><br><span class="line">        &#123;</span><br><span class="line">            var data = new RouteData(this, new MvcRouteHandler());</span><br><span class="line">            data.Values.Add(&quot;controller&quot;, &quot;Home&quot;);</span><br><span class="line">            data.Values.Add(&quot;action&quot;, &quot;Index&quot;);</span><br><span class="line">            return data;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)</span><br><span class="line">        &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>Client angular side:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$stateProvider</span><br><span class="line">         .state(&#x27;state1&#x27;, &#123;</span><br><span class="line">             url: &quot;/state1&quot;,</span><br><span class="line">             templateUrl: &quot;app/Home/state1&quot; &lt;= mvc route rule</span><br><span class="line">        &#125;)</span><br><span class="line">$locationProvider.html5Mode(true).hashPrefix(&#x27;!&#x27;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以上</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/03/25/html-span-to-focus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1071,101 +1171,6 @@ Method binding (One-way Binding): &amp;</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/11/24/azure-website-always-on/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/11/24/azure-website-always-on/" class="post-title-link" itemprop="url">[Azure] Website Always On</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-11-25 06:39:00" itemprop="dateCreated datePublished" datetime="2014-11-25T06:39:00+08:00">2014-11-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Azure/" itemprop="url" rel="index"><span itemprop="name">Azure</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/11/24/azure-website-always-on/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/24/azure-website-always-on/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>當mvc website第一次讀取的速度都會很慢，這個原因是因為要做complie的動作，
-那如何避免這個現象發生呢,</p>
-<ol>
-<li>將azure website的規格升級到basic以上的規格並開啟alowasy on.</li>
-<li>寫webjob(請參考這篇文章http://wp.sjkp.dk/windows-azure-websites-and-cloud-services-slow-on-first-request/)</li>
-<li>利用http://www.thecloudup.com/, 幫你做第二點事情(免費)</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1237,7 +1242,7 @@ Method binding (One-way Binding): &amp;</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">318</span>
+          <span class="site-state-item-count">319</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
