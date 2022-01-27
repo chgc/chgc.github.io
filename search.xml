@@ -18905,6 +18905,72 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Angular] Add E2E Testing from zero to one with cyrpess</title>
+    <url>/2022/01/27/angular-e2e-cypress/</url>
+    <content><![CDATA[<p>Angular 在 12 版之類就將 protactor E2E framework 從 CLI 起始專案中移除，主要原因是大家習慣用來做 E2E 測試的工具，Protractor 已經不是主流，是 cypress，為了這個原因，Angular 團隊決定把這選擇權還回開發者手上，讓開發者決定自己的 E2E 測試。</p>
+<span id="more"></span>
+<h1 id="初始環境"><a class="header-anchor" href="#初始環境"> </a>初始環境</h1>
+<p>當然有強大 angular schematics，cypress 也有出可以快速設定測試環境的套件，以下是如何安裝及執行第一個 E2E 測試的步驟</p>
+<ol>
+<li>
+<p>當起始一個新的 Agnular 專案，已經看不到 E2E 的資料夾了</p>
+<p><img src="image-20220127205749466.png" alt="image-20220127205749466"></p>
+</li>
+<li>
+<p>好家在有 <code>ng add</code> 的功能，cypress 的套件安裝可以透過 <code>ng add @cypress/schematic</code> 來完成，這個會執行以下工作</p>
+<p>✅ Install Cypress</p>
+<p>✅ Add npm scripts for running Cypress in <code>run</code> mode and <code>open</code> mode</p>
+<p>✅ Scaffold base Cypress files and directories</p>
+<p>✅ Provide the ability to add new e2e files easily using <code>ng-generate</code></p>
+<p>✅ Optional: prompt you to add or update the default <code>ng e2e</code> command to use Cypress.</p>
+<p><img src="image-20220127210133452.png" alt="image-20220127210133452"></p>
+</li>
+<li>
+<p>當跑完後就可以執行 <code>ng e2e</code> 將 cypress 執行起來並執行第一個預設測試，但如果在沒有任何修改下，會測試錯誤</p>
+<p><img src="image-20220127210434231.png" alt="image-20220127210434231"></p>
+</li>
+<li>
+<p>就來修改一下 e2e 測試讓他綠燈</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">describe(<span class="string">&#x27;My First Test&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  it(<span class="string">&#x27;Visits the initial project page&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    cy.visit(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">    cy.contains(<span class="string">&#x27;Welcome&#x27;</span>)</span><br><span class="line">    cy.contains(<span class="string">&#x27;e2e-study app is running!&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="image-20220127210600806.png" alt="image-20220127210600806"></p>
+</li>
+<li>
+<p>這樣就完成 cypress e2e 測試環境了</p>
+</li>
+</ol>
+<h1 id="cypress-schematics-介紹"><a class="header-anchor" href="#cypress-schematics-介紹"> </a>cypress-schematics 介紹</h1>
+<ol>
+<li>
+<p>To run Cypress in <code>open</code> mode within your project:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng run &#123;project-name&#125;:cypress-open</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>To run Cypress headlessly via <code>run</code> mode within your project:</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng run &#123;project-name&#125;:cypress-run</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>If you have chosen to add or update the <code>ng e2e</code> command, you can also run Cypress in <code>open</code> mode using this:</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng e2e</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>To generate new e2e spec files:</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng generate @cypress/schematic:e2e</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>更多設定參數可以到這<a href="https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic#builder-options-">連結</a>仔細研究 (angular.json)</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic">cypress schematics</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
