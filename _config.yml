@@ -90,21 +90,6 @@ markdown:
     permalinkClass: header-anchor
     permalinkSymbol: ' '
 
-# hexo-generator-amp
-# The following settings is the quick start options.
-generator_amp:
-  templateDir: amp-template
-  assetDistDir: amp-dist
-  logo:
-    path: sample/sample-logo.png
-    width: 600
-    height: 60
-  substituteTitleImage:
-    path: sample/sample-substituteTitleImage.png
-    width: 1024
-    height: 800
-  warningLog: false # To display warning, please set true.
-
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
