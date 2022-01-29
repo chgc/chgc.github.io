@@ -154,7 +154,7 @@ removeTodo(todo: Todo) {
 
 
 
-主要是因為刪除的按鈕只有在滑鼠移到上面時才會顯示出來，所以單純這樣子找會發現找不到的問題，但又用到 `:hover` 的 CSS 屬性來控制 button 的顯示與否，這問題要怎麼處理呢? 有兩種方式
+主要是因為刪除的按鈕只有在滑鼠移到上面時才會顯示出來，所以單純這樣子找會發現找不到的問題，但又用到 `:hover` 的 CSS 屬性來控制 button 的顯示與否，這問題要怎麼處理呢? 有以下幾種方式
 
 1. 使用 `.click({force: true})` 的暴力解法
 
@@ -167,7 +167,13 @@ removeTodo(todo: Todo) {
    });
    ```
 
-2. 使用社群開發的 plugin，但這個有瀏覽器環境的限制 (https://github.com/dmtrKovalenko/cypress-real-events)
+2. 使用 `.invoke('show')` 的方式強制顯示
+
+   ```typescript
+   cy.get('@firstItem').find('.destroy').invoke('show').click();
+   ```
+
+3. 使用社群開發的 plugin，但這個有瀏覽器環境的限制 (https://github.com/dmtrKovalenko/cypress-real-events)
 
 
 
