@@ -19202,6 +19202,48 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>FSharp + Minimal API + MongoDB</title>
+    <url>/2022/01/30/fsharp-minimalAPI-mongodb/</url>
+    <content><![CDATA[<p>延續<a href="https://blog.kevinyang.net/2022/01/30/fsharp-minimal-api/">上一篇</a> 寫的內容，將 MongoDB 的功能加進來，順便練習 F#</p>
+<span id="more"></span>
+<p>.net core 專案不管是 C# 或是 F# 要使用 MongoDB 都需要安裝一個 package <code>MongoDB.Driver</code>，安裝完成後就可以連接 MongoDB 了，這邊就假設各位的電腦已經有一個正常運行的 MongoDB，如果沒有，網路上有很多安裝教學</p>
+<p>接下來的檔案都是在 <code>Todo.fs</code> 內做異動</p>
+<ol>
+<li>
+<p>調整 <code>Todo</code> type 定義</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">Todo</span> </span>= </span><br><span class="line">    &#123; id: ObjectId <span class="comment">// mongodb 自己的 key 欄位, 需要 open MongoDB.Bson</span></span><br><span class="line">      uid: string <span class="comment">// 上一篇使用 int, 這裡改用 Guid 當作 uid</span></span><br><span class="line">      title: string</span><br><span class="line">      isDone: bool &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>增加 property 和 method 到 <code>ITodoService</code> type</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">ITodoService</span> </span>=  </span><br><span class="line">   <span class="keyword">abstract</span> mongo: MongoClient</span><br><span class="line">   <span class="keyword">abstract</span> db: IMongoDatabase</span><br><span class="line">   <span class="keyword">abstract</span> GetTodos: unit -&gt; Todo seq</span><br><span class="line">   <span class="keyword">abstract</span> SaveTodo: Todo -&gt; bool</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>將缺少的部分實做補齊</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> TodoService = </span><br><span class="line">    &#123; <span class="keyword">new</span> ITodoService <span class="keyword">with</span>   </span><br><span class="line">        <span class="keyword">member</span> __.mongo = MongoClient(<span class="string">&quot;your mongodb connection string&quot;</span>)</span><br><span class="line">        <span class="keyword">member</span> __.db = __.mongo.GetDatabase <span class="string">&quot;todos&quot;</span> <span class="comment">// 可以換成自己建立的 database 名稱</span></span><br><span class="line">        <span class="keyword">member</span> __.GetTodos(): seq&lt;Todo&gt; =</span><br><span class="line">            __.db</span><br><span class="line">              .GetCollection&lt;Todo&gt;(<span class="string">&quot;todos&quot;</span>)</span><br><span class="line">              .Find(Builders.Filter.Empty)</span><br><span class="line">              .ToEnumerable() |&gt; Seq.cast</span><br><span class="line">              </span><br><span class="line">        <span class="keyword">member</span> __.SaveTodo todo =</span><br><span class="line">            <span class="keyword">let</span> collection = __.db.GetCollection&lt;Todo&gt;(<span class="string">&quot;todos&quot;</span>)</span><br><span class="line">            <span class="keyword">let</span> todos = </span><br><span class="line">                collection</span><br><span class="line">                    .Find(<span class="keyword">fun</span> x-&gt; x.uid = todo.uid)</span><br><span class="line">                    .ToEnumerable()</span><br><span class="line"></span><br><span class="line">            <span class="keyword">match</span> Seq.isEmpty todos <span class="keyword">with</span></span><br><span class="line">            | <span class="keyword">true</span> -&gt; </span><br><span class="line">                collection.InsertOne &#123; todo <span class="keyword">with</span> </span><br><span class="line">                                        uid = Guid.NewGuid().ToString() &#125;</span><br><span class="line">                <span class="keyword">true</span></span><br><span class="line">            | <span class="keyword">false</span> -&gt; </span><br><span class="line">                <span class="keyword">let</span> filter = Builders&lt;Todo&gt;.Filter.Eq((<span class="keyword">fun</span> x -&gt; x.uid), todo.uid)</span><br><span class="line">                <span class="keyword">let</span> update =</span><br><span class="line">                    Builders&lt;Todo&gt;.Update</span><br><span class="line">                        .Set((<span class="keyword">fun</span> x -&gt; x.title), todo.title)</span><br><span class="line">                        .Set((<span class="keyword">fun</span> x -&gt; x.isDone), todo.isDone)</span><br><span class="line"></span><br><span class="line">                collection.UpdateOne(filter, update) |&gt; ignore</span><br><span class="line">                <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>__.GetTodos()</code> 這一段我稍微卡到的地方在於 <code>IEnumerable</code> 轉型到 <code>Seq</code> 的地方，查了一下文件，發現 <code>IEnumerable</code> 和 <code>Seq</code> 的本質上是一樣的，所以只要使用 <code>Seq.cast</code> 的方法轉一下即可</li>
+<li>MongoDB Collection 的查詢是使用 <code>Builders.filter</code> 的方法建立，這裡因為是要全撈，所以就單純使用 <code>Builders.Filter.Empty</code></li>
+<li><code>__.SaveTodo</code> 的部分，我將建立與更新寫在一起，判斷方式是先用傳進來的 <code>todo.uid</code> 去尋找是否有存在的記錄，透過 pattern match 的寫法來區分新增與更新</li>
+<li>line 24: 建立 <code>filter</code> 與 <code>update</code> 的定義，<code>colletion.UpdateOne</code> 方法需要傳進這兩個定義</li>
+</ul>
+</li>
+<li>
+<p>修改 <code>addTodo</code> 的方法</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">private</span> addTodo =</span><br><span class="line">    Func&lt;ITodoService, Todo, bool&gt;</span><br><span class="line">        (<span class="keyword">fun</span> (todos: ITodoService) (todo) -&gt; todos.SaveTodo todo)</span><br></pre></td></tr></table></figure>
+<p>有好一段時間沒有寫 C#，熊熊忘記 <code>Func</code> 的使用方式，還好後來有想起來，而這邊跟寫 C# 的差異在於 line 3 的部分，如果是 C# 會這樣子寫 <code>(todos: ITodoService , todo) =&gt; &#123;...&#125;</code>，但在 F# 的世界裡，因為 <code>Func</code> 的 signature 是 <code>Func(a -&gt; b -&gt; c)</code>，所以才會有 line 3 的寫法出現了，算是 FP 的特性之一。</p>
+<p>BTW，如果想要將 FP 學好，要學會看懂 signature</p>
+</li>
+</ol>
+<p>這樣調整完後，重新執行測試 API ，沒有意外就可以看到資料有儲存到 MongoDB 內了</p>
+]]></content>
+      <categories>
+        <category>FSharp</category>
+      </categories>
+      <tags>
+        <tag>FSharp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
