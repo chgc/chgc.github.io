@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'FSharp 也要跟 minimal api 風'
+title: 'FSharp 也要走 minimal API 風'
 comments: true
 typora-root-url: 2022-01-30-fsharp-minimal-api
 typora-copy-images-to: 2022-01-30-fsharp-minimal-api
@@ -9,7 +9,7 @@ categories: FSharp
 tags: FSharp
 ---
 
-minimal api 風格推出後，很多人慢慢能接受這樣的風格了，而 Fsharp 也要來跟風，以下是簡單跟風過程
+Minimal API 推出後，很多人慢慢能接受這樣的風格了，而 F# 當然也要來一波，以下是簡單跟風過程
 
 <!-- more -->
 
