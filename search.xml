@@ -1458,44 +1458,6 @@ Error:Module 『AndroinoTerm』: platform 『android-18』 not found」 while I 
       </tags>
   </entry>
   <entry>
-    <title>[ASP.NET MVC]WebApi回傳值得表示</title>
-    <url>/2014/07/30/aspnet-mvc-webapi-return-worth/</url>
-    <content><![CDATA[<p><a href="http://asp.net">asp.net</a> mvc webapi 2 提供了 IHttpActionResult 這個界面</p>
-<p>這個界面的效果基本上是跟HttpResponseMessage是一樣的
-但是在回傳值的表示有些微的不一樣,以下是整理表</p>
-<table>
-<thead>
-<tr>
-<th>IHttpActionResult</th>
-<th>HttpResponseMessage Request.CreateResponse(HttpStatusCode)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ok()</td>
-<td>HttpStatusCode.OK</td>
-</tr>
-<tr>
-<td>InternalServerError()</td>
-<td>HttpStatusCode.InternalServerError</td>
-</tr>
-<tr>
-<td>NotFound()</td>
-<td>HttpStatusCode.NotFound</td>
-</tr>
-</tbody>
-</table>
-<p>more on <a href="http://msdn.microsoft.com/zh-tw/library/system.web.http.apicontroller_methods(v=vs.118).aspx">http://msdn.microsoft.com/zh-tw/library/system.web.http.apicontroller_methods(v=vs.118).aspx</a></p>
-<p>這樣子寫起來就乾淨很多了</p>
-]]></content>
-      <categories>
-        <category>ASP.NET MVC</category>
-      </categories>
-      <tags>
-        <tag>MVC 4</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[VS2013] Introducing Gulp, Grunt, Bower, and npm support for Visual Studio [REF]</title>
     <url>/2014/09/04/vs2013-introducing-gulp-grunt-bower-and-npm-support-for-visual-studio-ref/</url>
     <content><![CDATA[<p>文章參考: <a href="http://www.hanselman.com/blog/IntroducingGulpGruntBowerAndNpmSupportForVisualStudio.aspx">http://www.hanselman.com/blog/IntroducingGulpGruntBowerAndNpmSupportForVisualStudio.aspx</a></p>
@@ -1540,6 +1502,44 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
       </categories>
       <tags>
         <tag>AngularJS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[ASP.NET MVC]WebApi回傳值得表示</title>
+    <url>/2014/07/30/aspnet-mvc-webapi-return-worth/</url>
+    <content><![CDATA[<p><a href="http://asp.net">asp.net</a> mvc webapi 2 提供了 IHttpActionResult 這個界面</p>
+<p>這個界面的效果基本上是跟HttpResponseMessage是一樣的
+但是在回傳值的表示有些微的不一樣,以下是整理表</p>
+<table>
+<thead>
+<tr>
+<th>IHttpActionResult</th>
+<th>HttpResponseMessage Request.CreateResponse(HttpStatusCode)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ok()</td>
+<td>HttpStatusCode.OK</td>
+</tr>
+<tr>
+<td>InternalServerError()</td>
+<td>HttpStatusCode.InternalServerError</td>
+</tr>
+<tr>
+<td>NotFound()</td>
+<td>HttpStatusCode.NotFound</td>
+</tr>
+</tbody>
+</table>
+<p>more on <a href="http://msdn.microsoft.com/zh-tw/library/system.web.http.apicontroller_methods(v=vs.118).aspx">http://msdn.microsoft.com/zh-tw/library/system.web.http.apicontroller_methods(v=vs.118).aspx</a></p>
+<p>這樣子寫起來就乾淨很多了</p>
+]]></content>
+      <categories>
+        <category>ASP.NET MVC</category>
+      </categories>
+      <tags>
+        <tag>MVC 4</tag>
       </tags>
   </entry>
   <entry>
@@ -19153,6 +19153,52 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </categories>
       <tags>
         <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>FSharp 也要跟 minimal api 風</title>
+    <url>/2022/01/30/fsharp-minimal-api/</url>
+    <content><![CDATA[<p>minimal api 風格推出後，很多人慢慢能接受這樣的風格了，而 Fsharp 也要來跟風，以下是簡單跟風過程</p>
+<span id="more"></span>
+<h1 id="基本型"><a class="header-anchor" href="#基本型"> </a>基本型</h1>
+<p>透過 VS2022 建立一個空專案，語言選擇 F#，就完成了</p>
+<p><img src="image-20220130135421055.png" alt="image-20220130135421055"></p>
+<p><img src="image-20220130135458674.png" alt="image-20220130135458674"></p>
+<p>後面就下一步到整個專案建立起來，然後就會看到一個很乾淨的 program.fs 了</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">open</span> System</span><br><span class="line"><span class="keyword">open</span> Microsoft.AspNetCore.Builder</span><br><span class="line"><span class="keyword">open</span> Microsoft.Extensions.Hosting</span><br><span class="line"></span><br><span class="line"><span class="meta">[&lt;EntryPoint&gt;]</span></span><br><span class="line"><span class="keyword">let</span> main args =</span><br><span class="line">    <span class="keyword">let</span> builder = WebApplication.CreateBuilder(args)</span><br><span class="line">    <span class="keyword">let</span> app = builder.Build()</span><br><span class="line"></span><br><span class="line">    app.MapGet(<span class="string">&quot;/&quot;</span>, Func&lt;string&gt;(<span class="keyword">fun</span> () -&gt; <span class="string">&quot;Hello World!&quot;</span>)) |&gt; ignore</span><br><span class="line"></span><br><span class="line">    app.Run()</span><br><span class="line"></span><br><span class="line">    <span class="number">0</span> <span class="comment">// Exit code</span></span><br></pre></td></tr></table></figure>
+<p>將專案執行起來後就可以看 Hello World! 的顯示</p>
+<p><img src="image-20220130141201938.png" alt="image-20220130141201938"></p>
+<h1 id="來點變化"><a class="header-anchor" href="#來點變化"> </a>來點變化</h1>
+<p>新增一個 <code>HOme.fs</code> 的檔案，然後將 root request 的動作搬到新檔案中，然後多點變化</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Home.fs</span></span><br><span class="line"><span class="keyword">module</span> Home</span><br><span class="line"></span><br><span class="line"><span class="keyword">open</span> System</span><br><span class="line"><span class="keyword">open</span> Microsoft.AspNetCore.Builder</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> showTime = </span><br><span class="line">    <span class="keyword">let</span> getCurrentTime () = DateTime.Now</span><br><span class="line">    Func&lt;DateTime&gt;(getCurrentTime)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> registerRoutes (app: WebApplication) =</span><br><span class="line">    app.MapGet(<span class="string">&quot;/&quot;</span>, showTime) |&gt; ignore</span><br><span class="line">    app</span><br></pre></td></tr></table></figure>
+<p>而原本的 <code>Program.fs</code> 就可以改成這樣</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">open</span> System</span><br><span class="line"><span class="keyword">open</span> Microsoft.AspNetCore.Builder</span><br><span class="line"><span class="keyword">open</span> Microsoft.Extensions.Hosting</span><br><span class="line"></span><br><span class="line"><span class="meta">[&lt;EntryPoint&gt;]</span></span><br><span class="line"><span class="keyword">let</span> main args =</span><br><span class="line">    <span class="keyword">let</span> builder = WebApplication.CreateBuilder(args)</span><br><span class="line">    <span class="keyword">let</span> app = builder.Build()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Changing</span></span><br><span class="line">    app</span><br><span class="line">    |&gt; Home.registerRoutes</span><br><span class="line">    |&gt; ignore</span><br><span class="line">    </span><br><span class="line">    app.Run()</span><br><span class="line"></span><br><span class="line">    <span class="number">0</span> <span class="comment">// Exit code</span></span><br></pre></td></tr></table></figure>
+<p>這樣是不是就乾淨很多了，在來多寫一個 add/get items 的小功能</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Todo.fs</span></span><br><span class="line"><span class="meta">[&lt;RequireQualifiedAccess&gt;]</span></span><br><span class="line"><span class="keyword">module</span> Todo</span><br><span class="line"></span><br><span class="line"><span class="keyword">open</span> System</span><br><span class="line"><span class="keyword">open</span> Microsoft.AspNetCore.Builder</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">Todo</span> </span>= </span><br><span class="line">    &#123; id: int</span><br><span class="line">      title: string</span><br><span class="line">      isDone: bool&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mutable</span> <span class="keyword">private</span> todos = []</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">ITodoService</span> </span>= </span><br><span class="line">   <span class="keyword">abstract</span> GetTodos: unit -&gt; Todo seq</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> TodoService = &#123; <span class="keyword">new</span> ITodoService <span class="keyword">with</span></span><br><span class="line">                       <span class="keyword">member</span> this.GetTodos(): seq&lt;Todo&gt; =</span><br><span class="line">                         todos |&gt; List.toSeq  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">private</span> getTodos = </span><br><span class="line">    Func&lt;ITodoService, Todo seq&gt;</span><br><span class="line">        (<span class="keyword">fun</span> (todos: ITodoService) -&gt; todos.GetTodos())</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">private</span> addTodo =</span><br><span class="line">    Func&lt;Todo, bool&gt;</span><br><span class="line">        (<span class="keyword">fun</span> todo -&gt; </span><br><span class="line">            todos &lt;- todo:: todos</span><br><span class="line">            <span class="keyword">true</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> registerRoutes (app: WebApplication) =</span><br><span class="line">    app.MapGet(<span class="string">&quot;/todos&quot;</span>, getTodos) |&gt; ignore</span><br><span class="line">    app.MapPost(<span class="string">&quot;/todos&quot;</span>, addTodo) |&gt; ignore</span><br><span class="line">    app</span><br></pre></td></tr></table></figure>
+<p><code>Program.fs</code></p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">open</span> System</span><br><span class="line"><span class="keyword">open</span> Microsoft.AspNetCore.Builder</span><br><span class="line"><span class="keyword">open</span> Microsoft.Extensions.Hosting</span><br><span class="line"><span class="keyword">open</span> Microsoft.Extensions.DependencyInjection <span class="comment">// 註冊 service 需要的 namespace</span></span><br><span class="line"></span><br><span class="line"><span class="meta">[&lt;EntryPoint&gt;]</span></span><br><span class="line"><span class="keyword">let</span> main args =</span><br><span class="line">    <span class="keyword">let</span> builder = WebApplication.CreateBuilder(args)</span><br><span class="line">    <span class="comment">// 註冊 service</span></span><br><span class="line">    builder</span><br><span class="line">        .Services</span><br><span class="line">        .AddSingleton&lt;Todo.ITodoService&gt;(<span class="keyword">fun</span> _ -&gt; Todo.TodoService) |&gt; ignore</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> app = builder.Build()</span><br><span class="line">   </span><br><span class="line">    app</span><br><span class="line">    |&gt; Home.registerRoutes</span><br><span class="line">    |&gt; Todo.registerRoutes</span><br><span class="line">    |&gt; ignore</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    app.Run()</span><br><span class="line"></span><br><span class="line">    <span class="number">0</span> <span class="comment">// Exit code</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="測試"><a class="header-anchor" href="#測試"> </a>測試</h2>
+<p>寫完後就可以用 postman 來測試一下</p>
+<ol>
+<li>
+<p>Query Items</p>
+<p><img src="image-20220130144502653.png" alt="image-20220130144502653"></p>
+</li>
+<li>
+<p>Add Item</p>
+<p><img src="image-20220130144622387.png" alt="image-20220130144622387"></p>
+<p>新增成功後在查詢看有沒有存進去</p>
+<p><img src="image-20220130144654827.png" alt="image-20220130144654827"></p>
+</li>
+</ol>
+<h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
+<p>同樣的架構在 F# 有可以試用，這是個好消息，之後會再嘗試接上 mongo了，此篇文章的程式碼是參考 <a href="https://github.com/AngelMunoz/NetSixSamples/tree/main/Newishfs">Github Repo</a>，也會在平日的晚上找時間開 F# 讀書會，有興趣的可以 follow 一下</p>
+]]></content>
+      <categories>
+        <category>FSharp</category>
+      </categories>
+      <tags>
+        <tag>FSharp</tag>
       </tags>
   </entry>
   <entry>

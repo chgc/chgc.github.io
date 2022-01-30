@@ -200,6 +200,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/01/28/note-angularjs-20140129/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/01/28/note-angularjs-20140129/" class="post-title-link" itemprop="url">[AngularJS]AngularJs-20140129</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-01-29 03:48:00" itemprop="dateCreated datePublished" datetime="2014-01-29T03:48:00+08:00">2014-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AngularJS/" itemprop="url" rel="index"><span itemprop="name">AngularJS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/01/28/note-angularjs-20140129/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/28/note-angularjs-20140129/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="location-Service-window-location"><a class="header-anchor" href="#location-Service-window-location"> </a>$location Service (window.location)</h1>
+<p>用途: redirect action</p>
+<h2 id="path"><a class="header-anchor" href="#path"> </a>path()</h2>
+<p>使用者可以使用『上一頁』的功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$location.path(); // 取得目前的路徑</span><br><span class="line"></span><br><span class="line">$location.path(&#x27;path&#x27;);//改變路徑</span><br></pre></td></tr></table></figure>
+<h2 id="replace"><a class="header-anchor" href="#replace"> </a>replace()</h2>
+<p>使用者沒有辦法使用『上一頁』</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$location.path(&#x27;path&#x27;);</span><br><span class="line">$locaton.replace();</span><br><span class="line"> </span><br><span class="line">// or </span><br><span class="line"> </span><br><span class="line">$location.path(&#x27;path&#x27;).replace()</span><br></pre></td></tr></table></figure>
+<h2 id="absUrl"><a class="header-anchor" href="#absUrl"> </a>absUrl()</h2>
+<p>取得完整的路徑</p>
+<h2 id="hash"><a class="header-anchor" href="#hash"> </a>hash()</h2>
+<p>取得 # 之後的內容</p>
+<h2 id="search"><a class="header-anchor" href="#search"> </a>search()</h2>
+<p>get/set search part of the current URL</p>
+<h2 id="url"><a class="header-anchor" href="#url"> </a>url()</h2>
+<p>get the URL of the current page</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/01/21/note-linq-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1232,143 +1336,6 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/12/python-20131112/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/11/12/python-20131112/" class="post-title-link" itemprop="url">[python] 20131112</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-11-12 12:41:00" itemprop="dateCreated datePublished" datetime="2013-11-12T12:41:00+08:00">2013-11-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/11/12/python-20131112/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/12/python-20131112/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>#demo program</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a,b=0,1     # 指定值至變數中</span><br><span class="line">while b&lt;10:                 # 迴圈</span><br><span class="line">...     print(b, end=&#x27;,&#x27;)   # 顯示文字，結尾加上,</span><br><span class="line">...     a,b=b,a+b           # 指定值至變數中</span><br><span class="line"></span><br><span class="line">1,1,2,3,5,8,                # 輸出結果</span><br></pre></td></tr></table></figure>
-<p>#Control Flow Tools</p>
-<h2 id="if"><a class="header-anchor" href="#if"> </a>if</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if x&lt;0:</span><br><span class="line">    something something</span><br><span class="line">elif condition:</span><br><span class="line">    something something</span><br><span class="line">else:</span><br><span class="line">    something something</span><br></pre></td></tr></table></figure>
-<h2 id="for"><a class="header-anchor" href="#for"> </a>for</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">words=[&#x27;cat&#x27;,&#x27;window&#x27;,&#x27;defenestrate&#x27;]</span><br><span class="line">for w in words:</span><br><span class="line">    print(w,len(w))</span><br><span class="line"></span><br><span class="line">cat 3</span><br><span class="line">window 6</span><br><span class="line">defenestrate 12</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; for w in words[:]:  # Loop over a slice copy of the entire list.</span><br><span class="line">...     if len(w) &gt; 6:</span><br><span class="line">...         words.insert(0, w) # 將值插入至list中</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; words</span><br><span class="line">[&#x27;defenestrate&#x27;, &#x27;cat&#x27;, &#x27;window&#x27;, &#x27;defenestrate&#x27;]</span><br></pre></td></tr></table></figure>
-<h2 id="range"><a class="header-anchor" href="#range"> </a>range()</h2>
-<p>range()主要的目的是要創造一個連續值的list, 例如 range(10)=[0,1,2,3,4,5,6,8,9]</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; for i in range(5): # range(5) = range(0,5)</span><br><span class="line">...     print(i)</span><br><span class="line">... </span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; for i in range(5,9):</span><br><span class="line">...     print(i)</span><br><span class="line">... </span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; for i in range(0,10,2): # = for(i=0;i&lt;10;i=i+2) step 2</span><br><span class="line">...     print(i)</span><br><span class="line">...     </span><br><span class="line">0</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line"></span><br><span class="line"># 使用在文字陣列上</span><br><span class="line">&gt;&gt;&gt; a = [&#x27;Mary&#x27;, &#x27;had&#x27;, &#x27;a&#x27;, &#x27;little&#x27;, &#x27;lamb&#x27;]</span><br><span class="line">&gt;&gt;&gt; for i in range(len(a)):</span><br><span class="line">...     print(i,a[i])</span><br><span class="line">... </span><br><span class="line">0 Mary</span><br><span class="line">1 had</span><br><span class="line">2 a</span><br><span class="line">3 little</span><br><span class="line">4 lamb</span><br></pre></td></tr></table></figure>
-<h2 id="break-continue-else-in-Loops"><a class="header-anchor" href="#break-continue-else-in-Loops"> </a>break, continue, else in Loops</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for n in range(2,10):</span><br><span class="line">    for x in range(2,n):</span><br><span class="line">        if n%x ==0:</span><br><span class="line">            print(n, &#x27;equals&#x27;, x, &#x27;*&#x27;, n//x)</span><br><span class="line">            break</span><br><span class="line">    else:</span><br><span class="line">        print(n, &#x27;is a prime number&#x27;)        </span><br></pre></td></tr></table></figure>
-<p>else: 是對應到 for x in range(2,n):
-意義: a try statement’s else clause runs when no exception occurs</p>
-<p>#python coding style</p>
-<ol>
-<li>
-<p>Use 4-space indentation, and no tabs.</p>
-<p>4 spaces are a good compromise between small indentation (allows greater nesting depth) and large indentation (easier to read). Tabs introduce confusion, and are best left out.</p>
-</li>
-<li>
-<p>Wrap lines so that they don’t exceed 79 characters.</p>
-<p>This helps users with small displays and makes it possible to have several code files side-by-side on larger displays.</p>
-</li>
-<li>
-<p>Use blank lines to separate functions and classes, and larger blocks of code inside functions.</p>
-</li>
-<li>
-<p>When possible, put comments on a line of their own.</p>
-</li>
-<li>
-<p>Use docstrings.
-「」&quot; something something something 「」&quot;
-可以被呼叫by function.<strong>doc</strong></p>
-</li>
-<li>
-<p>Use spaces around operators and after commas, but not directly inside bracketing constructs: a = f(1, 2) + g(3, 4).</p>
-</li>
-<li>
-<p>Name your classes and functions consistently; the convention is to use CamelCase for classes and lower_case_with_underscores for functions and methods. Always use self as the name for the first method argument (see A First Look at Classes for more on classes and methods).</p>
-</li>
-<li>
-<p>Don’t use fancy encodings if your code is meant to be used in international environments. Python’s default, UTF-8, or even plain ASCII work best in any case.</p>
-</li>
-<li>
-<p>Likewise, don’t use non-ASCII characters in identifiers if there is only the slightest chance people speaking a different language will read or maintain the code.</p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1440,20 +1407,20 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-count">323</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
