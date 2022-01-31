@@ -13,6 +13,8 @@ tags: FSharp
 
 <!-- more -->
 
+# Work with MongoDB
+
 .net core 專案不管是 C# 或是 F# 要使用 MongoDB 都需要安裝一個 package `MongoDB.Driver`，安裝完成後就可以連接 MongoDB 了，這邊就假設各位的電腦已經有一個正常運行的 MongoDB，如果沒有，網路上有很多安裝教學
 
 接下來的檔案都是在 `Todo.fs` 內做異動
@@ -92,4 +94,55 @@ tags: FSharp
    BTW，如果想要將 FP 學好，要學會看懂 signature
 
 這樣調整完後，重新執行測試 API ，沒有意外就可以看到資料有儲存到 MongoDB 內了
+
+# 注入 IConfiguration
+
+經過一晚的思考，還是將如何使用 Configuration 的作法補上來，順便熟悉 `Minimal API` 的 DI 機制，接下來會分兩塊來看
+
+1. map func 直接注入 dependency
+
+   ```fsharp
+   [<RequireQualifiedAccess>]
+   module Home
+   
+   open System
+   open Microsoft.AspNetCore.Builder
+   open Microsoft.Extensions.Configuration
+   
+   let showVersion = 
+       let getCurrentVersion (config:IConfiguration) = config["version"]
+       Func<IConfiguration, string>(getCurrentVersion)
+   
+   let registerRoutes (app: WebApplication) =
+       app.MapGet("/", showVersion) |> ignore
+       app
+   ```
+
+   * line 10: 的 `Func` 寫法如同上面的，可以用這樣子的方式取得註冊在 services 內的服務 (framework 幫我們完成)
+
+2. 註冊 service 層的 DI
+
+   ```fsharp
+   let TodoService (config: IConfiguration) = 
+       { new ITodoService with        
+           member __.mongo = MongoClient(config["mongodb"])
+           member __.db = __.mongo.GetDatabase "todos"
+         ....}
+   ```
+
+   * line 1: 在宣告時就表明要給 `IConfiuration`
+
+   ```fsharp
+   builder
+       .services
+       .AddSingleton<Todo.ITodoService>(fun _ -> Todo.TodoService builder.Configuration) |> ignore
+   ```
+
+   * 所以在註冊的時候就餵給他 Configuration 就好
+
+這樣子就完成了，這部分的寫法我一開始有點鬼打牆，主要是因為我卡在 C# 版本的觀念，service 的 DI 要從 `constructure` 注入，後來想通其實他就是 function，就直接傳進去就好了。
+
+換另外一個層面來看，當你發現一個 function 要傳入的東西太多時，就要重新思考這段程式碼是否有問題，是不是負責太多事情了。
+
+
 
