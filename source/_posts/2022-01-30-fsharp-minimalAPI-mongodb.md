@@ -22,8 +22,8 @@ tags: FSharp
 1. 調整 `Todo` type 定義
 
    ```fsharp
-   type Todo = 
-       { id: ObjectId // mongodb 自己的 key 欄位, 需要 open MongoDB.Bson
+   type Todo = {
+         id: BsonObjectId // mongodb 自己的 key 欄位, 需要 open MongoDB.Bson
          uid: string // 上一篇使用 int, 這裡改用 Guid 當作 uid
          title: string
          isDone: bool }
@@ -61,7 +61,8 @@ tags: FSharp
    
                match Seq.isEmpty todos with
                | true -> 
-                   collection.InsertOne { todo with 
+                   collection.InsertOne { todo with
+                     					  id = BsonObjectId(ObjectId.GenerateNewId())
                                            uid = Guid.NewGuid().ToString() }
                    true
                | false -> 
