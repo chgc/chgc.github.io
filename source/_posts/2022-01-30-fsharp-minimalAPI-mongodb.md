@@ -62,8 +62,8 @@ tags: FSharp
                match Seq.isEmpty todos with
                | true -> 
                    collection.InsertOne { todo with
-                     					  id = BsonObjectId(ObjectId.GenerateNewId())
-                                           uid = Guid.NewGuid().ToString() }
+                                           id = BsonObjectId(ObjectId.GenerateNewId())
+                                           uid = Guid.NewGuid().ToString() } |> ignore
                    true
                | false -> 
                    let filter = Builders<Todo>.Filter.Eq((fun x -> x.uid), todo.uid)
