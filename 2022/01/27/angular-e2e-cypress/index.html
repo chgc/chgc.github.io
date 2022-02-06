@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2022/01/27/angular-e2e-cypress/image-20220127210434231.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/01/27/angular-e2e-cypress/image-20220127210600806.png">
 <meta property="article:published_time" content="2022-01-27T12:40:33.000Z">
-<meta property="article:modified_time" content="2022-01-31T02:36:47.297Z">
+<meta property="article:modified_time" content="2022-02-06T08:38:28.267Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -295,7 +295,7 @@
 </li>
 <li>
 <p>就來修改一下 e2e 測試讓他綠燈</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;My First Test&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  it(<span class="string">&#x27;Visits the initial project page&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    cy.visit(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">    cy.contains(<span class="string">&#x27;Welcome&#x27;</span>)</span><br><span class="line">    cy.contains(<span class="string">&#x27;e2e-study app is running!&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;My First Test&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;Visits the initial project page&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    cy.<span class="title function_">visit</span>(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">    cy.<span class="title function_">contains</span>(<span class="string">&#x27;Welcome&#x27;</span>)</span><br><span class="line">    cy.<span class="title function_">contains</span>(<span class="string">&#x27;e2e-study app is running!&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><img src="image-20220127210600806.png" alt="image-20220127210600806"></p>
 </li>
 <li>

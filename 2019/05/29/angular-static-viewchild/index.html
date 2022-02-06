@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2019/05/29/angular-static-viewchild/1559140008278.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/05/29/angular-static-viewchild/1559140094660.png">
 <meta property="article:published_time" content="2019-05-29T14:00:12.000Z">
-<meta property="article:modified_time" content="2022-01-31T02:36:47.197Z">
+<meta property="article:modified_time" content="2022-02-06T08:38:28.139Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -275,7 +275,7 @@
         <p>Angular 8 在五月底正式釋出，而這次的釋出裡面有一個更新屬於新設定，觀念上是有需要調整的，所以寫了這篇文章釐清一下</p>
 <span id="more"></span>
 <p>所謂的 Query 上的改變，是針對 <code>ViewChild</code> / <code>ContentChild</code> 這一類的 decorator 做額外的設定，以前我們的程式碼會這樣子寫</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ViewChild</span>(<span class="string">&#x27;foo&#x27;</span>) foo: ElementRef</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ViewChild</span>(<span class="string">&#x27;foo&#x27;</span>) <span class="attr">foo</span>: <span class="title class_">ElementRef</span></span><br></pre></td></tr></table></figure>
 <p>這樣子寫在取得內容的時間點，有時候會是在 <code>Oninit</code> 有時候需要在 <code>ngAfterViewInit</code> 時才可以取得。稍微分析一下為什麼會有這樣子的時間點上的差異性</p>
 <ol>
 <li>當所要查詢的 Element 上沒有任何 <code>*ngIf</code> 或是 <code>*ngFor</code> 的 directive 時，該 element 一開始就已經存在，不需要再經過 Angular 做額外的判斷 (頁面處理)，這時候就可以在 <code>OnInit</code> 這階段取得該 Element 的相關資訊</li>

@@ -29,7 +29,7 @@
 <meta property="og:description" content="長久以來，使用 moment.js 這一個時間套件讓我很掙扎，畢竟他很好用但很肥，主要肥胖的地方都是一堆用不到的 locale. 今天終於下定決心要來解決這個問題，經過兩分鐘的搜尋後，以下是解法">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-07-25T04:21:38.000Z">
-<meta property="article:modified_time" content="2022-01-31T02:36:47.257Z">
+<meta property="article:modified_time" content="2022-02-06T08:38:28.215Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -273,7 +273,7 @@
 <li>在 <code>src</code> 資料夾下建立一個 locale 空的資料夾</li>
 <li>在 <code>angular.json</code> 的 <code>fileReplacements</code> 內多新增下面設定</li>
 </ol>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;replace&quot;</span>: <span class="string">&quot;node_modules/moment/locale/&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;with&quot;</span>: <span class="string">&quot;src/locale/&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;replace&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node_modules/moment/locale/&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;with&quot;</span><span class="punctuation">:</span> <span class="string">&quot;src/locale/&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>當這樣子設定完成後，ng build --prod 時會出現 <code>\moment\locale\af.js&quot; does not exist.</code> 找不到的錯誤訊息，沒關係這個不會影響到我們的程式執行。</p>
 <p>經過這樣子的調整後，整個 moment locale 的部分就會被拔掉，瞬間瘦了快 400kb 的大小，可以算是瘦身成功</p>
 

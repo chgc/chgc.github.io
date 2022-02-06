@@ -29,7 +29,7 @@
 <meta property="og:description" content="繼上一篇環境基礎設定完成後，這篇先來筆記一下要如何做頁面切換，有哪些地方需要留意的">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-02-05T16:22:09.000Z">
-<meta property="article:modified_time" content="2022-01-31T02:36:47.273Z">
+<meta property="article:modified_time" content="2022-02-06T08:38:28.235Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -269,12 +269,12 @@
         <p>繼上一篇環境基礎設定完成後，這篇先來筆記一下要如何做頁面切換，有哪些地方需要留意的</p>
 <span id="more"></span>
 <p>首先要知道在 VSCode Extension Webview 的環境並不是一個 web server 而是檔案，所以我們就不能使用預設的路由設定模式，而必須改為 hash 模式 (<code>HashLocationStrategy</code>)，設定方式如下</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> RouterModule.forRoot(routes, &#123;</span><br><span class="line">      <span class="attr">useHash</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes, &#123;</span><br><span class="line">      <span class="attr">useHash</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
 <p>在到 <code>index.html</code> 的地方，調整 base 路徑的部分</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>到這邊基本上 Angular 的路由就可以正常運作了</p>
 <p>或許會問說，那 LazyLoading 的部分呢? 很抱歉，在 VSCode Extension Webview 內是不能使用的，所以 <code>loadChildren</code> 的寫法要改成這樣</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">path</span>: <span class="string">&#x27;product&#x27;</span>, <span class="attr">loadChildren</span>: <span class="function">() =&gt;</span> ProductModule &#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">path</span>: <span class="string">&#x27;product&#x27;</span>, <span class="attr">loadChildren</span>: <span class="function">() =&gt;</span> <span class="title class_">ProductModule</span> &#125;,</span><br></pre></td></tr></table></figure>
 
     </div>
 

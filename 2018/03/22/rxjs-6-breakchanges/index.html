@@ -29,7 +29,7 @@
 <meta property="og:description" content="Angular 6 將會把 RxJS 一起升級到 6 版，在 RxJS 6 版有許多的 breaking changes，這些 breaking changes 有許多是為了簡化開發時的寫法所做的改變，所以不要太緊張，就慢慢的了解就可以了。">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2018-03-22T08:07:53.000Z">
-<meta property="article:modified_time" content="2022-01-31T02:36:47.157Z">
+<meta property="article:modified_time" content="2022-02-06T08:38:28.095Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -336,7 +336,7 @@
 </li>
 <li>
 <p>擁有 <code>resultSelector</code> 的 <code>operators</code> 都被拔掉了，建議改搭配使用 <code>map</code>，例如</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source.pipe(mergeMap(<span class="function">(<span class="params">x</span>)=&gt;</span> <span class="keyword">of</span>(x+x).pipe(<span class="function"><span class="params">y</span>=&gt;</span> x=y)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source.<span class="title function_">pipe</span>(<span class="title function_">mergeMap</span>(<span class="function">(<span class="params">x</span>)=&gt;</span> <span class="title function_">of</span>(x+x).<span class="title function_">pipe</span>(<span class="function"><span class="params">y</span>=&gt;</span> x=y)))</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>Pipeable operators 必須從 <code>rxjs/operators</code> 引用</p>
