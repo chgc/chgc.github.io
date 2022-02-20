@@ -19269,6 +19269,70 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[FSharp] Seq Study</title>
+    <url>/2022/02/20/fsharp-seq-study/</url>
+    <content><![CDATA[<p>最近在練習 F# 時，發現自己對於 F# Collection 操作不熟悉，尤其是 Seq 的部分，特地拉出單章刻意練習</p>
+<span id="more"></span>
+<p>來自官網的介紹</p>
+<blockquote>
+<p>「 <em>序列</em> 」（sequence）是一種元素的邏輯系列，全都是一種類型。 當您有大量的資料收集，但不一定會預期使用所有元素時，序列特別有用。 個別順序元素只會在必要時計算，因此在不使用所有元素的情況下，序列可以提供比清單更佳的效能。 順序是以類型表示 <code>seq&lt;'T&gt;</code> ，這是的別名 <a href="https://docs.microsoft.com/zh-tw/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a> 。 因此，任何實介面的 .NET 型別都 <a href="https://docs.microsoft.com/zh-tw/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a> 可以用來做為序列。 <a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html">Seq 模組</a>可支援涉及序列的操作。</p>
+</blockquote>
+<h1 id="Notes"><a class="header-anchor" href="#Notes"> </a>Notes</h1>
+<h2 id="建立-Seq"><a class="header-anchor" href="#建立-Seq"> </a>建立 Seq</h2>
+<p>F# 建立 range 數列的方式可以透過 <code>..</code> 的方式來完成，例如 <code>[ 1 .. 3 ]</code> 就能產生 <code>[ 1;2;3 ]</code> 的 List，要表示 step n 時，可以這樣子表示 <code>[ 1..2..5]</code> 就會得到 <code>[1;3;5]</code>，同樣的表示法套用在 seq 上會是這樣子寫</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">seq</span> &#123; <span class="number">1.</span><span class="number">.2</span><span class="operator">..</span><span class="number">5</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>更進一步可以透過程式的方式產生 seq 的內容</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">seq</span> &#123; <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span> <span class="operator">..</span> <span class="number">10</span> <span class="operator">-&gt;</span> i <span class="operator">*</span> i &#125;</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="keyword">seq</span> &#123; <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1.</span>. <span class="number">10</span> <span class="keyword">do</span> i <span class="operator">*</span> i&#125;</span><br></pre></td></tr></table></figure>
+<p>另外一種會遇到的情況是想將一個 seq 展開並放入到另外一個 seq 時，可以使用 <code>yield!</code> 的關鍵字 ，其效果跟 JavaScript 的 flatMap 是一樣的</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">seq</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="number">1.</span><span class="number">.10</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">yield!</span> <span class="keyword">seq</span> &#123; <span class="number">1</span>; <span class="number">2</span>; <span class="number">3</span>; <span class="number">4</span>; <span class="number">5</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>文件中提到一點就是如果運算是中有使用到 <code>yield!</code> 時，其他回傳值就必須使用 <code>yield</code></p>
+<h2 id="轉換"><a class="header-anchor" href="#轉換"> </a>轉換</h2>
+<p>可以透過兩種方式來將 <code>List</code> or <code>Array</code> 轉換成 <code>seq</code></p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Convert an array to a sequence by using a cast.</span></span><br><span class="line"><span class="keyword">let</span> seqFromArray1 <span class="operator">=</span> [<span class="operator">|</span> <span class="number">1</span> <span class="operator">..</span> <span class="number">10</span> <span class="operator">|</span>] <span class="operator">:&gt;</span> seq<span class="operator">&lt;</span>int<span class="operator">&gt;</span></span><br><span class="line"><span class="comment">// let seqFromArray1 = Seq.cast [| 1 .. 10 |]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Convert an array to a sequence by using Seq.ofArray.</span></span><br><span class="line"><span class="keyword">let</span> seqFromArray2 <span class="operator">=</span> [<span class="operator">|</span> <span class="number">1</span> <span class="operator">..</span> <span class="number">10</span> <span class="operator">|</span>] <span class="operator">|&gt;</span> Seq.ofArray</span><br></pre></td></tr></table></figure>
+<h2 id="搜尋"><a class="header-anchor" href="#搜尋"> </a>搜尋</h2>
+<p>常用的方法有  <a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#exists">Seq. exists</a>、 <a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#exists">array.exists2</a>、 <a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#find">seq. find</a>、 <a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#findIndex">findIndex</a>、 <a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#pick">Seq. pick</a>、 <a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#tryFind">tryFind</a> 和 <a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#tryFindIndex">array.tryfindindex</a></p>
+<h2 id="Obtaining-Subsequences"><a class="header-anchor" href="#Obtaining-Subsequences"> </a>Obtaining Subsequences</h2>
+<ul>
+<li>
+<p>常看到的有 <code>Seq.filter</code> 、<code>Seq.choose</code>，跟 List 的版本功能一樣但運作方式不同，filtering 和 choosing 的行為只會針對當下的 seq element</p>
+</li>
+<li>
+<p>取 n 筆記錄的方法有 <code>Seq.take</code> 或是 <code>Seq.truncate</code> 兩者的差異是要處理的 seq 內是否有足夠得資料比數，如果資料比數不夠時，<code>Seq.take</code> 會傳回 <code>System.InvalidOperationException</code> 的例外狀況，而 <code>Seq.truncate</code> 不會發生</p>
+</li>
+<li>
+<p><code>Seq.takeWhile</code> 取值直到第一個不吻合條件發生</p>
+</li>
+<li>
+<p><code>Seq.skip</code> 跳過 n  筆記錄</p>
+</li>
+<li>
+<p><code>Seq.skipWhil</code> skip until first element tor which the predicate return false</p>
+</li>
+</ul>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// takeWhile</span></span><br><span class="line"><span class="keyword">let</span> mySeqLessThan10 <span class="operator">=</span> Seq.takeWhile (<span class="keyword">fun</span> elem <span class="operator">-&gt;</span> elem <span class="operator">&lt;</span> <span class="number">10</span>) mySeq</span><br><span class="line">mySeqLessThan10 <span class="operator">|&gt;</span> printSeq</span><br><span class="line"></span><br><span class="line"><span class="comment">// skip</span></span><br><span class="line"><span class="keyword">let</span> mySeqSkipFirst5 <span class="operator">=</span> Seq.skip <span class="number">5</span> mySeq</span><br><span class="line">mySeqSkipFirst5 <span class="operator">|&gt;</span> printSeq</span><br><span class="line"></span><br><span class="line"><span class="comment">// skipWhile</span></span><br><span class="line"><span class="keyword">let</span> mySeqSkipWhileLessThan10 <span class="operator">=</span> Seq.skipWhile (<span class="keyword">fun</span> elem <span class="operator">-&gt;</span> elem <span class="operator">&lt;</span> <span class="number">10</span>) mySeq</span><br><span class="line">mySeqSkipWhileLessThan10 <span class="operator">|&gt;</span> printSeq</span><br></pre></td></tr></table></figure>
+<h2 id="Transforming-Sequences"><a class="header-anchor" href="#Transforming-Sequences"> </a>Transforming Sequences</h2>
+<p>發現很多用法跟 RxJS 好像</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> printSeq seq1 <span class="operator">=</span> Seq.iter (<span class="built_in">printf</span> <span class="string">&quot;%A &quot;</span>) seq1; <span class="built_in">printfn</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">let</span> seqPairwise <span class="operator">=</span> Seq.pairwise (<span class="keyword">seq</span> &#123; <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span> <span class="operator">..</span> <span class="number">10</span> <span class="operator">-&gt;</span> i<span class="operator">*</span>i &#125;)</span><br><span class="line">printSeq seqPairwise</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">(<span class="number">1</span>, <span class="number">4</span>) (<span class="number">4</span>, <span class="number">9</span>) (<span class="number">9</span>, <span class="number">16</span>) (<span class="number">16</span>, <span class="number">25</span>) (<span class="number">25</span>, <span class="number">36</span>) (<span class="number">36</span>, <span class="number">49</span>) (<span class="number">49</span>, <span class="number">64</span>) (<span class="number">64</span>, <span class="number">81</span>) (<span class="number">81</span>, <span class="number">100</span>) </span><br></pre></td></tr></table></figure>
+<p><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#windowed">Seq.windowed</a> 用法跟 <code>Seq.pairwise</code> 很像，只是他可以指定每組的數量</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> seqNumbers <span class="operator">=</span> [ <span class="number">1.0</span>; <span class="number">1.5</span>; <span class="number">2.0</span>; <span class="number">1.5</span>; <span class="number">1.0</span>; <span class="number">1.5</span> ] <span class="operator">:&gt;</span> seq<span class="operator">&lt;</span>float<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">let</span> seqWindows <span class="operator">=</span> Seq.windowed <span class="number">3</span> seqNumbers</span><br><span class="line"><span class="keyword">let</span> seqMovingAverage <span class="operator">=</span> Seq.map Array.average seqWindows</span><br><span class="line"><span class="built_in">printfn</span> <span class="string">&quot;Initial sequence: &quot;</span></span><br><span class="line">printSeq seqNumbers <span class="comment">// 1.0 1.5 2.0 1.5 1.0 1.5</span></span><br><span class="line"><span class="built_in">printfn</span> <span class="string">&quot;\nWindows of length 3: &quot;</span></span><br><span class="line">printSeq seqWindows <span class="comment">// [|1.0; 1.5; 2.0|] [|1.5; 2.0; 1.5|] [|2.0; 1.5; 1.0|] [|1.5; 1.0; 1.5|]</span></span><br><span class="line"><span class="built_in">printfn</span> <span class="string">&quot;\nMoving average: &quot;</span></span><br><span class="line">printSeq seqMovingAverage <span class="comment">// 1.5 1.666666667 1.5 1.333333333</span></span><br></pre></td></tr></table></figure>
+<h1 id="API-Study"><a class="header-anchor" href="#API-Study"> </a>API Study</h1>
+<h2 id="Seq-collect"><a class="header-anchor" href="#Seq-collect"> </a>Seq.collect</h2>
+<p><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#collect">API</a></p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> d <span class="operator">=</span> <span class="string">&quot;AB\nDE&quot;</span></span><br><span class="line"></span><br><span class="line">d.Split [<span class="operator">|</span> <span class="string">&#x27;\n&#x27;</span> <span class="operator">|</span>]</span><br><span class="line"><span class="operator">|&gt;</span> Seq.collect (Seq.skip <span class="number">1</span> <span class="operator">&gt;&gt;</span> Seq.take <span class="number">1</span>)</span><br><span class="line"><span class="operator">|&gt;</span> <span class="built_in">printfn</span> <span class="string">&quot;%A&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// output:</span></span><br><span class="line"><span class="comment">// seq [&#x27;B&#x27;; &#x27;E&#x27;]</span></span><br></pre></td></tr></table></figure>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://docs.microsoft.com/zh-tw/dotnet/fsharp/language-reference/sequences">sequences</a></li>
+<li><a href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html">fsharp collections seqmodule</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>FSharp</category>
+      </categories>
+      <tags>
+        <tag>FSharp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
