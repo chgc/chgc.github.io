@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [FSharp] Seq Study
+title: '[FSharp] Seq Study'
 comments: true
 typora-root-url: 2022-02-20-fsharp-seq-study
 typora-copy-images-to: 2022-02-20-fsharp-seq-study
