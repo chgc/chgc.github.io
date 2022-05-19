@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.1">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -196,6 +196,132 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/02/18/c-coding-conventions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/02/18/c-coding-conventions/" class="post-title-link" itemprop="url">[C#]  編碼慣例</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-02-19 05:35:00" itemprop="dateCreated datePublished" datetime="2014-02-19T05:35:00+08:00">2014-02-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/02/18/c-coding-conventions/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/18/c-coding-conventions/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>節錄於MSDN</p>
+<ul>
+<li>使用預設的程式碼編輯器設定 (智慧型縮排、四個字元縮排、將定位點儲存為空格)。</li>
+<li>每行只撰寫一個陳述式。</li>
+<li>每行只撰寫一個宣告。</li>
+<li>如果連續行沒有自動縮排，則會將它們縮排一個定位停駐點 (四個空格)。</li>
+<li>在方法定義與屬性定義之間加入至少一個空白行。</li>
+<li>使用括號在運算式中撰寫子句，如下列程式碼所示。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if ((val1 &gt; val2) &amp;&amp; (val1 &gt; val3))</span><br><span class="line">&#123;</span><br><span class="line">    // Take appropriate action.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#註解慣例</p>
+<ul>
+<li>將註解放到另一行，不放在程式碼行的結尾。</li>
+<li>以大寫字母做為註解文字開頭。</li>
+<li>以句號結束註解文字。</li>
+<li>在註解分隔符號 (//) 與註解文字之間插入一個空格，如下列範例所示。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// The following declaration creates a query. It does not run</span><br><span class="line">// the query.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不在註解周圍建立格式化的星號區塊。</li>
+</ul>
+<p>#語言方針</p>
+<ul>
+<li>當指派右邊的變數型別很明顯，或是不需要精確的型別時，使用隱含型別的區域變數。</li>
+<li>指派右邊的型別不明顯時，不要使用 var。</li>
+<li>不要倚賴變數名稱來指定變數的型別。 它可能是不正確的。</li>
+<li>避免使用 var 取代 dynamic。</li>
+<li>使用隱含型別判斷 for 和 foreach 迴圈中迴圈變數的型別。</li>
+<li>進行比較時，若要略過不必要的比較以避免例外狀況並提升效能，請使用 &amp;&amp; 取代 &amp;，以及使用 || 取代 |。</li>
+<li>使用簡潔的物件執行個體化形式搭配隱含型別，如以下宣告中所示。</li>
+<li>使用物件初始設定式簡化物件建立。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var instance1 = new ExampleClass();</span><br><span class="line"></span><br><span class="line">// Object initializer.</span><br><span class="line">var instance3 = new ExampleClass &#123; Name = &quot;Desktop&quot;, ID = 37414, </span><br><span class="line">    Location = &quot;Redmond&quot;, Age = 2.3 &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>#＃ LINQ查詢</p>
+<ul>
+<li>使用有意義的名稱做為查詢變數的名稱。 下列範例會使用 seattleCustomers 代表位於西雅圖的客戶。</li>
+<li>使用多個 from 子句，而不要使用 join 子句來存取內部集合。 例如，Student 物件集合中，每一個物件都可能包含考試分數集合。 執行下列查詢時，會傳回每一個高於 90 分的分數，以及得到該分數的學生名字。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
       
   
   
@@ -1251,135 +1377,6 @@ formName.inputfieldName.$error.maxlength</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/14/electronic-invoices-via-the-internet-opening-process/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/11/14/electronic-invoices-via-the-internet-opening-process/" class="post-title-link" itemprop="url">[工作筆記]網際網路電子發票開立流程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-11-15 02:59:00" itemprop="dateCreated datePublished" datetime="2013-11-15T02:59:00+08:00">2013-11-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/11/14/electronic-invoices-via-the-internet-opening-process/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/14/electronic-invoices-via-the-internet-opening-process/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>民國103年1月1日起，網際網路電子發票開始限制發票字軌只能使用丁種字軌，然後又推說如果利用網際網路電子發票開立B2B交易情形，只能接受丁種字軌，這表示，另外一方也必須用網際網路電子發票…看來國稅局在103年度要強推B2B的電子發票了。</p>
-<p>不管怎樣，這個也是一個趨勢，雖然現在開立的方法或是平台（還得獎…這好笑了吧, 請個F2E處理一下你的頁面吧。還是說設計者都沒有自己操作過)都還很鳥，如果要利用媒體檔上傳的方式，這個門檻又很高，因為那個該死的規格書又寫的很艱澀。（只是要罵一下)…</p>
-<h1 id="帳號申請網址：電子發票整合服務平台"><a class="header-anchor" href="#帳號申請網址：電子發票整合服務平台"> </a>帳號申請網址：<a target="_blank" rel="noopener" href="https://www.einvoice.nat.gov.tw/?CSRT=4242273227480015138">電子發票整合服務平台</a></h1>
-<p>還是稍微整理一下開立流程：</p>
-<h1 id="一般開立"><a class="header-anchor" href="#一般開立"> </a>一般開立</h1>
-<ol>
-<li>賣方開立發票</li>
-<li>買方收到開立通知</li>
-<li>買方接收開立發票</li>
-<li>賣方收到接收通知</li>
-<li>完成開立動作</li>
-</ol>
-<h1 id="退回發票"><a class="header-anchor" href="#退回發票"> </a>退回發票</h1>
-<ol>
-<li>賣方開立發票</li>
-<li>買方收到通知</li>
-<li>買方退回發票</li>
-<li>賣方確認發票退回</li>
-<li>完成動作</li>
-</ol>
-<h1 id="作廢發要"><a class="header-anchor" href="#作廢發要"> </a>作廢發要</h1>
-<ol>
-<li>賣方作廢發票</li>
-<li>買方收到通知</li>
-<li>買方確認發票作廢</li>
-<li>完成動作</li>
-</ol>
-<h2 id="B2B交換資料，發票狀態有幾種，其意義為何？"><a class="header-anchor" href="#B2B交換資料，發票狀態有幾種，其意義為何？"> </a>B2B交換資料，發票狀態有幾種，其意義為何？</h2>
-<p>銷項發票狀態
-開立　：已新增發票，尚未憑證寄送
-已寄送：已憑證寄送，資料傳送中
-已讀取：買方已讀取 尚未完成進項發票寄送確認
-已確認：買方已完成進項發票寄送確認
-進項發票狀態
-開立　　　：賣方已憑證寄送發票，買方尚未讀取
-已讀取　　：買方已讀取發票，尚未完成進項發票寄送確認
-確認寄送中：進項發票寄送確認，資料傳送中
-已確認　　：買方已完成進項發票寄送確認</p>
-<h2 id="買方營業人若無工商憑證是否可接收發票？"><a class="header-anchor" href="#買方營業人若無工商憑證是否可接收發票？"> </a>買方營業人若無工商憑證是否可接收發票？</h2>
-<p>請賣方營業人至基本資料／交易對象資料維護建立買方資料並設定交易暗語，買方即可以交易暗語寄送發票。
-惟作廢發票及發票退回確認僅能使用憑證接收，不得使用交易暗語接收。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1451,7 +1448,7 @@ formName.inputfieldName.$error.maxlength</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">325</span>
+          <span class="site-state-item-count">326</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.1">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -200,6 +200,107 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/17/laravel-controllers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/10/17/laravel-controllers/" class="post-title-link" itemprop="url">[Laravel] Controllers</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-10-17 08:31:00" itemprop="dateCreated datePublished" datetime="2013-10-17T08:31:00+08:00">2013-10-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel/" itemprop="url" rel="index"><span itemprop="name">Laravel</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/10/17/laravel-controllers/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/17/laravel-controllers/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Controller"><a class="header-anchor" href="#Controller"> </a>Controller</h2>
+<p>Controllers是用來處理商業邏輯及資料與view之間的介面(負責將資料input//output 給model，與資料庫的溝通就交給model去處理了)</p>
+<p>controller需要配合route的設定才可被view呼叫使用。</p>
+<p>例如:
+route::get(『something』,『someController@someaction』)</p>
+<p>當使用者跑到 <a target="_blank" rel="noopener" href="http://website/something%E6%99%82">http://website/something時</a>, 就會呼叫route內所對應的controller及action.</p>
+<p>發現，這種指定的方式，當頁面很多的時候就會變得很麻煩。 所以laravel的route提供另外一種指定的方式</p>
+<p>route::controller(『something』,『someController』)</p>
+<p>此種設定的方式，適用於restFUL的controller, (get,post,put,delete)四種交換模式的相關動作。</p>
+<p>一般而言，只是讀取一個頁面的時候，都是透過 get的method取得回應的。所以在controller內action的命名，
+就是用getSomection()為命名的方式，網址就是http://website/something/someaction (小寫, Controller內的action name 是大寫). 如果action的名稱是SomeAction時，<strong>注意 是兩個大寫字母</strong> 網址就會變成 <a target="_blank" rel="noopener" href="http://website/something/some-action">http://website/something/some-action</a> (破折號作為連結的符號)</p>
+<p>同理: 如果遇到form post時, 就是呼叫postSomeaction()</p>
+<p>以上為controller的基本呼叫方式。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/16/laravel-study-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -277,7 +378,7 @@
 <h2 id="migrate-rollback"><a class="header-anchor" href="#migrate-rollback"> </a>migrate:rollback</h2>
 <p>執行資料庫格式降級 --&gt; function down()</p>
 <h2 id="migrate-table-file-location-app-database-migrations"><a class="header-anchor" href="#migrate-table-file-location-app-database-migrations"> </a>migrate table file location : app/database/migrations/</h2>
-<figure class="highlight php"><figcaption><span>升級動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">up</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">// create new table</span></span><br><span class="line"><span class="title class_">Schema</span>::<span class="title function_ invoke__">table</span>(<span class="string">&#x27;users&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"><span class="variable">$table</span></span>)</span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">create</span>();</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">increments</span>(<span class="string">&#x27;id&#x27;</span>);<span class="comment">//id fields with AUTO_INCREMENT</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;email&#x27;</span>);<span class="comment">//email field with varchar(255)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;real_name&#x27;</span>,<span class="number">100</span>);<span class="comment">//real_field with varchar(100)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;password&#x27;</span>);</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">timestamps</span>();<span class="comment">// created_at,updated_at timestamps(2 fields)</span></span><br><span class="line"> &#125;);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>升級動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">up</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">// create new table</span></span><br><span class="line"><span class="title class_">Schema</span>::<span class="title function_ invoke__">table</span>(<span class="string">&#x27;users&#x27;</span>, function(<span class="variable">$table</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">create</span>();</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">increments</span>(<span class="string">&#x27;id&#x27;</span>);<span class="comment">//id fields with AUTO_INCREMENT</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;email&#x27;</span>);<span class="comment">//email field with varchar(255)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;real_name&#x27;</span>,<span class="number">100</span>);<span class="comment">//real_field with varchar(100)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;password&#x27;</span>);</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">timestamps</span>();<span class="comment">// created_at,updated_at timestamps(2 fields)</span></span><br><span class="line"> &#125;);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 <h2 id="code￼1"><a class="header-anchor" href="#code￼1"> </a><figure class="highlight php"><figcaption><span>降級動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">down</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//Drop Table</span></span><br><span class="line">	<span class="title class_">Schema</span>::<span class="title function_ invoke__">drop</span>(<span class="string">&#x27;users&#x27;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></h2>
 
       
@@ -896,7 +997,7 @@ app/views/{{controllerName}}/xxx.volt
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">325</span>
+          <span class="site-state-item-count">326</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

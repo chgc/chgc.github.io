@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.1">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -196,6 +196,96 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/03/12/laravel-download-file-but-server-doenst-have-php-fileinfo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/03/12/laravel-download-file-but-server-doenst-have-php-fileinfo/" class="post-title-link" itemprop="url">[Laravel] Download file, but server doenst have php_fileinfo</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-03-12 15:22:00" itemprop="dateCreated datePublished" datetime="2015-03-12T15:22:00+08:00">2015-03-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel/" itemprop="url" rel="index"><span itemprop="name">Laravel</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/03/12/laravel-download-file-but-server-doenst-have-php-fileinfo/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/12/laravel-download-file-but-server-doenst-have-php-fileinfo/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Response::Download() in Laravel 4.x needs php_fileinfo extension. Sometimes web hosting server doesn’t have that extension on, althought it’s default for php 5.4.</p>
+<p>so the way to work around is make a response, and add header to it. See code below</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$file = File::get($filepath);</span><br><span class="line">$response = Response::make($file, 200);</span><br><span class="line">$response-&gt;header(&#x27;Content-Type&#x27;, $item-&gt;mime);</span><br><span class="line">$response-&gt;header(&#x27;Content-Disposition&#x27;,&#x27;attachment;filename=&quot;&#x27;.$filename.&#x27;&quot;&#x27;);</span><br><span class="line">return $response;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
       
   
   
@@ -1088,111 +1178,6 @@ Method binding (One-way Binding): &amp;</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/" class="post-title-link" itemprop="url">[Azure] Azure Storage 2.0 – Some blob changes to be aware of -Ref</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-11-06 15:29:00" itemprop="dateCreated datePublished" datetime="2014-11-06T15:29:00+08:00">2014-11-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Azure/" itemprop="url" rel="index"><span itemprop="name">Azure</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Reference Website Url
-<a target="_blank" rel="noopener" href="http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/">http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/</a></p>
-<p>大綱:</p>
-<p>如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlob thumbnailBlob = objContainer.GetBlobReference(filename);</span><br></pre></td></tr></table></figure>
-<p>換成</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var thumbnailBlob = objContainer.GetBlobReferenceFromServer(filename);</span><br></pre></td></tr></table></figure>
-<p>結果，一直給我跑404.</p>
-<p>這GetBlobReserenceFromServer的用意是去server上面找filename的blob reference回來. 所以當我們要建立新的blob, 這就文不對題了。 所以要改用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob blob = objContainer).GetBlockBlobReference(filename);</span><br></pre></td></tr></table></figure>
-<p>這樣子就okey了.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob.UploadFile(fileData.LocalFileName);</span><br></pre></td></tr></table></figure>
-<hr>
-<hr>
-<p>這個也改掉了, 要改成</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob.UploadFromFile(filenameWithPath, FileMode)</span><br></pre></td></tr></table></figure>
-<p>CloudBlockBlob也有提供不同的上傳方式，請參閱<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/microsoft.windowsazure.storage.blob.cloudblockblob_methods.aspx">MSDN</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1264,7 +1249,7 @@ Method binding (One-way Binding): &amp;</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">325</span>
+          <span class="site-state-item-count">326</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
