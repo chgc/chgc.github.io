@@ -200,6 +200,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/04/17/angular2-redux-with-service/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/04/17/angular2-redux-with-service/" class="post-title-link" itemprop="url">[Angular] play with Redux part 2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2016-04-17 12:15:00" itemprop="dateCreated datePublished" datetime="2016-04-17T12:15:00+08:00">2016-04-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/04/17/angular2-redux-with-service/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/17/angular2-redux-with-service/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在Part 1提到在aciton裡面，如果有需要呼叫api的行為，都會發生這個階段
+目前有發現有兩種方式可以處理api.</p>
+<ol>
+<li>angular的service(http call)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/github/fetch">fetch api</a></li>
+</ol>
+<p>如果利用第二種方式處理api call時，可以直接寫在action裡面。但是如果想要利用angular的service方式時，就要繞一下路了
+但是，還是先簡單的寫一下fetch的方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">loadTodo</span>(<span class="params"></span>) &#123;</span><br><span class="line">	 <span class="keyword">return</span> <span class="function"><span class="params">dispatch</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">fetch</span>(<span class="string">&#x27;api/Values&#x27;</span>)</span><br><span class="line">            .<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> response.<span class="title function_">json</span>()</span><br><span class="line">            &#125;)</span><br><span class="line">            .<span class="title function_">then</span>(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> (&#123;</span><br><span class="line">                    <span class="attr">type</span>: <span class="variable constant_">TODO_INIT</span>,</span><br><span class="line">                    <span class="attr">payload</span>: data</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;)</span><br><span class="line">            .<span class="title function_">then</span>(<span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="title function_">dispatch</span>(action);</span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用service的code如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Injectable</span>, <span class="title class_">Inject</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Http</span>, <span class="title class_">Response</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/http&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;rxjs/Rx&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="variable constant_">TODO_INIT</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;../constants&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">TodoService</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">        @Inject(<span class="string">&#x27;ngRedux&#x27;</span>) private store,</span></span><br><span class="line"><span class="params">        private http: Http</span>) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">loadTodo</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">&#x27;api/Values&#x27;</span>)</span><br><span class="line">            .<span class="title function_">map</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123; <span class="keyword">return</span> res.<span class="title function_">json</span>() &#125;)</span><br><span class="line">            .<span class="title function_">map</span>(<span class="function">(<span class="params">d</span>) =&gt;</span> (&#123;</span><br><span class="line">                <span class="attr">type</span>: <span class="variable constant_">TODO_INIT</span>,</span><br><span class="line">                <span class="attr">payload</span>: d</span><br><span class="line">            &#125;))</span><br><span class="line">            .<span class="title function_">subscribe</span>(<span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">store</span>.<span class="title function_">dispatch</span>(action);</span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/04/14/angular2-play-with-redux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1109,117 +1208,6 @@ REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default�
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/12/16/mvc-6-authorize-redirect-to-login-page/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/16/mvc-6-authorize-redirect-to-login-page/" class="post-title-link" itemprop="url">[MVC 6] Authorize Redirect to Login Page</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-12-16 13:23:00" itemprop="dateCreated datePublished" datetime="2015-12-16T13:23:00+08:00">2015-12-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/12/16/mvc-6-authorize-redirect-to-login-page/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/16/mvc-6-authorize-redirect-to-login-page/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://docs.asp.net/en/latest/security/authorization/simple.html">http://docs.asp.net/en/latest/security/authorization/simple.html</a>
-這裡描述怎麼設定頁面授權的方式，<s>可是卻都沒有提到如果說沒授權的人要頁面轉至登入畫面的方式</s></p>
-<p>經過網頁上的查詢及測試後. 在1.0.0-rc1-update1的版本裡，設定方式如下</p>
-<ol>
-<li>startup.cs</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public void ConfigureServices(IServiceCollection services)</span><br><span class="line">&#123;</span><br><span class="line">    services.AddAuthentication();           </span><br><span class="line">    .....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> public void Configure(IApplicationBuilder app, IHostingEnvironment env)</span><br><span class="line">&#123;</span><br><span class="line">    app.UseCookieAuthentication(options =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        options.LoginPath = &quot;/Home/Login&quot;;</span><br><span class="line">        options.AutomaticAuthenticate = true;</span><br><span class="line">        options.AutomaticChallenge = true;</span><br><span class="line">    &#125;);</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>到這裡為止就可以做出跟以前一樣遇到沒有授權的頁面就轉到登入畫面了</p>
-<p>###參數說明</p>
-<p>重點在於AutomaticAuthenticate 及 AutomaticChallenge 這兩個參數
-他的說明如下:</p>
-<ol>
-<li>AutomaticAuthenticate: If true the authentication middlleware alter the request user coming in. If false the authentication middleware will only provide identity when explicitly indicated by the AuthenticationScheme.</li>
-<li>AutomaticChallenge: If true the authentication middleware should handle automatic challenge. If false the authentication middleware will only alter responses when explicitly indicated by the AuthenticationScheme.</li>
-</ol>
-<p>這裡出現另外一個參數 AuthenticationScheme
-AuthenticationScheme: The AuthenticationScheme in the options corresponds to the logical name for a particular authentication scheme. A different value may be assigned in order to use the same authentication middleware type more than once in a pipepline.</p>
-<p>這表示在Controller裡的[Authorize]可以指定AuthenticationScheme, 就可以做出很有彈性的權限設定轉址或是其他後續動作了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Authorize(ActiveAuthenticationSchemes =&quot;abc&quot;)]</span><br><span class="line">public IActionResult Index()&#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>##update
-設定頁面授權的方式在這裡 <a target="_blank" rel="noopener" href="http://docs.asp.net/en/latest/security/authentication/cookie.html">http://docs.asp.net/en/latest/security/authentication/cookie.html</a></p>
-<h3 id="Reference"><a class="header-anchor" href="#Reference"> </a>Reference</h3>
-<p><a target="_blank" rel="noopener" href="http://blueprogram.blogspot.tw/2015/12/aspnet-5mvc-6-claim.html">ASP.NET 5/MVC 6 自訂使用Claim驗証</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1291,7 +1279,7 @@ AuthenticationScheme: The AuthenticationScheme in the options corresponds to the
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">326</span>
+          <span class="site-state-item-count">327</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

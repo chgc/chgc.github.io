@@ -19347,6 +19347,39 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[HowTo] asp.net core 設定 Configuration 的方法</title>
+    <url>/2022/06/05/howto-dotnet-configuration/</url>
+    <content><![CDATA[<p>Quick note for setting configuration  in .net core.</p>
+<span id="more"></span>
+<p>透過建立 Class 來作為 Configuration 的容器</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MongoConnectionOptions</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> name = <span class="string">&quot;MongoConnection&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> ConnectionString &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = String.Empty;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Database &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = String.Empty;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>line 3: 單純是方便設定使用 (Option)</li>
+<li>line 5 ~ 6 需與 <code>appsettings.json</code> 想設定的 section 內的欄位一致</li>
+</ol>
+<p><code>appsettings.json</code> 依此範例內會有一個 <code>MongoConnection</code> 的 section 並且有 <code>ConnectionString</code> 和 <code>Database</code> 的設定</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;MongoConnection&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;ConnectionString&quot;</span><span class="punctuation">:</span><span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;Database&quot;</span><span class="punctuation">:</span><span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>預設 <a href="http://asp.net">asp.net</a> core 新建的範本，會使用 top function 的模式建立，所以 <code>program.cs</code> 檔案會變成這樣</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> apiWithMongo.Models;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add services to the container.</span></span><br><span class="line">builder.Services.Configure&lt;MongoConnectionOptions&gt;(builder.Configuration.GetSection(MongoConnectionOptions.name));</span><br><span class="line"></span><br><span class="line">builder.Services.AddControllers();</span><br><span class="line">...</span><br><span class="line">    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>透過 line 6 的寫法，我們可以將 <code>appsettings.json</code> 內的某一個 section 值與 class 關連設定起來</li>
+</ul>
+<p>設定完成後，在任何地方如果要使用這組設定值時，可以透過 <code>IOptions&lt;T&gt;</code> 的方式取得</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Demo</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> MongoConnectionOptions _options;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Demo</span>(<span class="params">IOptions&lt;MongoConnectionOptions&gt; options</span>)</span>&#123;</span><br><span class="line">        _options = options.Value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a class="header-anchor" href="#Reference"> </a>Reference</h2>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0&amp;WT.mc_id=DOP-MVP-5002594">Options pattern in ASP.NET Core</a></li>
+<li><a href="https://blog.yowko.com/aspdotnet-core-config-array/">在 ASP.NET Core Configuration 中使用 array</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>.NET Core</category>
+      </categories>
+      <tags>
+        <tag>.NET Core</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
