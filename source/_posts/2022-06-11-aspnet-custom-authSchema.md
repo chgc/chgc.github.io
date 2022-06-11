@@ -35,7 +35,7 @@ public class ApiAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 實做完上面後，就可以回到 `program.cs` 內做註冊的動作
 
 ```csharp
-builder.Services.AddAuthentication("Basic")
+builder.Services.AddAuthentication("Basic") // 預設 schema
     .AddScheme<AuthenticationSchemeOptions, ApiAuthHandler>("Basic", o => { });    
     .AddScheme<AuthenticationSchemeOptions, AnotherApiAuthHandler>("SchemaName", o => { });
 ```
@@ -47,7 +47,32 @@ builder.Services.AddAuthentication("Basic")
 public void SomeFunction() { }
 ```
 
+## 自訂 Options
 
+如果希望從 `Program.cs` 的地方傳入設定檔，就需要自訂一個 `AuthenticationSchemeOptions`
+
+```csharp
+public class ApiAuthHandlerOption: AuthenticationSchemeOptions
+{
+  // add your custom properties
+  public string MyProp { get; set; } = String.Empty;
+}
+```
+
+```csharp
+// Program.cs
+builder.Services.AddAuthentication("Basic") // 預設 schema
+    .AddScheme<ApiAuthHandlerOption, ApiAuthHandler>("Basic", o => {
+        o.MyProp = "some prop";
+    }); 
+```
+
+```csharp
+protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+{
+    var myPro = base.Options.MyProp; // 可以取上面那段所設定的值
+}    
+```
 
 
 
@@ -55,4 +80,5 @@ public void SomeFunction() { }
 
 - [MyNinjaAuthHandler.cs](https://github.com/referbruv/CustomSchemeNinja/blob/main/CustomSchemeNinjaApi/Providers/AuthHandlers/MyNinjaAuthHandler.cs)
 - [Basic Authentication](https://jasonwatmore.com/post/2019/10/21/aspnet-core-3-basic-authentication-tutorial-with-example-api#basic-authentication-handler-cs)
+- [[ASP.NET Core] 自定義自己的 Authentication 身份驗證器](https://www.dotblogs.com.tw/Null/2020/07/03/172547)
 
