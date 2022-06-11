@@ -19380,6 +19380,39 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Angular] 自訂 Decorators 使用範例</title>
+    <url>/2022/06/11/angular-custom-decorators-demo/</url>
+    <content><![CDATA[<p>距離上一篇關於 decorators 的文章已經是 2017 一月份的事情了，時間過真快，那時候來不知道能拿 decorator 做什麼，現在終於有一個還不錯的使用情境</p>
+<span id="more"></span>
+<p>開發 app 實有時候會希望記錄某功能的使用量，常見的作法就是打一發 API 到後端去記錄起來，而這個動作其實是可以透過 decorators 的方式封裝起來，然後讓任何需要記錄的 function 使用，以下就用程式碼說話了</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../app.module&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LogService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../my-feature/log.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">Logger</span>(<span class="params">typeName: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params"></span></span><br><span class="line"><span class="params">    target: <span class="built_in">Object</span>,</span></span><br><span class="line"><span class="params">    key: <span class="built_in">string</span> | <span class="built_in">symbol</span>,</span></span><br><span class="line"><span class="params">    descriptor: PropertyDescriptor</span></span><br><span class="line"><span class="params">  </span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> originalMethod = descriptor.<span class="property">value</span>;</span><br><span class="line"></span><br><span class="line">    descriptor.<span class="property">value</span> = <span class="keyword">function</span> (<span class="params">...args: <span class="built_in">any</span>[]</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> service = <span class="title class_">AppModule</span>?.<span class="property">injector</span>?.<span class="title function_">get</span>(<span class="title class_">LogService</span>);</span><br><span class="line">      <span class="keyword">if</span> (!!service) &#123;</span><br><span class="line">        service.<span class="title function_">recordUsage</span>(typeName);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> originalMethod.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 4: 如果想要 decorator 能接受外部傳進來的值，就可以在這邊定義</li>
+<li>line 10: 保留被 decorate 的 function，等等在第 line 19 會用到</li>
+<li>line 12: 覆寫原本的 function</li>
+<li>line 13: 從 <code>AppModule</code> 取得 injector，可透過 injector 拿到有註冊到 <code>RootModule</code>的 service</li>
+<li>line 19: 繼續執行原本 function 的行為</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="attr">injector</span>: <span class="title class_">Injector</span>;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">injector: Injector</span>) &#123;</span><br><span class="line">    <span class="title class_">AppModule</span>.<span class="property">injector</span> = injector;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>建立一個 static 變數讓自訂的 decorator 內可以使用</li>
+</ul>
+<p>基本上，上面就已經完成了一個 Decorator 的開發了，當然那個 <code>logService</code> 就是自行發揮了</p>
+<p>至於如何使用，範例如下</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Logger</span>(<span class="string">&#x27;AppComponent&#x27;</span>)</span><br><span class="line"><span class="title function_">c</span>(<span class="params">msg: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&#x27;clicked&#x27;</span>, msg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://www.typescriptlang.org/docs/handbook/decorators.html">TypeScript Decorator</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[.NET Core] 自訂 Authentication handler</title>
     <url>/2022/06/11/aspnet-custom-authSchema/</url>
     <content><![CDATA[<p><a href="http://asp.net">asp.net</a> core 有很多 authentication 的方法，但有時候想要自訂驗證規則時，該怎麼做，跟著官方文件做完一次後，將自己理解的版本筆記下來</p>
