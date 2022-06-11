@@ -19380,6 +19380,31 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[.NET Core] 自訂 Authentication handler</title>
+    <url>/2022/06/11/aspnet-custom-authSchema/</url>
+    <content><![CDATA[<p><a href="http://asp.net">asp.net</a> core 有很多 authentication 的方法，但有時候想要自訂驗證規則時，該怎麼做，跟著官方文件做完一次後，將自己理解的版本筆記下來</p>
+<span id="more"></span>
+<h1 id="自訂-Authentication"><a class="header-anchor" href="#自訂-Authentication"> </a>自訂 Authentication</h1>
+<p>一開始在思考這題時，繞了幾個圈，但理解後其實不難，就是實做一個 <code>AuthenticationHandler</code></p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ApiAuthHandler</span> : <span class="title">AuthenticationHandler</span>&lt;<span class="title">AuthenticationSchemeOptions</span>&gt;</span><br><span class="line">    &#123;</span><br><span class="line">     </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ApiAuthHandler</span>(<span class="params">IOptionsMonitor&lt;AuthenticationSchemeOptions&gt; options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock</span>) : <span class="title">base</span>(<span class="params">options, logger, encoder, clock</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> Task&lt;AuthenticateResult&gt; <span class="title">HandleAuthenticateAsync</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 回傳驗證結果</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>實做完上面後，就可以回到 <code>program.cs</code> 內做註冊的動作</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">builder.Services.AddAuthentication(<span class="string">&quot;Basic&quot;</span>)</span><br><span class="line">    .AddScheme&lt;AuthenticationSchemeOptions, ApiAuthHandler&gt;(<span class="string">&quot;Basic&quot;</span>, o =&gt; &#123; &#125;);    </span><br><span class="line">    .AddScheme&lt;AuthenticationSchemeOptions, AnotherApiAuthHandler&gt;(<span class="string">&quot;SchemaName&quot;</span>, o =&gt; &#123; &#125;);</span><br></pre></td></tr></table></figure>
+<p>而這裡也允許新增多組 schema，在 API Controller 的地方也可以指定要使用哪一組 schema 做驗證</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Authorize(AuthenticationSchemes = <span class="string">&quot;SchemaName&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SomeFunction</span>()</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="參考文件"><a class="header-anchor" href="#參考文件"> </a>參考文件</h1>
+<ul>
+<li><a href="https://github.com/referbruv/CustomSchemeNinja/blob/main/CustomSchemeNinjaApi/Providers/AuthHandlers/MyNinjaAuthHandler.cs">MyNinjaAuthHandler.cs</a></li>
+<li><a href="https://jasonwatmore.com/post/2019/10/21/aspnet-core-3-basic-authentication-tutorial-with-example-api#basic-authentication-handler-cs">Basic Authentication</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>.NET Core </category>
+      </categories>
+      <tags>
+        <tag>.NET Core </tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
