@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] 自訂 Decorators 使用範例'
+title: '[Angular] 自訂 Decorator 使用範例'
 comments: true
 typora-root-url: 2022-06-11-angular-custom-decorators-demo
 typora-copy-images-to: 2022-06-11-angular-custom-decorators-demo
@@ -9,11 +9,13 @@ categories: Angular
 tags: Angular
 ---
 
-距離上一篇關於 decorators 的文章已經是 2017 一月份的事情了，時間過真快，那時候來不知道能拿 decorator 做什麼，現在終於有一個還不錯的使用情境
+距離上一篇關於 decorator 的文章已經是 2017 一月份的事情了，時間過真快，那時候來不知道能拿 decorator 做什麼，現在終於有一個還不錯的使用情境
 
 <!-- more -->
 
-開發 app 實有時候會希望記錄某功能的使用量，常見的作法就是打一發 API 到後端去記錄起來，而這個動作其實是可以透過 decorators 的方式封裝起來，然後讓任何需要記錄的 function 使用，以下就用程式碼說話了
+## 讓程式碼講話
+
+開發 app 有時候會希望記錄某功能的使用量，常見的作法就是打一發 API 做記錄的動作，而這其實是可以透過 decorator 的方式封裝起來，然後讓任何需要記錄的 function 使用，以下就用程式碼說話了
 
 ```typescript
 import { AppModule } from '../app.module';
@@ -41,7 +43,7 @@ export function Logger(typeName: string) {
 ```
 
 - line 4: 如果想要 decorator 能接受外部傳進來的值，就可以在這邊定義
-- line 10: 保留被 decorate 的 function，等等在第 line 19 會用到
+- line 10: 保留被 decorated 的 function，等等在第 line 19 會用到
 - line 12: 覆寫原本的 function
 - line 13: 從 `AppModule` 取得 injector，可透過 injector 拿到有註冊到 `RootModule`的 service
 - line 19: 繼續執行原本 function 的行為
