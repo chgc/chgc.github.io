@@ -63,3 +63,4 @@ export class SkipInterceptorService {
 ## 參考資料
 
 - [Angular API - HttpBackend](https://angular.io/api/common/http/HttpBackend)
+- [Bypass Angular Interceptors with Request Metadata](https://itnext.io/bypass-angular-interceptors-with-request-metadata-cf28061cda69)
