@@ -200,6 +200,129 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/03/01/iis-parallels-win8-mactxt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/03/01/iis-parallels-win8-mactxt/" class="post-title-link" itemprop="url">IIS_Parallels_Win8_Mac.txt</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-03-01 16:56:00" itemprop="dateCreated datePublished" datetime="2014-03-01T16:56:00+08:00">2014-03-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/03/01/iis-parallels-win8-mactxt/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/03/01/iis-parallels-win8-mactxt/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>
+<p>In your Windows 8 VM, go to Control Panel &gt; System &gt; Advanced system settings &gt; Computer Name and click Change.  Name this whatever you like, e.g. 「windows」.  Restart your VM.</p>
+</li>
+<li>
+<p>Open CMD or Powershell as administrator.  Add a URL ACL entry for your new name on the port of your choice, e.g.
+netsh http add urlacl url=http://windows:8080/ user=everyone</p>
+</li>
+<li>
+<p>Open CMD or Powershell as administrator.  Add an inbound firewall rule for this new port.  In Windows 8, the syntax is:
+netsh advfirewall firewall add rule name=「IISExpressWeb」 dir=in action=allow protocol=TCP localport=8080</p>
+</li>
+</ol>
+<p>In Windows 7, the syntax is:
+netsh firewall add portopening TCP 8080 IISExpressWeb enable ALL</p>
+<ol start="4">
+<li>
+<p>Edit your IISExpress applicationhost.config file, typically found at your Documents\IISExpress\config\applicationhost.config.  Find your site under sites, and add a binding to the port using your machine name, e.g.
+<bindings>
+<binding protocol="http" bindingInformation="*:8080:localhost" /> <!-- This will be here already, genereated by VS -->
+<binding protocol="http" bindingInformation="*:8080:windows" /> <!-- Add this -->
+</bindings></p>
+</li>
+<li>
+<p>Startup IISExpress with Visual Studio, hit your URL from a browser on your Mac/VM Host, e.g. <a target="_blank" rel="noopener" href="http://windows:8080">http://windows:8080</a></p>
+</li>
+<li>
+<p>Revel in your magnificence.</p>
+</li>
+</ol>
+<p>More info here:
+<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/3313616/iis-express-enable-external-request">http://stackoverflow.com/questions/3313616/iis-express-enable-external-request</a>
+<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/5442551/iisexpress-returns-a-503-error-from-remote-machines">http://stackoverflow.com/questions/5442551/iisexpress-returns-a-503-error-from-remote-machines</a>
+<a target="_blank" rel="noopener" href="http://www.hanselman.com/blog/WorkingWithSSLAtDevelopmentTimeIsEasierWithIISExpress.aspx">http://www.hanselman.com/blog/WorkingWithSSLAtDevelopmentTimeIsEasierWithIISExpress.aspx</a></p>
+<p>Ref: <a target="_blank" rel="noopener" href="https://gist.github.com/justingarrick/6322779">https://gist.github.com/justingarrick/6322779</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/02/26/c-work-with-xml-and-xsd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1254,141 +1377,6 @@ ng-repeat有 <strong>ng-repeat-start</strong> and <strong>ng-repeat-end</strong>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/29/pythonsmall-script-read-electronic-newspapers-ripping-the-article-transcription/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/11/29/pythonsmall-script-read-electronic-newspapers-ripping-the-article-transcription/" class="post-title-link" itemprop="url">[python] small script -- 讀電子報，擷取文章，轉錄</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-11-29 10:17:00" itemprop="dateCreated datePublished" datetime="2013-11-29T10:17:00+08:00">2013-11-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/11/29/pythonsmall-script-read-electronic-newspapers-ripping-the-article-transcription/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/29/pythonsmall-script-read-electronic-newspapers-ripping-the-article-transcription/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>#流程</p>
-<ol>
-<li>從gmail裡面讀取電子報(特定的寄件者)</li>
-<li>取得郵件內容</li>
-<li>分析html</li>
-<li>取得所要的部份(s)</li>
-<li>將要轉錄的文章發布到wordpress上</li>
-<li>將已處理的信件從收件夾中移到另一個資料夾中</li>
-<li>結束作業</li>
-</ol>
-<p>#開發環境
-python 3.3</p>
-<p>#有用到的package</p>
-<ul>
-<li>imaplib --&gt; 用來處理imap type email</li>
-<li>email   --&gt; email結構</li>
-<li>re</li>
-<li>BeautifulSoup4 --&gt; work with python 3.3 --&gt; from bs4 import BeautifulSoup</li>
-<li>wordpress_xmlrpc --&gt; 透過xmlrpc的方式新增文章</li>
-</ul>
-<h1 id="所遇到的問題"><a class="header-anchor" href="#所遇到的問題"> </a>所遇到的問題</h1>
-<ol>
-<li>編碼
-a. 信件
-b. 信件內容</li>
-<li>html形式的email裡面藏有\xa0 , 還是因為編碼的關係</li>
-</ol>
-<p>其實在使用bs4的過程中，也是花最多時間的地方是如何讓中文正常的顯示出來。其實在第一段要取得信件裡的內容時，就遇到中文編碼的問題。</p>
-<p>demo code</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">import imaplib,email,re</span><br><span class="line">from email.header import decode_header</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">from wordpress_xmlrpc import Client,WordPressPost,WordPressPost,WordPressTerm</span><br><span class="line">from wordpress_xmlrpc.methods import posts</span><br><span class="line">from wordpress_xmlrpc.methods.posts import NewPost,EditPost</span><br><span class="line">from wordpress_xmlrpc.methods.users import GetUserInfo</span><br><span class="line"></span><br><span class="line"># 這樣子可以傳回中文字</span><br><span class="line">def decode_subject(subject,encoding):</span><br><span class="line">    if encoding == None:</span><br><span class="line">        return subject</span><br><span class="line">    else:</span><br><span class="line">        return subject.decode(encoding)  </span><br><span class="line"># 用意跟上面的一樣, 只是為了處理編碼的問題</span><br><span class="line">def showmessage(mail):</span><br><span class="line">    if mail.is_multipart():</span><br><span class="line">        for part in mail.get_payload():</span><br><span class="line">            showmessage(part)</span><br><span class="line">    else:</span><br><span class="line">        type = mail.get_content_charset()        </span><br><span class="line">        if type == None:</span><br><span class="line">            return mail.get_payload()</span><br><span class="line">        else:</span><br><span class="line">            try:</span><br><span class="line">                return mail.get_payload(decode=1).decode(type)</span><br><span class="line">            except UnicodeDecodeError:</span><br><span class="line">                return mail</span><br><span class="line">                </span><br><span class="line">conn = imaplib.IMAP4_SSL(&quot;imap.gmail.com&quot;, 993)</span><br><span class="line">conn.login(&#x27;account&#x27;,&#x27;password)</span><br><span class="line">conn.select(&quot;inbox&quot;) # connect to inbox.</span><br><span class="line">typ, data = conn.search(None, &#x27;ALL&#x27;)</span><br><span class="line">try:   </span><br><span class="line">    for num in data[0].split()[-1:]: #從最新的信件開始讀起</span><br><span class="line">        typ, msg_data = conn.fetch(num, &#x27;(RFC822)&#x27;)</span><br><span class="line">        for response_part in msg_data:</span><br><span class="line">            if isinstance(response_part, tuple):                </span><br><span class="line">                msg = email.message_from_string(response_part[1].decode())              </span><br><span class="line">                subject,encoding = decode_header(msg[&#x27;subject&#x27;])[0]               </span><br><span class="line">                mailsubject = decode_subject(subject,encoding)</span><br><span class="line">                #_from = msg[&#x27;from&#x27;]                </span><br><span class="line">                body = showmessage(msg) # 編碼轉換</span><br><span class="line">                # 分析並將轉錄到wordpress上</span><br><span class="line">                for link in soup.find_all(&quot;table&quot;)[8:]:#start with 8th table element                            content = link.encode(&#x27;big5&#x27;).decode(&#x27;cp950&#x27;)</span><br><span class="line">                    if content.find(&#x27;class=&quot;contentword&quot;&#x27;) &gt; -1:</span><br><span class="line">                        news = BeautifulSoup(content)                      </span><br><span class="line">                        for part in news.find_all(&#x27;tr&#x27;):</span><br><span class="line">                            td = part.find_all(&quot;td&quot;)</span><br><span class="line">                            title = td[0].get_text()</span><br><span class="line">                            puretext = re.sub(&#x27;(\xa0)+&#x27;,&#x27; &#x27;,td[1].get_text())</span><br><span class="line">                            if title == &#x27;公布日期&#x27;:                               </span><br><span class="line">                                publishdate = puretext</span><br><span class="line">                            elif title==&#x27;標題&#x27;:</span><br><span class="line">                                posttitle = puretext</span><br><span class="line">                            elif title==&#x27;詳細內容&#x27;:</span><br><span class="line">                                postcontent = puretext</span><br><span class="line">                        postToWP.post(posttitle,postcontent,&quot;post tag&quot;)</span><br><span class="line">        move_mail(conn,num,&#x27;Archive.Today&#x27;)</span><br><span class="line">finally:</span><br><span class="line">    try:</span><br><span class="line">        conn.close()</span><br><span class="line">    except:</span><br><span class="line">        pass</span><br><span class="line">    conn.logout()    </span><br></pre></td></tr></table></figure>
-<p>在3.3裡, email.message_from_string 傳進去的文字如果不加decode，會傳錯誤訊息出來。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">email.message_from_string(response_part[1].decode())</span><br></pre></td></tr></table></figure>
-<p>發布文章到wordpress
-參考網址: <a target="_blank" rel="noopener" href="http://python-wordpress-xmlrpc.readthedocs.org/en/latest/index.html">http://python-wordpress-xmlrpc.readthedocs.org/en/latest/index.html</a></p>
-<pre><code>class postToWP:
-    def post(title,content,tag):
-        client = Client('http://blog url//xmlrpc.php', 'username', 'password')        
-        post = WordPressPost()
-        post.title = title
-        post.content = content
-        post.terms_names = &#123;
-        'post_tag': [tag],              # 標籤(Tag)
-        'category': [tag],              # 分類(Categories)
-        &#125;      
-        post.post_status = 'publish'    # 如果沒有這一個，就會是草稿狀態
-        post.id = client.call(NewPost(post))
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1460,7 +1448,7 @@ b. 信件內容</li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">329</span>
+          <span class="site-state-item-count">330</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
