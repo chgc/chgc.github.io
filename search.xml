@@ -113,6 +113,49 @@ vi .gitconfig
       </tags>
   </entry>
   <entry>
+    <title>[Phalcon] Using Model</title>
+    <url>/2013/10/09/phalcon-using-model/</url>
+    <content><![CDATA[<p>In Phalcon Model system. 是根據ORM的架構，讓資料表物件化，讓在資料讀取或是寫入的動作上，可以利用物件的特性去操作。</p>
+<h1 id="初始設定"><a class="header-anchor" href="#初始設定"> </a>初始設定</h1>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Database connection is created based in the parameters defined in the configuration file</span><br><span class="line"> */</span><br><span class="line">$di-&gt;set(&#x27;db&#x27;, function() use ($config) &#123;</span><br><span class="line">	return new DbAdapter(array(</span><br><span class="line">		&#x27;host&#x27; =&gt; $config-&gt;database-&gt;host,</span><br><span class="line">		&#x27;username&#x27; =&gt; $config-&gt;database-&gt;username,</span><br><span class="line">		&#x27;password&#x27; =&gt; $config-&gt;database-&gt;password,</span><br><span class="line">		&#x27;dbname&#x27; =&gt; $config-&gt;database-&gt;dbname</span><br><span class="line">	));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上列的動作會開啟與資料庫中間的連線關係，$config會去讀取所指定的設定文件</p>
+<p>Model文件預設的命名方式為table名稱，例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class Rebots extends \Phalcon\Mvc\Model</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>官方文件建議，要在Model文件中描述資料表的欄位，以減少使用伺服器的記憶體資源。</p>
+<p>如果Model的名稱與資料庫資料表名稱不同時，可以透過以下的方式重新設定所關聯的資料表名稱</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">&#123;</span><br><span class="line">	$this-&gt;setSource(&#x27;Rebots&#x27;);</span><br><span class="line">&#125;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">#於Controller中使用Model讀取資料</span><br><span class="line"></span><br><span class="line">讀取清單的方式有幾種</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>ModelName::find(condition)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">當找到筆資料時，所回傳的物件可以直接修改後，並儲存(Update)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$result = ModelName::find(『id=1』);
+$result-&gt;fieldName = 「something something」;
+$result-&gt;save(); &lt;=將資料回傳至資料庫中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">新增動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$result = new ModelName();
+$result-&gt;fieldName = 「something something」;
+$result-&gt;save();</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">刪除動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$result = ModelName::find(condition);
+if ($result != false) {
+// 執行刪除
+if ($result-&gt;delete() == false) {<br>
+echo 「Delete Failed」;
+foreach ($result-&gt;getMessages() as $message) {
+echo $message, 「\n」;
+}
+} else {
+echo 「Deleted successfully!」;
+}
+}</p>
+<pre><code></code></pre>
+]]></content>
+      <categories>
+        <category>Phalcon</category>
+      </categories>
+      <tags>
+        <tag>Phalcon</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Phalcon] Work with Router</title>
     <url>/2013/10/10/phalcon-work-with-router/</url>
     <content><![CDATA[<h1 id="啟動方式"><a class="header-anchor" href="#啟動方式"> </a>啟動方式</h1>
@@ -164,49 +207,6 @@ vi .gitconfig
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$this-&gt;dispatcher-&gt;getParam(0);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParam(&#x27;paraName&#x27;);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParams(); &lt;=array</span><br></pre></td></tr></table></figure>
 <p>#如果是/?var=value</p>
 <p>就用原本$_GET[『』]的方式取值就可以了</p>
-]]></content>
-      <categories>
-        <category>Phalcon</category>
-      </categories>
-      <tags>
-        <tag>Phalcon</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[Phalcon] Using Model</title>
-    <url>/2013/10/09/phalcon-using-model/</url>
-    <content><![CDATA[<p>In Phalcon Model system. 是根據ORM的架構，讓資料表物件化，讓在資料讀取或是寫入的動作上，可以利用物件的特性去操作。</p>
-<h1 id="初始設定"><a class="header-anchor" href="#初始設定"> </a>初始設定</h1>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Database connection is created based in the parameters defined in the configuration file</span><br><span class="line"> */</span><br><span class="line">$di-&gt;set(&#x27;db&#x27;, function() use ($config) &#123;</span><br><span class="line">	return new DbAdapter(array(</span><br><span class="line">		&#x27;host&#x27; =&gt; $config-&gt;database-&gt;host,</span><br><span class="line">		&#x27;username&#x27; =&gt; $config-&gt;database-&gt;username,</span><br><span class="line">		&#x27;password&#x27; =&gt; $config-&gt;database-&gt;password,</span><br><span class="line">		&#x27;dbname&#x27; =&gt; $config-&gt;database-&gt;dbname</span><br><span class="line">	));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>上列的動作會開啟與資料庫中間的連線關係，$config會去讀取所指定的設定文件</p>
-<p>Model文件預設的命名方式為table名稱，例如:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class Rebots extends \Phalcon\Mvc\Model</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>官方文件建議，要在Model文件中描述資料表的欄位，以減少使用伺服器的記憶體資源。</p>
-<p>如果Model的名稱與資料庫資料表名稱不同時，可以透過以下的方式重新設定所關聯的資料表名稱</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public function initialize()</span><br><span class="line">&#123;</span><br><span class="line">	$this-&gt;setSource(&#x27;Rebots&#x27;);</span><br><span class="line">&#125;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">#於Controller中使用Model讀取資料</span><br><span class="line"></span><br><span class="line">讀取清單的方式有幾種</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>ModelName::find(condition)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">當找到筆資料時，所回傳的物件可以直接修改後，並儲存(Update)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>$result = ModelName::find(『id=1』);
-$result-&gt;fieldName = 「something something」;
-$result-&gt;save(); &lt;=將資料回傳至資料庫中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">新增動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>$result = new ModelName();
-$result-&gt;fieldName = 「something something」;
-$result-&gt;save();</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">刪除動作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>$result = ModelName::find(condition);
-if ($result != false) {
-// 執行刪除
-if ($result-&gt;delete() == false) {<br>
-echo 「Delete Failed」;
-foreach ($result-&gt;getMessages() as $message) {
-echo $message, 「\n」;
-}
-} else {
-echo 「Deleted successfully!」;
-}
-}</p>
-<pre><code></code></pre>
 ]]></content>
       <categories>
         <category>Phalcon</category>
@@ -15878,6 +15878,78 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[AMP] First AMP Page</title>
+    <url>/2020/04/16/amp-101/</url>
+    <content><![CDATA[<p>AMP = Accelerated Mobile Pages，Google帶領開發的開源專案，目的是為提升行動裝置對網站的存取速度。沒寫過，所以要來學，這一篇就是學習過程中的筆記</p>
+<span id="more"></span>
+<h1 id="AMP-基本組成"><a class="header-anchor" href="#AMP-基本組成"> </a>AMP 基本組成</h1>
+<p>一個合格的 AMP 一定要有以下的元素</p>
+<ol>
+<li>
+<p>第一行一定是 <code>&lt;!doctype html&gt;</code></p>
+</li>
+<li>
+<p>一定有 <code>&lt;head&gt;&lt;/head&gt;</code> 和 <code>&lt;body&gt;&lt;/body&gt;</code> 兩個區塊</p>
+</li>
+<li>
+<p><code>&lt;html&gt;</code> 標籤內要標示閃電符號 (<code>&lt;html ⚡&gt;</code>，或是 <code>amp</code> 文字 (<code>&lt;html amp&gt;</code>)</p>
+</li>
+<li>
+<p><code>&lt;head&gt;</code> 的第一個元素一定是 <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;head&gt;</code> 內會有 <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,minimum-scale=1,initial-scale=1&quot;&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;head&gt;</code> 內要有 <code>&lt;script async src=&quot;https://cdn.ampproject.org/v0.js&quot;&gt;&lt;/script&gt;</code>，這一行越早寫越好</p>
+</li>
+<li>
+<p><code>&lt;head&gt;</code> 內要有 <code>&lt;link rel=&quot;canonical&quot; href=&quot;$SOME_URL&quot;&gt;</code>，<code>$SOME_URL</code> 要替換成目前頁面的網址，目的是要連結目前的 AMP 頁面到非 AMP 頁面或是網站</p>
+</li>
+<li>
+<p>包含 AMP-Style: 這段程式碼會在 AMP Script 載入前將畫面隱藏</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-boilerplate</span>&gt;</span><span class="language-css"><span class="selector-tag">body</span>&#123;-webkit-<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;-moz-<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;-ms-<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both&#125;<span class="keyword">@-webkit-keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;<span class="keyword">@-moz-keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;<span class="keyword">@-ms-keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;<span class="keyword">@-o-keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;<span class="keyword">@keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;<span class="name">noscript</span>&gt;</span><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-boilerplate</span>&gt;</span><span class="language-css"><span class="selector-tag">body</span>&#123;-webkit-<span class="attribute">animation</span>:none;-moz-<span class="attribute">animation</span>:none;-ms-<span class="attribute">animation</span>:none;<span class="attribute">animation</span>:none&#125;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="AMP-限制"><a class="header-anchor" href="#AMP-限制"> </a>AMP 限制</h1>
+<h2 id="CSS"><a class="header-anchor" href="#CSS"> </a>CSS</h2>
+<p>在 AMP 上面要使用自訂 CSS 有以下的設定</p>
+<ol>
+<li>自訂 CSS 必須定義在 <code>&lt;style amp-custom&gt;&lt;/style&gt;</code> 內且只能有一個或是 <code>inline-style</code>，為了節省網路傳輸，不能有外部 style 連結</li>
+<li>CSS 內容的部分大小不能大於 75 K</li>
+<li>不能使用 <code>!important</code></li>
+<li>不能寫 <code>i-amphtml-</code> class 和 tag 名稱，簡單說不能使用 AMP Component 要用的名稱</li>
+<li>其它能用不能用的 CSS Style 請參閱 <a href="https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/?format=websites">Suppored CSS</a></li>
+</ol>
+<h2 id="HTML"><a class="header-anchor" href="#HTML"> </a>HTML</h2>
+<p>除了 CSS 有限制外，HTML 也有允許跟不允許使用的列表 ，<a href="https://github.com/ampproject/amphtml/blob/master/spec/amp-tag-addendum.md#html5-tag-whitelist">HTML5 Tag 白名單</a></p>
+<p>更多詳細資訊可以閱讀此文，<a href="https://amp.dev/documentation/guides-and-tutorials/learn/spec/amphtml/?format=websites">AMP HTML Specification</a></p>
+<h1 id="開發思維"><a class="header-anchor" href="#開發思維"> </a>開發思維</h1>
+<p>AMP 的開發方式，基本上是使用官方提供的 Component 去組出畫面，所以在內容呈現上就是要找到對的 Component 然後將內容套進去，例如 <code>&lt;img&gt;</code>，就會用 <code>&lt;amp-img&gt;</code> 替代</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">amp-img</span> <span class="attr">src</span>=<span class="string">&quot;IMG-URL&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;responsive&quot;</span> <span class="attr">width</span>=<span class="string">&quot;640&quot;</span> <span class="attr">height</span>=<span class="string">&quot;480&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">amp-img</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
+<p>所有的動作就交給 component 來處理，像是 RWD 的效果，除了 <code>responsive</code> 的效果外，當然還有其他的設定，設定方式請參閱官方文件 <a href="https://amp.dev/documentation/guides-and-tutorials/learn/amp-html-layout/?format=websites">AMPHTML Layout System</a> 章節</p>
+<h2 id="使用-AMP-Components"><a class="header-anchor" href="#使用-AMP-Components"> </a>使用 AMP Components</h2>
+<p>每一個 AMP Component 在自己的 API 文件中，大部分都有 <code>Required Scripts</code> 的資訊，而這一個資訊就是要加到頁面中，例如 <code>amp-youtube</code> 元件</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">custom-element</span>=<span class="string">&quot;amp-youtube&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.ampproject.org/v0/amp-youtube-0.1.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>基於這種架構，寫 AMP  的第一個門檻是要使用哪一個 component。(怎麼跟 Flutter 好像)，更多關於 Component 的可以參閱 <a href="https://amp.dev/documentation/components/">Components 文件</a></p>
+<h1 id="驗證工具"><a class="header-anchor" href="#驗證工具"> </a>驗證工具</h1>
+<p>Chrome 有出 AMP 驗證工具，安裝後即可使用，<a href="https://chrome.google.com/webstore/detail/amp-validator/nmoffdblmcmgeicmolmhobpoocbbmknc/related?hl=en">安裝位置</a></p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://amp.dev/documentation/courses/beginning-course">AMP Beginning Free Course</a></li>
+<li><a href="https://support.google.com/webmasters/answer/139066?hl=zh-Hant">整合重複的網址 canonical</a></li>
+<li><a href="https://amp.dev/documentation/guides-and-tutorials/learn/amp-html-layout/?format=websites">AMPHTML Layout System</a></li>
+<li><a href="https://amp.dev/documentation/components/">Components 文件</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>AMP</category>
+      </categories>
+      <tags>
+        <tag>AMP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Angular Form 值變化 - 不踩雷就不會進步</title>
     <url>/2020/04/20/angular-form-valuechanges/</url>
     <content><![CDATA[<p>Angular Reacitve Form 內有一套值的更新流程，從 FormGroup 到 FormControl 間到底是如何進行資料的更新，有什麼要留意的地方，在這篇筆記內我盡量整理 (會持續潤稿)</p>
@@ -16249,78 +16321,6 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </categories>
       <tags>
         <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[AMP] First AMP Page</title>
-    <url>/2020/04/16/amp-101/</url>
-    <content><![CDATA[<p>AMP = Accelerated Mobile Pages，Google帶領開發的開源專案，目的是為提升行動裝置對網站的存取速度。沒寫過，所以要來學，這一篇就是學習過程中的筆記</p>
-<span id="more"></span>
-<h1 id="AMP-基本組成"><a class="header-anchor" href="#AMP-基本組成"> </a>AMP 基本組成</h1>
-<p>一個合格的 AMP 一定要有以下的元素</p>
-<ol>
-<li>
-<p>第一行一定是 <code>&lt;!doctype html&gt;</code></p>
-</li>
-<li>
-<p>一定有 <code>&lt;head&gt;&lt;/head&gt;</code> 和 <code>&lt;body&gt;&lt;/body&gt;</code> 兩個區塊</p>
-</li>
-<li>
-<p><code>&lt;html&gt;</code> 標籤內要標示閃電符號 (<code>&lt;html ⚡&gt;</code>，或是 <code>amp</code> 文字 (<code>&lt;html amp&gt;</code>)</p>
-</li>
-<li>
-<p><code>&lt;head&gt;</code> 的第一個元素一定是 <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code></p>
-</li>
-<li>
-<p><code>&lt;head&gt;</code> 內會有 <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,minimum-scale=1,initial-scale=1&quot;&gt;</code></p>
-</li>
-<li>
-<p><code>&lt;head&gt;</code> 內要有 <code>&lt;script async src=&quot;https://cdn.ampproject.org/v0.js&quot;&gt;&lt;/script&gt;</code>，這一行越早寫越好</p>
-</li>
-<li>
-<p><code>&lt;head&gt;</code> 內要有 <code>&lt;link rel=&quot;canonical&quot; href=&quot;$SOME_URL&quot;&gt;</code>，<code>$SOME_URL</code> 要替換成目前頁面的網址，目的是要連結目前的 AMP 頁面到非 AMP 頁面或是網站</p>
-</li>
-<li>
-<p>包含 AMP-Style: 這段程式碼會在 AMP Script 載入前將畫面隱藏</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-boilerplate</span>&gt;</span><span class="language-css"><span class="selector-tag">body</span>&#123;-webkit-<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;-moz-<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;-ms-<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both;<span class="attribute">animation</span>:-amp-start <span class="number">8s</span> <span class="built_in">steps</span>(<span class="number">1</span>,end) <span class="number">0s</span> <span class="number">1</span> normal both&#125;<span class="keyword">@-webkit-keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;<span class="keyword">@-moz-keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;<span class="keyword">@-ms-keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;<span class="keyword">@-o-keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;<span class="keyword">@keyframes</span> -amp-start&#123;<span class="selector-tag">from</span>&#123;<span class="attribute">visibility</span>:hidden&#125;<span class="selector-tag">to</span>&#123;<span class="attribute">visibility</span>:visible&#125;&#125;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;<span class="name">noscript</span>&gt;</span><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-boilerplate</span>&gt;</span><span class="language-css"><span class="selector-tag">body</span>&#123;-webkit-<span class="attribute">animation</span>:none;-moz-<span class="attribute">animation</span>:none;-ms-<span class="attribute">animation</span>:none;<span class="attribute">animation</span>:none&#125;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="AMP-限制"><a class="header-anchor" href="#AMP-限制"> </a>AMP 限制</h1>
-<h2 id="CSS"><a class="header-anchor" href="#CSS"> </a>CSS</h2>
-<p>在 AMP 上面要使用自訂 CSS 有以下的設定</p>
-<ol>
-<li>自訂 CSS 必須定義在 <code>&lt;style amp-custom&gt;&lt;/style&gt;</code> 內且只能有一個或是 <code>inline-style</code>，為了節省網路傳輸，不能有外部 style 連結</li>
-<li>CSS 內容的部分大小不能大於 75 K</li>
-<li>不能使用 <code>!important</code></li>
-<li>不能寫 <code>i-amphtml-</code> class 和 tag 名稱，簡單說不能使用 AMP Component 要用的名稱</li>
-<li>其它能用不能用的 CSS Style 請參閱 <a href="https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/?format=websites">Suppored CSS</a></li>
-</ol>
-<h2 id="HTML"><a class="header-anchor" href="#HTML"> </a>HTML</h2>
-<p>除了 CSS 有限制外，HTML 也有允許跟不允許使用的列表 ，<a href="https://github.com/ampproject/amphtml/blob/master/spec/amp-tag-addendum.md#html5-tag-whitelist">HTML5 Tag 白名單</a></p>
-<p>更多詳細資訊可以閱讀此文，<a href="https://amp.dev/documentation/guides-and-tutorials/learn/spec/amphtml/?format=websites">AMP HTML Specification</a></p>
-<h1 id="開發思維"><a class="header-anchor" href="#開發思維"> </a>開發思維</h1>
-<p>AMP 的開發方式，基本上是使用官方提供的 Component 去組出畫面，所以在內容呈現上就是要找到對的 Component 然後將內容套進去，例如 <code>&lt;img&gt;</code>，就會用 <code>&lt;amp-img&gt;</code> 替代</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">amp-img</span> <span class="attr">src</span>=<span class="string">&quot;IMG-URL&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;responsive&quot;</span> <span class="attr">width</span>=<span class="string">&quot;640&quot;</span> <span class="attr">height</span>=<span class="string">&quot;480&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">amp-img</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
-<p>所有的動作就交給 component 來處理，像是 RWD 的效果，除了 <code>responsive</code> 的效果外，當然還有其他的設定，設定方式請參閱官方文件 <a href="https://amp.dev/documentation/guides-and-tutorials/learn/amp-html-layout/?format=websites">AMPHTML Layout System</a> 章節</p>
-<h2 id="使用-AMP-Components"><a class="header-anchor" href="#使用-AMP-Components"> </a>使用 AMP Components</h2>
-<p>每一個 AMP Component 在自己的 API 文件中，大部分都有 <code>Required Scripts</code> 的資訊，而這一個資訊就是要加到頁面中，例如 <code>amp-youtube</code> 元件</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">custom-element</span>=<span class="string">&quot;amp-youtube&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.ampproject.org/v0/amp-youtube-0.1.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>基於這種架構，寫 AMP  的第一個門檻是要使用哪一個 component。(怎麼跟 Flutter 好像)，更多關於 Component 的可以參閱 <a href="https://amp.dev/documentation/components/">Components 文件</a></p>
-<h1 id="驗證工具"><a class="header-anchor" href="#驗證工具"> </a>驗證工具</h1>
-<p>Chrome 有出 AMP 驗證工具，安裝後即可使用，<a href="https://chrome.google.com/webstore/detail/amp-validator/nmoffdblmcmgeicmolmhobpoocbbmknc/related?hl=en">安裝位置</a></p>
-<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
-<ul>
-<li><a href="https://amp.dev/documentation/courses/beginning-course">AMP Beginning Free Course</a></li>
-<li><a href="https://support.google.com/webmasters/answer/139066?hl=zh-Hant">整合重複的網址 canonical</a></li>
-<li><a href="https://amp.dev/documentation/guides-and-tutorials/learn/amp-html-layout/?format=websites">AMPHTML Layout System</a></li>
-<li><a href="https://amp.dev/documentation/components/">Components 文件</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>AMP</category>
-      </categories>
-      <tags>
-        <tag>AMP</tag>
       </tags>
   </entry>
   <entry>
@@ -19466,6 +19466,42 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 <ul>
 <li><a href="https://angular.io/api/common/http/HttpBackend">Angular API - HttpBackend</a></li>
 <li><a href="https://itnext.io/bypass-angular-interceptors-with-request-metadata-cf28061cda69">Bypass Angular Interceptors with Request Metadata</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Angular] Standalone Component 第一次接觸</title>
+    <url>/2022/07/09/angular-standalone-first-tryout/</url>
+    <content><![CDATA[<p>Angular standalone component 功能在 v14 版本推出 developer preview version (表示不建議使用在 production 環境上)，還是可以先玩弄一下，稍微感覺未來可能的開發模式跟架構會有怎樣的選擇出現</p>
+<span id="more"></span>
+<h2 id="基本語法"><a class="header-anchor" href="#基本語法"> </a>基本語法</h2>
+<p>standalone component 的寫法很簡單，在 component 的 decorator 內新增 <code>standalone: true</code> 即可完成設定</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">standalone</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;photo-gallery&#x27;</span>,</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">ImageGridComponent</span>],</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    ... &lt;image-grid [images]=&quot;imageList&quot;&gt;&lt;/image-grid&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">PhotoGalleryComponent</span> &#123;</span><br><span class="line">  <span class="comment">// component logic</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一旦設定成 standalone component ，過往設定在 <code>NgModule</code> 的 imports 的其他 <code>NgModules</code> 都需要在這邊設定，也包含這 component 內使用的其他 components</p>
+<p>而在路由設定這邊新增 <code>loadComponent</code> 的功能</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">ROUTES</span>: <span class="title class_">Route</span>[] = [</span><br><span class="line">  &#123;<span class="attr">path</span>: <span class="string">&#x27;admin&#x27;</span>, <span class="attr">loadComponent</span>: <span class="function">() =&gt;</span> <span class="title function_">import</span>(<span class="string">&#x27;./admin/panel.component&#x27;</span>).<span class="title function_">then</span>(<span class="function"><span class="params">mod</span> =&gt;</span> mod.<span class="property">AdminPanelComponent</span>)&#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p><code>loadChildren</code> 也支援讀取另外一組 route setting</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">ROUTES</span>: <span class="title class_">Route</span>[] = [</span><br><span class="line">  &#123;<span class="attr">path</span>: <span class="string">&#x27;admin&#x27;</span>, <span class="attr">loadChildren</span>: <span class="function">() =&gt;</span> <span class="title function_">import</span>(<span class="string">&#x27;./admin/routes&#x27;</span>).<span class="title function_">then</span>(<span class="function"><span class="params">mod</span> =&gt;</span> mod.<span class="property">ADMIN_ROUTES</span>)&#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// In admin/routes.ts:</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">ADMIN_ROUTES</span>: <span class="title class_">Route</span>[] = [</span><br><span class="line">  &#123;<span class="attr">path</span>: <span class="string">&#x27;home&#x27;</span>, <span class="attr">component</span>: <span class="title class_">AdminHomeComponent</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">path</span>: <span class="string">&#x27;users&#x27;</span>, <span class="attr">component</span>: <span class="title class_">AdminUsersComponent</span>&#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p><code>main.ts</code> 也可以直接啟動 standalone component</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;bootstrapApplication&#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/platform-browser&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">PhotoAppComponent</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;./app/photo.app.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">bootstrapApplication</span>(<span class="title class_">PhotoAppComponent</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="Dive-in-a-little-bit"><a class="header-anchor" href="#Dive-in-a-little-bit"> </a>Dive in a little bit</h2>
+<p>main.ts</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; enableProdMode, importProvidersFrom &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; bootstrapApplication &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/platform-browser&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">RouterModule</span>, <span class="title class_">Routes</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppComponent</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app/app.component&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">HomeComponent</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app/home/home.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; environment &#125; <span class="keyword">from</span> <span class="string">&#x27;./environments/environment&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">component</span>: <span class="title class_">HomeComponent</span> &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;demo&#x27;</span>,</span><br><span class="line">    <span class="attr">loadComponent</span>: <span class="function">() =&gt;</span></span><br><span class="line">      <span class="title function_">import</span>(<span class="string">&#x27;./app/demo/demo.component&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">m</span>) =&gt;</span> m.<span class="property">DemoComponent</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (environment.<span class="property">production</span>) &#123;</span><br><span class="line">  <span class="title function_">enableProdMode</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">bootstrapApplication</span>(<span class="title class_">AppComponent</span>, &#123;</span><br><span class="line">  <span class="attr">providers</span>: [<span class="title function_">importProvidersFrom</span>(<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes))],</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>透過這種方式完全不使用 <code>NgModule</code> 來啟動一個 Angular App，而在近期的 AngularAir 看到這樣的嘗試</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// main.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; enableProdMode &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppComponent</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app/app.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; environment &#125; <span class="keyword">from</span> <span class="string">&#x27;./environments/environment&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (environment.<span class="property">production</span>) &#123;</span><br><span class="line">  <span class="title function_">enableProdMode</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">AppComponent</span>.<span class="title function_">bootstrap</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CommonModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, importProvidersFrom &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; bootstrapApplication &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/platform-browser&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">RouterModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; routes &#125; <span class="keyword">from</span> <span class="string">&#x27;./routes&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  <span class="attr">templateUrl</span>: <span class="string">&#x27;./app.component.html&#x27;</span>,</span><br><span class="line">  <span class="attr">styleUrls</span>: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">  <span class="attr">standalone</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>, <span class="title class_">CommonModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">bootstrapApplication</span>(<span class="variable language_">this</span>, &#123;</span><br><span class="line">      <span class="attr">providers</span>: [<span class="title function_">importProvidersFrom</span>(<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes))],</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>這改法大幅的降低 main.ts 的複雜度，同時也增加了不少彈性</p>
+<p>那 Provider 的部分該怎麼處理，好消息是就跟有 <code>NgModule</code> 時的用法是一樣的。</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://angular.io/guide/standalone-components">Getting started with standalone component</a></li>
+<li><a href="https://stackblitz.com/edit/angular-ivy-2kth3b?file=src%2Fmain.ts,src%2Fapp%2Fapp.component.ts">範例程式碼</a></li>
 </ul>
 ]]></content>
       <categories>
