@@ -19512,6 +19512,81 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[HowTo] 讀取 WebAPI 資料到 Excel 表內</title>
+    <url>/2022/07/16/excel-load-webapi/</url>
+    <content><![CDATA[<p>週五突然想到 Excel 是否能載入 JSON 檔案或是 WebAPI 的資料，因為 PowerBI 可以做到，想說 Excel 應該也可以，所以就來試試看</p>
+<span id="more"></span>
+<p>一樣的，我們拿 <code>[JSONPlaceholder](https://jsonplaceholder.typicode.com/)</code> 所提供的 API 來當作範例資料，使用 <a href="https://jsonplaceholder.typicode.com/posts">https://jsonplaceholder.typicode.com/posts</a> 這組資料</p>
+<h2 id="步驟"><a class="header-anchor" href="#步驟"> </a>步驟</h2>
+<ol>
+<li>
+<p>建立一個空的 Excel 檔案</p>
+</li>
+<li>
+<p>選擇 <code>資料</code> Tab 內的<code>從 web</code></p>
+<p><img src="image-20220716125829631.png" alt="image-20220716125829631"></p>
+</li>
+<li>
+<p>將文章一開始的網址貼入到 URL 內後按下『確定』</p>
+<p><img src="image-20220716125919160.png" alt="image-20220716125919160"></p>
+</li>
+<li>
+<p>會開啟存取 Web 內容的視窗，這邊如果 API 有相關權限設定，可在這邊進行設定</p>
+<p><img src="image-20220716130028794.png" alt="image-20220716130028794"></p>
+</li>
+<li>
+<p>確認後下『連接』，Excel 會去呼叫 API 並取回資料</p>
+</li>
+<li>
+<p>取得資料後會開啟 Power Query 編輯器</p>
+<p><img src="image-20220716130216544.png" alt="image-20220716130216544"></p>
+<p>這時候我們就需要針對取回得資料作一些轉換的設定</p>
+<ol>
+<li>
+<p>點 『到表格』</p>
+<p><img src="image-20220716130621219.png" alt="image-20220716130621219"></p>
+</li>
+<li>
+<p>無分隔符號，直接按下『確定』</p>
+<p><img src="image-20220716130659427.png" alt="image-20220716130659427"></p>
+</li>
+<li>
+<p>這時候畫面會轉換成以下圖片</p>
+<p><img src="image-20220716130731882.png" alt="image-20220716130731882"></p>
+</li>
+<li>
+<p>點選 Column1 旁邊的小圖示，這個動作會開啟另外一個視窗來設定要展開哪些欄位</p>
+<p><img src="image-20220716130806821.png" alt="image-20220716130806821"></p>
+<p><img src="image-20220716130847323.png" alt="image-20220716130847323"></p>
+</li>
+<li>
+<p>如果確認後沒問題就可以按下『確定』。備註: 如果不想要使用原始資料行列名稱當前置詞，可以把設定取消掉</p>
+</li>
+<li>
+<p>瀏覽資料，確認無誤後按下『關閉並載入』即可在 Excel 上看到資料了</p>
+<p><img src="/SNAGHTML34f9708.PNG" alt="img"></p>
+</li>
+<li>
+<p>最終成果</p>
+<p><img src="image-20220716131228238.png" alt="image-20220716131228238"></p>
+<p>如果想要手動更新 API 得資料，單純點選這個圖示即可，或是上方的『重新整理』</p>
+<p><img src="image-20220716131326794.png" alt="image-20220716131326794"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="修改-Query"><a class="header-anchor" href="#修改-Query"> </a>修改 Query</h2>
+<p>如果想要回頭編輯 Query 的方式，可以從這個地方將 Power Query 編輯器開啟</p>
+<p><img src="image-20220716131657411.png" alt="image-20220716131657411"></p>
+]]></content>
+      <categories>
+        <category>Office</category>
+      </categories>
+      <tags>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
