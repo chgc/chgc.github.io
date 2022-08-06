@@ -19589,8 +19589,7 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
   <entry>
     <title>[Angular] 測試 ControlContainer with FormArray 版本</title>
     <url>/2022/08/06/angular-test-controlContainer-with-formarrayname/</url>
-    <content><![CDATA[<p>1</p>
-<p>很久以前寫過一篇關於 <code>ControlContainer</code> 的文章，但那時候太菜不知道怎麼寫測試，今天回頭寫 <code>ControlContainer</code> 配上 <code>formArrayName</code> 時，熊熊發現不知道怎寫測試，稍微有點悲劇，但還好根據官方的測試檔案，還是可以整理出答案，以下就是如何測試有使用 <code>ControlContainer</code> 的 Component</p>
+    <content><![CDATA[<p>很久以前寫過一篇關於 <code>ControlContainer</code> 的文章，但那時候太菜不知道怎麼寫測試，今天回頭寫 <code>ControlContainer</code> 配上 <code>formArrayName</code> 時，熊熊發現不知道怎寫測試，稍微有點悲劇，但還好根據官方的測試檔案，還是可以整理出答案，以下就是如何測試有使用 <code>ControlContainer</code> 的 Component</p>
 <span id="more"></span>
 <p>Component 的用法</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-filter-field</span> <span class="attr">formArrayName</span>=<span class="string">&quot;dynamicFields&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">app-filter-field</span>&gt;</span></span><br></pre></td></tr></table></figure>
