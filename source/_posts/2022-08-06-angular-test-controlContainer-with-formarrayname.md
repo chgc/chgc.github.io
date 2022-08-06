@@ -9,8 +9,6 @@ categories: Angular
 tags: Angular
 ---
 
-1
-
 很久以前寫過一篇關於 `ControlContainer` 的文章，但那時候太菜不知道怎麼寫測試，今天回頭寫 `ControlContainer` 配上 `formArrayName` 時，熊熊發現不知道怎寫測試，稍微有點悲劇，但還好根據官方的測試檔案，還是可以整理出答案，以下就是如何測試有使用 `ControlContainer` 的 Component
 
 <!-- more -->
