@@ -39,6 +39,7 @@ tags: Obsidian
 
 ## 設定 Templates
 
+
 剛剛在前面 `.gitignore` 時多排除一個 `@Templates` 的資料夾，當然現在要多新增一個 `@Templates` 的資料夾在 Blog 資料夾(Vault) 內，並多做以下兩點設定
 
 1. Template 為 Core Plugin，預設是開啟狀態，所以 Settings 內可以看到 `Templates` 的選單
@@ -69,12 +70,12 @@ tags: []
 - `{{title}}`: 目前這篇 Note 的標題
 - `{{date}}` 和 `{{time}}` 是日期變數 - (memo: 這邊沒有使用到)
 
-#### 使用方式
+### 使用方式
 
 1. 新增一篇 Note 並輸入標題
 2. 使用 Hotkey 來新增 Template，當有多個 templates 時，會出現選單讓我們選擇要套用哪一個
 
-#### `Templater plugin`
+### `Templater plugin`
 
 這個 plugin 很強大，可以允許我們寫 script 來處理各種 template 樣式，這邊有一個[介紹影片](https://www.youtube.com/watch?v=1eUxQo6Dy7k)，[plugin 文件](https://silentvoid13.github.io/Templater/introduction.html)，當然如果使用 `Templater plugin` 剛剛寫的 template 要做些調整
 
