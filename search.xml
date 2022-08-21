@@ -19610,6 +19610,75 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Obsidian] 第一次接觸</title>
+    <url>/2022/08/21/obsidian-note-1/</url>
+    <content><![CDATA[<p>其實我知道 <code>Obsidian</code> 這工具已經好一段時間了，只是一直都沒有真的去使用他，看了很多文章和影片介紹，覺得是時候給他一個機會，真的去用看看他的功能是否適合在工作上，或是有其他可以使用的情境</p>
+<span id="more"></span>
+<h2 id="安裝-Obsidian"><a class="header-anchor" href="#安裝-Obsidian"> </a>安裝 Obsidian</h2>
+<p>要安裝 Obsidian 很簡單，到<a href="https://obsidian.md/">官網</a>上就可以下載符合自己作業系統的安裝檔</p>
+<p><img src="image-20220821105956550.png" alt="image-20220821105956550"></p>
+<p>安裝完成後，第一次開啟會詢問要建立 <code>Vault</code> 或是選擇 <code>Vault</code> 的位置</p>
+<p><img src="image-20220821110154460.png" alt="image-20220821110154460"></p>
+<p>什麼是 <code>Vault</code> ? <code>Vault</code> 簡單來說就是存放筆記得資料夾位置，因為是第一次使用，就給他一個 Vault 的名稱跟實際檔案要放哪，建立完成後就會看到這一個畫面</p>
+<p><img src="image-20220821110432244.png" alt="image-20220821110432244"></p>
+<p>如果有使用 Typora 的朋友，基本畫面應該還沒熟悉的，但當然還有左邊跟其他功能圖示，這就等之後在一一探索研究了，當然第一件事情就是新增第一則筆記，Obsidian 是使用 Markdown 的格式來寫筆記，不熟悉 Markdown 的可以去學一下，應該 1 小時內就可以學玩了</p>
+<p>新增筆記的方法，點選左上角的檔案圖示</p>
+<p><img src="image-20220821110711236.png" alt="image-20220821110711236"></p>
+<p>給予筆記標題名稱 (即檔名)</p>
+<p><img src="image-20220821110744590.png" alt="image-20220821110744590"></p>
+<p>編輯區如下圖，Obsidian 也支援 Live Preview 的功能，會即時將 Markdown 轉換成顯示模式，這對於寫筆記的節奏其實幫助很大</p>
+<p><img src="image-20220821111028433.png" alt="image-20220821111028433"></p>
+<h2 id=""><a class="header-anchor" href="#"> </a></h2>
+<h2 id="設定調整-Optional"><a class="header-anchor" href="#設定調整-Optional"> </a>設定調整 (Optional)</h2>
+<p>因為自身的使用習慣，還是要調整一下預設設定，例如圖片存放資料夾的位置等，調整設定可以由左下角的齒輪進去</p>
+<p><img src="image-20220821112342482.png" alt="image-20220821112342482"></p>
+<h3 id="設定附件資料夾位置"><a class="header-anchor" href="#設定附件資料夾位置"> </a>設定附件資料夾位置</h3>
+<p><img src="image-20220821114111247.png" alt="image-20220821114111247"></p>
+<h3 id="安裝-Plugin"><a class="header-anchor" href="#安裝-Plugin"> </a>安裝 Plugin</h3>
+<p>Obsidian 之所有強大是因為他支援安裝 plugin，有分官方版與社群版</p>
+<p><img src="image-20220821114234602.png" alt="image-20220821114234602"></p>
+<p>這裡先列出幾個社群熱門的 plugin</p>
+<ol>
+<li>
+<p>Advanced tables: 簡單明瞭，幫助編輯 Markdown Table</p>
+<p><img src="image-20220821114644538.png" alt="image-20220821114644538"></p>
+</li>
+<li>
+<p>Calendar: 如果使用 Obsidian 寫 daily notes 時，安裝 Calendar 可以用月曆的方式呈現 daily notes，這之後在介紹</p>
+</li>
+<li>
+<p>Dataview: 將 Obsidian 的 Vault 當作資料庫看待，使用 Query 語法將筆記整理會出成另外一份表格使用</p>
+</li>
+<li>
+<p>Kanban:看板模式 <a href="https://github.com/mgmeyers/obsidian-kanban">GitHub Repo</a></p>
+<p><img src="image-20220821115414561.png" alt="image-20220821115414561"></p>
+</li>
+<li>
+<p>Excalidraw: Open source 的白板功能 (<a href="https://excalidraw.com/">範例</a>)</p>
+<p><img src="image-20220821115531883.png" alt="image-20220821115531883"></p>
+</li>
+<li>
+<p>Admonition: 這效果在寫文章筆記時真的很棒，可以很清楚的將需要注意的地方用不同的方式標記出來，例如</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="code">```ad-note</span></span><br><span class="line"><span class="code">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod nulla.</span></span><br><span class="line"><span class="code">```</span></span><br></pre></td></tr></table></figure>
+<p><img src="image-20220821115725690.png" alt="image-20220821115725690"></p>
+</li>
+</ol>
+<h2 id="心得"><a class="header-anchor" href="#心得"> </a>心得</h2>
+<p>Obsidian 確實能提供完整的筆記所需要的功能，當然還有更強大的功能，例如筆記與筆記之間的關連呈現，能透過連結的方式將知識庫給建立出來，雖然初期學習門檻有點高，但是一個值得投資的學習項目，網路上也有很多學習資源</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://ithelp.ithome.com.tw/users/20131832/ironman/4271">Obsidian 雙向鏈結型筆記工具研究與應用，打造屬於個人的專業知識圖譜 系列</a></li>
+<li><a href="https://www.youtube.com/c/NicolevanderHoeven">YouTube - Nicole van der Hoeven</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>Obsidian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
