@@ -19679,6 +19679,71 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Obsidian] 使用 Obsidian 來寫 Docusaurus Doc &amp; Blog</title>
+    <url>/2022/08/21/use-obsidian-to-maintian-docusaurus/</url>
+    <content><![CDATA[<p>使用 Obsidian 來寫 <code>Docusaurus</code> 似乎也是個好選擇，以下是我嘗試後的一些設定方式</p>
+<span id="more"></span>
+<h2 id="環境設定"><a class="header-anchor" href="#環境設定"> </a>環境設定</h2>
+<p>因為 Obsidian 可以將資料夾視為一個 Vault，我們可以將 <code>Docusaurus</code> 下的 Doc &amp; Blog 兩個資料夾設定為兩個 vault 使用，這篇文章會使用 <code>blog</code> 來做示範</p>
+<h3 id="Open-Folder-as-Vault"><a class="header-anchor" href="#Open-Folder-as-Vault"> </a>Open Folder as Vault</h3>
+<p>將 blog 資料夾開啟，這時候會在 <code>blog</code> 資料夾下新增 <code>.obsidian</code> 的資料夾，所以在 <code>.gitignore</code> 需要設定排除 <code>.obsidian</code> 資料夾，既然都開啟 <code>.gitignore</code> 了，順便排除 <code>@Templates</code> 資料夾  (可自行命名，是用來存放 Obsidian Template 的地方，等等會講到)</p>
+<h3 id="安裝-community-plugin"><a class="header-anchor" href="#安裝-community-plugin"> </a>安裝 community plugin</h3>
+<p>這裡需要安裝兩個 plugin</p>
+<ol>
+<li>
+<p>Custom attachment Location: 方便我們貼圖時可以將圖片動態指定我們設定的位置，以下是我設定的方式 (可自行設定)</p>
+<p><img src="image-20220821151228868.png" alt="image-20220821151228868"></p>
+<p>因為貼圖路徑的關係，還有一個地方需要配合調整，在 <code>Files &amp; Links</code> 的地方</p>
+<p><img src="image-20220821151341432.png" alt="image-20220821151341432"></p>
+<p>Step 2 需要將連結的格式改為相對路徑，這樣 <code>docusaurus</code> 才能正常判讀檔案位置，當然就不能使用 <code>wikilinks</code> 的格式，所幸這些設定檔都是跟著 Vault 走，所以修改不會影響到其他人</p>
+</li>
+<li>
+<p>mdx as md: 因為 <code>docusurus</code> 支援 md 和 mdx 兩種文件格式，所以 Obsidian 需要安裝這個才可以看到兩種檔案格式</p>
+</li>
+</ol>
+<h2 id="設定-Templates"><a class="header-anchor" href="#設定-Templates"> </a>設定 Templates</h2>
+<p>剛剛在前面 <code>.gitignore</code> 時多排除一個 <code>@Templates</code> 的資料夾，當然現在要多新增一個 <code>@Templates</code> 的資料夾在 Blog 資料夾(Vault) 內，並多做以下兩點設定</p>
+<ol>
+<li>
+<p>Template 為 Core Plugin，預設是開啟狀態，所以 Settings 內可以看到 <code>Templates</code> 的選單</p>
+<p><img src="image-20220821152120598.png" alt="image-20220821152120598"></p>
+</li>
+<li>
+<p>設定 Hotkey，這裡可以依各人喜好設定</p>
+<p><img src="image-20220821152234652.png" alt="image-20220821152234652"></p>
+</li>
+</ol>
+<p>當這些設定完成後，這時候我們就可以來新增一個 Blog Template 供後面新增時使用，在 <code>@Templates</code> 資料夾下新增一個 <code>Note</code>，名稱自取</p>
+<p><img src="image-20220821152401960.png" alt="image-20220821152401960"></p>
+<p>在該篇 Note 內，輸入以下內容，這些內容就可以在之後新增 Notes 時透過 Insert template 的方式將內容加入</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">slug: </span><br><span class="line">title: &#123;&#123;title&#125;&#125;</span><br><span class="line">authors: []</span><br><span class="line"><span class="section">tags: []</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+<p>能用變數說明</p>
+<ul>
+<li><code>&#123;&#123;title&#125;&#125;</code>: 目前這篇 Note 的標題</li>
+<li><code>&#123;&#123;date&#125;&#125;</code> 和 <code>&#123;&#123;time&#125;&#125;</code> 是日期變數 - (memo: 這邊沒有使用到)</li>
+</ul>
+<h4 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h4>
+<ol>
+<li>新增一篇 Note 並輸入標題</li>
+<li>使用 Hotkey 來新增 Template，當有多個 templates 時，會出現選單讓我們選擇要套用哪一個</li>
+</ol>
+<h4 id="Templater-plugin"><a class="header-anchor" href="#Templater-plugin"> </a><code>Templater plugin</code></h4>
+<p>這個 plugin 很強大，可以允許我們寫 script 來處理各種 template 樣式，這邊有一個<a href="https://www.youtube.com/watch?v=1eUxQo6Dy7k">介紹影片</a>，<a href="https://silentvoid13.github.io/Templater/introduction.html">plugin 文件</a>，當然如果使用 <code>Templater plugin</code> 剛剛寫的 template 要做些調整</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">slug: </span><br><span class="line">title: &#x27;&lt;% tp.file.title %&gt;&#x27;</span><br><span class="line">authors: []</span><br><span class="line"><span class="section">tags: []</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+<p>另外要留意的是 Hotkey 的部分，<code>Templater</code> 有自己的 Hotkey 設定，所以這邊會建議只使用一套，就看哪一套適合自己的寫作節奏</p>
+<p><img src="image-20220821154520713.png" alt="image-20220821154520713"></p>
+<p><img src="image-20220821154534208.png" alt="image-20220821154534208"></p>
+<h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2>
+<p>當上述這些設定完成後，<code>Dousaurus</code> 的 Doc 或 Blog 的編寫就會更貼近一般文書編輯的模式，圖片，表格等都可以使用 Obsidian 強大的功能來完成編輯</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>Obsidian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
