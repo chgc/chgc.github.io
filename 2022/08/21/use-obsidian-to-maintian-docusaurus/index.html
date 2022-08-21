@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2022/08/21/use-obsidian-to-maintian-docusaurus/image-20220821154520713.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/08/21/use-obsidian-to-maintian-docusaurus/image-20220821154534208.png">
 <meta property="article:published_time" content="2022-08-21T06:50:54.000Z">
-<meta property="article:modified_time" content="2022-08-21T08:03:48.282Z">
+<meta property="article:modified_time" content="2022-08-21T08:10:06.239Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Obsidian">
 <meta name="twitter:card" content="summary">
@@ -315,12 +315,12 @@
 <li><code>&#123;&#123;title&#125;&#125;</code>: 目前這篇 Note 的標題</li>
 <li><code>&#123;&#123;date&#125;&#125;</code> 和 <code>&#123;&#123;time&#125;&#125;</code> 是日期變數 - (memo: 這邊沒有使用到)</li>
 </ul>
-<h4 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h4>
+<h3 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h3>
 <ol>
 <li>新增一篇 Note 並輸入標題</li>
 <li>使用 Hotkey 來新增 Template，當有多個 templates 時，會出現選單讓我們選擇要套用哪一個</li>
 </ol>
-<h4 id="Templater-plugin"><a class="header-anchor" href="#Templater-plugin"> </a><code>Templater plugin</code></h4>
+<h3 id="Templater-plugin"><a class="header-anchor" href="#Templater-plugin"> </a><code>Templater plugin</code></h3>
 <p>這個 plugin 很強大，可以允許我們寫 script 來處理各種 template 樣式，這邊有一個<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=1eUxQo6Dy7k">介紹影片</a>，<a target="_blank" rel="noopener" href="https://silentvoid13.github.io/Templater/introduction.html">plugin 文件</a>，當然如果使用 <code>Templater plugin</code> 剛剛寫的 template 要做些調整</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">slug: </span><br><span class="line">title: &#x27;&lt;% tp.file.title %&gt;&#x27;</span><br><span class="line">authors: []</span><br><span class="line"><span class="section">tags: []</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
 <p>另外要留意的是 Hotkey 的部分，<code>Templater</code> 有自己的 Hotkey 設定，所以這邊會建議只使用一套，就看哪一套適合自己的寫作節奏</p>
@@ -424,7 +424,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">環境設定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Open-Folder-as-Vault"><span class="nav-number">1.1.</span> <span class="nav-text">Open Folder as Vault</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-community-plugin"><span class="nav-number">1.2.</span> <span class="nav-text">安裝 community plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-Templates"><span class="nav-number">2.</span> <span class="nav-text">設定 Templates</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">2.0.1.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Templater-plugin"><span class="nav-number">2.0.2.</span> <span class="nav-text">Templater plugin</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">小結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">環境設定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Open-Folder-as-Vault"><span class="nav-number">1.1.</span> <span class="nav-text">Open Folder as Vault</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-community-plugin"><span class="nav-number">1.2.</span> <span class="nav-text">安裝 community plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-Templates"><span class="nav-number">2.</span> <span class="nav-text">設定 Templates</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Templater-plugin"><span class="nav-number">2.2.</span> <span class="nav-text">Templater plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">小結</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

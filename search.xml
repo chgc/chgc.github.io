@@ -3039,6 +3039,51 @@ Control是配合ngControl使用. 初始是 new Control(『default value』, vali
       </tags>
   </entry>
   <entry>
+    <title>[Angular] ChangeDetectionStrategy</title>
+    <url>/2016/06/05/angular2-ChangeDetectionStrategy/</url>
+    <content><![CDATA[<p>Angular2裡面偵測改變的方法有全新的方式，用來提升整體的效能，那針對Component對於偵測改變有一個屬性可以設定，那就是透過 <code>ChangeDetectionStrategy</code></p>
+<span id="more"></span>
+<p>根據<a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html">官方文件</a>, ChangeDetectionStrategy有幾種方式</p>
+<ol>
+<li>CheckOnce</li>
+<li>Checked</li>
+<li>CheckAlways</li>
+<li>Detached</li>
+<li>OnPush</li>
+<li>Default</li>
+</ol>
+<p>這篇只專注於Default與OnPush這兩種</p>
+<h1 id="Change-Detection-Strategy"><a class="header-anchor" href="#Change-Detection-Strategy"> </a>Change Detection Strategy</h1>
+<h2 id="Default"><a class="header-anchor" href="#Default"> </a>Default</h2>
+<p>Example Code</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">movie</span> [<span class="attr">title</span>]=<span class="string">&quot;title&quot;</span> [<span class="attr">actor</span>]=<span class="string">&quot;actor&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">movie</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="attr">title</span>: <span class="built_in">string</span> = <span class="string">&quot;Movie 1&quot;</span>;</span><br><span class="line"><span class="attr">actor</span>: <span class="title class_">Actor</span> =<span class="keyword">new</span> <span class="title class_">Actor</span>( <span class="string">&#x27;Bruce&#x27;</span>, <span class="string">&#x27;Willis&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>針對movie這個component, 它接收兩種值，一個是string型別的title, 另外一個是Actor型別的物件。</p>
+<p>Movie Component會在什麼時機點更新要顯示的內容呢? 如果 ChangeDetectionStrategy是設定在Default的時候，那就是只要傳入的值有異動時，就更新顯示的內容。換句話說, 即使修改actor物件裡面的property, 也會觸發。</p>
+<h2 id="onPush"><a class="header-anchor" href="#onPush"> </a>onPush</h2>
+<p>可是換到onPush的時候就有點不一樣了，他不會將修改actor屬性視為值的異動，只會當一個全新的Actor物件被建立時，才會觸發更新。</p>
+<p>這樣的好處是，減少detect Dirty Change的次數. 就預設的方式，如果我的Actor物件裡面有很多屬性，那當每一次其中一個屬性的值被異動時，都會觸發畫面的更新，那就太累了。而onPush是會等一個全新物件被建立時，才會出發。所以只要用要更新的值去建立一個新的物件就好了，這樣子只會被觸發一次。當然效能就會大大的提升</p>
+<h1 id="Immutable"><a class="header-anchor" href="#Immutable"> </a>Immutable</h1>
+<p>Immuatable是另外一個議題。他的主要精神是。每一次的動作，都會產生一個新的物件，並不會直接修改原始物件內的值，或是使用參址的方式處理資料. 更詳細的內容可以參閱<a href="http://reactivex.io/rxjs/">RxJS</a>和<a href="https://facebook.github.io/immutable-js/">Immutable</a></p>
+<h1 id="參考文件"><a class="header-anchor" href="#參考文件"> </a>參考文件</h1>
+<ul>
+<li>
+<p><a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html">ChangeDetectionStrategy</a></p>
+</li>
+<li>
+<p><a href="http://ngcourse.rangle.io/handout/change-detection/change_detection_strategy_onpush.html">Change Detection Strategy: OnPush</a></p>
+<p>​</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[ASP.NET MVC] MVC Core with SqlClient on MAC</title>
     <url>/2016/06/22/mvc-core-with-sqlserver/</url>
     <content><![CDATA[<p>.Net Core 終於支援使用SqlClien的物件了(但不確定是從什麼時候開始的), 那就來試試看怎麼在mac的環境上連到sql server撈資料了</p>
@@ -3117,51 +3162,6 @@ Control是配合ngControl使用. 初始是 new Control(『default value』, vali
 <li><a href="https://angular.io/docs/ts/latest/api/core/index/provide-function.html">API DOC- provide</a></li>
 <li><a href="https://angular.io/docs/ts/latest/api/core/index/PLATFORM_DIRECTIVES-let.html">API DOC- PLATFORM_DIRECTIVES</a></li>
 <li><a href="https://github.com/chgc/demo-angular2-router">github repo</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Angular</category>
-      </categories>
-      <tags>
-        <tag>Angular</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[Angular] ChangeDetectionStrategy</title>
-    <url>/2016/06/05/angular2-ChangeDetectionStrategy/</url>
-    <content><![CDATA[<p>Angular2裡面偵測改變的方法有全新的方式，用來提升整體的效能，那針對Component對於偵測改變有一個屬性可以設定，那就是透過 <code>ChangeDetectionStrategy</code></p>
-<span id="more"></span>
-<p>根據<a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html">官方文件</a>, ChangeDetectionStrategy有幾種方式</p>
-<ol>
-<li>CheckOnce</li>
-<li>Checked</li>
-<li>CheckAlways</li>
-<li>Detached</li>
-<li>OnPush</li>
-<li>Default</li>
-</ol>
-<p>這篇只專注於Default與OnPush這兩種</p>
-<h1 id="Change-Detection-Strategy"><a class="header-anchor" href="#Change-Detection-Strategy"> </a>Change Detection Strategy</h1>
-<h2 id="Default"><a class="header-anchor" href="#Default"> </a>Default</h2>
-<p>Example Code</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">movie</span> [<span class="attr">title</span>]=<span class="string">&quot;title&quot;</span> [<span class="attr">actor</span>]=<span class="string">&quot;actor&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">movie</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="attr">title</span>: <span class="built_in">string</span> = <span class="string">&quot;Movie 1&quot;</span>;</span><br><span class="line"><span class="attr">actor</span>: <span class="title class_">Actor</span> =<span class="keyword">new</span> <span class="title class_">Actor</span>( <span class="string">&#x27;Bruce&#x27;</span>, <span class="string">&#x27;Willis&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>針對movie這個component, 它接收兩種值，一個是string型別的title, 另外一個是Actor型別的物件。</p>
-<p>Movie Component會在什麼時機點更新要顯示的內容呢? 如果 ChangeDetectionStrategy是設定在Default的時候，那就是只要傳入的值有異動時，就更新顯示的內容。換句話說, 即使修改actor物件裡面的property, 也會觸發。</p>
-<h2 id="onPush"><a class="header-anchor" href="#onPush"> </a>onPush</h2>
-<p>可是換到onPush的時候就有點不一樣了，他不會將修改actor屬性視為值的異動，只會當一個全新的Actor物件被建立時，才會觸發更新。</p>
-<p>這樣的好處是，減少detect Dirty Change的次數. 就預設的方式，如果我的Actor物件裡面有很多屬性，那當每一次其中一個屬性的值被異動時，都會觸發畫面的更新，那就太累了。而onPush是會等一個全新物件被建立時，才會出發。所以只要用要更新的值去建立一個新的物件就好了，這樣子只會被觸發一次。當然效能就會大大的提升</p>
-<h1 id="Immutable"><a class="header-anchor" href="#Immutable"> </a>Immutable</h1>
-<p>Immuatable是另外一個議題。他的主要精神是。每一次的動作，都會產生一個新的物件，並不會直接修改原始物件內的值，或是使用參址的方式處理資料. 更詳細的內容可以參閱<a href="http://reactivex.io/rxjs/">RxJS</a>和<a href="https://facebook.github.io/immutable-js/">Immutable</a></p>
-<h1 id="參考文件"><a class="header-anchor" href="#參考文件"> </a>參考文件</h1>
-<ul>
-<li>
-<p><a href="https://angular.io/docs/js/latest/api/core/ChangeDetectionStrategy-enum.html">ChangeDetectionStrategy</a></p>
-</li>
-<li>
-<p><a href="http://ngcourse.rangle.io/handout/change-detection/change_detection_strategy_onpush.html">Change Detection Strategy: OnPush</a></p>
-<p>​</p>
-</li>
 </ul>
 ]]></content>
       <categories>
@@ -19722,12 +19722,12 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 <li><code>&#123;&#123;title&#125;&#125;</code>: 目前這篇 Note 的標題</li>
 <li><code>&#123;&#123;date&#125;&#125;</code> 和 <code>&#123;&#123;time&#125;&#125;</code> 是日期變數 - (memo: 這邊沒有使用到)</li>
 </ul>
-<h4 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h4>
+<h3 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h3>
 <ol>
 <li>新增一篇 Note 並輸入標題</li>
 <li>使用 Hotkey 來新增 Template，當有多個 templates 時，會出現選單讓我們選擇要套用哪一個</li>
 </ol>
-<h4 id="Templater-plugin"><a class="header-anchor" href="#Templater-plugin"> </a><code>Templater plugin</code></h4>
+<h3 id="Templater-plugin"><a class="header-anchor" href="#Templater-plugin"> </a><code>Templater plugin</code></h3>
 <p>這個 plugin 很強大，可以允許我們寫 script 來處理各種 template 樣式，這邊有一個<a href="https://www.youtube.com/watch?v=1eUxQo6Dy7k">介紹影片</a>，<a href="https://silentvoid13.github.io/Templater/introduction.html">plugin 文件</a>，當然如果使用 <code>Templater plugin</code> 剛剛寫的 template 要做些調整</p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">slug: </span><br><span class="line">title: &#x27;&lt;% tp.file.title %&gt;&#x27;</span><br><span class="line">authors: []</span><br><span class="line"><span class="section">tags: []</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
 <p>另外要留意的是 Hotkey 的部分，<code>Templater</code> 有自己的 Hotkey 設定，所以這邊會建議只使用一套，就看哪一套適合自己的寫作節奏</p>
