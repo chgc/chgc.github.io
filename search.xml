@@ -156,6 +156,35 @@ echo 「Deleted successfully!」;
       </tags>
   </entry>
   <entry>
+    <title>[Laravel] Study Note.</title>
+    <url>/2013/10/16/laravel-study-note/</url>
+    <content><![CDATA[<p>#database config path</p>
+<p>/app/config/database.php</p>
+<p>#star up path</p>
+<p>serverName/laravel/public</p>
+<hr>
+<p>#php artisan migrate
+這裡migrate的觀念與EntityFramework 5 Code First的觀念相同。</p>
+<h2 id="migrate-install"><a class="header-anchor" href="#migrate-install"> </a>migrate:install</h2>
+<p>安裝Migration table, 會在資料庫中創建一個migrateion table, 紀錄migration版本</p>
+<h2 id="migrate-make-somethingsomething"><a class="header-anchor" href="#migrate-make-somethingsomething"> </a>migrate:make somethingsomething</h2>
+<p>建立新版的資料庫異動檔案</p>
+<h2 id="migrate"><a class="header-anchor" href="#migrate"> </a>migrate</h2>
+<p>執行資料庫格式升級 --&gt; function up()</p>
+<h2 id="migrate-rollback"><a class="header-anchor" href="#migrate-rollback"> </a>migrate:rollback</h2>
+<p>執行資料庫格式降級 --&gt; function down()</p>
+<h2 id="migrate-table-file-location-app-database-migrations"><a class="header-anchor" href="#migrate-table-file-location-app-database-migrations"> </a>migrate table file location : app/database/migrations/</h2>
+<figure class="highlight php"><figcaption><span>升級動作</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">up</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">// create new table</span></span><br><span class="line"><span class="title class_">Schema</span>::<span class="title function_ invoke__">table</span>(<span class="string">&#x27;users&#x27;</span>, function(<span class="variable">$table</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">create</span>();</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">increments</span>(<span class="string">&#x27;id&#x27;</span>);<span class="comment">//id fields with AUTO_INCREMENT</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;email&#x27;</span>);<span class="comment">//email field with varchar(255)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;real_name&#x27;</span>,<span class="number">100</span>);<span class="comment">//real_field with varchar(100)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;password&#x27;</span>);</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">timestamps</span>();<span class="comment">// created_at,updated_at timestamps(2 fields)</span></span><br><span class="line"> &#125;);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h2 id="code￼1"><a class="header-anchor" href="#code￼1"> </a><figure class="highlight php"><figcaption><span>降級動作</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">down</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//Drop Table</span></span><br><span class="line">	<span class="title class_">Schema</span>::<span class="title function_ invoke__">drop</span>(<span class="string">&#x27;users&#x27;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></h2>
+]]></content>
+      <categories>
+        <category>Laravel</category>
+      </categories>
+      <tags>
+        <tag>Laravel 4</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Phalcon] Work with Router</title>
     <url>/2013/10/10/phalcon-work-with-router/</url>
     <content><![CDATA[<h1 id="啟動方式"><a class="header-anchor" href="#啟動方式"> </a>啟動方式</h1>
@@ -213,35 +242,6 @@ echo 「Deleted successfully!」;
       </categories>
       <tags>
         <tag>Phalcon</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[Laravel] Study Note.</title>
-    <url>/2013/10/16/laravel-study-note/</url>
-    <content><![CDATA[<p>#database config path</p>
-<p>/app/config/database.php</p>
-<p>#star up path</p>
-<p>serverName/laravel/public</p>
-<hr>
-<p>#php artisan migrate
-這裡migrate的觀念與EntityFramework 5 Code First的觀念相同。</p>
-<h2 id="migrate-install"><a class="header-anchor" href="#migrate-install"> </a>migrate:install</h2>
-<p>安裝Migration table, 會在資料庫中創建一個migrateion table, 紀錄migration版本</p>
-<h2 id="migrate-make-somethingsomething"><a class="header-anchor" href="#migrate-make-somethingsomething"> </a>migrate:make somethingsomething</h2>
-<p>建立新版的資料庫異動檔案</p>
-<h2 id="migrate"><a class="header-anchor" href="#migrate"> </a>migrate</h2>
-<p>執行資料庫格式升級 --&gt; function up()</p>
-<h2 id="migrate-rollback"><a class="header-anchor" href="#migrate-rollback"> </a>migrate:rollback</h2>
-<p>執行資料庫格式降級 --&gt; function down()</p>
-<h2 id="migrate-table-file-location-app-database-migrations"><a class="header-anchor" href="#migrate-table-file-location-app-database-migrations"> </a>migrate table file location : app/database/migrations/</h2>
-<figure class="highlight php"><figcaption><span>升級動作</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">up</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">// create new table</span></span><br><span class="line"><span class="title class_">Schema</span>::<span class="title function_ invoke__">table</span>(<span class="string">&#x27;users&#x27;</span>, function(<span class="variable">$table</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">create</span>();</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">increments</span>(<span class="string">&#x27;id&#x27;</span>);<span class="comment">//id fields with AUTO_INCREMENT</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;email&#x27;</span>);<span class="comment">//email field with varchar(255)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;real_name&#x27;</span>,<span class="number">100</span>);<span class="comment">//real_field with varchar(100)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;password&#x27;</span>);</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">timestamps</span>();<span class="comment">// created_at,updated_at timestamps(2 fields)</span></span><br><span class="line"> &#125;);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h2 id="code￼1"><a class="header-anchor" href="#code￼1"> </a><figure class="highlight php"><figcaption><span>降級動作</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">down</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//Drop Table</span></span><br><span class="line">	<span class="title class_">Schema</span>::<span class="title function_ invoke__">drop</span>(<span class="string">&#x27;users&#x27;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></h2>
-]]></content>
-      <categories>
-        <category>Laravel</category>
-      </categories>
-      <tags>
-        <tag>Laravel 4</tag>
       </tags>
   </entry>
   <entry>
@@ -19610,75 +19610,6 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
-    <title>[Obsidian] 第一次接觸</title>
-    <url>/2022/08/21/obsidian-note-1/</url>
-    <content><![CDATA[<p>其實我知道 <code>Obsidian</code> 這工具已經好一段時間了，只是一直都沒有真的去使用他，看了很多文章和影片介紹，覺得是時候給他一個機會，真的去用看看他的功能是否適合在工作上，或是有其他可以使用的情境</p>
-<span id="more"></span>
-<h2 id="安裝-Obsidian"><a class="header-anchor" href="#安裝-Obsidian"> </a>安裝 Obsidian</h2>
-<p>要安裝 Obsidian 很簡單，到<a href="https://obsidian.md/">官網</a>上就可以下載符合自己作業系統的安裝檔</p>
-<p><img src="image-20220821105956550.png" alt="image-20220821105956550"></p>
-<p>安裝完成後，第一次開啟會詢問要建立 <code>Vault</code> 或是選擇 <code>Vault</code> 的位置</p>
-<p><img src="image-20220821110154460.png" alt="image-20220821110154460"></p>
-<p>什麼是 <code>Vault</code> ? <code>Vault</code> 簡單來說就是存放筆記得資料夾位置，因為是第一次使用，就給他一個 Vault 的名稱跟實際檔案要放哪，建立完成後就會看到這一個畫面</p>
-<p><img src="image-20220821110432244.png" alt="image-20220821110432244"></p>
-<p>如果有使用 Typora 的朋友，基本畫面應該還沒熟悉的，但當然還有左邊跟其他功能圖示，這就等之後在一一探索研究了，當然第一件事情就是新增第一則筆記，Obsidian 是使用 Markdown 的格式來寫筆記，不熟悉 Markdown 的可以去學一下，應該 1 小時內就可以學玩了</p>
-<p>新增筆記的方法，點選左上角的檔案圖示</p>
-<p><img src="image-20220821110711236.png" alt="image-20220821110711236"></p>
-<p>給予筆記標題名稱 (即檔名)</p>
-<p><img src="image-20220821110744590.png" alt="image-20220821110744590"></p>
-<p>編輯區如下圖，Obsidian 也支援 Live Preview 的功能，會即時將 Markdown 轉換成顯示模式，這對於寫筆記的節奏其實幫助很大</p>
-<p><img src="image-20220821111028433.png" alt="image-20220821111028433"></p>
-<h2 id=""><a class="header-anchor" href="#"> </a></h2>
-<h2 id="設定調整-Optional"><a class="header-anchor" href="#設定調整-Optional"> </a>設定調整 (Optional)</h2>
-<p>因為自身的使用習慣，還是要調整一下預設設定，例如圖片存放資料夾的位置等，調整設定可以由左下角的齒輪進去</p>
-<p><img src="image-20220821112342482.png" alt="image-20220821112342482"></p>
-<h3 id="設定附件資料夾位置"><a class="header-anchor" href="#設定附件資料夾位置"> </a>設定附件資料夾位置</h3>
-<p><img src="image-20220821114111247.png" alt="image-20220821114111247"></p>
-<h3 id="安裝-Plugin"><a class="header-anchor" href="#安裝-Plugin"> </a>安裝 Plugin</h3>
-<p>Obsidian 之所有強大是因為他支援安裝 plugin，有分官方版與社群版</p>
-<p><img src="image-20220821114234602.png" alt="image-20220821114234602"></p>
-<p>這裡先列出幾個社群熱門的 plugin</p>
-<ol>
-<li>
-<p>Advanced tables: 簡單明瞭，幫助編輯 Markdown Table</p>
-<p><img src="image-20220821114644538.png" alt="image-20220821114644538"></p>
-</li>
-<li>
-<p>Calendar: 如果使用 Obsidian 寫 daily notes 時，安裝 Calendar 可以用月曆的方式呈現 daily notes，這之後在介紹</p>
-</li>
-<li>
-<p>Dataview: 將 Obsidian 的 Vault 當作資料庫看待，使用 Query 語法將筆記整理會出成另外一份表格使用</p>
-</li>
-<li>
-<p>Kanban:看板模式 <a href="https://github.com/mgmeyers/obsidian-kanban">GitHub Repo</a></p>
-<p><img src="image-20220821115414561.png" alt="image-20220821115414561"></p>
-</li>
-<li>
-<p>Excalidraw: Open source 的白板功能 (<a href="https://excalidraw.com/">範例</a>)</p>
-<p><img src="image-20220821115531883.png" alt="image-20220821115531883"></p>
-</li>
-<li>
-<p>Admonition: 這效果在寫文章筆記時真的很棒，可以很清楚的將需要注意的地方用不同的方式標記出來，例如</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="code">```ad-note</span></span><br><span class="line"><span class="code">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod nulla.</span></span><br><span class="line"><span class="code">```</span></span><br></pre></td></tr></table></figure>
-<p><img src="image-20220821115725690.png" alt="image-20220821115725690"></p>
-</li>
-</ol>
-<h2 id="心得"><a class="header-anchor" href="#心得"> </a>心得</h2>
-<p>Obsidian 確實能提供完整的筆記所需要的功能，當然還有更強大的功能，例如筆記與筆記之間的關連呈現，能透過連結的方式將知識庫給建立出來，雖然初期學習門檻有點高，但是一個值得投資的學習項目，網路上也有很多學習資源</p>
-<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
-<ul>
-<li><a href="https://ithelp.ithome.com.tw/users/20131832/ironman/4271">Obsidian 雙向鏈結型筆記工具研究與應用，打造屬於個人的專業知識圖譜 系列</a></li>
-<li><a href="https://www.youtube.com/c/NicolevanderHoeven">YouTube - Nicole van der Hoeven</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>Obsidian</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[Obsidian] 使用 Obsidian 來寫 Docusaurus Doc &amp; Blog</title>
     <url>/2022/08/21/use-obsidian-to-maintian-docusaurus/</url>
     <content><![CDATA[<p>使用 Obsidian 來寫 <code>Docusaurus</code> 似乎也是個好選擇，以下是我嘗試後的一些設定方式</p>
@@ -19746,7 +19677,7 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
   <entry>
     <title>[Angular] Typed Form study notes</title>
     <url>/2022/09/09/ng14-typed-form/</url>
-    <content><![CDATA[<p>Angular 14 終於推出 Typed Form 的功能，利用中秋放假的時間，好好地將這個功能給仔細玩過一次，掌握好才能在專案上使用到</p>
+    <content><![CDATA[<p>Angular 14 推出 Typed Form 的功能，利用中秋放假的時間，好好地將這個功能給仔細玩過一次，掌握好才能在專案上使用到</p>
 <span id="more"></span>
 <h2 id="基本元素"><a class="header-anchor" href="#基本元素"> </a>基本元素</h2>
 <p>Angular 13  有 <code>FormGroup</code>、<code>FormControl</code>、<code>FormArray</code>、<code>FormBuilder</code>，而在 Angular 14 裡原本的這些 <code>FormControl</code> 都會變成 <code>UntypedFormGroup</code>、<code>UntypedFormControl</code>、<code>UnTypedFormArray</code>、<code>UnTypedFormBuilder</code> (透過 ng update 時，Angular 會更換成這些類別)，在 Angular 14 以後的 <code>FormGroup</code>、<code>FormControl</code>、<code>FormArray</code>、<code>FormBuilder</code> 都具有型別了，另外還有一個 <code>FormRecord</code> 的新類別，後面會介紹到他</p>
@@ -19804,6 +19735,75 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </categories>
       <tags>
         <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Obsidian] 第一次接觸</title>
+    <url>/2022/08/21/obsidian-note-1/</url>
+    <content><![CDATA[<p>其實我知道 <code>Obsidian</code> 這工具已經好一段時間了，只是一直都沒有真的去使用他，看了很多文章和影片介紹，覺得是時候給他一個機會，真的去用看看他的功能是否適合在工作上，或是有其他可以使用的情境</p>
+<span id="more"></span>
+<h2 id="安裝-Obsidian"><a class="header-anchor" href="#安裝-Obsidian"> </a>安裝 Obsidian</h2>
+<p>要安裝 Obsidian 很簡單，到<a href="https://obsidian.md/">官網</a>上就可以下載符合自己作業系統的安裝檔</p>
+<p><img src="image-20220821105956550.png" alt="image-20220821105956550"></p>
+<p>安裝完成後，第一次開啟會詢問要建立 <code>Vault</code> 或是選擇 <code>Vault</code> 的位置</p>
+<p><img src="image-20220821110154460.png" alt="image-20220821110154460"></p>
+<p>什麼是 <code>Vault</code> ? <code>Vault</code> 簡單來說就是存放筆記得資料夾位置，因為是第一次使用，就給他一個 Vault 的名稱跟實際檔案要放哪，建立完成後就會看到這一個畫面</p>
+<p><img src="image-20220821110432244.png" alt="image-20220821110432244"></p>
+<p>如果有使用 Typora 的朋友，基本畫面應該還沒熟悉的，但當然還有左邊跟其他功能圖示，這就等之後在一一探索研究了，當然第一件事情就是新增第一則筆記，Obsidian 是使用 Markdown 的格式來寫筆記，不熟悉 Markdown 的可以去學一下，應該 1 小時內就可以學玩了</p>
+<p>新增筆記的方法，點選左上角的檔案圖示</p>
+<p><img src="image-20220821110711236.png" alt="image-20220821110711236"></p>
+<p>給予筆記標題名稱 (即檔名)</p>
+<p><img src="image-20220821110744590.png" alt="image-20220821110744590"></p>
+<p>編輯區如下圖，Obsidian 也支援 Live Preview 的功能，會即時將 Markdown 轉換成顯示模式，這對於寫筆記的節奏其實幫助很大</p>
+<p><img src="image-20220821111028433.png" alt="image-20220821111028433"></p>
+<h2 id=""><a class="header-anchor" href="#"> </a></h2>
+<h2 id="設定調整-Optional"><a class="header-anchor" href="#設定調整-Optional"> </a>設定調整 (Optional)</h2>
+<p>因為自身的使用習慣，還是要調整一下預設設定，例如圖片存放資料夾的位置等，調整設定可以由左下角的齒輪進去</p>
+<p><img src="image-20220821112342482.png" alt="image-20220821112342482"></p>
+<h3 id="設定附件資料夾位置"><a class="header-anchor" href="#設定附件資料夾位置"> </a>設定附件資料夾位置</h3>
+<p><img src="image-20220821114111247.png" alt="image-20220821114111247"></p>
+<h3 id="安裝-Plugin"><a class="header-anchor" href="#安裝-Plugin"> </a>安裝 Plugin</h3>
+<p>Obsidian 之所有強大是因為他支援安裝 plugin，有分官方版與社群版</p>
+<p><img src="image-20220821114234602.png" alt="image-20220821114234602"></p>
+<p>這裡先列出幾個社群熱門的 plugin</p>
+<ol>
+<li>
+<p>Advanced tables: 簡單明瞭，幫助編輯 Markdown Table</p>
+<p><img src="image-20220821114644538.png" alt="image-20220821114644538"></p>
+</li>
+<li>
+<p>Calendar: 如果使用 Obsidian 寫 daily notes 時，安裝 Calendar 可以用月曆的方式呈現 daily notes，這之後在介紹</p>
+</li>
+<li>
+<p>Dataview: 將 Obsidian 的 Vault 當作資料庫看待，使用 Query 語法將筆記整理會出成另外一份表格使用</p>
+</li>
+<li>
+<p>Kanban:看板模式 <a href="https://github.com/mgmeyers/obsidian-kanban">GitHub Repo</a></p>
+<p><img src="image-20220821115414561.png" alt="image-20220821115414561"></p>
+</li>
+<li>
+<p>Excalidraw: Open source 的白板功能 (<a href="https://excalidraw.com/">範例</a>)</p>
+<p><img src="image-20220821115531883.png" alt="image-20220821115531883"></p>
+</li>
+<li>
+<p>Admonition: 這效果在寫文章筆記時真的很棒，可以很清楚的將需要注意的地方用不同的方式標記出來，例如</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="code">```ad-note</span></span><br><span class="line"><span class="code">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod nulla.</span></span><br><span class="line"><span class="code">```</span></span><br></pre></td></tr></table></figure>
+<p><img src="image-20220821115725690.png" alt="image-20220821115725690"></p>
+</li>
+</ol>
+<h2 id="心得"><a class="header-anchor" href="#心得"> </a>心得</h2>
+<p>Obsidian 確實能提供完整的筆記所需要的功能，當然還有更強大的功能，例如筆記與筆記之間的關連呈現，能透過連結的方式將知識庫給建立出來，雖然初期學習門檻有點高，但是一個值得投資的學習項目，網路上也有很多學習資源</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://ithelp.ithome.com.tw/users/20131832/ironman/4271">Obsidian 雙向鏈結型筆記工具研究與應用，打造屬於個人的專業知識圖譜 系列</a></li>
+<li><a href="https://www.youtube.com/c/NicolevanderHoeven">YouTube - Nicole van der Hoeven</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>Obsidian</tag>
       </tags>
   </entry>
   <entry>
