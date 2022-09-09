@@ -9,7 +9,7 @@ categories: Angular
 tags: Angular
 ---
 
-Angular 14 終於推出 Typed Form 的功能，利用中秋放假的時間，好好地將這個功能給仔細玩過一次，掌握好才能在專案上使用到
+Angular 14 推出 Typed Form 的功能，利用中秋放假的時間，好好地將這個功能給仔細玩過一次，掌握好才能在專案上使用到
 
 <!-- more -->
 
