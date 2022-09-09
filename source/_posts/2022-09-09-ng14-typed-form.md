@@ -15,7 +15,7 @@ Angular 14 終於推出 Typed Form 的功能，利用中秋放假的時間，好
 
 ## 基本元素
 
-Angular 13  有 `FormGroup`、`FormControl`、`FormArray`、`FormBuilder`，而在 Angular 14 裡原本的這些 Form Control 都會變成 `UntypedFormGroup`、`UntypedFormControl`、`UnTypedFormArray`、`UnTypedFormBuilder` (透過 ng update 時，Angular 會更換成這些類別)，在 Angular 14 以後的 `FormGroup`、`FormControl`、`FormArray`、`FormBuilder` 都具有型別了，另外還有一個 `FormRecord` 的新類別，後面會介紹到他
+Angular 13  有 `FormGroup`、`FormControl`、`FormArray`、`FormBuilder`，而在 Angular 14 裡原本的這些 `FormControl` 都會變成 `UntypedFormGroup`、`UntypedFormControl`、`UnTypedFormArray`、`UnTypedFormBuilder` (透過 ng update 時，Angular 會更換成這些類別)，在 Angular 14 以後的 `FormGroup`、`FormControl`、`FormArray`、`FormBuilder` 都具有型別了，另外還有一個 `FormRecord` 的新類別，後面會介紹到他
 
 使用 Typed Form 的好處是在開發時期就可以知道表單型別，避免一些不必要的錯誤，也可以針對 `null` 的狀況作防範，有好處就一定有壞處，如果遇到比較動態類型的表單，使用 Typed Form 就比較綁手綁腳，這時候可以退回使用 `UnTyped` 版本的 
 
