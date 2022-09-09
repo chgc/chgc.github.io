@@ -200,6 +200,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/05/13/ef6-bulkinsert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/05/13/ef6-bulkinsert/" class="post-title-link" itemprop="url">[EF6] BulkInsert</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-05-13 15:30:00" itemprop="dateCreated datePublished" datetime="2014-05-13T15:30:00+08:00">2014-05-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Entity-Framework/" itemprop="url" rel="index"><span itemprop="name">Entity Framework</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/05/13/ef6-bulkinsert/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/05/13/ef6-bulkinsert/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="處理狀況"><a class="header-anchor" href="#處理狀況"> </a>處理狀況</h2>
+<p>當要同一時間新增大量資料時，如果單純用EF的新增方式，速度會讓人吐血。
+所以需要透過BulkInsert的方式處理，但是又不想自己另外寫ado的方式處理，所以就要透過extenstion的方式，
+讓EF的功能加強一下</p>
+<p>##安裝 EntityFramework.BulkInsert-ef6</p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EntityFramework.BulkInsert-ef6/6.0.2.7">Nuget</a></p>
+<p>##參考文件</p>
+<p><a target="_blank" rel="noopener" href="http://efbulkinsert.codeplex.com/">http://efbulkinsert.codeplex.com/</a></p>
+<p>##(用法)Demo Code</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">using(context db = new context())&#123;</span><br><span class="line">     // 原本會用</span><br><span class="line">     // db.tables.AddRange(entities);</span><br><span class="line">     // 改用</span><br><span class="line">     db.BulkInsert(entities);</span><br><span class="line">     </span><br><span class="line">     db.SaveChanges();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##執行結果
+<strong>非常快速</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/05/04/ef6-entity-framework-6-code-first-migrations-with-multiple-data-contexts-change/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1240,132 +1340,6 @@ ng-repeat有 <strong>ng-repeat-start</strong> and <strong>ng-repeat-end</strong>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/02/18/c-coding-conventions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/02/18/c-coding-conventions/" class="post-title-link" itemprop="url">[C#]  編碼慣例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-02-19 05:35:00" itemprop="dateCreated datePublished" datetime="2014-02-19T05:35:00+08:00">2014-02-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/02/18/c-coding-conventions/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/18/c-coding-conventions/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>節錄於MSDN</p>
-<ul>
-<li>使用預設的程式碼編輯器設定 (智慧型縮排、四個字元縮排、將定位點儲存為空格)。</li>
-<li>每行只撰寫一個陳述式。</li>
-<li>每行只撰寫一個宣告。</li>
-<li>如果連續行沒有自動縮排，則會將它們縮排一個定位停駐點 (四個空格)。</li>
-<li>在方法定義與屬性定義之間加入至少一個空白行。</li>
-<li>使用括號在運算式中撰寫子句，如下列程式碼所示。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if ((val1 &gt; val2) &amp;&amp; (val1 &gt; val3))</span><br><span class="line">&#123;</span><br><span class="line">    // Take appropriate action.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>#註解慣例</p>
-<ul>
-<li>將註解放到另一行，不放在程式碼行的結尾。</li>
-<li>以大寫字母做為註解文字開頭。</li>
-<li>以句號結束註解文字。</li>
-<li>在註解分隔符號 (//) 與註解文字之間插入一個空格，如下列範例所示。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// The following declaration creates a query. It does not run</span><br><span class="line">// the query.</span><br></pre></td></tr></table></figure>
-<ul>
-<li>不在註解周圍建立格式化的星號區塊。</li>
-</ul>
-<p>#語言方針</p>
-<ul>
-<li>當指派右邊的變數型別很明顯，或是不需要精確的型別時，使用隱含型別的區域變數。</li>
-<li>指派右邊的型別不明顯時，不要使用 var。</li>
-<li>不要倚賴變數名稱來指定變數的型別。 它可能是不正確的。</li>
-<li>避免使用 var 取代 dynamic。</li>
-<li>使用隱含型別判斷 for 和 foreach 迴圈中迴圈變數的型別。</li>
-<li>進行比較時，若要略過不必要的比較以避免例外狀況並提升效能，請使用 &amp;&amp; 取代 &amp;，以及使用 || 取代 |。</li>
-<li>使用簡潔的物件執行個體化形式搭配隱含型別，如以下宣告中所示。</li>
-<li>使用物件初始設定式簡化物件建立。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var instance1 = new ExampleClass();</span><br><span class="line"></span><br><span class="line">// Object initializer.</span><br><span class="line">var instance3 = new ExampleClass &#123; Name = &quot;Desktop&quot;, ID = 37414, </span><br><span class="line">    Location = &quot;Redmond&quot;, Age = 2.3 &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>#＃ LINQ查詢</p>
-<ul>
-<li>使用有意義的名稱做為查詢變數的名稱。 下列範例會使用 seattleCustomers 代表位於西雅圖的客戶。</li>
-<li>使用多個 from 子句，而不要使用 join 子句來存取內部集合。 例如，Student 物件集合中，每一個物件都可能包含考試分數集合。 執行下列查詢時，會傳回每一個高於 90 分的分數，以及得到該分數的學生名字。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1437,7 +1411,7 @@ ng-repeat有 <strong>ng-repeat-start</strong> and <strong>ng-repeat-end</strong>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">335</span>
+          <span class="site-state-item-count">336</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
