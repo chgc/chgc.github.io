@@ -11,7 +11,7 @@ tags: playwright
 
 Playwright 是一套 E2E 的測試工具，可以測試多種瀏覽器環境(包含手機)，是一個功能強大且完整的工具，引用官網的介紹
 
-![image-20221022105911680](/image-20221022105911680.png)
+![image-20221022105911680](image-20221022105911680.png)
 
 <!-- more -->
 
@@ -86,7 +86,7 @@ test('homepage has Playwright in title and get started link linking to the intro
 
 如果有使用 VSCode，也可以安裝 playwright 的 extension，裝了之後可以讓測試 playwright 更輕鬆
 
-![image-20221022222048276](/image-20221022222048276.png)
+![image-20221022222048276](image-20221022222048276.png)
 
 看起來就是簡單好用，更多件介紹[由此去](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright)
 
