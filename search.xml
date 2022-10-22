@@ -19830,6 +19830,59 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>Playwright 探索日記(1) - 初次見面</title>
+    <url>/2022/10/22/playwright-note1/</url>
+    <content><![CDATA[<p>Playwright 是一套 E2E 的測試工具，可以測試多種瀏覽器環境(包含手機)，是一個功能強大且完整的工具，引用官網的介紹</p>
+<p><img src="/image-20221022105911680.png" alt="image-20221022105911680"></p>
+<span id="more"></span>
+<h2 id="專案初始"><a class="header-anchor" href="#專案初始"> </a>專案初始</h2>
+<p>建立一個 playwright 的專案動作很單純，可以透過 <code>npm init</code> 的方式完成，步驟如下</p>
+<ol>
+<li>建立一個資料夾來放 playwright 專案</li>
+<li>開啟命令視窗切換到該資料夾</li>
+<li>執行 <code>npm init playwright@latest</code></li>
+<li>過程中會遇到幾個選擇
+<ol>
+<li>語言: JavaScript or TypeScript</li>
+<li>測試資料夾的名稱</li>
+<li>是否要加入 GitHub Actions 的指令</li>
+</ol>
+</li>
+<li>等待安裝，即可完成</li>
+</ol>
+<p>等 <code>npm install</code> 結束後即可用 <code>VSCode</code> 開啟該資料夾專案，檔案結構很簡單</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">playwright.config.ts</span><br><span class="line">package.json</span><br><span class="line">package-lock.json</span><br><span class="line">tests/</span><br><span class="line">  example.spec.ts</span><br><span class="line">tests-examples/</span><br><span class="line">  demo-todo-app.spec.ts</span><br></pre></td></tr></table></figure>
+<p><code>playwright.config.ts</code> 和 <code>tests/</code> 下的東西晚點來看，先來跑一下測試與測試報告</p>
+<p>執行測試的指令: <code>npx playwright test</code></p>
+<p>測試報告指令: <code>npx playwright show-report</code></p>
+<h2 id="Playwright-設定檔"><a class="header-anchor" href="#Playwright-設定檔"> </a>Playwright 設定檔</h2>
+<p>在 <code>playwright.config.ts</code> 內充滿了滿滿的註解，想要看不懂設定真的有一定的難度，除了測試檔案資料夾或是 timeout 設定都算基本的，測試環境的設定也是在這個設定檔內，相信這個各位開啟檔案後應該知道怎麼處理了</p>
+<h2 id="測試檔的語法"><a class="header-anchor" href="#測試檔的語法"> </a>測試檔的語法</h2>
+<p>先從預設新增的測試檔案說明起，因為 playwright 提供的 api 功能強大，需要分別研究，現階段先看個感覺</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; test, expect &#125; <span class="keyword">from</span> <span class="string">&#x27;@playwright/test&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;homepage has Playwright in title and get started link linking to the intro page&#x27;</span>, <span class="keyword">async</span> (&#123; page &#125;) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;https://playwright.dev/&#x27;</span>);</span><br><span class="line">  <span class="comment">// Expect a title &quot;to contain&quot; a substring.</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">expect</span>(page).<span class="title function_">toHaveTitle</span>(<span class="regexp">/Playwright/</span>);</span><br><span class="line">  <span class="comment">// create a locator</span></span><br><span class="line">  <span class="keyword">const</span> getStarted = page.<span class="title function_">getByText</span>(<span class="string">&#x27;Get Started&#x27;</span>);</span><br><span class="line">  <span class="comment">// Expect an attribute &quot;to be strictly equal&quot; to the value.</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">expect</span>(getStarted).<span class="title function_">toHaveAttribute</span>(<span class="string">&#x27;href&#x27;</span>, <span class="string">&#x27;/docs/intro&#x27;</span>);</span><br><span class="line">  <span class="comment">// Click the get started link.</span></span><br><span class="line">  <span class="keyword">await</span> getStarted.<span class="title function_">click</span>();</span><br><span class="line">  <span class="comment">// Expects the URL to contain intro.</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">expect</span>(page).<span class="title function_">toHaveURL</span>(<span class="regexp">/.*intro/</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>基本語法結構跟寫 JS Unit test 很像，在 <code>test</code> 內可已有測試描述即要執行的測試程式</li>
+<li><code>page</code> 物件的操作等同操作瀏覽器的一個網頁</li>
+<li>使用 jasmine line 的 expect assertion 的語法來做測試，像是 <code>expect(page).toHaveTitle(/Playwright/);</code></li>
+<li>page 的操作會持續等待結果回來，或是超過 timeout 時間就會噴錯</li>
+<li>也可以執行按鈕的動作或是點選連結的行為</li>
+<li>整個測試流程可讀性還蠻高的</li>
+</ul>
+<h2 id="VSCode-Extension"><a class="header-anchor" href="#VSCode-Extension"> </a>VSCode Extension</h2>
+<p>如果有使用 VSCode，也可以安裝 playwright 的 extension，裝了之後可以讓測試 playwright 更輕鬆</p>
+<p><img src="/image-20221022222048276.png" alt="image-20221022222048276"></p>
+<p>看起來就是簡單好用，更多件介紹<a href="https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright">由此去</a></p>
+<h2 id="心得"><a class="header-anchor" href="#心得"> </a>心得</h2>
+<p>快速掃過官方文件，其實他可以做的不只有 E2E，也還可以做 API Testing，而且不像 <a href="http://cypress.io">cypress.io</a> 一開始就那麼肥大，看起來是一個值得深入研究的工具</p>
+]]></content>
+      <categories>
+        <category>playwright</category>
+      </categories>
+      <tags>
+        <tag>playwright</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

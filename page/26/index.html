@@ -200,6 +200,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/04/18/angular2-play-with-redux-part-3-middleware/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/04/18/angular2-play-with-redux-part-3-middleware/" class="post-title-link" itemprop="url">[Angular] play with Redux part 3 - middleware</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2016-04-19 03:17:00" itemprop="dateCreated datePublished" datetime="2016-04-19T03:17:00+08:00">2016-04-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/04/18/angular2-play-with-redux-part-3-middleware/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/18/angular2-play-with-redux-part-3-middleware/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Redux2的middleware是介於action和reducer之間。例如: ReduxThunk.
+設定方式是在建立store時，將middleware指定給store即可</p>
+<p>寫自訂的middleware基本架構如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> isPromise <span class="keyword">from</span> <span class="string">&#x27;../utils/is-promise&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">promiseMiddleware</span>(<span class="params">&#123; dispatch &#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">next</span> =&gt;</span> <span class="function"><span class="params">action</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_">isPromise</span>(action.<span class="property">payload</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">next</span>(action);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> &#123; types, payload, meta &#125; = action;</span><br><span class="line">        <span class="keyword">const</span> &#123; promise, data &#125; = payload;</span><br><span class="line">        <span class="keyword">const</span> [<span class="variable constant_">PENDING</span>, <span class="variable constant_">FULFILLED</span>, <span class="variable constant_">REJECTED</span>] = types;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Dispatch the pending action</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> pendingAction = &#123; <span class="attr">type</span>: <span class="variable constant_">PENDING</span>, <span class="attr">payload</span>: <span class="literal">null</span>, <span class="attr">meta</span>: <span class="literal">null</span> &#125;;</span><br><span class="line">        <span class="keyword">if</span> (_.<span class="title function_">isEmpty</span>(data)) &#123;</span><br><span class="line">            pendingAction.<span class="property">payload</span> = data;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (_.<span class="title function_">isEmpty</span>(meta)) &#123;</span><br><span class="line">            pendingAction.<span class="property">meta</span> = meta;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">dispatch</span>(pendingAction);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * If successful, dispatch the fulfilled action, otherwise dispatch</span></span><br><span class="line"><span class="comment">         * rejected action.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">return</span> promise.<span class="title function_">then</span>(</span><br><span class="line">            <span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="title function_">dispatch</span>(&#123;</span><br><span class="line">                    <span class="attr">type</span>: <span class="variable constant_">FULFILLED</span>,</span><br><span class="line">                    <span class="attr">payload</span>: result,</span><br><span class="line">                    meta,</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="title function_">dispatch</span>(&#123;</span><br><span class="line">                    <span class="attr">type</span>: <span class="variable constant_">REJECTED</span>,</span><br><span class="line">                    <span class="attr">payload</span>: error,</span><br><span class="line">                    meta,</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>store的設定方式如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">configureStore</span>(<span class="params">initialState</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> store = <span class="title function_">compose</span>(</span><br><span class="line">        <span class="title function_">_getMiddleware</span>()</span><br><span class="line">    )(createStore)(rootReducer, initialState);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> store;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">_getMiddleware</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 這裡加入middleware</span></span><br><span class="line">    <span class="keyword">let</span> middleware = [</span><br><span class="line">        promiseMiddleware,</span><br><span class="line">        <span class="title class_">ReduxThunk</span></span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (__DEV__) &#123;</span><br><span class="line">        middleware = [...middleware];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">applyMiddleware</span>(...middleware);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>參考文件:
+- <a target="_blank" rel="noopener" href="http://redux.js.org/docs/advanced/Middleware.html">middleware</a>
+- <a target="_blank" rel="noopener" href="https://github.com/gaearon/redux-thunk">redux-thunk</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/04/17/angular2-redux-with-service/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1115,99 +1212,6 @@ REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default�
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/01/11/ef-entity-framework-7-migration-with-exist-database/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/01/11/ef-entity-framework-7-migration-with-exist-database/" class="post-title-link" itemprop="url">[EF] Entity Framework Core 1.0 - Migration with Exist Database</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2016-01-12 02:12:00" itemprop="dateCreated datePublished" datetime="2016-01-12T02:12:00+08:00">2016-01-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Entity-Framework/" itemprop="url" rel="index"><span itemprop="name">Entity Framework</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2016/01/11/ef-entity-framework-7-migration-with-exist-database/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/11/ef-entity-framework-7-migration-with-exist-database/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>After Scaffold from existing datbase, and then add migration at first time.</p>
-<p><img src="https://farm2.staticflickr.com/1598/24326751835_e0c5dcabcc_o.png" alt=""></p>
-<p>EF will create something like above. But in first migration will have everything that already existed in database. therefore, delete that file and add migration again. Now this time. you will get an empty migration file. WHy? because ContextModelSnapShot. It seems EF will compare all model files with snapshot file. and find the differences to create migration content file.</p>
-<p>And Now it switch to Code first mode. ^^</p>
-<p><a target="_blank" rel="noopener" href="https://ef.readthedocs.org/en/latest/getting-started/index.html">EF 7 Doc</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1279,20 +1283,20 @@ REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">337</span>
+          <span class="site-state-item-count">338</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">73</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
