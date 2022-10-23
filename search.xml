@@ -19884,6 +19884,143 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Keycloak] 環境準備 &amp; 基本設定</title>
+    <url>/2022/10/23/keycloak-note-1/</url>
+    <content><![CDATA[<p><code>Keycloak is an open source identity and access management solution</code>. 他能提供 SSO 系統服務，一個簡單的驗證機制可以快速被建立出來，更多資訊可以到<a href="https://www.keycloak.org/">官網</a>上閱讀，那為什麼要寫這篇筆記，主要是想要瞭解開發時，如何與 Keycloak 串接，所以要在本機上面將該環境給準備出來，以供開發使用。</p>
+<span id="more"></span>
+<h2 id="環境架設"><a class="header-anchor" href="#環境架設"> </a>環境架設</h2>
+<p>好家在的是在本機電腦上面啟動一套 Keycloak 的動作很簡單，拜 container 技術的進步，只要一行指令就可以完成安裝</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:19.0.3 start-dev</span><br></pre></td></tr></table></figure>
+<ul>
+<li>登入帳號密碼預設為 <code>admin</code> / <code>admin</code></li>
+<li>登入網址: <code>http://localhost:8080</code></li>
+</ul>
+<h2 id="Keycloak-後台基本操作"><a class="header-anchor" href="#Keycloak-後台基本操作"> </a>Keycloak 後台基本操作</h2>
+<p>開啟 <code>http://localhost:8080</code> 會看到這個畫面</p>
+<p><img src="image-20221023102214910.png" alt="image-20221023102214910"></p>
+<p>進入 <code>Administration Console </code> 會先看到登入畫面，帳號密碼如上面說到的 <code>admin</code> / <code>admin</code>，登入帳後密碼後會看到一堆設定選單，我們的主要目的是要測試開發時能串接 Keycloak 的登入功能，所以會做以下幾件事情</p>
+<h3 id="建立-realm"><a class="header-anchor" href="#建立-realm"> </a>建立 realm</h3>
+<p>於左上角的下拉選單中，可以看到 <code>Crate Realm</code>，從這邊進行建立 realm 的動作</p>
+<p><img src="image-20221023103522222.png" alt="image-20221023103522222"></p>
+<p>什麼是 <code>realm</code> ? <code>realm</code> 是一個 workspace 讓你可以管理 users、applications、roles and groups.</p>
+<p><img src="image-20221023103719261.png" alt="image-20221023103719261"></p>
+<p>輸入一個名字後按下 <code>Create</code> 即可完成建立，建立完成後在左上角的下拉選單中就可以看到剛剛所建立的 <code>realm</code></p>
+<h3 id="建立-User"><a class="header-anchor" href="#建立-User"> </a>建立 User</h3>
+<p>切換到剛剛所新增的 <code>realm</code> ，然後點選 <code>Users</code> 來準備建立第一個 User 帳號</p>
+<p><img src="image-20221023103904970.png" alt="image-20221023103904970"></p>
+<p>點 <code>Create new user</code> 後，輸入一些基本資訊，按下 <code>Create</code> 完成新增第一個使用者</p>
+<p><img src="image-20221023104129585.png" alt="image-20221023104129585"></p>
+<p>新增完成後，需要來設定一下登入密碼，在畫面上設定密碼的地方在</p>
+<p><img src="image-20221023104247821.png" alt="image-20221023104247821"></p>
+<p><img src="image-20221023104307523.png" alt="image-20221023104307523"></p>
+<p><img src="image-20221023104339043.png" alt="image-20221023104339043"></p>
+<ul>
+<li><code>Temporary</code> ：使用者於第一次登入時是否要重新設定密碼，預設是 <code>On</code> 表示使用者在第一次登入後是需要變更密碼的</li>
+</ul>
+<p>驗證剛剛設定的 User 是否能正常使用，可以透過開啟 <a href="http://localhost:8080/realms/myrealm/account">Keycloak Account Console</a> 的畫面來進行驗證，如果能正確的登入就代表設定正確</p>
+<h2 id="開發-串接"><a class="header-anchor" href="#開發-串接"> </a>開發 &amp; 串接</h2>
+<p>上述完成後就可以來試著串看看了，當然首發是 Angular</p>
+<h3 id="設定-Client-on-Keycloak"><a class="header-anchor" href="#設定-Client-on-Keycloak"> </a>設定 Client (on Keycloak)</h3>
+<p>我覺得這塊是最困惑的地方，一個地方沒設定好，前端就沒法正常使用了</p>
+<ol>
+<li>
+<p>建立 clients</p>
+<p><img src="image-20221023115522307.png" alt="image-20221023115522307"></p>
+</li>
+<li>
+<p>設定 Client ID，之後在 Angular 設定時需要</p>
+<p><img src="image-20221023115602969.png" alt="image-20221023115602969"></p>
+</li>
+<li>
+<p><code>Capability Config</code> 的頁面先保持預設值</p>
+<p><img src="image-20221023115647040.png" alt="image-20221023115647040"></p>
+</li>
+<li>
+<p><code>Save</code> 完成新增 Client</p>
+</li>
+<li>
+<p>這時候會跳到 Client 的詳細頁面，這個頁面需要多設定一些網址資訊</p>
+<ol>
+<li><strong>Valid redirect URIs</strong> 新增 <code>http://localhost:4200/*</code></li>
+<li><strong>Valid post logout redirect URIs</strong> 新增 <code>http://localhost:4200/*</code></li>
+<li><strong>Web origins</strong> 新增 <code>http://localhost:4200</code></li>
+</ol>
+<p>設定完成後按下 <code>Save</code> 儲存異動</p>
+</li>
+</ol>
+<h3 id="Angular-安裝-Keycloack-library"><a class="header-anchor" href="#Angular-安裝-Keycloack-library"> </a>Angular 安裝 Keycloack library</h3>
+<ol>
+<li>
+<p>假設已經有一個 Angular 專案</p>
+</li>
+<li>
+<p>安裝 library</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install keycloak-angular keycloak-js</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>設定 initial config (<code>app.mdoule.ts</code>)</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">APP_INITIALIZER</span>, <span class="title class_">NgModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">BrowserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/platform-browser&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">RouterModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">KeycloakAngularModule</span>, <span class="title class_">KeycloakService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;keycloak-angular&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppComponent</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">initializeKeycloak</span>(<span class="params">keycloak: KeycloakService</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span></span><br><span class="line">    keycloak.<span class="title function_">init</span>(&#123;</span><br><span class="line">      <span class="attr">config</span>: &#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;http://localhost:8080&#x27;</span>,</span><br><span class="line">        <span class="attr">realm</span>: <span class="string">&#x27;myrealm&#x27;</span>,</span><br><span class="line">        <span class="attr">clientId</span>: <span class="string">&#x27;ngclient&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">loadUserProfileAtStartUp</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">initOptions</span>: &#123;</span><br><span class="line">        <span class="attr">onLoad</span>: <span class="string">&#x27;check-sso&#x27;</span>,</span><br><span class="line">        <span class="attr">silentCheckSsoRedirectUri</span>:</span><br><span class="line">          <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">origin</span> + <span class="string">&#x27;/assets/silent-check-sso.html&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">declarations</span>: [<span class="title class_">AppComponent</span>],</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">BrowserModule</span>, <span class="title class_">KeycloakAngularModule</span>, <span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>([])],</span><br><span class="line">  <span class="attr">providers</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">provide</span>: <span class="variable constant_">APP_INITIALIZER</span>,</span><br><span class="line">      <span class="attr">useFactory</span>: initializeKeycloak,</span><br><span class="line">      <span class="attr">multi</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">deps</span>: [<span class="title class_">KeycloakService</span>],</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">bootstrap</span>: [<span class="title class_">AppComponent</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>line 12: Keycloak server 位置</p>
+</li>
+<li>
+<p>line 13: 要存取哪一個 <code>realm</code></p>
+</li>
+<li>
+<p>line 14: 使用的 ClientID</p>
+</li>
+<li>
+<p>line 20: <code>slient-check-sso.html</code> 的內容是</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">      parent.postMessage(location.href, location.origin);</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>line 16 ~ 21: 其他關於驗證的設定項目</p>
+</li>
+</ul>
+<p>當上述設定完成後，基本上整個 angular application 已經跟 keycloak 做好連接了</p>
+<p>以下有一個簡單的範例，用來展示 login 前後的操作</p>
+<ul>
+<li>
+<p><code>app.component.html</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Keycloak Angular Example<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> *<span class="attr">ngIf</span>=<span class="string">&quot;isLoggedIn&quot;</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> (<span class="attr">click</span>)=<span class="string">&quot;logout()&quot;</span>&gt;</span>Log out<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> *<span class="attr">ngIf</span>=<span class="string">&quot;!isLoggedIn&quot;</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> (<span class="attr">click</span>)=<span class="string">&quot;login()&quot;</span>&gt;</span>Log in<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ng-container</span> *<span class="attr">ngIf</span>=<span class="string">&quot;userProfile&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h2</span>&gt;</span>User information<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span> *<span class="attr">ngIf</span>=<span class="string">&quot;userProfile.username&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">th</span> <span class="attr">scope</span>=<span class="string">&quot;row&quot;</span>&gt;</span>Username<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; userProfile.username &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span> *<span class="attr">ngIf</span>=<span class="string">&quot;userProfile.firstName&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">th</span> <span class="attr">scope</span>=<span class="string">&quot;row&quot;</span>&gt;</span>First name<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; userProfile.firstName &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span> *<span class="attr">ngIf</span>=<span class="string">&quot;userProfile.lastName&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">th</span> <span class="attr">scope</span>=<span class="string">&quot;row&quot;</span>&gt;</span>Last name<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; userProfile.lastName &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span> *<span class="attr">ngIf</span>=<span class="string">&quot;userProfile.email&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">th</span> <span class="attr">scope</span>=<span class="string">&quot;row&quot;</span>&gt;</span>E-mail<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; userProfile.email &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">th</span> <span class="attr">scope</span>=<span class="string">&quot;row&quot;</span>&gt;</span>E-mail verified<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; userProfile.emailVerified ? &#x27;Yes&#x27; : &#x27;No&#x27; &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ng-container</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>app.component.ts</code></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ActivatedRoute</span>, <span class="title class_">Router</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">KeycloakService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;keycloak-angular&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">KeycloakProfile</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;keycloak-js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  <span class="attr">templateUrl</span>: <span class="string">&#x27;./app.component.html&#x27;</span>,</span><br><span class="line">  <span class="attr">styleUrls</span>: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> isLoggedIn = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="attr">userProfile</span>: <span class="title class_">KeycloakProfile</span> | <span class="literal">null</span> = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="keyword">readonly</span> keycloak: KeycloakService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">async</span> <span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">isLoggedIn</span> = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">keycloak</span>.<span class="title function_">isLoggedIn</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">isLoggedIn</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">userProfile</span> = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">keycloak</span>.<span class="title function_">loadUserProfile</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">login</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">keycloak</span>.<span class="title function_">login</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">logout</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">keycloak</span>.<span class="title function_">logout</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>呈現畫面</p>
+<p><img src="image-20221023132329423.png" alt="image-20221023132329423"></p>
+</li>
+</ol>
+<p>而 login 後的 User 資訊到底可以取到什麼程度，也是可以從後台做設定的</p>
+<p><img src="/image-20221023132432605.png" alt="image-20221023132432605"></p>
+<h3 id="AuthGuide-HttpInterceptor"><a class="header-anchor" href="#AuthGuide-HttpInterceptor"> </a>AuthGuide &amp; HttpInterceptor</h3>
+<p>所安裝的套件也好心的將這兩區塊的功能，範例程式碼都提供出來了，這裡就不多寫，直接附上連結</p>
+<ul>
+<li><a href="https://github.com/mauriciovigolo/keycloak-angular#authguard">AuthGuard</a></li>
+<li><a href="https://github.com/mauriciovigolo/keycloak-angular#httpclient-interceptor">HttpClient Interceptor</a></li>
+</ul>
+<h2 id="心得"><a class="header-anchor" href="#心得"> </a>心得</h2>
+<p>Keycloak 的設定很多，很多細節需要仔細的研究，但總的來說，功能很強也保有一定的彈性，例如 User Info Storage 的部分可以串接其他的資訊，或是支援其他的 Identity providers 等，開發上的使用也支援很多常見語言，例如 Java、.NET、JavaScript 、Python 等</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://www.keycloak.org/">Keycloak</a></li>
+<li><a href="https://github.com/mauriciovigolo/keycloak-angular">keycloak-angular</a></li>
+<li><a href="https://www.keycloak.org/docs/latest/securing_apps/#_javascript_adapter">Keycloak JavaScript dapter</a></li>
+</ul>
+<p><a href="https://www.keycloak.org/">
+</a></p>
+]]></content>
+      <categories>
+        <category>Keycloak</category>
+      </categories>
+      <tags>
+        <tag>Keycloak</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

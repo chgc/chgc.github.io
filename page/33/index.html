@@ -200,6 +200,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/26/aspnet-mvc-play-with-grunt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/11/26/aspnet-mvc-play-with-grunt/" class="post-title-link" itemprop="url">[ASP.NET MVC] Play with Grunt (typescript ...)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-11-27 02:13:00" itemprop="dateCreated datePublished" datetime="2013-11-27T02:13:00+08:00">2013-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/11/26/aspnet-mvc-play-with-grunt/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/26/aspnet-mvc-play-with-grunt/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>#Grunt
+Need: Node.js installed</p>
+<p>Install Steps</p>
+<ol>
+<li>Installing the CLI
+run command</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g grunt-cli</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>edit package.json and Gruntfile.js</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;grunt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.4.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;grunt-ts&quot;</span><span class="punctuation">:</span> <span class="string">&quot;latest&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="run-npm-install-in-command"><a class="header-anchor" href="#run-npm-install-in-command"> </a>run npm install in command</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span> (<span class="params">grunt</span>) &#123;</span><br><span class="line">  <span class="comment">// load the task</span></span><br><span class="line">  grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-ts&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Configure grunt here</span></span><br><span class="line"></span><br><span class="line">  grunt.<span class="title function_">initConfig</span>(&#123;</span><br><span class="line">    <span class="attr">ts</span>: &#123;</span><br><span class="line">      <span class="attr">dev</span>: &#123;</span><br><span class="line">        <span class="comment">// a particular target</span></span><br><span class="line">        <span class="attr">src</span>: [<span class="string">&#x27;app/**/*.ts&#x27;</span>], <span class="comment">// The source typescript files, http://gruntjs.com/configuring-tasks#files</span></span><br><span class="line">        <span class="attr">html</span>: [<span class="string">&#x27;app/**/*.html&#x27;</span>], <span class="comment">// The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support</span></span><br><span class="line">        <span class="attr">reference</span>: <span class="string">&#x27;./reference.ts&#x27;</span>, <span class="comment">// If specified, generate this file that you can use for your reference management</span></span><br><span class="line">        <span class="attr">out</span>: <span class="string">&#x27;app/app.js&#x27;</span>, <span class="comment">// If specified, generate an out.js file which is the merged js file</span></span><br><span class="line">        <span class="attr">watch</span>: <span class="string">&#x27;app&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line">  grunt.<span class="title function_">registerTask</span>(<span class="string">&#x27;default&#x27;</span>, [<span class="string">&#x27;ts:dev&#x27;</span>]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="run-grunt-in-command"><a class="header-anchor" href="#run-grunt-in-command"> </a>run grunt in command</h3>
+<p>這樣子 grunt 就會監控 在 app 資料夾下的 ts 檔案異動，並同時做 complie 的動作，如果有錯誤，會產生 complie error 的訊息。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/26/aspnet-mvc-add-typescript-complier/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1232,100 +1336,6 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/26/html5-blob/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/10/26/html5-blob/" class="post-title-link" itemprop="url">[HTML5] Blob</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-10-26 12:56:00" itemprop="dateCreated datePublished" datetime="2013-10-26T12:56:00+08:00">2013-10-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/10/26/html5-blob/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/26/html5-blob/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>#BEFORE</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||</span><br><span class="line">                     window.MozBlobBuilder || window.MSBlobBuilder;</span><br><span class="line">window.URL = window.URL || window.webkitURL;</span><br><span class="line"></span><br><span class="line">var bb = new BlobBuilder();</span><br><span class="line">bb.append(&#x27;body &#123; color: red; &#125;&#x27;);</span><br><span class="line">var blob = bb.getBlob(&#x27;text/css&#x27;);</span><br><span class="line"></span><br><span class="line">var link = document.createElement(&#x27;link&#x27;);</span><br><span class="line">link.rel = &#x27;stylesheet&#x27;;</span><br><span class="line">link.href = window.URL.createObjectURL(blob);</span><br><span class="line"></span><br><span class="line">document.body.appendChild(link);</span><br></pre></td></tr></table></figure>
-<p>#NOW</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">window.URL = window.URL || window.webkitURL;</span><br><span class="line"></span><br><span class="line">var blob = new Blob([&#x27;body &#123; color: red; &#125;&#x27;], &#123;type: &#x27;text/css&#x27;&#125;);</span><br><span class="line"></span><br><span class="line">var link = document.createElement(&#x27;link&#x27;);</span><br><span class="line">link.rel = &#x27;stylesheet&#x27;;</span><br><span class="line">link.href = window.URL.createObjectURL(blob);</span><br><span class="line">document.body.appendChild(link);</span><br></pre></td></tr></table></figure>
-<p>#SO</p>
-<p>Just New Blob()…no more BlobBuilder()</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1397,20 +1407,20 @@ deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">338</span>
+          <span class="site-state-item-count">339</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-count">74</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
