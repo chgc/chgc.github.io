@@ -20021,6 +20021,45 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Keycloak] WebAPI with Keycloak</title>
+    <url>/2022/10/23/keycloak-note-2/</url>
+    <content><![CDATA[<p>上一篇介紹了基本環境設定與 Angular 前端如何套用 Keycloak，但一個完整的流程應該還會包含後端的 API 驗證，這篇會用 C# 的 WebAPI 來做一個簡單範例</p>
+<span id="more"></span>
+<h2 id="New-Keycloak-Client"><a class="header-anchor" href="#New-Keycloak-Client"> </a>New Keycloak Client</h2>
+<p>在 KeyCloak Admin Console 內多新增一個 Client 並把一些設定全部關掉，在最新版的介面裡面已經找不到設定 <code>access type</code> 的介面了，Google 一番後發現只要將所有的 Authentication flow 全部取消掉，就是以前的 Bearer-only 模式</p>
+<p>所謂的 Bearer-only 模式: the application only allows bearer token requests</p>
+<p><img src="image-20221023185121179.png" alt="image-20221023185121179"></p>
+<p>設定完成後可以到同一畫面的右上角取額 setting json 內容</p>
+<p><img src="image-20221023185454979.png" alt="image-20221023185454979"></p>
+<p>將內容複製起來，等等建立在 Core WebAPI 專案的地方用的到</p>
+<h2 id="c-專案"><a class="header-anchor" href="#c-專案"> </a>c# 專案</h2>
+<p>先新增一個 <a href="http://ASP.NET">ASP.NET</a> Core WebAPI 的專案，並安裝 <a href="https://www.nuget.org/packages/Keycloak.AuthServices.Authentication/1.2.1?_src=template">Keycloak.AuthServices.Authentication</a> 套件</p>
+<p>將上個步驟的 adapter config 內容新增到 <code>appsettings.json</code> 檔內，這邊是示範，Production 使用時請依正確做法設定</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;Logging&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;LogLevel&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;Default&quot;</span>: <span class="string">&quot;Information&quot;</span>,</span><br><span class="line">      <span class="string">&quot;Microsoft.AspNetCore&quot;</span>: <span class="string">&quot;Warning&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;AllowedHosts&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Keycloak&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;realm&quot;</span>: <span class="string">&quot;myrealm&quot;</span>,</span><br><span class="line">    <span class="string">&quot;auth-server-url&quot;</span>: <span class="string">&quot;http://localhost:8080/&quot;</span>,</span><br><span class="line">    <span class="string">&quot;ssl-required&quot;</span>: <span class="string">&quot;external&quot;</span>,</span><br><span class="line">    <span class="string">&quot;resource&quot;</span>: <span class="string">&quot;api-client&quot;</span>,</span><br><span class="line">    <span class="string">&quot;public-client&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;confidential-port&quot;</span>: <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回到 <code>Program.cs</code> 檔案內新增 Authentication 的設定</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">builder.Services.AddKeycloakAuthentication(configuration, o =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    o.RequireHttpsMetadata = <span class="literal">false</span>;    </span><br><span class="line">    o.Audience = <span class="string">&quot;account&quot;</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>記得在 <code>app.UseAuthorization()</code> 的上方加入 <code>app.UseAuthentication();</code></p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">app.UseAuthentication();</span><br><span class="line">app.UseAuthorization();</span><br></pre></td></tr></table></figure>
+<p>上述完成設定後，就可以到 API 的地方加上 <code>[Authorize]</code> 的標籤</p>
+<p><img src="image-20221023185907306.png" alt="image-20221023185907306"></p>
+<p>一旦加上去後，只要要呼叫這個 API 時，就會檢查 request header 內的 <strong>authorization</strong> 的 <code>Bearer</code> 值是否合法正確</p>
+<h3 id="如果遇到-CORS-問題"><a class="header-anchor" href="#如果遇到-CORS-問題"> </a>如果遇到 CORS 問題</h3>
+<p>如果從 angular application 呼叫 API 時，通常會撞上 CORS 的問題，這時候就得在 <code>Program.cs</code> 加上 <code>Cors</code> 的相關設定，減少大家 google 的時間，這邊就附上最不嚴謹的設定</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">builder.Services.AddCors(options =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    options.AddPolicy(<span class="string">&quot;policy&quot;</span>,</span><br><span class="line">                    policy =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        policy.AllowAnyOrigin()</span><br><span class="line">                            .AllowAnyHeader()</span><br><span class="line">                            .AllowAnyMethod();</span><br><span class="line">                    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">...</span><br><span class="line">app.UseCors(<span class="string">&quot;policy&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>Controller 的部分也需要加上 <code>[EnableCors]</code> 的標籤</p>
+<h3 id="實際呼叫的-Network-截圖"><a class="header-anchor" href="#實際呼叫的-Network-截圖"> </a>實際呼叫的 Network 截圖</h3>
+<p><img src="image-20221023190406972.png" alt="image-20221023190406972"></p>
+<p>在 Web 的部分會多判斷處理 Token 過期的問題，如果後臺有設定可自動 Refresh，那麼在呼叫 API 時就會去做 Token 更新的動作，之後才會進行 API 呼叫 (with authorization: Bearer xxxxxx)</p>
+<p><img src="image-20221023190645948.png" alt="image-20221023190645948"></p>
+]]></content>
+      <categories>
+        <category>Keycloak</category>
+      </categories>
+      <tags>
+        <tag>Keycloak</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
