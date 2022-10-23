@@ -19832,9 +19832,10 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
   <entry>
     <title>Playwright 探索日記(1) - 初次見面</title>
     <url>/2022/10/22/playwright-note1/</url>
-    <content><![CDATA[<p>Playwright 是一套 E2E 的測試工具，可以測試多種瀏覽器環境(包含手機)，是一個功能強大且完整的工具，引用官網的介紹</p>
-<p><img src="image-20221022105911680.png" alt="image-20221022105911680"></p>
+    <content><![CDATA[<p>Playwright 是一套 E2E 的測試工具，可以測試多種瀏覽器環境(包含手機)，是一個功能強大且完整的工具</p>
 <span id="more"></span>
+<p>引用官網的介紹</p>
+<p><img src="image-20221022105911680.png" alt="image-20221022105911680"></p>
 <h2 id="專案初始"><a class="header-anchor" href="#專案初始"> </a>專案初始</h2>
 <p>建立一個 playwright 的專案動作很單純，可以透過 <code>npm init</code> 的方式完成，步驟如下</p>
 <ol>
