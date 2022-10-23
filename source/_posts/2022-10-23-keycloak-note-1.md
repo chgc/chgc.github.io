@@ -257,7 +257,7 @@ docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 
 而 login 後的 User 資訊到底可以取到什麼程度，也是可以從後台做設定的
 
-![image-20221023132432605](/image-20221023132432605.png)
+![image-20221023132432605](image-20221023132432605.png)
 
 ### AuthGuide & HttpInterceptor
 
