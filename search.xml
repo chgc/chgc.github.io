@@ -20060,6 +20060,88 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[OIDC] 瞭解 OIDC 的表層</title>
+    <url>/2022/10/30/oidc-notes/</url>
+    <content><![CDATA[<p>Keycloak 提供了幾種 protocols，OpenID Connect (OIDC)、OAuth 2.0 and SAML。雖然 OIDC &amp; OAuth 2.0 已存在一段時間，但因為沒有使用實做上的情境，所以都沒有花時間去瞭解背後的運作原理，一樣利用週末的時間來做一下功課</p>
+<span id="more"></span>
+<p>根據閱讀多篇文件瞭解，OIDC 是基於 OAuth 2.0 發展出來的，看起來得先看 OAuth 2.0 是什麼</p>
+<h2 id="OAuth-2-0"><a class="header-anchor" href="#OAuth-2-0"> </a>OAuth 2.0</h2>
+<p>OAuth 2.0 基本上處理 Authorization 的部分，用來控制授權<strong>誰</strong>能存取<strong>資源</strong>，有四個基本元素</p>
+<ol>
+<li><strong>authorization server</strong>: 用來發 access token 的 server</li>
+<li><strong>resource owner</strong>: 有權限能存取資料的使用者</li>
+<li><strong>client</strong>: 將 access token 傳給系統服務的應用程式</li>
+<li><strong>resource server</strong>: 接受 access token 並驗證其合法性</li>
+</ol>
+<p>其他名詞</p>
+<ol>
+<li><strong>authorization grant</strong>: 授權範圍</li>
+<li><strong>access token</strong>: 由 <code>authorization server</code> 發出，會在發請求時附加在進去給 <code>resource server</code></li>
+<li><strong>redirect URI</strong>: 登入後要轉回的路徑</li>
+</ol>
+<h3 id="授權流程"><a class="header-anchor" href="#授權流程"> </a>授權流程</h3>
+<ol>
+<li>
+<p>Authorization Code</p>
+<p><img src="image-20221030091611632.png" alt="image-20221030091611632"></p>
+<p>這算是比較常見的模式，登入畫面會由 <code>authorization server</code> 提供，透過 <code>redirect URI</code> 的方式帶著 <code>authorization code</code> 回到 <code>client</code> 端供後面使用</p>
+</li>
+<li>
+<p>Implicit</p>
+<p><img src="image-20221030091931055.png" alt="image-20221030091931055"></p>
+<p>使用場景是 SPA 或是純前端系統，與 <code>Authorization Code</code> 模式的差異在於 <code>access token</code> 的取得方式，</p>
+</li>
+<li>
+<p>Resource Owner Password Credentials</p>
+<p><img src="image-20221030092328110.png" alt="image-20221030092328110"></p>
+<p>這比較像是過往的 server side 網頁服務</p>
+</li>
+<li>
+<p>Client Credentials</p>
+<p><img src="image-20221030092618674.png" alt="image-20221030092618674"></p>
+<p>適用場景: machine-to-machine (M2M) applications</p>
+</li>
+</ol>
+<p>(圖片出自: <a href="https://medium.com/%E9%BA%A5%E5%85%8B%E7%9A%84%E5%8D%8A%E8%B7%AF%E5%87%BA%E5%AE%B6%E7%AD%86%E8%A8%98/%E7%AD%86%E8%A8%98-%E8%AA%8D%E8%AD%98-oauth-2-0-%E4%B8%80%E6%AC%A1%E4%BA%86%E8%A7%A3%E5%90%84%E8%A7%92%E8%89%B2-%E5%90%84%E9%A1%9E%E5%9E%8B%E6%B5%81%E7%A8%8B%E7%9A%84%E5%B7%AE%E7%95%B0-c42da83a6015">[筆記] 認識 OAuth 2.0：一次了解各角色、各類型流程的差異</a>)</p>
+<h2 id="OIDC"><a class="header-anchor" href="#OIDC"> </a>OIDC</h2>
+<p>瞭解基本 OAuth 2.0 後，那 OIDC 又是什麼，一開始提到 <code>OIDC 是基於 OAuth 2.0 發展出來的</code></p>
+<p>先提一下 <code>OAuth 2.0</code> 只有做 <code>Authorization</code> 的部分，並沒有涵蓋<code>Authentication</code> 的部分，這兩者的差異是什麼呢?</p>
+<ul>
+<li>Authorization: 授權使用範圍</li>
+<li>Authentication: 使用者認證，使用者是否存在及使用者是誰，都算在認證的範圍內</li>
+</ul>
+<p><img src="image-20221030093943446.png" alt="image-20221030093943446"></p>
+<p>(圖片來源: <a href="https://openid.net/connect/">https://openid.net/connect/</a>)</p>
+<p>整個的流程大概會是這樣</p>
+<p><img src="image-20221030094329195.png" alt="image-20221030094329195"></p>
+<p>一些會出現在 OIDC 的名詞</p>
+<ul>
+<li><strong>End User</strong>: Human participant.</li>
+<li><strong>Replying Party (RP)</strong>: OAuth 2.0 Client application requiring End-User Authentication and Claims from an OpenID Provider.</li>
+<li><strong>OpenID Provider (OP)</strong>: OAuth 2.0 Authorization Server that is capable of Authenticating the End-User and providing Claims to a Relying Party about the Authentication event and the End-User.</li>
+<li><strong>ID Token</strong>: <a href="https://openid.net/specs/openid-connect-core-1_0.html#JWT">JSON Web Token (JWT)</a> [JWT] that contains Claims about the Authentication event. It MAY contain other Claims.</li>
+<li><strong>UserInfo Endpoint</strong>: Protected Resource that, when presented with an Access Token by the Client, returns authorized information about the End-User represented by the corresponding Authorization Grant. The UserInfo Endpoint URL MUST use the <code>https</code> scheme and MAY contain port, path, and query parameter components.</li>
+</ul>
+<h3 id="常見-flow"><a class="header-anchor" href="#常見-flow"> </a>常見 flow</h3>
+<ol>
+<li><strong>Authorization Code</strong></li>
+<li><strong>Implicit</strong>: with Id_token</li>
+<li><strong>Hybrid</strong>:  Authorization Code+ Implicit</li>
+</ol>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=996OiexHze0&amp;t=2s">OAuth 2.0 and OpenID Connect (in plain English)</a></li>
+<li><a href="https://kimlin20011.medium.com/%E6%B7%B1%E5%85%A5%E6%B7%BA%E5%87%BA-openid-connect-%E4%B8%80-8701bbf00958">深入淺出 OpenID Connect (一)</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Keycloak</category>
+      </categories>
+      <tags>
+        <tag>Keycloak</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

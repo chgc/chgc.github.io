@@ -200,6 +200,120 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/04/24/angular2-css-style/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/04/24/angular2-css-style/" class="post-title-link" itemprop="url">[Angular] css style </a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2016-04-25 01:40:00" itemprop="dateCreated datePublished" datetime="2016-04-25T01:40:00+08:00">2016-04-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/04/24/angular2-css-style/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/24/angular2-css-style/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Angular Component 處理styles有三種模式
+1. ViewEncapsulation.None: 適用於全部頁面(No Shadow DOM)
+2. ViewEncapsulation.Native: 僅套用於Shadow DOM自己本身
+3. ViewEncapsulation.Emulated: 預設行為。 會自動將每個component給予一個名稱，讓各compoent裡面的style會各自獨立</p>
+<p>先來看第1,2種，看看style會被放在哪一個位置</p>
+<ol>
+<li>ViewEncapsulation.None</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title class_">Component</span>(&#123;</span><br><span class="line">    <span class="attr">selector</span>: <span class="string">&#x27;ck-book&#x27;</span>,</span><br><span class="line">    <span class="attr">template</span>: <span class="built_in">require</span>(<span class="string">&#x27;./book.html&#x27;</span>),</span><br><span class="line">    <span class="attr">styles</span>: [<span class="string">`</span></span><br><span class="line"><span class="string">        h3 &#123;</span></span><br><span class="line"><span class="string">           color: red</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    `</span>],</span><br><span class="line">    <span class="attr">encapsulation</span>: <span class="title class_">ViewEncapsulation</span>.<span class="property">None</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CkBookPage</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://farm2.staticflickr.com/1645/26627939205_43b19d3144_o.png" alt=""></p>
+<p>2.ViewEncapsulation.Native</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title class_">Component</span>(&#123;</span><br><span class="line">    <span class="attr">selector</span>: <span class="string">&#x27;ck-book&#x27;</span>,</span><br><span class="line">    <span class="attr">template</span>: <span class="built_in">require</span>(<span class="string">&#x27;./book.html&#x27;</span>),</span><br><span class="line">    <span class="attr">styles</span>: [<span class="string">`</span></span><br><span class="line"><span class="string">        h3 &#123;</span></span><br><span class="line"><span class="string">           color: red</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    `</span>],</span><br><span class="line">    <span class="attr">encapsulation</span>: <span class="title class_">ViewEncapsulation</span>.<span class="property">Native</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CkBookPage</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://farm2.staticflickr.com/1453/26022315254_564ea8044a_o.png" alt=""></p>
+<p>注意到ViewEncapsulation.Native將ViewEncapsulation.None的和本身定義的Style都包含在Shadow DOM裡面，這表示該Componenet與外面已經分開了. 本身所定義的css樣式不會影響到別人了</p>
+<ol start="3">
+<li>ViewEncapsulation.Emulated為預設行為，會自動將每個Component給予一個名稱，然後在產生html時會將各Componet裡
+定義的style加上該名稱，讓css不會互相影響</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@<span class="title class_">Component</span>(&#123;</span><br><span class="line">    <span class="attr">selector</span>: <span class="string">&#x27;ck-book&#x27;</span>,</span><br><span class="line">    <span class="attr">template</span>: <span class="built_in">require</span>(<span class="string">&#x27;./book.html&#x27;</span>),</span><br><span class="line">    <span class="attr">styles</span>: [<span class="string">`</span></span><br><span class="line"><span class="string">        h3 &#123;</span></span><br><span class="line"><span class="string">           color: red</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    `</span>],</span><br><span class="line">    <span class="attr">encapsulation</span>: <span class="title class_">ViewEncapsulation</span>.<span class="property">Emulated</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"><span class="selector-tag">h3</span><span class="selector-attr">[_ngcontent-jfs-3]</span> &#123;</span></span><br><span class="line"><span class="language-css">         <span class="attribute">color</span>: red</span></span><br><span class="line"><span class="language-css">   &#125;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">_ngcontent-jfs-3</span> <span class="attr">class</span>=<span class="string">&quot;clearfix mx-auto col-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span> <span class="attr">_ngcontent-jfs-3</span>&gt;</span>Booking<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">		....</span><br></pre></td></tr></table></figure>
+<p><img src="https://farm2.staticflickr.com/1489/26534950052_6d97a87c71_o.png" alt=""></p>
+<h2 id="參考"><a class="header-anchor" href="#參考"> </a>參考</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://blog.thoughtram.io/angular/2015/06/29/shadow-dom-strategies-in-angular2.html">shadow-dom-strategies-in-angular2</a></li>
+<li><a target="_blank" rel="noopener" href="https://egghead.io/lessons/angular-2-controlling-how-styles-are-shared-with-view-encapsulation">Controlling how Styles are Shared with View Encapsulation</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/04/19/angular2-how-about-form/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1120,125 +1234,10 @@ server.urls的設定方式可以參考<a target="_blank" rel="noopener" href="ht
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/03/27/685100/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/03/27/685100/" class="post-title-link" itemprop="url">[Docker] Installing Docker on Windows 問題集</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2016-03-27 12:18:00" itemprop="dateCreated datePublished" datetime="2016-03-27T12:18:00+08:00">2016-03-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2016/03/27/685100/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/27/685100/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>###今天下載了docker Toolbox for windows ，根據<a target="_blank" rel="noopener" href="https://docs.docker.com/windows/step_one/">安裝指示</a>安裝後，在執行時出現了一個錯誤訊息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hyper-v is installed. virtualbox won&#x27;t boot a 64 bits vm in hyper-v is activated ....</span><br></pre></td></tr></table></figure>
-<p>排除方式為:修改 Program Files\Docker Toolbox\<a target="_blank" rel="noopener" href="http://start.sh">start.sh</a>
-在start.sh檔裡面，尋找</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$&#123;DOCKER_MACHINE&#125;&quot; create -d virtualbox &quot;$&#123;VM&#125;&quot; </span><br></pre></td></tr></table></figure>
-<p>更改成</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$&#123;DOCKER_MACHINE&#125;&quot; create --virtualbox-no-vtx-check -d virtualbox &quot;$&#123;VM&#125;&quot;</span><br></pre></td></tr></table></figure>
-<p>即可排除此錯誤訊息</p>
-<p>###當在command下docker command時，出現以下錯誤訊息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An error occurred trying to connect: Get http://127.0.0.1:2375/v1.22/containers/json: dial tcp 127.0.0.1:2375: connectex: No connection could be made because the target machine actively refused it.</span><br></pre></td></tr></table></figure>
-<p>排除方式為</p>
-<ol>
-<li><strong>docker-machine start default</strong> or create new one</li>
-<li><strong>docker-machine</strong> ls will show you your machine running</li>
-<li><strong>docker-machine env --shell cmd default</strong> and you’ll see something like</li>
-</ol>
-<blockquote>
-<p>SET DOCKER_TLS_VERIFY=1
-SET DOCKER_HOST=tcp://xxx.xxx.xxx.xxx:2376
-SET DOCKER_CERT_PATH=C:\Users\Arseny.docker\machine\machines\default
-SET DOCKER_MACHINE_NAME=default
-REM Run this command to configure your shell:
-REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default』) DO %i</p>
-</blockquote>
-<p>4.Run</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FOR /f &quot;tokens=*&quot; %i IN (&#x27;docker-machine env --shell cmd default&#x27;) DO %i</span><br></pre></td></tr></table></figure>
-<p>5.Enjoy. 就可以正常的下docker指令了</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1306,7 +1305,7 @@ REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">340</span>
+          <span class="site-state-item-count">341</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

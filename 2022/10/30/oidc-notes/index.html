@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Keycloak 提供了幾種 protocols，OpenID Connect (OIDC)、OAuth 2.0 and SAML。雖然 OIDC &amp; OAuth 2.0 已存在一段時間，但因為沒有使用實做上的情境，所以都沒有花時間去瞭解背後的運作原理，一樣利用週末的時間來做一下功課">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[OIDC] 瞭解 OIDC 的表層">
+<meta property="og:url" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Keycloak 提供了幾種 protocols，OpenID Connect (OIDC)、OAuth 2.0 and SAML。雖然 OIDC &amp; OAuth 2.0 已存在一段時間，但因為沒有使用實做上的情境，所以都沒有花時間去瞭解背後的運作原理，一樣利用週末的時間來做一下功課">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030091611632.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030091931055.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030092328110.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030092618674.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030093943446.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030094329195.png">
+<meta property="article:published_time" content="2022-10-30T00:21:43.000Z">
+<meta property="article:modified_time" content="2022-10-30T02:01:17.080Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Keycloak">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030091611632.png">
+
+<link rel="canonical" href="http://blog.kevinyang.net/2022/10/30/oidc-notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[OIDC] 瞭解 OIDC 的表層 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-7997572949867824',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2022/10/30/oidc-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [OIDC] 瞭解 OIDC 的表層
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-10-30 08:21:43" itemprop="dateCreated datePublished" datetime="2022-10-30T08:21:43+08:00">2022-10-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Keycloak/" itemprop="url" rel="index"><span itemprop="name">Keycloak</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2022/10/30/oidc-notes/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/30/oidc-notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Keycloak 提供了幾種 protocols，OpenID Connect (OIDC)、OAuth 2.0 and SAML。雖然 OIDC &amp; OAuth 2.0 已存在一段時間，但因為沒有使用實做上的情境，所以都沒有花時間去瞭解背後的運作原理，一樣利用週末的時間來做一下功課</p>
+<span id="more"></span>
+<p>根據閱讀多篇文件瞭解，OIDC 是基於 OAuth 2.0 發展出來的，看起來得先看 OAuth 2.0 是什麼</p>
+<h2 id="OAuth-2-0"><a class="header-anchor" href="#OAuth-2-0"> </a>OAuth 2.0</h2>
+<p>OAuth 2.0 基本上處理 Authorization 的部分，用來控制授權<strong>誰</strong>能存取<strong>資源</strong>，有四個基本元素</p>
+<ol>
+<li><strong>authorization server</strong>: 用來發 access token 的 server</li>
+<li><strong>resource owner</strong>: 有權限能存取資料的使用者</li>
+<li><strong>client</strong>: 將 access token 傳給系統服務的應用程式</li>
+<li><strong>resource server</strong>: 接受 access token 並驗證其合法性</li>
+</ol>
+<p>其他名詞</p>
+<ol>
+<li><strong>authorization grant</strong>: 授權範圍</li>
+<li><strong>access token</strong>: 由 <code>authorization server</code> 發出，會在發請求時附加在進去給 <code>resource server</code></li>
+<li><strong>redirect URI</strong>: 登入後要轉回的路徑</li>
+</ol>
+<h3 id="授權流程"><a class="header-anchor" href="#授權流程"> </a>授權流程</h3>
+<ol>
+<li>
+<p>Authorization Code</p>
+<p><img src="image-20221030091611632.png" alt="image-20221030091611632"></p>
+<p>這算是比較常見的模式，登入畫面會由 <code>authorization server</code> 提供，透過 <code>redirect URI</code> 的方式帶著 <code>authorization code</code> 回到 <code>client</code> 端供後面使用</p>
+</li>
+<li>
+<p>Implicit</p>
+<p><img src="image-20221030091931055.png" alt="image-20221030091931055"></p>
+<p>使用場景是 SPA 或是純前端系統，與 <code>Authorization Code</code> 模式的差異在於 <code>access token</code> 的取得方式，</p>
+</li>
+<li>
+<p>Resource Owner Password Credentials</p>
+<p><img src="image-20221030092328110.png" alt="image-20221030092328110"></p>
+<p>這比較像是過往的 server side 網頁服務</p>
+</li>
+<li>
+<p>Client Credentials</p>
+<p><img src="image-20221030092618674.png" alt="image-20221030092618674"></p>
+<p>適用場景: machine-to-machine (M2M) applications</p>
+</li>
+</ol>
+<p>(圖片出自: <a target="_blank" rel="noopener" href="https://medium.com/%E9%BA%A5%E5%85%8B%E7%9A%84%E5%8D%8A%E8%B7%AF%E5%87%BA%E5%AE%B6%E7%AD%86%E8%A8%98/%E7%AD%86%E8%A8%98-%E8%AA%8D%E8%AD%98-oauth-2-0-%E4%B8%80%E6%AC%A1%E4%BA%86%E8%A7%A3%E5%90%84%E8%A7%92%E8%89%B2-%E5%90%84%E9%A1%9E%E5%9E%8B%E6%B5%81%E7%A8%8B%E7%9A%84%E5%B7%AE%E7%95%B0-c42da83a6015">[筆記] 認識 OAuth 2.0：一次了解各角色、各類型流程的差異</a>)</p>
+<h2 id="OIDC"><a class="header-anchor" href="#OIDC"> </a>OIDC</h2>
+<p>瞭解基本 OAuth 2.0 後，那 OIDC 又是什麼，一開始提到 <code>OIDC 是基於 OAuth 2.0 發展出來的</code></p>
+<p>先提一下 <code>OAuth 2.0</code> 只有做 <code>Authorization</code> 的部分，並沒有涵蓋<code>Authentication</code> 的部分，這兩者的差異是什麼呢?</p>
+<ul>
+<li>Authorization: 授權使用範圍</li>
+<li>Authentication: 使用者認證，使用者是否存在及使用者是誰，都算在認證的範圍內</li>
+</ul>
+<p><img src="image-20221030093943446.png" alt="image-20221030093943446"></p>
+<p>(圖片來源: <a target="_blank" rel="noopener" href="https://openid.net/connect/">https://openid.net/connect/</a>)</p>
+<p>整個的流程大概會是這樣</p>
+<p><img src="image-20221030094329195.png" alt="image-20221030094329195"></p>
+<p>一些會出現在 OIDC 的名詞</p>
+<ul>
+<li><strong>End User</strong>: Human participant.</li>
+<li><strong>Replying Party (RP)</strong>: OAuth 2.0 Client application requiring End-User Authentication and Claims from an OpenID Provider.</li>
+<li><strong>OpenID Provider (OP)</strong>: OAuth 2.0 Authorization Server that is capable of Authenticating the End-User and providing Claims to a Relying Party about the Authentication event and the End-User.</li>
+<li><strong>ID Token</strong>: <a target="_blank" rel="noopener" href="https://openid.net/specs/openid-connect-core-1_0.html#JWT">JSON Web Token (JWT)</a> [JWT] that contains Claims about the Authentication event. It MAY contain other Claims.</li>
+<li><strong>UserInfo Endpoint</strong>: Protected Resource that, when presented with an Access Token by the Client, returns authorized information about the End-User represented by the corresponding Authorization Grant. The UserInfo Endpoint URL MUST use the <code>https</code> scheme and MAY contain port, path, and query parameter components.</li>
+</ul>
+<h3 id="常見-flow"><a class="header-anchor" href="#常見-flow"> </a>常見 flow</h3>
+<ol>
+<li><strong>Authorization Code</strong></li>
+<li><strong>Implicit</strong>: with Id_token</li>
+<li><strong>Hybrid</strong>:  Authorization Code+ Implicit</li>
+</ol>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=996OiexHze0&amp;t=2s">OAuth 2.0 and OpenID Connect (in plain English)</a></li>
+<li><a target="_blank" rel="noopener" href="https://kimlin20011.medium.com/%E6%B7%B1%E5%85%A5%E6%B7%BA%E5%87%BA-openid-connect-%E4%B8%80-8701bbf00958">深入淺出 OpenID Connect (一)</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Keycloak/" rel="tag"># Keycloak</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/23/keycloak-note-2/" rel="prev" title="[Keycloak] WebAPI with Keycloak">
+      <i class="fa fa-chevron-left"></i> [Keycloak] WebAPI with Keycloak
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OAuth-2-0"><span class="nav-number">1.</span> <span class="nav-text">OAuth 2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%88%E6%AC%8A%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">授權流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OIDC"><span class="nav-number">2.</span> <span class="nav-text">OIDC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B-flow"><span class="nav-number">2.1.</span> <span class="nav-text">常見 flow</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">341</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <!--google_adsense-->
+        
+          <div class="links-of-blogroll-title">
+            <i class="fa fa-google"></i> 廣告
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-7997572949867824"
+                data-ad-slot="3959999538"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        
+        <!--/google_adsense-->
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>    
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2022/10/30/oidc-notes/";
+    this.page.identifier = "2022/10/30/oidc-notes/";
+    this.page.title = "[OIDC] 瞭解 OIDC 的表層";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
