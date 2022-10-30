@@ -15,7 +15,7 @@ Keycloak 提供了幾種 protocols，OpenID Connect (OIDC)、OAuth 2.0 and SAML�
 
 根據閱讀多篇文件瞭解，OIDC 是基於 OAuth 2.0 發展出來的，看起來得先看 OAuth 2.0 是什麼
 
-
+![image-20221030104933158](image-20221030104933158.png)
 
 ## OAuth 2.0
 
