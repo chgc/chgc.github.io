@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030093943446.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030094329195.png">
 <meta property="article:published_time" content="2022-10-30T00:21:43.000Z">
-<meta property="article:modified_time" content="2022-10-30T02:01:17.080Z">
+<meta property="article:modified_time" content="2022-10-30T02:32:44.675Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Keycloak">
 <meta name="twitter:card" content="summary">
@@ -296,11 +296,17 @@
 <p>Authorization Code</p>
 <p><img src="image-20221030091611632.png" alt="image-20221030091611632"></p>
 <p>這算是比較常見的模式，登入畫面會由 <code>authorization server</code> 提供，透過 <code>redirect URI</code> 的方式帶著 <code>authorization code</code> 回到 <code>client</code> 端供後面使用</p>
+<blockquote>
+<p>這流程也是 Keycloak JavaScript adapter 預設行為</p>
+</blockquote>
 </li>
 <li>
 <p>Implicit</p>
 <p><img src="image-20221030091931055.png" alt="image-20221030091931055"></p>
 <p>使用場景是 SPA 或是純前端系統，與 <code>Authorization Code</code> 模式的差異在於 <code>access token</code> 的取得方式，</p>
+<blockquote>
+<p>這模式比較不安全，「透過 URI Fragment 來傳 Access Token ，所以可能會外洩」</p>
+</blockquote>
 </li>
 <li>
 <p>Resource Owner Password Credentials</p>
