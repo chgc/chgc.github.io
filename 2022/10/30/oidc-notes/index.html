@@ -28,6 +28,7 @@
 <meta property="og:site_name" content="CK&#39;s Notepad">
 <meta property="og:description" content="Keycloak 提供了幾種 protocols，OpenID Connect (OIDC)、OAuth 2.0 and SAML。雖然 OIDC &amp; OAuth 2.0 已存在一段時間，但因為沒有使用實做上的情境，所以都沒有花時間去瞭解背後的運作原理，一樣利用週末的時間來做一下功課">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030104933158.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030091611632.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030091931055.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030092328110.png">
@@ -35,11 +36,11 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030093943446.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030094329195.png">
 <meta property="article:published_time" content="2022-10-30T00:21:43.000Z">
-<meta property="article:modified_time" content="2022-10-30T02:32:44.675Z">
+<meta property="article:modified_time" content="2022-10-30T02:50:26.998Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Keycloak">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030091611632.png">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2022/10/30/oidc-notes/image-20221030104933158.png">
 
 <link rel="canonical" href="http://blog.kevinyang.net/2022/10/30/oidc-notes/">
 
@@ -276,6 +277,7 @@
         <p>Keycloak 提供了幾種 protocols，OpenID Connect (OIDC)、OAuth 2.0 and SAML。雖然 OIDC &amp; OAuth 2.0 已存在一段時間，但因為沒有使用實做上的情境，所以都沒有花時間去瞭解背後的運作原理，一樣利用週末的時間來做一下功課</p>
 <span id="more"></span>
 <p>根據閱讀多篇文件瞭解，OIDC 是基於 OAuth 2.0 發展出來的，看起來得先看 OAuth 2.0 是什麼</p>
+<p><img src="image-20221030104933158.png" alt="image-20221030104933158"></p>
 <h2 id="OAuth-2-0"><a class="header-anchor" href="#OAuth-2-0"> </a>OAuth 2.0</h2>
 <p>OAuth 2.0 基本上處理 Authorization 的部分，用來控制授權<strong>誰</strong>能存取<strong>資源</strong>，有四個基本元素</p>
 <ol>

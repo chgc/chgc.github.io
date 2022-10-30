@@ -20065,6 +20065,7 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
     <content><![CDATA[<p>Keycloak 提供了幾種 protocols，OpenID Connect (OIDC)、OAuth 2.0 and SAML。雖然 OIDC &amp; OAuth 2.0 已存在一段時間，但因為沒有使用實做上的情境，所以都沒有花時間去瞭解背後的運作原理，一樣利用週末的時間來做一下功課</p>
 <span id="more"></span>
 <p>根據閱讀多篇文件瞭解，OIDC 是基於 OAuth 2.0 發展出來的，看起來得先看 OAuth 2.0 是什麼</p>
+<p><img src="image-20221030104933158.png" alt="image-20221030104933158"></p>
 <h2 id="OAuth-2-0"><a class="header-anchor" href="#OAuth-2-0"> </a>OAuth 2.0</h2>
 <p>OAuth 2.0 基本上處理 Authorization 的部分，用來控制授權<strong>誰</strong>能存取<strong>資源</strong>，有四個基本元素</p>
 <ol>
