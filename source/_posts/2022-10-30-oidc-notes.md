@@ -40,6 +40,8 @@ OAuth 2.0 基本上處理 Authorization 的部分，用來控制授權**誰**能
 
    這算是比較常見的模式，登入畫面會由 `authorization server` 提供，透過 `redirect URI` 的方式帶著 `authorization code` 回到 `client` 端供後面使用
 
+   > 這流程也是 Keycloak JavaScript adapter 預設行為
+
    
 
 2. Implicit
@@ -48,7 +50,7 @@ OAuth 2.0 基本上處理 Authorization 的部分，用來控制授權**誰**能
 
    使用場景是 SPA 或是純前端系統，與 `Authorization Code` 模式的差異在於 `access token` 的取得方式，
 
-   
+   > 這模式比較不安全，"透過 URI Fragment 來傳 Access Token ，所以可能會外洩"
 
 3. Resource Owner Password Credentials
 
