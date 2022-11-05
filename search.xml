@@ -20149,6 +20149,90 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Dapr] What is Dapr?</title>
+    <url>/2022/11/05/study-dapr-1/</url>
+    <content><![CDATA[<p>Dapr 在 2019 第一次公開時，那時候版本還是 0.1 時，就有留意到，想不到幾年後，不僅進入 CNCF 還變成很多人推薦的框架，所以重新拾回研究一下 Dapr 的架構及如何使用在工作上</p>
+<span id="more"></span>
+<p>為什麼會回來看 Dapr，最主要的原因是目前的工作，系統都是以微服務的形式跑在自架的 K8s 上，一旦到達一個規模整個管理跟實做上要考慮的事情變的相對複雜，而 Dapr 可以降低這部分的工作並以一致的模式套用在不同的語言跟技術框架上</p>
+<h2 id="What’s-Dapr"><a class="header-anchor" href="#What’s-Dapr"> </a>What’s Dapr</h2>
+<p>官網上是這樣子介紹的</p>
+<blockquote>
+<h2 id="APIs-for-building-portable-and-reliable-microservices"><a class="header-anchor" href="#APIs-for-building-portable-and-reliable-microservices"> </a>APIs for building portable and reliable microservices</h2>
+<h4 id="Leverage-industry-best-practices-and-focus-on-your-application’s-logic"><a class="header-anchor" href="#Leverage-industry-best-practices-and-focus-on-your-application’s-logic"> </a>Leverage industry best practices and focus on your application’s logic.</h4>
+</blockquote>
+<p><img src="image-20221105101325259.png" alt="image-20221105101325259"></p>
+<p>從圖片上可以知道  Dapr 是走 sidecar 模式，但好家在他底層是使用 go 實做，執行起來也不會太笨重，並提供簡化不少原系統要處理的東西。而且 Dapr sidecar 之間的溝通是採用 <code>gRPC</code> 的模式來降低整體的負擔，將效能影響降至最低</p>
+<h2 id="Dapr-架構"><a class="header-anchor" href="#Dapr-架構"> </a>Dapr 架構</h2>
+<p><img src="Dapr-high-level.png" alt="Dapr at 20,000 feet"></p>
+<p>從這張圖尚可知道，原本的應用程式可透過 HTTP 或 gRPC 的方式與 Dapr 的元件溝通，在這模式下，應用程式間的互動會由 <code>代理人</code> Dapr 來處理，之後我會說明為什麼我會將其定義成 <code>代理人</code> 的原因</p>
+<p>Dapr 提供幾個積木供我們使用 (如下表)，讓我們有抽換背後對應的服務 (抽象化)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Building block</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">State management</td>
+<td style="text-align:left">Support contextual information for long running stateful services.</td>
+</tr>
+<tr>
+<td style="text-align:left">Service invocation</td>
+<td style="text-align:left">Invoke direct, secure service-to-service calls using platform agnostic protocols and well-known endpoints.</td>
+</tr>
+<tr>
+<td style="text-align:left">Publish and subscribe</td>
+<td style="text-align:left">Implement secure, scalable pub/sub messaging between services.</td>
+</tr>
+<tr>
+<td style="text-align:left">Bindings</td>
+<td style="text-align:left">Trigger code from events raised by external resources with bi-directional communication.</td>
+</tr>
+<tr>
+<td style="text-align:left">Observability</td>
+<td style="text-align:left">Monitor and measure message calls across networked services.</td>
+</tr>
+<tr>
+<td style="text-align:left">Secrets</td>
+<td style="text-align:left">Securely access external secret stores.</td>
+</tr>
+<tr>
+<td style="text-align:left">Actors</td>
+<td style="text-align:left">Encapsulate logic and data in reusable actor objects.</td>
+</tr>
+</tbody>
+</table>
+<p><img src="building-blocks-integration.png" alt="Dapr building blocks integration"></p>
+<p>一開始有提到 Dapr 是使用 <code>sidecar</code> 模式與 application 做互動，所以架構會長的像這樣</p>
+<p><img src="sidecar-generic.png" alt="Sidecar architecture"></p>
+<h2 id="Hosting-Environment"><a class="header-anchor" href="#Hosting-Environment"> </a>Hosting Environment</h2>
+<p>Dapr 的執行環境有分 <code>self-hosted</code> 和 <code>container</code> 模式</p>
+<p><img src="self-hosted-Dapr-sidecar.png" alt="Self-hosted sidecar architecture"></p>
+<p><img src="kubernetes-hosted-Dapr-sidecar.png" alt="Kubernetes-hosted sidecar architecture"></p>
+<p>所以在本機開發環境如果沒有 docker 也還是可以透過 <code>self-hosted</code> 的模式進行開發，不會影響之後的部屬，<code>self-hosted</code> 可透過 Dapr cli 來完成相關的操作 (<a href="https://docs.Dapr.io/getting-started/install-Dapr-cli/">Dapr CLI installer</a>)</p>
+<h3 id="Service-Mesh-Dapr"><a class="header-anchor" href="#Service-Mesh-Dapr"> </a>Service  Mesh &amp; Dapr</h3>
+<p>Service Mesh 是另外一個偉大的坑，其負責範圍其實很多，科普一下</p>
+<blockquote>
+<p>服務網格是一個可設定的基礎結構層，內建功能可處理服務對服務通訊、復原、負載平衡和遙測擷取。 它會將這些考慮的責任移出服務，並移入服務網格層。</p>
+</blockquote>
+<p>Dapr 也遵循一樣的模式，所以接下來的問題會是 Dapr 可以取代原本的 service mesh 嗎? 其實 Dapr 可以與原有的 Service Mesh 共存，負責的業務範圍會不太一樣，Dapr 提供系統服務，service mesh 提供服務間的網路溝通</p>
+<p><img src="dapr-and-service-mesh.png" alt="Dapr and Service Mesh together"></p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/architecture/dapr-for-net-developers/">Dapr for .NET Developers</a></li>
+<li><a href="https://docs.Dapr.io/getting-started/install-Dapr-cli/">Dapr CLI installer</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Dapr</category>
+      </categories>
+      <tags>
+        <tag>Dapr</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

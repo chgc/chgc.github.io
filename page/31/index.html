@@ -200,6 +200,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/10/08/angular-careless-mistakes-errorerrorinfdig/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/10/08/angular-careless-mistakes-errorerrorinfdig/" class="post-title-link" itemprop="url">[AngularJS] 粗心的錯誤 Error: error:infdig</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-10-09 06:18:00" itemprop="dateCreated datePublished" datetime="2014-10-09T06:18:00+08:00">2014-10-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AngularJS/" itemprop="url" rel="index"><span itemprop="name">AngularJS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/10/08/angular-careless-mistakes-errorerrorinfdig/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/08/angular-careless-mistakes-errorerrorinfdig/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>angular在寫ng-repeat的時後, 因為想要利用 filter的功能將過濾後的資料集拿到不同區塊使用, 把function 寫到ng-repeat裡面。 像是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-repeat=&quot;item in processData((items | filter: someCondition))&quot;</span><br></pre></td></tr></table></figure>
+<p>這一個粗心的錯誤會讓angular產生<strong>Error: error:infdig,Infinite $digest Loop</strong>的錯誤訊息</p>
+<p>這個訊息的產生原因是當ng-repeat每跑一次, 會觸發processData fuction =&gt; 因為值改變，所以又會觸發$digest. 然後當$digest的次數太多之後，就會發生錯誤訊息, 執行效率也會變得非常的不好。</p>
+<p>所以回到angularjs的頁面裡找到這個<a href="">https://docs.angularjs.org/error/$rootScope/infdig</a></p>
+<p>下面的說明就有提到這個現象.</p>
+<blockquote>
+<p>Since getUsers() returns a new array, Angular determines that the model is different on each $digest cycle, resulting in the error. The solution is to return the same array object if the elements have not changed:</p>
+</blockquote>
+<p>解決的方式就是不要在ng-repeat裡面寫function. 但如果要達到相同的效果, 可以先將過濾後的結果存到一個變數中, 然後在去操作那個變數就不會產生這個錯誤了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-repeat=&quot;item in (someVar = items | filter: someCondition)&quot;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/09/04/vs2013-introducing-gulp-grunt-bower-and-npm-support-for-visual-studio-ref/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1103,105 +1202,6 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/04/07/android-studio-platform-not-found/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/04/07/android-studio-platform-not-found/" class="post-title-link" itemprop="url">[Android Studio]platform not found</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-04-07 10:32:00" itemprop="dateCreated datePublished" datetime="2014-04-07T10:32:00+08:00">2014-04-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/04/07/android-studio-platform-not-found/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/04/07/android-studio-platform-not-found/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Ref from G+</p>
-<blockquote>
-<p>Ater upgrading to AS 0.5.4 I am getting this error 「Failed to set up SDK
-Error:Module 『AndroinoTerm』: platform 『android-18』 not found」 while I already have android-18 installed. My sdk path is correctly setup and I am also able to run my project successfully. Does Anybody else having this issue ?</p>
-</blockquote>
-<p>Solution:
-1. Change sdk folder location
-2. update sdk path in android studio
-3. change back to original location
-4. update sdk path setting in android studio again
-5. problem solved</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1273,20 +1273,20 @@ Error:Module 『AndroinoTerm』: platform 『android-18』 not found」 while I 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">341</span>
+          <span class="site-state-item-count">342</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

@@ -200,6 +200,127 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/01/29/kinect-day-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/29/kinect-day-1/" class="post-title-link" itemprop="url">[Kinect] Day 1 - 讓程式碼先能動</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-01-29 14:08:00" itemprop="dateCreated datePublished" datetime="2015-01-29T14:08:00+08:00">2015-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/01/29/kinect-day-1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/29/kinect-day-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Kinect-Data-Source"><a class="header-anchor" href="#Kinect-Data-Source"> </a>Kinect Data Source</h2>
+<pre><code>- Color
+- Infrared
+- Depth
+- Body
+- BodyIndex    
+</code></pre>
+<h2 id="For-Windows-8-1-App"><a class="header-anchor" href="#For-Windows-8-1-App"> </a>For Windows 8.1 App</h2>
+<pre><code>- 開啟microphone, webcam權限
+- 加入WindowsPreview.Kinect
+- 建置CPU設定為x86
+</code></pre>
+<h2 id="取得kinectSensor的方式"><a class="header-anchor" href="#取得kinectSensor的方式"> </a>取得kinectSensor的方式</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.sensor = KinectSensor.GetDefault();</span><br><span class="line">this.sensor.Open();</span><br><span class="line">this.sensor.Close();</span><br></pre></td></tr></table></figure>
+<h2 id="Readers"><a class="header-anchor" href="#Readers"> </a>Readers</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InfraredFrameReader reader = this.sensor.InfraredFrameSource.OpenReader();</span><br><span class="line">reader.FrameArrived += InfraredReaderFrameArrvied;</span><br></pre></td></tr></table></figure>
+<h2 id="Frame-references"><a class="header-anchor" href="#Frame-references"> </a>Frame references</h2>
+<pre><code>- Send in frame event args
+- AcquireFrame : access to the actual frame
+- RelativeTime : allow to templorally correlate frames
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">private void InfraredReaderFrameArrvied(InfraredFrameReader sender, InfraredFrameArrivedEventArgs args)</span><br><span class="line">&#123;</span><br><span class="line">		using (InfraredFrame frame = args.FrameReference.AcquireFrame())</span><br><span class="line">    &#123;</span><br><span class="line">      if (frame != null)</span><br><span class="line">      &#123;</span><br><span class="line">      // Get What you need from the frame</span><br><span class="line">      </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Frame"><a class="header-anchor" href="#Frame"> </a>Frame</h2>
+<pre><code>- Gives access to the frame data
+    - Make a local copy of access the underlying buffer directly
+- Contains metadata for the frame
+    - Color, Format, width, height,etc.
+- Important: Not Disposing frames will cause you to not receive more frames
+</code></pre>
+<h2 id="Demo-Code"><a class="header-anchor" href="#Demo-Code"> </a>Demo Code</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.IO;</span><br><span class="line">using System.Linq;</span><br><span class="line">using System.Runtime.InteropServices.WindowsRuntime;</span><br><span class="line">using Windows.Foundation;</span><br><span class="line">using Windows.Foundation.Collections;</span><br><span class="line">using Windows.UI.Xaml;</span><br><span class="line">using Windows.UI.Xaml.Controls;</span><br><span class="line">using Windows.UI.Xaml.Controls.Primitives;</span><br><span class="line">using Windows.UI.Xaml.Data;</span><br><span class="line">using Windows.UI.Xaml.Input;</span><br><span class="line">using Windows.UI.Xaml.Media;</span><br><span class="line">using Windows.UI.Xaml.Navigation;</span><br><span class="line">using WindowsPreview.Kinect;</span><br><span class="line">using Windows.UI.Xaml.Media.Imaging;</span><br><span class="line"></span><br><span class="line">namespace KinectStudy_01</span><br><span class="line">&#123;    </span><br><span class="line">    public sealed partial class MainPage : Page</span><br><span class="line">    &#123;</span><br><span class="line">        public MainPage()</span><br><span class="line">        &#123;</span><br><span class="line">            this.InitializeComponent();  </span><br><span class="line">            this.Loaded += MainPage_Loaded;         </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"> 			  KinectSensor sensor;</span><br><span class="line">        InfraredFrameReader reader;</span><br><span class="line">        ushort[] irData;</span><br><span class="line">        byte[] irDateConverted;</span><br><span class="line">        WriteableBitmap irBitmap;    </span><br><span class="line"></span><br><span class="line">				private void MainPage_Loaded(object sender, RoutedEventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line">            sensor = KinectSensor.GetDefault();</span><br><span class="line">            reader = sensor.InfraredFrameSource.OpenReader();</span><br><span class="line">            FrameDescription fd = sensor.InfraredFrameSource.FrameDescription;</span><br><span class="line">            irData = new ushort[fd.LengthInPixels];</span><br><span class="line">            irDateConverted = new byte[fd.LengthInPixels * 4];</span><br><span class="line">            irBitmap = new WriteableBitmap(fd.Width, fd.Height);</span><br><span class="line">            image.Source = irBitmap;</span><br><span class="line"></span><br><span class="line">            sensor.Open();</span><br><span class="line">            reader.FrameArrived += InfraredReaderFrameArrvied;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">        private void InfraredReaderFrameArrvied(InfraredFrameReader sender, InfraredFrameArrivedEventArgs args)</span><br><span class="line">        &#123;</span><br><span class="line">            using (InfraredFrame frame = args.FrameReference.AcquireFrame())</span><br><span class="line">            &#123;</span><br><span class="line">                if (frame != null)</span><br><span class="line">                &#123;</span><br><span class="line">                    // Get What you need from the frame</span><br><span class="line">                    frame.CopyFrameDataToArray(irData);</span><br><span class="line">                    for (int i = 0; i &lt; irData.Length; i++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        byte intensity = (byte)(irData[i] &gt;&gt; 8);</span><br><span class="line">                        irDateConverted[i * 4] = intensity;</span><br><span class="line">                        irDateConverted[i * 4 + 1] = intensity;</span><br><span class="line">                        irDateConverted[i * 4 + 2] = intensity;</span><br><span class="line">                        irDateConverted[i * 4 + 3] = 255;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    irDateConverted.CopyTo(irBitmap.PixelBuffer);</span><br><span class="line">                    irBitmap.Invalidate();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;      </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Demo2"><a class="header-anchor" href="#Demo2"> </a>Demo2</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.IO;</span><br><span class="line">using System.Linq;</span><br><span class="line">using System.Runtime.InteropServices.WindowsRuntime;</span><br><span class="line">using Windows.Foundation;</span><br><span class="line">using Windows.Foundation.Collections;</span><br><span class="line">using Windows.UI.Xaml;</span><br><span class="line">using Windows.UI.Xaml.Controls;</span><br><span class="line">using Windows.UI.Xaml.Controls.Primitives;</span><br><span class="line">using Windows.UI.Xaml.Data;</span><br><span class="line">using Windows.UI.Xaml.Input;</span><br><span class="line">using Windows.UI.Xaml.Media;</span><br><span class="line">using Windows.UI.Xaml.Navigation;</span><br><span class="line">using WindowsPreview.Kinect;</span><br><span class="line">using Windows.UI.Xaml.Media.Imaging;</span><br><span class="line"></span><br><span class="line">using Windows.UI.Xaml.Shapes;</span><br><span class="line">using Windows.UI;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace KinectStudy_01</span><br><span class="line">&#123;</span><br><span class="line">    public sealed partial class MainPage : Page</span><br><span class="line">    &#123;</span><br><span class="line">        KinectSensor sensor;</span><br><span class="line">        InfraredFrameReader reader;</span><br><span class="line">        ushort[] irData;</span><br><span class="line">        byte[] irDateConverted;</span><br><span class="line">        WriteableBitmap irBitmap;</span><br><span class="line"></span><br><span class="line">        Body[] bodies;</span><br><span class="line">        MultiSourceFrameReader msfr;</span><br><span class="line"></span><br><span class="line">        public MainPage()</span><br><span class="line">        &#123;</span><br><span class="line">            this.InitializeComponent();</span><br><span class="line">            this.Loaded += MainPage_Loaded;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private void MainPage_Loaded(object sender, RoutedEventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line">            sensor = KinectSensor.GetDefault();</span><br><span class="line">            reader = sensor.InfraredFrameSource.OpenReader();</span><br><span class="line">            FrameDescription fd = sensor.InfraredFrameSource.FrameDescription;</span><br><span class="line">            irData = new ushort[fd.LengthInPixels];</span><br><span class="line">            irDateConverted = new byte[fd.LengthInPixels * 4];</span><br><span class="line">            irBitmap = new WriteableBitmap(fd.Width, fd.Height);</span><br><span class="line">            image.Source = irBitmap;</span><br><span class="line"></span><br><span class="line">            bodies = new Body[6];</span><br><span class="line">            msfr = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.Infrared);</span><br><span class="line">            msfr.MultiSourceFrameArrived += msfr_MultiSourceFrameArrived;</span><br><span class="line"></span><br><span class="line">            sensor.Open();            </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        void msfr_MultiSourceFrameArrived(MultiSourceFrameReader sender, MultiSourceFrameArrivedEventArgs args)</span><br><span class="line">        &#123;</span><br><span class="line">            using (MultiSourceFrame frame = args.FrameReference.AcquireFrame())</span><br><span class="line">            &#123;</span><br><span class="line">                if (frame != null)</span><br><span class="line">                &#123;</span><br><span class="line">                    using (BodyFrame bodyframe = frame.BodyFrameReference.AcquireFrame())</span><br><span class="line">                    &#123;</span><br><span class="line">                        using (InfraredFrame ifFrame = frame.InfraredFrameReference.AcquireFrame())</span><br><span class="line">                        &#123;</span><br><span class="line">                            if (bodyframe != null &amp;&amp; ifFrame != null)</span><br><span class="line">                            &#123;</span><br><span class="line">                                // Get What you need from the frame</span><br><span class="line">                                ifFrame.CopyFrameDataToArray(irData);</span><br><span class="line">                                for (int i = 0; i &lt; irData.Length; i++)</span><br><span class="line">                                &#123;</span><br><span class="line">                                    byte intensity = (byte)(irData[i] &gt;&gt; 8);</span><br><span class="line">                                    irDateConverted[i * 4] = intensity;</span><br><span class="line">                                    irDateConverted[i * 4 + 1] = intensity;</span><br><span class="line">                                    irDateConverted[i * 4 + 2] = intensity;</span><br><span class="line">                                    irDateConverted[i * 4 + 3] = 255;</span><br><span class="line">                                &#125;</span><br><span class="line"></span><br><span class="line">                                irDateConverted.CopyTo(irBitmap.PixelBuffer);</span><br><span class="line">                                irBitmap.Invalidate();</span><br><span class="line">																</span><br><span class="line">                                // 取得身體的相關資料</span><br><span class="line">                                bodyframe.GetAndRefreshBodyData(bodies);</span><br><span class="line">                                bodyCanvas.Children.Clear();</span><br><span class="line">                                foreach (Body body in bodies)</span><br><span class="line">                                &#123;</span><br><span class="line">                                    if (body.IsTracked)</span><br><span class="line">                                    &#123;</span><br><span class="line">                                        // 取得頭的關節位置</span><br><span class="line">                                        Joint headJoint = body.Joints[JointType.Head];</span><br><span class="line">                                        if (headJoint.TrackingState == TrackingState.Tracked)</span><br><span class="line">                                        &#123;</span><br><span class="line">                                            // 轉換成DepthSpacePoint</span><br><span class="line">                                            DepthSpacePoint dsp = sensor.CoordinateMapper.MapCameraPointToDepthSpace(headJoint.Position);</span><br><span class="line">                                            // 在該位置上畫圓圈</span><br><span class="line">                                            Ellipse headCircle = new Ellipse() &#123; Width = 50, Height = 50, Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0)) &#125;;</span><br><span class="line">                                            bodyCanvas.Children.Add(headCircle);</span><br><span class="line">                                            Canvas.SetLeft(headCircle, dsp.X - 25);</span><br><span class="line">                                            Canvas.SetTop(headCircle, dsp.Y - 25);</span><br><span class="line">                                        &#125;</span><br><span class="line">                                    &#125;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/01/22/kinect-began-to-learn-to-write-a-kinect-app/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1132,105 +1253,6 @@ Web的速度只有Premium 2可以跟的上, 價錢就是一個不可思議</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/10/08/angular-careless-mistakes-errorerrorinfdig/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/10/08/angular-careless-mistakes-errorerrorinfdig/" class="post-title-link" itemprop="url">[AngularJS] 粗心的錯誤 Error: error:infdig</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-10-09 06:18:00" itemprop="dateCreated datePublished" datetime="2014-10-09T06:18:00+08:00">2014-10-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AngularJS/" itemprop="url" rel="index"><span itemprop="name">AngularJS</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/10/08/angular-careless-mistakes-errorerrorinfdig/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/08/angular-careless-mistakes-errorerrorinfdig/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>angular在寫ng-repeat的時後, 因為想要利用 filter的功能將過濾後的資料集拿到不同區塊使用, 把function 寫到ng-repeat裡面。 像是</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-repeat=&quot;item in processData((items | filter: someCondition))&quot;</span><br></pre></td></tr></table></figure>
-<p>這一個粗心的錯誤會讓angular產生<strong>Error: error:infdig,Infinite $digest Loop</strong>的錯誤訊息</p>
-<p>這個訊息的產生原因是當ng-repeat每跑一次, 會觸發processData fuction =&gt; 因為值改變，所以又會觸發$digest. 然後當$digest的次數太多之後，就會發生錯誤訊息, 執行效率也會變得非常的不好。</p>
-<p>所以回到angularjs的頁面裡找到這個<a href="">https://docs.angularjs.org/error/$rootScope/infdig</a></p>
-<p>下面的說明就有提到這個現象.</p>
-<blockquote>
-<p>Since getUsers() returns a new array, Angular determines that the model is different on each $digest cycle, resulting in the error. The solution is to return the same array object if the elements have not changed:</p>
-</blockquote>
-<p>解決的方式就是不要在ng-repeat裡面寫function. 但如果要達到相同的效果, 可以先將過濾後的結果存到一個變數中, 然後在去操作那個變數就不會產生這個錯誤了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng-repeat=&quot;item in (someVar = items | filter: someCondition)&quot;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1302,20 +1324,20 @@ Web的速度只有Premium 2可以跟的上, 價錢就是一個不可思議</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">341</span>
+          <span class="site-state-item-count">342</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
