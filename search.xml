@@ -20233,6 +20233,79 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Dapr] 使用 Dapr 開發 - Hello World</title>
+    <url>/2022/11/05/study-dapr-2/</url>
+    <content><![CDATA[<p>上一篇知道 Dapr 是什麼後，就要進入 Hello World 的世界了，著手寫看看第一個 Dapr 應用程式</p>
+<span id="more"></span>
+<h2 id="環境安裝"><a class="header-anchor" href="#環境安裝"> </a>環境安裝</h2>
+<p>如果沒有安裝過 <code>Dapr CLI</code> 的，可以先安裝，他可以任我們在開發環境上執行、啟動、管理和除錯 Dapr instances。雖然不是必要但建議開發環境要支援 Docker</p>
+<p>步驟如下</p>
+<ol>
+<li>
+<p><a href="https://docs.dapr.io/getting-started/install-dapr-cli/">安裝 Dapr CLI</a></p>
+</li>
+<li>
+<p><a href="https://docs.dapr.io/getting-started/install-dapr-selfhost/">初始化 Dapr</a>。 此步驟會安裝最新的 Dapr 二進位檔和容器映射，以設定您的開發環境。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dapr init</span><br></pre></td></tr></table></figure>
+<p><img src="image-20221105194553626.png" alt="image-20221105194553626"></p>
+<p><img src="image-20221105194623033.png" alt="image-20221105194623033"></p>
+<p>環境多準備了這三個 containers，這時候我們就可以準備來開發第一個 Dapr 應用程式</p>
+</li>
+</ol>
+<h2 id="第一個-Dapr-應用程式"><a class="header-anchor" href="#第一個-Dapr-應用程式"> </a>第一個 Dapr 應用程式</h2>
+<p>Dapr 有提供不同語言的 SDK，方便使用者能自然且直覺的與 Dapr 做互動</p>
+<p><img src="image-20221105194821719.png" alt="image-20221105194821719"></p>
+<p>這裡的範例我使用 .net core console 來練習</p>
+<ol>
+<li>
+<p>建立一個 console 程式</p>
+</li>
+<li>
+<p>安裝 <code>Dapr.Client</code> 套件</p>
+</li>
+<li>
+<p>在 <code>program.cs</code> 貼上這段程式碼</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> Dapr.Client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> storeName = <span class="string">&quot;statestore&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> key = <span class="string">&quot;counter&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> daprClient = <span class="keyword">new</span> DaprClientBuilder().Build();</span><br><span class="line"><span class="keyword">var</span> counter = <span class="keyword">await</span> daprClient.GetStateAsync&lt;<span class="built_in">int</span>&gt;(storeName, key);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;Counter = <span class="subst">&#123;counter++&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> daprClient.SaveStateAsync(storeName, key, counter);</span><br><span class="line">    <span class="keyword">await</span> Task.Delay(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 6: 建立 dapr Client</li>
+<li>line 7: 取得 <code>counter</code> state</li>
+<li>line 13: 儲存值回 <code>counter</code> state</li>
+</ul>
+</li>
+<li>
+<p>試著用 <code>dapr</code> 指令來執行程式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dapr run --app-id DaprCounter dotnet run</span><br></pre></td></tr></table></figure>
+<p>會看到程式會跑起來，而且也能看到 Counter 的值被持續增加上去，而且當重啟程式後，也會保留上一次的結果繼續  	
+<img src="/image-20221105200300957.png" alt="image-20221105200300957"></p>
+<p><img src="/image-20221105200334950.png" alt="image-20221105200334950"></p>
+</li>
+</ol>
+<p>使用 <code>dapr run</code> 時，<code>--app-id</code> 很重要，state management building block 是使用這個為 prefix 的值，所以第二次執行不是使用同一個 <code>app-id</code> 則會被視為不同的狀態</p>
+<p>還記得一開始在 <code>dapr init</code> 時，有啟動幾個 container，其中一個是 <code>redis</code>，這也是 dapr 儲存狀態的地方，在上一篇也有提到每一個 building block 後面的元件是可以被抽換的，相關設定檔是透過 yaml 來設定，設定檔儲存位置如下</p>
+<ul>
+<li>
+<p>mac/Linux: <code>$HOME/.dapr/components</code></p>
+</li>
+<li>
+<p>windows: <code>%USERPROFILE%\.dapr\components</code></p>
+<p><img src="image-20221105201130802.png" alt="image-20221105201130802"></p>
+</li>
+</ul>
+<p>從圖片中可以看到有一個 <code>statesotre.yaml</code> 的檔案，內容會是這樣</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">dapr.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Component</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">statestore</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">state.redis</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v1</span></span><br><span class="line">  <span class="attr">metadata:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">redisHost</span></span><br><span class="line">    <span class="attr">value:</span> <span class="string">localhost:6379</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">redisPassword</span></span><br><span class="line">    <span class="attr">value:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">actorStateStore</span></span><br><span class="line">    <span class="attr">value:</span> <span class="string">&quot;true&quot;</span></span><br><span class="line">  <span class="attr">scopes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DaprCounter</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 4: 這裡的 name 會對應到上面程式碼的 line 3 <code>const string storeName = &quot;statestore&quot;;</code></li>
+<li>line 15: 可透過 <code>scopes</code> 來限定能存取此元件的應用程式 (<code>app-id</code>)</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Dapr</category>
+      </categories>
+      <tags>
+        <tag>Dapr</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>

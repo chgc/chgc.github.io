@@ -200,6 +200,155 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/09/memo-common-git-commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/10/09/memo-common-git-commands/" class="post-title-link" itemprop="url">[Memo]常用git指令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-10-09 13:16:00" itemprop="dateCreated datePublished" datetime="2013-10-09T13:16:00+08:00">2013-10-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/10/09/memo-common-git-commands/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/09/memo-common-git-commands/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>commit your code</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;xxxx&quot; </span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>merge your branch to master
+以master為主要branch</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge [module name]&lt;= this should be branch name</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">3. update</span><br></pre></td></tr></table></figure>
+<p>git pull origin master</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">檢查是否有conflict要修</span><br><span class="line"></span><br><span class="line">4. push至origin</span><br></pre></td></tr></table></figure>
+<p>git push origin master:[module name]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">5. 通知alvin合併</span><br><span class="line"></span><br><span class="line">6. 拉別人的code</span><br></pre></td></tr></table></figure>
+<p>git add remote kyo /home/kyo/web/mc2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">7. 直接合併於目前的branch  EX. 拉KYO的master</span><br></pre></td></tr></table></figure>
+<p>git pull remote kyo master</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">8. 拉成新的branch EX. 拉KYO的master為自己的kyo branch </span><br></pre></td></tr></table></figure>
+<p>git fetch remote kyo master:kyo</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">9. git 環境設定</span><br><span class="line"></span><br><span class="line">###設定個人資訊</span><br></pre></td></tr></table></figure>
+<p>git config --global <a target="_blank" rel="noopener" href="http://user.name">user.name</a> 「Your Name」</p>
+<p>git config --global user.email <a href="mailto:you@example.com">you@example.com</a></p>
+<pre><code>
+###設定git環境
+
+cd ~ #進入個人home目錄 
+ex./home/fish
+vi .gitconfig 
+
+####編輯git環境檔，貼上以下環境設定變數
+
+[color]
+ 
+ branch = auto
+ 
+ diff = auto
+ 
+ status = auto
+
+[color &quot;branch&quot;]
+
+  current = yellow reverse
+ 
+  local = yellow 
+
+  remote = green
+
+[color &quot;diff&quot;]
+ 
+ meta = yellow bold
+ 
+ frag = magenta bold
+ 
+ old = red bold
+ 
+ new = green bold
+
+[color &quot;status&quot;]
+
+  added = green
+ 
+  changed = red</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/09/phalcon-using-model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -504,7 +653,7 @@ app/views/{{controllerName}}/xxx.volt
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">342</span>
+          <span class="site-state-item-count">343</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

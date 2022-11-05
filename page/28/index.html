@@ -200,6 +200,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/" class="post-title-link" itemprop="url">[ASP.NET] 透過ajax的方式向webapi下載檔案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-10-20 10:53:00" itemprop="dateCreated datePublished" datetime="2015-10-20T10:53:00+08:00">2015-10-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>現在SPA的網站越來越盛行，下載檔案的功能在ajax下是有點麻煩，但是感謝HTML5下的Blob功能。網路上就有相對應的js功能出來
+所以，引用這位大大的程式 (<a target="_blank" rel="noopener" href="https://github.com/eligrey/FileSaver.js">https://github.com/eligrey/FileSaver.js</a>)，其相關限制都有在該專案上描述</p>
+<p>所以使用方法如下
+(Client端)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$http.post(&#x27;api url&#x27;, query, &#123; responseType: &#x27;arraybuffer&#x27; &#125;).then(function (response) &#123;        </span><br><span class="line">            var filename = (filename);</span><br><span class="line">            var expectedMediaType = (file-Content-Type);</span><br><span class="line">            openSaveAsDialog(filename, response.data, expectedMediaType);</span><br><span class="line">&#125;);      </span><br><span class="line">                </span><br><span class="line">function openSaveAsDialog(filename, content, mediaType) &#123;</span><br><span class="line">        var blob = new Blob([content], &#123; type: mediaType &#125;);</span><br><span class="line">        saveAs(blob, filename);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>重點</strong> : responseType 要設定為 arraybuffer</p>
+<p>(Server端)
+Webapi要回傳的httpresponseMessage內容如下, 不好意思程式碼是VB, 因為這個專案是用VB開發的，但是基本觀念的一樣的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Dim response As HttpResponseMessage = New HttpResponseMessage()</span><br><span class="line">       &#x27; _ms 是 MemoryStream, 這裡是因為要將NPOI所產生的excel檔做下載, 然而我將NPOI所產生出來的東西</span><br><span class="line">       &#x27; 存入到 MemoryStream裡, 重點是ByteArrayContent</span><br><span class="line">       Dim _filename as string = (filename)</span><br><span class="line">       If _ms IsNot Nothing Then</span><br><span class="line">           response.Content = New ByteArrayContent(_ms.ToArray())</span><br><span class="line">       End If</span><br><span class="line">       response.Content.Headers.ContentType = New Headers.MediaTypeHeaderValue(&quot;application/octet-stream&quot;)</span><br><span class="line">       response.Content.Headers.ContentDisposition = New Headers.ContentDispositionHeaderValue(&quot;attachment&quot;) With &#123;.FileName = HttpUtility.UrlPathEncode(_filename)&#125;</span><br><span class="line">       Return Task.FromResult(response)</span><br></pre></td></tr></table></figure>
+<p>以上的動作就可以讓ajax的call直接做下載檔案的動作，就不用另外產生一個form然後做post到新視窗後再下載了 ^^</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/18/javascript-es2015-let/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1150,107 +1248,6 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/06/12/ef-connection-resiliency/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/06/12/ef-connection-resiliency/" class="post-title-link" itemprop="url">[EF] Connection resiliency</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-06-12 09:50:00" itemprop="dateCreated datePublished" datetime="2015-06-12T09:50:00+08:00">2015-06-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Entity-Framework/" itemprop="url" rel="index"><span itemprop="name">Entity Framework</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/06/12/ef-connection-resiliency/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/12/ef-connection-resiliency/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <pre><code>- connection retry policy
-- works great with async
-- four modes
-    - DefaultExcutionStrategy
-    - DefaultSqlExecutionStrategy
-    - DbExecutionStrategy
-    - SqlAzureExecutionStrategy
-- throws RetryLimitExceededException
-</code></pre>
-<p>##Configuration</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class MyConfiguration : DbConfiguration </span><br><span class="line">&#123; </span><br><span class="line">    public MyConfiguration() </span><br><span class="line">    &#123; </span><br><span class="line">        SetExecutionStrategy(&quot;System.Data.SqlClient&quot;, </span><br><span class="line">        () =&gt; new SqlAzureExecutionStrategy(1, TimeSpan.FromSeconds(30))); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://msdn.microsoft.com/zh-tw/library/system.data.entity.sqlserver.sqlazureexecutionstrategy(v=vs.113).aspx">MSDB</a></p>
-<p><a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/data/dn456835.aspx">參考網址</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1322,7 +1319,7 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">342</span>
+          <span class="site-state-item-count">343</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
