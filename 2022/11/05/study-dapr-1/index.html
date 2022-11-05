@@ -29,14 +29,14 @@
 <meta property="og:description" content="Dapr 在 2019 第一次公開時，那時候版本還是 0.1 時，就有留意到，想不到幾年後，不僅進入 CNCF 還變成很多人推薦的框架，所以重新拾回研究一下 Dapr 的架構及如何使用在工作上">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/image-20221105101325259.png">
-<meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/Dapr-high-level.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/dapr-high-level.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/building-blocks-integration.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/sidecar-generic.png">
-<meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/self-hosted-Dapr-sidecar.png">
-<meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/kubernetes-hosted-Dapr-sidecar.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/self-hosted-dapr-sidecar.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/kubernetes-hosted-dapr-sidecar.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-1/dapr-and-service-mesh.png">
 <meta property="article:published_time" content="2022-11-05T01:45:10.000Z">
-<meta property="article:modified_time" content="2022-11-05T12:20:58.798Z">
+<meta property="article:modified_time" content="2022-11-05T12:32:29.288Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Dapr">
 <meta name="twitter:card" content="summary">
@@ -277,16 +277,16 @@
         <p>Dapr 在 2019 第一次公開時，那時候版本還是 0.1 時，就有留意到，想不到幾年後，不僅進入 CNCF 還變成很多人推薦的框架，所以重新拾回研究一下 Dapr 的架構及如何使用在工作上</p>
 <span id="more"></span>
 <p>為什麼會回來看 Dapr，最主要的原因是目前的工作，系統都是以微服務的形式跑在自架的 K8s 上，一旦到達一個規模整個管理跟實做上要考慮的事情變的相對複雜，而 Dapr 可以降低這部分的工作並以一致的模式套用在不同的語言跟技術框架上</p>
-<h2 id="What’s-Dapr"><a class="header-anchor" href="#What’s-Dapr"> </a>What’s Dapr</h2>
+<h2 id="What-is-Dapr"><a class="header-anchor" href="#What-is-Dapr"> </a>What is Dapr</h2>
 <p>官網上是這樣子介紹的</p>
 <blockquote>
-<h2 id="APIs-for-building-portable-and-reliable-microservices"><a class="header-anchor" href="#APIs-for-building-portable-and-reliable-microservices"> </a>APIs for building portable and reliable microservices</h2>
-<h4 id="Leverage-industry-best-practices-and-focus-on-your-application’s-logic"><a class="header-anchor" href="#Leverage-industry-best-practices-and-focus-on-your-application’s-logic"> </a>Leverage industry best practices and focus on your application’s logic.</h4>
+<p>APIs for building portable and reliable microservices</p>
+<p>Leverage industry best practices and focus on your application’s logic.</p>
 </blockquote>
 <p><img src="image-20221105101325259.png" alt="image-20221105101325259"></p>
 <p>從圖片上可以知道  Dapr 是走 sidecar 模式，但好家在他底層是使用 go 實做，執行起來也不會太笨重，並提供簡化不少原系統要處理的東西。而且 Dapr sidecar 之間的溝通是採用 <code>gRPC</code> 的模式來降低整體的負擔，將效能影響降至最低</p>
 <h2 id="Dapr-架構"><a class="header-anchor" href="#Dapr-架構"> </a>Dapr 架構</h2>
-<p><img src="Dapr-high-level.png" alt="Dapr at 20,000 feet"></p>
+<p><img src="dapr-high-level.png" alt="Dapr at 20,000 feet"></p>
 <p>從這張圖尚可知道，原本的應用程式可透過 HTTP 或 gRPC 的方式與 Dapr 的元件溝通，在這模式下，應用程式間的互動會由 <code>代理人</code> Dapr 來處理，之後我會說明為什麼我會將其定義成 <code>代理人</code> 的原因</p>
 <p>Dapr 提供幾個積木供我們使用 (如下表)，讓我們有抽換背後對應的服務 (抽象化)</p>
 <table>
@@ -332,8 +332,8 @@
 <p><img src="sidecar-generic.png" alt="Sidecar architecture"></p>
 <h2 id="Hosting-Environment"><a class="header-anchor" href="#Hosting-Environment"> </a>Hosting Environment</h2>
 <p>Dapr 的執行環境有分 <code>self-hosted</code> 和 <code>container</code> 模式</p>
-<p><img src="self-hosted-Dapr-sidecar.png" alt="Self-hosted sidecar architecture"></p>
-<p><img src="kubernetes-hosted-Dapr-sidecar.png" alt="Kubernetes-hosted sidecar architecture"></p>
+<p><img src="self-hosted-dapr-sidecar.png" alt="Self-hosted sidecar architecture"></p>
+<p><img src="kubernetes-hosted-dapr-sidecar.png" alt="Kubernetes-hosted sidecar architecture"></p>
 <p>所以在本機開發環境如果沒有 docker 也還是可以透過 <code>self-hosted</code> 的模式進行開發，不會影響之後的部屬，<code>self-hosted</code> 可透過 Dapr cli 來完成相關的操作 (<a target="_blank" rel="noopener" href="https://docs.Dapr.io/getting-started/install-Dapr-cli/">Dapr CLI installer</a>)</p>
 <h3 id="Service-Mesh-Dapr"><a class="header-anchor" href="#Service-Mesh-Dapr"> </a>Service  Mesh &amp; Dapr</h3>
 <p>Service Mesh 是另外一個偉大的坑，其負責範圍其實很多，科普一下</p>
@@ -446,7 +446,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What%E2%80%99s-Dapr"><span class="nav-number">1.</span> <span class="nav-text">What’s Dapr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APIs-for-building-portable-and-reliable-microservices"><span class="nav-number">2.</span> <span class="nav-text">APIs for building portable and reliable microservices</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Leverage-industry-best-practices-and-focus-on-your-application%E2%80%99s-logic"><span class="nav-number">2.0.1.</span> <span class="nav-text">Leverage industry best practices and focus on your application’s logic.</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dapr-%E6%9E%B6%E6%A7%8B"><span class="nav-number">3.</span> <span class="nav-text">Dapr 架構</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hosting-Environment"><span class="nav-number">4.</span> <span class="nav-text">Hosting Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-Mesh-Dapr"><span class="nav-number">4.1.</span> <span class="nav-text">Service  Mesh &amp; Dapr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Dapr"><span class="nav-number">1.</span> <span class="nav-text">What is Dapr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dapr-%E6%9E%B6%E6%A7%8B"><span class="nav-number">2.</span> <span class="nav-text">Dapr 架構</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hosting-Environment"><span class="nav-number">3.</span> <span class="nav-text">Hosting Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-Mesh-Dapr"><span class="nav-number">3.1.</span> <span class="nav-text">Service  Mesh &amp; Dapr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

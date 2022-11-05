@@ -31,11 +31,11 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-2/image-20221105194553626.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-2/image-20221105194623033.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-2/image-20221105194821719.png">
-<meta property="og:image" content="http://blog.kevinyang.net/image-20221105200300957.png">
-<meta property="og:image" content="http://blog.kevinyang.net/image-20221105200334950.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-2/image-20221105200300957.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-2/image-20221105200334950.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2022/11/05/study-dapr-2/image-20221105201130802.png">
 <meta property="article:published_time" content="2022-11-05T03:08:05.000Z">
-<meta property="article:modified_time" content="2022-11-05T12:20:58.802Z">
+<meta property="article:modified_time" content="2022-11-05T12:32:29.292Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Dapr">
 <meta name="twitter:card" content="summary">
@@ -314,8 +314,8 @@
 <p>試著用 <code>dapr</code> 指令來執行程式</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dapr run --app-id DaprCounter dotnet run</span><br></pre></td></tr></table></figure>
 <p>會看到程式會跑起來，而且也能看到 Counter 的值被持續增加上去，而且當重啟程式後，也會保留上一次的結果繼續  	
-<img src="/image-20221105200300957.png" alt="image-20221105200300957"></p>
-<p><img src="/image-20221105200334950.png" alt="image-20221105200334950"></p>
+<img src="image-20221105200300957.png" alt="image-20221105200300957"></p>
+<p><img src="image-20221105200334950.png" alt="image-20221105200334950"></p>
 </li>
 </ol>
 <p>使用 <code>dapr run</code> 時，<code>--app-id</code> 很重要，state management building block 是使用這個為 prefix 的值，所以第二次執行不是使用同一個 <code>app-id</code> 則會被視為不同的狀態</p>
