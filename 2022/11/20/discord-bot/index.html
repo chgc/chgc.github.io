@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="最近接了關於 Bot 開發相關的業務，趁休息時間玩一下 Discord Bot 的開發體驗，將過程記錄一下，搞不好後面還用的到。 在這之前還是快速介紹一下 Discord。Discord是一款專為社群設計的免費網路即時通話軟體與數位發行平台，在早期很常被遊戲玩家拿來做線上連線時的通訊軟體，現在是很多產品、社群等都會利用 Discord 來經營社群。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Discord] Bot 新手上路">
+<meta property="og:url" content="http://blog.kevinyang.net/2022/11/20/discord-bot/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="最近接了關於 Bot 開發相關的業務，趁休息時間玩一下 Discord Bot 的開發體驗，將過程記錄一下，搞不好後面還用的到。 在這之前還是快速介紹一下 Discord。Discord是一款專為社群設計的免費網路即時通話軟體與數位發行平台，在早期很常被遊戲玩家拿來做線上連線時的通訊軟體，現在是很多產品、社群等都會利用 Discord 來經營社群。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120110706291.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120110903558.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120111248877.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120111311212.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120112233735.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120114918739.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120121208822.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120132856679.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120133514279.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120135115034.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120135415958.png">
+<meta property="article:published_time" content="2022-11-20T02:44:46.000Z">
+<meta property="article:modified_time" content="2022-11-20T06:33:02.584Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="BOT">
+<meta property="article:tag" content="Discord">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2022/11/20/discord-bot/image-20221120110706291.png">
+
+<link rel="canonical" href="http://blog.kevinyang.net/2022/11/20/discord-bot/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[Discord] Bot 新手上路 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-7997572949867824',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2022/11/20/discord-bot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Discord] Bot 新手上路
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-11-20 10:44:46" itemprop="dateCreated datePublished" datetime="2022-11-20T10:44:46+08:00">2022-11-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BOT/" itemprop="url" rel="index"><span itemprop="name">BOT</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2022/11/20/discord-bot/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/11/20/discord-bot/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近接了關於 Bot 開發相關的業務，趁休息時間玩一下 Discord Bot 的開發體驗，將過程記錄一下，搞不好後面還用的到。</p>
+<p>在這之前還是快速介紹一下 Discord。Discord是一款專為社群設計的免費網路即時通話軟體與數位發行平台，在早期很常被遊戲玩家拿來做線上連線時的通訊軟體，現在是很多產品、社群等都會利用 Discord 來經營社群。</p>
+<span id="more"></span>
+<p>既然是平台，本身又提供 Bot 開發的能力，就要好好的探索一下到底 Bot 在 Discord 能做到什麼事情</p>
+<h2 id="建立第一個-Bot"><a class="header-anchor" href="#建立第一個-Bot"> </a>建立第一個 Bot</h2>
+<p>在建立第一個 Bot 之前，假設你是純新手沒有開過 Discord 帳號，可以透過這篇<a target="_blank" rel="noopener" href="https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started">說明</a>建立自己的 Discord 帳號。</p>
+<h3 id="Create-Application"><a class="header-anchor" href="#Create-Application"> </a>Create Application</h3>
+<p>進入 <a target="_blank" rel="noopener" href="https://discord.com/developers/applications">Developer Portal</a> 並登入應可看到這個畫面</p>
+<p><img src="image-20221120110706291.png" alt="image-20221120110706291"></p>
+<p>點選右上角的 <code>New Application</code> 會跳出建立 Application 的詢問視窗，輸入你想的名字，打勾 agree Terms of services 後，按下 <code>Create</code> 即完成第一個 Application 的建立</p>
+<p><img src="image-20221120110903558.png" alt="image-20221120110903558"></p>
+<p>建立完成後在 <code>Applications</code> 的列表上就可看到剛剛建立的 application，點進去會看到等等開發時所需要的資訊，類似  Application ID 和 Endpoint URL 。</p>
+<h3 id="Config-Bot"><a class="header-anchor" href="#Config-Bot"> </a>Config Bot</h3>
+<p>因為我們要建立 Bot，所以還要多做一個步驟</p>
+<p><img src="image-20221120111248877.png" alt="image-20221120111248877"></p>
+<p><img src="image-20221120111311212.png" alt="image-20221120111311212"></p>
+<p>完成這步驟後，會看到一些可以設定的項目，其中 Token 會是待會開發時需要的資訊，晚點再回來這邊建立新 Token</p>
+<p>Bot 需要取得使用權限及授權範圍，Discord 也很好心的給了建立方式，一樣在 Application 的畫面裡，左邊選單的<code>OAuth2</code> 下的 <code>URL Generator</code>，這頁面上，我們需要設定幾樣東西</p>
+<ul>
+<li>SCOPES: <code>bot</code> 、<code>applications.commands</code></li>
+<li>BOT PERMISSIONS: <code>Send Messages</code> 和 <code>Use Slash Commands</code></li>
+</ul>
+<p><img src="image-20221120112233735.png" alt="image-20221120112233735"></p>
+<p>此畫面的最後面會有一個 <code>GENERATED URL</code> ，複製並貼到瀏覽器上，會開啟一個設定畫面，詢問這一個 Bot 想要加到哪一個伺服器中，就跟著步驟一步一步完成即可</p>
+<h2 id="開發-Bot"><a class="header-anchor" href="#開發-Bot"> </a>開發 Bot</h2>
+<p>雖然官方有提供一個範例程式碼，但我還是想從頭做一次，過程中還是會參考 <a target="_blank" rel="noopener" href="https://github.com/discord/discord-example-app">example code</a></p>
+<ol>
+<li>
+<p>建立一個 node express 專案，我這邊使用 NX 來幫忙建立 workspace</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-nx-workspace --preset=express</span><br></pre></td></tr></table></figure>
+<p><img src="image-20221120114918739.png" alt="image-20221120114918739"></p>
+</li>
+<li>
+<p>現在我們有一個可以用的 express app 可以運作，但為了讓 Discord Server 可以將訊息打到我們的 App，需要透過 <code>ngrok</code> 的協助</p>
+<ol>
+<li>啟動 express app on port 3333</li>
+<li>啟動 ngrok 並監聽 port 3333，正確啟動後會取得一個對外網址，這個網址我們要回填到 Discord Application 的 <code>INTERACTIONS ENDPOINT URL</code> 中，當這樣設定完成後，Discord Server 就會將相關的訊息以 webhook 的方式打給我們</li>
+<li>但這裡會發現無法正確儲存，原因是我們還沒有實做對應的 Endpoint 給 discord server 做驗證，下面會完成第一階段的功能</li>
+</ol>
+</li>
+<li>
+<p>假設填入的網址是 <code>https://xxxxxx.ngrok.io/interactions</code>，express 這邊需要實做一個對應的<code>POST</code> 方法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/interactions&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(req);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在上一步驟時進行設定儲存時，會出現這個錯誤訊息</p>
+<p><img src="image-20221120121208822.png" alt="image-20221120121208822"></p>
+<p>要排除這個錯誤，需要實做一個 <code>PING-PONG</code> 的回應，實做程式碼如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">InteractionResponseType</span>, <span class="title class_">InteractionType</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;discord-interactions&#x27;</span>;</span><br><span class="line">...</span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/interactions&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="keyword">type</span>, id, data &#125; = req.<span class="property">body</span>;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Handle verification requests</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">   <span class="keyword">if</span> (<span class="keyword">type</span> === <span class="title class_">InteractionType</span>.<span class="property">PING</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">send</span>(&#123; <span class="attr">type</span>: <span class="title class_">InteractionResponseType</span>.<span class="property">PONG</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>有多安裝一個套件 <code>discord-interactions</code></li>
+</ul>
+</li>
+<li>
+<p>這時候回去 discord application 頁面按儲存時還是會失敗，而且 express 這邊也會噴 <code>req.body</code> 是 undefined 的錯誤，還少一個驗證 request 的功能</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>(&#123; <span class="attr">verify</span>: <span class="title class_">VerifyDiscordRequest</span>(process.<span class="property">env</span>.<span class="property">PUBLIC_KEY</span>) &#125;));</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PUBLIC_KEY</code> 可以從 Discord Application Detail 頁面中取得，放置 <code>.env</code> 檔案內即可</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; verifyKey &#125; <span class="keyword">from</span> <span class="string">&#x27;discord-interactions&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">VerifyDiscordRequest</span>(<span class="params">clientKey</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">req, res, buf, encoding</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> signature = req.<span class="title function_">get</span>(<span class="string">&#x27;X-Signature-Ed25519&#x27;</span>);</span><br><span class="line">    <span class="keyword">const</span> timestamp = req.<span class="title function_">get</span>(<span class="string">&#x27;X-Signature-Timestamp&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> isValidRequest = <span class="title function_">verifyKey</span>(buf, signature, timestamp, clientKey);</span><br><span class="line">    <span class="keyword">if</span> (!isValidRequest) &#123;</span><br><span class="line">      res.<span class="title function_">status</span>(<span class="number">401</span>).<span class="title function_">send</span>(<span class="string">&#x27;Bad request signature&#x27;</span>);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Bad request signature&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>這段功能補上去後，Discord Application 設定頁面應可正確的儲存了</p>
+</li>
+</ol>
+<h3 id="註冊-Command"><a class="header-anchor" href="#註冊-Command"> </a>註冊 Command</h3>
+<p>上面已經完成最基本與 discord 互動的 Endpoint，接下來就是要是處理 Command 的部分，我們期望是 User 在 Discord 頻道中使用 Bot 來下指令，用一個 <code>test</code> 作為指令行為驗證。使用前要先註冊，這邊有點繁瑣，拆步驟說明</p>
+<ol>
+<li>
+<p>取得 APP_ID: 資訊可以從 Discord Application Detail 頁面上取得</p>
+</li>
+<li>
+<p>GUILD_ID: 這部分稍微麻煩點</p>
+<ol>
+<li>
+<p>首先開啟 Discord 網頁版並切到有 Bot 的 Channel</p>
+</li>
+<li>
+<p>網址大概會長這樣</p>
+<p><img src="image-20221120132856679.png" alt="image-20221120132856679"></p>
+<p>Channels 後面的第一組數字就是我們要的 GUILD_ID 了</p>
+</li>
+</ol>
+</li>
+<li>
+<p>詢問 Channel 是否有註冊過 Commands，如果沒有就註冊</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">HasGuildCommands</span>(<span class="params">appId, guildId, commands</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (guildId === <span class="string">&#x27;&#x27;</span> || appId === <span class="string">&#x27;&#x27;</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  commands.<span class="title function_">forEach</span>(<span class="function">(<span class="params">c</span>) =&gt;</span> <span class="title class_">HasGuildCommand</span>(appId, guildId, c));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">HasGuildCommand</span>(<span class="params">appId, guildId, command</span>) &#123;</span><br><span class="line">  <span class="comment">// API endpoint to get and post guild commands</span></span><br><span class="line">  <span class="keyword">const</span> endpoint = <span class="string">`applications/<span class="subst">$&#123;appId&#125;</span>/guilds/<span class="subst">$&#123;guildId&#125;</span>/commands`</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title class_">DiscordRequest</span>(endpoint, &#123; <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span> &#125;);</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> res.<span class="title function_">json</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (data) &#123;</span><br><span class="line">      <span class="keyword">const</span> installedNames = data.<span class="title function_">map</span>(<span class="function">(<span class="params">c</span>) =&gt;</span> c[<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">      <span class="comment">// This is just matching on the name, so it&#x27;s not good for updates</span></span><br><span class="line">      <span class="keyword">if</span> (!installedNames.<span class="title function_">includes</span>(command[<span class="string">&#x27;name&#x27;</span>])) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Installing &quot;<span class="subst">$&#123;command[<span class="string">&#x27;name&#x27;</span>]&#125;</span>&quot;`</span>);</span><br><span class="line">        <span class="title class_">InstallGuildCommand</span>(appId, guildId, command);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`&quot;<span class="subst">$&#123;command[<span class="string">&#x27;name&#x27;</span>]&#125;</span>&quot; command already installed`</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Installs a command</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">InstallGuildCommand</span>(<span class="params">appId, guildId, command</span>) &#123;</span><br><span class="line">  <span class="comment">// API endpoint to get and post guild commands</span></span><br><span class="line">  <span class="keyword">const</span> endpoint = <span class="string">`applications/<span class="subst">$&#123;appId&#125;</span>/guilds/<span class="subst">$&#123;guildId&#125;</span>/commands`</span>;</span><br><span class="line">  <span class="comment">// install command</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="title class_">DiscordRequest</span>(endpoint, &#123; <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>, <span class="attr">body</span>: command &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Command 宣告</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">TEST_COMMAND</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&#x27;Basic guild command&#x27;</span>,</span><br><span class="line">  <span class="attr">type</span>: <span class="number">1</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>當 express 啟動時執行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> server = app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="title class_">HasGuildCommands</span>(process.<span class="property">env</span>.<span class="property">APP_ID</span>, process.<span class="property">env</span>.<span class="property">GUILD_ID</span>, [<span class="variable constant_">TEST_COMMAND</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>這段有實做一個 <code>DiscordRequest</code> function，內容如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fetch <span class="keyword">from</span> <span class="string">&#x27;node-fetch&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">DiscordRequest</span>(<span class="params">endpoint, options</span>) &#123;</span><br><span class="line">  <span class="comment">// append endpoint to root API URL</span></span><br><span class="line">  <span class="keyword">const</span> url = <span class="string">&#x27;https://discord.com/api/v10/&#x27;</span> + endpoint;</span><br><span class="line">  <span class="comment">// Stringify payloads</span></span><br><span class="line">  <span class="keyword">if</span> (options.<span class="property">body</span>) options.<span class="property">body</span> = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(options.<span class="property">body</span>);</span><br><span class="line">  <span class="comment">// Use node-fetch to make requests</span></span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(url, &#123;</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="title class_">Authorization</span>: <span class="string">`Bot <span class="subst">$&#123;process.env.DISCORD_TOKEN&#125;</span>`</span>,</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json; charset=UTF-8&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;User-Agent&#x27;</span>:</span><br><span class="line">        <span class="string">&#x27;DiscordBot (https://github.com/discord/discord-example-app, 1.0.0)&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    ...options,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// throw API errors</span></span><br><span class="line">  <span class="keyword">if</span> (!res.<span class="property">ok</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> res.<span class="title function_">json</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">status</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(data));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// return original response</span></span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>需要安裝 <code>node-fetch</code> 套件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install node-fetch@^2.6.6</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>DISCORD_TOKEN: 來自 Bot 頁面的 Token</p>
+<p><img src="image-20221120133514279.png" alt="image-20221120133514279"></p>
+</li>
+</ul>
+<p>重新啟動 express app，應該可以看到 Command 被成功註冊的訊息，重新啟動一次 app，也可以看到 Command 已經被註冊的訊息。回到 Channel 中輸入 /test 就能看到被註冊的指令了</p>
+<p><img src="image-20221120135115034.png" alt="image-20221120135115034"></p>
+<h3 id="處理-Command"><a class="header-anchor" href="#處理-Command"> </a>處理 Command</h3>
+<p>上一階段把 Command 註冊成功了，express app (Bot Service) 這邊也要實做對應的邏輯</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">type</span> === <span class="title class_">InteractionType</span>.<span class="property">APPLICATION_COMMAND</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; name &#125; = data;</span><br><span class="line">  <span class="keyword">if</span> (name === <span class="string">&#x27;test&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// Send a message into the channel where command was triggered from</span></span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">InteractionResponseType</span>.<span class="property">CHANNEL_MESSAGE_WITH_SOURCE</span>,</span><br><span class="line">      <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="comment">// Fetches a random emoji to send from a helper function</span></span><br><span class="line">        <span class="attr">content</span>: <span class="string">&#x27;hello world !&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="image-20221120135415958.png" alt="image-20221120135415958"></p>
+<h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2>
+<p>初期要設定 Bot 在 Discord 上面跑需要一些設定，在寫這篇筆記時，比較會卡住的點是流程面，Discord 在相關的設定上其實還算簡單，第一關打通後，後面會比較順一點。所以稍微複雜的互動行為就留在下一篇筆記了</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started">Discord Getting Start</a></li>
+<li><a target="_blank" rel="noopener" href="https://discord.com/developers/docs/intro">Discord Developer Portal</a></li>
+<li><a target="_blank" rel="noopener" href="https://discord.com/developers/docs/getting-started">Discord 開發 APP QuickStart</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BOT/" rel="tag"># BOT</a>
+              <a href="/tags/Discord/" rel="tag"># Discord</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/05/study-dapr-2/" rel="prev" title="[Dapr] 使用 Dapr 開發 - Hello World">
+      <i class="fa fa-chevron-left"></i> [Dapr] 使用 Dapr 開發 - Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%AC%AC%E4%B8%80%E5%80%8B-Bot"><span class="nav-number">1.</span> <span class="nav-text">建立第一個 Bot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-Application"><span class="nav-number">1.1.</span> <span class="nav-text">Create Application</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Config-Bot"><span class="nav-number">1.2.</span> <span class="nav-text">Config Bot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%8B%E7%99%BC-Bot"><span class="nav-number">2.</span> <span class="nav-text">開發 Bot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%BB%E5%86%8A-Command"><span class="nav-number">2.1.</span> <span class="nav-text">註冊 Command</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%95%E7%90%86-Command"><span class="nav-number">2.2.</span> <span class="nav-text">處理 Command</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">小結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">344</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <!--google_adsense-->
+        
+          <div class="links-of-blogroll-title">
+            <i class="fa fa-google"></i> 廣告
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-7997572949867824"
+                data-ad-slot="3959999538"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        
+        <!--/google_adsense-->
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>    
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2022/11/20/discord-bot/";
+    this.page.identifier = "2022/11/20/discord-bot/";
+    this.page.title = "[Discord] Bot 新手上路";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

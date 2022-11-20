@@ -200,6 +200,143 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/10/phalcon-work-with-router/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/10/10/phalcon-work-with-router/" class="post-title-link" itemprop="url">[Phalcon] Work with Router</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-10-10 15:03:00" itemprop="dateCreated datePublished" datetime="2013-10-10T15:03:00+08:00">2013-10-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Phalcon/" itemprop="url" rel="index"><span itemprop="name">Phalcon</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/10/10/phalcon-work-with-router/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/10/phalcon-work-with-router/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="啟動方式"><a class="header-anchor" href="#啟動方式"> </a>啟動方式</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$di-&gt;set(&#x27;router&#x27;, function () &#123;</span><br><span class="line">    $router = new \Phalcon\Mvc\Router();</span><br><span class="line">    $router-&gt;add(&quot;/:controller/:action/:params&quot;, array(</span><br><span class="line">        &#x27;controller&#x27; =&gt; 1,</span><br><span class="line">        &#x27;action&#x27; =&gt; 2,</span><br><span class="line">        &#x27;params&#x27; =&gt; 3</span><br><span class="line">    ));</span><br><span class="line"></span><br><span class="line">    return $router;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="Defining-Route"><a class="header-anchor" href="#Defining-Route"> </a>Defining  Route</h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Placeholder</th>
+<th style="text-align:left">Regular Expression</th>
+<th style="text-align:left">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">/:module</td>
+<td style="text-align:left">/([a-zA-Z0-9_-]+)</td>
+<td style="text-align:left">Matches a valid module name with alpha-numeric characters only</td>
+</tr>
+<tr>
+<td style="text-align:left">/:controller</td>
+<td style="text-align:left">/([a-zA-Z0-9_-]+)</td>
+<td style="text-align:left">Matches a valid controller name with alpha-numeric characters only</td>
+</tr>
+<tr>
+<td style="text-align:left">/:action</td>
+<td style="text-align:left">/([a-zA-Z0-9_]+)</td>
+<td style="text-align:left">Matches a valid action name with alpha-numeric characters only</td>
+</tr>
+<tr>
+<td style="text-align:left">/:params</td>
+<td style="text-align:left">(/.<em>)</em></td>
+<td style="text-align:left">Matches a list of optional words separated by slashes. Use only this placeholder at the end of a route</td>
+</tr>
+<tr>
+<td style="text-align:left">/:namespace</td>
+<td style="text-align:left">/([a-zA-Z0-9_-]+)</td>
+<td style="text-align:left">Matches a single level namespace name</td>
+</tr>
+<tr>
+<td style="text-align:left">/:int</td>
+<td style="text-align:left">/([0-9]+)</td>
+<td style="text-align:left">Matches an integer parameter</td>
+</tr>
+</tbody>
+</table>
+<p>/:params : 只能放在router的最後面</p>
+<p>#controller內取得route裡面參數的方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$this-&gt;dispatcher-&gt;getParam(0);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParam(&#x27;paraName&#x27;);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParams(); &lt;=array</span><br></pre></td></tr></table></figure>
+<p>#如果是/?var=value</p>
+<p>就用原本$_GET[『』]的方式取值就可以了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/09/memo-common-git-commands/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -653,7 +790,7 @@ app/views/{{controllerName}}/xxx.volt
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">343</span>
+          <span class="site-state-item-count">344</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -666,7 +803,7 @@ app/views/{{controllerName}}/xxx.volt
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">75</span>
+        <span class="site-state-item-count">77</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

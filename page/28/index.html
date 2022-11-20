@@ -200,6 +200,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/24/javascript-es2015/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/10/24/javascript-es2015/" class="post-title-link" itemprop="url">[Javascript] ES2015 - Default args, Spread operator</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-10-24 16:03:00" itemprop="dateCreated datePublished" datetime="2015-10-24T16:03:00+08:00">2015-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/10/24/javascript-es2015/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/24/javascript-es2015/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Default-args"><a class="header-anchor" href="#Default-args"> </a>Default args</h2>
+<p>可以將在function的參數給予預設值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function fnWithDefaultArg(a,b=[])&#123;</span><br><span class="line">    // some codes</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Spread-operator"><a class="header-anchor" href="#Spread-operator"> </a>Spread operator</h2>
+<p>The spread operator allows an expression to be expanded in places where multiple arguments (for function calls) or multiple elements (for array literals) are expected.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function fn(a,b,c)&#123;</span><br><span class="line">  // some codes</span><br><span class="line">&#125;</span><br><span class="line">var args = [1,2,3];</span><br><span class="line">fn(...args); &lt;= spread operator</span><br></pre></td></tr></table></figure>
+<p>A more powerful array literal</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var parts = [&#x27;shoulders&#x27;, &#x27;knees&#x27;];</span><br><span class="line">var lyrics = [&#x27;head&#x27;, ...parts, &#x27;and&#x27;, &#x27;toes&#x27;]; // [&quot;head&quot;, &quot;shoulders&quot;, &quot;knees&quot;, &quot;and&quot;, &quot;toes&quot;]</span><br></pre></td></tr></table></figure>
+<p>A better push</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr1 = [0, 1, 2];</span><br><span class="line">var arr2 = [3, 4, 5];</span><br><span class="line">arr1.push(...arr2);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1158,96 +1256,6 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/06/24/vfp-read-ini-files/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/06/24/vfp-read-ini-files/" class="post-title-link" itemprop="url">[VFP] 讀ini檔案</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-06-25 01:31:00" itemprop="dateCreated datePublished" datetime="2015-06-25T01:31:00+08:00">2015-06-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VFP/" itemprop="url" rel="index"><span itemprop="name">VFP</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/06/24/vfp-read-ini-files/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/24/vfp-read-ini-files/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">********************</span><br><span class="line">****讀取ini file****</span><br><span class="line">********************</span><br><span class="line">function getinit(mfilename,msection,mentry)</span><br><span class="line">    local lcinifile,lcvalue,lcbuffer,luentryvalue,lnnumbytes</span><br><span class="line"></span><br><span class="line">*-- DECLARE DLL statements for reading/writing to private INI files</span><br><span class="line">    declare integer GetPrivateProfileString in Win32API ;</span><br><span class="line">        string cSection, string cKey, string cDefault, string @cBuffer, ;</span><br><span class="line">        integer nBufferSize, string cINIFile</span><br><span class="line"></span><br><span class="line">    local minivalue, mresult, mbuffersize</span><br><span class="line">    mbuffersize = 255</span><br><span class="line">    minivalue = spac(mbuffersize)</span><br><span class="line">    mresult=getprivateprofilestring(msection,mentry,&quot;*NULL*&quot;,@minivalue,mbuffersize,mfilename)</span><br><span class="line">    minivalue=substr(minivalue,1,mresult)</span><br><span class="line">    if minivalue=&quot;*NULL*&quot;</span><br><span class="line">        minivalue=.null.</span><br><span class="line">    endif</span><br><span class="line">    return minivalue</span><br><span class="line">endfun</span><br></pre></td></tr></table></figure>
-<p>demo config ini file</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[section]</span><br><span class="line">entryName=return value</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1319,7 +1327,7 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">343</span>
+          <span class="site-state-item-count">344</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -1332,7 +1340,7 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">75</span>
+        <span class="site-state-item-count">77</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
