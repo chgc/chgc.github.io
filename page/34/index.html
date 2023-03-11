@@ -200,6 +200,124 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/14/python-20131114/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/11/14/python-20131114/" class="post-title-link" itemprop="url">[python] 20131114</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-11-14 13:53:00" itemprop="dateCreated datePublished" datetime="2013-11-14T13:53:00+08:00">2013-11-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/11/14/python-20131114/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/14/python-20131114/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Tuples"><a class="header-anchor" href="#Tuples"> </a>Tuples</h1>
+<p>很像list,但是一旦建立後值就沒有辦法被更改 (ex. list[1]= 『b』 &lt;=會出錯)
+用途: 用來儲存一些常用(const)變數</p>
+<h1 id="Set"><a class="header-anchor" href="#Set"> </a>Set</h1>
+<p>set會將重複得值給排除掉(有distinct的味道)
+建立set的方式有set() 或 a= {『something』,『something』}
+如果要建立空的set，只能透過set()的方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = set(&#x27;abracadabra&#x27;)</span><br><span class="line">&gt;&gt;&gt; b = set(&#x27;alacazam&#x27;)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&#123;&#x27;d&#x27;, &#x27;r&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;b&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">&#123;&#x27;m&#x27;, &#x27;l&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;z&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a^b  # value in a or b not in both, 不含兩邊都有值</span><br><span class="line">&#123;&#x27;r&#x27;, &#x27;z&#x27;, &#x27;d&#x27;, &#x27;b&#x27;, &#x27;m&#x27;, &#x27;l&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a-b # value in a not b</span><br><span class="line">&#123;&#x27;d&#x27;, &#x27;b&#x27;, &#x27;r&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a|b # value in a or b</span><br><span class="line">&#123;&#x27;r&#x27;, &#x27;z&#x27;, &#x27;d&#x27;, &#x27;a&#x27;, &#x27;c&#x27;, &#x27;b&#x27;, &#x27;m&#x27;, &#x27;l&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; a&amp;b # value in a and b</span><br><span class="line">&#123;&#x27;a&#x27;, &#x27;c&#x27;&#125;</span><br></pre></td></tr></table></figure>
+<p>#Dictionaries
+as c# Dictionary&lt;string, string&gt;
+操作方式</p>
+<ul>
+<li>指定: dict[key]= value</li>
+<li>刪除: del dict[key]</li>
+<li>列表: list(dict.key())</li>
+<li>排序: sorted(dict.key())</li>
+</ul>
+<p>建立的方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dict([(&#x27;sape&#x27;, 4139), (&#x27;guido&#x27;, 4127), (&#x27;jack&#x27;, 4098)])</span><br><span class="line">&#123;&#x27;sape&#x27;: 4139, &#x27;jack&#x27;: 4098, &#x27;guido&#x27;: 4127&#125;</span><br><span class="line">&gt;&gt;&gt; dict(sape=4139, guido=4127, jack=4098)</span><br><span class="line">&#123;&#x27;sape&#x27;: 4139, &#x27;jack&#x27;: 4098, &#x27;guido&#x27;: 4127&#125;</span><br></pre></td></tr></table></figure>
+<p>##looping</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; knights = &#123;&#x27;gallahad&#x27;: &#x27;the pure&#x27;, &#x27;robin&#x27;: &#x27;the brave&#x27;&#125;</span><br><span class="line">&gt;&gt;&gt; for k, v in knights.items():</span><br><span class="line">...     print(k, v)</span><br><span class="line">...</span><br><span class="line">gallahad the pure</span><br><span class="line">robin the brave</span><br></pre></td></tr></table></figure>
+<p>#More on Conditions
+比較的方法:</p>
+<ul>
+<li>in, not in</li>
+<li>is, is not</li>
+<li>and, or : 當遇到第一個成立條件時，就跳出了</li>
+</ul>
+<p>比較可以連續串接: eg: a&lt;b==c tests whether a is thess then b and moreover b equals c</p>
+<p>比較的順序: 左到右</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/13/python20131113/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1177,112 +1295,6 @@ route::get(『something』,『someController@someaction』)</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/16/laravel-study-note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/10/16/laravel-study-note/" class="post-title-link" itemprop="url">[Laravel] Study Note.</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2013-10-16 08:56:00" itemprop="dateCreated datePublished" datetime="2013-10-16T08:56:00+08:00">2013-10-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Laravel/" itemprop="url" rel="index"><span itemprop="name">Laravel</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/10/16/laravel-study-note/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/16/laravel-study-note/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>#database config path</p>
-<p>/app/config/database.php</p>
-<p>#star up path</p>
-<p>serverName/laravel/public</p>
-<hr>
-<p>#php artisan migrate
-這裡migrate的觀念與EntityFramework 5 Code First的觀念相同。</p>
-<h2 id="migrate-install"><a class="header-anchor" href="#migrate-install"> </a>migrate:install</h2>
-<p>安裝Migration table, 會在資料庫中創建一個migrateion table, 紀錄migration版本</p>
-<h2 id="migrate-make-somethingsomething"><a class="header-anchor" href="#migrate-make-somethingsomething"> </a>migrate:make somethingsomething</h2>
-<p>建立新版的資料庫異動檔案</p>
-<h2 id="migrate"><a class="header-anchor" href="#migrate"> </a>migrate</h2>
-<p>執行資料庫格式升級 --&gt; function up()</p>
-<h2 id="migrate-rollback"><a class="header-anchor" href="#migrate-rollback"> </a>migrate:rollback</h2>
-<p>執行資料庫格式降級 --&gt; function down()</p>
-<h2 id="migrate-table-file-location-app-database-migrations"><a class="header-anchor" href="#migrate-table-file-location-app-database-migrations"> </a>migrate table file location : app/database/migrations/</h2>
-<figure class="highlight php"><figcaption><span>升級動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">up</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">// create new table</span></span><br><span class="line"><span class="title class_">Schema</span>::<span class="title function_ invoke__">table</span>(<span class="string">&#x27;users&#x27;</span>, function(<span class="variable">$table</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">create</span>();</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">increments</span>(<span class="string">&#x27;id&#x27;</span>);<span class="comment">//id fields with AUTO_INCREMENT</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;email&#x27;</span>);<span class="comment">//email field with varchar(255)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;real_name&#x27;</span>,<span class="number">100</span>);<span class="comment">//real_field with varchar(100)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;password&#x27;</span>);</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">timestamps</span>();<span class="comment">// created_at,updated_at timestamps(2 fields)</span></span><br><span class="line"> &#125;);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h2 id="code￼1"><a class="header-anchor" href="#code￼1"> </a><figure class="highlight php"><figcaption><span>降級動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">down</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//Drop Table</span></span><br><span class="line">	<span class="title class_">Schema</span>::<span class="title function_ invoke__">drop</span>(<span class="string">&#x27;users&#x27;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></h2>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1354,7 +1366,7 @@ route::get(『something』,『someController@someaction』)</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">344</span>
+          <span class="site-state-item-count">345</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

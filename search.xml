@@ -20438,6 +20438,66 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Angular] Singals 嘗鮮</title>
+    <url>/2023/03/11/angular-signals/</url>
+    <content><![CDATA[<p>Angular 嘗試在下一世代中加入新的 reactive 機制，試圖找到取代 zone.js 的方式，因此引進了 <code>signals</code> 來試試看是否能成為下一代 change detection 的選擇。想要嘗試的朋友可以安裝 <code>angular cli v16</code> 的版本</p>
+<span id="more"></span>
+<h2 id="什麼是-Signals"><a class="header-anchor" href="#什麼是-Signals"> </a>什麼是 Signals</h2>
+<p>Signals 不是 Angular team 創造出來的 library，而是引用其他 framework 內所有使用的一個機制，如果沒記錯應該是來自 <code>[SolidJS](https://www.solidjs.com/tutorial/introduction_signals)</code></p>
+<blockquote>
+<p><em>Signals</em> are the cornerstone of reactivity in Solid. They contain values that change over time; when you change a signal’s value, it automatically updates anything that uses it.</p>
+</blockquote>
+<h2 id="如何在-Angular-內使用-Signals"><a class="header-anchor" href="#如何在-Angular-內使用-Signals"> </a>如何在 Angular 內使用 Signals</h2>
+<h3 id="建立-signal-物件"><a class="header-anchor" href="#建立-signal-物件"> </a>建立 signal 物件</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, signal &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;....&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  count = <span class="title function_">signal</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>singal</code> 介面</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> signal&lt;T&gt;(<span class="attr">initialValue</span>: T, equal?: <span class="title class_">ValueEqualityFn</span>&lt;T&gt;): <span class="title class_">SettableSignal</span>&lt;T&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="顯示"><a class="header-anchor" href="#顯示"> </a>顯示</h3>
+<p>要取得 signal 物件值的方式很直接，直接當 function 使用即可，接續上面的範例</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;&#123; count() &#125;&#125; </span><br></pre></td></tr></table></figure>
+<p>這樣就可以在 html 上顯示 count 的值了，或許會問不要在 html render 時寫 function call 嗎，會有效能問題，這裡這樣使用是沒有問題的 (之前有聽 angular team 說為什麼不會有問題，但我忘記理由了)</p>
+<h3 id="更新"><a class="header-anchor" href="#更新"> </a>更新</h3>
+<p>當建立一個 signal 物件後，更新值得方式有三種，<code>set</code> 、<code>update</code>  和 <code>mutate</code></p>
+<ul>
+<li>
+<p>set: Directly set the signal to a new value, and notify any dependents.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">set</span>(<span class="attr">value</span>: T): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>update: Update the value of the signal based on its current value, and notify any dependents.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">update</span>(<span class="attr">updateFn</span>: <span class="function">(<span class="params">value: T</span>) =&gt;</span> T): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>mutate: Update the current value by mutating it in-place, and notify any dependents.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">mutate</span>(<span class="attr">mutatorFn</span>: <span class="function">(<span class="params">value: T</span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="範例"><a class="header-anchor" href="#範例"> </a>範例</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CommonModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, signal &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    Count: &#123;&#123; count() &#125;&#125;</span></span><br><span class="line"><span class="string">    &lt;button (click)=&quot;increase()&quot;&gt;+&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;button (click)=&quot;reset()&quot;&gt;reset&lt;/button&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="attr">styleUrls</span>: [<span class="string">&#x27;./app.component.css&#x27;</span>],</span><br><span class="line">  <span class="attr">standalone</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">CommonModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  count = <span class="title function_">signal</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">reset</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">count</span>.<span class="title function_">set</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">increase</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">count</span>.<span class="title function_">update</span>(<span class="function">(<span class="params">c</span>) =&gt;</span> ++c);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="進階用法"><a class="header-anchor" href="#進階用法"> </a>進階用法</h2>
+<p>開頭有提到 signals 是一個 reactive library，當然不會只有這種單一值的使用情境，一定會有錯綜複雜的使用情境，這時候會怎麼使用呢</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, signal, computed &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line"> ...</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;p&gt;Count: &#123;&#123; count() &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Double: &#123;&#123; double() &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">	...</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  count = <span class="title function_">signal</span>(<span class="number">0</span>);</span><br><span class="line">  double = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> <span class="variable language_">this</span>.<span class="title function_">count</span>() * <span class="number">2</span>);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>computed</code> 可以讓我們與其他 signal 作互動結合，當 computed 內的 signal 值改變時，此 computed 結果也會跟著改變，使用上算直覺</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> computed&lt;T&gt;(<span class="attr">computation</span>: <span class="function">() =&gt;</span> T, equal?: <span class="title class_">ValueEqualityFn</span>&lt;T&gt;): <span class="title class_">Signal</span>&lt;T&gt;;</span><br></pre></td></tr></table></figure>
+<p>除了 computed，還有一個是 <code>effect</code></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">effect</span>(<span class="params">effectFn: () =&gt; <span class="built_in">void</span></span>): <span class="title class_">Effect</span>;</span><br></pre></td></tr></table></figure>
+<p>須留意的是兩者回傳的物件是不一樣的，<code>computed</code> 會回傳一個新的 <code>Signal</code> 物件，但 <code>effect</code> 是回傳一個 <code>Effect</code> 物件，這 Effect 型別的物件可以允許我們停用 <code>effect</code> ，類似 Observable.subscribe 會回傳 subscription 的概念</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">effect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="title function_">count</span>());</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="RxJS-怎麼辦"><a class="header-anchor" href="#RxJS-怎麼辦"> </a>RxJS 怎麼辦?</h2>
+<p>Signal 的使用方式與 RxJS 其實有很大部分是重疊的，但 RxJS 有很好用的 operators，這時候該怎麼辦呢? 是否有方法能結合兩者。在 GitHub 上面有一個 PR 就是要解決這個問題，Angular team 提供兩個 function，<code>fromSignal</code> 和 <code>fromObservable</code>，這過這兩個 function  可以將 Observable 和 Signal 物件做彼此轉換，我是覺得這樣就可保留相當的彈性了，當然也要等實際使用在產品才能知道會有那些坑</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://github.com/angular/angular/discussions/49090">[Watch This Space] Angular Reactivity with Signals</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
