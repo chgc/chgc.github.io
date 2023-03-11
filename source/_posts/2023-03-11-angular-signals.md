@@ -158,4 +158,5 @@ Signal 的使用方式與 RxJS 其實有很大部分是重疊的，但 RxJS 有�
 ## 參考資料
 
 - [[Watch This Space] Angular Reactivity with Signals](https://github.com/angular/angular/discussions/49090)
+- [Angular & signals. Everything you need to know.](https://dev.to/this-is-angular/angular-signals-everything-you-need-to-know-2b7g)
 
