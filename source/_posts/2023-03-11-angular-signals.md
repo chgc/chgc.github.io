@@ -1,9 +1,9 @@
 ---
 layout: post
-title: `[Angular] singals 嘗鮮`
+title: '[Angular] Singals 嘗鮮'
 comments: true
-typora-root-url: 2023-03-11-angular-signals
-typora-copy-images-to: 2023-03-11-angular-signals
+typora-root-url: 2023-03-11-angular-signals/
+typora-copy-images-to: 2023-03-11-angular-signals/
 date: 2023-03-11 09:45:03
 categories: Angular
 tags: Angular
