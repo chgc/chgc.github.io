@@ -15,9 +15,11 @@ Angular 嘗試在下一世代中加入新的 reactive 機制，試圖找到取�
 
 ## 什麼是 Signals
 
-Signals 不是 Angular team 創造出來的 library，而是引用其他 framework 內所有使用的一個機制，如果沒記錯應該是來自 `[SolidJS](https://www.solidjs.com/tutorial/introduction_signals)`
+Signals 不是 Angular team 創造出來的 library，而是引用其他 framework 內所有使用的一個機制，如果沒記錯應該是來自 [SolidJS](https://www.solidjs.com/tutorial/introduction_signals)
 
 > *Signals* are the cornerstone of reactivity in Solid. They contain values that change over time; when you change a signal's value, it automatically updates anything that uses it.
+
+說是這樣子說，Angular Team 是自己實做整個 Signal 機制，相關的程式碼連結我會附在下面
 
 ## 如何在 Angular 內使用 Signals 
 
@@ -142,21 +144,44 @@ export declare function effect(effectFn: () => void): Effect;
 須留意的是兩者回傳的物件是不一樣的，`computed` 會回傳一個新的 `Signal` 物件，但 `effect` 是回傳一個 `Effect` 物件，這 Effect 型別的物件可以允許我們停用 `effect` ，類似 Observable.subscribe 會回傳 subscription 的概念
 
 ```typescript
-  ngOnInit() {
+  constructor() {
     effect(() => {
       console.log(this.count());
     });
   }
 ```
 
+這邊要留意的是 `effect` 宣告的地方跟 `inject()` 是一樣的，只能在 constructor 宣告，不然會噴錯誤訊息給你看
+
+![image-20230407225822130](image-20230407225822130.png)
+
 ## RxJS 怎麼辦?
 
 Signal 的使用方式與 RxJS 其實有很大部分是重疊的，但 RxJS 有很好用的 operators，這時候該怎麼辦呢? 是否有方法能結合兩者。在 GitHub 上面有一個 PR 就是要解決這個問題，Angular team 提供兩個 function，`fromSignal` 和 `fromObservable`，這過這兩個 function  可以將 Observable 和 Signal 物件做彼此轉換，我是覺得這樣就可保留相當的彈性了，當然也要等實際使用在產品才能知道會有那些坑
 
+[Update] [Angular  v16.0.0-next.6](https://github.com/angular/angular/releases/tag/16.0.0-next.6) 實做了 `fromObservable` 和 `fromSignal` 兩個方法，想玩的朋友可以更新到新版
 
+附上範例程式
+
+```typescript
+// fromSignal
+count = signal<number[]>([]);
+double = computed(() => this.count().length * 2);
+triple$ = fromSignal(this.count).pipe(map((value) => value.length * 3));
+
+// fromObservable
+counter$ = new BehaviorSubject(0);
+counter = fromObservable(this.counter$);
+
+```
+
+宣告的位置跟 `effect` 是一樣的，不然也會噴錯誤訊息給你享用
+
+![image-20230407230242645](image-20230407230242645.png)
 
 ## 參考資料
 
 - [[Watch This Space] Angular Reactivity with Signals](https://github.com/angular/angular/discussions/49090)
 - [Angular & signals. Everything you need to know.](https://dev.to/this-is-angular/angular-signals-everything-you-need-to-know-2b7g)
+- [Source Code - Signal](https://github.com/angular/angular/tree/main/packages/core/src/signals)
 
