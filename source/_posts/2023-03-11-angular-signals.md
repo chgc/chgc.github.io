@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] Singals 嘗鮮'
+title: '[Angular] Signals 嘗鮮'
 comments: true
 typora-root-url: 2023-03-11-angular-signals/
 typora-copy-images-to: 2023-03-11-angular-signals/
@@ -32,7 +32,7 @@ export class AppComponent {
 }
 ```
 
-`singal` 介面
+`signal` 介面
 
 ```typescript
 function signal<T>(initialValue: T, equal?: ValueEqualityFn<T>): SettableSignal<T>
