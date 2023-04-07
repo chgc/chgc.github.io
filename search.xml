@@ -20443,10 +20443,11 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
     <content><![CDATA[<p>Angular 嘗試在下一世代中加入新的 reactive 機制，試圖找到取代 zone.js 的方式，因此引進了 <code>signals</code> 來試試看是否能成為下一代 change detection 的選擇。想要嘗試的朋友可以安裝 <code>angular cli v16</code> 的版本</p>
 <span id="more"></span>
 <h2 id="什麼是-Signals"><a class="header-anchor" href="#什麼是-Signals"> </a>什麼是 Signals</h2>
-<p>Signals 不是 Angular team 創造出來的 library，而是引用其他 framework 內所有使用的一個機制，如果沒記錯應該是來自 <code>[SolidJS](https://www.solidjs.com/tutorial/introduction_signals)</code></p>
+<p>Signals 不是 Angular team 創造出來的 library，而是引用其他 framework 內所有使用的一個機制，如果沒記錯應該是來自 <a href="https://www.solidjs.com/tutorial/introduction_signals">SolidJS</a></p>
 <blockquote>
 <p><em>Signals</em> are the cornerstone of reactivity in Solid. They contain values that change over time; when you change a signal’s value, it automatically updates anything that uses it.</p>
 </blockquote>
+<p>說是這樣子說，Angular Team 是自己實做整個 Signal 機制，相關的程式碼連結我會附在下面</p>
 <h2 id="如何在-Angular-內使用-Signals"><a class="header-anchor" href="#如何在-Angular-內使用-Signals"> </a>如何在 Angular 內使用 Signals</h2>
 <h3 id="建立-signal-物件"><a class="header-anchor" href="#建立-signal-物件"> </a>建立 signal 物件</h3>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, signal &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;....&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  count = <span class="title function_">signal</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -20482,13 +20483,21 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 <p>除了 computed，還有一個是 <code>effect</code></p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">effect</span>(<span class="params">effectFn: () =&gt; <span class="built_in">void</span></span>): <span class="title class_">Effect</span>;</span><br></pre></td></tr></table></figure>
 <p>須留意的是兩者回傳的物件是不一樣的，<code>computed</code> 會回傳一個新的 <code>Signal</code> 物件，但 <code>effect</code> 是回傳一個 <code>Effect</code> 物件，這 Effect 型別的物件可以允許我們停用 <code>effect</code> ，類似 Observable.subscribe 會回傳 subscription 的概念</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">effect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="title function_">count</span>());</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">effect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="title function_">count</span>());</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這邊要留意的是 <code>effect</code> 宣告的地方跟 <code>inject()</code> 是一樣的，只能在 constructor 宣告，不然會噴錯誤訊息給你看</p>
+<p><img src="image-20230407225822130.png" alt="image-20230407225822130"></p>
 <h2 id="RxJS-怎麼辦"><a class="header-anchor" href="#RxJS-怎麼辦"> </a>RxJS 怎麼辦?</h2>
 <p>Signal 的使用方式與 RxJS 其實有很大部分是重疊的，但 RxJS 有很好用的 operators，這時候該怎麼辦呢? 是否有方法能結合兩者。在 GitHub 上面有一個 PR 就是要解決這個問題，Angular team 提供兩個 function，<code>fromSignal</code> 和 <code>fromObservable</code>，這過這兩個 function  可以將 Observable 和 Signal 物件做彼此轉換，我是覺得這樣就可保留相當的彈性了，當然也要等實際使用在產品才能知道會有那些坑</p>
+<p>[Update] <a href="https://github.com/angular/angular/releases/tag/16.0.0-next.6">Angular  v16.0.0-next.6</a> 實做了 <code>fromObservable</code> 和 <code>fromSignal</code> 兩個方法，想玩的朋友可以更新到新版</p>
+<p>附上範例程式</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// fromSignal</span></span><br><span class="line">count = signal&lt;<span class="built_in">number</span>[]&gt;([]);</span><br><span class="line">double = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> <span class="variable language_">this</span>.<span class="title function_">count</span>().<span class="property">length</span> * <span class="number">2</span>);</span><br><span class="line">triple$ = <span class="title function_">fromSignal</span>(<span class="variable language_">this</span>.<span class="property">count</span>).<span class="title function_">pipe</span>(<span class="title function_">map</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> value.<span class="property">length</span> * <span class="number">3</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// fromObservable</span></span><br><span class="line">counter$ = <span class="keyword">new</span> <span class="title class_">BehaviorSubject</span>(<span class="number">0</span>);</span><br><span class="line">counter = <span class="title function_">fromObservable</span>(<span class="variable language_">this</span>.<span class="property">counter$</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>宣告的位置跟 <code>effect</code> 是一樣的，不然也會噴錯誤訊息給你享用</p>
+<p><img src="image-20230407230242645.png" alt="image-20230407230242645"></p>
 <h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
 <ul>
 <li><a href="https://github.com/angular/angular/discussions/49090">[Watch This Space] Angular Reactivity with Signals</a></li>
 <li><a href="https://dev.to/this-is-angular/angular-signals-everything-you-need-to-know-2b7g">Angular &amp; signals. Everything you need to know.</a></li>
+<li><a href="https://github.com/angular/angular/tree/main/packages/core/src/signals">Source Code - Signal</a></li>
 </ul>
 ]]></content>
       <categories>
