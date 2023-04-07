@@ -20438,7 +20438,7 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
-    <title>[Angular] Singals 嘗鮮</title>
+    <title>[Angular] Signals 嘗鮮</title>
     <url>/2023/03/11/angular-signals/</url>
     <content><![CDATA[<p>Angular 嘗試在下一世代中加入新的 reactive 機制，試圖找到取代 zone.js 的方式，因此引進了 <code>signals</code> 來試試看是否能成為下一代 change detection 的選擇。想要嘗試的朋友可以安裝 <code>angular cli v16</code> 的版本</p>
 <span id="more"></span>
@@ -20450,7 +20450,7 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 <h2 id="如何在-Angular-內使用-Signals"><a class="header-anchor" href="#如何在-Angular-內使用-Signals"> </a>如何在 Angular 內使用 Signals</h2>
 <h3 id="建立-signal-物件"><a class="header-anchor" href="#建立-signal-物件"> </a>建立 signal 物件</h3>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, signal &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;....&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  count = <span class="title function_">signal</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>singal</code> 介面</p>
+<p><code>signal</code> 介面</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> signal&lt;T&gt;(<span class="attr">initialValue</span>: T, equal?: <span class="title class_">ValueEqualityFn</span>&lt;T&gt;): <span class="title class_">SettableSignal</span>&lt;T&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="顯示"><a class="header-anchor" href="#顯示"> </a>顯示</h3>
 <p>要取得 signal 物件值的方式很直接，直接當 function 使用即可，接續上面的範例</p>
