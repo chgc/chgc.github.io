@@ -157,27 +157,27 @@ export declare function effect(effectFn: () => void): Effect;
 
 ## RxJS 怎麼辦?
 
-Signal 的使用方式與 RxJS 其實有很大部分是重疊的，但 RxJS 有很好用的 operators，這時候該怎麼辦呢? 是否有方法能結合兩者。在 GitHub 上面有一個 PR 就是要解決這個問題，Angular team 提供兩個 function，`fromSignal` 和 `fromObservable`，這過這兩個 function  可以將 Observable 和 Signal 物件做彼此轉換，我是覺得這樣就可保留相當的彈性了，當然也要等實際使用在產品才能知道會有那些坑
+Signal 的使用方式與 RxJS 其實有很大部分是重疊的，但 RxJS 有很好用的 operators，這時候該怎麼辦呢? 是否有方法能結合兩者。在 GitHub 上面有一個 PR 就是要解決這個問題，Angular team 提供兩個 function，`toSignal` 和 `toObservable`，這過這兩個 function  可以將 Observable 和 Signal 物件做彼此轉換，我是覺得這樣就可保留相當的彈性了，當然也要等實際使用在產品才能知道會有那些坑
 
 [Update] [Angular  v16.0.0-next.6](https://github.com/angular/angular/releases/tag/16.0.0-next.6) 實做了 `fromObservable` 和 `fromSignal` 兩個方法，想玩的朋友可以更新到新版
 
 附上範例程式
 
 ```typescript
-// fromSignal
+// toObservable
 count = signal<number[]>([]);
 double = computed(() => this.count().length * 2);
-triple$ = fromSignal(this.count).pipe(map((value) => value.length * 3));
+triple$ = toObservable(this.count).pipe(map((value) => value.length * 3));
 
-// fromObservable
+// toSignal
 counter$ = new BehaviorSubject(0);
-counter = fromObservable(this.counter$);
+counter = toSignal(this.counter$);
 
 ```
 
 宣告的位置跟 `effect` 是一樣的，不然也會噴錯誤訊息給你享用
 
-![image-20230407230242645](image-20230407230242645.png)
+![image-20230415111504566](image-20230415111504566.png)
 
 ## 參考資料
 
