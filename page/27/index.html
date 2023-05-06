@@ -200,6 +200,127 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/04/14/angular2-play-with-redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/04/14/angular2-play-with-redux/" class="post-title-link" itemprop="url">[Angular] play with Redux part 1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2016-04-15 07:09:00" itemprop="dateCreated datePublished" datetime="2016-04-15T07:09:00+08:00">2016-04-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/04/14/angular2-play-with-redux/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/14/angular2-play-with-redux/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Redux是根據Facebook的flux所產出的一個架構. 簡單介紹請參考<a target="_blank" rel="noopener" href="https://youtu.be/s9AC8KTcce8">這裡</a></p>
+<p>簡單的動作及資料流程如下
+<img src="http://user-image.logdown.io/user/4862/blog/4871/post/710542/PhIpkTcMTvOGWU1XGjfY_Untitled%20Diagram.png" alt="Untitled Diagram.png"></p>
+<p>複雜一點的流程圖如下
+<img src="http://user-image.logdown.io/user/4862/blog/4871/post/710542/6Or79jM8QmuFVuhUhrJu_moreDetailReduxFlow.png" alt="moreDetailReduxFlow.png"></p>
+<p>每一個階段都有他應該要做的事情
+- Action: 處理資料，呼叫API, 任何有可能產生副作用的行為都在這階段處理, 通常都是回傳JSON object.<br>
+- Reducer: 根據Action傳來的動作和資料，來決定與原本的資料(In Store)的關係，例如、新增、更新、移除或過濾等,回傳要顯示在View上面的資料</p>
+<p>##程式碼
+@Component程式的基本架構</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    <span class="title class_">Component</span>,    </span><br><span class="line">    <span class="title class_">Inject</span>,</span><br><span class="line">    <span class="title class_">ApplicationRef</span></span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">TodoAction</span> <span class="keyword">from</span> <span class="string">&#x27;../../actions/ToDo&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@<span class="title class_">Component</span>(&#123;</span><br><span class="line">    <span class="attr">selector</span>: <span class="string">&#x27;ck-todo-app&#x27;</span>,    </span><br><span class="line">    <span class="attr">template</span>: <span class="built_in">require</span>(<span class="string">&#x27;./TodoPage.html&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CkTodoApp</span> &#123;</span><br><span class="line">    private <span class="attr">disconnect</span>: <span class="title class_">Function</span>;</span><br><span class="line">    private <span class="attr">unsubscribe</span>: <span class="title class_">Function</span>;</span><br><span class="line">        </span><br><span class="line">    private <span class="attr">items</span>: any;</span><br><span class="line">    private <span class="attr">task</span>: any;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">        @Inject(<span class="string">&#x27;ngRedux&#x27;</span>) private ngRedux,</span></span><br><span class="line"><span class="params">        private applicationRef: ApplicationRef</span>) &#123;       </span><br><span class="line">    &#125;    </span><br><span class="line"></span><br><span class="line">    <span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">disconnect</span> = <span class="variable language_">this</span>.<span class="property">ngRedux</span>.<span class="title function_">connect</span>(</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">mapStateToThis</span>,</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">mapDispatchToThis</span>)(<span class="variable language_">this</span>);</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">unsubscribe</span> = <span class="variable language_">this</span>.<span class="property">ngRedux</span>.<span class="title function_">subscribe</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">applicationRef</span>.<span class="title function_">tick</span>();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">ngOnDestroy</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">unsubscribe</span>();</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">disconnect</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 註冊store到變數上</span></span><br><span class="line">    <span class="title function_">mapStateToThis</span>(<span class="params">state</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">items</span>: state.<span class="property">todo</span>,</span><br><span class="line">            <span class="attr">task</span>: state.<span class="property">newtodo</span></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 註冊功能到這個Class裡</span></span><br><span class="line">    <span class="title function_">mapDispatchToThis</span>(<span class="params">dispatch</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">add</span>: <span class="function">(<span class="params">task</span>) =&gt;</span> <span class="title function_">dispatch</span>(<span class="title class_">TodoAction</span>.<span class="title function_">add</span>(<span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, task))),</span><br><span class="line">            <span class="attr">remove</span>: <span class="function">(<span class="params">task</span>) =&gt;</span> <span class="title function_">dispatch</span>(<span class="title class_">TodoAction</span>.<span class="title function_">remove</span>(task))</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>TodoPage.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;clearfix mx-auto col-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>TODO App<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;clearfix mxn2&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> [(<span class="attr">ngModel</span>)]=<span class="string">&quot;task.content&quot;</span> <span class="attr">class</span>=<span class="string">&quot;input inline-block&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-primary inline-block&quot;</span> (<span class="attr">click</span>)=<span class="string">&quot;add(task)&quot;</span>&gt;</span>Add<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;clearfix mxn2&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;list-reset&quot;</span> *<span class="attr">ngFor</span>=<span class="string">&quot;#item of items&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; item.content &#125;&#125; <span class="tag">&lt;<span class="name">span</span> (<span class="attr">click</span>)=<span class="string">&quot;remove(item)&quot;</span>&gt;</span>x<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>###註冊Store as provider in Angular2 application</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; enableProdMode, provide &#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; bootstrap&#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/bootstrap&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">ROUTER_PROVIDERS</span>, <span class="variable constant_">APP_BASE_HREF</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;angular2/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CkDemoApp</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./containers/main-app&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 註冊redux store用</span></span><br><span class="line"><span class="keyword">import</span> configureStore <span class="keyword">from</span> <span class="string">&#x27;./store/configure-store&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> provider = <span class="built_in">require</span>(<span class="string">&#x27;ng2-redux&#x27;</span>).<span class="property">provider</span>;</span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">configureStore</span>(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">declare <span class="keyword">let</span> <span class="attr">__PRODUCTION__</span>: any;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (__PRODUCTION__) &#123;</span><br><span class="line">    <span class="title function_">enableProdMode</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">bootstrap</span>(<span class="title class_">CkDemoApp</span>, [</span><br><span class="line">    <span class="title function_">provider</span>(store),</span><br><span class="line">    <span class="variable constant_">ROUTER_PROVIDERS</span>,</span><br><span class="line">    <span class="title function_">provide</span>(<span class="variable constant_">APP_BASE_HREF</span>, &#123; <span class="attr">useValue</span>: <span class="string">&#x27;/&#x27;</span> &#125;)</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>store/configureStore</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">///&lt;reference path=&quot;./dev-types.d.ts&quot;/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;createStore, applyMiddleware, compose&#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;fromJS&#125; <span class="keyword">from</span> <span class="string">&#x27;immutable&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ReduxThunk</span> <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> rootReducer <span class="keyword">from</span> <span class="string">&#x27;../reducers&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> persistState = <span class="built_in">require</span>(<span class="string">&#x27;redux-localstorage&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">configureStore</span>(<span class="params">initialState</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> store = <span class="title function_">compose</span>(</span><br><span class="line">        <span class="title function_">_getMiddleware</span>()</span><br><span class="line">    )(createStore)(rootReducer, initialState);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> store;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">_getMiddleware</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> middleware = [</span><br><span class="line">        <span class="title class_">ReduxThunk</span></span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (__DEV__) &#123;</span><br><span class="line">        middleware = [...middleware];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">applyMiddleware</span>(...middleware);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> configureStore;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="設定ACTIONs"><a class="header-anchor" href="#設定ACTIONs"> </a>設定ACTIONs</h2>
+<p>actions/Todo</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">TODO_ADD</span>, <span class="variable constant_">TODO_REMOVE</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../constants&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">task</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="variable constant_">TODO_ADD</span>,</span><br><span class="line">        <span class="attr">data</span>: task</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">remove</span>(<span class="params">task</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="variable constant_">TODO_REMOVE</span>,</span><br><span class="line">        <span class="attr">data</span>: task</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="設定可以使用的Reducers"><a class="header-anchor" href="#設定可以使用的Reducers"> </a>設定可以使用的Reducers</h3>
+<p>reducers/index</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; combineReducers &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span>;</span><br><span class="line"><span class="comment">// reducer functions</span></span><br><span class="line"><span class="keyword">import</span> &#123;todo, newtodo&#125; <span class="keyword">from</span> <span class="string">&#x27;./todo&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面的名稱是要存取store資料時的名稱</span></span><br><span class="line"><span class="comment">// ex. state.todo</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">combineReducers</span>(&#123;</span><br><span class="line">    todo,</span><br><span class="line">    newtodo</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>reducers/todo.ts</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; fromJS, <span class="title class_">List</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;immutable&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">TODO_ADD</span>, <span class="variable constant_">TODO_REMOVE</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../constants&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">INITIAL_STATE</span> = <span class="title class_">List</span>&lt;any&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// todo Reducer</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">todo</span>(<span class="params">state = INITIAL_STATE, action: any = &#123; type: <span class="string">&#x27;&#x27;</span> &#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.<span class="property">type</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="attr">TODO_ADD</span>:</span><br><span class="line">            <span class="keyword">return</span> state.<span class="title function_">push</span>(action.<span class="property">data</span>);</span><br><span class="line">        <span class="keyword">case</span> <span class="attr">TODO_REMOVE</span>:</span><br><span class="line">            <span class="keyword">return</span> state.<span class="title function_">remove</span>(state.<span class="title function_">indexOf</span>(action.<span class="property">data</span>));</span><br><span class="line">        <span class="attr">default</span>:</span><br><span class="line">            <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// newtodo Reducer</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">newtodo</span>(<span class="params">state = &#123; content: <span class="string">&#x27;&#x27;</span> &#125;, action: any = &#123; type: <span class="string">&#x27;&#x27;</span> &#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.<span class="property">type</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="attr">TODO_ADD</span>:</span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">content</span>: <span class="string">&#x27;&#x27;</span> &#125;;</span><br><span class="line">        <span class="attr">default</span>:</span><br><span class="line">            <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://github.com/chgc/Angular2WithRedux">CODE</a></p>
+<p>參考資料:
+- <a target="_blank" rel="noopener" href="https://medium.com/google-developer-experts/angular-2-introduction-to-redux-1cf18af27e6e#.yjn4pou3u">Angular 2 — Introduction to Redux</a>
+- <a target="_blank" rel="noopener" href="http://ngcourse.rangle.io/handout/redux/index.html">Angular 2 and Redux</a>
+- <a target="_blank" rel="noopener" href="https://github.com/reactjs/redux">redux</a>
+- <a target="_blank" rel="noopener" href="https://github.com/wbuchwalter/ng2-redux">ng2-redux</a>
+- <a target="_blank" rel="noopener" href="https://facebook.github.io/immutable-js/">immutable.js</a>
+- <a target="_blank" rel="noopener" href="http://onehungrymind.com/build-better-angular-2-application-redux-ngrx/">work with service</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/04/13/vs2015-uses-global-npm-version/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1099,114 +1220,6 @@ AuthenticationScheme: The AuthenticationScheme in the options corresponds to the
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/11/08/angular-ngoptions-in-14/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/11/08/angular-ngoptions-in-14/" class="post-title-link" itemprop="url">[AngularJS] ngOptions in 1.4</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-11-08 14:53:00" itemprop="dateCreated datePublished" datetime="2015-11-08T14:53:00+08:00">2015-11-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AngularJS/" itemprop="url" rel="index"><span itemprop="name">AngularJS</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/11/08/angular-ngoptions-in-14/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/08/angular-ngoptions-in-14/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前沒有特別留意ngOptions在1.4版裡面修正了一些東西，包含track by的用法
-先簡單的描述一下狀況</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$scope.options = [</span><br><span class="line">         &#123;id:1,display:&quot;1&quot;&#125;,</span><br><span class="line">         &#123;id:2,display:&quot;2&quot;&#125;,</span><br><span class="line">         &#123;id:3,display:&quot;3&quot;&#125;,</span><br><span class="line">         &#123;id:4,display:&quot;4&quot;&#125;,</span><br><span class="line">         &#123;id:5,display:&quot;5&quot;&#125;</span><br><span class="line">       ] ;</span><br><span class="line">       </span><br><span class="line">$scope.selected = 3;</span><br><span class="line"></span><br><span class="line">// html</span><br><span class="line">&lt;select ng-options=&quot;m.id as m.display for m in options&quot; </span><br><span class="line">       ng-model=&quot;selected&quot;&gt;&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-<p>這種寫法應該算是很常見的用法</p>
-<p>但是這樣子的寫法經過1.4版處理後, 仔細去看他的html會變成</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;select ng-options=&quot;m.id as m.display for m in options&quot; ng-model=&quot;selected&quot;&gt;</span><br><span class="line">    &lt;option label=&quot;1&quot; value=&quot;number:1&quot;&gt;1&lt;/option&gt;</span><br><span class="line">    &lt;option label=&quot;2&quot; value=&quot;number:2&quot;&gt;2&lt;/option&gt;</span><br><span class="line">    &lt;option label=&quot;3&quot; value=&quot;number:3&quot; selected=&quot;selected&quot;&gt;3&lt;/option&gt;</span><br><span class="line">	  &lt;option label=&quot;4&quot; value=&quot;number:4&quot;&gt;4&lt;/option&gt;</span><br><span class="line">		&lt;option label=&quot;5&quot; value=&quot;number:5&quot;&gt;5&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-<p>竟然多了型別…&gt;&quot;&lt;, 這表示如果我的$scope.selected = '3’時，就會選不到東西了</p>
-<p>好吧，那如果用track by呢</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;select ng-options=&quot;m.id as m.display for m in options track by m.id&quot; </span><br><span class="line">       ng-model=&quot;selected&quot;&gt;&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-<p>DOM</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;select ng-options=&quot;m.id as m.display for m in options track by m.id&quot; ng-model=&quot;selected&quot;&gt;</span><br><span class="line">      &lt;option value=&quot;?&quot; selected=&quot;selected&quot;&gt;&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;1&quot; value=&quot;1&quot;&gt;1&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;2&quot; value=&quot;2&quot;&gt;2&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;3&quot; value=&quot;3&quot;&gt;3&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;4&quot; value=&quot;4&quot;&gt;4&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;5&quot; value=&quot;5&quot;&gt;5&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-<p>這樣子看起來正常多了，但是$scope.selected的值不管是使用 3 or 「3」 都選不到東西. 只有給他options裡面的某一個object他才會被選定。
-所以看起來track by是用 for m的m當作選定的值，那 select as label不就沒用了，沒用就拿掉他</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;select ng-options=&quot;m.display for m in options track by m.id&quot; </span><br><span class="line">       ng-model=&quot;selected&quot;&gt;&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-<p>DOM</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;select ng-options=&quot;m.id as m.display for m in options track by m.id&quot; ng-model=&quot;selected&quot;&gt;</span><br><span class="line">      &lt;option value=&quot;?&quot; selected=&quot;selected&quot;&gt;&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;1&quot; value=&quot;1&quot;&gt;1&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;2&quot; value=&quot;2&quot;&gt;2&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;3&quot; value=&quot;3&quot;&gt;3&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;4&quot; value=&quot;4&quot;&gt;4&lt;/option&gt;</span><br><span class="line">      &lt;option label=&quot;5&quot; value=&quot;5&quot;&gt;5&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-<p>看起來都一樣了</p>
-<p>結論
-用track by: select裡的ng-model會是以object的型態呈現, 不需要再寫select as xxxx了.
-不用track by: 就看所表示的select是怎樣的型態，ng-model就是怎樣的型態，但是多了型別的判斷</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1278,20 +1291,20 @@ AuthenticationScheme: The AuthenticationScheme in the options corresponds to the
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">345</span>
+          <span class="site-state-item-count">346</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-count">78</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

@@ -200,6 +200,111 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/" class="post-title-link" itemprop="url">[Azure] Azure Storage 2.0 – Some blob changes to be aware of -Ref</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-11-06 15:29:00" itemprop="dateCreated datePublished" datetime="2014-11-06T15:29:00+08:00">2014-11-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Azure/" itemprop="url" rel="index"><span itemprop="name">Azure</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/06/azure-ref-azure-storage-20-some-blob-changes-to-be-aware-of/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Reference Website Url
+<a target="_blank" rel="noopener" href="http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/">http://happyfunpartytime.com/2012/11/azure-storage-2-0-some-blob-changes-to-be-aware-of/</a></p>
+<p>大綱:</p>
+<p>如果從官網上面抄下來的範例如果直接貼在vs裡面，會出現錯誤，那根據原本字面上的意思來找相類似的method來用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlob thumbnailBlob = objContainer.GetBlobReference(filename);</span><br></pre></td></tr></table></figure>
+<p>換成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var thumbnailBlob = objContainer.GetBlobReferenceFromServer(filename);</span><br></pre></td></tr></table></figure>
+<p>結果，一直給我跑404.</p>
+<p>這GetBlobReserenceFromServer的用意是去server上面找filename的blob reference回來. 所以當我們要建立新的blob, 這就文不對題了。 所以要改用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob blob = objContainer).GetBlockBlobReference(filename);</span><br></pre></td></tr></table></figure>
+<p>這樣子就okey了.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob.UploadFile(fileData.LocalFileName);</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<p>這個也改掉了, 要改成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudBlockBlob.UploadFromFile(filenameWithPath, FileMode)</span><br></pre></td></tr></table></figure>
+<p>CloudBlockBlob也有提供不同的上傳方式，請參閱<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/microsoft.windowsazure.storage.blob.cloudblockblob_methods.aspx">MSDN</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/11/02/azure-documentdb/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1131,106 +1236,6 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/05/13/ef6-bulkinsert/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/05/13/ef6-bulkinsert/" class="post-title-link" itemprop="url">[EF6] BulkInsert</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-05-13 15:30:00" itemprop="dateCreated datePublished" datetime="2014-05-13T15:30:00+08:00">2014-05-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Entity-Framework/" itemprop="url" rel="index"><span itemprop="name">Entity Framework</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/05/13/ef6-bulkinsert/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/05/13/ef6-bulkinsert/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="處理狀況"><a class="header-anchor" href="#處理狀況"> </a>處理狀況</h2>
-<p>當要同一時間新增大量資料時，如果單純用EF的新增方式，速度會讓人吐血。
-所以需要透過BulkInsert的方式處理，但是又不想自己另外寫ado的方式處理，所以就要透過extenstion的方式，
-讓EF的功能加強一下</p>
-<p>##安裝 EntityFramework.BulkInsert-ef6</p>
-<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EntityFramework.BulkInsert-ef6/6.0.2.7">Nuget</a></p>
-<p>##參考文件</p>
-<p><a target="_blank" rel="noopener" href="http://efbulkinsert.codeplex.com/">http://efbulkinsert.codeplex.com/</a></p>
-<p>##(用法)Demo Code</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">using(context db = new context())&#123;</span><br><span class="line">     // 原本會用</span><br><span class="line">     // db.tables.AddRange(entities);</span><br><span class="line">     // 改用</span><br><span class="line">     db.BulkInsert(entities);</span><br><span class="line">     </span><br><span class="line">     db.SaveChanges();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>##執行結果
-<strong>非常快速</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1302,20 +1307,20 @@ VS2013對於前端網頁的開發支援程度愈來越好了</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">345</span>
+          <span class="site-state-item-count">346</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-count">78</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
