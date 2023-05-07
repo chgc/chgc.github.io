@@ -20570,6 +20570,61 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Ansible] 學習 Ansible 之路 - Ansible playbook</title>
+    <url>/2023/05/07/study-ansible-02/</url>
+    <content><![CDATA[<p>Ansible playbook 可以讓我們用劇本的方式來管理想對 managed node 執行的動作，Ansible playbook 是使用 YAML 的格式來編寫，當然 Ansible 也有提供對應的檢查工具來檢查 playbook 是否有正確編寫。</p>
+<p>這一篇來學習如何寫 Ansible playbook</p>
+<span id="more"></span>
+<h2 id="Playbook"><a class="header-anchor" href="#Playbook"> </a>Playbook</h2>
+<p>建立一個空的 playbook 很簡單，只要建立一個 <code>&lt;xxxx&gt;.yml</code> 檔就算是完成一個 playbook 的建立。內容才是重點，主要會有幾個元素</p>
+<p><img src="image-20230507105006665.png" alt="image-20230507105006665"></p>
+<ol>
+<li>
+<p>劇本名稱</p>
+</li>
+<li>
+<p>執行對象: 這會跟 Inventory 設定檔有關</p>
+<ul>
+<li>Inventory 可以在執行 playbook 時指定，這裡提供一個範本</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[local]</span></span><br><span class="line">server1 <span class="attr">ansible_ssh_host</span>=<span class="number">127.0</span>.<span class="number">0.1</span> ansible_ssh_port=<span class="number">32769</span> ansible_ssh_pass=docker</span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 1: <code>[local]</code> 是 inventory group 名稱，也是 hosts 指定的目標，可以依自己的喜好編寫，後面也會有一篇研究如何寫 inventory 檔案</li>
+</ul>
+</li>
+<li>
+<p>任務列表: 會包含一系列要執行的動作，通常會使用 Ansible 所提供的 module 來執行</p>
+<ol>
+<li><code>command</code> 是 Ansible 內建的 module，可以對 hosts 下指令</li>
+<li><code>register</code> 也是 Ansible 內建的 module，可以將回傳訊息記錄在變數內，這邊就是會儲存在 <code>result</code> 這一個變數</li>
+<li>要將變數輸出到 console 上，需要使用 <code>Jinja2</code> 的樣本功能，使用 <code>&#123;&#123; &#125;&#125;</code> 的方式輸出</li>
+</ol>
+</li>
+</ol>
+<h2 id="執行-playbook"><a class="header-anchor" href="#執行-playbook"> </a>執行 playbook</h2>
+<p>在 WSL 的環境內，切換到 playbook 檔案所在得資料夾，執行這段指令，需依實際的狀況作些調整，基本指令結構是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i &lt;inventory 檔案&gt; &lt;playbook 檔案名&gt;</span><br></pre></td></tr></table></figure>
+<p>範例:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i hosts hello_world.yml </span><br></pre></td></tr></table></figure>
+<p>如果設定都正確的話，可預期會得到這樣的執行結果</p>
+<p><img src="image-20230507110200351.png" alt="image-20230507110200351"></p>
+<h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2>
+<p>撰寫 Ansible playbook 本身不難，一旦知道我們想要自動化的行為有什麼，相關流程需要怎麼安排，接下來就是找對應的 Ansible module 或是網路上有的參考範例，最後就是整理在 playbook 劇本內。當然更進階的管理辦法或是 playbook 的檔案結構應該要怎麼規劃，就留給各位去研究了。</p>
+<h2 id="補充"><a class="header-anchor" href="#補充"> </a>補充</h2>
+<p>Ansible 有提供 <code>ansible-lint</code> 的工具，可檢查 playbook  的格式是否正確，該工具的 GitHub Repo <a href="https://github.com/ansible/ansible-lint">由此去</a>，<a href="https://ansible-lint.readthedocs.io/">Ansible Lint Documentation</a></p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax">Playbook Syntax</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>Ansible</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[Angular] Pipe</title>
     <url>/2017/05/13/angular-pipe/</url>
     <content><![CDATA[<p>Angular Pipe 是一個很強大的資料顯示轉型的工具，可以透過 Pipe 的幫忙，將原始資料轉換成我們想要顯示的樣式，且不會異動到原始資料的內容。</p>
