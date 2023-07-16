@@ -21313,4 +21313,99 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
         <tag>Reading</tag>
       </tags>
   </entry>
+  <entry>
+    <title>[Grafana] Faro Web SDK 學習筆記</title>
+    <url>/2023/07/16/faro-web-sdk-study/</url>
+    <content><![CDATA[<p>Grafana 提供了許多工具讓維運團隊能很清楚的知道系統的相關狀態，針對網頁相關效能的監控，也有提供相關的 solution，就是 <a href="https://grafana.com/oss/faro/">Faro</a></p>
+<p><img src="https://grafana.com/static/assets/img/grafana-faro-oss-dashboard-thm.jpg" alt="grafana faro"></p>
+<p>Grafana Faro 的運作方式如下圖，</p>
+<p><img src="https://grafana.com/static/assets/img/diagrams/grafana-oss-faro-diagram.svg" alt="how does grafana faro work"></p>
+<p>前端開發可以透過提供的 SDK 將相關資訊傳到後面的 Agent/Collect ，就完成了。只是 SDK 雖然簡單套用，裡面有很多細節設定是需要深入研究的，這篇就是這些設定的學習筆記</p>
+<span id="more"></span>
+<h2 id="Faro-Web-SDK"><a class="header-anchor" href="#Faro-Web-SDK"> </a>Faro Web SDK</h2>
+<p><code>@grafana/faro-web-sdk</code> provides instrumentations, metas and transports for use in web applications，安裝使用方法如下</p>
+<ol>
+<li>
+<p>安裝 <code>faro-web-sdk</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i @grafana/faro-web-sdk</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>initialize</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; initializeFaro &#125; <span class="keyword">from</span> <span class="string">&#x27;@grafana/faro-web-sdk&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> faro = <span class="title function_">initializeFaro</span>(&#123;</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&#x27;https://collector-host:12345/collect&#x27;</span>,</span><br><span class="line">  <span class="attr">apiKey</span>: <span class="string">&#x27;secret&#x27;</span>,</span><br><span class="line">  <span class="attr">app</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;frontend&#x27;</span>,</span><br><span class="line">    <span class="attr">version</span>: <span class="string">&#x27;1.0.0&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>url</code>: Grafana Agent 的位置</li>
+<li><code>apiKey</code>: 對應到 Grafana Agent 的 <code>integrations.app_agent_receiver_configs</code> 下的 <code>server.api_key</code> 設定</li>
+<li><code>app</code>:  Web Application 的 meta 資訊，會用於 Grafana Dashboard 上</li>
+</ol>
+</li>
+<li>
+<p>當這樣設定完成後，開啟網頁時，在 network 的地方就會看到 SDK post 相關資訊到設定的 agent 位置</p>
+</li>
+</ol>
+<h3 id="基本用法"><a class="header-anchor" href="#基本用法"> </a>基本用法</h3>
+<p>當遇到需要手動推送資訊時，SDK 也有提供對應的 API 接口</p>
+<ol>
+<li>
+<p>手動推送 log</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// send a log message</span></span><br><span class="line"><span class="comment">// by default info, warn and error levels are captured.</span></span><br><span class="line"><span class="comment">// trace, debug and log are not</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&#x27;Hello world&#x27;</span>, <span class="number">123</span>);</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line">faro.<span class="property">api</span>.<span class="title function_">pushLog</span>([<span class="string">&#x27;Hello world&#x27;</span>, <span class="number">123</span>], &#123; <span class="attr">level</span>: <span class="title class_">LogLevel</span>.<span class="property">Debug</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// log with context</span></span><br><span class="line">faro.<span class="property">api</span>.<span class="title function_">pushLog</span>([<span class="string">&#x27;Sending update&#x27;</span>], &#123;</span><br><span class="line">  <span class="attr">context</span>: &#123;</span><br><span class="line">    <span class="attr">payload</span>: thePayload,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">level</span>: <span class="title class_">LogLevel</span>.<span class="property">TRACE</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>手動送 Exception</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">faro.<span class="property">api</span>.<span class="title function_">pushError</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;everything went horribly wrong&#x27;</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>手動送 Event</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">faro.<span class="property">api</span>.<span class="title function_">pushEvent</span>(<span class="string">&#x27;navigation&#x27;</span>, &#123; <span class="attr">url</span>: <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>手動送 <code>meaurement</code></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">faro.<span class="property">api</span>.<span class="title function_">pushMeasurement</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&#x27;cart-transaction&#x27;</span>,</span><br><span class="line">  <span class="attr">values</span>: &#123;</span><br><span class="line">    <span class="attr">delay</span>: <span class="number">122</span>,</span><br><span class="line">    <span class="attr">duration</span>: <span class="number">4000</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>pause/resume Faro</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// pause faro, preventing events from being sent</span></span><br><span class="line">faro.<span class="title function_">pause</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// resume sending events</span></span><br><span class="line">faro.<span class="title function_">unpause</span>();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="學習筆記"><a class="header-anchor" href="#學習筆記"> </a>學習筆記</h3>
+<ol>
+<li>
+<p>Faro SDK 預設會忽略短時間內相同訊息的事件，不會每一筆都往後面送，如果想要改變這行為，可以設定 <code>dedupe: false</code> (<code>dedupe</code>: A flag for toggling deduplication filter)</p>
+</li>
+<li>
+<p>預設是採 batch sending 的模式，每 250 ms 或是每 50 筆送一次，這些數值也可以設定</p>
+<p><img src="image-20230716114843343.png" alt="image-20230716114843343"></p>
+</li>
+<li>
+<p>上一段提到的手動送資訊到後面的 API，都有額外的參數可以設定，細節可以參閱<a href="https://github.com/grafana/faro-web-sdk/tree/main/packages/core#api">這邊</a></p>
+</li>
+<li>
+<p>很多 SDK 的使用細節說明都寫在 <code>faro-core</code> 的地方，<a href="https://github.com/grafana/faro-web-sdk/blob/main/packages/core/README.md">README</a> 有此去</p>
+</li>
+<li>
+<p>預設有提供 <code>faro-react</code>，其他 framework 如果想要實作類似的效果，可以參考 react 的版本，包含的項目有</p>
+<ol>
+<li>Error Boundary - Provides additional stacktrace for errors</li>
+<li>Component Profiler - Capture every re-render of a component, the un/mounting time etc.</li>
+<li>Router (v4-v6) integration - Send events for all route changes</li>
+<li>SSR support</li>
+</ol>
+<p>以 Angular 來說，應該也可以做到 1~3 點，但我還沒有自己動手實作過，先暫定可以好了</p>
+</li>
+</ol>
+<h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2>
+<p>Faro 提供的是 <code>RUM</code> (Real User Monitoring) 的相關資訊，除了 Grafana，Kibana 和 Sentry 都有提供類似的功能，只是因為自家的 Monitor stack 是 Grafana 為主，所以選擇 Faro 只是為了讓使用的工程師不用在工具中切來切去</p>
+<p>前端效能調教水很深，收集到的這些資訊並不會有 Web 在產生畫面的相關資訊，那些需要回到瀏覽器上做分析，背後的 web vita API 可以參考這一個套件 <a href="https://www.npmjs.com/package/web-vitals">web-vitals</a></p>
+<h2 id="Reference"><a class="header-anchor" href="#Reference"> </a>Reference</h2>
+<ul>
+<li><a href="https://github.com/grafana/faro-web-sdk">Faro Web SDK</a></li>
+<li><a href="https://web.dev/vitals/">Web Vitals</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Grafana</category>
+      </categories>
+      <tags>
+        <tag>Grafana</tag>
+      </tags>
+  </entry>
 </search>
