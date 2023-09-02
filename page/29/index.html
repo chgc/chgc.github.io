@@ -200,6 +200,111 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/18/javascript-es2015-arror-function-string-templates-let/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/10/18/javascript-es2015-arror-function-string-templates-let/" class="post-title-link" itemprop="url">[Javascript] ES2015 - Arrow function, String templates, let, const</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-10-18 11:46:00" itemprop="dateCreated datePublished" datetime="2015-10-18T11:46:00+08:00">2015-10-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/10/18/javascript-es2015-arror-function-string-templates-let/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/18/javascript-es2015-arror-function-string-templates-let/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在ES2015裡面，幾個比較大的改變Part1</p>
+<h2 id="Arrow-Function"><a class="header-anchor" href="#Arrow-Function"> </a>Arrow Function</h2>
+<p>人真的可以在懶惰一點，為了不要寫__function__這幾個字，就有 ()=&gt;{} 的出現。這就是Arror Function
+跟Lambda的表示法很像, 真的用法也是跟那個一樣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Old</span><br><span class="line">var old = function(n) &#123;</span><br><span class="line">    return n * n;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// with Arror Functions express 1</span><br><span class="line">let new_1 = (n) =&gt; n * n;</span><br><span class="line"></span><br><span class="line">// with arror function express 2</span><br><span class="line">let new_2 = (n) =&gt; &#123;</span><br><span class="line">	return n * n;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>另外一個要注意的是Arrow Scope的問題,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var hendrik = &#123;</span><br><span class="line">    this.name = &quot;Hendrik&quot;;</span><br><span class="line">    </span><br><span class="line">    sayHello: (names) =&gt; &#123;</span><br><span class="line">        names.forEach((name)=&gt;&#123;</span><br><span class="line">          console.log(`$&#123;this.name&#125; greets $&#123;name&#125;`);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">hendrik.sayHello([&#x27;frikkie&#x27;]);</span><br><span class="line">// output </span><br><span class="line">// hendrik greets frikkie</span><br></pre></td></tr></table></figure>
+<h2 id="String-templates"><a class="header-anchor" href="#String-templates"> </a>String templates</h2>
+<p>最快樂的事情非屬這個, 文字串的組合可以用 ` (鍵盤左上角流水符號的那個鍵), 可以讓你多行編輯文字字串
+在配合 ${變數} 來將變數顯示在文字裡面。 這樣子就不用一堆的 『加號』 來串文字了，超快樂的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// old</span><br><span class="line">function sayHello(name, surname)&#123;</span><br><span class="line">    console.log(&#x27;hello there &#x27; + name + &#x27; &#x27; + surname + &#x27;, the time is now &#x27; + new Date());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// new way </span><br><span class="line">function sayHello_new(name, surname)&#123;</span><br><span class="line">    console.log(`hello there $&#123;name&#125; $&#123;surname&#125;, </span><br><span class="line">    the time is now $&#123;new Date()&#125;`);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>FYI: 新版的C#/VB.net也有將此功能加入，已經可以不用string.format + 無數的{流水號}了</p>
+<h2 id="Let"><a class="header-anchor" href="#Let"> </a>Let</h2>
+<p><strong>非常重要</strong> 要將使用var來定義變數的改用let來定義變數, 這樣子就可以避免同樣名稱的變數在不同的scope被覆蓋的情形發生</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">//=== old ===</span><br><span class="line"> var </span><br><span class="line">     name = &#x27;Fido&#x27;,</span><br><span class="line">     breed = &#x27;schnauzer&#x27;,</span><br><span class="line">     owners = [&#x27;Hendrik&#x27;, &#x27;Alice&#x27;]</span><br><span class="line"> ;</span><br><span class="line"> </span><br><span class="line"> console.log(name + &#x27;(&#x27; + breed + &#x27;):&#x27;);</span><br><span class="line"> </span><br><span class="line"> for(var i = 0; i &lt; owners.length; i++)&#123;</span><br><span class="line">     var name = owners[i];</span><br><span class="line"> </span><br><span class="line">     console.log(&#x27;Owner &#x27; + name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(name);</span><br><span class="line">//output</span><br><span class="line">// Fido(schnauzer):</span><br><span class="line">// Owner Hendrik</span><br><span class="line">// Owner Alice</span><br><span class="line">// Alice (被改變掉了)</span><br><span class="line"></span><br><span class="line">//=== new ===</span><br><span class="line">let fname = &#x27;Fido&#x27;,</span><br><span class="line">    breed = &#x27;schnauzer&#x27;,</span><br><span class="line">    owners = [&#x27;Hendrik&#x27;, &#x27;Alice&#x27;]</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line">console.log(`$&#123;fname&#125; ($&#123;breed&#125;):`);</span><br><span class="line"></span><br><span class="line">for(let i = 0; i &lt; owners.length; i++)&#123;</span><br><span class="line">    let fname = owners[i];</span><br><span class="line">    console.log(`Owner $&#123;fname&#125;`);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(fname);</span><br><span class="line">// output:</span><br><span class="line">// Fido (schnauzer):</span><br><span class="line">// Owner Hendrik</span><br><span class="line">// Owner Alice</span><br><span class="line">// Fido</span><br></pre></td></tr></table></figure>
+<h2 id="const"><a class="header-anchor" href="#const"> </a>const</h2>
+<p>常數，當變數一旦被指定為const時，就不可以被改變了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const pi = Math.PI;</span><br><span class="line"></span><br><span class="line">pi = 123;</span><br><span class="line">// this will cause error message</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/17/javascript-es6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1101,98 +1206,6 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/04/30/mono-install-mono-40/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/04/30/mono-install-mono-40/" class="post-title-link" itemprop="url">[Mono] Install Mono</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2015-04-30 08:46:00" itemprop="dateCreated datePublished" datetime="2015-04-30T08:46:00+08:00">2015-04-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/04/30/mono-install-mono-40/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/30/mono-install-mono-40/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>取得最新的Mono
-<a target="_blank" rel="noopener" href="http://www.mono-project.com/download/">http://www.mono-project.com/download/</a></p>
-<p>Building Mono From a Git Source Code Checkout</p>
-<p>To build Mono in 64 bit mode instead use:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PATH=$PREFIX/bin:$PATH</span><br><span class="line">git clone https://github.com/mono/mono.git</span><br><span class="line">cd mono</span><br><span class="line">./autogen.sh --prefix=$PREFIX --disable-nls</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1264,7 +1277,7 @@ add 「Microsoft.AspNet.Mvc」 to dependencies</li>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">349</span>
+          <span class="site-state-item-count">350</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
