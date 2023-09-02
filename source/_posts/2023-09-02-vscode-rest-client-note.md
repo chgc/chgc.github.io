@@ -9,11 +9,11 @@ categories: VSCode
 tags: VSCode
 ---
 
-除了 Postman，在 VSCode 內還有其他類似的套件可以選擇，例如本篇筆記的主角 `Rest Client`
-
-![image-20230902223304534](image-20230902223304534.png)
+除了 Postman，在 VS Code 內還有其他類似的套件可以選擇，例如本篇筆記的主角 `Rest Client`
 
 <!-- more -->
+
+![image-20230902223304534](image-20230902223304534.png)
 
 可以從 VS Code 的 extension market 內搜尋並安裝，使用方式也很簡單，只要檔名的結果是 `.http` 或是 `.rest` 都是 `Rest Client` 可以支援的檔案類型，先用一個簡單的範例作展示
 
