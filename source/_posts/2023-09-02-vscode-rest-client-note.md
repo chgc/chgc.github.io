@@ -76,6 +76,12 @@ tags: VSCode
 
    ![image-20230902232818215](image-20230902232818215.png)
 
+6. 在 Markdown 內也可以被使用，當使用 code block 時，只要標註為 `http` 或是 `rest` 時，REST Client 套件也能認得並可以被執行，要留意的是，該動作沒法再 preview 的畫面上執行，必須是在編輯 `md` 檔時。變數設定在不同的 code block 一樣可以被吃到，只要是在同一份 markdown 檔案內即可
+
+   ![image-20230903103750927](image-20230903103750927.png)
+
+   
+
 
 
 ## Reference
