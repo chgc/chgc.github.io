@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Angular] 官方文件的 httpTestingController 範例遇到 jest 會有出乎預期的結果, 小心'
+title: '[Angular] 官方文件的 HttpTestingController 範例遇到 jest 時，結果不是想像的那樣，小心'
 comments: true
 typora-root-url: 2023-10-06-jest-with-httpTestingController/
 typora-copy-images-to: 2023-10-06-jest-with-httpTestingController/
@@ -69,7 +69,7 @@ tags: Angular
 
 確實也讓 test failed 了
 
-![image-20231006202257967](/image-20231006202257967.png)
+![image-20231006202257967](image-20231006202257967.png)
 
 但是接著噴了另外一個錯誤訊息, 竟然說 `done()` 必須要呼叫到，timeout.
 
