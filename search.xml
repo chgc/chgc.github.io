@@ -19140,84 +19140,6 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
-    <title>[K8s] 開始學習 Kubernetes - Multi-container Pods</title>
-    <url>/2021/07/18/k8s-note-004/</url>
-    <content><![CDATA[<p>Multi-container Pods 是另外一個很常見的使用方式，有 4 種模式 <code>Init Pattern</code> 、<code>Sidecar Pattern</code>、<code>Adapter Patter</code> 、<code>Ambassador Pattern</code>。</p>
-<span id="more"></span>
-<p>為什麼會出現這種模式，主要的目的是要讓 container 的工作可以單純化，透過組合的方式來完成原本應該要做的事情</p>
-<h1 id="Init-Pattern"><a class="header-anchor" href="#Init-Pattern"> </a>Init Pattern</h1>
-<ul>
-<li>
-<p>在主要 Container 前執行的 Container</p>
-</li>
-<li>
-<p>只會跑一次</p>
-</li>
-<li>
-<p>init container 完成後才會執行主要的 container</p>
-</li>
-<li>
-<p>基本寫法</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ps-init</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">initializer</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">initContainers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">init-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&#x27;sh&#x27;</span>, <span class="string">&#x27;-c&#x27;</span>, <span class="string">&#x27;until nslookup pluralsight-ftw; do echo waiting for pluralsight-ftw service; sleep 1; done; echo Service found!&#x27;</span>]</span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web-ctr</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nigelpoulton/web-app:1.0</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>initContainers</code> 區塊就是用來定義 init containers 的</li>
-<li>可以有多個 container</li>
-<li>會依序執行</li>
-<li>如果 init container 執行失敗，整個 Pod 會重新開始 (預設值)，可以被修改</li>
-<li>應設定 resource requests &amp; limits</li>
-</ul>
-<h1 id="Sidecar-Pattern"><a class="header-anchor" href="#Sidecar-Pattern"> </a>Sidecar Pattern</h1>
-<p><img src="image-20210718225552049.png" alt="image-20210718225552049"></p>
-<ul>
-<li>
-<p>與 main container 同時執行，平行運作</p>
-</li>
-<li>
-<p>寫法就是在 containers 下有第二個 image 時，基本上就是 sidecar pattern</p>
-</li>
-<li>
-<p>範例:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">git-syncer</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">git-syncer</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/usr/share/nginx/</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">k8s.gcr.io/git-sync:v3.1.5</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">init-sync-ctr</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/tmp/git</span></span><br><span class="line">    <span class="string">...</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">    <span class="attr">emptyDir:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>常見用法: Logging</p>
-</li>
-</ul>
-<h1 id="Adapter-Pattern"><a class="header-anchor" href="#Adapter-Pattern"> </a>Adapter Pattern</h1>
-<p><img src="image-20210718225620546.png" alt="image-20210718225620546"></p>
-<ul>
-<li>
-<p>範例</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nigelpoulton/nginxadapter:1.0</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">transformer</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx/nginx-prometheus-exporter</span></span><br><span class="line">    <span class="attr">args:</span> [<span class="string">&quot;-nginx.scrape-uri&quot;</span>,<span class="string">&quot;http://localhost/nginx_status&quot;</span>]</span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">9113</span></span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>使用另外一個 container 做輸出資料轉換</p>
-</li>
-<li>
-<p>SRP</p>
-</li>
-</ul>
-<h1 id="Ambassador-Pattern"><a class="header-anchor" href="#Ambassador-Pattern"> </a>Ambassador Pattern</h1>
-<p><img src="image-20210718225658971.png" alt="image-20210718225658971"></p>
-<ul>
-<li>
-<p>在 Pod 內的建立起的 proxy</p>
-</li>
-<li>
-<p>Service 只對 Ambassador 做開放</p>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>K8s</category>
-      </categories>
-      <tags>
-        <tag>K8s</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[K8s 相關] 寫 Helm 技巧筆記</title>
     <url>/2021/07/28/helm-tips/</url>
     <content><![CDATA[<p>Helm 或許不是現在最新最流行的工具，但公司用這個，所以還是得知道怎麼寫，這邊整理一些撰寫中一些實用小技巧。因為他底層是用 go template，有些語法會跟 Go 很像</p>
@@ -21500,6 +21422,122 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </categories>
       <tags>
         <tag>VSCode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Angular] 官方文件的 httpTestingController 範例遇到 jest 會有出乎預期的結果, 小心</title>
+    <url>/2023/10/06/jest-with-httpTestingController/</url>
+    <content><![CDATA[<p>今天在寫 http service 測試時，無意間撞到這個問題，分享這個小雷給大家，避免死的不明不白，</p>
+<p>這篇 <a href="https://angular.io/guide/http-test-requests">HTTP client - Test requests</a> 內說明如何使用 <code>HttpTestingController</code> 進行 http request 的測試，而因為後期的專案我都是使用 Nx 來建立，Nx 建立的專案是使用  Jest 來跑 Unit Test. 不知道是幸運還是怎樣，竟然遇到超乎預期的結果</p>
+<span id="more"></span>
+<p>情境是這樣的，測試一個 server 呼叫  API 回傳的結果是否符合預期，寫法是</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">callApi</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">&#x27;/data&#x27;</span>).<span class="title function_">pipe</span>(</span><br><span class="line">    <span class="title function_">catchError</span>(<span class="function">() =&gt;</span> <span class="title function_">of</span>([])),</span><br><span class="line">    <span class="title function_">map</span>(<span class="function">(<span class="params">x</span>) =&gt;</span> [x])</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>測試程式碼為</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;test api&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> mockData = &#123; <span class="attr">name</span>: <span class="string">&#x27;Kevin&#x27;</span> &#125;;</span><br><span class="line">  service.<span class="title function_">callApi</span>().<span class="title function_">subscribe</span>(&#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">expect</span>(result).<span class="title function_">toEqual</span>([]);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> req = httpTestingController.<span class="title function_">expectOne</span>(<span class="string">&#x27;/data&#x27;</span>);</span><br><span class="line">  req.<span class="title function_">flush</span>(mockData);</span><br><span class="line"></span><br><span class="line">  httpTestingController.<span class="title function_">verify</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上述的測試預期結果會是 fail 的，因為 line: 5 的結果理當為 <code>[mockData]</code>，但實際跑完測試的結果卻是 passed</p>
+<p><img src="image-20231006202133288.png" alt="image-20231006202133288"></p>
+<p>這時候第一個想法會是非同步的關係，可能要用到 callback 的方式，所以調整了 test case ，調整後如下</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;test api&#x27;</span>, <span class="function">(<span class="params">done</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="keyword">const</span> mockData = &#123; <span class="attr">name</span>: <span class="string">&#x27;Kevin&#x27;</span> &#125;;</span><br><span class="line">   service.<span class="title function_">callApi</span>().<span class="title function_">subscribe</span>(&#123;</span><br><span class="line">     <span class="attr">next</span>: <span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">       <span class="title function_">expect</span>(result).<span class="title function_">toEqual</span>([]);</span><br><span class="line">       <span class="title function_">done</span>();</span><br><span class="line">     &#125;,</span><br><span class="line">   &#125;);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> req = httpTestingController.<span class="title function_">expectOne</span>(<span class="string">&#x27;/data&#x27;</span>);</span><br><span class="line">   req.<span class="title function_">flush</span>(mockData);</span><br><span class="line"></span><br><span class="line">   httpTestingController.<span class="title function_">verify</span>();</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<p>確實也讓 test failed 了</p>
+<p><img src="/image-20231006202257967.png" alt="image-20231006202257967"></p>
+<p>但是接著噴了另外一個錯誤訊息, 竟然說 <code>done()</code> 必須要呼叫到，timeout.</p>
+<p><img src="image-20231006202352969.png" alt="image-20231006202352969"></p>
+<p>經過一段時間的研究，發現原來是這個原因</p>
+<blockquote>
+<p>If <code>done()</code> is never called, the test will fail (with timeout error), which is what you want to happen.</p>
+<p>If the <code>expect</code> statement fails, it throws an error and <code>done()</code> is not called. If we want to see in the test log why it failed, we have to wrap <code>expect</code> in a <code>try</code> block and pass the error in the <code>catch</code> block to <code>done</code>. Otherwise, we end up with an opaque timeout error that doesn’t show what value was received by <code>expect(data)</code>.</p>
+</blockquote>
+<p>在 jest 內如果 expect 的結果不符合預期，會噴 exception，所以當使用 <code>done</code> callback 時，需要用 try catch 包起來</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"> <span class="title function_">it</span>(<span class="string">&#x27;test api&#x27;</span>, <span class="function">(<span class="params">done</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> mockData = &#123; <span class="attr">name</span>: <span class="string">&#x27;Kevin&#x27;</span> &#125;;</span><br><span class="line">    service.<span class="title function_">callApi</span>().<span class="title function_">subscribe</span>(&#123;</span><br><span class="line">      <span class="attr">next</span>: <span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="title function_">expect</span>(result).<span class="title function_">toEqual</span>([]);</span><br><span class="line">          <span class="title function_">done</span>();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">          <span class="title function_">done</span>(err);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> req = httpTestingController.<span class="title function_">expectOne</span>(<span class="string">&#x27;/data&#x27;</span>);</span><br><span class="line">    req.<span class="title function_">flush</span>(mockData);</span><br><span class="line"></span><br><span class="line">    httpTestingController.<span class="title function_">verify</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>這樣改寫完，timeout 的錯誤訊息就沒有再出現了。看來過往沒有特別留意到這塊，真的是太不小心了。所以寫這篇筆記分享給大家</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://jestjs.io/docs/asynchronous#callbacks">https://jestjs.io/docs/asynchronous#callbacks</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[K8s] 開始學習 Kubernetes - Multi-container Pods</title>
+    <url>/2021/07/18/k8s-note-004/</url>
+    <content><![CDATA[<p>Multi-container Pods 是另外一個很常見的使用方式，有 4 種模式 <code>Init Pattern</code> 、<code>Sidecar Pattern</code>、<code>Adapter Patter</code> 、<code>Ambassador Pattern</code>。</p>
+<span id="more"></span>
+<p>為什麼會出現這種模式，主要的目的是要讓 container 的工作可以單純化，透過組合的方式來完成原本應該要做的事情</p>
+<h1 id="Init-Pattern"><a class="header-anchor" href="#Init-Pattern"> </a>Init Pattern</h1>
+<ul>
+<li>
+<p>在主要 Container 前執行的 Container</p>
+</li>
+<li>
+<p>只會跑一次</p>
+</li>
+<li>
+<p>init container 完成後才會執行主要的 container</p>
+</li>
+<li>
+<p>基本寫法</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ps-init</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">initializer</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">initContainers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">init-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&#x27;sh&#x27;</span>, <span class="string">&#x27;-c&#x27;</span>, <span class="string">&#x27;until nslookup pluralsight-ftw; do echo waiting for pluralsight-ftw service; sleep 1; done; echo Service found!&#x27;</span>]</span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web-ctr</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nigelpoulton/web-app:1.0</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>initContainers</code> 區塊就是用來定義 init containers 的</li>
+<li>可以有多個 container</li>
+<li>會依序執行</li>
+<li>如果 init container 執行失敗，整個 Pod 會重新開始 (預設值)，可以被修改</li>
+<li>應設定 resource requests &amp; limits</li>
+</ul>
+<h1 id="Sidecar-Pattern"><a class="header-anchor" href="#Sidecar-Pattern"> </a>Sidecar Pattern</h1>
+<p><img src="image-20210718225552049.png" alt="image-20210718225552049"></p>
+<ul>
+<li>
+<p>與 main container 同時執行，平行運作</p>
+</li>
+<li>
+<p>寫法就是在 containers 下有第二個 image 時，基本上就是 sidecar pattern</p>
+</li>
+<li>
+<p>範例:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">git-syncer</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">git-syncer</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/usr/share/nginx/</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">k8s.gcr.io/git-sync:v3.1.5</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">init-sync-ctr</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/tmp/git</span></span><br><span class="line">    <span class="string">...</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">    <span class="attr">emptyDir:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>常見用法: Logging</p>
+</li>
+</ul>
+<h1 id="Adapter-Pattern"><a class="header-anchor" href="#Adapter-Pattern"> </a>Adapter Pattern</h1>
+<p><img src="image-20210718225620546.png" alt="image-20210718225620546"></p>
+<ul>
+<li>
+<p>範例</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nigelpoulton/nginxadapter:1.0</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">transformer</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx/nginx-prometheus-exporter</span></span><br><span class="line">    <span class="attr">args:</span> [<span class="string">&quot;-nginx.scrape-uri&quot;</span>,<span class="string">&quot;http://localhost/nginx_status&quot;</span>]</span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">9113</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用另外一個 container 做輸出資料轉換</p>
+</li>
+<li>
+<p>SRP</p>
+</li>
+</ul>
+<h1 id="Ambassador-Pattern"><a class="header-anchor" href="#Ambassador-Pattern"> </a>Ambassador Pattern</h1>
+<p><img src="image-20210718225658971.png" alt="image-20210718225658971"></p>
+<ul>
+<li>
+<p>在 Pod 內的建立起的 proxy</p>
+</li>
+<li>
+<p>Service 只對 Ambassador 做開放</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>K8s</category>
+      </categories>
+      <tags>
+        <tag>K8s</tag>
       </tags>
   </entry>
 </search>
