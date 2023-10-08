@@ -2022,22 +2022,6 @@ Method binding (One-way Binding): &amp;</p>
       </tags>
   </entry>
   <entry>
-    <title>[Devexpress] How to bind a objec to bindingsource in WEB xtrareport</title>
-    <url>/2015/06/30/devexpress-how-to-bind-a-objec-to-bindingsource-in-web-xtrareport/</url>
-    <content><![CDATA[<p>Bindingsource物件是屬於winform的，所以在web環境下的design time是沒有辦法直接設定物件到datasource的屬性裡
-所以這部分需要手動加進去，作法是進入 xxx.Designer.cs的InitializeComponent()加入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">this.bindingSource1.DataSource = typeof(Object); // replace with the object you want</span><br></pre></td></tr></table></figure>
-<p>這樣子回到設計模式就會出現可以設定的binding物件了</p>
-<p>^^</p>
-]]></content>
-      <categories>
-        <category>Library</category>
-      </categories>
-      <tags>
-        <tag>Devexpress</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[MVC] 當MVC遇上exe檔(需要讀取網路磁碟機時)</title>
     <url>/2015/07/13/mvc-when-the-mvc-in-exe-file-need-to-read-when-a-network-drive/</url>
     <content><![CDATA[<p>最近要寫一個api，其功能需要呼叫一個exe執行檔然後取得該檔回傳的dbf檔案
@@ -2051,6 +2035,22 @@ Method binding (One-way Binding): &amp;</p>
       </categories>
       <tags>
         <tag>MVC 5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Devexpress] How to bind a objec to bindingsource in WEB xtrareport</title>
+    <url>/2015/06/30/devexpress-how-to-bind-a-objec-to-bindingsource-in-web-xtrareport/</url>
+    <content><![CDATA[<p>Bindingsource物件是屬於winform的，所以在web環境下的design time是沒有辦法直接設定物件到datasource的屬性裡
+所以這部分需要手動加進去，作法是進入 xxx.Designer.cs的InitializeComponent()加入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">this.bindingSource1.DataSource = typeof(Object); // replace with the object you want</span><br></pre></td></tr></table></figure>
+<p>這樣子回到設計模式就會出現可以設定的binding物件了</p>
+<p>^^</p>
+]]></content>
+      <categories>
+        <category>Library</category>
+      </categories>
+      <tags>
+        <tag>Devexpress</tag>
       </tags>
   </entry>
   <entry>
@@ -3579,36 +3579,6 @@ Control是配合ngControl使用. 初始是 new Control(『default value』, vali
       </tags>
   </entry>
   <entry>
-    <title>[Angular] Router Resolve</title>
-    <url>/2016/12/11/ng2-router-resolve/</url>
-    <content><![CDATA[<p>Angular 2的Router Config的地方，可以設定data跟resolve. 這篇就簡單的紀錄一下怎麼寫resolve的部分跟怎麼在component裡取得資料</p>
-<span id="more"></span>
-<h1 id="基本用法"><a class="header-anchor" href="#基本用法"> </a>基本用法</h1>
-<p>Routes設定的部分</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;posts&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">PostsComponent</span>,</span><br><span class="line">    data : &#123; <span class="attr">someProp</span>: propValue&#125;,</span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">posts</span>: <span class="title class_">PostsResolver</span>  </span><br><span class="line">    &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這裡的可以直接設定data或是resolve的屬性，這兩個屬性都可以透過ActivatedRoute的data取得.</p>
-<p>PostsResolver是實作Resolve</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Http</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/http&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Resolve</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Observable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">PostsResolver</span> <span class="keyword">implements</span> <span class="title class_">Resolve</span>&lt;<span class="built_in">any</span>&gt;&#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> http: Http</span>) &#123;   </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">resolve</span>(): <span class="title class_">Observable</span>&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">&#x27;https://jsonplaceholder.typicode.com/posts&#x27;</span>).<span class="title function_">map</span>(<span class="function"><span class="params">res</span>=&gt;</span>res.<span class="title function_">json</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>當然在routing-module下必須把這個註冊在provider裡面</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes)],</span><br><span class="line">  <span class="attr">exports</span>: [<span class="title class_">RouterModule</span>],</span><br><span class="line">  <span class="attr">providers</span>: [</span><br><span class="line">      <span class="title class_">PostsResolver</span></span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppRoutingModule</span> &#123; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以上就是基本的router resolve的做法</p>
-<p>那Component裡面怎麼用呢</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">PostsComponent</span> <span class="keyword">implements</span> <span class="title class_">OnInit</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="attr">posts</span>: <span class="built_in">any</span>[] = [];</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> route: ActivatedRoute</span>) &#123; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">route</span>.<span class="property">data</span>.<span class="title function_">subscribe</span>(<span class="function">(<span class="params">data: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">posts</span> = data.<span class="property">posts</span>;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// or this way</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">posts</span> = <span class="variable language_">this</span>.<span class="property">route</span>.<span class="property">snapshot</span>.<span class="property">data</span>[<span class="string">&#x27;posts&#x27;</span>];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="進階用法"><a class="header-anchor" href="#進階用法"> </a>進階用法</h1>
-<p>resolve也可以把參數的部分帶入使用</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Http</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/http&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Resolve</span>, <span class="title class_">ActivatedRouteSnapshot</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Observable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">PostResolver</span> <span class="keyword">implements</span> <span class="title class_">Resolve</span>&lt;<span class="built_in">any</span>&gt;&#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> http: Http</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">resolve</span>(<span class="attr">route</span>: <span class="title class_">ActivatedRouteSnapshot</span>): <span class="title class_">Observable</span>&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> id = route.<span class="property">params</span>[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">`https://jsonplaceholder.typicode.com/posts/<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">            .<span class="title function_">map</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
-<p><a href="https://angular.io/docs/ts/latest/guide/router.html#!#resolve-guard">ROUTING &amp; NAVIGATION</a></p>
-<p><a href="https://github.com/chgc/blogDemocode-ng2Router-resolve">範例程式碼</a></p>
-]]></content>
-      <categories>
-        <category>Angular</category>
-      </categories>
-      <tags>
-        <tag>Angular</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[Angular] 與ASP.NET Core合體</title>
     <url>/2017/01/03/mvccore-with-angular2-cli/</url>
     <content><![CDATA[<p>Angular可以說是一個很稱職的前端Framework，那後端的架構又有什麼選擇呢? <a href="http://xn--ASP-yx1e609b.NET">其實ASP.NET</a> MVC Core是一個不錯的選擇。架構很輕，在搭配無敵強大的Visual Studio與Azure超級無縫的接軌。可以說是不二人選，但是. Angular CLI的專案要怎麼跟MVC Core的專案結合呢? 以下使用Visual Studio 2017RC+ Core 1.1.0版來做Demo.</p>
@@ -3921,6 +3891,36 @@ Control是配合ngControl使用. 初始是 new Control(『default value』, vali
       <tags>
         <tag>Angular</tag>
         <tag>學習筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Angular] Router Resolve</title>
+    <url>/2016/12/11/ng2-router-resolve/</url>
+    <content><![CDATA[<p>Angular 2的Router Config的地方，可以設定data跟resolve. 這篇就簡單的紀錄一下怎麼寫resolve的部分跟怎麼在component裡取得資料</p>
+<span id="more"></span>
+<h1 id="基本用法"><a class="header-anchor" href="#基本用法"> </a>基本用法</h1>
+<p>Routes設定的部分</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;posts&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">PostsComponent</span>,</span><br><span class="line">    data : &#123; <span class="attr">someProp</span>: propValue&#125;,</span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">posts</span>: <span class="title class_">PostsResolver</span>  </span><br><span class="line">    &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡的可以直接設定data或是resolve的屬性，這兩個屬性都可以透過ActivatedRoute的data取得.</p>
+<p>PostsResolver是實作Resolve</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Http</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/http&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Resolve</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Observable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">PostsResolver</span> <span class="keyword">implements</span> <span class="title class_">Resolve</span>&lt;<span class="built_in">any</span>&gt;&#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> http: Http</span>) &#123;   </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">resolve</span>(): <span class="title class_">Observable</span>&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">&#x27;https://jsonplaceholder.typicode.com/posts&#x27;</span>).<span class="title function_">map</span>(<span class="function"><span class="params">res</span>=&gt;</span>res.<span class="title function_">json</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>當然在routing-module下必須把這個註冊在provider裡面</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes)],</span><br><span class="line">  <span class="attr">exports</span>: [<span class="title class_">RouterModule</span>],</span><br><span class="line">  <span class="attr">providers</span>: [</span><br><span class="line">      <span class="title class_">PostsResolver</span></span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppRoutingModule</span> &#123; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以上就是基本的router resolve的做法</p>
+<p>那Component裡面怎麼用呢</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">PostsComponent</span> <span class="keyword">implements</span> <span class="title class_">OnInit</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="attr">posts</span>: <span class="built_in">any</span>[] = [];</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> route: ActivatedRoute</span>) &#123; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">route</span>.<span class="property">data</span>.<span class="title function_">subscribe</span>(<span class="function">(<span class="params">data: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">posts</span> = data.<span class="property">posts</span>;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// or this way</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">posts</span> = <span class="variable language_">this</span>.<span class="property">route</span>.<span class="property">snapshot</span>.<span class="property">data</span>[<span class="string">&#x27;posts&#x27;</span>];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="進階用法"><a class="header-anchor" href="#進階用法"> </a>進階用法</h1>
+<p>resolve也可以把參數的部分帶入使用</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Http</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/http&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Resolve</span>, <span class="title class_">ActivatedRouteSnapshot</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Observable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">PostResolver</span> <span class="keyword">implements</span> <span class="title class_">Resolve</span>&lt;<span class="built_in">any</span>&gt;&#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> http: Http</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">resolve</span>(<span class="attr">route</span>: <span class="title class_">ActivatedRouteSnapshot</span>): <span class="title class_">Observable</span>&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> id = route.<span class="property">params</span>[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">`https://jsonplaceholder.typicode.com/posts/<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">            .<span class="title function_">map</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<p><a href="https://angular.io/docs/ts/latest/guide/router.html#!#resolve-guard">ROUTING &amp; NAVIGATION</a></p>
+<p><a href="https://github.com/chgc/blogDemocode-ng2Router-resolve">範例程式碼</a></p>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
       </tags>
   </entry>
   <entry>
@@ -4682,66 +4682,6 @@ Control是配合ngControl使用. 初始是 new Control(『default value』, vali
       </tags>
   </entry>
   <entry>
-    <title>[Angular] 啟用 strictNullChecks</title>
-    <url>/2017/04/13/angular-strictNullChecks/</url>
-    <content><![CDATA[<p>Typescript 2.0 新增了一個功能 <code>strictNullChecks</code> ，這一功能的主要目的是將 <code>null</code> 與 <code>undefined</code> 視為不同的型別。在這個選項啟動時， Typescript 會去檢查所有有可能發生 <code>null</code> 的程式碼，在下面會看到當開啟時，需要調整的項目有哪些。這樣的嚴謹模式，可以大大的降低一些例外的發生</p>
-<p>而 Angular 所使用的 Typescript 版本也是 2.0 以後的版本，爾當然支援這樣的功能，以下我就拿一個手上練習的專案將該功能該起後，所遇到的一些狀況跟解決方式。</p>
-<span id="more"></span>
-<h1 id="前言"><a class="header-anchor" href="#前言"> </a>前言</h1>
-<blockquote>
-<h1 id="Null-and-undefined-aware-types"><a class="header-anchor" href="#Null-and-undefined-aware-types"> </a>Null- and undefined-aware types</h1>
-<p>TypeScript has two special types, Null and Undefined, that have the values <code>null</code> and <code>undefined</code> respectively. Previously it was not possible to explicitly name these types, but <code>null</code> and <code>undefined</code> may now be used as type names regardless of type checking mode.</p>
-<p>The type checker previously considered <code>null</code> and <code>undefined</code> assignable to anything. Effectively, <code>null</code> and <code>undefined</code> were valid values of <em>every</em> type and it wasn’t possible to specifically exclude them (and therefore not possible to detect erroneous use of them).</p>
-</blockquote>
-<h1 id="Angular-環境設定"><a class="header-anchor" href="#Angular-環境設定"> </a>Angular 環境設定</h1>
-<p>在 <code>tsconfig.json</code> 內開啟 strictNullChecks 功能，由於 Angular 主程式內還有部分的程式碼還沒有辦法通過 <code>strictNullChecks</code> 的檢查，所以必須再多開啟 <code>skipLibCheck</code> 的選項</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;compileOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="attr">&quot;strictNullChecks&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;skipLibCheck&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h1 id="檢查開始"><a class="header-anchor" href="#檢查開始"> </a>檢查開始</h1>
-<p>當執行 <code>npm start</code> 時，Typescript 就會開始做檢查的動作了，在最近更新的 Visual Studio Code 支援從 Terminal 直接開啟該檔案的功能，<code>Ctrl + Click</code>  就可以開啟了。</p>
-<p>第一次的檢查，會跳出很多紅色的錯誤。就一個一個看吧</p>
-<h2 id="錯誤-1-Type-any-is-not-assignable-to-type-never"><a class="header-anchor" href="#錯誤-1-Type-any-is-not-assignable-to-type-never"> </a>錯誤 1: Type any[] is not assignable to type never[]</h2>
-<p><img src="https://farm4.staticflickr.com/3839/33966106616_47d4595064_o.png" alt=""></p>
-<p>圖片中的 errMessage 是發生錯誤的地方。造成這個錯誤的原因是 errMessage 在定義時，並沒有宣告型別，而是直接給予一個空陣列。</p>
-<p><img src="https://farm3.staticflickr.com/2870/33878082021_5228371f40_o.png" alt=""></p>
-<p><strong>修正方式 :</strong>  明確的給予型別，即可修正此類型的錯誤</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="attr">errMessage</span>: <span class="built_in">string</span>[] = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">  <span class="keyword">if</span> (obj.<span class="title function_">hasOwnProperty</span>(prop)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(obj[prop])) &#123;</span><br><span class="line">      errMessage = [...errMessage, ...obj[prop]];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="錯誤-2-Argument-of-Type-…-is-not-assignable-to-type-『…』"><a class="header-anchor" href="#錯誤-2-Argument-of-Type-…-is-not-assignable-to-type-『…』"> </a>錯誤 2: Argument of Type … is not assignable to type 『…』</h2>
-<p><img src="https://farm4.staticflickr.com/3942/33966175946_d3fb790e8a_o.png" alt=""></p>
-<p><img src="https://farm3.staticflickr.com/2825/33966186516_b0bca33e9c_o.png" alt=""></p>
-<p>這裡的 AuthConfig 接受的參數型別是 <code>IAuthConfigOptional</code>，而程式碼裡所傳入的 Object 並未指定型別。</p>
-<p><img src="https://farm3.staticflickr.com/2819/33966196546_d41c75867c_o.png" alt=""></p>
-<p><strong>修正方式 :</strong> 給予正確的型別</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AuthHttp</span>(<span class="keyword">new</span> <span class="title class_">AuthConfig</span>(&lt;<span class="title class_">IAuthConfigOptional</span>&gt;&#123;</span><br><span class="line">        <span class="attr">tokenName</span>: <span class="string">&#x27;token&#x27;</span>,</span><br><span class="line">        <span class="attr">noJwtError</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">tokenGetter</span>: (<span class="function">() =&gt;</span> <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)),</span><br><span class="line">    &#125;), http, options);</span><br></pre></td></tr></table></figure>
-<h2 id="錯誤-3-Object-is-possibly-null"><a class="header-anchor" href="#錯誤-3-Object-is-possibly-null"> </a>錯誤 3: Object is possibly null</h2>
-<p><img src="https://farm3.staticflickr.com/2848/33878182561_27142d36fe_o.png" alt=""></p>
-<p>在這裡的錯誤訊息是指，這段程式碼有可能因為某一個Object是 null 時，後續的程式碼就無法繼續下去，所以必須先排除 null 的狀態，才能確保後續的動作是正常的。而這個行為，在 Typescript 2.0 稱為 <code>Control flow based type analysis</code> <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></p>
-<p>這裡有幾種修正方式</p>
-<ol>
-<li>告訴 Typescript, 這裡有可能發生 null 的 Object 是不會有 null 值的情形，需使用 <code>!</code>  <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></li>
-</ol>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">number</span> = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="property">body</span>.<span class="property">scrollTop</span>;</span><br><span class="line">       <span class="keyword">if</span> (<span class="built_in">number</span> &gt; <span class="number">130</span>) &#123;</span><br><span class="line">           <span class="variable language_">this</span>.<span class="property">document</span>!.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>)!.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="variable language_">this</span>.<span class="property">document</span>!.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>)!.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">       &#125;           </span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>根據 Type 來控制流程</li>
-</ol>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">document</span> === <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="built_in">number</span> = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="property">body</span>.<span class="property">scrollTop</span>;</span><br><span class="line"><span class="keyword">const</span> panel = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (panel === <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">number</span> &gt; <span class="number">130</span>) &#123;</span><br><span class="line">  panel.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  panel.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="錯誤4-Type-『null』-is-not-assignable-to-type-『file-undefined』"><a class="header-anchor" href="#錯誤4-Type-『null』-is-not-assignable-to-type-『file-undefined』"> </a>錯誤4: Type 『null』 is not assignable to type 『file | undefined』</h2>
-<p><img src="https://farm3.staticflickr.com/2937/34007884075_3ffb7190eb_o.png" alt=""></p>
-<p><strong>修正方式 :</strong> 這個錯誤其實很簡單，就是不要指定 null 到變數上即可</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">photo.<span class="property">file</span> = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure>
-<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
-<p>透過這一系列的型別設定檢查，雖然在開發時期，因為型別的指定會降低開發的速度，可是當系統越來越龐大時，可以在開發時期確保程式不會壞掉。就投報率的角度來說，是非常值得投資的。</p>
-<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
-<p><a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html">TypeScript 2.0</a></p>
-<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">A new <code>!</code> post-fix expression operator may be used to assert that its operand is non-null and non-undefined in contexts where the type checker is unable to conclude that fact. Specifically, the operation <code>x!</code> produces a value of the type of <code>x</code>with <code>null</code> and <code>undefined</code> excluded. Similar to type assertions of the forms <code>&lt;T&gt;x</code> and <code>x as T</code>, the <code>!</code> non-null assertion operator is simply removed in the emitted JavaScript code.</span><a href="#fnref:1" rev="footnote"> ↩</a></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">2.</span><span style="display: inline-block; vertical-align: top;">TypeScript 2.0 implements a control flow-based type analysis for local variables and parameters. Previously, the type analysis performed for type guards was limited to <code>if</code> statements and <code>?:</code> conditional expressions and didn't include effects of assignments and control flow constructs such as <code>return</code> and <code>break</code> statements. With TypeScript 2.0, the type checker analyses all possible flows of control in statements and expressions to produce the most specific type possible (the <em>narrowed type</em>) at any given location for a local variable or parameter that is declared to have a union type.</span><a href="#fnref:2" rev="footnote"> ↩</a></li></ol></div></div>]]></content>
-      <categories>
-        <category>Angular</category>
-      </categories>
-      <tags>
-        <tag>Angular</tag>
-        <tag>Typescript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[Angular] EventManager</title>
     <url>/2017/04/19/angular-eventmanager/</url>
     <content><![CDATA[<p>EventManager 是一個很強大的 Angular 內建功能。預設有開啟三種 Event，<code>Dom</code>、<code>Key</code>、<code>HammerGestures</code> Plugin可以使用。EventManager 可以讓我們很簡單的控制全域 (window)  的事件。</p>
@@ -4806,6 +4746,66 @@ Control是配合ngControl使用. 初始是 new Control(『default value』, vali
       </categories>
       <tags>
         <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Angular] 啟用 strictNullChecks</title>
+    <url>/2017/04/13/angular-strictNullChecks/</url>
+    <content><![CDATA[<p>Typescript 2.0 新增了一個功能 <code>strictNullChecks</code> ，這一功能的主要目的是將 <code>null</code> 與 <code>undefined</code> 視為不同的型別。在這個選項啟動時， Typescript 會去檢查所有有可能發生 <code>null</code> 的程式碼，在下面會看到當開啟時，需要調整的項目有哪些。這樣的嚴謹模式，可以大大的降低一些例外的發生</p>
+<p>而 Angular 所使用的 Typescript 版本也是 2.0 以後的版本，爾當然支援這樣的功能，以下我就拿一個手上練習的專案將該功能該起後，所遇到的一些狀況跟解決方式。</p>
+<span id="more"></span>
+<h1 id="前言"><a class="header-anchor" href="#前言"> </a>前言</h1>
+<blockquote>
+<h1 id="Null-and-undefined-aware-types"><a class="header-anchor" href="#Null-and-undefined-aware-types"> </a>Null- and undefined-aware types</h1>
+<p>TypeScript has two special types, Null and Undefined, that have the values <code>null</code> and <code>undefined</code> respectively. Previously it was not possible to explicitly name these types, but <code>null</code> and <code>undefined</code> may now be used as type names regardless of type checking mode.</p>
+<p>The type checker previously considered <code>null</code> and <code>undefined</code> assignable to anything. Effectively, <code>null</code> and <code>undefined</code> were valid values of <em>every</em> type and it wasn’t possible to specifically exclude them (and therefore not possible to detect erroneous use of them).</p>
+</blockquote>
+<h1 id="Angular-環境設定"><a class="header-anchor" href="#Angular-環境設定"> </a>Angular 環境設定</h1>
+<p>在 <code>tsconfig.json</code> 內開啟 strictNullChecks 功能，由於 Angular 主程式內還有部分的程式碼還沒有辦法通過 <code>strictNullChecks</code> 的檢查，所以必須再多開啟 <code>skipLibCheck</code> 的選項</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;compileOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="attr">&quot;strictNullChecks&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;skipLibCheck&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="檢查開始"><a class="header-anchor" href="#檢查開始"> </a>檢查開始</h1>
+<p>當執行 <code>npm start</code> 時，Typescript 就會開始做檢查的動作了，在最近更新的 Visual Studio Code 支援從 Terminal 直接開啟該檔案的功能，<code>Ctrl + Click</code>  就可以開啟了。</p>
+<p>第一次的檢查，會跳出很多紅色的錯誤。就一個一個看吧</p>
+<h2 id="錯誤-1-Type-any-is-not-assignable-to-type-never"><a class="header-anchor" href="#錯誤-1-Type-any-is-not-assignable-to-type-never"> </a>錯誤 1: Type any[] is not assignable to type never[]</h2>
+<p><img src="https://farm4.staticflickr.com/3839/33966106616_47d4595064_o.png" alt=""></p>
+<p>圖片中的 errMessage 是發生錯誤的地方。造成這個錯誤的原因是 errMessage 在定義時，並沒有宣告型別，而是直接給予一個空陣列。</p>
+<p><img src="https://farm3.staticflickr.com/2870/33878082021_5228371f40_o.png" alt=""></p>
+<p><strong>修正方式 :</strong>  明確的給予型別，即可修正此類型的錯誤</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="attr">errMessage</span>: <span class="built_in">string</span>[] = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">  <span class="keyword">if</span> (obj.<span class="title function_">hasOwnProperty</span>(prop)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(obj[prop])) &#123;</span><br><span class="line">      errMessage = [...errMessage, ...obj[prop]];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="錯誤-2-Argument-of-Type-…-is-not-assignable-to-type-『…』"><a class="header-anchor" href="#錯誤-2-Argument-of-Type-…-is-not-assignable-to-type-『…』"> </a>錯誤 2: Argument of Type … is not assignable to type 『…』</h2>
+<p><img src="https://farm4.staticflickr.com/3942/33966175946_d3fb790e8a_o.png" alt=""></p>
+<p><img src="https://farm3.staticflickr.com/2825/33966186516_b0bca33e9c_o.png" alt=""></p>
+<p>這裡的 AuthConfig 接受的參數型別是 <code>IAuthConfigOptional</code>，而程式碼裡所傳入的 Object 並未指定型別。</p>
+<p><img src="https://farm3.staticflickr.com/2819/33966196546_d41c75867c_o.png" alt=""></p>
+<p><strong>修正方式 :</strong> 給予正確的型別</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AuthHttp</span>(<span class="keyword">new</span> <span class="title class_">AuthConfig</span>(&lt;<span class="title class_">IAuthConfigOptional</span>&gt;&#123;</span><br><span class="line">        <span class="attr">tokenName</span>: <span class="string">&#x27;token&#x27;</span>,</span><br><span class="line">        <span class="attr">noJwtError</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">tokenGetter</span>: (<span class="function">() =&gt;</span> <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)),</span><br><span class="line">    &#125;), http, options);</span><br></pre></td></tr></table></figure>
+<h2 id="錯誤-3-Object-is-possibly-null"><a class="header-anchor" href="#錯誤-3-Object-is-possibly-null"> </a>錯誤 3: Object is possibly null</h2>
+<p><img src="https://farm3.staticflickr.com/2848/33878182561_27142d36fe_o.png" alt=""></p>
+<p>在這裡的錯誤訊息是指，這段程式碼有可能因為某一個Object是 null 時，後續的程式碼就無法繼續下去，所以必須先排除 null 的狀態，才能確保後續的動作是正常的。而這個行為，在 Typescript 2.0 稱為 <code>Control flow based type analysis</code> <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></p>
+<p>這裡有幾種修正方式</p>
+<ol>
+<li>告訴 Typescript, 這裡有可能發生 null 的 Object 是不會有 null 值的情形，需使用 <code>!</code>  <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">number</span> = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="property">body</span>.<span class="property">scrollTop</span>;</span><br><span class="line">       <span class="keyword">if</span> (<span class="built_in">number</span> &gt; <span class="number">130</span>) &#123;</span><br><span class="line">           <span class="variable language_">this</span>.<span class="property">document</span>!.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>)!.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="variable language_">this</span>.<span class="property">document</span>!.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>)!.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">       &#125;           </span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>根據 Type 來控制流程</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">document</span> === <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="built_in">number</span> = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="property">body</span>.<span class="property">scrollTop</span>;</span><br><span class="line"><span class="keyword">const</span> panel = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (panel === <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">number</span> &gt; <span class="number">130</span>) &#123;</span><br><span class="line">  panel.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  panel.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="錯誤4-Type-『null』-is-not-assignable-to-type-『file-undefined』"><a class="header-anchor" href="#錯誤4-Type-『null』-is-not-assignable-to-type-『file-undefined』"> </a>錯誤4: Type 『null』 is not assignable to type 『file | undefined』</h2>
+<p><img src="https://farm3.staticflickr.com/2937/34007884075_3ffb7190eb_o.png" alt=""></p>
+<p><strong>修正方式 :</strong> 這個錯誤其實很簡單，就是不要指定 null 到變數上即可</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">photo.<span class="property">file</span> = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>透過這一系列的型別設定檢查，雖然在開發時期，因為型別的指定會降低開發的速度，可是當系統越來越龐大時，可以在開發時期確保程式不會壞掉。就投報率的角度來說，是非常值得投資的。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<p><a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html">TypeScript 2.0</a></p>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">A new <code>!</code> post-fix expression operator may be used to assert that its operand is non-null and non-undefined in contexts where the type checker is unable to conclude that fact. Specifically, the operation <code>x!</code> produces a value of the type of <code>x</code>with <code>null</code> and <code>undefined</code> excluded. Similar to type assertions of the forms <code>&lt;T&gt;x</code> and <code>x as T</code>, the <code>!</code> non-null assertion operator is simply removed in the emitted JavaScript code.</span><a href="#fnref:1" rev="footnote"> ↩</a></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">2.</span><span style="display: inline-block; vertical-align: top;">TypeScript 2.0 implements a control flow-based type analysis for local variables and parameters. Previously, the type analysis performed for type guards was limited to <code>if</code> statements and <code>?:</code> conditional expressions and didn't include effects of assignments and control flow constructs such as <code>return</code> and <code>break</code> statements. With TypeScript 2.0, the type checker analyses all possible flows of control in statements and expressions to produce the most specific type possible (the <em>narrowed type</em>) at any given location for a local variable or parameter that is declared to have a union type.</span><a href="#fnref:2" rev="footnote"> ↩</a></li></ol></div></div>]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+        <tag>Typescript</tag>
       </tags>
   </entry>
   <entry>
@@ -6168,37 +6168,6 @@ We are not storing the subscription from connecting as we do not expect this ser
       </tags>
   </entry>
   <entry>
-    <title>[Angular] Angular 下拉選單的隱藏菜單</title>
-    <url>/2017/07/02/angular-select-option/</url>
-    <content><![CDATA[<p>看完 Sam 所寫的 <a href="http://oomusou.io/angular/angular-select/">如何使用 Angular 實作下拉選單?</a>，其實 Angular 針對 Select 這個控制項，有提供一些額外的功能，這邊文章就來整理一下這控制項的隱藏菜單</p>
-<span id="more"></span>
-<h1 id="隱藏菜單"><a class="header-anchor" href="#隱藏菜單"> </a>隱藏菜單</h1>
-<h2 id="ngValue"><a class="header-anchor" href="#ngValue"> </a>ngValue</h2>
-<p>AngularJS 有提供 <code>ngOptions</code> 的方法，可以讓我們把 <code>Object</code> 當作 <code>Option</code> 的值，當我們做下拉選單選擇時，就可以取得所選取的物件資料，十分的方便。但在 Angular 裡面應該要怎麼寫才能有同樣的效果。</p>
-<p>Angular 如果想要達到同樣的效果，就需要將 <code>Object資料</code> 塞到 <code>ngValue</code> 內即可達到一樣的效果</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Component</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;example-app&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;form #f=&quot;ngForm&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;select name=&quot;state&quot; ngModel&gt;</span></span><br><span class="line"><span class="string">        &lt;option value=&quot;&quot; disabled&gt;Choose a state&lt;/option&gt;</span></span><br><span class="line"><span class="string">        &lt;option *ngFor=&quot;let state of states&quot; [ngValue]=&quot;state&quot;&gt;</span></span><br><span class="line"><span class="string">          &#123;&#123; state.abbrev &#125;&#125;</span></span><br><span class="line"><span class="string">        &lt;/option&gt;</span></span><br><span class="line"><span class="string">      &lt;/select&gt;</span></span><br><span class="line"><span class="string">    &lt;/form&gt;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">     &lt;p&gt;Form value: &#123;&#123; f.value | json &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">     &lt;!-- example value: &#123;state: &#123;name: &#x27;New York&#x27;, abbrev: &#x27;NY&#x27;&#125; &#125; --&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SelectControlComp</span> &#123;</span><br><span class="line">  states = [</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;Arizona&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;AZ&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;California&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;CA&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;Colorado&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;CO&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;New York&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;NY&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;Pennsylvania&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;PA&#x27;</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="compareWith"><a class="header-anchor" href="#compareWith"> </a>compareWith</h2>
-<p>當使用 <code>Object</code> 當作資料時，要怎麼設定下拉選單所選取的值呢，這時候可以透過 <code>compareWith</code> 的方法來實現</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">classs <span class="title class_">AppComponent</span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="title function_">compareFn</span>(<span class="attr">c1</span>: <span class="title class_">Country</span>, <span class="attr">c2</span>: <span class="title class_">Country</span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> c1 &amp;&amp; c2 ? c1.<span class="property">id</span> === c2.<span class="property">id</span> : c1 === c2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>template 的部分是</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> [<span class="attr">compareWith</span>]=<span class="string">&quot;compareFn&quot;</span>  [(<span class="attr">ngModel</span>)]=<span class="string">&quot;selectedCountries&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let country of countries&quot;</span> [<span class="attr">ngValue</span>]=<span class="string">&quot;country&quot;</span>&gt;</span></span><br><span class="line">        &#123;&#123;country.name&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>透過自訂的方式來決定要依什麼條件來選取下拉選單的選項</p>
-<ul>
-<li>注意: compareWith 是監聽 <code>change</code> 事件，因為 <code>input</code>  事件在 Firefox 和 IE 上是不會被觸發的。</li>
-</ul>
-<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
-<ul>
-<li><a href="https://angular.io/api/forms/SelectControlValueAccessor">SelectControlValueAccessor</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Angular</category>
-      </categories>
-      <tags>
-        <tag>Angular</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[Angular] Extension Method</title>
     <url>/2017/07/03/angular-method-extension/</url>
     <content><![CDATA[<p>如果有寫 C# 的人，多少都會寫到擴充方法(Extension Method) ，在 JavaScript 裡面也有雷同的功能，就是直接擴充 <code>prototype</code> 的功能，而 TypeScript 也同理，這裡整理 3 種擴充方法的寫法，並將擴充方法加入到 Angular 專案內使用</p>
@@ -6225,6 +6194,37 @@ We are not storing the subscription from connecting as we do not expect this ser
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign()</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty()</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Angular] Angular 下拉選單的隱藏菜單</title>
+    <url>/2017/07/02/angular-select-option/</url>
+    <content><![CDATA[<p>看完 Sam 所寫的 <a href="http://oomusou.io/angular/angular-select/">如何使用 Angular 實作下拉選單?</a>，其實 Angular 針對 Select 這個控制項，有提供一些額外的功能，這邊文章就來整理一下這控制項的隱藏菜單</p>
+<span id="more"></span>
+<h1 id="隱藏菜單"><a class="header-anchor" href="#隱藏菜單"> </a>隱藏菜單</h1>
+<h2 id="ngValue"><a class="header-anchor" href="#ngValue"> </a>ngValue</h2>
+<p>AngularJS 有提供 <code>ngOptions</code> 的方法，可以讓我們把 <code>Object</code> 當作 <code>Option</code> 的值，當我們做下拉選單選擇時，就可以取得所選取的物件資料，十分的方便。但在 Angular 裡面應該要怎麼寫才能有同樣的效果。</p>
+<p>Angular 如果想要達到同樣的效果，就需要將 <code>Object資料</code> 塞到 <code>ngValue</code> 內即可達到一樣的效果</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Component</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;example-app&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;form #f=&quot;ngForm&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;select name=&quot;state&quot; ngModel&gt;</span></span><br><span class="line"><span class="string">        &lt;option value=&quot;&quot; disabled&gt;Choose a state&lt;/option&gt;</span></span><br><span class="line"><span class="string">        &lt;option *ngFor=&quot;let state of states&quot; [ngValue]=&quot;state&quot;&gt;</span></span><br><span class="line"><span class="string">          &#123;&#123; state.abbrev &#125;&#125;</span></span><br><span class="line"><span class="string">        &lt;/option&gt;</span></span><br><span class="line"><span class="string">      &lt;/select&gt;</span></span><br><span class="line"><span class="string">    &lt;/form&gt;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">     &lt;p&gt;Form value: &#123;&#123; f.value | json &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">     &lt;!-- example value: &#123;state: &#123;name: &#x27;New York&#x27;, abbrev: &#x27;NY&#x27;&#125; &#125; --&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SelectControlComp</span> &#123;</span><br><span class="line">  states = [</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;Arizona&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;AZ&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;California&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;CA&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;Colorado&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;CO&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;New York&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;NY&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&#x27;Pennsylvania&#x27;</span>, <span class="attr">abbrev</span>: <span class="string">&#x27;PA&#x27;</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="compareWith"><a class="header-anchor" href="#compareWith"> </a>compareWith</h2>
+<p>當使用 <code>Object</code> 當作資料時，要怎麼設定下拉選單所選取的值呢，這時候可以透過 <code>compareWith</code> 的方法來實現</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">classs <span class="title class_">AppComponent</span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="title function_">compareFn</span>(<span class="attr">c1</span>: <span class="title class_">Country</span>, <span class="attr">c2</span>: <span class="title class_">Country</span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> c1 &amp;&amp; c2 ? c1.<span class="property">id</span> === c2.<span class="property">id</span> : c1 === c2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>template 的部分是</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> [<span class="attr">compareWith</span>]=<span class="string">&quot;compareFn&quot;</span>  [(<span class="attr">ngModel</span>)]=<span class="string">&quot;selectedCountries&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let country of countries&quot;</span> [<span class="attr">ngValue</span>]=<span class="string">&quot;country&quot;</span>&gt;</span></span><br><span class="line">        &#123;&#123;country.name&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>透過自訂的方式來決定要依什麼條件來選取下拉選單的選項</p>
+<ul>
+<li>注意: compareWith 是監聽 <code>change</code> 事件，因為 <code>input</code>  事件在 Firefox 和 IE 上是不會被觸發的。</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://angular.io/api/forms/SelectControlValueAccessor">SelectControlValueAccessor</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -10735,6 +10735,116 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[Angular] Akita 第一次接觸</title>
+    <url>/2018/10/14/angular-akita-first-impression/</url>
+    <content><![CDATA[<p>沒錯，又是另外一套 Angular 狀態管理的工具，這一套 Akita 根據介紹，是融合 Flux + Redux + RxJS 以 OOP 的方式呈現。有別於其他 Redux 風格的狀態管理，是以 FP 的方式完成，就來嘗鮮看看，多一種選擇也不錯</p>
+<span id="more"></span>
+<h1 id="介紹"><a class="header-anchor" href="#介紹"> </a>介紹</h1>
+<p>什麼是 Akita，Akita 是結合多家的精神，以物件導向的方格完成的狀態管理工具，減少產稱不必要的程式碼，讓習慣物件導向開發模式的人，也可以享受 Flux 風格的狀態管理方式</p>
+<p><img src="https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-LDIcOEJiLYk8yWho34E%2F-LEFMbbD5BNkHxecdUde%2F-LEFMe1nMjDF-0kBdGY5%2Fakita-arc.jpg?alt=media&amp;token=4f72cec7-063d-46f2-b231-48d475235744" alt=""></p>
+<h1 id="安裝-Akita"><a class="header-anchor" href="#安裝-Akita"> </a>安裝 Akita</h1>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn add @datorama/akita</span><br><span class="line"></span><br><span class="line">或是</span><br><span class="line"></span><br><span class="line">npm install @datorama/akita</span><br></pre></td></tr></table></figure>
+<h1 id="基本元素"><a class="header-anchor" href="#基本元素"> </a>基本元素</h1>
+<p>(以下範例皆來自官方文件)</p>
+<h2 id="Model"><a class="header-anchor" href="#Model"> </a>Model</h2>
+<p>Model 是用來描述 Store 內資料存放的結構。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">ID</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@datorama/akita&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Session</span> = &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="variable constant_">ID</span>;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">token</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createSession</span>(<span class="params">&#123;</span></span><br><span class="line"><span class="params">  id = <span class="literal">null</span>, firstName = <span class="string">&#x27;&#x27;</span>, lastName = <span class="string">&#x27;&#x27;</span>, token = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="params">&#125;: Partial&lt;Session&gt;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    id,</span><br><span class="line">    firstName,</span><br><span class="line">    lastName,</span><br><span class="line">    token</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>官方建議新增 <code>type</code> 和 <code>factory function</code> ，讓其負責 store 初始值的建立</p>
+<h2 id="Store"><a class="header-anchor" href="#Store"> </a>Store</h2>
+<p><code>Store</code> 是一個用來記載狀態的一個物件，建立一個 <code>store</code> 物件繼承 <code>Akita Sotre</code> 並傳入型別(Model) 被給予初始值</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Store</span>, <span class="title class_">StoreConfig</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@datorama/akita&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Session</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session.model&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">SessionState</span> &#123;</span><br><span class="line">   <span class="attr">token</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createInitialState</span>(<span class="params"></span>): <span class="title class_">SessionState</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">token</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@StoreConfig</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;session&#x27;</span> &#125;) <span class="comment">// 在 store 要存放的名字</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionStore</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Store</span>&lt;<span class="title class_">SessionState</span>&gt; &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(<span class="title function_">createInitialState</span>());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當建立 <code>store</code> 後，當在 <code>service</code> 使用時，可以透過 <code>setState</code> 的方式來更新 store 內的狀態</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setState</span>(<span class="attr">newStateFn</span>: <span class="function">(<span class="params">state: Readonly&lt;S&gt;</span>) =&gt;</span> S)</span><br></pre></td></tr></table></figure>
+<p>使用範例:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionStore</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session.store&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionDataService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session-data.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> sessionStore: SessionStore, </span></span><br><span class="line"><span class="params">              <span class="keyword">private</span> sessionDataService: SessionDataService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="title function_">login</span>(<span class="params">creds</span>) &#123;</span><br><span class="line">    	<span class="variable language_">this</span>.<span class="property">sessionDataService</span>.<span class="title function_">login</span>(creds).<span class="title function_">subscribe</span>(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      	<span class="variable language_">this</span>.<span class="property">sessionStore</span>.<span class="title function_">setState</span>(<span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">	        <span class="keyword">return</span> &#123;</span><br><span class="line">    	       ...state,</span><br><span class="line">        	   ...<span class="title function_">createSession</span>(user)</span><br><span class="line">        	&#125;</span><br><span class="line">      	&#125;);</span><br><span class="line">    	&#125;);</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>setState</code> 的做法比較像是 redux 風格的 reducer，而 Akita 有提供另外一種方法可以快速地更新 Store 的值，</p>
+<p>可透過 <code>update</code> 的方法來完成，<code>update(newState: Partial&lt;S&gt;)</code></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionStore</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session.store&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionDataService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session-data.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionService</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> sessionStore: SessionStore, </span></span><br><span class="line"><span class="params">              <span class="keyword">private</span> sessionDataService: SessionDataService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">login</span>(<span class="params">creds</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sessionDataService</span>.<span class="title function_">login</span>(creds).<span class="title function_">subscribe</span>(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">sessionStore</span>.<span class="title function_">update</span>(<span class="title function_">createSession</span>(user));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>update</code> 也可以接受 callback 方法。(詳情請閱讀官方文件)</p>
+<p>也有其他的方法可以使用</p>
+<ul>
+<li><code>setLoading(isLoading: boolean)</code> : 設定 store 的讀取狀態</li>
+<li><code>setError(error: any)</code> 設定 store 的錯誤狀態</li>
+</ul>
+<h2 id="Service"><a class="header-anchor" href="#Service"> </a>Service</h2>
+<p>Service 內的使用與一般在寫 Service 是一樣的，只是要將 store class 注入到 service 內使用</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionStore</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session.store&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionDataService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session-data.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionService</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> sessionStore: SessionStore</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">login</span>(<span class="params">creds</span>) &#123;</span><br><span class="line">    http.<span class="title function_">login</span>(creds).<span class="title function_">subscribe</span>(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">sessionStore</span>.<span class="title function_">update</span>(<span class="title function_">createSession</span>(user));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Query"><a class="header-anchor" href="#Query"> </a>Query</h2>
+<p>Akita 的 Query 的地位，等同於 <code>ngrx</code> 的 selector，是用來撈取 Store 使用，回傳的型別為 <code>Observable</code></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Query</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@datorama/akita&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionQuery</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Query</span>&lt;<span class="title class_">Session</span>&gt; &#123;</span><br><span class="line">  isLoggedIn$ = <span class="variable language_">this</span>.<span class="title function_">select</span>(<span class="function"><span class="params">session</span> =&gt;</span> !!session.<span class="property">token</span>);</span><br><span class="line">   </span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">protected</span> store: SessionStore</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(store);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當繼承 <code>Query&lt;T&gt;</code> 時，會擁有 <code>select&lt;R&gt;(project?: (store: S) =&gt; R): Observable&lt;R&gt;</code> 的方法可以使用，雖然在 component 可透過 <code>select</code> 的方式讀取 <code>store</code> 的狀態，但一般建議是寫在 Query Class 內部，以方便重複使用</p>
+<ul>
+<li>
+<p><code>select()</code> 方法回傳的 Observable 是會執行 <code>distinctUntilChanged()</code> 的，這表示該 <code>select</code> 只會當有資料異動時才會被觸發</p>
+</li>
+<li>
+<p><code>selectOnce()</code> 行為類似於 <code>select()</code> ，但只會被觸發一次</p>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">query</span>.<span class="title function_">selectOnce</span>(<span class="function"><span class="params">state</span>=&gt;</span> state.<span class="property">key</span>);	</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>getSnapshot()</code> 回傳 store 的 <em>raw</em> value</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">query</span>.<span class="title function_">getSnapshot</span>();</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>selectLoading()</code> : 取得 store 的 loading 狀態</p>
+</li>
+<li>
+<p><code>selectError()</code> 取得 store 的錯誤狀態</p>
+</li>
+</ul>
+<h1 id="感想"><a class="header-anchor" href="#感想"> </a>感想</h1>
+<p>雖然少了許多不必要的程式碼跟流程，但操作的複雜度似乎需要多花點時間研究，主要是 API 部分需要熟悉，這動作能不能自己刻，這當然是可以的，但透過學習其他的狀態管理工具並了解其背後的設計原理，也是有很大的幫助的。</p>
+<p>單純就基本結構元素來看，Akita 所提供的 <code>store</code> 是比較關鍵的功能，其他的操作應該是大同小異。初步看來，真正的應用應該會是在 <code>Entity</code> 的地方，如何上用 <code>Entity</code> 來管理複雜的狀態會是需要思考的部分。</p>
+<p>至於實際上怎麼使用，可以先參考<a href="https://engineering.datorama.com/building-a-shopping-cart-in-angular-using-akita-c41f6a6f7255">這篇文章</a>，先抓個感覺</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://netbasal.gitbook.io/akita/">官方文件</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Angular] Angular Component Host Style</title>
+    <url>/2018/10/14/angular-host-style/</url>
+    <content><![CDATA[<p>Angular 內有提供針對 Component 本體樣式描述的特別語法，分別是 <code>:host</code> 與 <code>:host-context</code> 這兩者使用，可以讓 Component 的樣式更模組化。而這篇文章就針對這兩者的用法做說明</p>
+<span id="more"></span>
+<h1 id="host"><a class="header-anchor" href="#host"> </a>:host</h1>
+<p><code>:host</code> 可用來描述本體 component 的樣式呈現方式，例如</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background</span>: grey;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣就可以針對 <code>Component</code> 本身做樣式設定</p>
+<p><img src="https://i.imgur.com/5AWX7Fv.png" alt=""></p>
+<p>如果想要透過外部做額外的樣式複寫，這時候可以搭配 <code>:host(selector)</code> 的方式做設定</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span>(<span class="selector-class">.active</span>)&#123;</span><br><span class="line">  <span class="attribute">background</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>外部 html 的部分，當加上 <code>class=&quot;active&quot;</code> 時，就會套用此樣式規則</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-counter</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">app-counter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/OzWjUMT.png" alt=""></p>
+<h1 id="host-context"><a class="header-anchor" href="#host-context"> </a>:host-context</h1>
+<p>進一步來看，如果想要依更外層的 <code>class</code> 來做判斷呢? 這時候可以使用 <code>:host-context(selector)</code> 的方式做設定</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span>-context(<span class="selector-class">.theme-light</span>) &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#eef</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;theme-light&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">app-counter</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">app-counter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/Du1T9Ah.png" alt=""></p>
+<h1 id="套用順序"><a class="header-anchor" href="#套用順序"> </a>套用順序</h1>
+<p><code>:host</code> 與 <code>:host-context</code> 的樣式會依 css 優先權規則套用。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://stackblitz.com/edit/angular-host-style?file=src%2Fapp%2Fcounter%2Fcounter.component.css">範例程式</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[C#] Collection</title>
     <url>/2018/10/04/csharp-collection/</url>
     <content><![CDATA[<p>C# 的集合種類有很多種，每一種集合都有不同的特性，趁著在看 <code>ImmutableList</code> 將這個區塊的資訊整理一下。C# 跟及何有關的命名空間，都會放在 <code>System.Collections</code> 下</p>
@@ -10908,116 +11018,6 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </categories>
       <tags>
         <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[Angular] Akita 第一次接觸</title>
-    <url>/2018/10/14/angular-akita-first-impression/</url>
-    <content><![CDATA[<p>沒錯，又是另外一套 Angular 狀態管理的工具，這一套 Akita 根據介紹，是融合 Flux + Redux + RxJS 以 OOP 的方式呈現。有別於其他 Redux 風格的狀態管理，是以 FP 的方式完成，就來嘗鮮看看，多一種選擇也不錯</p>
-<span id="more"></span>
-<h1 id="介紹"><a class="header-anchor" href="#介紹"> </a>介紹</h1>
-<p>什麼是 Akita，Akita 是結合多家的精神，以物件導向的方格完成的狀態管理工具，減少產稱不必要的程式碼，讓習慣物件導向開發模式的人，也可以享受 Flux 風格的狀態管理方式</p>
-<p><img src="https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-LDIcOEJiLYk8yWho34E%2F-LEFMbbD5BNkHxecdUde%2F-LEFMe1nMjDF-0kBdGY5%2Fakita-arc.jpg?alt=media&amp;token=4f72cec7-063d-46f2-b231-48d475235744" alt=""></p>
-<h1 id="安裝-Akita"><a class="header-anchor" href="#安裝-Akita"> </a>安裝 Akita</h1>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn add @datorama/akita</span><br><span class="line"></span><br><span class="line">或是</span><br><span class="line"></span><br><span class="line">npm install @datorama/akita</span><br></pre></td></tr></table></figure>
-<h1 id="基本元素"><a class="header-anchor" href="#基本元素"> </a>基本元素</h1>
-<p>(以下範例皆來自官方文件)</p>
-<h2 id="Model"><a class="header-anchor" href="#Model"> </a>Model</h2>
-<p>Model 是用來描述 Store 內資料存放的結構。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">ID</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@datorama/akita&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Session</span> = &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="variable constant_">ID</span>;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">token</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createSession</span>(<span class="params">&#123;</span></span><br><span class="line"><span class="params">  id = <span class="literal">null</span>, firstName = <span class="string">&#x27;&#x27;</span>, lastName = <span class="string">&#x27;&#x27;</span>, token = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="params">&#125;: Partial&lt;Session&gt;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    id,</span><br><span class="line">    firstName,</span><br><span class="line">    lastName,</span><br><span class="line">    token</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>官方建議新增 <code>type</code> 和 <code>factory function</code> ，讓其負責 store 初始值的建立</p>
-<h2 id="Store"><a class="header-anchor" href="#Store"> </a>Store</h2>
-<p><code>Store</code> 是一個用來記載狀態的一個物件，建立一個 <code>store</code> 物件繼承 <code>Akita Sotre</code> 並傳入型別(Model) 被給予初始值</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Store</span>, <span class="title class_">StoreConfig</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@datorama/akita&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Session</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session.model&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">SessionState</span> &#123;</span><br><span class="line">   <span class="attr">token</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createInitialState</span>(<span class="params"></span>): <span class="title class_">SessionState</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">token</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@StoreConfig</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;session&#x27;</span> &#125;) <span class="comment">// 在 store 要存放的名字</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionStore</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Store</span>&lt;<span class="title class_">SessionState</span>&gt; &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(<span class="title function_">createInitialState</span>());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>當建立 <code>store</code> 後，當在 <code>service</code> 使用時，可以透過 <code>setState</code> 的方式來更新 store 內的狀態</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setState</span>(<span class="attr">newStateFn</span>: <span class="function">(<span class="params">state: Readonly&lt;S&gt;</span>) =&gt;</span> S)</span><br></pre></td></tr></table></figure>
-<p>使用範例:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionStore</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session.store&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionDataService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session-data.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> sessionStore: SessionStore, </span></span><br><span class="line"><span class="params">              <span class="keyword">private</span> sessionDataService: SessionDataService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="title function_">login</span>(<span class="params">creds</span>) &#123;</span><br><span class="line">    	<span class="variable language_">this</span>.<span class="property">sessionDataService</span>.<span class="title function_">login</span>(creds).<span class="title function_">subscribe</span>(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      	<span class="variable language_">this</span>.<span class="property">sessionStore</span>.<span class="title function_">setState</span>(<span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">	        <span class="keyword">return</span> &#123;</span><br><span class="line">    	       ...state,</span><br><span class="line">        	   ...<span class="title function_">createSession</span>(user)</span><br><span class="line">        	&#125;</span><br><span class="line">      	&#125;);</span><br><span class="line">    	&#125;);</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>setState</code> 的做法比較像是 redux 風格的 reducer，而 Akita 有提供另外一種方法可以快速地更新 Store 的值，</p>
-<p>可透過 <code>update</code> 的方法來完成，<code>update(newState: Partial&lt;S&gt;)</code></p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionStore</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session.store&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionDataService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session-data.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionService</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> sessionStore: SessionStore, </span></span><br><span class="line"><span class="params">              <span class="keyword">private</span> sessionDataService: SessionDataService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">login</span>(<span class="params">creds</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sessionDataService</span>.<span class="title function_">login</span>(creds).<span class="title function_">subscribe</span>(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">sessionStore</span>.<span class="title function_">update</span>(<span class="title function_">createSession</span>(user));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>update</code> 也可以接受 callback 方法。(詳情請閱讀官方文件)</p>
-<p>也有其他的方法可以使用</p>
-<ul>
-<li><code>setLoading(isLoading: boolean)</code> : 設定 store 的讀取狀態</li>
-<li><code>setError(error: any)</code> 設定 store 的錯誤狀態</li>
-</ul>
-<h2 id="Service"><a class="header-anchor" href="#Service"> </a>Service</h2>
-<p>Service 內的使用與一般在寫 Service 是一樣的，只是要將 store class 注入到 service 內使用</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionStore</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session.store&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SessionDataService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./session-data.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionService</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> sessionStore: SessionStore</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">login</span>(<span class="params">creds</span>) &#123;</span><br><span class="line">    http.<span class="title function_">login</span>(creds).<span class="title function_">subscribe</span>(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">sessionStore</span>.<span class="title function_">update</span>(<span class="title function_">createSession</span>(user));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Query"><a class="header-anchor" href="#Query"> </a>Query</h2>
-<p>Akita 的 Query 的地位，等同於 <code>ngrx</code> 的 selector，是用來撈取 Store 使用，回傳的型別為 <code>Observable</code></p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Query</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@datorama/akita&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SessionQuery</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Query</span>&lt;<span class="title class_">Session</span>&gt; &#123;</span><br><span class="line">  isLoggedIn$ = <span class="variable language_">this</span>.<span class="title function_">select</span>(<span class="function"><span class="params">session</span> =&gt;</span> !!session.<span class="property">token</span>);</span><br><span class="line">   </span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">protected</span> store: SessionStore</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(store);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>當繼承 <code>Query&lt;T&gt;</code> 時，會擁有 <code>select&lt;R&gt;(project?: (store: S) =&gt; R): Observable&lt;R&gt;</code> 的方法可以使用，雖然在 component 可透過 <code>select</code> 的方式讀取 <code>store</code> 的狀態，但一般建議是寫在 Query Class 內部，以方便重複使用</p>
-<ul>
-<li>
-<p><code>select()</code> 方法回傳的 Observable 是會執行 <code>distinctUntilChanged()</code> 的，這表示該 <code>select</code> 只會當有資料異動時才會被觸發</p>
-</li>
-<li>
-<p><code>selectOnce()</code> 行為類似於 <code>select()</code> ，但只會被觸發一次</p>
-</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">query</span>.<span class="title function_">selectOnce</span>(<span class="function"><span class="params">state</span>=&gt;</span> state.<span class="property">key</span>);	</span><br></pre></td></tr></table></figure>
-<ul>
-<li>
-<p><code>getSnapshot()</code> 回傳 store 的 <em>raw</em> value</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">query</span>.<span class="title function_">getSnapshot</span>();</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p><code>selectLoading()</code> : 取得 store 的 loading 狀態</p>
-</li>
-<li>
-<p><code>selectError()</code> 取得 store 的錯誤狀態</p>
-</li>
-</ul>
-<h1 id="感想"><a class="header-anchor" href="#感想"> </a>感想</h1>
-<p>雖然少了許多不必要的程式碼跟流程，但操作的複雜度似乎需要多花點時間研究，主要是 API 部分需要熟悉，這動作能不能自己刻，這當然是可以的，但透過學習其他的狀態管理工具並了解其背後的設計原理，也是有很大的幫助的。</p>
-<p>單純就基本結構元素來看，Akita 所提供的 <code>store</code> 是比較關鍵的功能，其他的操作應該是大同小異。初步看來，真正的應用應該會是在 <code>Entity</code> 的地方，如何上用 <code>Entity</code> 來管理複雜的狀態會是需要思考的部分。</p>
-<p>至於實際上怎麼使用，可以先參考<a href="https://engineering.datorama.com/building-a-shopping-cart-in-angular-using-akita-c41f6a6f7255">這篇文章</a>，先抓個感覺</p>
-<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
-<ul>
-<li><a href="https://netbasal.gitbook.io/akita/">官方文件</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Angular</category>
-      </categories>
-      <tags>
-        <tag>Angular</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[Angular] Angular Component Host Style</title>
-    <url>/2018/10/14/angular-host-style/</url>
-    <content><![CDATA[<p>Angular 內有提供針對 Component 本體樣式描述的特別語法，分別是 <code>:host</code> 與 <code>:host-context</code> 這兩者使用，可以讓 Component 的樣式更模組化。而這篇文章就針對這兩者的用法做說明</p>
-<span id="more"></span>
-<h1 id="host"><a class="header-anchor" href="#host"> </a>:host</h1>
-<p><code>:host</code> 可用來描述本體 component 的樣式呈現方式，例如</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background</span>: grey;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這樣就可以針對 <code>Component</code> 本身做樣式設定</p>
-<p><img src="https://i.imgur.com/5AWX7Fv.png" alt=""></p>
-<p>如果想要透過外部做額外的樣式複寫，這時候可以搭配 <code>:host(selector)</code> 的方式做設定</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span>(<span class="selector-class">.active</span>)&#123;</span><br><span class="line">  <span class="attribute">background</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>外部 html 的部分，當加上 <code>class=&quot;active&quot;</code> 時，就會套用此樣式規則</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-counter</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">app-counter</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/OzWjUMT.png" alt=""></p>
-<h1 id="host-context"><a class="header-anchor" href="#host-context"> </a>:host-context</h1>
-<p>進一步來看，如果想要依更外層的 <code>class</code> 來做判斷呢? 這時候可以使用 <code>:host-context(selector)</code> 的方式做設定</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span>-context(<span class="selector-class">.theme-light</span>) &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#eef</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;theme-light&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">app-counter</span> <span class="attr">class</span>=<span class="string">&quot;active&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">app-counter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/Du1T9Ah.png" alt=""></p>
-<h1 id="套用順序"><a class="header-anchor" href="#套用順序"> </a>套用順序</h1>
-<p><code>:host</code> 與 <code>:host-context</code> 的樣式會依 css 優先權規則套用。</p>
-<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
-<ul>
-<li><a href="https://stackblitz.com/edit/angular-host-style?file=src%2Fapp%2Fcounter%2Fcounter.component.css">範例程式</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Angular</category>
-      </categories>
-      <tags>
-        <tag>Angular</tag>
       </tags>
   </entry>
   <entry>
@@ -17572,26 +17572,6 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
-    <title>[Angular] Angular 在 VSCode Extension (Webview) 內做頁面切換</title>
-    <url>/2021/02/05/angular-vscode-extension-page-navigate/</url>
-    <content><![CDATA[<p>繼上一篇環境基礎設定完成後，這篇先來筆記一下要如何做頁面切換，有哪些地方需要留意的</p>
-<span id="more"></span>
-<p>首先要知道在 VSCode Extension Webview 的環境並不是一個 web server 而是檔案，所以我們就不能使用預設的路由設定模式，而必須改為 hash 模式 (<code>HashLocationStrategy</code>)，設定方式如下</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"> <span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes, &#123;</span><br><span class="line">      <span class="attr">useHash</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
-<p>在到 <code>index.html</code> 的地方，調整 base 路徑的部分</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>到這邊基本上 Angular 的路由就可以正常運作了</p>
-<p>或許會問說，那 LazyLoading 的部分呢? 很抱歉，在 VSCode Extension Webview 內是不能使用的，所以 <code>loadChildren</code> 的寫法要改成這樣</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">path</span>: <span class="string">&#x27;product&#x27;</span>, <span class="attr">loadChildren</span>: <span class="function">() =&gt;</span> <span class="title class_">ProductModule</span> &#125;,</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Angular</category>
-      </categories>
-      <tags>
-        <tag>Angular</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[Rust] Rust 學習筆記 - 跟著文件寫猜數字</title>
     <url>/2021/02/19/rust-note-1/</url>
     <content><![CDATA[<p>Rust 這語言關注他有一段時間，但都沒有真正的動手寫看看，趁年後還沒那麼多事情時，來學習一下，或許日後可以用他來寫 web assembly</p>
@@ -17901,6 +17881,26 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </categories>
       <tags>
         <tag>Azure DevOps</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Angular] Angular 在 VSCode Extension (Webview) 內做頁面切換</title>
+    <url>/2021/02/05/angular-vscode-extension-page-navigate/</url>
+    <content><![CDATA[<p>繼上一篇環境基礎設定完成後，這篇先來筆記一下要如何做頁面切換，有哪些地方需要留意的</p>
+<span id="more"></span>
+<p>首先要知道在 VSCode Extension Webview 的環境並不是一個 web server 而是檔案，所以我們就不能使用預設的路由設定模式，而必須改為 hash 模式 (<code>HashLocationStrategy</code>)，設定方式如下</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"> <span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes, &#123;</span><br><span class="line">      <span class="attr">useHash</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
+<p>在到 <code>index.html</code> 的地方，調整 base 路徑的部分</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>到這邊基本上 Angular 的路由就可以正常運作了</p>
+<p>或許會問說，那 LazyLoading 的部分呢? 很抱歉，在 VSCode Extension Webview 內是不能使用的，所以 <code>loadChildren</code> 的寫法要改成這樣</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">path</span>: <span class="string">&#x27;product&#x27;</span>, <span class="attr">loadChildren</span>: <span class="function">() =&gt;</span> <span class="title class_">ProductModule</span> &#125;,</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Angular</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
       </tags>
   </entry>
   <entry>
@@ -21216,61 +21216,6 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
-    <title>[Ansible] 學習 Ansible 之路 - Ansible playbook</title>
-    <url>/2023/05/07/study-ansible-02/</url>
-    <content><![CDATA[<p>Ansible playbook 可以讓我們用劇本的方式來管理想對 managed node 執行的動作，Ansible playbook 是使用 YAML 的格式來編寫，當然 Ansible 也有提供對應的檢查工具來檢查 playbook 是否有正確編寫。</p>
-<p>這一篇來學習如何寫 Ansible playbook</p>
-<span id="more"></span>
-<h2 id="Playbook"><a class="header-anchor" href="#Playbook"> </a>Playbook</h2>
-<p>建立一個空的 playbook 很簡單，只要建立一個 <code>&lt;xxxx&gt;.yml</code> 檔就算是完成一個 playbook 的建立。內容才是重點，主要會有幾個元素</p>
-<p><img src="image-20230507105006665.png" alt="image-20230507105006665"></p>
-<ol>
-<li>
-<p>劇本名稱</p>
-</li>
-<li>
-<p>執行對象: 這會跟 Inventory 設定檔有關</p>
-<ul>
-<li>Inventory 可以在執行 playbook 時指定，這裡提供一個範本</li>
-</ul>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[local]</span></span><br><span class="line">server1 <span class="attr">ansible_ssh_host</span>=<span class="number">127.0</span>.<span class="number">0.1</span> ansible_ssh_port=<span class="number">32769</span> ansible_ssh_pass=docker</span><br></pre></td></tr></table></figure>
-<ul>
-<li>line 1: <code>[local]</code> 是 inventory group 名稱，也是 hosts 指定的目標，可以依自己的喜好編寫，後面也會有一篇研究如何寫 inventory 檔案</li>
-</ul>
-</li>
-<li>
-<p>任務列表: 會包含一系列要執行的動作，通常會使用 Ansible 所提供的 module 來執行</p>
-<ol>
-<li><code>command</code> 是 Ansible 內建的 module，可以對 hosts 下指令</li>
-<li><code>register</code> 也是 Ansible 內建的 module，可以將回傳訊息記錄在變數內，這邊就是會儲存在 <code>result</code> 這一個變數</li>
-<li>要將變數輸出到 console 上，需要使用 <code>Jinja2</code> 的樣本功能，使用 <code>&#123;&#123; &#125;&#125;</code> 的方式輸出</li>
-</ol>
-</li>
-</ol>
-<h2 id="執行-playbook"><a class="header-anchor" href="#執行-playbook"> </a>執行 playbook</h2>
-<p>在 WSL 的環境內，切換到 playbook 檔案所在得資料夾，執行這段指令，需依實際的狀況作些調整，基本指令結構是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i &lt;inventory 檔案&gt; &lt;playbook 檔案名&gt;</span><br></pre></td></tr></table></figure>
-<p>範例:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i hosts hello_world.yml </span><br></pre></td></tr></table></figure>
-<p>如果設定都正確的話，可預期會得到這樣的執行結果</p>
-<p><img src="image-20230507110200351.png" alt="image-20230507110200351"></p>
-<h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2>
-<p>撰寫 Ansible playbook 本身不難，一旦知道我們想要自動化的行為有什麼，相關流程需要怎麼安排，接下來就是找對應的 Ansible module 或是網路上有的參考範例，最後就是整理在 playbook 劇本內。當然更進階的管理辦法或是 playbook 的檔案結構應該要怎麼規劃，就留給各位去研究了。</p>
-<h2 id="補充"><a class="header-anchor" href="#補充"> </a>補充</h2>
-<p>Ansible 有提供 <code>ansible-lint</code> 的工具，可檢查 playbook  的格式是否正確，該工具的 GitHub Repo <a href="https://github.com/ansible/ansible-lint">由此去</a>，<a href="https://ansible-lint.readthedocs.io/">Ansible Lint Documentation</a></p>
-<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
-<ul>
-<li><a href="https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax">Playbook Syntax</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>Ansible</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[讀書筆記][閱讀中] 網站可靠性工程工作手冊｜導入SRE的實用方法</title>
     <url>/2023/06/24/books-The-Site-Reliability-Workbook/</url>
     <content><![CDATA[<p>SRE 真的需要大量的閱讀跟實做，累積經驗才可以得到 SRE 的精髓，只好認真 K 書了</p>
@@ -21406,6 +21351,61 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </categories>
       <tags>
         <tag>Grafana</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Ansible] 學習 Ansible 之路 - Ansible playbook</title>
+    <url>/2023/05/07/study-ansible-02/</url>
+    <content><![CDATA[<p>Ansible playbook 可以讓我們用劇本的方式來管理想對 managed node 執行的動作，Ansible playbook 是使用 YAML 的格式來編寫，當然 Ansible 也有提供對應的檢查工具來檢查 playbook 是否有正確編寫。</p>
+<p>這一篇來學習如何寫 Ansible playbook</p>
+<span id="more"></span>
+<h2 id="Playbook"><a class="header-anchor" href="#Playbook"> </a>Playbook</h2>
+<p>建立一個空的 playbook 很簡單，只要建立一個 <code>&lt;xxxx&gt;.yml</code> 檔就算是完成一個 playbook 的建立。內容才是重點，主要會有幾個元素</p>
+<p><img src="image-20230507105006665.png" alt="image-20230507105006665"></p>
+<ol>
+<li>
+<p>劇本名稱</p>
+</li>
+<li>
+<p>執行對象: 這會跟 Inventory 設定檔有關</p>
+<ul>
+<li>Inventory 可以在執行 playbook 時指定，這裡提供一個範本</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[local]</span></span><br><span class="line">server1 <span class="attr">ansible_ssh_host</span>=<span class="number">127.0</span>.<span class="number">0.1</span> ansible_ssh_port=<span class="number">32769</span> ansible_ssh_pass=docker</span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 1: <code>[local]</code> 是 inventory group 名稱，也是 hosts 指定的目標，可以依自己的喜好編寫，後面也會有一篇研究如何寫 inventory 檔案</li>
+</ul>
+</li>
+<li>
+<p>任務列表: 會包含一系列要執行的動作，通常會使用 Ansible 所提供的 module 來執行</p>
+<ol>
+<li><code>command</code> 是 Ansible 內建的 module，可以對 hosts 下指令</li>
+<li><code>register</code> 也是 Ansible 內建的 module，可以將回傳訊息記錄在變數內，這邊就是會儲存在 <code>result</code> 這一個變數</li>
+<li>要將變數輸出到 console 上，需要使用 <code>Jinja2</code> 的樣本功能，使用 <code>&#123;&#123; &#125;&#125;</code> 的方式輸出</li>
+</ol>
+</li>
+</ol>
+<h2 id="執行-playbook"><a class="header-anchor" href="#執行-playbook"> </a>執行 playbook</h2>
+<p>在 WSL 的環境內，切換到 playbook 檔案所在得資料夾，執行這段指令，需依實際的狀況作些調整，基本指令結構是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i &lt;inventory 檔案&gt; &lt;playbook 檔案名&gt;</span><br></pre></td></tr></table></figure>
+<p>範例:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i hosts hello_world.yml </span><br></pre></td></tr></table></figure>
+<p>如果設定都正確的話，可預期會得到這樣的執行結果</p>
+<p><img src="image-20230507110200351.png" alt="image-20230507110200351"></p>
+<h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2>
+<p>撰寫 Ansible playbook 本身不難，一旦知道我們想要自動化的行為有什麼，相關流程需要怎麼安排，接下來就是找對應的 Ansible module 或是網路上有的參考範例，最後就是整理在 playbook 劇本內。當然更進階的管理辦法或是 playbook 的檔案結構應該要怎麼規劃，就留給各位去研究了。</p>
+<h2 id="補充"><a class="header-anchor" href="#補充"> </a>補充</h2>
+<p>Ansible 有提供 <code>ansible-lint</code> 的工具，可檢查 playbook  的格式是否正確，該工具的 GitHub Repo <a href="https://github.com/ansible/ansible-lint">由此去</a>，<a href="https://ansible-lint.readthedocs.io/">Ansible Lint Documentation</a></p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax">Playbook Syntax</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>Ansible</tag>
       </tags>
   </entry>
   <entry>
