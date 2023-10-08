@@ -2,60 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.kevinyang.net/categories/index.html</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/reading/index.html</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/tags/index.html</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2023/06/24/books-The-Site-Reliability-Workbook/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2023/07/16/faro-web-sdk-study/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2023/09/02/vscode-rest-client-note/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.kevinyang.net/2023/10/06/jest-with-httpTestingController/</loc>
     
     <lastmod>2023-10-08</lastmod>
@@ -75,6 +21,33 @@
   
   <url>
     <loc>http://blog.kevinyang.net/about/index.html</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/categories/index.html</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/reading/index.html</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/tags/index.html</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -110,7 +83,25 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2022/11/05/study-dapr-2/</loc>
+    <loc>http://blog.kevinyang.net/2023/06/24/books-The-Site-Reliability-Workbook/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2023/07/16/faro-web-sdk-study/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2023/09/02/vscode-rest-client-note/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -128,7 +119,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2022/11/05/study-dapr-1/</loc>
+    <loc>http://blog.kevinyang.net/2022/11/05/study-dapr-2/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -137,7 +128,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2022/10/23/keycloak-note-2/</loc>
+    <loc>http://blog.kevinyang.net/2022/11/05/study-dapr-1/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -156,6 +147,15 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2022/10/23/keycloak-note-1/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2022/10/23/keycloak-note-2/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -299,15 +299,6 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2022/01/28/angular-e2e-note-1/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.kevinyang.net/2022/01/29/angular-e2e-note-2/</loc>
     
     <lastmod>2023-10-08</lastmod>
@@ -318,24 +309,6 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2022/01/30/fsharp-minimal-api/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2021/07/28/helm-tips/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2021/08/15/dhall-note-001/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -371,6 +344,15 @@
   </url>
   
   <url>
+    <loc>http://blog.kevinyang.net/2022/01/28/angular-e2e-note-1/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.kevinyang.net/2021/07/17/k8s-note-003/</loc>
     
     <lastmod>2023-10-08</lastmod>
@@ -381,6 +363,24 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2021/07/18/k8s-note-004/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2021/07/28/helm-tips/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2021/08/15/dhall-note-001/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -443,15 +443,6 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.kevinyang.net/2021/04/18/devops-api-angular-version/</loc>
     
     <lastmod>2023-10-08</lastmod>
@@ -462,6 +453,15 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2021/05/08/nats-study-1/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2021/03/26/teams-messagecard-action-action/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -489,24 +489,6 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2021/03/20/teams-and-messages/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2020/12/27/dart-reduce-fold/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2021/01/13/flutter-firebase-message-setup/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -587,6 +569,24 @@
   </url>
   
   <url>
+    <loc>http://blog.kevinyang.net/2020/12/27/dart-reduce-fold/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2021/01/13/flutter-firebase-message-setup/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.kevinyang.net/2020/07/30/docker-101-note-1/</loc>
     
     <lastmod>2023-10-08</lastmod>
@@ -606,15 +606,6 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2020/07/28/office-ppt-tips-crop-image/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2020/04/02/obs-tips-2/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -713,6 +704,15 @@
   </url>
   
   <url>
+    <loc>http://blog.kevinyang.net/2020/04/02/obs-tips-2/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.kevinyang.net/2020/03/23/material-datepicker-taiwan/</loc>
     
     <lastmod>2023-10-08</lastmod>
@@ -750,15 +750,6 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2020/03/03/zoom-create-event/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2019/11/28/angular-element-with-sharepoint-part2/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -848,7 +839,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2019/10/06/flutter-layout-grid-list/</loc>
+    <loc>http://blog.kevinyang.net/2019/11/28/angular-element-with-sharepoint-part2/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -912,6 +903,15 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2019/10/05/flutter-layout-container/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2019/10/06/flutter-layout-grid-list/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -1001,15 +1001,6 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2019/07/15/angular-firebase-link-provide-to-same-account/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.kevinyang.net/2019/07/26/angular-with-o365-3/</loc>
     
     <lastmod>2023-10-08</lastmod>
@@ -1047,6 +1038,15 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2019/07/01/rxjs-notification/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2019/07/15/angular-firebase-link-provide-to-same-account/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -1127,15 +1127,6 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2019/04/11/ng-windows-auth/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.kevinyang.net/2019/04/15/vscode-custom-emmet/</loc>
     
     <lastmod>2023-10-08</lastmod>
@@ -1146,6 +1137,15 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2019/04/20/ng-push-notification/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2019/04/11/ng-windows-auth/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -1290,96 +1290,6 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2019/03/15/ng-dart-start/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/02/11/nx/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/02/13/nx-config-file/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/02/19/nx-create-app/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/02/24/nx-create-lib/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/03/10/blazor/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/03/22/rxjs-6-breakchanges/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/03/23/forensic-accounting-note-1/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/03/24/forensic-accounting-note-2/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/03/25/blazor-basic/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2018/03/30/angular-ngxs/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -1704,87 +1614,6 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2018/11/20/ng-treeshaking/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2016/11/12/ng2-template/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2016/11/13/ng2-transclusion/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2016/11/17/ng2-3rdLibrary/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2016/11/19/ng2-viewchild-viewcontent/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2016/12/11/ng2-router-resolve/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2017/01/03/mvccore-with-angular2-cli/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2017/01/05/angular2-ssw-testing-angular2-note/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2017/01/07/angular-test-learning-note/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2017/01/08/rxjs-context-demo-1/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2279,7 +2108,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/08/study-note-phalcon-using-view/</loc>
+    <loc>http://blog.kevinyang.net/2018/02/11/nx/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2288,7 +2117,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/09/memo-common-git-commands/</loc>
+    <loc>http://blog.kevinyang.net/2018/02/13/nx-config-file/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2297,7 +2126,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/09/phalcon-using-model/</loc>
+    <loc>http://blog.kevinyang.net/2018/02/19/nx-create-app/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2306,7 +2135,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/10/phalcon-work-with-router/</loc>
+    <loc>http://blog.kevinyang.net/2018/02/24/nx-create-lib/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2315,7 +2144,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/16/laravel-study-note/</loc>
+    <loc>http://blog.kevinyang.net/2018/03/10/blazor/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2324,7 +2153,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/17/laravel-controllers/</loc>
+    <loc>http://blog.kevinyang.net/2018/03/22/rxjs-6-breakchanges/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2333,7 +2162,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/20/vfp-prog-cache/</loc>
+    <loc>http://blog.kevinyang.net/2018/03/23/forensic-accounting-note-1/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2342,7 +2171,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/26/html5-blob/</loc>
+    <loc>http://blog.kevinyang.net/2018/03/24/forensic-accounting-note-2/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2351,7 +2180,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/26/laravel-blade-template/</loc>
+    <loc>http://blog.kevinyang.net/2018/03/25/blazor-basic/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -2360,16 +2189,7 @@
   </url>
   
   <url>
-    <loc>http://blog.kevinyang.net/2013/10/31/aspnet-mvc-aspnet-mvc-open-to-accelerate/</loc>
-    
-    <lastmod>2023-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.kevinyang.net/2013/11/10/python-start-study-python/</loc>
+    <loc>http://blog.kevinyang.net/2018/03/30/angular-ngxs/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
@@ -3198,6 +3018,186 @@
   
   <url>
     <loc>http://blog.kevinyang.net/2016/11/11/ng2-component-interaction/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2016/11/12/ng2-template/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2016/11/13/ng2-transclusion/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2016/11/17/ng2-3rdLibrary/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2016/11/19/ng2-viewchild-viewcontent/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2016/12/11/ng2-router-resolve/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2017/01/03/mvccore-with-angular2-cli/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2017/01/05/angular2-ssw-testing-angular2-note/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2017/01/07/angular-test-learning-note/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2017/01/08/rxjs-context-demo-1/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/08/study-note-phalcon-using-view/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/09/memo-common-git-commands/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/09/phalcon-using-model/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/10/phalcon-work-with-router/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/16/laravel-study-note/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/17/laravel-controllers/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/20/vfp-prog-cache/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/26/html5-blob/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/26/laravel-blade-template/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/10/31/aspnet-mvc-aspnet-mvc-open-to-accelerate/</loc>
+    
+    <lastmod>2023-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.kevinyang.net/2013/11/10/python-start-study-python/</loc>
     
     <lastmod>2023-10-08</lastmod>
     
