@@ -170,7 +170,7 @@ func DateRange(t time.Time) (beginOfDate time.Time, endOfDate time.Time) {
 }
 
 func main() {
-    now := time.Now()
+	now := time.Now()
 	startOfDay, endOfDay := DateRange(now)
 	fmt.Println(startOfDay, endOfDay)
 }
