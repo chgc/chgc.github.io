@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Go] Go's time package'
+title: "[Go] time package"
 comments: true
 typora-root-url: 2023-10-08-golang-note-time-package/
 typora-copy-images-to: 2023-10-08-golang-note-time-package/
