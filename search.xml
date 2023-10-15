@@ -19140,6 +19140,58 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
       </tags>
   </entry>
   <entry>
+    <title>[K8s 相關] 寫 Helm 技巧筆記</title>
+    <url>/2021/07/28/helm-tips/</url>
+    <content><![CDATA[<p>Helm 或許不是現在最新最流行的工具，但公司用這個，所以還是得知道怎麼寫，這邊整理一些撰寫中一些實用小技巧。因為他底層是用 go template，有些語法會跟 Go 很像</p>
+<span id="more"></span>
+<ol>
+<li>
+<p>使用 name template 來降低 template 的雜亂度</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">define</span> <span class="string">&quot;temp.name&quot;</span> &#125;&#125;</span><br><span class="line"><span class="string">...</span></span><br><span class="line">&#123;&#123;<span class="string">end</span> <span class="string">-</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用不會輸出到 YAML 的註解表示法: <code>&#123;&#123; /*    /*&#125;&#125;</code></p>
+</li>
+<li>
+<p>需知道 <code>&#123;&#123;-    -&#125;&#125;</code> 中 <code>-</code> 的意思，知道他要去除那邊的空白</p>
+</li>
+<li>
+<p>可以使用 <code>&#123;&#123;- $var  := printf "%s-%s" .Values.xxx .Values.yyy -&#125;&#125;</code> 的寫法來定義範圍區域變數</p>
+</li>
+<li>
+<p>使用 <code>printf</code> 時，要留意資料型別，這部分可查閱  Go <code>printf</code> 的使用辦法</p>
+</li>
+<li>
+<p>在 name template 內如果要使用全域變數時，可加上 <code>$</code> ，例如 <code>&#123;&#123; $.Values.xxxx&#125;&#125;</code></p>
+</li>
+<li>
+<p>使用 name template 時，可以利用 <code>dict</code> 將多組資料傳入 name templates  中</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">$data</span> <span class="string">:=</span> <span class="string">dict</span> <span class="string">&quot;key1&quot;</span> <span class="string">value1</span> <span class="string">&quot;key2&quot;</span> <span class="string">value2</span> <span class="string">-</span>&#125;&#125;</span><br><span class="line">&#123;&#123; <span class="string">include</span> <span class="string">&quot;name.template&quot;</span> <span class="string">$data</span> &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="string">//</span> <span class="string">name</span> <span class="string">template</span> <span class="string">內使用傳進來資料的方式</span></span><br><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">define</span> <span class="string">&quot;name.template&quot;</span> &#125;&#125;</span><br><span class="line"><span class="attr">value1:</span> &#123;&#123; <span class="string">.key1</span> &#125;&#125;</span><br><span class="line"><span class="attr">value2:</span> &#123;&#123; <span class="string">.key2</span> &#125;&#125;</span><br><span class="line">&#123;&#123;<span class="string">end</span> <span class="string">-</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用 <code>range</code> 搭配 Values 中的列表資料，可以快速產生多組設定</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">range</span> <span class="string">$item</span> <span class="string">:=</span> <span class="string">.Values.items</span> &#125;&#125;</span><br><span class="line"><span class="attr">value in item:</span> &#123;&#123; <span class="string">$item.value</span> &#125;&#125;</span><br><span class="line">&#123;&#123; <span class="string">include</span> <span class="string">&quot;name.template&quot;</span> <span class="string">$item</span> &#125;&#125;</span><br><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">end</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>HELM 有一些 Flow control 的運算式可以使用，可參閱 <a href="https://helm.sh/docs/chart_template_guide/control_structures/">Doc</a></p>
+</li>
+<li>
+<p>內建 function 及善用 pipe 可以簡化很多工作</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;&#123; <span class="string">toYaml</span> <span class="string">.Values.resoureces</span> <span class="string">|</span> <span class="string">indent</span> <span class="number">12</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>轉成 YAML 格式且 indent 12 個空白</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>K8s</category>
+      </categories>
+      <tags>
+        <tag>K8s</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[K8s] 開始學習 Kubernetes - Multi-container Pods</title>
     <url>/2021/07/18/k8s-note-004/</url>
     <content><![CDATA[<p>Multi-container Pods 是另外一個很常見的使用方式，有 4 種模式 <code>Init Pattern</code> 、<code>Sidecar Pattern</code>、<code>Adapter Patter</code> 、<code>Ambassador Pattern</code>。</p>
@@ -19209,58 +19261,6 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 </ul>
 </li>
 </ul>
-]]></content>
-      <categories>
-        <category>K8s</category>
-      </categories>
-      <tags>
-        <tag>K8s</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[K8s 相關] 寫 Helm 技巧筆記</title>
-    <url>/2021/07/28/helm-tips/</url>
-    <content><![CDATA[<p>Helm 或許不是現在最新最流行的工具，但公司用這個，所以還是得知道怎麼寫，這邊整理一些撰寫中一些實用小技巧。因為他底層是用 go template，有些語法會跟 Go 很像</p>
-<span id="more"></span>
-<ol>
-<li>
-<p>使用 name template 來降低 template 的雜亂度</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">define</span> <span class="string">&quot;temp.name&quot;</span> &#125;&#125;</span><br><span class="line"><span class="string">...</span></span><br><span class="line">&#123;&#123;<span class="string">end</span> <span class="string">-</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>使用不會輸出到 YAML 的註解表示法: <code>&#123;&#123; /*    /*&#125;&#125;</code></p>
-</li>
-<li>
-<p>需知道 <code>&#123;&#123;-    -&#125;&#125;</code> 中 <code>-</code> 的意思，知道他要去除那邊的空白</p>
-</li>
-<li>
-<p>可以使用 <code>&#123;&#123;- $var  := printf "%s-%s" .Values.xxx .Values.yyy -&#125;&#125;</code> 的寫法來定義範圍區域變數</p>
-</li>
-<li>
-<p>使用 <code>printf</code> 時，要留意資料型別，這部分可查閱  Go <code>printf</code> 的使用辦法</p>
-</li>
-<li>
-<p>在 name template 內如果要使用全域變數時，可加上 <code>$</code> ，例如 <code>&#123;&#123; $.Values.xxxx&#125;&#125;</code></p>
-</li>
-<li>
-<p>使用 name template 時，可以利用 <code>dict</code> 將多組資料傳入 name templates  中</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">$data</span> <span class="string">:=</span> <span class="string">dict</span> <span class="string">&quot;key1&quot;</span> <span class="string">value1</span> <span class="string">&quot;key2&quot;</span> <span class="string">value2</span> <span class="string">-</span>&#125;&#125;</span><br><span class="line">&#123;&#123; <span class="string">include</span> <span class="string">&quot;name.template&quot;</span> <span class="string">$data</span> &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="string">//</span> <span class="string">name</span> <span class="string">template</span> <span class="string">內使用傳進來資料的方式</span></span><br><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">define</span> <span class="string">&quot;name.template&quot;</span> &#125;&#125;</span><br><span class="line"><span class="attr">value1:</span> &#123;&#123; <span class="string">.key1</span> &#125;&#125;</span><br><span class="line"><span class="attr">value2:</span> &#123;&#123; <span class="string">.key2</span> &#125;&#125;</span><br><span class="line">&#123;&#123;<span class="string">end</span> <span class="string">-</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>使用 <code>range</code> 搭配 Values 中的列表資料，可以快速產生多組設定</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">range</span> <span class="string">$item</span> <span class="string">:=</span> <span class="string">.Values.items</span> &#125;&#125;</span><br><span class="line"><span class="attr">value in item:</span> &#123;&#123; <span class="string">$item.value</span> &#125;&#125;</span><br><span class="line">&#123;&#123; <span class="string">include</span> <span class="string">&quot;name.template&quot;</span> <span class="string">$item</span> &#125;&#125;</span><br><span class="line">&#123;&#123;<span class="bullet">-</span> <span class="string">end</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>HELM 有一些 Flow control 的運算式可以使用，可參閱 <a href="https://helm.sh/docs/chart_template_guide/control_structures/">Doc</a></p>
-</li>
-<li>
-<p>內建 function 及善用 pipe 可以簡化很多工作</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;&#123; <span class="string">toYaml</span> <span class="string">.Values.resoureces</span> <span class="string">|</span> <span class="string">indent</span> <span class="number">12</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>轉成 YAML 格式且 indent 12 個空白</li>
-</ul>
-</li>
-</ol>
 ]]></content>
       <categories>
         <category>K8s</category>
@@ -21603,6 +21603,37 @@ only provides run-time support. This version of <a href="http://ODP.NET">ODP.NET
 <ul>
 <li><a href="https://pkg.go.dev/time">Go time package Documentation</a></li>
 </ul>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[Go] VSCode 內的 Test Coverage 設定小技巧</title>
+    <url>/2023/10/15/golang-test-coverage-tips/</url>
+    <content><![CDATA[<p>VSCode 應該是很多人的主開發工具，尤其在這個一個人要身兼多語言開發時，VSCode 真的是個不錯的選擇，而 Go 在 VSCode 上的開發體驗，搭配 <a href="https://marketplace.visualstudio.com/items?itemName=golang.Go">Go Exntesion</a> 後，真的沒什麼好挑剔的，但還是有些設定需要做調整，這篇會筆記一些近期針對測試部分所做的設定調整。</p>
+<span id="more"></span>
+<h2 id="調整-Coverage-的顯示方式"><a class="header-anchor" href="#調整-Coverage-的顯示方式"> </a>調整 Coverage 的顯示方式</h2>
+<ol>
+<li>
+<p>開啟 Coverage 的顯示，先講效果
+<img src="image-20231015115046331.png" alt="image-20231015115046331"></p>
+<p>從畫面的左邊就可以知道有哪些程式尚未被覆蓋到，在撰寫 test case 時是很直覺的，設定方式如下</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;go.coverOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;go.coverageDecorator&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gutter&quot;</span><span class="punctuation">,</span> <span class="comment">// 預設是 hightlight</span></span><br><span class="line">    <span class="attr">&quot;coveredHighlightColor&quot;</span><span class="punctuation">:</span> <span class="string">&quot;rgba(64,128,128,0.5)&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;uncoveredHighlightColor&quot;</span><span class="punctuation">:</span> <span class="string">&quot;rgba(128,64,64,0.25)&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;coveredGutterStyle&quot;</span><span class="punctuation">:</span> <span class="string">&quot;blockgreen&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;uncoveredGutterStyle&quot;</span><span class="punctuation">:</span> <span class="string">&quot;blockred&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>coverOnSave</code>: 設定為 <code>true</code> 時，在 save 檔案時會執行 <code>go test -coverprofile</code></li>
+<li><code>go.coverageDecorator.type</code> 有兩種模式，<code>highlight</code> 和 <code>gutter</code>，自己是比較偏愛 <code>gutter</code> 的模式，各位可以自己玩看看</li>
+</ul>
+<h2 id="額外發現"><a class="header-anchor" href="#額外發現"> </a>額外發現</h2>
+<p>原來 Go extension 內有支援 generate unit test  的功能，這樣還有什麼理由不寫測試呢</p>
+<p><img src="image-20231015123047230.png" alt="image-20231015123047230"></p>
+<p>或是用 command Palette 方式執行</p>
+<p><img src="image-20231015123120869.png" alt="image-20231015123120869"></p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>Go</category>
