@@ -200,6 +200,96 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/" class="post-title-link" itemprop="url">[ASP.NET MVC]HTMLHelper work with AngularJs</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-05-01 07:58:00" itemprop="dateCreated datePublished" datetime="2014-05-01T07:58:00+08:00">2014-05-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>當要在htmlHelper裡面使用angularjs的屬性時, 原本的ng-model變成ng_model, 將 <strong>-</strong> 變成 <strong>_</strong> 即可</p>
+<p>例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Html.DropDownList(&quot;dropdown&quot;, (IEnumerable&lt;SelectListItem&gt;)ViewBag.items, new &#123; ng_model = &quot;currentSelect&quot;, ng_change = &quot;selectChanges()&quot; &#125;)</span><br><span class="line"></span><br><span class="line">會產生</span><br><span class="line">&lt;select id=&quot;dropdown&quot; name=&quot;dropdown&quot; ng-change=&quot;selectChanges()&quot; ng-model=&quot;currentSelect&quot;&gt;</span><br><span class="line">  &lt;options&gt;something&lt;/options&gt;*n</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/04/28/c-what-is-lambda-expressions-action-func-and-predicate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1314,144 +1404,6 @@ ng-repeat有 <strong>ng-repeat-start</strong> and <strong>ng-repeat-end</strong>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/01/30/zen-coding-style-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/01/30/zen-coding-style-notes/" class="post-title-link" itemprop="url">[WEB]Zen Coding style筆記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-01-31 03:37:00" itemprop="dateCreated datePublished" datetime="2014-01-31T03:37:00+08:00">2014-01-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/01/30/zen-coding-style-notes/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/30/zen-coding-style-notes/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <table>
-<thead>
-<tr>
-<th>符號</th>
-<th>說明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>#</td>
-<td>id屬性</td>
-</tr>
-<tr>
-<td>.</td>
-<td>class屬性</td>
-</tr>
-<tr>
-<td>[]</td>
-<td>自訂屬性</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>子元素</td>
-</tr>
-<tr>
-<td>+</td>
-<td>兄弟元素</td>
-</tr>
-<tr>
-<td>^</td>
-<td>升層</td>
-</tr>
-<tr>
-<td>*</td>
-<td>複製數量</td>
-</tr>
-<tr>
-<td>$</td>
-<td>增量變數</td>
-</tr>
-<tr>
-<td>$$</td>
-<td>增量變數(2位數)</td>
-</tr>
-<tr>
-<td>{}</td>
-<td>文字節點</td>
-</tr>
-</tbody>
-</table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1523,7 +1475,7 @@ ng-repeat有 <strong>ng-repeat-start</strong> and <strong>ng-repeat-end</strong>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">353</span>
+          <span class="site-state-item-count">354</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
