@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="了解 proto 的基本語法後，就可以來用一個程式語言實作 gRPC 服務了，本篇就用 Golang 來作範例吧，練習內容是根據官方文件所提供的教學內容，細節可以到這邊閱讀。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[gRPC] 重新學習 gRPC 系列 - 2">
+<meta property="og:url" content="http://blog.kevinyang.net/2023/12/30/backto-grpc-note2/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="了解 proto 的基本語法後，就可以來用一個程式語言實作 gRPC 服務了，本篇就用 Golang 來作範例吧，練習內容是根據官方文件所提供的教學內容，細節可以到這邊閱讀。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-12-30T02:21:25.000Z">
+<meta property="article:modified_time" content="2023-12-30T10:00:10.171Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="gRPC">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://blog.kevinyang.net/2023/12/30/backto-grpc-note2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[gRPC] 重新學習 gRPC 系列 - 2 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-7997572949867824',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2023/12/30/backto-grpc-note2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [gRPC] 重新學習 gRPC 系列 - 2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2023-12-30 10:21:25" itemprop="dateCreated datePublished" datetime="2023-12-30T10:21:25+08:00">2023-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/gRPC/" itemprop="url" rel="index"><span itemprop="name">gRPC</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/12/30/backto-grpc-note2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/12/30/backto-grpc-note2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>了解 <code>proto</code> 的基本語法後，就可以來用一個程式語言實作 gRPC 服務了，本篇就用 Golang 來作範例吧，練習內容是根據官方文件所提供的教學內容，細節可以到<a target="_blank" rel="noopener" href="https://grpc.io/docs/languages/go/quickstart/">這邊</a>閱讀。</p>
+<span id="more"></span>
+<h1 id="練習一"><a class="header-anchor" href="#練習一"> </a>練習一</h1>
+<p>Golang 環境如何安裝這邊就不說明了。需要安裝 <code>Protobuf Compiler</code>(<a target="_blank" rel="noopener" href="https://github.com/protocolbuffers/protobuf#protobuf-compiler-installation">安裝連結</a>)，如果環境沒有安裝 C++，也可以下載預先 compile 好的執行檔，並設定好環境參數 (<a target="_blank" rel="noopener" href="https://grpc.io/docs/protoc-installation/#install-pre-compiled-binaries-any-os">步驟說明</a>)，如果一切設定正確，在命令視窗內應可執行 <code>protoc</code> 指令了</p>
+<p>練習題目: 建立一個 address book，功能是可以從檔案中存取聯絡資訊，聯絡資訊包含姓名、ID、Email、連絡電話</p>
+<h2 id="初始化專案"><a class="header-anchor" href="#初始化專案"> </a>初始化專案</h2>
+<ol>
+<li>
+<p>建立一個新的資料夾</p>
+</li>
+<li>
+<p>執行 <code>go mod init &lt;project name&gt;</code> 指令</p>
+</li>
+<li>
+<p>建立 <code>addressbook.proto</code> 檔案</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> tutorial;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;google/protobuf/timestamp.proto&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">option</span> go_package = <span class="string">&quot;./tutorialpb&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">message </span><span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="type">string</span> name = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int32</span> id = <span class="number">2</span>;</span><br><span class="line">    <span class="type">string</span> email = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">repeated</span> PhoneNumber phones = <span class="number">4</span>;</span><br><span class="line">    google.protobuf.Timestamp last_updated = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">message </span><span class="title class_">PhoneNumber</span> &#123;</span><br><span class="line">        <span class="type">string</span> number = <span class="number">1</span>;</span><br><span class="line">        PhoneType type = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum </span><span class="title class_">PhoneType</span> &#123;</span><br><span class="line">  PHONE_TYPE_UNSPECIFIED = <span class="number">0</span>;</span><br><span class="line">  PHONE_TYPE_MOBILE = <span class="number">1</span>;</span><br><span class="line">  PHONE_TYPE_HOME = <span class="number">2</span>;</span><br><span class="line">  PHONE_TYPE_WORK = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">message </span><span class="title class_">AddressBook</span> &#123;</span><br><span class="line">    <span class="keyword">repeated</span> Person people = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>123</li>
+</ul>
+</li>
+<li>
+<p>安裝 <code>go install google.golang.org/protobuf/cmd/protoc-gen-go@latest</code></p>
+</li>
+<li>
+<p>開啟命令視窗，執行 <code>protoc -I=. --go_out . addressbook.proto</code> 指令，即可看到程式碼產生再 <code>tutorialpb</code> 的資料夾下</p>
+</li>
+</ol>
+<h2 id="實作"><a class="header-anchor" href="#實作"> </a>實作</h2>
+<ol>
+<li>
+<p>建立 <code>main.go</code></p>
+</li>
+<li>
+<p>引用剛剛產生的程式碼，其內容會包含</p>
+<ol>
+<li>An <code>AddressBook</code> structure with a <code>People</code> field.</li>
+<li>A <code>Person</code> structure with fields for <code>Name</code>, <code>Id</code>, <code>Email</code> and <code>Phones</code>.</li>
+<li>A <code>Person_PhoneNumber</code> structure, with fields for <code>Number</code> and <code>Type</code>.</li>
+<li>The type <code>Person_PhoneType</code> and a value defined for each value in the <code>Person.PhoneType</code> enum.</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	pb <span class="string">&quot;go-grpc/tutorialpb&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	p := pb.Person&#123;</span><br><span class="line">		Id:    <span class="number">1234</span>,</span><br><span class="line">		Name:  <span class="string">&quot;John Doe&quot;</span>,</span><br><span class="line">		Email: <span class="string">&quot;jdoe@example.com&quot;</span>,</span><br><span class="line">		Phones: []*pb.Person_PhoneNumber&#123;</span><br><span class="line">			&#123;Number: <span class="string">&quot;555-4321&quot;</span>, Type: pb.PhoneType_PHONE_TYPE_HOME&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Writing-a-Message"><a class="header-anchor" href="#Writing-a-Message"> </a>Writing a Message</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	pb <span class="string">&quot;go-grpc/tutorialpb&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;google.golang.org/protobuf/proto&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fname := <span class="string">&quot;adress&quot;</span></span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 讀取檔案內容</span></span><br><span class="line">	in, err := os.ReadFile(fname)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> os.IsNotExist(err) &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;%s: File not found.  Creating new file.\n&quot;</span>, fname)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			log.Fatalln(<span class="string">&quot;Error reading file:&quot;</span>, err)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建立 Person 物件</span></span><br><span class="line">	p := pb.Person&#123;</span><br><span class="line">		Id:    <span class="number">1234</span>,</span><br><span class="line">		Name:  <span class="string">&quot;John Doe&quot;</span>,</span><br><span class="line">		Email: <span class="string">&quot;jdoe@example.com&quot;</span>,</span><br><span class="line">		Phones: []*pb.Person_PhoneNumber&#123;</span><br><span class="line">			&#123;Number: <span class="string">&quot;555-4321&quot;</span>, Type: pb.PhoneType_PHONE_TYPE_HOME&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	book := &amp;pb.AddressBook&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 將檔案內容放進 AddressBook 物件內</span></span><br><span class="line">	<span class="keyword">if</span> err := proto.Unmarshal(in, book); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;Failed to parse address book:&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新增聯絡人</span></span><br><span class="line">	book.People = <span class="built_in">append</span>(book.People, &amp;p)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Marshal &amp; 儲存回檔案中</span></span><br><span class="line">	out, err := proto.Marshal(book)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;Failed to encode address book:&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err := os.WriteFile(fname, out, <span class="number">0644</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;Failed to write address book:&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Reading-a-Message"><a class="header-anchor" href="#Reading-a-Message"> </a>Reading a Message</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	pb <span class="string">&quot;go-grpc/tutorialpb&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;google.golang.org/protobuf/proto&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fname := <span class="string">&quot;adress&quot;</span></span><br><span class="line"></span><br><span class="line">	in, err := os.ReadFile(fname)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;Error reading file:&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	book := &amp;pb.AddressBook&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err := proto.Unmarshal(in, book); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;Failed to parse address book:&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 列出聯絡簿資訊</span></span><br><span class="line">	<span class="keyword">for</span> _, p := <span class="keyword">range</span> book.People &#123;</span><br><span class="line">		log.Println(<span class="string">&quot;Person ID&quot;</span>, p.Id)</span><br><span class="line">		<span class="keyword">for</span> _, pn := <span class="keyword">range</span> p.Phones &#123;</span><br><span class="line">			<span class="keyword">switch</span> pn.Type &#123;</span><br><span class="line">			<span class="keyword">case</span> pb.PhoneType_PHONE_TYPE_HOME:</span><br><span class="line">				log.Println(<span class="string">&quot;Home Number&quot;</span>, pn.Number)</span><br><span class="line">			<span class="keyword">case</span> pb.PhoneType_PHONE_TYPE_WORK:</span><br><span class="line">				log.Println(<span class="string">&quot;Work Number&quot;</span>, pn.Number)</span><br><span class="line">			<span class="keyword">case</span> pb.PhoneType_PHONE_TYPE_MOBILE:</span><br><span class="line">				log.Println(<span class="string">&quot;Cell Number&quot;</span>, pn.Number)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="練習二"><a class="header-anchor" href="#練習二"> </a>練習二</h1>
+<p>練習題目: 建立一個可以回 Hello World 的  gRPC Service</p>
+<ul>
+<li>
+<p>安裝 protocol compiler plugins</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go install google.golang.org/protobuf/cmd/protoc-gen-go@latest</span><br><span class="line">go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>建立 <code>helloWorld.proto</code></p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> helloWorld;</span><br><span class="line"></span><br><span class="line"><span class="keyword">option</span> go_package = <span class="string">&quot;./helloWorldpb&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">service </span><span class="title class_">Greeter</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">rpc</span> SayHello(HelloReqeust) <span class="keyword">returns</span> (HelloResponse)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">message </span><span class="title class_">HelloResponse</span> &#123;</span><br><span class="line">    <span class="type">string</span> message = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">message </span><span class="title class_">HelloReqeust</span> &#123;</span><br><span class="line">    <span class="type">string</span> name = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>執行 <code> protoc --go_out=. --go-grpc_out=. helloworld.proto</code>，會產生兩個檔案</p>
+<ul>
+<li>*<strong>.pb.go*</strong> 包含用於 protobuf 消息的序列化/反序列化的程式</li>
+<li>*<strong>_grpc.pb.go*</strong> 包含 gRPC 服務器和客戶端的程式</li>
+</ul>
+</li>
+<li>
+<p>建立 <code>server/server.go</code>，建立 gRPC Server 需要完成兩件事情</p>
+<ul>
+<li>實作定義在 proto 檔中的 service interface</li>
+<li>啟動 gRPC server，設定 service</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;context&quot;</span></span><br><span class="line">	<span class="string">&quot;flag&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;net&quot;</span></span><br><span class="line"></span><br><span class="line">	pb <span class="string">&quot;go-grpc/helloWorldpb&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;google.golang.org/grpc&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	port = flag.Int(<span class="string">&quot;port&quot;</span>, <span class="number">50051</span>, <span class="string">&quot;The server port&quot;</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 實作 Greeter gRPC</span></span><br><span class="line"><span class="keyword">type</span> server <span class="keyword">struct</span> &#123;</span><br><span class="line">	pb.UnimplementedGreeterServer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *server)</span></span> SayHello(ctx context.Context, in *pb.HelloReqeust) (*pb.HelloResponse, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;pb.HelloResponse&#123;Message: <span class="string">&quot;Hello World &quot;</span> + in.GetName()&#125;, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;    </span><br><span class="line">	flag.Parse()</span><br><span class="line">    <span class="comment">// service port 設定</span></span><br><span class="line">	lis, err := net.Listen(<span class="string">&quot;tcp&quot;</span>, fmt.Sprintf(<span class="string">&quot;:%d&quot;</span>, *port))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;failed to listen: %v&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">// 建立一個空的 gRPC Server</span></span><br><span class="line">	s := grpc.NewServer()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 註冊 Greeter Service</span></span><br><span class="line">	pb.RegisterGreeterServer(s, &amp;server&#123;&#125;)</span><br><span class="line">	log.Printf(<span class="string">&quot;server listening at %v&quot;</span>, lis.Addr())</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 啟動 gRPC Server</span></span><br><span class="line">	<span class="keyword">if</span> err := s.Serve(lis); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;failed to serve: %v&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>建立 <code>client/client.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;context&quot;</span></span><br><span class="line">	<span class="string">&quot;flag&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line"></span><br><span class="line">	pb <span class="string">&quot;go-grpc/helloWorldpb&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;google.golang.org/grpc&quot;</span></span><br><span class="line">	<span class="string">&quot;google.golang.org/grpc/credentials/insecure&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	defaultName = <span class="string">&quot;world&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	addr = flag.String(<span class="string">&quot;addr&quot;</span>, <span class="string">&quot;localhost:50051&quot;</span>, <span class="string">&quot;the address to connect to&quot;</span>)</span><br><span class="line">	name = flag.String(<span class="string">&quot;name&quot;</span>, defaultName, <span class="string">&quot;Name to greet&quot;</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	flag.Parse()</span><br><span class="line">	<span class="comment">// 建立 gRPC 連線</span></span><br><span class="line">	conn, err := grpc.Dial(*addr, grpc.WithTransportCredentials(insecure.NewCredentials()))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;did not connect: %v&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> conn.Close()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 建立 Client</span></span><br><span class="line">	c := pb.NewGreeterClient(conn)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Contact the server and print out its response.</span></span><br><span class="line">	ctx, cancel := context.WithTimeout(context.Background(), time.Second)</span><br><span class="line">	<span class="keyword">defer</span> cancel()</span><br><span class="line">    <span class="comment">// 呼叫 gRPC Service 方法</span></span><br><span class="line">	r, err := c.SayHello(ctx, &amp;pb.HelloReqeust&#123;Name: *name&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;could not greet: %v&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	log.Printf(<span class="string">&quot;Greeting: %s&quot;</span>, r.GetMessage())</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://protobuf.dev/getting-started/gotutorial">Go Tutorials - 1</a></li>
+<li><a target="_blank" rel="noopener" href="https://grpc.io/docs/languages/go/quickstart/">Go Tutorials -  2</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/gRPC/" rel="tag"># gRPC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/29/backto-grpc-note1/" rel="prev" title="[gRPC] 重新學習 gRPC 系列 - 1">
+      <i class="fa fa-chevron-left"></i> [gRPC] 重新學習 gRPC 系列 - 1
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B7%B4%E7%BF%92%E4%B8%80"><span class="nav-number">1.</span> <span class="nav-text">練習一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B0%88%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">初始化專案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">實作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Writing-a-Message"><span class="nav-number">1.2.1.</span> <span class="nav-text">Writing a Message</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reading-a-Message"><span class="nav-number">1.2.2.</span> <span class="nav-text">Reading a Message</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B7%B4%E7%BF%92%E4%BA%8C"><span class="nav-number">2.</span> <span class="nav-text">練習二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">356</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <!--google_adsense-->
+        
+          <div class="links-of-blogroll-title">
+            <i class="fa fa-google"></i> 廣告
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-7997572949867824"
+                data-ad-slot="3959999538"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        
+        <!--/google_adsense-->
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>    
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2023/12/30/backto-grpc-note2/";
+    this.page.identifier = "2023/12/30/backto-grpc-note2/";
+    this.page.title = "[gRPC] 重新學習 gRPC 系列 - 2";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
