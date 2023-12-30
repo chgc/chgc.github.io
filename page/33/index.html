@@ -200,6 +200,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/05/04/ef6-entity-framework-6-code-first-migrations-with-multiple-data-contexts-change/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/05/04/ef6-entity-framework-6-code-first-migrations-with-multiple-data-contexts-change/" class="post-title-link" itemprop="url">[EF6] Entity Framework 6 Code First Migrations with Multiple Data Contexts (轉)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2014-05-05 04:15:00" itemprop="dateCreated datePublished" datetime="2014-05-05T04:15:00+08:00">2014-05-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Entity-Framework/" itemprop="url" rel="index"><span itemprop="name">Entity Framework</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2014/05/04/ef6-entity-framework-6-code-first-migrations-with-multiple-data-contexts-change/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/05/04/ef6-entity-framework-6-code-first-migrations-with-multiple-data-contexts-change/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Ref: <a target="_blank" rel="noopener" href="http://www.dotnet-tricks.com/Tutorial/entityframework/2VOa140214-Entity-Framework-6-Code-First-Migrations-with-Multiple-Data-Contexts.html">http://www.dotnet-tricks.com/Tutorial/entityframework/2VOa140214-Entity-Framework-6-Code-First-Migrations-with-Multiple-Data-Contexts.html</a></p>
+<h2 id="如何動態產生Database"><a class="header-anchor" href="#如何動態產生Database"> </a>如何動態產生Database</h2>
+<p>如果利用Code first的方式，搭配DbMigration即可完成工作</p>
+<ul>
+<li>DBContext.cs</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class DemoContext : DbContext</span><br><span class="line">    &#123;</span><br><span class="line">        public DemoContext() &#123; &#125;</span><br><span class="line">        public DemoContext(string ConnectionString)</span><br><span class="line">            : base(ConnectionString)</span><br><span class="line">        &#123;            </span><br><span class="line">            Database.SetInitializer(new CustomInitializer());</span><br><span class="line">            Database.Initialize(true);</span><br><span class="line">        &#125;        </span><br><span class="line">        public DbSet&lt;Blog&gt; Blogs &#123; get; set; &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CustomInitializer.cs</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"><span class="keyword">using</span> System.Data.Entity.Infrastructure;</span><br><span class="line"><span class="keyword">using</span> System.Data.Entity.Migrations;</span><br><span class="line"><span class="keyword">using</span> System.Data.Entity.Migrations.Infrastructure;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">internal</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title">Configuration</span> : <span class="title">DbMigrationsConfiguration</span>&lt;<span class="title">DemoContext</span>&gt;</span><br><span class="line">&#123;        </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Configuration</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        AutomaticMigrationsEnabled = <span class="literal">true</span>;</span><br><span class="line">        MigrationsDirectory = <span class="string">@&quot;Migration&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Seed</span>(<span class="params">DemoContext context</span>)</span></span><br><span class="line">    &#123;            </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">CustomInitializer</span> : <span class="title">IDatabaseInitializer</span>&lt;<span class="title">DemoContext</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InitializeDatabase</span>(<span class="params">DemoContext context</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!context.Database.Exists() || !context.Database.CompatibleWithModel(<span class="literal">false</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> configuration = <span class="keyword">new</span> Configuration();</span><br><span class="line">            configuration.TargetDatabase = <span class="keyword">new</span> DbConnectionInfo(context.Database.Connection.ConnectionString, <span class="string">&quot;System.Data.SqlClient&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> migrator = <span class="keyword">new</span> DbMigrator(configuration);                </span><br><span class="line">            migrator.Update();                </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>client端</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">using (var db = new AtaBookContext(connection1))&#123;&#125;</span><br><span class="line">using (var db = new AtaBookContext(connection2))&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>connection1和connection2分別指到不同的資料庫，EF就會根據連線字串的設定產生相對應的資料庫</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/04/30/aspnet-mvc-htmlhelper-work-with-angularjs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1262,148 +1366,6 @@ ng-repeat有 <strong>ng-repeat-start</strong> and <strong>ng-repeat-end</strong>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/02/11/vfp-vartype/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/02/11/vfp-vartype/" class="post-title-link" itemprop="url">[VFP]Vartype() </a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-02-12 03:11:00" itemprop="dateCreated datePublished" datetime="2014-02-12T03:11:00+08:00">2014-02-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VFP/" itemprop="url" rel="index"><span itemprop="name">VFP</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/02/11/vfp-vartype/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/11/vfp-vartype/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <table>
-<thead>
-<tr>
-<th>Return value</th>
-<th>Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>C</td>
-<td>Character, Memo, Varchar, Varchar (Binary)</td>
-</tr>
-<tr>
-<td>D</td>
-<td>Date</td>
-</tr>
-<tr>
-<td>G</td>
-<td>General</td>
-</tr>
-<tr>
-<td>L</td>
-<td>Logical</td>
-</tr>
-<tr>
-<td>N</td>
-<td>Numeric, Float, Double, or Integer</td>
-</tr>
-<tr>
-<td>O</td>
-<td>Object</td>
-</tr>
-<tr>
-<td>Q</td>
-<td>Blob,Varbinary</td>
-</tr>
-<tr>
-<td>T</td>
-<td>DateTime</td>
-</tr>
-<tr>
-<td>U</td>
-<td>Unknown or variable does not exist</td>
-</tr>
-<tr>
-<td>X</td>
-<td>Null</td>
-</tr>
-<tr>
-<td>Y</td>
-<td>Currency</td>
-</tr>
-</tbody>
-</table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1475,20 +1437,20 @@ ng-repeat有 <strong>ng-repeat-start</strong> and <strong>ng-repeat-end</strong>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">354</span>
+          <span class="site-state-item-count">355</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">81</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
