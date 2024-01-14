@@ -200,6 +200,96 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/03/18/ngcordova-socialsharing-to-line/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/03/18/ngcordova-socialsharing-to-line/" class="post-title-link" itemprop="url">[ngCordova] socialSharing - to Line</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2015-03-19 00:54:00" itemprop="dateCreated datePublished" datetime="2015-03-19T00:54:00+08:00">2015-03-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Library/" itemprop="url" rel="index"><span itemprop="name">Library</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2015/03/18/ngcordova-socialsharing-to-line/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/18/ngcordova-socialsharing-to-line/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>when use ngCordova socialSharing plugin. there is a method 『canShareVia』 which can share to specific social application by it’s appPackageName.</p>
+<p>To Line(<a target="_blank" rel="noopener" href="http://line.me">http://line.me</a>) the packageName is <strong>jp.naver.line.android</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var lineAppPackageName = &#x27;jp.naver.line.android&#x27;;</span><br><span class="line">$cordovaSocialSharing</span><br><span class="line">            .shareVia(lineAppPackageName, content, subject, null, &#x27;&#x27;)</span><br><span class="line">            ...</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/03/12/laravel-download-file-but-server-doenst-have-php-fileinfo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1083,101 +1173,6 @@ Method binding (One-way Binding): &amp;</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2014/11/10/javsscript-for-loop-vs-foreach-when-there-is-async-function/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/11/10/javsscript-for-loop-vs-foreach-when-there-is-async-function/" class="post-title-link" itemprop="url">[Javsscript] for loop VS forEach when there is async function</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2014-11-11 04:05:00" itemprop="dateCreated datePublished" datetime="2014-11-11T04:05:00+08:00">2014-11-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2014/11/10/javsscript-for-loop-vs-foreach-when-there-is-async-function/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/10/javsscript-for-loop-vs-foreach-when-there-is-async-function/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天在檢查一段程式的時候，再跑一段根據array的資料新增或更新到資料庫中，卻發現都是更新同一筆紀錄
-原本的寫法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for(var i=0; i &lt; arr.length; i++)&#123;</span><br><span class="line">	db.insert(xxx).then(function()&#123;</span><br><span class="line">     ...</span><br><span class="line">     all insert the same record</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這是因為javascript async non-blocking的關係，所以資料庫新增自己跑自己的，for迴圈跑自己的，當新增時要取資料庫裡面資料時，會取到不對的值</p>
-<p>解法：用array.forEach來替代for loop</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr.forEach(function(item,idx)&#123;</span><br><span class="line">	db.insert(xxx).then(function()&#123;</span><br><span class="line">  		...</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>當我改寫成這樣子後，就正常了</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-
-    
-      <div>
-        <div class="addthis_inline-share_toolbox">
-   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
-</div>        
-      </div>
-     
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1249,20 +1244,20 @@ Method binding (One-way Binding): &amp;</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">356</span>
+          <span class="site-state-item-count">357</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-count">82</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -1339,7 +1334,7 @@ Method binding (One-way Binding): &amp;</p>
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
