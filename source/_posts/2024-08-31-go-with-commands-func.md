@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [GO] 用做一個 CLI 工具
+title: '[GO] 用做一個 CLI 工具'
 comments: true
 typora-root-url: 2024-08-31-go-with-commands-func/
 typora-copy-images-to: 2024-08-31-go-with-commands-func/
