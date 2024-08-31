@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2019/06/07/angular-web-worker/web-worker.jpg">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/06/07/angular-web-worker/service-worker.jpg">
 <meta property="article:published_time" content="2019-06-07T02:18:40.000Z">
-<meta property="article:modified_time" content="2024-01-14T12:59:09.107Z">
+<meta property="article:modified_time" content="2024-08-31T03:52:10.387Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -307,7 +307,7 @@
 <p>透過 <code>postMessage</code> 的方法可以從 <code>worker</code> 傳送訊息到 <code>Main Thread</code></p>
 <h3 id="引用-Library"><a class="header-anchor" href="#引用-Library"> </a>引用 Library</h3>
 <p>在 worker 內一樣可以使用 JavaScript Library, 引用方式如下</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">importScripts(<span class="string">&#x27;script.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line">importScripts(<span class="string">&#x27;script1.js&#x27;</span>, <span class="string">&#x27;script2.js&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">importScripts</span>(<span class="string">&#x27;script.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">importScripts</span>(<span class="string">&#x27;script1.js&#x27;</span>, <span class="string">&#x27;script2.js&#x27;</span>);</span><br></pre></td></tr></table></figure>
 <h3 id="錯誤處理"><a class="header-anchor" href="#錯誤處理"> </a>錯誤處理</h3>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">addEventListener</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">  <span class="comment">// handle exception here</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="關閉-v2"><a class="header-anchor" href="#關閉-v2"> </a>關閉</h3>

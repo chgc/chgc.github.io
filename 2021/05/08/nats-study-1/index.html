@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2021/05/08/nats-study-1/image-20210508152057858.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2021/05/08/nats-study-1/image-20210508154237496.png">
 <meta property="article:published_time" content="2021-05-08T06:39:36.000Z">
-<meta property="article:modified_time" content="2024-01-14T12:59:09.187Z">
+<meta property="article:modified_time" content="2024-08-31T03:52:10.471Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="NATS">
 <meta name="twitter:card" content="summary">
@@ -386,7 +386,7 @@
 <ol>
 <li>發送端</li>
 </ol>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">  <span class="meta">@Inject</span>(<span class="string">&#x27;MATH_SERVICE&#x27;</span>) <span class="keyword">private</span> client: ClientProxy,</span></span><br><span class="line"><span class="params"></span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">  <span class="meta">@Inject</span>(<span class="string">&#x27;MATH_SERVICE&#x27;</span>) <span class="keyword">private</span> <span class="attr">client</span>: <span class="title class_">ClientProxy</span>,</span></span><br><span class="line"><span class="params"></span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>@Inject('MATH_SERVICE')</code> 對應 <code>AppModule</code> 所註冊的名稱，可自行更換</li>
 </ul>

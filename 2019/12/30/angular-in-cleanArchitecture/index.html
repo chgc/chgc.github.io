@@ -29,7 +29,7 @@
 <meta property="og:description" content="繼上一篇 學習使用 CleanArchitecture 開發 -  筆記 1，依習慣先從畫面往底層看回去，而這專案範本使用 Angular 作為前端開發框架，那就來看看裡面有哪些東西或是技巧是可以偷學的">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2019-12-30T02:18:07.000Z">
-<meta property="article:modified_time" content="2024-01-14T12:59:09.147Z">
+<meta property="article:modified_time" content="2024-08-31T03:52:10.427Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content=".NET Core">
 <meta name="twitter:card" content="summary">
@@ -287,7 +287,7 @@
 </li>
 <li>
 <p><code>UserManager</code> 有許多 events 可以掛 callback (<a target="_blank" rel="noopener" href="https://github.com/IdentityModel/oidc-client-js/wiki#events">API</a>)，而這邊是針對 <code>userSignedOut</code> 的部分做了一些處理</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">userManager</span>.<span class="property">events</span>.<span class="title function_">addUserSignedOut</span>(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">userManager</span>.<span class="title function_">removeUser</span>();</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">userSubject</span>.<span class="title function_">next</span>(<span class="literal">null</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">userManager</span>.<span class="property">events</span>.<span class="title function_">addUserSignedOut</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">userManager</span>.<span class="title function_">removeUser</span>();</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">userSubject</span>.<span class="title function_">next</span>(<span class="literal">null</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>關於使用者的登入及註冊都交給後端的 <code>ASP.NET Core Idenetity</code> 去處理了 (這是另外一個大坑要填)</p>
@@ -295,7 +295,7 @@
 </ul>
 <h2 id="LoginComponent"><a class="header-anchor" href="#LoginComponent"> </a>LoginComponent</h2>
 <p><code>LoginComponent</code> 的目的並不是用來顯示而是負責處理相對應的行為，例如登入應該要顯示後端的登入畫面等，而因為網址會有分前端管理的跟後端管理的區別，而 Angular 內建的 Router 並沒有辦法直接導覽到非 Angular 網址的地方，所以這裡的處理方式為</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title function_">redirectToApiAuthorizationPath</span>(<span class="params">apiAuthorizationPath: <span class="built_in">string</span></span>) &#123;    </span><br><span class="line">  <span class="keyword">const</span> redirectUrl = <span class="string">`<span class="subst">$&#123;<span class="variable language_">window</span>.location.origin&#125;</span><span class="subst">$&#123;apiAuthorizationPath&#125;</span>`</span>;</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">location</span>.<span class="title function_">replace</span>(redirectUrl);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title function_">redirectToApiAuthorizationPath</span>(<span class="params"><span class="attr">apiAuthorizationPath</span>: <span class="built_in">string</span></span>) &#123;    </span><br><span class="line">  <span class="keyword">const</span> redirectUrl = <span class="string">`<span class="subst">$&#123;<span class="variable language_">window</span>.location.origin&#125;</span><span class="subst">$&#123;apiAuthorizationPath&#125;</span>`</span>;</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">location</span>.<span class="title function_">replace</span>(redirectUrl);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這裡使用 <code>window.location.replace</code> 的目的是為了確保使用者按下返回鍵是回到正確的位置而不是 <code>loginComponent</code> 的對應網址</p>
 <h2 id="LogoutComponent"><a class="header-anchor" href="#LogoutComponent"> </a>LogoutComponent</h2>
 <ul>

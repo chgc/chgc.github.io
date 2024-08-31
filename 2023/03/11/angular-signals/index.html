@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2023/03/11/angular-signals/image-20230407225822130.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2023/03/11/angular-signals/image-20230415111504566.png">
 <meta property="article:published_time" content="2023-03-11T01:45:03.000Z">
-<meta property="article:modified_time" content="2024-01-14T12:59:09.235Z">
+<meta property="article:modified_time" content="2024-08-31T03:52:10.519Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -295,11 +295,11 @@
 </li>
 <li>
 <p>update: Update the value of the signal based on its current value, and notify any dependents.</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">update</span>(<span class="attr">updateFn</span>: <span class="function">(<span class="params">value: T</span>) =&gt;</span> T): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">update</span>(<span class="attr">updateFn</span>: <span class="function">(<span class="params"><span class="attr">value</span>: T</span>) =&gt;</span> T): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>mutate: Update the current value by mutating it in-place, and notify any dependents.</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mutate</span>(<span class="attr">mutatorFn</span>: <span class="function">(<span class="params">value: T</span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mutate</span>(<span class="attr">mutatorFn</span>: <span class="function">(<span class="params"><span class="attr">value</span>: T</span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="範例"><a class="header-anchor" href="#範例"> </a>範例</h3>
@@ -310,7 +310,7 @@
 <p><code>computed</code> 可以讓我們與其他 signal 作互動結合，當 computed 內的 signal 值改變時，此 computed 結果也會跟著改變，使用上算直覺</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> computed&lt;T&gt;(<span class="attr">computation</span>: <span class="function">() =&gt;</span> T, equal?: <span class="title class_">ValueEqualityFn</span>&lt;T&gt;): <span class="title class_">Signal</span>&lt;T&gt;;</span><br></pre></td></tr></table></figure>
 <p>除了 computed，還有一個是 <code>effect</code></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">effect</span>(<span class="params">effectFn: () =&gt; <span class="built_in">void</span></span>): <span class="title class_">Effect</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">effect</span>(<span class="params"><span class="attr">effectFn</span>: () =&gt; <span class="built_in">void</span></span>): <span class="title class_">Effect</span>;</span><br></pre></td></tr></table></figure>
 <p>須留意的是兩者回傳的物件是不一樣的，<code>computed</code> 會回傳一個新的 <code>Signal</code> 物件，但 <code>effect</code> 是回傳一個 <code>Effect</code> 物件，這 Effect 型別的物件可以允許我們停用 <code>effect</code> ，類似 Observable.subscribe 會回傳 subscription 的概念</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">effect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="title function_">count</span>());</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這邊要留意的是 <code>effect</code> 宣告的地方跟 <code>inject()</code> 是一樣的，只能在 constructor 宣告，不然會噴錯誤訊息給你看</p>
