@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.kevinyang.net","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Web API 提供的服務涵蓋很廣，File System API 已經推出一段時間，主要功能是讓瀏覽器能經過使用者授權後，與使用者本機的檔案系統做互動，這篇筆記就是將一些如何使用 File system API 記錄下來">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] work with File System API">
+<meta property="og:url" content="http://blog.kevinyang.net/2024/10/27/ng-with-file-system-api/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Web API 提供的服務涵蓋很廣，File System API 已經推出一段時間，主要功能是讓瀏覽器能經過使用者授權後，與使用者本機的檔案系統做互動，這篇筆記就是將一些如何使用 File system API 記錄下來">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2024/10/27/ng-with-file-system-api/image-20241027110411084.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2024/10/27/ng-with-file-system-api/image-20241027111010266.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2024/10/27/ng-with-file-system-api/image-20241027111030755.png">
+<meta property="article:published_time" content="2024-10-27T02:06:28.000Z">
+<meta property="article:modified_time" content="2024-10-27T05:13:03.372Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2024/10/27/ng-with-file-system-api/image-20241027110411084.png">
+
+<link rel="canonical" href="http://blog.kevinyang.net/2024/10/27/ng-with-file-system-api/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>[Angular] work with File System API | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56711593-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56711593-1');
+      }
+    </script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-7997572949867824',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CK's Notepad</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2024/10/27/ng-with-file-system-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] work with File System API
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-10-27 10:06:28" itemprop="dateCreated datePublished" datetime="2024-10-27T10:06:28+08:00">2024-10-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/10/27/ng-with-file-system-api/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/10/27/ng-with-file-system-api/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Web API 提供的服務涵蓋很廣，File System API 已經推出一段時間，主要功能是讓瀏覽器能經過使用者授權後，與使用者本機的檔案系統做互動，這篇筆記就是將一些如何使用 File system API 記錄下來</p>
+<span id="more"></span>
+<blockquote>
+<p>本筆記將使用 Angular v19-next 作為練習環境</p>
+</blockquote>
+<h2 id="Typescript-Types"><a class="header-anchor" href="#Typescript-Types"> </a>Typescript Types</h2>
+<p>首先，因為 typescript 還不認得 File System API. 所以必須要手動安裝設定對應的 types</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D @types/wicg-file-system-access</span><br></pre></td></tr></table></figure>
+<p>接下來在  <code>tsconfig.json</code> 內增修以下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="attr">&quot;types&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">     <span class="string">&quot;@types/wicg-file-system-access&quot;</span></span><br><span class="line">   <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Directory"><a class="header-anchor" href="#Directory"> </a>Directory</h2>
+<h3 id="開啟-DirectoryPicker"><a class="header-anchor" href="#開啟-DirectoryPicker"> </a>開啟 DirectoryPicker</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">broweFolders</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> dirHandler = <span class="title function_">await</span> (&lt;<span class="built_in">any</span>&gt;<span class="variable language_">window</span>).<span class="title function_">showDirectoryPicker</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(dirHandler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;broweFolders()&quot;</span>&gt;</span>Browe<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>當按下按鈕時，會跳出挑選資料夾的 Dialog，選擇完要開啟的資料夾後，Console log 的地方應該會看到很簡單的資訊</p>
+<p><img src="image-20241027110411084.png" alt="image-20241027110411084"></p>
+<ol>
+<li>
+<p>回傳的型別為 <code>FileSystemDirectoryHandle</code></p>
+</li>
+<li>
+<p>顯示資料夾名稱</p>
+</li>
+<li>
+<p><code>showDirectoryPicker</code> 支援傳入參數 in Object</p>
+<ol>
+<li><code>startIn</code>
+<ol>
+<li><code>desktop</code>：使用者的桌面目錄 (如果有的話)。</li>
+<li><code>documents</code>：通常儲存使用者建立文件的目錄。</li>
+<li><code>downloads</code>：通常儲存下載檔案的目錄。</li>
+<li><code>music</code>：通常用來儲存音訊檔案的目錄。</li>
+<li><code>pictures</code>：相片和其他靜態圖片的儲存目錄。</li>
+<li><code>videos</code>：通常儲存影片或電影的目錄。</li>
+</ol>
+</li>
+<li><code>id</code> : 指定不同檔案選擇器的用途識別用。為什麼會有指定 id 的情境，因為根據預設，每個檔案挑選器會在最後記住的位置開啟，為了避免此情形，就可以透過設定 id 的方式來區分</li>
+</ol>
+</li>
+</ol>
+<p>當有了這一個 <code>directoryHandler</code>, 就可以做一些有趣的事情</p>
+<h3 id="列出資料夾下的檔案及資料夾"><a class="header-anchor" href="#列出資料夾下的檔案及資料夾"> </a>列出資料夾下的檔案及資料夾</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">listFolderItems</span>(<span class="params"><span class="attr">entry</span>: <span class="title class_">FileSystemDirectoryHandle</span></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> items = [];</span><br><span class="line">    <span class="keyword">for</span> <span class="title function_">await</span> (<span class="keyword">const</span> handle <span class="keyword">of</span> entry.<span class="title function_">values</span>()) &#123;</span><br><span class="line">      items.<span class="title function_">push</span>(handle);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> items;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>directoryHandler</code> 的  values 回傳的是 <code>AsyncIterableIterator</code>，可搭配 for await 的新語法取得所有的值，如果不知道 Iterator &amp; Generator 的朋友，可以回去看一下相關的文件。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">broweFolders</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> dirHandler = <span class="title function_">await</span> (&lt;<span class="built_in">any</span>&gt;<span class="variable language_">window</span>).<span class="title function_">showDirectoryPicker</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(dirHandler);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">items</span> = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="title function_">listFolderItems</span>(dirHandler);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">items</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;broweFolders()&quot;</span>&gt;</span>Browe<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  @for (item of items; track item) &#123;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; item.kind &#125;&#125; - &#123;&#123; item.name &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這樣輸出的結果如下</p>
+<p><img src="image-20241027111010266.png" alt="image-20241027111010266"></p>
+<p><img src="image-20241027111030755.png" alt="image-20241027111030755"></p>
+<p>到這邊應該還算單純，當然如果想要取得所有檔案(包含子資料夾下)，就會動到遞迴的</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">getAllFilesFromDirectory</span>(<span class="params"><span class="attr">dirHandler</span>: <span class="title class_">FileSystemDirectoryHandle</span></span>)&#123;</span><br><span class="line">	<span class="keyword">for</span> <span class="title function_">await</span> (<span class="keyword">const</span> fileHandle <span class="keyword">of</span> <span class="variable language_">this</span>.<span class="title function_">getFilesRecursively</span>(dirHandler)) &#123;</span><br><span class="line">	  <span class="variable language_">console</span>.<span class="title function_">log</span>(fileHandle);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> *<span class="title function_">getFilesRecursively</span>(<span class="attr">entry</span>: <span class="title class_">FileSystemHandle</span>): <span class="title class_">AsyncGenerator</span>&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (entry.<span class="property">kind</span> === <span class="string">&#x27;file&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> file = <span class="title function_">await</span> (&lt;<span class="title class_">FileSystemFileHandle</span>&gt;entry).<span class="title function_">getFile</span>();</span><br><span class="line">      <span class="keyword">if</span> (file !== <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">yield</span> file;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (entry.<span class="property">kind</span> === <span class="string">&#x27;directory&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> <span class="title function_">await</span> (<span class="keyword">const</span> handle <span class="title function_">of</span> (&lt;<span class="title class_">FileSystemDirectoryHandle</span>&gt;entry).<span class="title function_">values</span>()) &#123;</span><br><span class="line">        <span class="keyword">yield</span>* <span class="variable language_">this</span>.<span class="title function_">getFilesRecursively</span>(handle);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="建立資料夾"><a class="header-anchor" href="#建立資料夾"> </a>建立資料夾</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">createFolder</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">dirHandler</span> === <span class="literal">undefined</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">const</span> subHandler = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">dirHandler</span>.<span class="title function_">getDirectoryHandle</span>(</span><br><span class="line">    <span class="string">`Folder_<span class="subst">$&#123;<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">10</span>)&#125;</span>`</span>,</span><br><span class="line">    &#123; <span class="attr">create</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  );</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(subHandler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>透過 <code>getDirectoryHandle</code> + <code>&#123;create: true&#125;</code> 就可以在所選取的 root directory 下建立資料夾，如果遇到資料夾名稱一樣的，基本上就會回傳已存在的 directory，所以我們可以這樣理解，當要取得某個 `DirectoryHandle時，如果不存在就建立一個新的。</p>
+<h3 id="刪除資料夾"><a class="header-anchor" href="#刪除資料夾"> </a>刪除資料夾</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> directoryHandle.<span class="title function_">removeEntry</span>(<span class="string">&#x27;Old Stuff&#x27;</span>, &#123; <span class="attr">recursive</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="keyword">await</span> directoryHandle.<span class="title function_">remove</span>(); </span><br></pre></td></tr></table></figure>
+<h2 id="File"><a class="header-anchor" href="#File"> </a>File</h2>
+<h3 id="取得檔案相對路徑"><a class="header-anchor" href="#取得檔案相對路徑"> </a>取得檔案相對路徑</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">getRelativePath</span>(<span class="params"><span class="attr">entry</span>: <span class="title class_">FileSystemFileHandle</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">dirHandler</span> === <span class="literal">undefined</span>) <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="keyword">const</span> relativePaths = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">dirHandler</span>.<span class="title function_">resolve</span>(entry);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(relativePaths); <span class="comment">// 回傳陣列: [&quot;My Documents&quot;, &quot;My Notes.txt&quot;]</span></span><br><span class="line">  <span class="keyword">return</span> relativePaths?.<span class="title function_">join</span>(<span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="刪除檔案"><a class="header-anchor" href="#刪除檔案"> </a>刪除檔案</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> directoryHandle.<span class="title function_">removeEntry</span>(<span class="string">&#x27;Abandoned Projects.txt&#x27;</span>);</span><br><span class="line"><span class="comment">// or </span></span><br><span class="line"><span class="keyword">await</span> fileHandle.<span class="title function_">remove</span>();</span><br></pre></td></tr></table></figure>
+<h3 id="讀取檔案"><a class="header-anchor" href="#讀取檔案"> </a>讀取檔案</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">read</span>(<span class="params"><span class="attr">handler</span>: <span class="title class_">FileSystemHandle</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (handler.<span class="property">kind</span> === <span class="string">&#x27;file&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> fileHandler = handler <span class="keyword">as</span> <span class="title class_">FileSystemFileHandle</span>;</span><br><span class="line">    <span class="keyword">const</span> content = <span class="keyword">await</span> fileHandler.<span class="title function_">getFile</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">file</span>) =&gt;</span> file.<span class="title function_">text</span>());</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(content);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="建立檔案"><a class="header-anchor" href="#建立檔案"> </a>建立檔案</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">async</span> <span class="title function_">save</span>(<span class="params"></span>) &#123;</span><br><span class="line">   <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">dirHandler</span> === <span class="literal">undefined</span> || <span class="variable language_">this</span>.<span class="property">fileContent</span>.<span class="property">length</span> === <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">   <span class="keyword">const</span> fileName = <span class="string">`notes_<span class="subst">$&#123;<span class="keyword">new</span> <span class="built_in">Date</span>().toDateString()&#125;</span>`</span>;</span><br><span class="line">   <span class="keyword">const</span> fileHandler = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">dirHandler</span>.<span class="title function_">getFileHandle</span>(fileName, &#123;</span><br><span class="line">     <span class="attr">create</span>: <span class="literal">true</span>,</span><br><span class="line">   &#125;);</span><br><span class="line">...</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="回寫檔案"><a class="header-anchor" href="#回寫檔案"> </a>回寫檔案</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">save</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">dirHandler</span> === <span class="literal">undefined</span> || <span class="variable language_">this</span>.<span class="property">fileContent</span>.<span class="property">length</span> === <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">const</span> fileName = <span class="string">`notes_<span class="subst">$&#123;<span class="keyword">new</span> <span class="built_in">Date</span>().toDateString()&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">const</span> fileHandler = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">dirHandler</span>.<span class="title function_">getFileHandle</span>(fileName, &#123;</span><br><span class="line">    <span class="attr">create</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// create wrtiable and save content</span></span><br><span class="line">  <span class="keyword">const</span> writeable = <span class="keyword">await</span> fileHandler.<span class="title function_">createWritable</span>();</span><br><span class="line">  <span class="keyword">await</span> writeable.<span class="title function_">write</span>(<span class="variable language_">this</span>.<span class="property">fileContent</span>);</span><br><span class="line">  <span class="keyword">await</span> writeable.<span class="title function_">close</span>();</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">fileContent</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a class="header-anchor" href="#Reference"> </a>Reference</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_API">MDN File System API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncIterator">AsyncIterableIterator</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of">for await…of</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/31/go-with-commands-func/" rel="prev" title="[GO] 用做一個 CLI 工具">
+      <i class="fa fa-chevron-left"></i> [GO] 用做一個 CLI 工具
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+ 
+  
+ 
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Typescript-Types"><span class="nav-number">1.</span> <span class="nav-text">Typescript Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Directory"><span class="nav-number">2.</span> <span class="nav-text">Directory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%96%8B%E5%95%9F-DirectoryPicker"><span class="nav-number">2.1.</span> <span class="nav-text">開啟 DirectoryPicker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E8%B3%87%E6%96%99%E5%A4%BE%E4%B8%8B%E7%9A%84%E6%AA%94%E6%A1%88%E5%8F%8A%E8%B3%87%E6%96%99%E5%A4%BE"><span class="nav-number">2.2.</span> <span class="nav-text">列出資料夾下的檔案及資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A4%BE"><span class="nav-number">2.3.</span> <span class="nav-text">建立資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%AA%E9%99%A4%E8%B3%87%E6%96%99%E5%A4%BE"><span class="nav-number">2.4.</span> <span class="nav-text">刪除資料夾</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File"><span class="nav-number">3.</span> <span class="nav-text">File</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%96%E5%BE%97%E6%AA%94%E6%A1%88%E7%9B%B8%E5%B0%8D%E8%B7%AF%E5%BE%91"><span class="nav-number">3.1.</span> <span class="nav-text">取得檔案相對路徑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%AA%E9%99%A4%E6%AA%94%E6%A1%88"><span class="nav-number">3.2.</span> <span class="nav-text">刪除檔案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%80%E5%8F%96%E6%AA%94%E6%A1%88"><span class="nav-number">3.3.</span> <span class="nav-text">讀取檔案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E6%AA%94%E6%A1%88"><span class="nav-number">3.4.</span> <span class="nav-text">建立檔案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%AF%AB%E6%AA%94%E6%A1%88"><span class="nav-number">3.5.</span> <span class="nav-text">回寫檔案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">359</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yoKevinYang" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yoKevinYang" rel="noopener" target="_blank"><i class="fa fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jeffwu85182.github.io/" title="https:&#x2F;&#x2F;jeffwu85182.github.io&#x2F;" rel="noopener" target="_blank">Jeffs WebTech Note</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <!--google_adsense-->
+        
+          <div class="links-of-blogroll-title">
+            <i class="fa fa-google"></i> 廣告
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-7997572949867824"
+                data-ad-slot="3959999538"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        
+        <!--/google_adsense-->
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>    
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KevinYang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-587058bb56929fc8" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://cksnotepad.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://blog.kevinyang.net/2024/10/27/ng-with-file-system-api/";
+    this.page.identifier = "2024/10/27/ng-with-file-system-api/";
+    this.page.title = "[Angular] work with File System API";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://cksnotepad.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

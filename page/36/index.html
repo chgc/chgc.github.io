@@ -200,6 +200,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/26/html5-blob/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/10/26/html5-blob/" class="post-title-link" itemprop="url">[HTML5] Blob</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2013-10-26 12:56:00" itemprop="dateCreated datePublished" datetime="2013-10-26T12:56:00+08:00">2013-10-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/10/26/html5-blob/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/26/html5-blob/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>#BEFORE</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder ||</span><br><span class="line">                     window.MozBlobBuilder || window.MSBlobBuilder;</span><br><span class="line">window.URL = window.URL || window.webkitURL;</span><br><span class="line"></span><br><span class="line">var bb = new BlobBuilder();</span><br><span class="line">bb.append(&#x27;body &#123; color: red; &#125;&#x27;);</span><br><span class="line">var blob = bb.getBlob(&#x27;text/css&#x27;);</span><br><span class="line"></span><br><span class="line">var link = document.createElement(&#x27;link&#x27;);</span><br><span class="line">link.rel = &#x27;stylesheet&#x27;;</span><br><span class="line">link.href = window.URL.createObjectURL(blob);</span><br><span class="line"></span><br><span class="line">document.body.appendChild(link);</span><br></pre></td></tr></table></figure>
+<p>#NOW</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">window.URL = window.URL || window.webkitURL;</span><br><span class="line"></span><br><span class="line">var blob = new Blob([&#x27;body &#123; color: red; &#125;&#x27;], &#123;type: &#x27;text/css&#x27;&#125;);</span><br><span class="line"></span><br><span class="line">var link = document.createElement(&#x27;link&#x27;);</span><br><span class="line">link.rel = &#x27;stylesheet&#x27;;</span><br><span class="line">link.href = window.URL.createObjectURL(blob);</span><br><span class="line">document.body.appendChild(link);</span><br></pre></td></tr></table></figure>
+<p>#SO</p>
+<p>Just New Blob()…no more BlobBuilder()</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+
+    
+      <div>
+        <div class="addthis_inline-share_toolbox">
+   <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=" async="async"></script>
+</div>        
+      </div>
+     
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/26/laravel-blade-template/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1225,7 +1319,7 @@ app/views/{{controllerName}}/xxx.volt
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">358</span>
+          <span class="site-state-item-count">359</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
