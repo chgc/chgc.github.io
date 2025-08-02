@@ -184,6 +184,48 @@ export class BookSearch {
 }
 ```
 
+## Example
+
+搭配 `@ngrx/signals/entities` 使用時，可以怎麼寫呢?
+
+```typescript
+export const BookStore = signalStore(
+  { providedIn: 'root' },
+  withState<BookSearchState>({
+    isLoading: false,
+    filter: { query: '', order: 'asc' },
+  }),
+  withEntities({ entity: type<Book>(), collection: 'books' }),
+  withReducer(
+	...
+    on(bookSearchEvents.queryChanged, ({ payload: query }, state) => {
+      return {
+        filter: { ...state.filter, query },
+        isLoading: true,
+      };
+    }),
+    on(bookApiEvents.loadedSuccess, ({ payload: books }) => {
+      // 👇 Returning an array of partial state updaters.
+      return [
+         // 👇 prependEntities 也是 v20 新提供的 entity 功能.
+        prependEntities(books, { collection: 'books' }), 
+        {
+          isLoading: false,
+        },
+      ];
+    }),
+    on(bookApiEvents.loadedFailed, () => ({ isLoading: false }))
+  ),
+```
+
+- `prependEntities`: Adds multiple entities to the beginning of the collection, maintaining their relative order. If the entity collection has entities with the same IDs, they are not added and no error is thrown.
+
+其他相關的新方法有
+
+- `prependEntity`: Adds an entity to the beginning of the collection. If the entity collection has an entity with the same ID, it is not added and no error is thrown.
+- `upsertEntity`:  Adds or updates an entity in the collection. When updating, it does not replace the existing entity but merges it with the provided one. Only the properties provided in the updated entity are merged with the existing entity. Properties not present in the updated entity remain unchanged.
+- ``upsertEntities`: Adds or updates multiple entities in the collection. When updating, it does not replace existing entities but merges them with the provided ones. Only the properties provided in updated entities are merged with existing entities. Properties not present in updated entities remain unchanged.
+
 
 
 ## Reference
