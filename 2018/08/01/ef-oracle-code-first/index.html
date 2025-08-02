@@ -45,7 +45,7 @@
 <meta property="og:image" content="https://i.imgur.com/Wjyvyjm.png">
 <meta property="og:image" content="https://i.imgur.com/OBShcGB.png">
 <meta property="article:published_time" content="2018-08-01T07:07:15.000Z">
-<meta property="article:modified_time" content="2024-10-27T05:13:03.196Z">
+<meta property="article:modified_time" content="2025-08-02T05:31:49.787Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Entity Framework">
 <meta name="twitter:card" content="summary">
@@ -382,7 +382,7 @@ only provides run-time support. This version of <a target="_blank" rel="noopener
 </li>
 <li>
 <p>設定 <code>program.cs</code> ，啟動 EF 並塞入一筆資料</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">      Database.SetInitializer(<span class="keyword">new</span> DropCreateDatabaseAlways&lt;OracleDbContext&gt;());</span><br><span class="line"></span><br><span class="line">      <span class="keyword">using</span> (OracleDbContext ctx = <span class="keyword">new</span> OracleDbContext())</span><br><span class="line">      &#123;</span><br><span class="line">        Employee emp = <span class="keyword">new</span> Employee()</span><br><span class="line">        &#123;</span><br><span class="line">          Name = <span class="string">&quot;Kevin&quot;</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        ctx.Employees.Add(emp);</span><br><span class="line">        ctx.SaveChanges();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Data.Entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BlogDemo</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">      Database.SetInitializer(<span class="keyword">new</span> DropCreateDatabaseAlways&lt;OracleDbContext&gt;());</span><br><span class="line"></span><br><span class="line">      <span class="keyword">using</span> (OracleDbContext ctx = <span class="keyword">new</span> OracleDbContext())</span><br><span class="line">      &#123;</span><br><span class="line">        Employee emp = <span class="keyword">new</span> Employee()</span><br><span class="line">        &#123;</span><br><span class="line">          Name = <span class="string">&quot;Kevin&quot;</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        ctx.Employees.Add(emp);</span><br><span class="line">        ctx.SaveChanges();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>第一次執行，因為 <code>DropCreateDatabaseAlways</code> 的關係，所以會建立資料表，<strong>這模式不適合以在開發的系統</strong>，請留意!!</p>
@@ -556,7 +556,7 @@ only provides run-time support. This version of <a target="_blank" rel="noopener
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">359</span>
+          <span class="site-state-item-count">360</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -646,7 +646,7 @@ only provides run-time support. This version of <a target="_blank" rel="noopener
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

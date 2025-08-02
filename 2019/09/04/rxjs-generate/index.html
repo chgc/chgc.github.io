@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2019/09/04/rxjs-generate/1567579775214.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/09/04/rxjs-generate/1567580096145.png">
 <meta property="article:published_time" content="2019-09-04T05:55:48.000Z">
-<meta property="article:modified_time" content="2024-10-27T05:13:03.248Z">
+<meta property="article:modified_time" content="2025-08-02T05:31:49.833Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -279,7 +279,7 @@
 <p>而這是 RxJS 使用 generate 的寫法</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">generate</span>(<span class="number">0</span>, <span class="function"><span class="params">x</span>=&gt;</span> x&lt; <span class="number">100</span>, <span class="function"><span class="params">x</span>=&gt;</span> ++x)</span><br></pre></td></tr></table></figure>
 <p>generate 介面</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">generate&lt;T, S&gt;(<span class="attr">initialStateOrOptions</span>: S | <span class="title class_">GenerateOptions</span>&lt;T, S&gt;, condition?: <span class="title class_">ConditionFunc</span>&lt;S&gt;, iterate?: <span class="title class_">IterateFunc</span>&lt;S&gt;, resultSelectorOrObservable?: (<span class="title class_">ResultFunc</span>&lt;S, T&gt;) | <span class="title class_">SchedulerLike</span>, scheduler?: <span class="title class_">SchedulerLike</span>): <span class="title class_">Observable</span>&lt;T&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">generate&lt;T, S&gt;(<span class="attr">initialStateOrOptions</span>: S | <span class="title class_">GenerateOptions</span>&lt;T, S&gt;, <span class="attr">condition</span>?: <span class="title class_">ConditionFunc</span>&lt;S&gt;, <span class="attr">iterate</span>?: <span class="title class_">IterateFunc</span>&lt;S&gt;, <span class="attr">resultSelectorOrObservable</span>?: (<span class="title class_">ResultFunc</span>&lt;S, T&gt;) | <span class="title class_">SchedulerLike</span>, <span class="attr">scheduler</span>?: <span class="title class_">SchedulerLike</span>): <span class="title class_">Observable</span>&lt;T&gt;</span><br></pre></td></tr></table></figure>
 <h1 id="變化用法"><a class="header-anchor" href="#變化用法"> </a>變化用法</h1>
 <h2 id="with-resultSelector"><a class="header-anchor" href="#with-resultSelector"> </a>with resultSelector</h2>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source = <span class="title function_">generate</span>(<span class="number">0</span>, <span class="function"><span class="params">x</span> =&gt;</span> x &lt; <span class="number">10</span>, <span class="function"><span class="params">x</span> =&gt;</span> ++x, <span class="function"><span class="params">x</span> =&gt;</span> x + <span class="string">&#x27;!!&#x27;</span>);</span><br><span class="line"></span><br><span class="line">source.<span class="title function_">subscribe</span>(&#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="function"><span class="params">v</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(v)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
@@ -421,7 +421,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">359</span>
+          <span class="site-state-item-count">360</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -511,7 +511,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

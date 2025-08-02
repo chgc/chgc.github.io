@@ -29,7 +29,7 @@
 <meta property="og:description" content="Component在Angular2的世界裡是很多變也很重要的。在一個網站裡會存在很多Component，如何讓Component與Component之間做交流，當然也是一個很重要的課題">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2016-11-11T13:42:08.000Z">
-<meta property="article:modified_time" content="2024-10-27T05:13:03.192Z">
+<meta property="article:modified_time" content="2025-08-02T05:31:49.781Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -276,7 +276,7 @@
 <h2 id="細節說明"><a class="header-anchor" href="#細節說明"> </a>細節說明</h2>
 <h3 id="Input"><a class="header-anchor" href="#Input"> </a>@Input</h3>
 <p>@Input的Interface, @Input可以在小括號內指定對外的property name.</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">Input</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Name used when instantiating a component in the template.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    bindingPropertyName?: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">Input</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Name used when instantiating a component in the template.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="attr">bindingPropertyName</span>?: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>而接續在@input() 後面的是在該Component內所使用的變數，也可以指定型別給他。當然也可以分成兩行寫</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Input</span>()</span><br><span class="line"><span class="keyword">private</span> <span class="attr">hero</span>: <span class="title class_">Hero</span>;	</span><br></pre></td></tr></table></figure>
 <p>或是自訂Setter/Getter</p>
@@ -423,7 +423,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">359</span>
+          <span class="site-state-item-count">360</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -513,7 +513,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

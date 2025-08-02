@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2019/05/07/nestjs-pipe/1557244390580.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/05/07/nestjs-pipe/1557244418440.png">
 <meta property="article:published_time" content="2019-05-07T15:21:36.000Z">
-<meta property="article:modified_time" content="2024-10-27T05:13:03.228Z">
+<meta property="article:modified_time" content="2025-08-02T05:31:49.814Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta property="article:tag" content="NestJS">
@@ -293,7 +293,7 @@
 <h1 id="Pipe-詳解"><a class="header-anchor" href="#Pipe-詳解"> </a>Pipe 詳解</h1>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">transform</span>(<span class="params"><span class="attr">value</span>: <span class="built_in">any</span>, <span class="attr">metadata</span>: <span class="title class_">ArgumentMetadata</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <p><code>transform</code> 函式內有兩個參數，一個是<code>value</code> 另一個是 <code>metadata</code>，以下為 <code>metadata</code> 的格式</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">ArgumentMetadata</span> &#123;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">type</span>: <span class="string">&#x27;body&#x27;</span> | <span class="string">&#x27;query&#x27;</span> | <span class="string">&#x27;param&#x27;</span> | <span class="string">&#x27;custom&#x27;</span>;</span><br><span class="line">  <span class="keyword">readonly</span> metatype?: <span class="title class_">Type</span>&lt;<span class="built_in">any</span>&gt;;</span><br><span class="line">  <span class="keyword">readonly</span> data?: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">ArgumentMetadata</span> &#123;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">type</span>: <span class="string">&#x27;body&#x27;</span> | <span class="string">&#x27;query&#x27;</span> | <span class="string">&#x27;param&#x27;</span> | <span class="string">&#x27;custom&#x27;</span>;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">metatype</span>?: <span class="title class_">Type</span>&lt;<span class="built_in">any</span>&gt;;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">data</span>?: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>實際取得的資訊如下</p>
 <p><img src="1557243358947.png" alt="1557243358947"></p>
 <p>重新看一下使用 <code>Pipe</code> 的 Controller</p>
@@ -436,7 +436,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">359</span>
+          <span class="site-state-item-count">360</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -526,7 +526,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

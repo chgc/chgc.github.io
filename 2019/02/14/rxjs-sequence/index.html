@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="http://blog.kevinyang.net/2019/02/14/rxjs-sequence/1550108112073.png">
 <meta property="article:published_time" content="2019-02-14T00:14:37.000Z">
-<meta property="article:modified_time" content="2024-10-27T05:13:03.212Z">
+<meta property="article:modified_time" content="2025-08-02T05:31:49.802Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -311,7 +311,7 @@
 <p>先來調整一下 <code>keyCorrection</code> 的寫法，讓在第一次收集完 <code>keyup</code> 事件後，之後每一次的<code>keyup</code> 事件都會送出值</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> keyCorrection = keys.<span class="title function_">pipe</span>(</span><br><span class="line">    <span class="title function_">bufferCount</span>(<span class="number">10</span>,<span class="number">1</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>再來修正比較的部份，這裡介紹一個 operator, <code>sequenceEqual</code>，這一個方法的功用是比較兩個 Observable 的值發生的順序是否一樣</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sequenceEqual&lt;T&gt;(<span class="attr">compareTo</span>: <span class="title class_">Observable</span>&lt;T&gt;, comparator?: <span class="function">(<span class="params"><span class="attr">a</span>: T, <span class="attr">b</span>: T</span>) =&gt;</span> <span class="built_in">boolean</span>): <span class="title class_">OperatorFunction</span>&lt;T, <span class="built_in">boolean</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sequenceEqual&lt;T&gt;(<span class="attr">compareTo</span>: <span class="title class_">Observable</span>&lt;T&gt;, <span class="attr">comparator</span>?: <span class="function">(<span class="params"><span class="attr">a</span>: T, <span class="attr">b</span>: T</span>) =&gt;</span> <span class="built_in">boolean</span>): <span class="title class_">OperatorFunction</span>&lt;T, <span class="built_in">boolean</span>&gt;</span><br></pre></td></tr></table></figure>
 <p>將 matches 的部份調整一下</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> matches = keyCorrection.<span class="title function_">pipe</span>(</span><br><span class="line">  <span class="title function_">mergeMap</span>(<span class="function"><span class="params">result</span> =&gt;</span> <span class="title function_">from</span>(result).<span class="title function_">pipe</span>(<span class="title function_">sequenceEqual</span>(<span class="title function_">from</span>(codes))))</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>經過這樣子的修正後，一樣可以達到一樣的效果，最後在修飾一下，完整的程式碼如下</p>
@@ -437,7 +437,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">359</span>
+          <span class="site-state-item-count">360</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -527,7 +527,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

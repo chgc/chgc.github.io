@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://blog.kevinyang.net/2023/03/11/angular-signals/image-20230407225822130.png">
 <meta property="og:image" content="http://blog.kevinyang.net/2023/03/11/angular-signals/image-20230415111504566.png">
 <meta property="article:published_time" content="2023-03-11T01:45:03.000Z">
-<meta property="article:modified_time" content="2024-10-27T05:13:03.364Z">
+<meta property="article:modified_time" content="2025-08-02T05:31:49.938Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
@@ -281,7 +281,7 @@
 <h3 id="建立-signal-物件"><a class="header-anchor" href="#建立-signal-物件"> </a>建立 signal 物件</h3>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, signal &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;....&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  count = <span class="title function_">signal</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>signal</code> 介面</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> signal&lt;T&gt;(<span class="attr">initialValue</span>: T, equal?: <span class="title class_">ValueEqualityFn</span>&lt;T&gt;): <span class="title class_">SettableSignal</span>&lt;T&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> signal&lt;T&gt;(<span class="attr">initialValue</span>: T, <span class="attr">equal</span>?: <span class="title class_">ValueEqualityFn</span>&lt;T&gt;): <span class="title class_">SettableSignal</span>&lt;T&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="顯示"><a class="header-anchor" href="#顯示"> </a>顯示</h3>
 <p>要取得 signal 物件值的方式很直接，直接當 function 使用即可，接續上面的範例</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; count() &#125;&#125; </span><br></pre></td></tr></table></figure>
@@ -308,7 +308,7 @@
 <p>開頭有提到 signals 是一個 reactive library，當然不會只有這種單一值的使用情境，一定會有錯綜複雜的使用情境，這時候會怎麼使用呢</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, signal, computed &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line"> ...</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;p&gt;Count: &#123;&#123; count() &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Double: &#123;&#123; double() &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">	...</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  count = <span class="title function_">signal</span>(<span class="number">0</span>);</span><br><span class="line">  double = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> <span class="variable language_">this</span>.<span class="title function_">count</span>() * <span class="number">2</span>);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>computed</code> 可以讓我們與其他 signal 作互動結合，當 computed 內的 signal 值改變時，此 computed 結果也會跟著改變，使用上算直覺</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> computed&lt;T&gt;(<span class="attr">computation</span>: <span class="function">() =&gt;</span> T, equal?: <span class="title class_">ValueEqualityFn</span>&lt;T&gt;): <span class="title class_">Signal</span>&lt;T&gt;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> computed&lt;T&gt;(<span class="attr">computation</span>: <span class="function">() =&gt;</span> T, <span class="attr">equal</span>?: <span class="title class_">ValueEqualityFn</span>&lt;T&gt;): <span class="title class_">Signal</span>&lt;T&gt;;</span><br></pre></td></tr></table></figure>
 <p>除了 computed，還有一個是 <code>effect</code></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">effect</span>(<span class="params"><span class="attr">effectFn</span>: () =&gt; <span class="built_in">void</span></span>): <span class="title class_">Effect</span>;</span><br></pre></td></tr></table></figure>
 <p>須留意的是兩者回傳的物件是不一樣的，<code>computed</code> 會回傳一個新的 <code>Signal</code> 物件，但 <code>effect</code> 是回傳一個 <code>Effect</code> 物件，這 Effect 型別的物件可以允許我們停用 <code>effect</code> ，類似 Observable.subscribe 會回傳 subscription 的概念</p>
@@ -443,7 +443,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">359</span>
+          <span class="site-state-item-count">360</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -533,7 +533,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
