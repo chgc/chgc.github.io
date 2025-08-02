@@ -17,7 +17,7 @@ NgRx Signals v20 前陣子釋出了，這一版從別人的文章中，似乎有
 
 複習一下之前大家熟悉的 redux 運作模式，signal store 內的 state change 都會透過 event dispatch 的方式進行異動
 
-![image-20250802105456969](/image-20250802105456969.png)
+![image-20250802105456969](image-20250802105456969.png)
 
 ### 定義 Event Type
 
