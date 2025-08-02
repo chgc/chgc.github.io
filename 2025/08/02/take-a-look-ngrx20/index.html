@@ -28,13 +28,13 @@
 <meta property="og:site_name" content="CK&#39;s Notepad">
 <meta property="og:description" content="NgRx Signals v20 前陣子釋出了，這一版從別人的文章中，似乎有不少有趣的新東西，其中推出尚在時現階段的 event system, 看文章似乎蠻有趣的，趁著周末有空自己動手玩看看">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="http://blog.kevinyang.net/image-20250802105456969.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/image-20250802105456969.png">
 <meta property="article:published_time" content="2025-08-02T02:42:39.000Z">
-<meta property="article:modified_time" content="2025-08-02T05:31:49.947Z">
+<meta property="article:modified_time" content="2025-08-02T05:36:34.775Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="Angular">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://blog.kevinyang.net/image-20250802105456969.png">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/image-20250802105456969.png">
 
 <link rel="canonical" href="http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/">
 
@@ -272,7 +272,7 @@
 <span id="more"></span>
 <h2 id="Event-System"><a class="header-anchor" href="#Event-System"> </a>Event System</h2>
 <p>複習一下之前大家熟悉的 redux 運作模式，signal store 內的 state change 都會透過 event dispatch 的方式進行異動</p>
-<p><img src="/image-20250802105456969.png" alt="image-20250802105456969"></p>
+<p><img src="image-20250802105456969.png" alt="image-20250802105456969"></p>
 <h3 id="定義-Event-Type"><a class="header-anchor" href="#定義-Event-Type"> </a>定義 Event Type</h3>
 <p>定義的方式與之前使用 redux 的寫法差不多</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">type</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@ngrx/signals&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; event &#125; <span class="keyword">from</span> <span class="string">&#x27;@ngrx/signals/events&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> opened = <span class="title function_">event</span>(<span class="string">&#x27;[Book Search] Opened&#x27;</span>);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> queryChanged = <span class="title function_">event</span>(<span class="string">&#x27;[Book Search]QueryChanged&#x27;</span>, <span class="keyword">type</span>&lt;<span class="built_in">string</span>&gt;());</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loadedSuccess = <span class="title function_">event</span>(<span class="string">&#x27;[Book API] Load success&#x27;</span>, <span class="keyword">type</span>&lt;<span class="title class_">Book</span>[]&gt;());</span><br></pre></td></tr></table></figure>
