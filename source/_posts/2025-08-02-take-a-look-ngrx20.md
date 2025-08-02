@@ -224,7 +224,7 @@ export const BookStore = signalStore(
 
 - `prependEntity`: Adds an entity to the beginning of the collection. If the entity collection has an entity with the same ID, it is not added and no error is thrown.
 - `upsertEntity`:  Adds or updates an entity in the collection. When updating, it does not replace the existing entity but merges it with the provided one. Only the properties provided in the updated entity are merged with the existing entity. Properties not present in the updated entity remain unchanged.
-- ``upsertEntities`: Adds or updates multiple entities in the collection. When updating, it does not replace existing entities but merges them with the provided ones. Only the properties provided in updated entities are merged with existing entities. Properties not present in updated entities remain unchanged.
+- `upsertEntities`: Adds or updates multiple entities in the collection. When updating, it does not replace existing entities but merges them with the provided ones. Only the properties provided in updated entities are merged with existing entities. Properties not present in updated entities remain unchanged.
 
 
 
