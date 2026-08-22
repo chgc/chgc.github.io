@@ -19,7 +19,7 @@ tags: Angular
 
 更多關於 Event loop 運行方式，可以看這個影片
 
-{% youtube 8aGhZQkoFbQ%} 
+{% iframe https://www.youtube.com/embed/8aGhZQkoFbQ %}
 
 實際上 `Event loop` 內在分細一點，針對不同的非同步行為，有著執行的優先順序。這裡要介紹 `Micro Task` 與 `Macro Task` ，簡單的說，就是將上述的 Queue 在分成兩種 Queue，一個是記載著 `Micro Task` 的 (這裡我們先稱為 `Micro Task Queue`)，另外一個是記載著 `Macro Task` (這裡我們先稱為 `Macro Task Queue`)。 在每一個事件循環，會先處理記載 `Micro Task` 的 Queue，然後當 `Micro Task Queue` 清空後，才會處理 `Macro Task Queue` 。
 

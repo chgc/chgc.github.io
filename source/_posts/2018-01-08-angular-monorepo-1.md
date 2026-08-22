@@ -15,7 +15,7 @@ tags: Angular
 
 第一個問題是什麼是 Mono Repo?  Mono Repo 是將各應用程式及相關的程式碼都放在同一個 Repo 下做管理，讓程式碼共用的複雜度降低，這裡有一部在 YouTube 上面的影片，說明 Google 內部是如何使用 Mono Repo 跟為什麼要這樣子做
 
-{% youtube W71BTkUbdqE%}
+{% iframe https://www.youtube.com/embed/W71BTkUbdqE %}
 
 這樣子有什麼樣的好處呢? 在提好處之前，先來看 Multiple Repositories 的好處有哪些
 

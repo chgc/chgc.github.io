@@ -50,7 +50,7 @@ Angular 4 將原本的 `ngIf` 的功能給擴充了。多了兩個新朋友 `els
 
 執行效果如下
 
-{%  youtube  AVG4E8mzOzI %}
+{% iframe https://www.youtube.com/embed/AVG4E8mzOzI %}
 
 
 
@@ -88,7 +88,7 @@ class NgIfThenElse implements OnInit {
 
 執行效果如下
 
-{%  youtube  e5JyDE7kCR8 %}
+{% iframe https://www.youtube.com/embed/e5JyDE7kCR8 %}
 
 
 

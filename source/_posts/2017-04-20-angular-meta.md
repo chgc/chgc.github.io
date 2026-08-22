@@ -124,5 +124,5 @@ this.router.events.filter(event => (event instanceof NavigationEnd))
 
 # 執行結果
 
-{%  youtube  IJw4KLpozQA %}
+{% iframe https://www.youtube.com/embed/IJw4KLpozQA %}
 

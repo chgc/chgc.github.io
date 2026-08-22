@@ -13,7 +13,7 @@ tags: Angular
 
 這神奇的現象，用簡單的影片表示一下 (使用字型: 細明體)
 
-{% youtube z_a13DhNcMI %}
+{% iframe https://www.youtube.com/embed/z_a13DhNcMI %}
 
 # 開始追蹤
 
@@ -126,7 +126,7 @@ const defaultHandler = (percentage, msg, ...args) => {
 
 驗證一下，將命令視窗的字型改成【點陣字體】後再跑一次，看看會不會正常
 
-{% youtube eGH8dKdlB1I %}
+{% iframe https://www.youtube.com/embed/eGH8dKdlB1I %}
 
 
 

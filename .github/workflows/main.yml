@@ -1,53 +1,50 @@
-# This is a basic workflow to help you get started with Actions
-
+# Build & deploy Hexo site to GitHub Pages
 name: CI
 
-# Controls when the action will run. 
+# Triggers the workflow on push to the source branch (content branch)
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: source
-      
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
 jobs:
   pages:
     runs-on: ubuntu-latest
     steps:
       # cancel previous runs
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.5.0
+        uses: styfle/cancel-workflow-action@0.13.1
         with:
           access_token: ${{ github.token }}
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: true
       # install node
       - name: Use Node.js 22.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: '22.x'
 
-      # cache yarn
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      # cache npm
+      - name: Get npm cache directory path
+        id: npm-cache-dir-path
+        run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
       - uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: npm-cache # use this to check for `cache-hit` (`steps.npm-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
-      # install dependencies
+            ${{ runner.os }}-npm-
+      # install dependencies from lockfile (deterministic)
       - name: Install Dependencies
-        run: yarn install
+        run: npm ci
       # build
       - name: Build
-        run: yarn build
+        run: npm run build
       # deploy
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          publish_branch: master  # deploying branch
+          publish_branch: master # deploying branch

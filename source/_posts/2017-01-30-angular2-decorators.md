@@ -125,7 +125,7 @@ export class AppComponent {
 
   ngrx/store搭配 effects套件，讓angular內在設定redux動作時，變得比較直覺，程式碼也精簡很多
 
-{% youtube Rw9ZQW2z0M8 %}
+{% iframe https://www.youtube.com/embed/Rw9ZQW2z0M8 %}
 
 
 
