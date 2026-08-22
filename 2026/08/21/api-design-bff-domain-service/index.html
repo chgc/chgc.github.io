@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="最近設計 API 時，同事之間又為了「REST 還是 action 導向」吵了一場。REST 純粹主義者搬出 Fielding 2000 年的博士論文，說 POST &#x2F;orders 才是正義；商業派搬出 Netflix 的 use-case 主張，說資源導向在大規模下會逼客戶端用一堆請求才能完成一件「事」，POST &#x2F;checkout 才是正義。 兩邊都對，也都不對。真正的問題從來不是「選哪一種風">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考">
+<meta property="og:url" content="http://blog.kevinyang.net/2026/08/21/api-design-bff-domain-service/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="最近設計 API 時，同事之間又為了「REST 還是 action 導向」吵了一場。REST 純粹主義者搬出 Fielding 2000 年的博士論文，說 POST &#x2F;orders 才是正義；商業派搬出 Netflix 的 use-case 主張，說資源導向在大規模下會逼客戶端用一堆請求才能完成一件「事」，POST &#x2F;checkout 才是正義。 兩邊都對，也都不對。真正的問題從來不是「選哪一種風">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2026-08-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-22T12:17:19.106Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="API 設計">
+<meta property="article:tag" content="BFF">
+<meta property="article:tag" content="REST">
+<meta property="article:tag" content="gRPC">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2026/08/21/api-design-bff-domain-service/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2026/08/21/api-design-bff-domain-service/","path":"2026/08/21/api-design-bff-domain-service/","title":"[API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E5%9B%9E%E5%88%B0%E8%AB%96%E6%88%B0%E7%9A%84%E8%B5%B7%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">先回到論戰的起源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B3%87%E6%BA%90%E5%B0%8E%E5%90%91%EF%BC%88REST%EF%BC%89%E6%98%AF%E6%80%8E%E9%BA%BC%E4%BE%86%E7%9A%84"><span class="nav-number">1.1.</span> <span class="nav-text">資源導向（REST）是怎麼來的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E6%A5%AD%E6%84%8F%E5%9C%96%E5%B0%8E%E5%90%91%E6%98%AF%E6%80%8E%E9%BA%BC%E4%BE%86%E7%9A%84"><span class="nav-number">1.2.</span> <span class="nav-text">商業意圖導向是怎麼來的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFF-%E5%B1%A4%EF%BC%9A%E8%B2%BC%E8%BF%91-UI%EF%BC%8C%E5%95%86%E6%A5%AD%E6%84%8F%E5%9C%96%E6%98%AF%E5%87%BA%E7%99%BC%E9%BB%9E"><span class="nav-number">2.</span> <span class="nav-text">BFF 層：貼近 UI，商業意圖是出發點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Domain-Service-%E5%B1%A4%EF%BC%9A%E8%B2%BC%E8%BF%91%E9%A0%98%E5%9F%9F%E6%A8%A1%E5%9E%8B%EF%BC%8C%E8%B3%87%E6%BA%90%E6%98%AF%E5%9C%B0%E5%9F%BA"><span class="nav-number">3.</span> <span class="nav-text">Domain Service 層：貼近領域模型，資源是地基</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E7%94%A8%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%A8%AD%E8%A8%88%E4%B8%80%E6%94%AF-API-%E5%89%8D%EF%BC%8C%E5%85%88%E5%95%8F%E4%BA%94%E5%80%8B%E5%95%8F%E9%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">實用決策框架：設計一支 API 前，先問五個問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E4%B8%80%E4%B8%8B%EF%BC%9A%E4%B8%89%E5%80%8B%E7%9C%9F%E5%AF%A6%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8F%8D%E6%96%B9%E8%A7%80%E9%BB%9E"><span class="nav-number">5.</span> <span class="nav-text">平衡一下：三個真實存在的反方觀點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">6.</span> <span class="nav-text">小結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2026/08/21/api-design-bff-domain-service/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2026-08-22 00:00:00 / 修改時間：20:17:19" itemprop="dateCreated datePublished" datetime="2026-08-22T00:00:00+08:00">2026-08-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/API-Design/" itemprop="url" rel="index"><span itemprop="name">API Design</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2026/08/21/api-design-bff-domain-service/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/08/21/api-design-bff-domain-service/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近設計 API 時，同事之間又為了「REST 還是 action 導向」吵了一場。REST 純粹主義者搬出 Fielding 2000 年的博士論文，說 <code>POST /orders</code> 才是正義；商業派搬出 Netflix 的 use-case 主張，說資源導向在大規模下會逼客戶端用一堆請求才能完成一件「事」，<code>POST /checkout</code> 才是正義。</p>
+<p>兩邊都對，也都不對。真正的問題從來不是「選哪一種風格」，而是——</p>
+<p><strong>這支 API 到底在服務誰？</strong></p>
+<p>把 API 分成「BFF 層」與「Domain Service 層」兩個維度來看，答案會清楚很多，這篇就是把整理的過程筆記下來。</p>
+<span id="more"></span>
+<h2 id="先回到論戰的起源"><a class="header-anchor" href="#先回到論戰的起源"> </a>先回到論戰的起源</h2>
+<h3 id="資源導向（REST）是怎麼來的"><a class="header-anchor" href="#資源導向（REST）是怎麼來的"> </a>資源導向（REST）是怎麼來的</h3>
+<p>Roy Fielding 在 2000 年的博士論文定義 REST，核心約束是 <strong>uniform interface</strong>：用資源（名詞）辨識事物、用標準 HTTP 方法表達操作、狀態由 hypermedia 驅動。Richardson Maturity Model（2008）把「REST 程度」分成 0 到 3 級，從把 HTTP 當傳輸管線，到用對資源、用對 verb、最後加上 hypermedia controls。</p>
+<p>資源導向的優勢很清楚：<strong>穩定、可快取、可預測</strong>。GitHub 和 Stripe 這種大型公開 API 都以資源為核心——但請注意，即使它們也保留了動作型端點：Stripe 的 <code>charge capture</code>、<code>refund</code>，GitHub 的 git refs 操作。連資源導向的先驅都無法完全迴避「動作」，看到這個其實鬆了一口氣，不是只有我們遇到這個問題。</p>
+<h3 id="商業意圖導向是怎麼來的"><a class="header-anchor" href="#商業意圖導向是怎麼來的"> </a>商業意圖導向是怎麼來的</h3>
+<p>另一方陣營主張 API 應該表達「使用者想完成的事」，而不是「資料長什麼樣」。Netflix 的 Daniel Jacobson 從 2014 年起公開倡導 use-case 導向的 edge API，理由很實際：一個「結帳」流程在資源導向下要按順序打好幾支 API，任何一個環節失敗都要客戶端自己兜；而動作導向一支 <code>POST /checkout</code> 就搞定。</p>
+<p>gRPC（2015）把這個思路推到極致：service 裡定義的就是 method，<code>PlaceOrder()</code>、<code>CapturePayment()</code>，完全不管名詞。它在內部微服務通訊中成了主流——這不是巧合，自己在寫 gRPC 的時候其實也是這樣，service 上定義的就是「動作」。</p>
+<h2 id="BFF-層：貼近-UI，商業意圖是出發點"><a class="header-anchor" href="#BFF-層：貼近-UI，商業意圖是出發點"> </a>BFF 層：貼近 UI，商業意圖是出發點</h2>
+<p>BFF（Backend for Frontend）是 Sam Newman 2015 年提出的模式：每一種 client（Web、iOS、Android）各自擁有一層專屬 API，負責<strong>資料塑形（shaping）與聚合</strong>。它存在的唯一理由，是讓前端用最少的來回、最貼合 UI 的形狀拿到資料。</p>
+<p>既然如此，BFF 的 API 設計就應該從「使用者的 user story」出發：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 資源導向的做法（前端要自己編排多次呼叫）</span><br><span class="line">POST /orders</span><br><span class="line">POST /orders/&#123;id&#125;/payments</span><br><span class="line">GET  /orders/&#123;id&#125;/tracking</span><br><span class="line"></span><br><span class="line"># 商業意圖導向的做法（一支 API 對應一個 use case）</span><br><span class="line">POST /checkout</span><br></pre></td></tr></table></figure>
+<ul>
+<li>UI 上的一個按鈕、一個畫面、一個流程，對應 BFF 的一支 API（或一個 GraphQL mutation）</li>
+<li>BFF 不該暴露 <code>GET /customers/{id}/addresses</code> 這種「資料瀏覽」式介面，因為 UI 在乎的是「把這筆訂單結帳、寄出、確認」這個商業事件，不是資料庫表長相</li>
+</ul>
+<p>判斷標準很簡單：<strong>把 UI 畫面上的操作翻成一句話，如果那句話是動詞，BFF 就該是動作。</strong></p>
+<blockquote>
+<p>註：GraphQL 之所以在 BFF 位置大受歡迎，正是因為它把「商業資料需求」交給 client 宣告，本質上就是商業意圖導向的一種極致形式。</p>
+</blockquote>
+<h2 id="Domain-Service-層：貼近領域模型，資源是地基"><a class="header-anchor" href="#Domain-Service-層：貼近領域模型，資源是地基"> </a>Domain Service 層：貼近領域模型，資源是地基</h2>
+<p>Domain Service 是領域的骨幹：訂單、付款、庫存、客戶。它的消費者<strong>不是某個 UI，而是多個上游系統</strong>——BFF、其他服務、批次作業、第三方整合都可能呼叫它。</p>
+<p>因此這層的 API 必須：</p>
+<ul>
+<li><strong>以資源（名詞）為核心</strong>：<code>POST /orders</code>、<code>GET /orders/{id}</code>、<code>PUT /orders/{id}/status</code>。資源是領域事實（aggregate），命名穩定，不隨 UI 改版而變</li>
+<li><strong>可重用</strong>：一支 <code>POST /orders</code> 可能同時服務 Web 結帳、App 下單、內部補單系統</li>
+<li><strong>動作是例外，不是常態</strong>：怎麼判斷「拆得掉還是拆不掉」？
+<ul>
+<li>「把訂單狀態改成已出貨」是改單一欄位，拆得掉 → <code>PUT /orders/{id}/status</code></li>
+<li>「結帳」涉及庫存扣減、訂單建立、金流授權、發票開立——橫跨多個資源的狀態轉移，拆不掉 → 用動作</li>
+</ul>
+</li>
+</ul>
+<p>拆不掉的動作，在資源導向下有個官方的折衷寫法，Google 稱之為 custom methods：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /v1/payments/pay_123:capture</span><br><span class="line">POST /v1/orders/ord_456:refund</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>POST /payments/{id}:capture</code> 這種語法是 Google AIPs 的 custom methods 模式（AIP-121 規定資源導向設計，AIP-136 明確認可 custom methods）</li>
+<li>這就是大型企業承認「純 CRUD 不夠用」的官方折衷，看到自己也覺得安心，大家最後都走到類似的地方</li>
+</ul>
+<p>領域層選擇資源導向，不是為了信仰，而是為了<strong>穩定與可預測</strong>：資源一多，客戶端與團隊之間溝通的「詞彙」就固定了；多個消費端也不必為了新 UI 改版而追著 domain API 改。</p>
+<h2 id="實用決策框架：設計一支-API-前，先問五個問題"><a class="header-anchor" href="#實用決策框架：設計一支-API-前，先問五個問題"> </a>實用決策框架：設計一支 API 前，先問五個問題</h2>
+<table>
+<thead>
+<tr>
+<th>問題</th>
+<th>偏向商業意圖（BFF）</th>
+<th>偏向資源導向（Domain）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 消費者只有一個 UI 嗎？</td>
+<td>是 → 動作命名，直接服務該畫面</td>
+<td>否，多個系統共用 → 資源命名</td>
+</tr>
+<tr>
+<td>2. 這支 API 是否對應一個明確 user story？</td>
+<td>是（結帳、註冊）</td>
+<td>否（查詢、更新單一狀態）</td>
+</tr>
+<tr>
+<td>3. 操作可以拆成標準 CRUD 語意嗎？</td>
+<td>拆不掉 → 動作</td>
+<td>可以 → 資源</td>
+</tr>
+<tr>
+<td>4. 資料的生命週期與領域一致嗎？</td>
+<td>資料是 UI 的臨時投影</td>
+<td>資料就是領域事實</td>
+</tr>
+<tr>
+<td>5. 這層會被幾個 team 當作契約使用？</td>
+<td>少數，改版成本低</td>
+<td>多數，契約必須穩定</td>
+</tr>
+</tbody>
+</table>
+<p>簡單記法：<strong>BFF 回答「使用者要做什麼」，Domain 回答「系統裡有什麼」。</strong></p>
+<h2 id="平衡一下：三個真實存在的反方觀點"><a class="header-anchor" href="#平衡一下：三個真實存在的反方觀點"> </a>平衡一下：三個真實存在的反方觀點</h2>
+<p><strong>1.「連 Domain Service 都該商業意圖導向」</strong>——Jacobson 主張 use-case 優先適用於所有層。</p>
+<blockquote>
+<p>反駁：Netflix 的 edge API 確實動作化很成功，但 Netflix 的 domain 是「推薦/串流」這種本質上是服務的領域；針對訂單、帳務這種以狀態轉移為核心的領域，資源模型反而讓稽核、重試、並行控制更容易表達。</p>
+</blockquote>
+<p><strong>2.「動作導向就是偽 REST，一律資源化」</strong>——Fielding 陣營認為不遵守 uniform interface 的 API 都是披著 HTTP 的 RPC。</p>
+<blockquote>
+<p>反駁：技術上說得對，但它把「表達商業意圖」的需求丟回給呼叫端：客戶端被迫用多個請求自行拼出商業事件，延遲與錯誤處理成本全部落在最脆弱的環節。資源化是手段，不是目的。</p>
+</blockquote>
+<p><strong>3.「GraphQL 一個 schema 取代 BFF + Domain 分層」</strong></p>
+<blockquote>
+<p>反駁：GraphQL 解決的是「資料塑形」，不是「領域契約」；把 GraphQL 直接對到資料庫/領域層，會把查詢權力下放給所有 client，難以做權限、稽核與領域不變量控管。GraphQL 放在 BFF 位置最理想，取代不了 Domain 層。</p>
+</blockquote>
+<h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2>
+<p>API 設計的爭論之所以吵不完，是因為雙方其實在講不同的層。</p>
+<ul>
+<li><strong>BFF 層</strong>：以商業意圖為出發點。一支 API 對應一個 user story，動作命名、資料塑形、聚合編排，GraphQL 也很好</li>
+<li><strong>Domain Service 層</strong>：以資源為出發點。名詞核心、穩定可重用，動作是例外（custom methods），因為它的消費者是多個契約方</li>
+</ul>
+<p>整理完才發現，答案其實不複雜：下次再有人問「REST 還是 action？」——別急著站隊。先反問一句：<strong>這支 API 服務誰？</strong> 答案是 UI 的使用者，就走商業意圖；答案是領域的契約方，就走資源。答案出來，設計原則就出來了。</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Fielding 博士論文（Architectural Styles and the Design of Network-based Software Architectures, 2000）</a></li>
+<li><a target="_blank" rel="noopener" href="https://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model（Martin Fowler, 2010）</a></li>
+<li><a target="_blank" rel="noopener" href="https://samnewman.io/patterns/architectural/bff/">Sam Newman - Pattern: Backend For Frontend (2015)</a></li>
+<li><a target="_blank" rel="noopener" href="https://netflixtechblog.com/">Netflix TechBlog - API Design（Daniel Jacobson 的 use-case 主張）</a></li>
+<li><a target="_blank" rel="noopener" href="https://google.aip.dev/121">Google AIP-121（Resource-oriented design）</a></li>
+<li><a target="_blank" rel="noopener" href="https://google.aip.dev/136">Google AIP-136（Custom methods）</a></li>
+<li><a target="_blank" rel="noopener" href="https://grpc.io/docs/">gRPC 官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://graphql.org/learn/">GraphQL 官方文件</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/gRPC/" rel="tag"># gRPC</a>
+              <a href="/tags/REST/" rel="tag"># REST</a>
+              <a href="/tags/BFF/" rel="tag"># BFF</a>
+              <a href="/tags/API-%E8%A8%AD%E8%A8%88/" rel="tag"># API 設計</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/02/take-a-look-ngrx20/" rel="prev" title="[Angular] 看一下 NgRx Signals 20 有什麼好玩的東西">
+                  <i class="fa fa-angle-left"></i> [Angular] 看一下 NgRx Signals 20 有什麼好玩的東西
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>
