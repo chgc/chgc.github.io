@@ -56,6 +56,11 @@ disqus:
 # Google site verification
 google_site_verification: hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg
 
+# Google Analytics 4 (GA4)
+google_analytics:
+  tracking_id: G-Q2X3KJFBLM
+  only_pageview: false
+
 # Custom head injection (Google AdSense)
 custom_file_path:
   head: source/_data/head.njk
