@@ -9,7 +9,7 @@
   <link href="http://blog.kevinyang.net/atom.xml" rel="self"/>
   <rights>All rights reserved 2026, KevinYang</rights>
   <title>CK's Notepad</title>
-  <updated>2026-08-22T12:17:19.106Z</updated>
+  <updated>2026-08-22T14:09:08.159Z</updated>
   <entry>
     <author>
       <name>KevinYang</name>
@@ -20,19 +20,19 @@
     <category term="BFF" scheme="http://blog.kevinyang.net/tags/BFF/"/>
     <category term="API 設計" scheme="http://blog.kevinyang.net/tags/API-%E8%A8%AD%E8%A8%88/"/>
     <content>
-      <![CDATA[<p>最近設計 API 時，同事之間又為了「REST 還是 action 導向」吵了一場。REST 純粹主義者搬出 Fielding 2000 年的博士論文，說 <code>POST /orders</code> 才是正義；商業派搬出 Netflix 的 use-case 主張，說資源導向在大規模下會逼客戶端用一堆請求才能完成一件「事」，<code>POST /checkout</code> 才是正義。</p><p>兩邊都對，也都不對。真正的問題從來不是「選哪一種風格」，而是——</p><p><strong>這支 API 到底在服務誰？</strong></p><p>把 API 分成「BFF 層」與「Domain Service 層」兩個維度來看，答案會清楚很多，這篇就是把整理的過程筆記下來。</p><span id="more"></span><h2 id="先回到論戰的起源"><a class="header-anchor" href="#先回到論戰的起源"> </a>先回到論戰的起源</h2><h3 id="資源導向（REST）是怎麼來的"><a class="header-anchor" href="#資源導向（REST）是怎麼來的"> </a>資源導向（REST）是怎麼來的</h3><p>Roy Fielding 在 2000 年的博士論文定義 REST，核心約束是 <strong>uniform interface</strong>：用資源（名詞）辨識事物、用標準 HTTP 方法表達操作、狀態由 hypermedia 驅動。Richardson Maturity Model（2008）把「REST 程度」分成 0 到 3 級，從把 HTTP 當傳輸管線，到用對資源、用對 verb、最後加上 hypermedia controls。</p><p>資源導向的優勢很清楚：<strong>穩定、可快取、可預測</strong>。GitHub 和 Stripe 這種大型公開 API 都以資源為核心——但請注意，即使它們也保留了動作型端點：Stripe 的 <code>charge capture</code>、<code>refund</code>，GitHub 的 git refs 操作。連資源導向的先驅都無法完全迴避「動作」，看到這個其實鬆了一口氣，不是只有我們遇到這個問題。</p><h3 id="商業意圖導向是怎麼來的"><a class="header-anchor" href="#商業意圖導向是怎麼來的"> </a>商業意圖導向是怎麼來的</h3><p>另一方陣營主張 API 應該表達「使用者想完成的事」，而不是「資料長什麼樣」。Netflix 的 Daniel Jacobson 從 2014 年起公開倡導 use-case 導向的 edge API，理由很實際：一個「結帳」流程在資源導向下要按順序打好幾支 API，任何一個環節失敗都要客戶端自己兜；而動作導向一支 <code>POST /checkout</code> 就搞定。</p><p>gRPC（2015）把這個思路推到極致：service 裡定義的就是 method，<code>PlaceOrder()</code>、<code>CapturePayment()</code>，完全不管名詞。它在內部微服務通訊中成了主流——這不是巧合，自己在寫 gRPC 的時候其實也是這樣，service 上定義的就是「動作」。</p><h2 id="BFF-層：貼近-UI，商業意圖是出發點"><a class="header-anchor" href="#BFF-層：貼近-UI，商業意圖是出發點"> </a>BFF 層：貼近 UI，商業意圖是出發點</h2><p>BFF（Backend for Frontend）是 Sam Newman 2015 年提出的模式：每一種 client（Web、iOS、Android）各自擁有一層專屬 API，負責<strong>資料塑形（shaping）與聚合</strong>。它存在的唯一理由，是讓前端用最少的來回、最貼合 UI 的形狀拿到資料。</p><p>既然如此，BFF 的 API 設計就應該從「使用者的 user story」出發：</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 資源導向的做法（前端要自己編排多次呼叫）</span><br><span class="line">POST /orders</span><br><span class="line">POST /orders/&#123;id&#125;/payments</span><br><span class="line">GET  /orders/&#123;id&#125;/tracking</span><br><span class="line"></span><br><span class="line"># 商業意圖導向的做法（一支 API 對應一個 use case）</span><br><span class="line">POST /checkout</span><br></pre></td></tr></table></figure><ul><li>UI 上的一個按鈕、一個畫面、一個流程，對應 BFF 的一支 API（或一個 GraphQL mutation）</li><li>BFF 不該暴露 <code>GET /customers/{id}/addresses</code> 這種「資料瀏覽」式介面，因為 UI 在乎的是「把這筆訂單結帳、寄出、確認」這個商業事件，不是資料庫表長相</li></ul><p>判斷標準很簡單：<strong>把 UI 畫面上的操作翻成一句話，如果那句話是動詞，BFF 就該是動作。</strong></p><blockquote><p>註：GraphQL 之所以在 BFF 位置大受歡迎，正是因為它把「商業資料需求」交給 client 宣告，本質上就是商業意圖導向的一種極致形式。</p></blockquote><h2 id="Domain-Service-層：貼近領域模型，資源是地基"><a class="header-anchor" href="#Domain-Service-層：貼近領域模型，資源是地基"> </a>Domain Service 層：貼近領域模型，資源是地基</h2><p>Domain Service 是領域的骨幹：訂單、付款、庫存、客戶。它的消費者<strong>不是某個 UI，而是多個上游系統</strong>——BFF、其他服務、批次作業、第三方整合都可能呼叫它。</p><p>因此這層的 API 必須：</p><ul><li><strong>以資源（名詞）為核心</strong>：<code>POST /orders</code>、<code>GET /orders/{id}</code>、<code>PUT /orders/{id}/status</code>。資源是領域事實（aggregate），命名穩定，不隨 UI 改版而變</li><li><strong>可重用</strong>：一支 <code>POST /orders</code> 可能同時服務 Web 結帳、App 下單、內部補單系統</li><li><strong>動作是例外，不是常態</strong>：怎麼判斷「拆得掉還是拆不掉」？<ul><li>「把訂單狀態改成已出貨」是改單一欄位，拆得掉 → <code>PUT /orders/{id}/status</code></li><li>「結帳」涉及庫存扣減、訂單建立、金流授權、發票開立——橫跨多個資源的狀態轉移，拆不掉 → 用動作</li></ul></li></ul><p>拆不掉的動作，在資源導向下有個官方的折衷寫法，Google 稱之為 custom methods：</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /v1/payments/pay_123:capture</span><br><span class="line">POST /v1/orders/ord_456:refund</span><br></pre></td></tr></table></figure><ul><li><code>POST /payments/{id}:capture</code> 這種語法是 Google AIPs 的 custom methods 模式（AIP-121 規定資源導向設計，AIP-136 明確認可 custom methods）</li><li>這就是大型企業承認「純 CRUD 不夠用」的官方折衷，看到自己也覺得安心，大家最後都走到類似的地方</li></ul><p>領域層選擇資源導向，不是為了信仰，而是為了<strong>穩定與可預測</strong>：資源一多，客戶端與團隊之間溝通的「詞彙」就固定了；多個消費端也不必為了新 UI 改版而追著 domain API 改。</p><h2 id="實用決策框架：設計一支-API-前，先問五個問題"><a class="header-anchor" href="#實用決策框架：設計一支-API-前，先問五個問題"> </a>實用決策框架：設計一支 API 前，先問五個問題</h2><table><thead><tr><th>問題</th><th>偏向商業意圖（BFF）</th><th>偏向資源導向（Domain）</th></tr></thead><tbody><tr><td>1. 消費者只有一個 UI 嗎？</td><td>是 → 動作命名，直接服務該畫面</td><td>否，多個系統共用 → 資源命名</td></tr><tr><td>2. 這支 API 是否對應一個明確 user story？</td><td>是（結帳、註冊）</td><td>否（查詢、更新單一狀態）</td></tr><tr><td>3. 操作可以拆成標準 CRUD 語意嗎？</td><td>拆不掉 → 動作</td><td>可以 → 資源</td></tr><tr><td>4. 資料的生命週期與領域一致嗎？</td><td>資料是 UI 的臨時投影</td><td>資料就是領域事實</td></tr><tr><td>5. 這層會被幾個 team 當作契約使用？</td><td>少數，改版成本低</td><td>多數，契約必須穩定</td></tr></tbody></table><p>簡單記法：<strong>BFF 回答「使用者要做什麼」，Domain 回答「系統裡有什麼」。</strong></p><h2 id="平衡一下：三個真實存在的反方觀點"><a class="header-anchor" href="#平衡一下：三個真實存在的反方觀點"> </a>平衡一下：三個真實存在的反方觀點</h2><p><strong>1.「連 Domain Service 都該商業意圖導向」</strong>——Jacobson 主張 use-case 優先適用於所有層。</p><blockquote><p>反駁：Netflix 的 edge API 確實動作化很成功，但 Netflix 的 domain 是「推薦/串流」這種本質上是服務的領域；針對訂單、帳務這種以狀態轉移為核心的領域，資源模型反而讓稽核、重試、並行控制更容易表達。</p></blockquote><p><strong>2.「動作導向就是偽 REST，一律資源化」</strong>——Fielding 陣營認為不遵守 uniform interface 的 API 都是披著 HTTP 的 RPC。</p><blockquote><p>反駁：技術上說得對，但它把「表達商業意圖」的需求丟回給呼叫端：客戶端被迫用多個請求自行拼出商業事件，延遲與錯誤處理成本全部落在最脆弱的環節。資源化是手段，不是目的。</p></blockquote><p><strong>3.「GraphQL 一個 schema 取代 BFF + Domain 分層」</strong></p><blockquote><p>反駁：GraphQL 解決的是「資料塑形」，不是「領域契約」；把 GraphQL 直接對到資料庫/領域層，會把查詢權力下放給所有 client，難以做權限、稽核與領域不變量控管。GraphQL 放在 BFF 位置最理想，取代不了 Domain 層。</p></blockquote><h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2><p>API 設計的爭論之所以吵不完，是因為雙方其實在講不同的層。</p><ul><li><strong>BFF 層</strong>：以商業意圖為出發點。一支 API 對應一個 user story，動作命名、資料塑形、聚合編排，GraphQL 也很好</li><li><strong>Domain Service 層</strong>：以資源為出發點。名詞核心、穩定可重用，動作是例外（custom methods），因為它的消費者是多個契約方</li></ul><p>整理完才發現，答案其實不複雜：下次再有人問「REST 還是 action？」——別急著站隊。先反問一句：<strong>這支 API 服務誰？</strong> 答案是 UI 的使用者，就走商業意圖；答案是領域的契約方，就走資源。答案出來，設計原則就出來了。</p><h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2><ul><li><a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Fielding 博士論文（Architectural Styles and the Design of Network-based Software Architectures, 2000）</a></li><li><a href="https://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model（Martin Fowler, 2010）</a></li><li><a href="https://samnewman.io/patterns/architectural/bff/">Sam Newman - Pattern: Backend For Frontend (2015)</a></li><li><a href="https://netflixtechblog.com/">Netflix TechBlog - API Design（Daniel Jacobson 的 use-case 主張）</a></li><li><a href="https://google.aip.dev/121">Google AIP-121（Resource-oriented design）</a></li><li><a href="https://google.aip.dev/136">Google AIP-136（Custom methods）</a></li><li><a href="https://grpc.io/docs/">gRPC 官方文件</a></li><li><a href="https://graphql.org/learn/">GraphQL 官方文件</a></li></ul>]]>
+      <![CDATA[<p>最近重新思考設計 API 要用什麼方式時，內心劇場演著「REST 還是 action 導向」劇本。REST 純粹主義者搬出 Fielding 2000 年的博士論文，說 <code>POST /orders</code> 才是正義；商業派搬出 Netflix 的 use-case 主張，說資源導向在大規模下會逼客戶端用一堆請求才能完成一件「事」，<code>POST /checkout</code> 才是正義。</p><p>兩邊都對，也都不對。真正的問題從來不是「選哪一種風格」，而是——</p><p><strong>這支 API 到底在服務誰？</strong></p><p>把 API 分成「BFF 層」與「Domain Service 層」兩個維度來看，答案會清楚很多，這篇就是把整理的過程筆記下來。</p><span id="more"></span><h2 id="先回到論戰的起源"><a class="header-anchor" href="#先回到論戰的起源"> </a>先回到論戰的起源</h2><h3 id="資源導向（REST）是怎麼來的"><a class="header-anchor" href="#資源導向（REST）是怎麼來的"> </a>資源導向（REST）是怎麼來的</h3><p>Roy Fielding 在 2000 年的博士論文定義 REST，核心約束是 <strong>uniform interface</strong>：用資源（名詞）辨識事物、用標準 HTTP 方法表達操作、狀態由 hypermedia 驅動。Richardson Maturity Model（2008）把「REST 程度」分成 0 到 3 級，從把 HTTP 當傳輸管線，到用對資源、用對 verb、最後加上 hypermedia controls。</p><p>資源導向的優勢很清楚：<strong>穩定、可快取、可預測</strong>。GitHub 和 Stripe 這種大型公開 API 都以資源為核心——但請注意，即使它們也保留了動作型端點：Stripe 的 <code>charge capture</code>、<code>refund</code>，GitHub 的 git refs 操作。連資源導向的先驅都無法完全迴避「動作」，看到這個其實鬆了一口氣，不是只有我們遇到這個問題。</p><h3 id="商業意圖導向是怎麼來的"><a class="header-anchor" href="#商業意圖導向是怎麼來的"> </a>商業意圖導向是怎麼來的</h3><p>另一方陣營主張 API 應該表達「使用者想完成的事」，而不是「資料長什麼樣」。Netflix 的 Daniel Jacobson 從 2014 年起公開倡導 use-case 導向的 edge API，理由很實際：一個「結帳」流程在資源導向下要按順序打好幾支 API，任何一個環節失敗都要客戶端自己兜；而動作導向一支 <code>POST /checkout</code> 就搞定。</p><p>gRPC（2015）把這個思路推到極致：service 裡定義的就是 method，<code>PlaceOrder()</code>、<code>CapturePayment()</code>，完全不管名詞。它在內部微服務通訊中成了主流——這不是巧合，自己在寫 gRPC 的時候其實也是這樣，service 上定義的就是「動作」。</p><h2 id="BFF-層：貼近-UI，商業意圖是出發點"><a class="header-anchor" href="#BFF-層：貼近-UI，商業意圖是出發點"> </a>BFF 層：貼近 UI，商業意圖是出發點</h2><p>BFF（Backend for Frontend）是 Sam Newman 2015 年提出的模式：每一種 client（Web、iOS、Android）各自擁有一層專屬 API，負責<strong>資料塑形（shaping）與聚合</strong>。它存在的唯一理由，是讓前端用最少的來回、最貼合 UI 的形狀拿到資料。</p><p>既然如此，BFF 的 API 設計就應該從「使用者的 user story」出發：</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 資源導向的做法（前端要自己編排多次呼叫）</span><br><span class="line">POST /orders</span><br><span class="line">POST /orders/&#123;id&#125;/payments</span><br><span class="line">GET  /orders/&#123;id&#125;/tracking</span><br><span class="line"></span><br><span class="line"># 商業意圖導向的做法（一支 API 對應一個 use case）</span><br><span class="line">POST /checkout</span><br></pre></td></tr></table></figure><ul><li>UI 上的一個按鈕、一個畫面、一個流程，對應 BFF 的一支 API（或一個 GraphQL mutation）</li><li>BFF 不該暴露 <code>GET /customers/{id}/addresses</code> 這種「資料瀏覽」式介面，因為 UI 在乎的是「把這筆訂單結帳、寄出、確認」這個商業事件，不是資料庫表長相</li></ul><p>判斷標準很簡單：<strong>把 UI 畫面上的操作翻成一句話，如果那句話是動詞，BFF 就該是動作。</strong></p><blockquote><p>註：GraphQL 之所以在 BFF 位置大受歡迎，正是因為它把「商業資料需求」交給 client 宣告，本質上就是商業意圖導向的一種極致形式。</p></blockquote><h2 id="Domain-Service-層：貼近領域模型，資源是地基"><a class="header-anchor" href="#Domain-Service-層：貼近領域模型，資源是地基"> </a>Domain Service 層：貼近領域模型，資源是地基</h2><p>Domain Service 是領域的骨幹：訂單、付款、庫存、客戶。它的消費者<strong>不是某個 UI，而是多個上游系統</strong>——BFF、其他服務、批次作業、第三方整合都可能呼叫它。</p><p>因此這層的 API 必須：</p><ul><li><strong>以資源（名詞）為核心</strong>：<code>POST /orders</code>、<code>GET /orders/{id}</code>、<code>PUT /orders/{id}/status</code>。資源是領域事實（aggregate），命名穩定，不隨 UI 改版而變</li><li><strong>可重用</strong>：一支 <code>POST /orders</code> 可能同時服務 Web 結帳、App 下單、內部補單系統</li><li><strong>動作是例外，不是常態</strong>：怎麼判斷「拆得掉還是拆不掉」？<ul><li>「把訂單狀態改成已出貨」是改單一欄位，拆得掉 → <code>PUT /orders/{id}/status</code></li><li>「結帳」涉及庫存扣減、訂單建立、金流授權、發票開立——橫跨多個資源的狀態轉移，拆不掉 → 用動作</li></ul></li></ul><p>拆不掉的動作，在資源導向下有個官方的折衷寫法，Google 稱之為 custom methods：</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /v1/payments/pay_123:capture</span><br><span class="line">POST /v1/orders/ord_456:refund</span><br></pre></td></tr></table></figure><ul><li><code>POST /payments/{id}:capture</code> 這種語法是 Google AIPs 的 custom methods 模式（AIP-121 規定資源導向設計，AIP-136 明確認可 custom methods）</li><li>這就是大型企業承認「純 CRUD 不夠用」的官方折衷，看到自己也覺得安心，大家最後都走到類似的地方</li></ul><p>領域層選擇資源導向，不是為了信仰，而是為了<strong>穩定與可預測</strong>：資源一多，客戶端與團隊之間溝通的「詞彙」就固定了；多個消費端也不必為了新 UI 改版而追著 domain API 改。</p><h2 id="實用決策框架：設計一支-API-前，先問五個問題"><a class="header-anchor" href="#實用決策框架：設計一支-API-前，先問五個問題"> </a>實用決策框架：設計一支 API 前，先問五個問題</h2><table><thead><tr><th>問題</th><th>偏向商業意圖（BFF）</th><th>偏向資源導向（Domain）</th></tr></thead><tbody><tr><td>1. 消費者只有一個 UI 嗎？</td><td>是 → 動作命名，直接服務該畫面</td><td>否，多個系統共用 → 資源命名</td></tr><tr><td>2. 這支 API 是否對應一個明確 user story？</td><td>是（結帳、註冊）</td><td>否（查詢、更新單一狀態）</td></tr><tr><td>3. 操作可以拆成標準 CRUD 語意嗎？</td><td>拆不掉 → 動作</td><td>可以 → 資源</td></tr><tr><td>4. 資料的生命週期與領域一致嗎？</td><td>資料是 UI 的臨時投影</td><td>資料就是領域事實</td></tr><tr><td>5. 這層會被幾個 team 當作契約使用？</td><td>少數，改版成本低</td><td>多數，契約必須穩定</td></tr></tbody></table><p>簡單記法：<strong>BFF 回答「使用者要做什麼」，Domain 回答「系統裡有什麼」。</strong></p><h2 id="平衡一下：三個真實存在的反方觀點"><a class="header-anchor" href="#平衡一下：三個真實存在的反方觀點"> </a>平衡一下：三個真實存在的反方觀點</h2><p><strong>1.「連 Domain Service 都該商業意圖導向」</strong>——Jacobson 主張 use-case 優先適用於所有層。</p><blockquote><p>反駁：Netflix 的 edge API 確實動作化很成功，但 Netflix 的 domain 是「推薦/串流」這種本質上是服務的領域；針對訂單、帳務這種以狀態轉移為核心的領域，資源模型反而讓稽核、重試、並行控制更容易表達。</p></blockquote><p><strong>2.「動作導向就是偽 REST，一律資源化」</strong>——Fielding 陣營認為不遵守 uniform interface 的 API 都是披著 HTTP 的 RPC。</p><blockquote><p>反駁：技術上說得對，但它把「表達商業意圖」的需求丟回給呼叫端：客戶端被迫用多個請求自行拼出商業事件，延遲與錯誤處理成本全部落在最脆弱的環節。資源化是手段，不是目的。</p></blockquote><p><strong>3.「GraphQL 一個 schema 取代 BFF + Domain 分層」</strong></p><blockquote><p>反駁：GraphQL 解決的是「資料塑形」，不是「領域契約」；把 GraphQL 直接對到資料庫/領域層，會把查詢權力下放給所有 client，難以做權限、稽核與領域不變量控管。GraphQL 放在 BFF 位置最理想，取代不了 Domain 層。</p></blockquote><h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2><p>API 設計的爭論之所以吵不完，是因為雙方其實在講不同的層。</p><ul><li><strong>BFF 層</strong>：以商業意圖為出發點。一支 API 對應一個 user story，動作命名、資料塑形、聚合編排，GraphQL 也很好</li><li><strong>Domain Service 層</strong>：以資源為出發點。名詞核心、穩定可重用，動作是例外（custom methods），因為它的消費者是多個契約方</li></ul><p>整理完才發現，答案其實不複雜：下次再有人問「REST 還是 action？」——別急著站隊。先反問一句：<strong>這支 API 服務誰？</strong> 答案是 UI 的使用者，就走商業意圖；答案是領域的契約方，就走資源。答案出來，設計原則就出來了。</p><h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2><ul><li><a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Fielding 博士論文（Architectural Styles and the Design of Network-based Software Architectures, 2000）</a></li><li><a href="https://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model（Martin Fowler, 2010）</a></li><li><a href="https://samnewman.io/patterns/architectural/bff/">Sam Newman - Pattern: Backend For Frontend (2015)</a></li><li><a href="https://netflixtechblog.com/">Netflix TechBlog - API Design（Daniel Jacobson 的 use-case 主張）</a></li><li><a href="https://google.aip.dev/121">Google AIP-121（Resource-oriented design）</a></li><li><a href="https://google.aip.dev/136">Google AIP-136（Custom methods）</a></li><li><a href="https://grpc.io/docs/">gRPC 官方文件</a></li><li><a href="https://graphql.org/learn/">GraphQL 官方文件</a></li></ul>]]>
     </content>
     <id>http://blog.kevinyang.net/2026/08/21/api-design-bff-domain-service/</id>
     <link href="http://blog.kevinyang.net/2026/08/21/api-design-bff-domain-service/"/>
     <published>2026-08-21T16:00:00.000Z</published>
     <summary>
-      <![CDATA[<p>最近設計 API 時，同事之間又為了「REST 還是 action 導向」吵了一場。REST 純粹主義者搬出 Fielding 2000 年的博士論文，說 <code>POST /orders</code> 才是正義；商業派搬出 Netflix 的 use-case 主張，說資源導向在大規模下會逼客戶端用一堆請求才能完成一件「事」，<code>POST /checkout</code> 才是正義。</p>
+      <![CDATA[<p>最近重新思考設計 API 要用什麼方式時，內心劇場演著「REST 還是 action 導向」劇本。REST 純粹主義者搬出 Fielding 2000 年的博士論文，說 <code>POST /orders</code> 才是正義；商業派搬出 Netflix 的 use-case 主張，說資源導向在大規模下會逼客戶端用一堆請求才能完成一件「事」，<code>POST /checkout</code> 才是正義。</p>
 <p>兩邊都對，也都不對。真正的問題從來不是「選哪一種風格」，而是——</p>
 <p><strong>這支 API 到底在服務誰？</strong></p>
 <p>把 API 分成「BFF 層」與「Domain Service 層」兩個維度來看，答案會清楚很多，這篇就是把整理的過程筆記下來。</p>]]>
     </summary>
     <title>[API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考</title>
-    <updated>2026-08-22T12:17:19.106Z</updated>
+    <updated>2026-08-22T14:09:08.159Z</updated>
   </entry>
   <entry>
     <author>
@@ -50,7 +50,7 @@
       <![CDATA[<p>NgRx Signals v20 前陣子釋出了，這一版從別人的文章中，似乎有不少有趣的新東西，其中推出尚在時現階段的 event system, 看文章似乎蠻有趣的，趁著周末有空自己動手玩看看</p>]]>
     </summary>
     <title>[Angular] 看一下 NgRx Signals 20 有什麼好玩的東西</title>
-    <updated>2026-08-22T12:17:19.106Z</updated>
+    <updated>2026-08-22T14:09:08.159Z</updated>
   </entry>
   <entry>
     <author>
@@ -68,7 +68,7 @@
       <![CDATA[<p>Web API 提供的服務涵蓋很廣，File System API 已經推出一段時間，主要功能是讓瀏覽器能經過使用者授權後，與使用者本機的檔案系統做互動，這篇筆記就是將一些如何使用 File system API 記錄下來</p>]]>
     </summary>
     <title>[Angular] work with File System API</title>
-    <updated>2026-08-22T12:17:19.105Z</updated>
+    <updated>2026-08-22T14:09:08.158Z</updated>
   </entry>
   <entry>
     <author>
@@ -87,7 +87,7 @@
 <p><img src="image-20240831103322975.png" alt="image-20240831103322975"></p>]]>
     </summary>
     <title>[GO] 用做一個 CLI 工具</title>
-    <updated>2026-08-22T12:17:19.103Z</updated>
+    <updated>2026-08-22T14:09:08.156Z</updated>
   </entry>
   <entry>
     <author>
@@ -106,7 +106,7 @@
       <![CDATA[<p>Open Policy Agent (OPA) 的文件上有提到 OPA API，但遇上文件有看沒有懂的情況，就得自己動手做做看才有感覺，這邊記錄實作後的理解</p>]]>
     </summary>
     <title>[OPA] OPA API in Go</title>
-    <updated>2026-08-22T12:17:19.103Z</updated>
+    <updated>2026-08-22T14:09:08.156Z</updated>
   </entry>
   <entry>
     <author>
@@ -124,7 +124,7 @@
       <![CDATA[<p>了解 <code>proto</code> 的基本語法後，就可以來用一個程式語言實作 gRPC 服務了，本篇就用 Golang 來作範例吧，練習內容是根據官方文件所提供的教學內容，細節可以到<a href="https://grpc.io/docs/languages/go/quickstart/">這邊</a>閱讀。</p>]]>
     </summary>
     <title>[gRPC] 重新學習 gRPC 系列 - 2</title>
-    <updated>2026-08-22T12:17:19.103Z</updated>
+    <updated>2026-08-22T14:09:08.156Z</updated>
   </entry>
   <entry>
     <author>
@@ -151,7 +151,7 @@
 <p>這表示 gRPC 是一個可以在各種語言/環境中，做到高效且擴充性佳的框架，十分有趣。繼續研讀下去</p>]]>
     </summary>
     <title>[gRPC] 重新學習 gRPC 系列 - 1</title>
-    <updated>2026-08-22T12:17:19.103Z</updated>
+    <updated>2026-08-22T14:09:08.156Z</updated>
   </entry>
   <entry>
     <author>
@@ -169,7 +169,7 @@
       <![CDATA[<p>Angular 17 快上線了，已經看到 RC 版釋出，當然要先玩看看，這一版讓人興奮的一定是新的 flow syntax，除此之外還有什麼有趣的東西嗎? 這篇會快速筆記一下</p>]]>
     </summary>
     <title>[Angular] Angular 17 RC 搶先試用</title>
-    <updated>2026-08-22T12:17:19.103Z</updated>
+    <updated>2026-08-22T14:09:08.156Z</updated>
   </entry>
   <entry>
     <author>
@@ -187,7 +187,7 @@
       <![CDATA[<p>VSCode 應該是很多人的主開發工具，尤其在這個一個人要身兼多語言開發時，VSCode 真的是個不錯的選擇，而 Go 在 VSCode 上的開發體驗，搭配 <a href="https://marketplace.visualstudio.com/items?itemName=golang.Go">Go Exntesion</a> 後，真的沒什麼好挑剔的，但還是有些設定需要做調整，這篇會筆記一些近期針對測試部分所做的設定調整。</p>]]>
     </summary>
     <title>[Go] VSCode 內的 Test Coverage 設定小技巧</title>
-    <updated>2026-08-22T12:17:19.103Z</updated>
+    <updated>2026-08-22T14:09:08.156Z</updated>
   </entry>
   <entry>
     <author>
@@ -205,7 +205,7 @@
       <![CDATA[<p>Go 的 time package，主要提供 time 相關的功能，這篇筆記整理一些常用的 function</p>]]>
     </summary>
     <title>[Go] time package</title>
-    <updated>2026-08-22T12:17:19.101Z</updated>
+    <updated>2026-08-22T14:09:08.155Z</updated>
   </entry>
   <entry>
     <author>
@@ -224,7 +224,7 @@
 <p>這篇 <a href="https://angular.io/guide/http-test-requests">HTTP client - Test requests</a> 內說明如何使用 <code>HttpTestingController</code> 進行 http request 的測試，而因為後期的專案我都是使用 Nx 來建立，Nx 建立的專案是使用  Jest 來跑 Unit Test. 不知道是幸運還是怎樣，竟然遇到超乎預期的結果</p>]]>
     </summary>
     <title>[Angular] 官方文件的 HttpTestingController 範例遇到 jest 時，結果不是想像的那樣，小心</title>
-    <updated>2026-08-22T12:17:19.101Z</updated>
+    <updated>2026-08-22T14:09:08.154Z</updated>
   </entry>
   <entry>
     <author>
@@ -242,7 +242,7 @@
       <![CDATA[<p>除了 Postman，在 VS Code 內還有其他類似的套件可以選擇，例如本篇筆記的主角 <code>Rest Client</code></p>]]>
     </summary>
     <title>[VSCode] Rest Client Extension</title>
-    <updated>2026-08-22T12:17:19.100Z</updated>
+    <updated>2026-08-22T14:09:08.153Z</updated>
   </entry>
   <entry>
     <author>
@@ -264,7 +264,7 @@
 <p>前端開發可以透過提供的 SDK 將相關資訊傳到後面的 Agent/Collect ，就完成了。只是 SDK 雖然簡單套用，裡面有很多細節設定是需要深入研究的，這篇就是這些設定的學習筆記</p>]]>
     </summary>
     <title>[Grafana] Faro Web SDK 學習筆記</title>
-    <updated>2026-08-22T12:17:19.100Z</updated>
+    <updated>2026-08-22T14:09:08.153Z</updated>
   </entry>
   <entry>
     <author>
@@ -288,7 +288,7 @@
 <p>讀書筆記跟實務上遇到的經驗都會整理一起</p>]]>
     </summary>
     <title>[讀書筆記][閱讀中] 網站可靠性工程工作手冊｜導入SRE的實用方法</title>
-    <updated>2026-08-22T12:17:19.100Z</updated>
+    <updated>2026-08-22T14:09:08.153Z</updated>
   </entry>
   <entry>
     <author>
@@ -307,7 +307,7 @@
 <p>這一篇來學習如何寫 Ansible playbook</p>]]>
     </summary>
     <title>[Ansible] 學習 Ansible 之路 - Ansible playbook</title>
-    <updated>2026-08-22T12:17:19.099Z</updated>
+    <updated>2026-08-22T14:09:08.152Z</updated>
   </entry>
   <entry>
     <author>
@@ -325,7 +325,7 @@
       <![CDATA[<p>基於種種原因，必須學習 Ansible，這已經脫離之前習慣的領域，所以就用一個新手的心學習這一個工具，聽說是很厲害的工具</p>]]>
     </summary>
     <title>[Ansible] 學習 Ansible 之路 - 環境準備篇</title>
-    <updated>2026-08-22T12:17:19.097Z</updated>
+    <updated>2026-08-22T14:09:08.151Z</updated>
   </entry>
   <entry>
     <author>
@@ -343,7 +343,7 @@
       <![CDATA[<p>Angular 嘗試在下一世代中加入新的 reactive 機制，試圖找到取代 zone.js 的方式，因此引進了 <code>signals</code> 來試試看是否能成為下一代 change detection 的選擇。想要嘗試的朋友可以安裝 <code>angular cli v16</code> 的版本</p>]]>
     </summary>
     <title>[Angular] Signals 嘗鮮</title>
-    <updated>2026-08-22T12:17:19.096Z</updated>
+    <updated>2026-08-22T14:09:08.149Z</updated>
   </entry>
   <entry>
     <author>
@@ -363,7 +363,7 @@
 <p>在這之前還是快速介紹一下 Discord。Discord是一款專為社群設計的免費網路即時通話軟體與數位發行平台，在早期很常被遊戲玩家拿來做線上連線時的通訊軟體，現在是很多產品、社群等都會利用 Discord 來經營社群。</p>]]>
     </summary>
     <title>[Discord] Bot 新手上路</title>
-    <updated>2026-08-22T12:17:19.094Z</updated>
+    <updated>2026-08-22T14:09:08.147Z</updated>
   </entry>
   <entry>
     <author>
@@ -381,7 +381,7 @@
       <![CDATA[<p>上一篇知道 Dapr 是什麼後，就要進入 Hello World 的世界了，著手寫看看第一個 Dapr 應用程式</p>]]>
     </summary>
     <title>[Dapr] 使用 Dapr 開發 - Hello World</title>
-    <updated>2026-08-22T12:17:19.092Z</updated>
+    <updated>2026-08-22T14:09:08.145Z</updated>
   </entry>
   <entry>
     <author>
@@ -399,6 +399,6 @@
       <![CDATA[<p>Dapr 在 2019 第一次公開時，那時候版本還是 0.1 時，就有留意到，想不到幾年後，不僅進入 CNCF 還變成很多人推薦的框架，所以重新拾回研究一下 Dapr 的架構及如何使用在工作上</p>]]>
     </summary>
     <title>[Dapr] What is Dapr?</title>
-    <updated>2026-08-22T12:17:19.088Z</updated>
+    <updated>2026-08-22T14:09:08.141Z</updated>
   </entry>
 </feed>
