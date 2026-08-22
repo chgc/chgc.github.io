@@ -4,6 +4,9 @@
 # Kept in the site repo so the theme submodule stays pristine.
 # ============================================================
 
+# Always display light mode (NexT 8 defaults to dark mode)
+darkmode: false
+
 # Layout scheme (fork used Pisces)
 scheme: Pisces
 
