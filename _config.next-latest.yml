@@ -1,0 +1,57 @@
+# ============================================================
+# NexT 8.29 config overrides
+# Ported from the old fork (NexT 7.8.0) customizations.
+# Kept in the site repo so the theme submodule stays pristine.
+# ============================================================
+
+# Layout scheme (fork used Pisces)
+scheme: Pisces
+
+# Menu
+menu:
+  home: / || fa fa-house
+  categories: /categories/ || fa fa-th
+  archives: /archives/ || fa fa-box-archive
+  tags: /tags/ || fa fa-tags
+
+# Avatar
+avatar:
+  url: /images/4550568.jpg
+  rounded: false
+
+# Social links
+social:
+  FB Page: https://www.facebook.com/CKNotepad || fa fa-facebook
+social_icons:
+  enable: true
+  icons_only: false
+  transition: false
+
+# Blogroll (sidebar links)
+links_settings:
+  icon: fa fa-globe
+  layout: block
+links:
+  The Will Will Web | Will 保哥: https://blog.miniasp.com/
+  全端開發人員天梯: https://wellwind.idv.tw/blog/
+  POY CHANG | Trial and Error: https://poychang.github.io/
+
+# Footer heart icon (NexT 8 default is already fa fa-heart, kept for clarity)
+footer:
+  icon:
+    name: fa fa-heart
+    animated: false
+    color: "#ff0000"
+
+# Disqus comments
+disqus:
+  enable: true
+  shortname: cksnotepad
+  count: true
+
+# Google site verification
+google_site_verification: hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg
+
+# Custom head injection (Google AdSense)
+custom_file_path:
+  head: source/_data/head.njk
