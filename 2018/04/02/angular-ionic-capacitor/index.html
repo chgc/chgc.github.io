@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="什麼是 Capacitor ? Capacitor 是 Ionic 團隊所開發出來的新開發框架，再次證明他們的野心  Capacitor is a cross-platform app runtime that makes it easy to build web apps that run natively on iOS, Android, Electron, and the web. We c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Capacitor">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/04/02/angular-ionic-capacitor/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="什麼是 Capacitor ? Capacitor 是 Ionic 團隊所開發出來的新開發框架，再次證明他們的野心  Capacitor is a cross-platform app runtime that makes it easy to build web apps that run natively on iOS, Android, Electron, and the web. We c">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/2apRkeu.png">
+<meta property="og:image" content="https://i.imgur.com/ExGjmJY.png">
+<meta property="og:image" content="https://i.imgur.com/e8QpqT9.png">
+<meta property="article:published_time" content="2018-04-02T15:26:02.000Z">
+<meta property="article:modified_time" content="2026-08-22T11:44:32.028Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/2apRkeu.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/04/02/angular-ionic-capacitor/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/04/02/angular-ionic-capacitor/","path":"2018/04/02/angular-ionic-capacitor/","title":"[Angular] Capacitor"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] Capacitor | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.</span> <span class="nav-text">測試步驟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%A5%97%E4%BB%B6-Plugin"><span class="nav-number">2.</span> <span class="nav-text">使用套件(Plugin)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E5%B1%AC%E5%88%B0-Android-%E8%A8%AD%E5%82%99%E4%B8%8A"><span class="nav-number">3.</span> <span class="nav-text">部屬到 Android 設備上</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E9%9A%9B%E6%B8%AC%E8%A9%A6-%E9%83%A8%E5%B1%AC%E5%88%B0-Android"><span class="nav-number">3.1.</span> <span class="nav-text">實際測試&#x2F;部屬到 Android</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%B7%E8%A1%8C%E7%B5%90%E6%9E%9C"><span class="nav-number">3.2.</span> <span class="nav-text">執行結果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">4.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%E9%96%B1%E8%AE%80"><span class="nav-number">5.</span> <span class="nav-text">延伸閱讀</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/04/02/angular-ionic-capacitor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] Capacitor | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] Capacitor
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-04-02 23:26:02" itemprop="dateCreated datePublished" datetime="2018-04-02T23:26:02+08:00">2018-04-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2026-08-22 19:44:32" itemprop="dateModified" datetime="2026-08-22T19:44:32+08:00">2026-08-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/04/02/angular-ionic-capacitor/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/02/angular-ionic-capacitor/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>什麼是 Capacitor ? Capacitor 是 Ionic 團隊所開發出來的新開發框架，再次證明他們的野心</p>
+<blockquote>
+<p>Capacitor is a cross-platform app runtime that makes it easy to build web apps that run natively on iOS, Android, Electron, <em>and</em> the web. We call these apps 「Native Progressive Web Apps」 and they represent the next evolution beyond Hybrid apps.</p>
+</blockquote>
+<p>但是否如他們所說的那麼強大呢? 一定要動手玩看看才知道</p>
+<span id="more"></span>
+<h1 id="測試步驟"><a class="header-anchor" href="#測試步驟"> </a>測試步驟</h1>
+<ol>
+<li>
+<p>透過 Angular CLI 建立一個標準的 Angular 專案</p>
+<p><code> ng new appCapacitor</code></p>
+</li>
+<li>
+<p>在 Angular 專案資料夾下，安裝 <code>@capacitor/core</code> 和 <code>@capacitor/cli</code></p>
+<p><code>npm install --save @capacitor/core @capacitor/cli</code></p>
+</li>
+<li>
+<p>執行 <code>Capacitor</code> 初始化，這動作會建立一個 json 的設定檔</p>
+<p><code>npx cap init</code></p>
+<ol>
+<li>如果不知道 <code>npx</code> 是什麼的，請參閱這篇<a target="_blank" rel="noopener" href="https://robin-front.github.io/2017/07/14/introducing-npx-an-npm-package-runner/">文章</a></li>
+<li>輸入一些基本資料後，即完成設定動作，完成後的畫面如下</li>
+</ol>
+<p><img src="https://i.imgur.com/2apRkeu.png" alt=""></p>
+</li>
+<li>
+<p>配合 Angular CLI 的建置輸出路徑修改 <code>capacitor.config.json</code> 檔案</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;appId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cky.demo.app&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;appName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;App&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;bundledWebRuntime&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;webDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;dist&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>開始第一次 <code>build —prod</code></p>
+</li>
+<li>
+<p>因為第一次想用 PWA 的方式呈現，可透過 <code>npx cap serve</code> 來啟動 web server</p>
+<ol>
+<li>如果想要跑成 iOS 的格式，指令為 <code>npx cap open ios</code> (需要有 xcode 才可以跑)</li>
+<li>如果想要跑成 Android 的格式，指令為 <code>npx cap open android</code></li>
+</ol>
+</li>
+<li>
+<p>跑起來的畫面就跟預設的畫面是一樣的，只是網址變成 <code>http://localhost:3333</code></p>
+<p><img src="https://i.imgur.com/ExGjmJY.png" alt=""></p>
+</li>
+</ol>
+<h1 id="使用套件-Plugin"><a class="header-anchor" href="#使用套件-Plugin"> </a>使用套件(Plugin)</h1>
+<p>來試試看現成的 Geolocation API (內建的) 能不能正常使用，在程式碼上會不會很難處理</p>
+<p>因為已經有裝 <code>@capacitor/core</code>，所以可以透過 <code>import &#123; Plugin &#125; from '@capacitor/core'</code> 來取得現有內建的 <a target="_blank" rel="noopener" href="https://capacitor.ionicframework.com/docs/apis/">API</a></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, <span class="title class_">OnInit</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Plugins</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@capacitor/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Observable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; bindCallback &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/observable/bindCallback&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; map &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/operators&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">Geolocation</span>, <span class="title class_">Modals</span>, <span class="title class_">App</span> &#125; = <span class="title class_">Plugins</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">	&lt;button (click)=&quot;currentLocation()&quot;&gt;顯示目前位置&lt;/button&gt;</span></span><br><span class="line"><span class="string">	`</span>,</span><br><span class="line">  <span class="attr">styleUrls</span>: [<span class="string">&#x27;./app.component.css&#x27;</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> <span class="keyword">implements</span> <span class="title class_">OnInit</span> &#123;</span><br><span class="line">  <span class="attr">coords</span>: <span class="title class_">Coordinates</span>;</span><br><span class="line">  <span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">     <span class="title class_">App</span>.<span class="title function_">addListener</span>(<span class="string">&#x27;backButton&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title class_">Plugins</span>.<span class="property">App</span>.<span class="title function_">exitApp</span>();</span><br><span class="line">    &#125;);</span><br><span class="line">      </span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">watchPosition</span>().<span class="title function_">subscribe</span>(<span class="function"><span class="params">coords</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">coords</span> = coords;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">watchPosition</span>(): <span class="title class_">Observable</span>&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> watch = <span class="title function_">bindCallback</span>(<span class="title class_">Geolocation</span>.<span class="property">watchPosition</span>)(&#123;&#125;);</span><br><span class="line">    <span class="keyword">return</span> watch.<span class="title function_">pipe</span>(<span class="title function_">map</span>(<span class="function"><span class="params">pos</span> =&gt;</span> pos.<span class="property">coords</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">currentLocation</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> position = <span class="keyword">await</span> <span class="title class_">Geolocation</span>.<span class="title function_">getCurrentPosition</span>();</span><br><span class="line">    <span class="title class_">Modals</span>.<span class="title function_">alert</span>(&#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;目前位置&#x27;</span>,</span><br><span class="line">      <span class="attr">message</span>: <span class="string">`lat: <span class="subst">$&#123;position.coords.latitude&#125;</span>, long: <span class="subst">$&#123;position.coords.longitude&#125;</span>`</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>利用 <code>bindCallback</code> 的方法將 api 轉換成 <code>Observable</code> 型別</li>
+<li>Chrome 在版本 50 以後就不允許 http 跑 Geolocation 了，所以如果要測試這段，這部分可能就要自己摸索了</li>
+</ul>
+<h1 id="部屬到-Android-設備上"><a class="header-anchor" href="#部屬到-Android-設備上"> </a>部屬到 Android 設備上</h1>
+<p>假設 Android 開發環境已經準備好了 ( 使用 Android Studio )，Capacitor 只需要透過幾個指令，就可以將 Android 部屬目標加上去，以下是相關的指令及對應的功能</p>
+<ol>
+<li>
+<p><code>npx cap add android</code> 將 <code>Android platform</code>  加入到目前的專案下</p>
+<p><img src="https://i.imgur.com/e8QpqT9.png" alt=""></p>
+</li>
+<li>
+<p><code>npx cap sync</code> 同步 <code>dependency</code> 和 <code>web</code> 內容</p>
+</li>
+<li>
+<p><code>npx cap copy</code> 複製 <code>web</code> 內容</p>
+</li>
+<li>
+<p><code>npx cap open android</code> 開啟 <code>Android Studio</code> 並執行建置動作</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>如果 <code>Android Studio</code> 不是安裝在預設路徑下時，可以在 <code>capacitor.config.json</code> 內設定實際的安裝位置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"> ...</span><br><span class="line">  <span class="attr">&quot;windowsAndroidStudioPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;D:\\Program Files\\Android\\Android Studio\\bin\\studio64.exe&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="實際測試-部屬到-Android"><a class="header-anchor" href="#實際測試-部屬到-Android"> </a>實際測試/部屬到 Android</h2>
+<p>因為我們需要將網頁建置後的結果複製到 Android 的專案下，所以在執行 <code>npx cap sync</code> 之前，記得要做 <code>ng build --prod</code> 的動作</p>
+<p>基本流程如下</p>
+<ol>
+<li><code>ng build --prod</code>  建置 web 專案</li>
+<li><code>npca cap sync</code> 同步 web 專案及 dependency 元建至 Android 專案下</li>
+<li><code>npx cap open android</code> 開啟 Android Studio 進行後續的測試部屬，如果 Android Studio 已經開啟時，就不需要執行這行指令</li>
+</ol>
+<h2 id="執行結果"><a class="header-anchor" href="#執行結果"> </a>執行結果</h2>
+<iframe src="https://www.youtube.com/embed/WsJ90xN28ww" width="100%" height="300" frameborder="0" loading="lazy" allowfullscreen></iframe>
+<h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
+<p>目前看起來 Ionic 的新架構 <code>Capacitor</code> 的確可以擺脫以前的 ionic 的開發方式，讓使用者用自己熟悉的 JavaScript framework 做開發，而不用侷限使用  Angular，個人還蠻期待後續的發展的</p>
+<h1 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://capacitor.ionicframework.com/docs/"> Capacitor Documentation</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/30/angular-ngxs/" rel="prev" title="[Angular] 第一次體驗 NGXS">
+                  <i class="fa fa-angle-left"></i> [Angular] 第一次體驗 NGXS
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/10/angular-new-injectable-feature/" rel="next" title="[Angular] Tree-shakable providers">
+                  [Angular] Tree-shakable providers <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

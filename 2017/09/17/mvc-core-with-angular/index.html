@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content=".NET Core 所提供的 Angular SPA 範本，用起來都覺得卡卡的，所以只好自己來整一個給 Angular 所使用的架構，跟著以下的步驟，就可以整理出我覺得還滿意的 .NET MVC Core 的程式架構">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular]與DOTNET MVC CORE 整合">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/09/17/mvc-core-with-angular/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content=".NET Core 所提供的 Angular SPA 範本，用起來都覺得卡卡的，所以只好自己來整一個給 Angular 所使用的架構，跟著以下的步驟，就可以整理出我覺得還滿意的 .NET MVC Core 的程式架構">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/k6myBB4.png">
+<meta property="og:image" content="https://i.imgur.com/VsRyXAX.png">
+<meta property="og:image" content="https://i.imgur.com/QGTO1hG.png">
+<meta property="og:image" content="https://i.imgur.com/bEBfa3c.png">
+<meta property="og:image" content="https://i.imgur.com/T5hqm1I.png">
+<meta property="og:image" content="https://i.imgur.com/zgi1bJa.png">
+<meta property="article:published_time" content="2017-09-17T07:31:45.000Z">
+<meta property="article:modified_time" content="2017-12-30T13:24:37.618Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content=".NET Core">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/k6myBB4.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2017/09/17/mvc-core-with-angular/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2017/09/17/mvc-core-with-angular/","path":"2017/09/17/mvc-core-with-angular/","title":"[Angular]與DOTNET MVC CORE 整合"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular]與DOTNET MVC CORE 整合 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.</span> <span class="nav-text">操作步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-ASP-NET-Core-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">建立 ASP.NET Core Web 應用程式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-Angular-%E5%B0%88%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">建立 Angular 專案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-angular-cli-json"><span class="nav-number">1.3.</span> <span class="nav-text">修改 .angular-cli.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-app-module-ts"><span class="nav-number">1.4.</span> <span class="nav-text">修改 app.module.ts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-layout-cshtml"><span class="nav-number">1.5.</span> <span class="nav-text">修改 _layout.cshtml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-Startup-cs"><span class="nav-number">1.6.</span> <span class="nav-text">修改 Startup.cs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E-Home-Angular"><span class="nav-number">1.7.</span> <span class="nav-text">新增 Home&#x2F;Angular</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-number">2.</span> <span class="nav-text">路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%9F%E5%8B%95-app-root-%E5%BE%8C%E5%86%8D%E7%94%B1%E6%AD%A4%E7%94%A2%E7%94%9F%E5%B0%8D%E6%87%89%E7%9A%84-component"><span class="nav-number">2.1.</span> <span class="nav-text">啟動 app-root 後再由此產生對應的 component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8-component"><span class="nav-number">2.2.</span> <span class="nav-text">直接使用 component</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/09/17/mvc-core-with-angular/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular]與DOTNET MVC CORE 整合 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular]與DOTNET MVC CORE 整合
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-09-17 15:31:45" itemprop="dateCreated datePublished" datetime="2017-09-17T15:31:45+08:00">2017-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2017-12-30 21:24:37" itemprop="dateModified" datetime="2017-12-30T21:24:37+08:00">2017-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/09/17/mvc-core-with-angular/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/17/mvc-core-with-angular/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>.NET Core 所提供的 Angular SPA 範本，用起來都覺得卡卡的，所以只好自己來整一個給 Angular 所使用的架構，跟著以下的步驟，就可以整理出我覺得還滿意的 .NET MVC Core 的程式架構</p>
+<span id="more"></span>
+<h1 id="操作步驟"><a class="header-anchor" href="#操作步驟"> </a>操作步驟</h1>
+<h2 id="建立-ASP-NET-Core-Web-應用程式"><a class="header-anchor" href="#建立-ASP-NET-Core-Web-應用程式"> </a>建立 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core Web 應用程式</h2>
+<p>首先，先用 Visual Studio 2017 建立一個  <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core Web 應用程式</p>
+<p><img src="https://i.imgur.com/k6myBB4.png" alt=""></p>
+<p><img src="https://i.imgur.com/VsRyXAX.png" alt=""></p>
+<p>按下【確定】建立新專案，當建立完成後，即可獲得一個已經可執行的 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core 的 Web 應用程式了</p>
+<p><img src="https://i.imgur.com/QGTO1hG.png" alt=""></p>
+<h2 id="建立-Angular-專案"><a class="header-anchor" href="#建立-Angular-專案"> </a>建立 Angular 專案</h2>
+<p>打開命令視窗，並切換至專案目錄下</p>
+<p><img src="https://i.imgur.com/bEBfa3c.png" alt=""></p>
+<p>執行 <code>ng new clientApp</code> 命令，透過 <code>Angulra CLI</code> 的方式將 Angular 專案建立起來</p>
+<p><img src="https://i.imgur.com/T5hqm1I.png" alt=""></p>
+<p>建立完成後即可在 Visual Studio 的專案下看到剛剛所建立的 clientApp 資料夾</p>
+<h2 id="修改-angular-cli-json"><a class="header-anchor" href="#修改-angular-cli-json"> </a>修改 .angular-cli.json</h2>
+<p>由於 Angular 的專案希望是由 MVC 這邊顯示，所以在建置的過程中，需要將 <code>.angular-cli.json</code> 內的設定做些微的調整</p>
+<ol>
+<li>修改輸出路徑</li>
+<li>增加 deployUrl</li>
+<li>產生一個 script.html，用來接受 CLI 建置後的檔案路徑</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;apps&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;src&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;outDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;../wwwroot/dist&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;deployUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/dist/&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;assets&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;assets&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;favicon.ico&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;script.html&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;main.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;polyfills&quot;</span><span class="punctuation">:</span> <span class="string">&quot;polyfills.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;test.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tsconfig&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tsconfig.app.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;testTsconfig&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tsconfig.spec.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;prefix&quot;</span><span class="punctuation">:</span> <span class="string">&quot;app&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;styles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;styles.css&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;environmentSource&quot;</span><span class="punctuation">:</span> <span class="string">&quot;environments/environment.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;environments&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;environments/environment.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;prod&quot;</span><span class="punctuation">:</span> <span class="string">&quot;environments/environment.prod.ts&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+<h2 id="修改-app-module-ts"><a class="header-anchor" href="#修改-app-module-ts"> </a>修改 app.module.ts</h2>
+<p>由於啟動的 component 不一定會存在顯示頁面上，所以必須在 app.module.ts 的地方調整一下啟動方式</p>
+<ol>
+<li>
+<p>先將 AppComponent 從 bootstrap 區塊移動到 entryComponents 的地方</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">declarations</span>: [<span class="title class_">AppComponent</span>, <span class="title class_">HomeComponent</span>, <span class="title class_">EmptyComponent</span>],</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">BrowserModule</span>, <span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes)],</span><br><span class="line">  <span class="attr">entryComponents</span>: [<span class="title class_">AppComponent</span>]</span><br><span class="line">&#125;)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li>
+<p>在 AppModule Class 內新增 ngDobootstrap 函式</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">ngDoBootstrap</span>(<span class="params"><span class="attr">app</span>: <span class="title class_">ApplicationRef</span></span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;app-root&#x27;</span>)) &#123;</span><br><span class="line">        app.<span class="title function_">bootstrap</span>(<span class="title class_">AppComponent</span>);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ol>
+<h2 id="修改-layout-cshtml"><a class="header-anchor" href="#修改-layout-cshtml"> </a>修改 _layout.cshtml</h2>
+<p>將在 <code>.angular-cli.json</code> 所設定輸出的 html 檔案內容加入到 <code>_layout.cshtml</code> 內，這裡要使用 <code>ViewComponent</code> 的方式來處理，不然當部屬到 Azure 時會壞掉</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ScriptHTMLViewComponent</span> : <span class="title">ViewComponent</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IHostingEnvironment _env;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ScriptHTMLViewComponent</span>(<span class="params">IHostingEnvironment env</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">       _env = env;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;IViewComponentResult&gt; <span class="title">InvokeAsync</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> model = System.IO.File.ReadAllText(Path.Combine(_env.WebRootPath, <span class="string">&quot;dist&quot;</span>, <span class="string">&quot;script.html&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> View(<span class="string">&quot;Index&quot;</span>, model);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Shared/Components/ScriptHTML/Index.cshtml</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@model string</span><br><span class="line">@Html.Raw(Model)</span><br></pre></td></tr></table></figure>
+<p><code>_layout.cshtml</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@await Component.InvokeAsync(&quot;ScriptHTML&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="修改-Startup-cs"><a class="header-anchor" href="#修改-Startup-cs"> </a>修改 Startup.cs</h2>
+<p>新增一條新的路由給 Angular 使用</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.UseMvc(routes =&gt;</span><br><span class="line">           &#123;</span><br><span class="line">               routes.MapRoute(</span><br><span class="line">                   name: <span class="string">&quot;default&quot;</span>,</span><br><span class="line">                   template: <span class="string">&quot;&#123;controller=Home&#125;/&#123;action=Index&#125;/&#123;id?&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line">               routes.MapSpaFallbackRoute(<span class="string">&quot;spa-fallback&quot;</span>, <span class="keyword">new</span> &#123; controller = <span class="string">&quot;Home&quot;</span>, action = <span class="string">&quot;Angular&quot;</span> &#125;);</span><br><span class="line">           &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="新增-Home-Angular"><a class="header-anchor" href="#新增-Home-Angular"> </a>新增 Home/Angular</h2>
+<p>在 <code>HomeController</code> 內新增 Angular Action</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> IActionResult <span class="title">Angular</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> View();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>並將相對應的 View 檔案也建立起來，並新增 Angular 的 root component</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-root</span>&gt;</span><span class="tag">&lt;/<span class="name">app-root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>基本上經這個幾個步驟的設定，已經將 Angular 的專案整合到 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core Web 專案內了</p>
+<h1 id="路由"><a class="header-anchor" href="#路由"> </a>路由</h1>
+<p>關於路由部分，由於 Angular 與 MVC 本身都有自己的路由系統，而這兩個系統都會作用，所以要稍微留意</p>
+<p>通常一個頁面有可能是純的 Razor 頁面，或是 Angular 所 render 的頁面，當 MVC 的路由系統找不到時，就會導向 Home/Angular 的頁面，這時候 Angular 的路由機制就會接手處理，一個頁面只有一種產生方式還算是單純</p>
+<p>但如果同一個網址，後端與前端都有符合條件的路由時，又該怎麼辦，在這情形下有分兩種處理方式</p>
+<ol>
+<li>啟動 app-root 後再由此產生對應的 component</li>
+<li>直接使用 component</li>
+</ol>
+<h2 id="啟動-app-root-後再由此產生對應的-component"><a class="header-anchor" href="#啟動-app-root-後再由此產生對應的-component"> </a>啟動 app-root 後再由此產生對應的 component</h2>
+<p>例如 ~/home/about 頁面內，在前端的路由檔內也有對應的設定</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;dash&#x27;</span>, <span class="attr">loadChildren</span>: <span class="string">&#x27;app/dash/dash.module#DashModule&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;home/about&#x27;</span>, <span class="attr">component</span>: <span class="title class_">HomeComponent</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;**&#x27;</span>, <span class="attr">component</span>: <span class="title class_">EmptyComponent</span> &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>About<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">app-root</span>&gt;</span><span class="tag">&lt;/<span class="name">app-root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這樣的設定方式，顯示結果如下</p>
+<p><img src="https://i.imgur.com/zgi1bJa.png" alt=""></p>
+<h2 id="直接使用-component"><a class="header-anchor" href="#直接使用-component"> </a>直接使用 component</h2>
+<p>直接使用 component 時，就必須將該 component 註冊到 <code>entryComponents</code> 內，並於 <code>ngDoBootstrap</code> 時判斷是否有該 element的存在，假設在 Home/Index 頁面有一個 <code>&lt;app-menu&gt;&lt;/app-menu&gt;</code> 的 element，那就需要將 <code>MenuComponent</code> 註冊到 <code>entryComponents</code> 的區塊內</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Index Page</span><br><span class="line"><span class="tag">&lt;<span class="name">app-menu</span>&gt;</span><span class="tag">&lt;/<span class="name">app-menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>App.Module.ts 檔案需要調整的內容如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">declarations</span>: [<span class="title class_">AppComponent</span>, <span class="title class_">HomeComponent</span>, <span class="title class_">EmptyComponent</span>],</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">BrowserModule</span>, <span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes), <span class="title class_">MenuModule</span>],</span><br><span class="line">  <span class="attr">entryComponents</span>: [<span class="title class_">AppComponent</span>, <span class="title class_">MenuComponent</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;  </span><br><span class="line">  <span class="title function_">ngDoBootstrap</span>(<span class="params"><span class="attr">app</span>: <span class="title class_">ApplicationRef</span></span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;app-root&#x27;</span>)) &#123;</span><br><span class="line">        app.<span class="title function_">bootstrap</span>(<span class="title class_">AppComponent</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;app-menu&#x27;</span>)) &#123;</span><br><span class="line">        app.<span class="title function_">bootstrap</span>(<span class="title class_">MenuComponent</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由於這樣子的設定方式，當需要動態顯示的 Components 一多時，就會變得很難管哩，所以稍微調整一下寫法，讓後續的新增動作簡化些</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> entryComponents = [<span class="title class_">AppComponent</span>, <span class="title class_">MenuComponent</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;dash&#x27;</span>, <span class="attr">loadChildren</span>: <span class="string">&#x27;app/dash/dash.module#DashModule&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;home/about&#x27;</span>, <span class="attr">component</span>: <span class="title class_">HomeComponent</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;**&#x27;</span>, <span class="attr">component</span>: <span class="title class_">EmptyComponent</span> &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">declarations</span>: [<span class="title class_">AppComponent</span>, <span class="title class_">HomeComponent</span>, <span class="title class_">EmptyComponent</span>],</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">BrowserModule</span>, <span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes), <span class="title class_">MenuModule</span>],</span><br><span class="line">  <span class="attr">entryComponents</span>: [...entryComponents]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">componentFactoryResolver</span>: <span class="title class_">ComponentFactoryResolver</span></span>) &#123;&#125;</span><br><span class="line">  <span class="title function_">ngDoBootstrap</span>(<span class="params"><span class="attr">app</span>: <span class="title class_">ApplicationRef</span></span>) &#123;</span><br><span class="line">    entryComponents.<span class="title function_">forEach</span>(<span class="function">(<span class="params"><span class="attr">component</span>: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> factory = <span class="variable language_">this</span>.<span class="property">componentFactoryResolver</span>.<span class="title function_">resolveComponentFactory</span>(component);</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(factory.<span class="property">selector</span>)) &#123;</span><br><span class="line">        app.<span class="title function_">bootstrap</span>(factory);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>componentFactoryResolver : 會將 Component Type 建立成 componentFactory 以供後續使用</li>
+<li>ApplicationRef.bootstrap 接受 componentFactory 或是 Type 的方式啟動</li>
+</ul>
+<h1 id="結語"><a class="header-anchor" href="#結語"> </a>結語</h1>
+<p>基本上到這裡的設定算是很基本的設定方式，這樣的整合方式可以說是 MPA (Multi-Page Application) 與 SPA (Single Page Application ) 的整合，對於開發專案時的彈性是很大的，而且也可以避免一些前後端分離要留意的點，例如 API CORS 的問題</p>
+<p>如果要顯示的頁面很簡單，可以直接使用 Razor 的方式完成，如果要處理的頁面使用者操作比較複雜，這時候使用 Angular 的方式來處理頁面動作，可以很漂亮的完成工作。</p>
+<p>但是要留意的地方，這個架構只是眾多解決方案的其中一個，所以要仔細評估各專案的性質，選擇最適合的架構，開發起來會省很多力氣</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/chgc/coremvc_angular_new_structure">GitHub Repo</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+              <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/09/07/angular-integration-test/" rel="prev" title="[Angular] 整合測試">
+                  <i class="fa fa-angle-left"></i> [Angular] 整合測試
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/09/24/angular-injector/" rel="next" title="[Angular] Angular 建立 Injector 的流程">
+                  [Angular] Angular 建立 Injector 的流程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Animation 在  4.2 版以後，整個功能強度往上跳了好幾級，我對 Animation 本身真的沒什麼研究，但是還是盡量整理了一下，新增的功能有哪些(目前尚無完整的文件)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Animation 4.2版 &#x3D; wow">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/06/11/ng-animation-4-2/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Animation 在  4.2 版以後，整個功能強度往上跳了好幾級，我對 Animation 本身真的沒什麼研究，但是還是盡量整理了一下，新增的功能有哪些(目前尚無完整的文件)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2017-06-11T01:31:53.000Z">
+<meta property="article:modified_time" content="2017-12-30T13:24:37.605Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2017/06/11/ng-animation-4-2/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2017/06/11/ng-animation-4-2/","path":"2017/06/11/ng-animation-4-2/","title":"[Angular] Animation 4.2版 = wow"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] Animation 4.2版 = wow | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">新增功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#animation"><span class="nav-number">1.1.</span> <span class="nav-text">animation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useAnimation"><span class="nav-number">1.2.</span> <span class="nav-text">useAnimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#query"><span class="nav-number">1.3.</span> <span class="nav-text">query</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#animateChild"><span class="nav-number">1.4.</span> <span class="nav-text">animateChild</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stagger"><span class="nav-number">1.5.</span> <span class="nav-text">stagger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AnimationBuilder"><span class="nav-number">1.6.</span> <span class="nav-text">AnimationBuilder</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/06/11/ng-animation-4-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] Animation 4.2版 &#x3D; wow | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] Animation 4.2版 = wow
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-06-11 09:31:53" itemprop="dateCreated datePublished" datetime="2017-06-11T09:31:53+08:00">2017-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2017-12-30 21:24:37" itemprop="dateModified" datetime="2017-12-30T21:24:37+08:00">2017-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/06/11/ng-animation-4-2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/06/11/ng-animation-4-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Animation 在  4.2 版以後，整個功能強度往上跳了好幾級，我對 Animation 本身真的沒什麼研究，但是還是盡量整理了一下，新增的功能有哪些(目前尚無完整的文件)</p>
+<span id="more"></span>
+<h1 id="新增功能"><a class="header-anchor" href="#新增功能"> </a>新增功能</h1>
+<p>Animation在 4.2 版以後有增加了許多功能，以下一一的整理，如果有遺漏或是不正確的地方，還請指教</p>
+<h2 id="animation"><a class="header-anchor" href="#animation"> </a>animation</h2>
+<p><code>animation</code> 方法讓我們可以使用包裝動畫效果，也可使用變數來當作動畫的參數範本。範例程式碼</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">animation</span>(<span class="params"><span class="attr">steps</span>: <span class="title class_">AnimationMetadata</span> | <span class="title class_">AnimationMetadata</span>[], <span class="attr">options</span>?: <span class="title class_">AnimationOptions</span> | <span class="literal">null</span></span>): <span class="title class_">AnimationReferenceMetadata</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> flyIn = <span class="title function_">animation</span>(</span><br><span class="line">    [</span><br><span class="line">      ...</span><br><span class="line">      <span class="title function_">group</span>([</span><br><span class="line">        <span class="title function_">animate</span>(</span><br><span class="line">            <span class="string">&#x27;0.3s 0.1s ease&#x27;</span>,</span><br><span class="line">            <span class="title function_">style</span>(&#123;<span class="attr">transform</span>: <span class="string">&#x27;translateX(0px)&#x27;</span>, <span class="attr">width</span>: <span class="string">&#x27;&#123;&#123;width&#125;&#125;px&#x27;</span>&#125;)),</span><br><span class="line">        <span class="title function_">animate</span>(<span class="string">&#x27;0.3s ease&#x27;</span>, <span class="title function_">style</span>(&#123;<span class="attr">opacity</span>: <span class="number">1</span>&#125;))</span><br><span class="line">      ])</span><br><span class="line">    ],</span><br><span class="line">    &#123;<span class="attr">params</span>: &#123;<span class="attr">width</span>: <span class="number">120</span>&#125;&#125;);</span><br></pre></td></tr></table></figure>
+<p>透過上述的方式，可以將 <code>animation</code> 單獨的抽離至新檔案，也可以給予參數的能力，如果使用這個 <code>animation</code> 的當下如設定任何參數時，就會使用預設值。</p>
+<h2 id="useAnimation"><a class="header-anchor" href="#useAnimation"> </a>useAnimation</h2>
+<p>如果要使用單獨抽離的 <code>animation</code> 時，可以使用 <code>useAnimation</code> ，第一個參數是要使用的 animation 名稱，如果使用的 <code>animation</code> 允使使用參數來改變內建的變數，那就可以設定於第二個參數位置</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">useAnimation</span>(<span class="params"><span class="attr">animation</span>: <span class="title class_">AnimationReferenceMetadata</span>, <span class="attr">options</span>?: <span class="title class_">AnimationOptions</span> | <span class="literal">null</span></span>): <span class="title class_">AnimationAnimateRefMetadata</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;flyIn&#125; <span class="keyword">from</span> <span class="string">&#x27;./my-animation&#x27;</span>;</span><br><span class="line">...  </span><br><span class="line"><span class="attr">animations</span>: [<span class="title function_">trigger</span>(</span><br><span class="line">      <span class="string">&#x27;heroState&#x27;</span>,</span><br><span class="line">      [</span><br><span class="line">        ...</span><br><span class="line">        <span class="title function_">transition</span>(<span class="string">&#x27;void =&gt; *&#x27;</span>, [<span class="title function_">useAnimation</span>(flyIn, &#123;<span class="attr">params</span>: &#123;<span class="attr">width</span>: <span class="number">100</span>&#125;&#125;)]),      </span><br><span class="line">        ...</span><br><span class="line">      ])]</span><br></pre></td></tr></table></figure>
+<h2 id="query"><a class="header-anchor" href="#query"> </a>query</h2>
+<p>這也是另外一個強大的新功能，這功能允許使用類似 jquery 的 query 功能，透過這個可以快速地針對特定的 HTMLElement 加上動畫</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">animations</span>: [<span class="title function_">trigger</span>(</span><br><span class="line">      <span class="string">&#x27;flyInOut&#x27;</span>,</span><br><span class="line">      [</span><br><span class="line">       ...</span><br><span class="line">        <span class="title function_">transition</span>(<span class="string">&#x27;:enter&#x27;</span>, [<span class="title function_">group</span>([</span><br><span class="line">              <span class="title function_">useAnimation</span>(flyIn, &#123;<span class="attr">params</span>: &#123;<span class="attr">width</span>: <span class="number">100</span>&#125;&#125;),</span><br><span class="line">              <span class="title function_">query</span>(<span class="string">&#x27;p&#x27;</span>,</span><br><span class="line">                [</span><br><span class="line">                  <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;),</span><br><span class="line">                  <span class="title function_">animate</span>(<span class="number">4000</span>, <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;))</span><br><span class="line">                ])</span><br><span class="line">            ])</span><br><span class="line">        ])</span><br><span class="line">        ...</span><br><span class="line">      ])]</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let hero of heroes&quot;</span> [@<span class="attr">flyInOut</span>]=<span class="string">&quot;&#x27;in&#x27;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;hero.name&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="animateChild"><a class="header-anchor" href="#animateChild"> </a>animateChild</h2>
+<p><code>animateChild</code> 搭配 <code>query</code> 的使用，可以觸發內層元件的動畫事件。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;parent-child-component&#x27;</span>,</span><br><span class="line">  <span class="attr">animations</span>: [</span><br><span class="line">    <span class="title function_">trigger</span>(<span class="string">&#x27;parentAnimation&#x27;</span>, [</span><br><span class="line">      <span class="title function_">transition</span>(<span class="string">&#x27;false =&gt; true&#x27;</span>, [</span><br><span class="line">        <span class="title function_">query</span>(<span class="string">&#x27;header&#x27;</span>, [</span><br><span class="line">          <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;),</span><br><span class="line">          <span class="title function_">animate</span>(<span class="number">500</span>, <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;))</span><br><span class="line">        ]),</span><br><span class="line">        <span class="title function_">query</span>(<span class="string">&#x27;@childAnimation&#x27;</span>, [</span><br><span class="line">          <span class="title function_">animateChild</span>()</span><br><span class="line">        ])</span><br><span class="line">      ])</span><br><span class="line">    ]),</span><br><span class="line">    <span class="title function_">trigger</span>(<span class="string">&#x27;childAnimation&#x27;</span>, [</span><br><span class="line">      <span class="title function_">transition</span>(<span class="string">&#x27;false =&gt; true&#x27;</span>, [</span><br><span class="line">        <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;),</span><br><span class="line">        <span class="title function_">animate</span>(<span class="number">500</span>, <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;))</span><br><span class="line">      ])</span><br><span class="line">    ])</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ParentChildCmp</span> &#123;</span><br><span class="line">  <span class="attr">exp</span>: <span class="built_in">boolean</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> [@<span class="attr">parentAnimation</span>]=<span class="string">&quot;exp&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">header</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> [@<span class="attr">childAnimation</span>]=<span class="string">&quot;exp&quot;</span>&gt;</span></span><br><span class="line">      one</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> [@<span class="attr">childAnimation</span>]=<span class="string">&quot;exp&quot;</span>&gt;</span></span><br><span class="line">      two</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> [@<span class="attr">childAnimation</span>]=<span class="string">&quot;exp&quot;</span>&gt;</span></span><br><span class="line">      three</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="stagger"><a class="header-anchor" href="#stagger"> </a>stagger</h2>
+<p><code>stagger</code> 這個方法可以去設定再跑 ngFor 時，可以讓動畫一筆一筆的跑，這方法需要再 <code>query</code> 內使用</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">stagger</span>(<span class="params"><span class="attr">timings</span>: <span class="built_in">string</span> | <span class="built_in">number</span>, <span class="attr">animation</span>: <span class="title class_">AnimationMetadata</span> | <span class="title class_">AnimationMetadata</span>[]</span>): <span class="title class_">AnimationStaggerMetadata</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">   <span class="attr">templateUrl</span>: <span class="string">&#x27;list.component.html&#x27;</span>,</span><br><span class="line">   <span class="attr">animations</span>: [</span><br><span class="line">      <span class="title function_">trigger</span>(<span class="string">&#x27;listAnimation&#x27;</span>, [</span><br><span class="line">        <span class="title function_">transition</span>(<span class="string">&#x27;* =&gt; *&#x27;</span>, [ <span class="comment">// each time the binding value changes</span></span><br><span class="line">        <span class="title function_">query</span>(<span class="string">&#x27;:leave&#x27;</span>, [</span><br><span class="line">          <span class="title function_">stagger</span>(<span class="number">100</span>, [</span><br><span class="line">            <span class="title function_">animate</span>(<span class="string">&#x27;0.5s&#x27;</span>, <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;))</span><br><span class="line">          ], &#123;<span class="attr">optional</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">        ]),</span><br><span class="line">        <span class="title function_">query</span>(<span class="string">&#x27;:enter&#x27;</span>, [</span><br><span class="line">          <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;),</span><br><span class="line">          <span class="title function_">stagger</span>(<span class="number">100</span>, [</span><br><span class="line">            <span class="title function_">animate</span>(<span class="string">&#x27;0.5s&#x27;</span>, <span class="title function_">style</span>(&#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;))</span><br><span class="line">          ], &#123;<span class="attr">optional</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">        ])</span><br><span class="line">      ])</span><br><span class="line">    ])</span><br><span class="line">  ]</span><br><span class="line"> &#125;)</span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">ListComponent</span> &#123;</span><br><span class="line">   items = [];</span><br><span class="line"></span><br><span class="line">   <span class="title function_">showItems</span>(<span class="params"></span>) &#123;</span><br><span class="line">     <span class="variable language_">this</span>.<span class="property">items</span> = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="title function_">hideItems</span>(<span class="params"></span>) &#123;</span><br><span class="line">     <span class="variable language_">this</span>.<span class="property">items</span> = [];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="title function_">toggle</span>(<span class="params"></span>) &#123;</span><br><span class="line">     <span class="variable language_">this</span>.<span class="property">items</span>.<span class="property">length</span> ? <span class="variable language_">this</span>.<span class="title function_">hideItems</span>() : <span class="variable language_">this</span>.<span class="title function_">showItems</span>();</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;toggle()&quot;</span>&gt;</span>Show / Hide Items<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> [@<span class="attr">listAnimation</span>]=<span class="string">&quot;items.length&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of items&quot;</span>&gt;</span></span><br><span class="line">     &#123;&#123; item &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="AnimationBuilder"><a class="header-anchor" href="#AnimationBuilder"> </a>AnimationBuilder</h2>
+<p><code>AnimationBuilder</code> 的 <code>build</code> 方法會產生一個 <code>AnimationFactory</code>，而 <code>AnimationFactory</code> 的 <code>create</code> 方法可以產生一個 <code>AnimationPlayer</code>，這個 <code>AnimationPlayer</code> 是可以被撥放，暫停或停止。這模式可以讓我們用程式碼的方式，建立與 decorator 內 animations 區塊相同功能出來，且可以手動控制執行動畫的時間點。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">HeroListComponent</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">_builder</span>: <span class="title class_">AnimationBuilder</span></span>) &#123;&#125;</span><br><span class="line">  ...</span><br><span class="line">  <span class="title function_">makeAnimation</span>(<span class="params"><span class="attr">element</span>: <span class="built_in">any</span></span>) &#123;</span><br><span class="line">    <span class="comment">// first build the animation</span></span><br><span class="line">    <span class="keyword">const</span> myAnimation = <span class="variable language_">this</span>.<span class="property">_builder</span>.<span class="title function_">build</span>(</span><br><span class="line">        [<span class="title function_">style</span>(&#123;<span class="attr">opacity</span>: <span class="number">0</span>&#125;), <span class="title function_">animate</span>(<span class="string">&#x27;0.3s 0.2s ease&#x27;</span>, <span class="title function_">style</span>(&#123;<span class="attr">opacity</span>: <span class="number">1</span>&#125;))]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// then create a player from it</span></span><br><span class="line">    <span class="keyword">const</span> player = myAnimation.<span class="title function_">create</span>(element);</span><br><span class="line">    player.<span class="title function_">play</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
+<p>Angular 4.2 版大大的加強 animation 的功能，或許還有些新功能我沒有注意到，但是上述的這些新用法，就已經足以玩出很多種變化。</p>
+<p>尤其是讓動畫的效果可以重複使用，對於前端設計者，就可以專注於動畫的設計，而其他對於 animation 不熟悉的人，也可以簡單的使用已經設計好的動畫效果。</p>
+<p>非常期待一些大師發布 angular animation 作品，可以讓我們簡單的使用設計好的動畫效果。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/28/angular-excel-addins/" rel="prev" title="[Angular] 開發 Excel 增益集">
+                  <i class="fa fa-angle-left"></i> [Angular] 開發 Excel 增益集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/06/11/core-configuration/" rel="next" title="[.NET Core] 加入設定參數">
+                  [.NET Core] 加入設定參數 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

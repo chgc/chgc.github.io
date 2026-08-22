@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="A Subject is like an Observable, but can multicast to many Observers. Subjects are like EventEmitters: they maintain a registry of many listeners.  這表示Subject是 Observable，也是Observer。而這篇文章重點會放在每種類型的Su">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[RxJS] Subject">
+<meta property="og:url" content="http://blog.kevinyang.net/2016/10/06/rx-subject/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="A Subject is like an Observable, but can multicast to many Observers. Subjects are like EventEmitters: they maintain a registry of many listeners.  這表示Subject是 Observable，也是Observer。而這篇文章重點會放在每種類型的Su">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://farm6.staticflickr.com/5096/30150932965_855e132fdb_o.png">
+<meta property="og:image" content="https://farm6.staticflickr.com/5096/30066617701_c3e230b51c_o.png">
+<meta property="og:image" content="https://farm6.staticflickr.com/5697/29522601444_8f8e39f9cd_o.png">
+<meta property="og:image" content="https://farm6.staticflickr.com/5243/30116188896_400cfb7143_o.png">
+<meta property="og:image" content="https://farm6.staticflickr.com/5216/29522454703_b9511f0241_o.png">
+<meta property="article:published_time" content="2016-10-06T11:53:18.000Z">
+<meta property="article:modified_time" content="2017-12-30T13:24:37.584Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="RxJS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://farm6.staticflickr.com/5096/30150932965_855e132fdb_o.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2016/10/06/rx-subject/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2016/10/06/rx-subject/","path":"2016/10/06/rx-subject/","title":"[RxJS] Subject"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[RxJS] Subject | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Subject"><span class="nav-number">1.</span> <span class="nav-text">Subject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BehaviorSubject"><span class="nav-number">2.</span> <span class="nav-text">BehaviorSubject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReplaySubject"><span class="nav-number">3.</span> <span class="nav-text">ReplaySubject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AsyncSubject"><span class="nav-number">4.</span> <span class="nav-text">AsyncSubject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BehaviorSubject%E3%80%81ReplaySubject%E3%80%81AsyncSubject-%E8%88%87-Publish-%E7%9A%84%E9%97%9C%E4%BF%82"><span class="nav-number">5.</span> <span class="nav-text">BehaviorSubject、ReplaySubject、AsyncSubject 與 Publish 的關係</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E7%B6%B2%E5%9D%80"><span class="nav-number">6.</span> <span class="nav-text">參考網址</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/10/06/rx-subject/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[RxJS] Subject | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [RxJS] Subject
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2016-10-06 19:53:18" itemprop="dateCreated datePublished" datetime="2016-10-06T19:53:18+08:00">2016-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2017-12-30 21:24:37" itemprop="dateModified" datetime="2017-12-30T21:24:37+08:00">2017-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/10/06/rx-subject/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/06/rx-subject/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>A Subject is like an Observable, but can multicast to many Observers. Subjects are like EventEmitters: they maintain a registry of many listeners.</p>
+</blockquote>
+<p>這表示Subject是 Observable，也是Observer。而這篇文章重點會放在每種類型的Subject的特性</p>
+<span id="more"></span>
+<p>RxJS 的 Subject類型除了基本型<code>Subject</code>, 還有以下幾種類型的Subject <code>BehaviorSubject</code>, <code>ReplaySubject</code>, and <code>AsyncSubject</code></p>
+<h2 id="Subject"><a class="header-anchor" href="#Subject"> </a>Subject</h2>
+<p>程式碼</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> source = <span class="title class_">Rx</span>.<span class="property">Observable</span>.<span class="title function_">interval</span>(<span class="number">1000</span>).<span class="title function_">take</span>(<span class="number">5</span>)</span><br><span class="line">               .<span class="title function_">do</span>(<span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;source&#x27;</span> + value);&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> subject = <span class="keyword">new</span> <span class="title class_">Rx</span>.<span class="title class_">Subject</span>(); <span class="comment">// 0 is the initial value</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObserverA</span> = &#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;A next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="keyword">function</span>(<span class="params">error</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;A error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  <span class="attr">complete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;A Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObserverB</span> = &#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;B next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="keyword">function</span>(<span class="params">error</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;B error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  <span class="attr">complete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;B Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">source.<span class="title function_">subscribe</span>(subject);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">subject.<span class="title function_">subscribe</span>(<span class="title class_">ObserverA</span>);</span><br><span class="line"> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ObserverA subscribed&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  subject.<span class="title function_">subscribe</span>(<span class="title class_">ObserverB</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ObserverB subscribed&#x27;</span>);</span><br><span class="line">&#125;,<span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://farm6.staticflickr.com/5096/30150932965_855e132fdb_o.png" alt=""></p>
+<h2 id="BehaviorSubject"><a class="header-anchor" href="#BehaviorSubject"> </a>BehaviorSubject</h2>
+<blockquote>
+<p>BehaviorSubjects are useful for representing 「values over time」. For instance, an event stream of birthdays is a Subject, but the stream of a person’s age would be a BehaviorSubject.</p>
+</blockquote>
+<p>BehaviorSubject會記錄<strong>最後一次的值</strong>，當後來註冊進來的subscriber可以知道當下的值是什麼</p>
+<p>所以BehaviorSubject在建立時，需要指定一個初始值</p>
+<p>程式碼如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> source = <span class="title class_">Rx</span>.<span class="property">Observable</span>.<span class="title function_">interval</span>(<span class="number">1000</span>).<span class="title function_">take</span>(<span class="number">5</span>)</span><br><span class="line">               .<span class="title function_">do</span>(<span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;source &#x27;</span> + value);&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> subject = <span class="keyword">new</span> <span class="title class_">Rx</span>.<span class="title class_">BehaviorSubject</span>(<span class="number">0</span>); <span class="comment">// 0 is the initial value</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObserverA</span> = &#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;A next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="keyword">function</span>(<span class="params">error</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;A error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  <span class="attr">complete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;A Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObserverB</span> = &#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;B next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="keyword">function</span>(<span class="params">error</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;B error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  <span class="attr">complete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;B Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">source.<span class="title function_">subscribe</span>(subject);</span><br><span class="line"></span><br><span class="line">subject.<span class="title function_">subscribe</span>(<span class="title class_">ObserverA</span>);</span><br><span class="line"> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ObserverA subscribed&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  subject.<span class="title function_">subscribe</span>(<span class="title class_">ObserverB</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ObserverB subscribed&#x27;</span>);</span><br><span class="line">&#125;,<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://farm6.staticflickr.com/5096/30066617701_c3e230b51c_o.png" alt=""></p>
+<h2 id="ReplaySubject"><a class="header-anchor" href="#ReplaySubject"> </a>ReplaySubject</h2>
+<blockquote>
+<p>A <code>ReplaySubject</code> records multiple values from the Observable execution and replays them to new subscribers.</p>
+</blockquote>
+<p>ReplaySubject有點類似於BehaviorSubject，可以取得subscribe之前的值，只是可以取不只一個。類似回播的功能</p>
+<p>ReplaySubject在建立時有幾個參數可以設定，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> subject = <span class="keyword">new</span> <span class="title class_">Rx</span>.<span class="title class_">ReplaySubject</span>(bufferSize, windowTime);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>bufferSize: ReplaySubject可以儲存 x 數量的值</li>
+<li>windowTime: ReplaySubject取最後  x milliseconds 期間的值</li>
+</ul>
+<p>程式碼 (with no windowTime參數)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> source = <span class="title class_">Rx</span>.<span class="property">Observable</span>.<span class="title function_">interval</span>(<span class="number">500</span>).<span class="title function_">take</span>(<span class="number">7</span>)</span><br><span class="line">               .<span class="title function_">do</span>(<span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;source &#x27;</span> + value);&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> subject = <span class="keyword">new</span> <span class="title class_">Rx</span>.<span class="title class_">ReplaySubject</span>(<span class="number">3</span>); <span class="comment">// 0 is the initial value</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObserverA</span> = &#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;A next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="keyword">function</span>(<span class="params">error</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;A error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  <span class="attr">complete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;A Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObserverB</span> = &#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;B next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="keyword">function</span>(<span class="params">error</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;B error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  <span class="attr">complete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;B Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">source.<span class="title function_">subscribe</span>(subject);</span><br><span class="line"></span><br><span class="line">subject.<span class="title function_">subscribe</span>(<span class="title class_">ObserverA</span>);</span><br><span class="line"> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ObserverA subscribed&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  subject.<span class="title function_">subscribe</span>(<span class="title class_">ObserverB</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ObserverB subscribed&#x27;</span>);</span><br><span class="line">&#125;,<span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://farm6.staticflickr.com/5697/29522601444_8f8e39f9cd_o.png" alt=""></p>
+<p>程式碼 (with windowTime參數)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> source = <span class="title class_">Rx</span>.<span class="property">Observable</span>.<span class="title function_">interval</span>(<span class="number">500</span>).<span class="title function_">take</span>(<span class="number">7</span>)</span><br><span class="line">               .<span class="title function_">do</span>(<span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;source &#x27;</span> + value);&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// source: 0--1--2--3--4--5--6-----</span></span><br><span class="line"><span class="comment">//      A: 0--1--2--3--4--5--6-----</span></span><br><span class="line"><span class="comment">//              |---|: windowTime </span></span><br><span class="line"><span class="comment">//      B:         23--4--5--6-----</span></span><br><span class="line"><span class="keyword">var</span> subject = <span class="keyword">new</span> <span class="title class_">Rx</span>.<span class="title class_">ReplaySubject</span>(<span class="number">3</span>, <span class="number">700</span>); <span class="comment">// 0 is the initial value</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObserverA</span> = &#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;A next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="keyword">function</span>(<span class="params">error</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;A error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  <span class="attr">complete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;A Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObserverB</span> = &#123;</span><br><span class="line">  <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params">value</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;B next &#x27;</span>+ value);	&#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="keyword">function</span>(<span class="params">error</span>)&#123; <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;B error &#x27;</span>+ error);   &#125;,</span><br><span class="line">  <span class="attr">complete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;B Complete&#x27;</span>);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">source.<span class="title function_">subscribe</span>(subject);</span><br><span class="line"></span><br><span class="line">subject.<span class="title function_">subscribe</span>(<span class="title class_">ObserverA</span>);</span><br><span class="line"> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ObserverA subscribed&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  subject.<span class="title function_">subscribe</span>(<span class="title class_">ObserverB</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ObserverB subscribed&#x27;</span>);</span><br><span class="line">&#125;,<span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://farm6.staticflickr.com/5243/30116188896_400cfb7143_o.png" alt=""></p>
+<h2 id="AsyncSubject"><a class="header-anchor" href="#AsyncSubject"> </a>AsyncSubject</h2>
+<p>AsyncSubject只會記錄 Observable <strong>完成後</strong>的值。</p>
+<p>程式碼</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">var source = Rx.Observable.interval(500).take(7)</span><br><span class="line">               .do(function(value)&#123; console.log(&#x27;source &#x27; + value);&#125;)</span><br><span class="line"></span><br><span class="line">var subject = new Rx.AsyncSubject(); // 0 is the initial value</span><br><span class="line"></span><br><span class="line">var ObserverA = &#123;</span><br><span class="line">  next: function(value)&#123; console.log(&#x27;A next &#x27;+ value);	&#125;,</span><br><span class="line">  error: function(error)&#123; console.error(&#x27;A error &#x27;+ error);   &#125;,</span><br><span class="line">  complete: function()&#123; console.log(&#x27;A Complete&#x27;);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var ObserverB = &#123;</span><br><span class="line">  next: function(value)&#123; console.log(&#x27;B next &#x27;+ value);	&#125;,</span><br><span class="line">  error: function(error)&#123; console.error(&#x27;B error &#x27;+ error);   &#125;,</span><br><span class="line">  complete: function()&#123; console.log(&#x27;B Complete&#x27;);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">source.subscribe(subject);</span><br><span class="line"></span><br><span class="line">subject.subscribe(ObserverA);</span><br><span class="line"> console.log(&#x27;ObserverA subscribed&#x27;);</span><br><span class="line"></span><br><span class="line">setTimeout(function()&#123;</span><br><span class="line">  subject.subscribe(ObserverB);</span><br><span class="line">  console.log(&#x27;ObserverB subscribed&#x27;);</span><br><span class="line">&#125;,2000)</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://farm6.staticflickr.com/5216/29522454703_b9511f0241_o.png" alt=""></p>
+<h2 id="BehaviorSubject、ReplaySubject、AsyncSubject-與-Publish-的關係"><a class="header-anchor" href="#BehaviorSubject、ReplaySubject、AsyncSubject-與-Publish-的關係"> </a>BehaviorSubject、ReplaySubject、AsyncSubject 與 Publish 的關係</h2>
+<p>在<a href="http://blog.kevinyang.net/2016/10/06/rxjs-multicast">前一篇</a>提到說 publish 是 multicast的變化型，而multicast裡可以建立各式的Subject，那publish相對應的又是什麼，對照表如下</p>
+<table>
+<thead>
+<tr>
+<th>Subject Type</th>
+<th>Multicasting  Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rx.Subject</td>
+<td>publish()</td>
+</tr>
+<tr>
+<td>Rx.BehaviorSubject</td>
+<td>publishBehavior(initValue)</td>
+</tr>
+<tr>
+<td>Rx.ReplaySubject</td>
+<td>publishReplay(bufferSize, windowTime)</td>
+</tr>
+<tr>
+<td>Rx.AsyncSubject</td>
+<td>publishLast()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="參考網址"><a class="header-anchor" href="#參考網址"> </a>參考網址</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://reactivex.io/rxjs/manual/overview.html#behaviorsubject">BehaviorSubject</a></li>
+<li><a target="_blank" rel="noopener" href="http://reactivex.io/rxjs/manual/overview.html#ReplaySubject">ReplaySubject</a></li>
+<li><a target="_blank" rel="noopener" href="http://reactivex.io/rxjs/manual/overview.html#AsyncSubject">AsyncSubject</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RxJS/" rel="tag"># RxJS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/10/06/rxjs-multicast/" rel="prev" title="[RxJS] MultiCasting">
+                  <i class="fa fa-angle-left"></i> [RxJS] MultiCasting
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/11/11/ng2-component-interaction/" rel="next" title="[Angular]Component Interaction">
+                  [Angular]Component Interaction <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

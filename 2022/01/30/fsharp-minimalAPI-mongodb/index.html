@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="延續上一篇 寫的內容，將 MongoDB 的功能加進來，順便練習 F#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FSharp + Minimal API + MongoDB">
+<meta property="og:url" content="http://blog.kevinyang.net/2022/01/30/fsharp-minimalAPI-mongodb/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="延續上一篇 寫的內容，將 MongoDB 的功能加進來，順便練習 F#">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-01-30T12:34:35.000Z">
+<meta property="article:modified_time" content="2022-02-06T08:40:30.947Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="FSharp">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2022/01/30/fsharp-minimalAPI-mongodb/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2022/01/30/fsharp-minimalAPI-mongodb/","path":"2022/01/30/fsharp-minimalAPI-mongodb/","title":"FSharp + Minimal API + MongoDB"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>FSharp + Minimal API + MongoDB | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Work-with-MongoDB"><span class="nav-number">1.</span> <span class="nav-text">Work with MongoDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E5%85%A5-IConfiguration"><span class="nav-number">2.</span> <span class="nav-text">注入 IConfiguration</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2022/01/30/fsharp-minimalAPI-mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="FSharp + Minimal API + MongoDB | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FSharp + Minimal API + MongoDB
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-01-30 20:34:35" itemprop="dateCreated datePublished" datetime="2022-01-30T20:34:35+08:00">2022-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2022-02-06 16:40:30" itemprop="dateModified" datetime="2022-02-06T16:40:30+08:00">2022-02-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/FSharp/" itemprop="url" rel="index"><span itemprop="name">FSharp</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2022/01/30/fsharp-minimalAPI-mongodb/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/01/30/fsharp-minimalAPI-mongodb/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>延續<a href="https://blog.kevinyang.net/2022/01/30/fsharp-minimal-api/">上一篇</a> 寫的內容，將 MongoDB 的功能加進來，順便練習 F#</p>
+<span id="more"></span>
+<h1 id="Work-with-MongoDB"><a class="header-anchor" href="#Work-with-MongoDB"> </a>Work with MongoDB</h1>
+<p>.net core 專案不管是 C# 或是 F# 要使用 MongoDB 都需要安裝一個 package <code>MongoDB.Driver</code>，安裝完成後就可以連接 MongoDB 了，這邊就假設各位的電腦已經有一個正常運行的 MongoDB，如果沒有，網路上有很多安裝教學</p>
+<p>接下來的檔案都是在 <code>Todo.fs</code> 內做異動</p>
+<ol>
+<li>
+<p>調整 <code>Todo</code> type 定義</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Todo</span> <span class="operator">=</span> &#123;</span><br><span class="line">      <span class="built_in">id</span><span class="operator">:</span> BsonObjectId <span class="comment">// mongodb 自己的 key 欄位, 需要 open MongoDB.Bson</span></span><br><span class="line">      uid<span class="operator">:</span> <span class="type">string</span> <span class="comment">// 上一篇使用 int, 這裡改用 Guid 當作 uid</span></span><br><span class="line">      title<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">      isDone<span class="operator">:</span> <span class="type">bool</span> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>增加 property 和 method 到 <code>ITodoService</code> type</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">ITodoService</span> <span class="operator">=</span>  </span><br><span class="line">   <span class="keyword">abstract</span> mongo<span class="operator">:</span> MongoClient</span><br><span class="line">   <span class="keyword">abstract</span> db<span class="operator">:</span> IMongoDatabase</span><br><span class="line">   <span class="keyword">abstract</span> GetTodos<span class="operator">:</span> <span class="type">unit</span> <span class="operator">-&gt;</span> Todo <span class="type">seq</span></span><br><span class="line">   <span class="keyword">abstract</span> SaveTodo<span class="operator">:</span> Todo <span class="operator">-&gt;</span> <span class="type">bool</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>將缺少的部分實做補齊</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> TodoService <span class="operator">=</span> </span><br><span class="line">    &#123; <span class="keyword">new</span> ITodoService <span class="keyword">with</span>   </span><br><span class="line">        <span class="keyword">member</span> __.mongo <span class="operator">=</span> MongoClient(<span class="string">&quot;your mongodb connection string&quot;</span>)</span><br><span class="line">        <span class="keyword">member</span> __.db <span class="operator">=</span> __.mongo.GetDatabase <span class="string">&quot;todos&quot;</span> <span class="comment">// 可以換成自己建立的 database 名稱</span></span><br><span class="line">        <span class="keyword">member</span> __.GetTodos()<span class="operator">:</span> <span class="type">seq</span><span class="operator">&lt;</span>Todo<span class="operator">&gt;</span> <span class="operator">=</span></span><br><span class="line">            __.db</span><br><span class="line">              .GetCollection<span class="operator">&lt;</span>Todo<span class="operator">&gt;</span>(<span class="string">&quot;todos&quot;</span>)</span><br><span class="line">              .Find(Builders.Filter.Empty)</span><br><span class="line">              .ToEnumerable() <span class="operator">|&gt;</span> Seq.cast</span><br><span class="line">              </span><br><span class="line">        <span class="keyword">member</span> __.SaveTodo todo <span class="operator">=</span></span><br><span class="line">            <span class="keyword">let</span> collection <span class="operator">=</span> __.db.GetCollection<span class="operator">&lt;</span>Todo<span class="operator">&gt;</span>(<span class="string">&quot;todos&quot;</span>)</span><br><span class="line">            <span class="keyword">let</span> todos <span class="operator">=</span> </span><br><span class="line">                collection</span><br><span class="line">                    .Find(<span class="keyword">fun</span> x<span class="operator">-&gt;</span> x.uid <span class="operator">=</span> todo.uid)</span><br><span class="line">                    .ToEnumerable()</span><br><span class="line"></span><br><span class="line">            <span class="keyword">match</span> Seq.isEmpty todos <span class="keyword">with</span></span><br><span class="line">            <span class="operator">|</span> <span class="literal">true</span> <span class="operator">-&gt;</span> </span><br><span class="line">                collection.InsertOne &#123; todo <span class="keyword">with</span></span><br><span class="line">                                        <span class="built_in">id</span> <span class="operator">=</span> BsonObjectId(ObjectId.GenerateNewId())</span><br><span class="line">                                        uid <span class="operator">=</span> Guid.NewGuid().ToString() &#125; <span class="operator">|&gt;</span> <span class="built_in">ignore</span></span><br><span class="line">                <span class="literal">true</span></span><br><span class="line">            <span class="operator">|</span> <span class="literal">false</span> <span class="operator">-&gt;</span> </span><br><span class="line">                <span class="keyword">let</span> filter <span class="operator">=</span> Builders<span class="operator">&lt;</span>Todo<span class="operator">&gt;.</span>Filter.Eq((<span class="keyword">fun</span> x <span class="operator">-&gt;</span> x.uid), todo.uid)</span><br><span class="line">                <span class="keyword">let</span> update <span class="operator">=</span></span><br><span class="line">                    Builders<span class="operator">&lt;</span>Todo<span class="operator">&gt;.</span>Update</span><br><span class="line">                        .Set((<span class="keyword">fun</span> x <span class="operator">-&gt;</span> x.title), todo.title)</span><br><span class="line">                        .Set((<span class="keyword">fun</span> x <span class="operator">-&gt;</span> x.isDone), todo.isDone)</span><br><span class="line"></span><br><span class="line">                collection.UpdateOne(filter, update) <span class="operator">|&gt;</span> <span class="built_in">ignore</span></span><br><span class="line">                <span class="literal">true</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>__.GetTodos()</code> 這一段我稍微卡到的地方在於 <code>IEnumerable</code> 轉型到 <code>Seq</code> 的地方，查了一下文件，發現 <code>IEnumerable</code> 和 <code>Seq</code> 的本質上是一樣的，所以只要使用 <code>Seq.cast</code> 的方法轉一下即可</li>
+<li>MongoDB Collection 的查詢是使用 <code>Builders.filter</code> 的方法建立，這裡因為是要全撈，所以就單純使用 <code>Builders.Filter.Empty</code></li>
+<li><code>__.SaveTodo</code> 的部分，我將建立與更新寫在一起，判斷方式是先用傳進來的 <code>todo.uid</code> 去尋找是否有存在的記錄，透過 pattern match 的寫法來區分新增與更新</li>
+<li>line 24: 建立 <code>filter</code> 與 <code>update</code> 的定義，<code>colletion.UpdateOne</code> 方法需要傳進這兩個定義</li>
+</ul>
+</li>
+<li>
+<p>修改 <code>addTodo</code> 的方法</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">private</span> addTodo <span class="operator">=</span></span><br><span class="line">    Func<span class="operator">&lt;</span>ITodoService, Todo, bool<span class="operator">&gt;</span></span><br><span class="line">        (<span class="keyword">fun</span> (todos<span class="operator">:</span> ITodoService) (todo) <span class="operator">-&gt;</span> todos.SaveTodo todo)</span><br></pre></td></tr></table></figure>
+<p>有好一段時間沒有寫 C#，熊熊忘記 <code>Func</code> 的使用方式，還好後來有想起來，而這邊跟寫 C# 的差異在於 line 3 的部分，如果是 C# 會這樣子寫 <code>(todos: ITodoService , todo) =&gt; {...}</code>，但在 F# 的世界裡，因為 <code>Func</code> 的 signature 是 <code>Func(a -&gt; b -&gt; c)</code>，所以才會有 line 3 的寫法出現了，算是 FP 的特性之一。</p>
+<p>BTW，如果想要將 FP 學好，要學會看懂 signature</p>
+</li>
+</ol>
+<p>這樣調整完後，重新執行測試 API ，沒有意外就可以看到資料有儲存到 MongoDB 內了</p>
+<h1 id="注入-IConfiguration"><a class="header-anchor" href="#注入-IConfiguration"> </a>注入 IConfiguration</h1>
+<p>經過一晚的思考，還是將如何使用 Configuration 的作法補上來，順便熟悉 <code>Minimal API</code> 的 DI 機制，接下來會分兩塊來看</p>
+<ol>
+<li>
+<p>map func 直接注入 dependency</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[&lt;RequireQualifiedAccess&gt;]</span></span><br><span class="line"><span class="keyword">module</span> Home</span><br><span class="line"></span><br><span class="line"><span class="keyword">open</span> System</span><br><span class="line"><span class="keyword">open</span> Microsoft.AspNetCore.Builder</span><br><span class="line"><span class="keyword">open</span> Microsoft.Extensions.Configuration</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> showVersion <span class="operator">=</span> </span><br><span class="line">    <span class="keyword">let</span> getCurrentVersion (config<span class="operator">:</span>IConfiguration) <span class="operator">=</span> config[<span class="string">&quot;version&quot;</span>]</span><br><span class="line">    Func<span class="operator">&lt;</span>IConfiguration, string<span class="operator">&gt;</span>(getCurrentVersion)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> registerRoutes (app<span class="operator">:</span> WebApplication) <span class="operator">=</span></span><br><span class="line">    app.MapGet(<span class="string">&quot;/&quot;</span>, showVersion) <span class="operator">|&gt;</span> <span class="built_in">ignore</span></span><br><span class="line">    app</span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 10: 的 <code>Func</code> 寫法如同上面的，可以用這樣子的方式取得註冊在 services 內的服務 (framework 幫我們完成)</li>
+</ul>
+</li>
+<li>
+<p>註冊 service 層的 DI</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> TodoService (config<span class="operator">:</span> IConfiguration) <span class="operator">=</span> </span><br><span class="line">    &#123; <span class="keyword">new</span> ITodoService <span class="keyword">with</span>        </span><br><span class="line">        <span class="keyword">member</span> __.mongo <span class="operator">=</span> MongoClient(config[<span class="string">&quot;mongodb&quot;</span>])</span><br><span class="line">        <span class="keyword">member</span> __.db <span class="operator">=</span> __.mongo.GetDatabase <span class="string">&quot;todos&quot;</span></span><br><span class="line">      <span class="operator">....</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 1: 在宣告時就表明要給 <code>IConfiuration</code></li>
+</ul>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">builder</span><br><span class="line">    .services</span><br><span class="line">    .AddSingleton<span class="operator">&lt;</span>Todo.ITodoService<span class="operator">&gt;</span>(<span class="keyword">fun</span> _ <span class="operator">-&gt;</span> Todo.TodoService builder.Configuration) <span class="operator">|&gt;</span> <span class="built_in">ignore</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>所以在註冊的時候就餵給他 Configuration 就好</li>
+</ul>
+</li>
+</ol>
+<p>這樣子就完成了，這部分的寫法我一開始有點鬼打牆，主要是因為我卡在 C# 版本的觀念，service 的 DI 要從 <code>constructure</code> 注入，後來想通其實他就是 function，就直接傳進去就好了。</p>
+<p>換另外一個層面來看，當你發現一個 function 要傳入的東西太多時，就要重新思考這段程式碼是否有問題，是不是負責太多事情了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FSharp/" rel="tag"># FSharp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/30/fsharp-minimal-api/" rel="prev" title="FSharp 也要走 minimal API 風">
+                  <i class="fa fa-angle-left"></i> FSharp 也要走 minimal API 風
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/02/20/fsharp-seq-study/" rel="next" title="[FSharp] Seq Study">
+                  [FSharp] Seq Study <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

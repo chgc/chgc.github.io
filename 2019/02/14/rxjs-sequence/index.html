@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="今天在 medium 上面看到一篇有趣的文章，他的主題是 How to detect a sequence of keystrokes in JavaScript，那讓我用 RxJS 來挑戰一下，順便回味一下以前打電動需要輸入一系列的指令才可以開啟密技的樂趣">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[RxJS] 應用練習 - sequenceEqual">
+<meta property="og:url" content="http://blog.kevinyang.net/2019/02/14/rxjs-sequence/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="今天在 medium 上面看到一篇有趣的文章，他的主題是 How to detect a sequence of keystrokes in JavaScript，那讓我用 RxJS 來挑戰一下，順便回味一下以前打電動需要輸入一系列的指令才可以開啟密技的樂趣">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/02/14/rxjs-sequence/1550108112073.png">
+<meta property="article:published_time" content="2019-02-14T00:14:37.000Z">
+<meta property="article:modified_time" content="2019-03-24T01:48:15.102Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2019/02/14/rxjs-sequence/1550108112073.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2019/02/14/rxjs-sequence/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2019/02/14/rxjs-sequence/","path":"2019/02/14/rxjs-sequence/","title":"[RxJS] 應用練習 - sequenceEqual"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[RxJS] 應用練習 - sequenceEqual | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%91%E6%88%B0"><span class="nav-number">1.</span> <span class="nav-text">挑戰</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%82%E4%BA%AE%E4%B8%80%E9%BB%9E%E7%9A%84%E8%A7%A3%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">漂亮一點的解法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E8%A8%8A"><span class="nav-number">3.</span> <span class="nav-text">參考資訊</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/02/14/rxjs-sequence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[RxJS] 應用練習 - sequenceEqual | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [RxJS] 應用練習 - sequenceEqual
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-02-14 08:14:37" itemprop="dateCreated datePublished" datetime="2019-02-14T08:14:37+08:00">2019-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2019-03-24 09:48:15" itemprop="dateModified" datetime="2019-03-24T09:48:15+08:00">2019-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/02/14/rxjs-sequence/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/14/rxjs-sequence/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>今天在 medium 上面看到一篇有趣的文章，他的主題是 <code>How to detect a sequence of keystrokes in JavaScript</code>，那讓我用 RxJS 來挑戰一下，順便回味一下以前打電動需要輸入一系列的指令才可以開啟密技的樂趣</p>
+<span id="more"></span>
+<h1 id="挑戰"><a class="header-anchor" href="#挑戰"> </a>挑戰</h1>
+<blockquote>
+<p>當使用者在畫面上輸入了 **上上下下左右左右 BA **，就跳出 <code>密技開啟</code> 的訊息</p>
+</blockquote>
+<ol>
+<li>
+<p>擷取 <code>keyup</code> 事件，這個簡單</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> keys = <span class="title function_">fromEvent</span>(<span class="variable language_">document</span>, <span class="string">&#x27;keyup&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>我們先用 <code>code</code> 來作為判斷的規則</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> keys = <span class="title function_">fromEvent</span>(<span class="variable language_">document</span>, <span class="string">&#x27;keyup&#x27;</span>).<span class="title function_">pipe</span>(<span class="title function_">map</span>(<span class="function"><span class="params">e</span>=&gt;</span> e.<span class="property">code</span>));</span><br></pre></td></tr></table></figure>
+<p><img src="1550108112073.png" alt="1550108112073"></p>
+</li>
+<li>
+<p>準備開啟密技所需要的條件</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> codes = [</span><br><span class="line">  <span class="string">&#x27;ArrowUp&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowUp&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowDown&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowDown&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowLeft&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowRight&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowLeft&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowRight&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;KeyB&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;KeyA&#x27;</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>這裡先暫停一下，要解這一個題目，只要將步驟 2 所收集到的 code 與步驟 3 的條件做比對，如果相同就可以啟動密技了</p>
+<ol start="4">
+<li>
+<p>收集 10 個 <code>keyup</code> 事件</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> keyCorrection = keys.<span class="title function_">pipe</span>(</span><br><span class="line">    <span class="title function_">bufferCount</span>(<span class="number">10</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>bufferCount</code> :</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bufferCount&lt;T&gt;(<span class="attr">bufferSize</span>: <span class="built_in">number</span>, <span class="attr">startBufferEvery</span>: <span class="built_in">number</span> = <span class="literal">null</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>比較陣列的值</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> matches = keyCorrection.<span class="title function_">pipe</span>(</span><br><span class="line">  <span class="title function_">map</span>(<span class="function"><span class="params">result</span> =&gt;</span> codes.<span class="title function_">every</span>(<span class="function">(<span class="params">item, idx</span>) =&gt;</span> item === result[idx]))</span><br><span class="line">);</span><br><span class="line">matches.<span class="title function_">subscribe</span>(<span class="function"><span class="params">x</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(x));</span><br></pre></td></tr></table></figure>
+<p>這樣子當次輸入 10 次項目時，就會做一次比對結果，這樣子結果是對的，但好像沒那麼漂亮</p>
+</li>
+</ol>
+<h1 id="漂亮一點的解法"><a class="header-anchor" href="#漂亮一點的解法"> </a>漂亮一點的解法</h1>
+<p>先來調整一下 <code>keyCorrection</code> 的寫法，讓在第一次收集完 <code>keyup</code> 事件後，之後每一次的<code>keyup</code> 事件都會送出值</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> keyCorrection = keys.<span class="title function_">pipe</span>(</span><br><span class="line">    <span class="title function_">bufferCount</span>(<span class="number">10</span>,<span class="number">1</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>再來修正比較的部份，這裡介紹一個 operator, <code>sequenceEqual</code>，這一個方法的功用是比較兩個 Observable 的值發生的順序是否一樣</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sequenceEqual&lt;T&gt;(<span class="attr">compareTo</span>: <span class="title class_">Observable</span>&lt;T&gt;, <span class="attr">comparator</span>?: <span class="function">(<span class="params"><span class="attr">a</span>: T, <span class="attr">b</span>: T</span>) =&gt;</span> <span class="built_in">boolean</span>): <span class="title class_">OperatorFunction</span>&lt;T, <span class="built_in">boolean</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>將 matches 的部份調整一下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> matches = keyCorrection.<span class="title function_">pipe</span>(</span><br><span class="line">  <span class="title function_">mergeMap</span>(<span class="function"><span class="params">result</span> =&gt;</span> <span class="title function_">from</span>(result).<span class="title function_">pipe</span>(<span class="title function_">sequenceEqual</span>(<span class="title function_">from</span>(codes))))</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>經過這樣子的修正後，一樣可以達到一樣的效果，最後在修飾一下，完整的程式碼如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; fromEvent, <span class="keyword">from</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; map, bufferCount, tap, mergeMap, sequenceEqual &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/operators&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">clear</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> codes = <span class="title function_">from</span>([</span><br><span class="line">  <span class="string">&#x27;ArrowUp&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowUp&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowDown&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowDown&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowLeft&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowRight&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowLeft&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;ArrowRight&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;KeyB&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;KeyA&#x27;</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> keys = <span class="title function_">fromEvent</span>(<span class="variable language_">document</span>, <span class="string">&#x27;keyup&#x27;</span>).<span class="title function_">pipe</span>(<span class="title function_">map</span>(<span class="function">(<span class="params"><span class="attr">e</span>: <span class="title class_">KeyboardEvent</span></span>) =&gt;</span> e.<span class="property">code</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> matches = keys.<span class="title function_">pipe</span>(</span><br><span class="line">  <span class="title function_">bufferCount</span>(<span class="number">10</span>, <span class="number">1</span>),</span><br><span class="line">  <span class="title function_">tap</span>(<span class="variable language_">console</span>.<span class="property">log</span>),</span><br><span class="line">  <span class="title function_">mergeMap</span>(<span class="function"><span class="params">result</span> =&gt;</span> <span class="title function_">from</span>(result).<span class="title function_">pipe</span>(<span class="title function_">sequenceEqual</span>(codes)))</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">matches.<span class="title function_">subscribe</span>(<span class="function"><span class="params">x</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(x));</span><br></pre></td></tr></table></figure>
+<h1 id="參考資訊"><a class="header-anchor" href="#參考資訊"> </a>參考資訊</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackblitz.com/edit/sequenceequal?file=index.ts">範例程式碼</a></li>
+<li><a target="_blank" rel="noopener" href="https://rxjs.dev/api/operators/sequenceEqual">RxJS API - sequenceEqual</a></li>
+<li><a target="_blank" rel="noopener" href="https://rxjs.dev/api/operators/bufferCount">RxJS API - bufferCount</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/14/ng-ngzone/" rel="prev" title="[Angular] NgZone 的應用">
+                  <i class="fa fa-angle-left"></i> [Angular] NgZone 的應用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/19/rxjs-using/" rel="next" title="[RxJS] using">
+                  [RxJS] using <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Angular 使用 Windows Authentication，聽起來沒什麼，但是加上 CORS 就是不同的故事了 ※ 這篇文章的後端是使用 ASP.NET Core MVC ，但要處理的問題是一樣的，觀念通用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 使用 Windows 驗證 (Windows Authentication)">
+<meta property="og:url" content="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Angular 使用 Windows Authentication，聽起來沒什麼，但是加上 CORS 就是不同的故事了 ※ 這篇文章的後端是使用 ASP.NET Core MVC ，但要處理的問題是一樣的，觀念通用">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/1554953527168.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/1554953778917.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/1554954488888.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/1554954644800.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/1554954728393.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/1554955062068.png">
+<meta property="article:published_time" content="2019-04-11T02:52:41.000Z">
+<meta property="article:modified_time" content="2019-04-20T11:45:09.735Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/1554953527168.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2019/04/11/ng-windows-auth/","path":"2019/04/11/ng-windows-auth/","title":"[Angular] 使用 Windows 驗證 (Windows Authentication)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] 使用 Windows 驗證 (Windows Authentication) | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B0%A1%E5%96%AE%E6%83%85%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">簡單情境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8D%E5%BE%AE%E8%A4%87%E9%9B%9C%E6%83%85%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">稍微複雜情境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/04/11/ng-windows-auth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] 使用 Windows 驗證 (Windows Authentication) | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] 使用 Windows 驗證 (Windows Authentication)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-04-11 10:52:41" itemprop="dateCreated datePublished" datetime="2019-04-11T10:52:41+08:00">2019-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2019-04-20 19:45:09" itemprop="dateModified" datetime="2019-04-20T19:45:09+08:00">2019-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/04/11/ng-windows-auth/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/11/ng-windows-auth/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Angular 使用 Windows Authentication，聽起來沒什麼，但是加上 CORS 就是不同的故事了</p>
+<p>※ 這篇文章的後端是使用 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core MVC ，但要處理的問題是一樣的，觀念通用</p>
+<span id="more"></span>
+<p>Angular 的 HttpClient 在發送請求時，如果在同一個網址下 (同一個網站)，自然會付上 cookie，但遇到不同站點下時又想要帶 cookie 時，該怎麼處理，這時候就必須將 <code>withCredentials</code> 開啟，這是 <code>XMLHttpRequest</code> 內建屬性，用途為判斷是否該使用類似 cookies, authorization headers 或者 TLS 客戶端認證這一類資格證書來建立一個跨站點訪問控制（cross-site <code>Access-Control</code>）請求。這裡是基本用法，當然如果要全域套用時，就會寫成 Http interceptor</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">&#x27;https://localhost:44369/api/values&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">withCredentials</span>: <span class="literal">true</span></span><br><span class="line">      &#125;)</span><br><span class="line">      .<span class="title function_">subscribe</span>(<span class="function"><span class="params">data</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(data));</span><br></pre></td></tr></table></figure>
+<p>Angular 端這樣子就可以算是設定完成了</p>
+<p>問題是後端要怎麼設定，會遇到幾個問題</p>
+<ol>
+<li>CORS</li>
+<li>Web 授權設定</li>
+</ol>
+<h1 id="簡單情境"><a class="header-anchor" href="#簡單情境"> </a>簡單情境</h1>
+<p>當 Angular  的 Http 請求只有單純的設定 <code>withCredentials: true</code> 時，後端的設定就很單純，(這裡就假設已經會新增一個基本的 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core MVC 網站)</p>
+<ol>
+<li>
+<p>開啟 <code>windowsAuthentication</code> 的方法有兩種</p>
+<ol>
+<li>
+<p>直接修改 <code>Properties/launchSettings.json</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;iisSettings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;windowsAuthentication&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> <span class="comment">// 設定為 true</span></span><br><span class="line">    <span class="attr">&quot;anonymousAuthentication&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;iisExpress&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;applicationUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://localhost:11235&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;sslPort&quot;</span><span class="punctuation">:</span> <span class="number">44369</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">   ....</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>透過 UI 的方式設定</p>
+<p><img src="1554953527168.png" alt="1554953527168"></p>
+</li>
+<li>
+<p>在 API 的 Controller 的地方，加上 <code>[Authorize]</code></p>
+</li>
+</ol>
+</li>
+<li>
+<p>啟動 <code>CORS</code></p>
+<ol>
+<li>
+<p>在 <code>Startup.cs</code> 檔案新增以下程式碼</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">            services.AddCors(o =&gt; o.AddPolicy(<span class="string">&quot;CORSPolicy&quot;</span>, builder =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                builder.AllowAnyOrigin()</span><br><span class="line">                       .AllowAnyMethod()</span><br><span class="line">                       .AllowAnyHeader()</span><br><span class="line">                       .AllowCredentials()</span><br><span class="line">                       .WithOrigins(<span class="string">&quot;http://localhost:4200&quot;</span>);</span><br><span class="line">            &#125;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    	...</span><br><span class="line">        app.UseCors(<span class="string">&quot;CORSPolicy&quot;</span>);</span><br><span class="line">    	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>.WithOrigins(&quot;http://localhost:4200&quot;)</code> 這一行很重要，當 CORS + <code>withCredentials: true</code> 時，沒有這一行就會噴出錯誤訊息</p>
+<p><img src="1554953778917.png" alt="1554953778917"></p>
+</li>
+<li>
+<p>在 API 的 Controller 的地方，加上 <code>[EnableCors(&quot;CORSPolicy&quot;)]</code></p>
+</li>
+<li>
+<p>相關關於 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core MVC 如何加上 CORS 的文章，網路很多，搜尋一下應該很容易就找到了</p>
+</li>
+</ol>
+</li>
+<li>
+<p>當上述的兩的步驟完成後，應可以完成最基本的 Windows 驗證功能</p>
+</li>
+<li>
+<p>至於之後驗證要做到多細，就與處理登入驗證的做法是一樣的了</p>
+</li>
+</ol>
+<h1 id="稍微複雜情境"><a class="header-anchor" href="#稍微複雜情境"> </a>稍微複雜情境</h1>
+<p>在實做的過程中發現了一個問題，當我的 Http 請求寫成這樣時，後端設定就變複雜許多</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">http</span></span><br><span class="line">      .<span class="title function_">get</span>(<span class="string">&#x27;https://localhost:44369/api/values&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">headers</span>: <span class="keyword">new</span> <span class="title class_">HttpHeaders</span>(&#123;</span><br><span class="line">          <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="string">&#x27;*&#x27;</span></span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="attr">withCredentials</span>: <span class="literal">true</span></span><br><span class="line">      &#125;)</span><br><span class="line">      .<span class="title function_">subscribe</span>(<span class="function"><span class="params">data</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(data));</span><br></pre></td></tr></table></figure>
+<p>瀏覽器在請求時，因為會先發 <code>Options</code> 的 preflight 請求，但這時發的請求是不會有任何 credentials 的，當然後端會直接擋掉</p>
+<p><img src="1554954488888.png" alt="1554954488888"></p>
+<p>這時候後端的設定要調整一下，要允許匿名登入，設定方式跟上面開啟 <code>windowsAuthentication</code> 類似，只要將 <code>anonymousAuthentication</code> 設定為真，或是將 <code>啟動匿名驗證</code> 打勾</p>
+<p><img src="1554954644800.png" alt="1554954644800"></p>
+<p>當這樣子設定完後，重新啟動後端服務，當打開 <code>https://localhost:44369/api/values</code>  網址時會出現以下的錯誤畫面</p>
+<p><img src="1554954728393.png" alt="1554954728393"></p>
+<p>只好再來調整一下 <code>Startup.cs</code> 的程式了</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 新增這行</span></span><br><span class="line">    services.AddAuthentication(IISDefaults.AuthenticationScheme);</span><br><span class="line"></span><br><span class="line">    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當修改完成後，重新整理一次網頁，之前的錯誤訊息就會消失了，打開 <code>Networking</code> 的地方，就會看到兩次對後端的請求都是正常的</p>
+<p><img src="1554955062068.png" alt="1554955062068"></p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/windowsauth?view=aspnetcore-2.2&amp;tabs=visual-studio">設定 Windows 驗證</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials">XMLHttpRequest.withCredentials</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/04/08/grpc-chat-server/" rel="prev" title="[.NET Core] gRPC with Visual Studio 2019 and .NET Core 3">
+                  <i class="fa fa-angle-left"></i> [.NET Core] gRPC with Visual Studio 2019 and .NET Core 3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/15/vscode-custom-emmet/" rel="next" title="[VS Code] 自訂 Emmet 範本">
+                  [VS Code] 自訂 Emmet 範本 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

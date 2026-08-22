@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="要使用 RSA Private Key 來做資料簽章表示我們需要將 Private Key 存放在某一個地方，但絕對不會在程式的參數設定檔內，其實在 ASP.NET Core 內提供很多方法可以存放設定檔，例如使用 user secret，更多資訊可以參閱此文件。 Azure 上面也有一個 Azure Key Vault 的服務，可以集中管理相關的金鑰 (Keys)、秘密 (Secret)、憑證">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[.NET Core] 使用 Azure Key Vault 服務來管理簽章用的金鑰">
+<meta property="og:url" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="要使用 RSA Private Key 來做資料簽章表示我們需要將 Private Key 存放在某一個地方，但絕對不會在程式的參數設定檔內，其實在 ASP.NET Core 內提供很多方法可以存放設定檔，例如使用 user secret，更多資訊可以參閱此文件。 Azure 上面也有一個 Azure Key Vault 的服務，可以集中管理相關的金鑰 (Keys)、秘密 (Secret)、憑證">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622213144659.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622213613127.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/SNAGHTML2126530-1592833176303.PNG">
+<meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622214050780.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622220559893.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622225114968.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622220802801.png">
+<meta property="article:published_time" content="2020-06-22T13:16:41.000Z">
+<meta property="article:modified_time" content="2020-07-30T05:33:21.502Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content=".NET Core">
+<meta property="article:tag" content="Azure">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/image-20200622213144659.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/","path":"2020/06/22/azure-keyVault-sign-with-rsa/","title":"[.NET Core] 使用 Azure Key Vault 服務來管理簽章用的金鑰"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[.NET Core] 使用 Azure Key Vault 服務來管理簽章用的金鑰 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%98%E5%AF%86-Secret"><span class="nav-number">1.</span> <span class="nav-text">秘密 (Secret)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">程式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%91%E9%91%B0-Keys"><span class="nav-number">2.</span> <span class="nav-text">金鑰 (Keys)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2020/06/22/azure-keyVault-sign-with-rsa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[.NET Core] 使用 Azure Key Vault 服務來管理簽章用的金鑰 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [.NET Core] 使用 Azure Key Vault 服務來管理簽章用的金鑰
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-06-22 21:16:41" itemprop="dateCreated datePublished" datetime="2020-06-22T21:16:41+08:00">2020-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2020-07-30 13:33:21" itemprop="dateModified" datetime="2020-07-30T13:33:21+08:00">2020-07-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Azure/" itemprop="url" rel="index"><span itemprop="name">Azure</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NET-Core/" itemprop="url" rel="index"><span itemprop="name">.NET Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/06/22/azure-keyVault-sign-with-rsa/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/06/22/azure-keyVault-sign-with-rsa/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>要使用 RSA Private Key 來做資料簽章表示我們需要將 Private Key 存放在某一個地方，但絕對不會在程式的參數設定檔內，其實在 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core 內提供很多方法可以存放設定檔，例如使用 user secret，更多資訊可以參閱<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-3.1">此文件</a>。</p>
+<p>Azure 上面也有一個 Azure Key Vault 的服務，可以集中管理相關的金鑰 (Keys)、秘密 (Secret)、憑證 (Certificate) 等資訊，而相關的服務就可以連線到這一個 Key Vault 服務取得相關的資訊做進一步的使用，例如加解密等作業</p>
+<span id="more"></span>
+<h1 id="秘密-Secret"><a class="header-anchor" href="#秘密-Secret"> </a>秘密 (Secret)</h1>
+<p>在一個網站會有一些設定檔會因為部屬環境而所異動，這一類的設定當然不可能寫死在程式裡，所以會將這一類的設定檔放在某一個設定檔類，例如 appsettings.json 或是 user secret 等地方，而像資料庫連線這種資料敏感的資料，存放在 appsettings.json 內就十分危險，會建議放在版控以外的地方或是 Hosting 的主機上，例如 Azure App Service 就有提供設定環境參數的地方。</p>
+<p><img src="image-20200622213144659.png" alt="image-20200622213144659"></p>
+<p>但如果同樣的資訊出現在不同的程式裡，分別設定就變得十分不合適了，這時候使用 Azure Key Vault 服務就會是個不錯的選擇，但這邊就不多說明如何建立 Azure Key Vault 的步驟了，相關資訊可以上網找一下，應該蠻多的</p>
+<p>當 Azure Key Vault 設定好時，為了要讓網站 (<a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core MVC) 可以將 Key Vault 上所設定的 Secret 資訊讀近來，還需要以下有幾個步驟</p>
+<ol>
+<li>
+<p>在 Azure Active Directory 下註冊應用程式</p>
+<p><img src="image-20200622213613127.png" alt="image-20200622213613127"></p>
+</li>
+<li>
+<p>註冊完成後，到該應用程式下的【憑證與秘密】，新增 【用戶端密碼】</p>
+<ol>
+<li>這邊需要記下兩個資訊，分別是 【應用程式 (用戶端) 識別碼】與 【用戶端密碼的值】</li>
+<li>這邊如果不想要使用用戶端密碼的，可以使用憑證的方式</li>
+</ol>
+</li>
+<li>
+<p>回到 Azure Key Vault 的服務內，授權應用程式可以存取 Key Vault</p>
+<p><img src="SNAGHTML2126530-1592833176303.PNG" alt="img"></p>
+<ol start="4">
+<li>
+<p>新增存取原則</p>
+<p><img src="image-20200622214050780.png" alt="image-20200622214050780"></p>
+<ul>
+<li>設定相關的權限</li>
+<li>選擇套用的主體，這邊是指剛剛所註冊的應用程式</li>
+</ul>
+</li>
+<li>
+<p>完成新增動作</p>
+</li>
+</ol>
+<p>到這邊，就已經完成相關權限設定的部分，接下來就是程式端的設定</p>
+<h2 id="程式"><a class="header-anchor" href="#程式"> </a>程式</h2>
+<ol>
+<li>
+<p>需要安裝以下套件</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Azure.Services.AppAuthentication">Microsoft.Azure.Services.AppAuthentication</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Azure.KeyVault">Microsoft.Azure.KeyVault</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Extensions.Configuration.AzureKeyVault/">Microsoft.Extensions.Configuration.AzureKeyVault</a></li>
+</ol>
+</li>
+<li>
+<p>在 appsettings.json 的地方新增此資訊</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;KeyVault&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Vault&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxx&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ClientId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxx&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ClientSecret&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxx&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+<p>當然這邊的 <code>ClientId</code> 和 <code>ClientSecret</code> 會放在 <code>User secret</code> 下，而不會是 <code>appsettings.json</code> 內</p>
+</li>
+<li>
+<p>在 <code>Program.cs</code> 的地方做出以下調整</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IHostBuilder <span class="title">CreateHostBuilder</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span> =&gt;</span><br><span class="line">            Host.CreateDefaultBuilder(<span class="keyword">args</span>)</span><br><span class="line">                .ConfigureAppConfiguration((ctx, builder) =&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">// 新增部分</span></span><br><span class="line">                    <span class="keyword">var</span> builtConfig = builder.Build();</span><br><span class="line">                    <span class="keyword">var</span> keyVaultEndpoint = GetKeyVaultEndpoint(builtConfig[<span class="string">&quot;KeyVault:Vault&quot;</span>]);</span><br><span class="line">                    <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(keyVaultEndpoint))</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">var</span> azureServiceTokenProvider = <span class="keyword">new</span> AzureServiceTokenProvider();</span><br><span class="line">                        <span class="keyword">var</span> keyVaultClient = <span class="keyword">new</span> KeyVaultClient(</span><br><span class="line">                            <span class="keyword">new</span> KeyVaultClient.AuthenticationCallback(</span><br><span class="line">                                azureServiceTokenProvider.KeyVaultTokenCallback));</span><br><span class="line">                        builder.AddAzureKeyVault(</span><br><span class="line">                            keyVaultEndpoint, keyVaultClient, <span class="keyword">new</span> DefaultKeyVaultSecretManager());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)                </span><br><span class="line">                .ConfigureWebHostDefaults(webBuilder =&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    webBuilder.UseStartup&lt;Startup&gt;();</span><br><span class="line">                &#125;);</span><br><span class="line">	   <span class="comment">// 新增部分</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">GetKeyVaultEndpoint</span>(<span class="params"><span class="built_in">string</span> VAULT_NAME</span>)</span> =&gt; <span class="string">$&quot;https://<span class="subst">&#123;VAULT_NAME&#125;</span>.vault.azure.net/&quot;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>當完成這修改後，.NET Core MVC 就會優先從 Azure Key Vault 裡取得 secret 資料，讀取的方式與其他參數設定取法是一樣的</p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="金鑰-Keys"><a class="header-anchor" href="#金鑰-Keys"> </a>金鑰 (Keys)</h1>
+<p>至於金鑰的取法就比較特殊點，需要透過 <code>KeyVaultClient</code> 的方式來取得，而且也只能取得公開金鑰的部分，私有金鑰要做的事情，則會透過 <code>KeyVaultClient</code> 來完成。</p>
+<p>要建立 <code>KeyVaultClient</code> 的方法如下</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> KeyVaultClient <span class="title">GetClient</span>()</span> =&gt; <span class="keyword">new</span> KeyVaultClient(<span class="keyword">new</span> KeyVaultClient.AuthenticationCallback(<span class="keyword">async</span> (<span class="built_in">string</span> authority, <span class="built_in">string</span> resource, <span class="built_in">string</span> scope) =&gt;</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="keyword">var</span> context = <span class="keyword">new</span> AuthenticationContext(authority, TokenCache.DefaultShared);</span><br><span class="line">           ClientCredential clientCred = <span class="keyword">new</span> ClientCredential(configuration[<span class="string">&quot;KeyVault:ClientId&quot;</span>], configuration[<span class="string">&quot;KeyVault:ClientSecret&quot;</span>]);</span><br><span class="line">           <span class="keyword">var</span> authResult = <span class="keyword">await</span> context.AcquireTokenAsync(resource, clientCred);</span><br><span class="line">           <span class="keyword">return</span> authResult.AccessToken;</span><br><span class="line">       &#125;));</span><br></pre></td></tr></table></figure>
+<p>執行 <code>GetClient()</code> 就可以取得 KeyVaultClient，當取得 client 後，就可以取得我們想要的金鑰，但這邊最簡單的方式是透過金鑰的識別碼</p>
+<p><img src="image-20200622220559893.png" alt="image-20200622220559893"></p>
+<p><img src="image-20200622225114968.png" alt="image-20200622225114968"></p>
+<p><img src="image-20200622220802801.png" alt="image-20200622220802801"></p>
+<p>這邊的【金鑰識別碼】就是我們等等要用的資訊，先記起來，相關的程式碼會這樣子寫。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> KeyId = <span class="string">&quot;xxx&quot;</span>; <span class="comment">// 金鑰識別碼</span></span><br><span class="line"><span class="keyword">var</span> client = GetClient();</span><br><span class="line"><span class="keyword">var</span> hostKey = <span class="keyword">await</span> client.GetKeyAsync(KeyId);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取得 Public Key </span></span><br><span class="line"><span class="keyword">var</span> rsa = hostkye.Key.ToRSA();</span><br><span class="line"><span class="keyword">var</span> publicKey = rsa.ToXmlString(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 簽章</span></span><br><span class="line"><span class="keyword">var</span> hasher = <span class="keyword">new</span> SHA256CryptoServiceProvider();</span><br><span class="line"><span class="keyword">var</span> digest = hasher.ComputeHash(data_buffer);</span><br><span class="line"><span class="keyword">var</span> result = <span class="keyword">await</span> client.SignAsync(KeyId, <span class="string">&quot;RS256&quot;</span>, digest);</span><br><span class="line"><span class="built_in">byte</span>[] sign_buffer = result.Result;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 驗證簽章</span></span><br><span class="line"><span class="keyword">var</span> sign_buffer = sign_getFromSomeWhere();</span><br><span class="line"><span class="keyword">var</span> data_buffer = data_getFromSomeWhere();</span><br><span class="line"><span class="keyword">var</span> rsa = <span class="keyword">new</span> RSACryptoServiceProvider();</span><br><span class="line">rsa.FromXmlString(publicKey);</span><br><span class="line"><span class="keyword">var</span> hasher = <span class="keyword">new</span> SHA256CryptoServiceProvider();</span><br><span class="line"><span class="keyword">var</span> digest = hasher.ComputeHash(data_buffer);</span><br><span class="line"><span class="keyword">var</span> isVerfy = rsa.VerifyHash(digest, <span class="string">&quot;Sha256&quot;</span>, sign_buffer);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>到這裡基本上就是一些 KeyVaultClient 的操作，當然還有其他更細節的東西，可能就要等我之後有玩更深入時，才能分享了</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/zh-tw/services/key-vault/">Azure Key Vault</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PgujSug1ZbI">Azure Key Vault Tutorial | Secure secrets, keys and certificates easily</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/security/key-vault-configuration?view=aspnetcore-3.1">ASP.NET Core 中的 Azure Key Vault 設定提供者</a></li>
+<li><a target="_blank" rel="noopener" href="https://dotblogs.com.tw/tom5707/2018/05/07/004419">[ASP.NET Core] 使用User Secret安全存放開發應用程式密鑰(VS 2017)</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Azure/" rel="tag"># Azure</a>
+              <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/06/15/azure-app-service-linux-angular/" rel="prev" title="[Azure] 將 Angular 網站放在 App Service Linux Version 上">
+                  <i class="fa fa-angle-left"></i> [Azure] 將 Angular 網站放在 App Service Linux Version 上
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/25/angular-moment-localte-is-too-fat/" rel="next" title="[Angular] 幫 moment.js 套件瘦身">
+                  [Angular] 幫 moment.js 套件瘦身 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

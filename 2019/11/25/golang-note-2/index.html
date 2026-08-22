@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="上一篇簡單快速的介紹 Go 最基礎最簡單的部分，這一篇要進入比較進階一點的地方，更多跟語言有關的筆記介紹如下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Go] Go 語言學習筆記 - 語言 part 2">
+<meta property="og:url" content="http://blog.kevinyang.net/2019/11/25/golang-note-2/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="上一篇簡單快速的介紹 Go 最基礎最簡單的部分，這一篇要進入比較進階一點的地方，更多跟語言有關的筆記介紹如下">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/25/golang-note-2/image-20191125211743398.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/25/golang-note-2/image-20191125222622273.png">
+<meta property="article:published_time" content="2019-11-25T12:04:36.000Z">
+<meta property="article:modified_time" content="2019-11-25T14:31:46.713Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2019/11/25/golang-note-2/image-20191125211743398.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2019/11/25/golang-note-2/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2019/11/25/golang-note-2/","path":"2019/11/25/golang-note-2/","title":"[Go] Go 語言學習筆記 - 語言 part 2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Go] Go 語言學習筆記 - 語言 part 2 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pointers"><span class="nav-number">1.</span> <span class="nav-text">Pointers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Structs"><span class="nav-number">2.</span> <span class="nav-text">Structs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Arrays"><span class="nav-number">3.</span> <span class="nav-text">Arrays</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Slices"><span class="nav-number">4.</span> <span class="nav-text">Slices</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A%E6%96%B9%E6%B3%95-1"><span class="nav-number">4.1.</span> <span class="nav-text">設定方法 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A%E6%96%B9%E6%B3%95-2"><span class="nav-number">4.2.</span> <span class="nav-text">設定方法 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slices-%E8%B3%87%E8%A8%8A-%E9%87%8D%E8%A6%81%E8%A7%80%E5%BF%B5"><span class="nav-number">4.3.</span> <span class="nav-text">slices 資訊 (重要觀念)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A0%90%E8%A8%AD%E5%80%BC"><span class="nav-number">4.4.</span> <span class="nav-text">預設值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-make-%E5%BB%BA%E7%AB%8B-slices"><span class="nav-number">4.5.</span> <span class="nav-text">使用 make 建立 slices</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%B6%AD%E9%99%A3%E5%88%97"><span class="nav-number">4.6.</span> <span class="nav-text">多維陣列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%B4%E5%A2%9E"><span class="nav-number">4.7.</span> <span class="nav-text">擴增</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#range"><span class="nav-number">4.8.</span> <span class="nav-text">range</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%E9%96%B1%E8%AE%80"><span class="nav-number">4.9.</span> <span class="nav-text">延伸閱讀</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/11/25/golang-note-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Go] Go 語言學習筆記 - 語言 part 2 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Go] Go 語言學習筆記 - 語言 part 2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2019-11-25 20:04:36 / 修改時間：22:31:46" itemprop="dateCreated datePublished" datetime="2019-11-25T20:04:36+08:00">2019-11-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/11/25/golang-note-2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/25/golang-note-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>上一篇簡單快速的介紹 Go 最基礎最簡單的部分，這一篇要進入比較進階一點的地方，更多跟語言有關的筆記介紹如下</p>
+<span id="more"></span>
+<h1 id="Pointers"><a class="header-anchor" href="#Pointers"> </a>Pointers</h1>
+<p>Pointer 的作用是讓變數可以參考某一個變數的記憶體位置，預設值為 <code>nil</code>，語法是 <code>*T</code> 是指到 T 的位址(memory address)，<code>&amp;</code> 是產生 <code>pointer</code> 的運算式</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	i, j := <span class="number">42</span>, <span class="number">2701</span></span><br><span class="line"></span><br><span class="line">	p := &amp;i</span><br><span class="line">	fmt.Println(*p) <span class="comment">// 42</span></span><br><span class="line">	*p = <span class="number">21</span></span><br><span class="line">	fmt.Println(i) <span class="comment">// 21</span></span><br><span class="line"></span><br><span class="line">	p = &amp;j</span><br><span class="line">	*p = *p / <span class="number">37</span></span><br><span class="line">	fmt.Println(j) <span class="comment">// 73</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Structs"><a class="header-anchor" href="#Structs"> </a>Structs</h1>
+<p>可以利用 <code>struct</code> 來當作一個資料模型</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span> <span class="comment">// field</span></span><br><span class="line">	Y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以將 <code>structs</code> 視為一個 data object，當然就可以做到這件事情</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// Vertex Model</span></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span></span><br><span class="line">	Y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	v := Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</span><br><span class="line">	v.X = <span class="number">4</span></span><br><span class="line">    fmt.Println(v) <span class="comment">// output: &#123;4 2&#125;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>當 <code>strcut</code> 遇上 <code>pointer</code> 時，由於 <code>*</code> 寫起來很麻煩，所以當是一個 struct point 時， <code>*</code> 就可以不用寫</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span></span><br><span class="line">	Y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	v := Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</span><br><span class="line">	p := &amp;v</span><br><span class="line">    p.X = <span class="number">5</span></span><br><span class="line">    fmt.Println(v) <span class="comment">// output &#123;5 2&#125;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果還是要加 <code>*</code> 的話，還是可以加，寫法如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	v := Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</span><br><span class="line">	p := &amp;v</span><br><span class="line">    (*p).X = <span class="number">5</span> <span class="comment">// 加 * 的寫法 (*T).field</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義完 <code>strcut</code> 後，建立 struct 實體的方式除了直接一開始就先給值之外，還可以這樣子寫</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	X, Y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">v1 := Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;  <span class="comment">// has type Vertex</span></span><br><span class="line">v2 := Vertex&#123;X: <span class="number">1</span>&#125;  <span class="comment">// Y:0 is implicit</span></span><br><span class="line">v3 := Vertex&#123;&#125;      <span class="comment">// X:0 and Y:0</span></span><br><span class="line">p  := &amp;Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125; <span class="comment">// has type *Vertex</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Arrays"><a class="header-anchor" href="#Arrays"> </a>Arrays</h1>
+<p>陣列的操作，在任何程式語言都應該被好好熟悉並掌握，在 Go 裡面宣告陣列的方式比較不一樣，宣告方視為 <code>[n]T</code>  is an array of <code>n</code> values of type <code>T</code>，範例</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a [<span class="number">2</span>]<span class="type">string</span></span><br><span class="line">    a[<span class="number">0</span>] = <span class="string">&quot;Hello&quot;</span></span><br><span class="line">    a[<span class="number">1</span>] = <span class="string">&quot;world&quot;</span></span><br><span class="line">    fmt.Println(a[<span class="number">0</span>], a[<span class="number">1</span>]) <span class="comment">// output: Hello World</span></span><br><span class="line">    fmt.Println(a) <span class="comment">// output: [Hello World]</span></span><br><span class="line">    </span><br><span class="line">    primes := [<span class="number">6</span>]<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125; <span class="comment">//  宣告後直接賦予值</span></span><br><span class="line">	fmt.Println(primes)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>Go 在開發時，會立刻針對型別做檢查</p>
+</li>
+<li>
+<p>如果陣列初始值長度大於宣告的，也會出現錯誤提示</p>
+<p><img src="image-20191125211743398.png" alt="image-20191125211743398"></p>
+</li>
+</ul>
+<h1 id="Slices"><a class="header-anchor" href="#Slices"> </a>Slices</h1>
+<h2 id="設定方法-1"><a class="header-anchor" href="#設定方法-1"> </a>設定方法 1</h2>
+<p>Array 是一個有固定長度的陣列，而 slices 是沒有固定長度的陣列，宣告使用方式為</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">q := []<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// strcut slices</span></span><br><span class="line">s := []<span class="keyword">struct</span> &#123;</span><br><span class="line">		i <span class="type">int</span></span><br><span class="line">		b <span class="type">bool</span></span><br><span class="line">	&#125;&#123;</span><br><span class="line">		&#123;<span class="number">2</span>, <span class="literal">true</span>&#125;,</span><br><span class="line">		&#123;<span class="number">3</span>, <span class="literal">false</span>&#125;,</span><br><span class="line">		&#123;<span class="number">5</span>, <span class="literal">true</span>&#125;,</span><br><span class="line">		&#123;<span class="number">7</span>, <span class="literal">true</span>&#125;,</span><br><span class="line">		&#123;<span class="number">11</span>, <span class="literal">false</span>&#125;,</span><br><span class="line">		&#123;<span class="number">13</span>, <span class="literal">true</span>&#125;,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="設定方法-2"><a class="header-anchor" href="#設定方法-2"> </a>設定方法 2</h2>
+<p>slices 可透過這語法<code>array[lowIndex: highIndex]</code>，包含 <code>lowIndex</code> 但不包含 <code>highIndex</code>，從一個陣列中取出某一部分的陣列資料</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	primes := [<span class="number">6</span>]<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line">	s := primes[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    fmt.Println(primes, s) <span class="comment">// output: [2,3,5,7,11,13] [3,5]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong> 非常重要，slice 出來的陣列，並不是複製體，而是參考到原本的來源陣列，這表示，改動 slice 出來的陣列，是會影響到原本的資料，測試程式碼如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	primes := [<span class="number">6</span>]<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line">	s := primes[<span class="number">1</span>:<span class="number">3</span>] <span class="comment">// 由上面得知是 [3,5]</span></span><br><span class="line">	s[<span class="number">0</span>] = <span class="number">1</span> <span class="comment">// 修改後變成 [1,5]</span></span><br><span class="line">    fmt.Println(primes, s) <span class="comment">// output: [2,1,5,7.11.13] [1,5]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當沒有設 <code>lowIndex</code> 或 <code>highIndex</code> 時，Go 內的預設值會是</p>
+<ul>
+<li><code>lowIndex</code> : 0</li>
+<li><code>highIndex</code>: 陣列長度</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	primes := [<span class="number">6</span>]<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line">    s := primes[:<span class="number">3</span>] <span class="comment">// output: [2 3 5]</span></span><br><span class="line">    p := primes[<span class="number">4</span>:] <span class="comment">// output: [11 13]</span></span><br><span class="line">	fmt.Println(s, p) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="slices-資訊-重要觀念"><a class="header-anchor" href="#slices-資訊-重要觀念"> </a>slices 資訊 (重要觀念)</h2>
+<p>如果想要得知目前 <code>slice</code> 長度跟複製的陣列來源長度，可以透過 <code>len()</code> 和 <code>cap()</code> 兩個方法取得</p>
+<ul>
+<li><code>len()</code> : slice 出來的陣列長度</li>
+<li><code>cap()</code>: slice 來源的陣列長度</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := []<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line">    printSlice(s) <span class="comment">// len: 6, cap: 6, s: [2 3 5 7 11 13]</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Slice the slice to give it zero length.</span></span><br><span class="line">	s = s[:<span class="number">0</span>]</span><br><span class="line">    printSlice(s) <span class="comment">// len: 0, cap: 6, s: [], cap_s: [2 3 5 7 11 13]</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Extend its length.</span></span><br><span class="line">    s = s[:<span class="number">4</span>] </span><br><span class="line">	printSlice(s) <span class="comment">// len: 4, cap: 6, s: [2 3 5 7], cap_s: [2 3 5 7 11 13]</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Drop its first two values.</span></span><br><span class="line">    s = s[<span class="number">2</span>:]</span><br><span class="line">    printSlice(s) <span class="comment">// len: 2 cap: 4, s: [5 7], cap_s: [5 7 11 13]</span></span><br><span class="line">    </span><br><span class="line">    s = s[:<span class="number">4</span>]</span><br><span class="line">    printSlice(s) <span class="comment">// len: 4 cap: 4, s: [5 7 11 13], cap_s: [5 7 11 13]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="預設值"><a class="header-anchor" href="#預設值"> </a>預設值</h2>
+<p>而一個 <code>slices</code> 沒有設定初始值時，預設值就是 <code>nil</code></p>
+<h2 id="使用-make-建立-slices"><a class="header-anchor" href="#使用-make-建立-slices"> </a>使用 make 建立 slices</h2>
+<p><code>make</code> 是 go 內建的方法之一，可以透過 <code>make</code> 來建立一個動態長度的陣列, slices. 語法是</p>
+<blockquote>
+<p>make( []T, len, cap)</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    a := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">    fmt.Println(a, <span class="built_in">len</span>(a), <span class="built_in">cap</span>(a)) <span class="comment">// output: [] 0 5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多維陣列"><a class="header-anchor" href="#多維陣列"> </a>多維陣列</h2>
+<p>這應該就不用多解釋了</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">board := [][]<span class="type">string</span>&#123;</span><br><span class="line">		[]<span class="type">string</span>&#123;<span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>&#125;,</span><br><span class="line">		[]<span class="type">string</span>&#123;<span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>&#125;,</span><br><span class="line">		[]<span class="type">string</span>&#123;<span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>&#125;,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="擴增"><a class="header-anchor" href="#擴增"> </a>擴增</h2>
+<p>透過 <code>append( s []T, vs ...T)</code> 的方式增加 slices 內的資料筆數，slices 會根據需要長大</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> a []<span class="type">int</span></span><br><span class="line">	a = <span class="built_in">append</span>(a, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">	fmt.Println(a, <span class="built_in">len</span>(a), <span class="built_in">cap</span>(a))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="range"><a class="header-anchor" href="#range"> </a>range</h2>
+<p>range 是一種 for loop slices 的用法，直接看程式碼比較快</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i, v := <span class="keyword">range</span> pow &#123;</span><br><span class="line">		fmt.Println(i, v)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="image-20191125222622273.png" alt="image-20191125222622273"></p>
+<p>由圖片得知, <code>range</code> 會回傳目前所在的 index 和 value (複製本)</p>
+<p>如果只想值，不想取得 index 時，第一個 index 可以用 <code>_</code> 來代替</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> _, v := <span class="keyword">range</span> pow &#123;</span><br><span class="line">    fmt.Println(v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果只是想要取得 index 的話，那可直接省略 <code>, v</code> 的部分</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="keyword">range</span> pow &#123;</span><br><span class="line">    fmt.Println(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="延伸閱讀"><a class="header-anchor" href="#延伸閱讀"> </a>延伸閱讀</h2>
+<p>更多關於 slices 的資訊，可以閱讀<a target="_blank" rel="noopener" href="https://blog.golang.org/go-slices-usage-and-internals">這篇文章</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"># Go</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/11/25/golang-note-1/" rel="prev" title="[Go] Go 語言學習筆記 - 語法">
+                  <i class="fa fa-angle-left"></i> [Go] Go 語言學習筆記 - 語法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/11/27/angular-element-with-sharepoint/" rel="next" title="[Angular] Angular Element as SharePoint WebPart">
+                  [Angular] Angular Element as SharePoint WebPart <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

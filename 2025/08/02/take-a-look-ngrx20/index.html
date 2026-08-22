@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="NgRx Signals v20 前陣子釋出了，這一版從別人的文章中，似乎有不少有趣的新東西，其中推出尚在時現階段的 event system, 看文章似乎蠻有趣的，趁著周末有空自己動手玩看看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 看一下 NgRx Signals 20 有什麼好玩的東西">
+<meta property="og:url" content="http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="NgRx Signals v20 前陣子釋出了，這一版從別人的文章中，似乎有不少有趣的新東西，其中推出尚在時現階段的 event system, 看文章似乎蠻有趣的，趁著周末有空自己動手玩看看">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/image-20250802105456969.png">
+<meta property="article:published_time" content="2025-08-02T02:42:39.000Z">
+<meta property="article:modified_time" content="2025-08-02T06:59:20.755Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/image-20250802105456969.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/","path":"2025/08/02/take-a-look-ngrx20/","title":"[Angular] 看一下 NgRx Signals 20 有什麼好玩的東西"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] 看一下 NgRx Signals 20 有什麼好玩的東西 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Event-System"><span class="nav-number">1.</span> <span class="nav-text">Event System</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%BE%A9-Event-Type"><span class="nav-number">1.1.</span> <span class="nav-text">定義 Event Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dispatching-Events"><span class="nav-number">1.3.</span> <span class="nav-text">Dispatching Events</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-number">2.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2025/08/02/take-a-look-ngrx20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] 看一下 NgRx Signals 20 有什麼好玩的東西 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] 看一下 NgRx Signals 20 有什麼好玩的東西
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2025-08-02 10:42:39 / 修改時間：14:59:20" itemprop="dateCreated datePublished" datetime="2025-08-02T10:42:39+08:00">2025-08-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/08/02/take-a-look-ngrx20/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/08/02/take-a-look-ngrx20/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>NgRx Signals v20 前陣子釋出了，這一版從別人的文章中，似乎有不少有趣的新東西，其中推出尚在時現階段的 event system, 看文章似乎蠻有趣的，趁著周末有空自己動手玩看看</p>
+<span id="more"></span>
+<h2 id="Event-System"><a class="header-anchor" href="#Event-System"> </a>Event System</h2>
+<p>複習一下之前大家熟悉的 redux 運作模式，signal store 內的 state change 都會透過 event dispatch 的方式進行異動</p>
+<p><img src="image-20250802105456969.png" alt="image-20250802105456969"></p>
+<h3 id="定義-Event-Type"><a class="header-anchor" href="#定義-Event-Type"> </a>定義 Event Type</h3>
+<p>定義的方式與之前使用 redux 的寫法差不多</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">type</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@ngrx/signals&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; event &#125; <span class="keyword">from</span> <span class="string">&#x27;@ngrx/signals/events&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> opened = <span class="title function_">event</span>(<span class="string">&#x27;[Book Search] Opened&#x27;</span>);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> queryChanged = <span class="title function_">event</span>(<span class="string">&#x27;[Book Search]QueryChanged&#x27;</span>, <span class="keyword">type</span>&lt;<span class="built_in">string</span>&gt;());</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loadedSuccess = <span class="title function_">event</span>(<span class="string">&#x27;[Book API] Load success&#x27;</span>, <span class="keyword">type</span>&lt;<span class="title class_">Book</span>[]&gt;());</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>event</code> function 是一個 event creator function， 當 event 被呼叫時，會回傳一個 object  <code>{ type: 'xxx', payload: xxxx }</code></li>
+<li><code>event</code> function的第一個參數是 event type，第二個參數為 payload 型別</li>
+<li>官方建議定義 event type 時，命名規則為 <code>[Source] EventName</code></li>
+</ul>
+<p>上面的定義方式有點囉嗦，但過往定義方式確實是那樣，NgRx 提供另外一種方式可以有系統地整理定義 event type</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> bookApiEvents = <span class="title function_">eventGroup</span>(&#123;</span><br><span class="line">  <span class="attr">source</span>: <span class="string">&#x27;Books API&#x27;</span>,</span><br><span class="line">  <span class="attr">events</span>: &#123;</span><br><span class="line">    <span class="attr">loadedSuccess</span>: <span class="keyword">type</span>&lt;<span class="title class_">Book</span>[]&gt;(),</span><br><span class="line">    <span class="attr">loadedFailed</span>: <span class="keyword">type</span>&lt;<span class="built_in">string</span>&gt;(),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>透過 <code>eventGroup</code> function 可以將整個定義 event 的行為簡化，在使用上也比較容易些。</p>
+<h3 id="使用方式"><a class="header-anchor" href="#使用方式"> </a>使用方式</h3>
+<p>透過 <code>withReducer</code> 與 <code>on</code> 兩個 function 就可以將 event 與 signal store 結合在一起</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">BookStore</span> = <span class="title function_">signalStore</span>(</span><br><span class="line">  &#123; <span class="attr">providedIn</span>: <span class="string">&#x27;root&#x27;</span> &#125;,</span><br><span class="line">  withState&lt;<span class="title class_">BookSearchState</span>&gt;(&#123;</span><br><span class="line">    <span class="attr">books</span>: [],</span><br><span class="line">    <span class="attr">isLoading</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">filter</span>: &#123; <span class="attr">query</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">order</span>: <span class="string">&#x27;asc&#x27;</span> &#125;,</span><br><span class="line">  &#125;),</span><br><span class="line">  <span class="title function_">withReducer</span>(</span><br><span class="line">    <span class="title function_">on</span>(bookSearchEvents.<span class="property">opened</span>, <span class="function">() =&gt;</span> (&#123; <span class="attr">isLoading</span>: <span class="literal">true</span> &#125;)),</span><br><span class="line">    <span class="title function_">on</span>(bookSearchEvents.<span class="property">queryChanged</span>, <span class="function">(<span class="params">&#123; payload: query &#125;, state</span>) =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">filter</span>: &#123; ...state.<span class="property">filter</span>, query &#125;,</span><br><span class="line">      <span class="attr">isLoading</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;)),</span><br><span class="line">    <span class="title function_">on</span>(bookApiEvents.<span class="property">loadedSuccess</span>, <span class="function">(<span class="params">&#123; payload: books &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">      books,</span><br><span class="line">      <span class="attr">isLoading</span>: <span class="literal">false</span>,</span><br><span class="line">    &#125;)),</span><br><span class="line">    <span class="title function_">on</span>(bookApiEvents.<span class="property">loadedFailed</span>, <span class="function">() =&gt;</span> (&#123; <span class="attr">isLoading</span>: <span class="literal">false</span> &#125;))</span><br><span class="line">  )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>取在 <code>on</code> 內取得現在 store 的 state 值時，可以利用第三個參數的方式取得，可參考 <code>bookSearchEvents.queryChanged</code> 的設定方式</li>
+</ul>
+<p>官方文件上寫到另外一些進階用法，這邊就快速貼一下給大家一點感覺</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">CounterStore</span> = <span class="title function_">signalStore</span>(</span><br><span class="line">  <span class="title function_">withState</span>(&#123; <span class="attr">count1</span>: <span class="number">0</span>, <span class="attr">count2</span>: <span class="number">0</span> &#125;),</span><br><span class="line">  <span class="title function_">withReducer</span>(</span><br><span class="line">    <span class="comment">// 👇 Returning a partial state object.</span></span><br><span class="line">    <span class="title function_">on</span>(incrementBy, <span class="function">(<span class="params">event, state</span>) =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">count1</span>: state.<span class="property">count1</span> + event.<span class="property">payload</span>,</span><br><span class="line">    &#125;)),</span><br><span class="line">    <span class="comment">// 👇 Returning a partial state updater.</span></span><br><span class="line">    <span class="title function_">on</span>(increment, <span class="function">() =&gt;</span> <span class="title function_">incrementFirst</span>()),</span><br><span class="line">    <span class="comment">// 👇 Returning an array of partial state updaters.</span></span><br><span class="line">    <span class="title function_">on</span>(incrementBoth, <span class="function">() =&gt;</span> [<span class="title function_">incrementFirst</span>(), <span class="title function_">incrementSecond</span>()]),</span><br><span class="line">  ),</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">incrementFirst</span>(<span class="params"></span>): <span class="title class_">PartialStateUpdater</span>&lt;&#123; <span class="attr">count1</span>: <span class="built_in">number</span> &#125;&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">state</span>) =&gt;</span> (&#123; <span class="attr">count1</span>: state.<span class="property">count1</span> + <span class="number">1</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">incrementSecond</span>(<span class="params"></span>): <span class="title class_">PartialStateUpdater</span>&lt;&#123; <span class="attr">count2</span>: <span class="built_in">number</span> &#125;&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">state</span>) =&gt;</span> (&#123; <span class="attr">count2</span>: state.<span class="property">count2</span> + <span class="number">1</span> &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>處理副作用類型的動作，可以使用 <code>withEffects</code> 做管理</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Events</span>, withEffects &#125; <span class="keyword">from</span> <span class="string">&#x27;@ngrx/signals/events&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">BookSearchStore</span> = <span class="title function_">signalStore</span>(</span><br><span class="line">  <span class="comment">// ... other features</span></span><br><span class="line">  <span class="title function_">withEffects</span>(</span><br><span class="line">    <span class="function">(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">      store,</span></span></span><br><span class="line"><span class="params"><span class="function">      events = inject(Events),</span></span></span><br><span class="line"><span class="params"><span class="function">      booksService = inject(BooksService),</span></span></span><br><span class="line"><span class="params"><span class="function">    </span>) =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">loadBooksByQuery$</span>: events</span><br><span class="line">        .<span class="title function_">on</span>(bookSearchEvents.<span class="property">opened</span>, bookSearchEvents.<span class="property">queryChanged</span>)</span><br><span class="line">        .<span class="title function_">pipe</span>(</span><br><span class="line">          <span class="title function_">switchMap</span>(<span class="function">() =&gt;</span></span><br><span class="line">            booksService.<span class="title function_">getByQuery</span>(store.<span class="title function_">query</span>()).<span class="title function_">pipe</span>(</span><br><span class="line">              <span class="title function_">mapResponse</span>(&#123;</span><br><span class="line">                <span class="attr">next</span>: <span class="function">(<span class="params">books</span>) =&gt;</span> booksApiEvents.<span class="title function_">loadedSuccess</span>(books),</span><br><span class="line">                <span class="attr">error</span>: <span class="function">(<span class="params"><span class="attr">error</span>: &#123; message: <span class="built_in">string</span> &#125;</span>) =&gt;</span></span><br><span class="line">                  booksApiEvents.<span class="title function_">loadedFailure</span>(error.<span class="property">message</span>),</span><br><span class="line">              &#125;),</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      <span class="attr">logError$</span>: events</span><br><span class="line">        .<span class="title function_">on</span>(booksApiEvents.<span class="property">loadedFailure</span>)</span><br><span class="line">        .<span class="title function_">pipe</span>(<span class="title function_">tap</span>(<span class="function">(<span class="params">&#123; payload &#125;</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(payload))),</span><br><span class="line">    &#125;),</span><br><span class="line">  ),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="Dispatching-Events"><a class="header-anchor" href="#Dispatching-Events"> </a>Dispatching Events</h3>
+<p>透過 <code>Dispatcher</code> 的方式來發送 event，使用上沒什麼複雜度</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    Current Query: &#123;&#123; store.filter.query() &#125;&#125; &lt;br /&gt;</span></span><br><span class="line"><span class="string">    Current store State: &#123;&#123; store.isLoading() &#125;&#125; &lt;br /&gt;</span></span><br><span class="line"><span class="string">    &lt;input</span></span><br><span class="line"><span class="string">      type=&quot;text&quot;</span></span><br><span class="line"><span class="string">      [ngModel]=&quot;store.filter.query()&quot;</span></span><br><span class="line"><span class="string">      (ngModelChange)=&quot;queryBooks($event)&quot;</span></span><br><span class="line"><span class="string">    /&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="attr">providers</span>: [<span class="title class_">BookStore</span>],</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">FormsModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">App</span> &#123;</span><br><span class="line">  <span class="keyword">readonly</span> store = <span class="title function_">inject</span>(<span class="title class_">BookStore</span>);</span><br><span class="line">  <span class="keyword">readonly</span> dispatcher = <span class="title function_">inject</span>(<span class="title class_">Dispatcher</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">queryBooks</span>(<span class="params"><span class="attr">query</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dispatcher</span>.<span class="title function_">dispatch</span>(bookSearchEvents.<span class="title function_">queryChanged</span>(query));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>withReducer</code> 與 <code>withEffects</code> 的執行順序會是 <code>withReducer</code> 的 <code>queryChanged</code>  然後才會呼叫到 <code>withEffects</code> 內有註冊 <code>queryChanged</code> event 的 function。至於在 <code>withEffects</code> 內如果有多個 functions 同時註冊到同一個 event 時，觸發順序則是看程式碼內的撰寫順序，只是寫在 <code>withEffects</code> 內的功能基本上都是非同步，所以回來的結果假設會更新到同一個 store state 時，就會有 race condition 的情形發生，要留意使用。</p>
+<p>在 dispatcher 上 NgRx signal v20 有提供 <code>injectDispatch</code> 搭配 <code>eventGroup</code> 一起使用，撰寫上更為乾淨，用法如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">BookSearch</span> &#123;</span><br><span class="line">  <span class="keyword">readonly</span> store = <span class="title function_">inject</span>(<span class="title class_">BookStore</span>);</span><br><span class="line">  <span class="keyword">readonly</span> dispatch = <span class="title function_">injectDispatch</span>(bookSearchEvents);</span><br><span class="line">   </span><br><span class="line">  <span class="title function_">queryBooks</span>(<span class="params"><span class="attr">query</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dispatch</span>.<span class="title function_">queryChanged</span>(query);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Example"><a class="header-anchor" href="#Example"> </a>Example</h2>
+<p>搭配 <code>@ngrx/signals/entities</code> 使用時，可以怎麼寫呢?</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">BookStore</span> = <span class="title function_">signalStore</span>(</span><br><span class="line">  &#123; <span class="attr">providedIn</span>: <span class="string">&#x27;root&#x27;</span> &#125;,</span><br><span class="line">  withState&lt;<span class="title class_">BookSearchState</span>&gt;(&#123;</span><br><span class="line">    <span class="attr">isLoading</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">filter</span>: &#123; <span class="attr">query</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">order</span>: <span class="string">&#x27;asc&#x27;</span> &#125;,</span><br><span class="line">  &#125;),</span><br><span class="line">  <span class="title function_">withEntities</span>(&#123; <span class="attr">entity</span>: <span class="keyword">type</span>&lt;<span class="title class_">Book</span>&gt;(), <span class="attr">collection</span>: <span class="string">&#x27;books&#x27;</span> &#125;),</span><br><span class="line">  <span class="title function_">withReducer</span>(</span><br><span class="line">	...</span><br><span class="line">    <span class="title function_">on</span>(bookSearchEvents.<span class="property">queryChanged</span>, <span class="function">(<span class="params">&#123; payload: query &#125;, state</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">filter</span>: &#123; ...state.<span class="property">filter</span>, query &#125;,</span><br><span class="line">        <span class="attr">isLoading</span>: <span class="literal">true</span>,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="title function_">on</span>(bookApiEvents.<span class="property">loadedSuccess</span>, <span class="function">(<span class="params">&#123; payload: books &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 👇 Returning an array of partial state updaters.</span></span><br><span class="line">      <span class="keyword">return</span> [</span><br><span class="line">         <span class="comment">// 👇 prependEntities 也是 v20 新提供的 entity 功能.</span></span><br><span class="line">        <span class="title function_">prependEntities</span>(books, &#123; <span class="attr">collection</span>: <span class="string">&#x27;books&#x27;</span> &#125;), </span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">isLoading</span>: <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      ];</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="title function_">on</span>(bookApiEvents.<span class="property">loadedFailed</span>, <span class="function">() =&gt;</span> (&#123; <span class="attr">isLoading</span>: <span class="literal">false</span> &#125;))</span><br><span class="line">  ),</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>prependEntities</code>: Adds multiple entities to the beginning of the collection, maintaining their relative order. If the entity collection has entities with the same IDs, they are not added and no error is thrown.</li>
+</ul>
+<p>其他相關的新方法有</p>
+<ul>
+<li><code>prependEntity</code>: Adds an entity to the beginning of the collection. If the entity collection has an entity with the same ID, it is not added and no error is thrown.</li>
+<li><code>upsertEntity</code>:  Adds or updates an entity in the collection. When updating, it does not replace the existing entity but merges it with the provided one. Only the properties provided in the updated entity are merged with the existing entity. Properties not present in the updated entity remain unchanged.</li>
+<li><code>upsertEntities</code>: Adds or updates multiple entities in the collection. When updating, it does not replace existing entities but merges them with the provided ones. Only the properties provided in updated entities are merged with existing entities. Properties not present in updated entities remain unchanged.</li>
+</ul>
+<h2 id="Reference"><a class="header-anchor" href="#Reference"> </a>Reference</h2>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://dev.to/ngrx/announcing-ngrx-v20-the-power-of-events-enhanced-dx-and-a-mature-signalstore-2fdm">Announcing NgRx v20: The Power of Events, Enhanced DX, and a Mature SignalStore!</a></li>
+<li><a target="_blank" rel="noopener" href="https://ngrx.io/guide/signals">NgRx signals Doc</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/27/ng-with-file-system-api/" rel="prev" title="[Angular] work with File System API">
+                  <i class="fa fa-angle-left"></i> [Angular] work with File System API
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/08/22/api-design-bff-domain-service/" rel="next" title="[API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考">
+                  [API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

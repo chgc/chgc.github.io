@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="在前幾天， Ionic 團隊發布 Ionic 4 的 beta 版，這一版可以說是整個打掉重寫的產品。原本的元件程式碼，都從頭來過。那 Ionic 4 又有帶來什麼驚喜呢，為什麼團隊願意整個打掉重來呢?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Ionic 4 第一次接觸">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/07/28/ionic-first-look/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="在前幾天， Ionic 團隊發布 Ionic 4 的 beta 版，這一版可以說是整個打掉重寫的產品。原本的元件程式碼，都從頭來過。那 Ionic 4 又有帶來什麼驚喜呢，為什麼團隊願意整個打掉重來呢?">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/3lkQWd5.png">
+<meta property="og:image" content="https://i.imgur.com/DbN4x2R.png">
+<meta property="og:image" content="https://i.imgur.com/HWi3tlX.png">
+<meta property="og:image" content="https://i.imgur.com/1GFCjNi.png">
+<meta property="og:image" content="https://i.imgur.com/StXQA5a.png">
+<meta property="og:image" content="https://i.imgur.com/vbCqArQ.png">
+<meta property="og:image" content="https://i.imgur.com/RrS52eP.png">
+<meta property="og:image" content="https://i.imgur.com/hv7lc7j.png">
+<meta property="article:published_time" content="2018-07-28T04:54:13.000Z">
+<meta property="article:modified_time" content="2019-03-24T01:48:15.060Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="Ionic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/3lkQWd5.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/07/28/ionic-first-look/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/07/28/ionic-first-look/","path":"2018/07/28/ionic-first-look/","title":"[Angular] Ionic 4 第一次接觸"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] Ionic 4 第一次接觸 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%AC%AC%E4%B8%80%E5%80%8B-ionic-4-%E5%B0%88%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">建立第一個 ionic 4 專案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%A8%AD%E5%AE%9A%E6%AA%94"><span class="nav-number">1.1.</span> <span class="nav-text">路由設定檔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E9%A0%81%E9%9D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">建立頁面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AA%A2%E8%A6%96-ionic-4-component-%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">檢視 ionic 4 component 內容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E6%A9%9F%E6%9C%8D%E5%8B%99"><span class="nav-number">3.</span> <span class="nav-text">手機服務</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ionic-Native"><span class="nav-number">3.1.</span> <span class="nav-text">Ionic Native</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Capacitor-Plugin"><span class="nav-number">3.2.</span> <span class="nav-text">Capacitor Plugin</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%BA%E7%BD%AE%E7%99%BC%E5%B8%83"><span class="nav-number">4.</span> <span class="nav-text">建置發布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">5.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/07/28/ionic-first-look/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] Ionic 4 第一次接觸 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] Ionic 4 第一次接觸
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-07-28 12:54:13" itemprop="dateCreated datePublished" datetime="2018-07-28T12:54:13+08:00">2018-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2019-03-24 09:48:15" itemprop="dateModified" datetime="2019-03-24T09:48:15+08:00">2019-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/07/28/ionic-first-look/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/07/28/ionic-first-look/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在前幾天， Ionic 團隊發布 Ionic 4 的 beta 版，這一版可以說是整個打掉重寫的產品。原本的元件程式碼，都從頭來過。那 Ionic 4 又有帶來什麼驚喜呢，為什麼團隊願意整個打掉重來呢?</p>
+<span id="more"></span>
+<p>在正式分享自己第一次玩弄 ionic 4 的心得之前，先從官方文件內擷取一些重點出來，在一次的重點更新有</p>
+<ol>
+<li><strong>web component</strong> : 所有的 component 都重新改寫成 web component，但是團隊並不是自己刻 web component，而是透過 Stencil  這工具完成的，(<a target="_blank" rel="noopener" href="https://github.com/ionic-team/stencil">相關訊息在此</a>)。</li>
+<li><strong>Framework Integration&amp; Compatibility:</strong> 因為基於 web component ，沒有相依於任何的 framework ，當然就可以拿到任何的 framework 下使用。</li>
+<li><strong>Angular CLI &amp; Router</strong>  : 當然 ionic cli 提供建立 Angular 專案類型的指令，在 ionic 3 的路由設定與 Angular 的路由設定是完全不一樣的，而 ionic 4 的路由就跟 Angular 一樣，所以會寫 Angular 就會寫 ionic app.</li>
+</ol>
+<h1 id="建立第一個-ionic-4-專案"><a class="header-anchor" href="#建立第一個-ionic-4-專案"> </a>建立第一個 ionic 4 專案</h1>
+<p>首先，要先安裝或更新 ionic cli</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g ionic</span><br></pre></td></tr></table></figure>
+<p>安裝完成後，建立第一個專案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ionic start myApp tabs --type=angular</span><br></pre></td></tr></table></figure>
+<ul>
+<li>–type=angular 是需要多加的參數，或許以後就可以有 --type=Vue 或是其他的 framework 的選擇</li>
+</ul>
+<p>第一次建立時，其實會問蠻多問題的</p>
+<p><img src="https://i.imgur.com/3lkQWd5.png" alt=""></p>
+<p><img src="https://i.imgur.com/DbN4x2R.png" alt=""></p>
+<p><img src="https://i.imgur.com/HWi3tlX.png" alt=""></p>
+<p>當創建專案跑完後，用 VSCode 打開，就可以看到熟悉的 Angular 的專案架構</p>
+<h2 id="路由設定檔"><a class="header-anchor" href="#路由設定檔"> </a>路由設定檔</h2>
+<p>因為建立的是 Tab 類型的專案，所以就來看一下 <code>tabs.router.module.ts</code> 內的設定</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NgModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">RouterModule</span>, <span class="title class_">Routes</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">TabsPage</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./tabs.page&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">HomePage</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../home/home.page&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AboutPage</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../about/about.page&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ContactPage</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../contact/contact.page&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;tabs&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">TabsPage</span>,</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">        <span class="attr">outlet</span>: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="title class_">HomePage</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;about&#x27;</span>,</span><br><span class="line">        <span class="attr">outlet</span>: <span class="string">&#x27;about&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="title class_">AboutPage</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;contact&#x27;</span>,</span><br><span class="line">        <span class="attr">outlet</span>: <span class="string">&#x27;contact&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="title class_">ContactPage</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">redirectTo</span>: <span class="string">&#x27;/tabs/(home:home)&#x27;</span>,</span><br><span class="line">    <span class="attr">pathMatch</span>: <span class="string">&#x27;full&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forChild</span>(routes)],</span><br><span class="line">  <span class="attr">exports</span>: [<span class="title class_">RouterModule</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">TabsPageRoutingModule</span> &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在上一層的路有檔為</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NgModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Routes</span>, <span class="title class_">RouterModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">loadChildren</span>: <span class="string">&#x27;./tabs/tabs.module#TabsPageModule&#x27;</span> &#125;</span><br><span class="line">];</span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes)],</span><br><span class="line">  <span class="attr">exports</span>: [<span class="title class_">RouterModule</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppRoutingModule</span> &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>是不是很熟悉。路由設定的部分都與常寫的 Angular 專案一模一樣</p>
+<h2 id="建立頁面"><a class="header-anchor" href="#建立頁面"> </a>建立頁面</h2>
+<p>ionic cli 其實也有提供 generate 的功能，來看一下有哪些東西可以產生</p>
+<p><img src="https://i.imgur.com/1GFCjNi.png" alt=""></p>
+<p><img src="https://i.imgur.com/StXQA5a.png" alt=""></p>
+<p><img src="https://i.imgur.com/vbCqArQ.png" alt=""></p>
+<p>新增後的路由異動內容為</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  ...</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;profile&#x27;</span>, <span class="attr">loadChildren</span>: <span class="string">&#x27;./pages/profile/profile.module#ProfilePageModule&#x27;</span> &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>很好心的，把 <strong>lazyLoading</strong> 的功能設為預設行為，並且將每一個 page 頁面都以 NgModule 包起來.，其他的內容就與一般的 component 是一樣的</p>
+<h1 id="檢視-ionic-4-component-內容"><a class="header-anchor" href="#檢視-ionic-4-component-內容"> </a>檢視 ionic 4 component 內容</h1>
+<p>ionic component 的用法其實沒有太大的改變，已經熟悉的人，稍微再調整一下，應該很快就可以上手了，但總要來驗證一下是否如 ionic 團隊所說，元件都重新改寫，來一個簡單的 alert 元件看一下程式碼</p>
+<p><img src="https://i.imgur.com/RrS52eP.png" alt=""></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ionic-team/ionic/blob/master/core/src/components/alert/alert.tsx">程式碼的部分</a></p>
+<p><img src="https://i.imgur.com/hv7lc7j.png" alt=""></p>
+<p>基本上，整個寫法就完全與框架脫鉤，只利用 stencil 建置工具的方法而已了。有興趣的人可以自行再去研究</p>
+<h1 id="手機服務"><a class="header-anchor" href="#手機服務"> </a>手機服務</h1>
+<h2 id="Ionic-Native"><a class="header-anchor" href="#Ionic-Native"> </a>Ionic Native</h2>
+<p>透過 Ionic Native 就可以取得手機上的服務，這裡就簡單地舉一個範例程式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ionic cordova plugin add cordova-plugin-camera</span><br><span class="line">$ npm install --save @ionic-native/camera</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Camera</span>, <span class="title class_">CameraOptions</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@ionic-native/camera&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">camera</span>: <span class="title class_">Camera</span></span>) &#123; &#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">options</span>: <span class="title class_">CameraOptions</span> = &#123;</span><br><span class="line">  <span class="attr">quality</span>: <span class="number">100</span>,</span><br><span class="line">  <span class="attr">destinationType</span>: <span class="variable language_">this</span>.<span class="property">camera</span>.<span class="property">DestinationType</span>.<span class="property">FILE_URI</span>,</span><br><span class="line">  <span class="attr">encodingType</span>: <span class="variable language_">this</span>.<span class="property">camera</span>.<span class="property">EncodingType</span>.<span class="property">JPEG</span>,</span><br><span class="line">  <span class="attr">mediaType</span>: <span class="variable language_">this</span>.<span class="property">camera</span>.<span class="property">MediaType</span>.<span class="property">PICTURE</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">camera</span>.<span class="title function_">getPicture</span>(options).<span class="title function_">then</span>(<span class="function">(<span class="params">imageData</span>) =&gt;</span> &#123;</span><br><span class="line"> <span class="comment">// imageData is either a base64 encoded string or a file URI</span></span><br><span class="line"> <span class="comment">// If it&#x27;s base64 (DATA_URL):</span></span><br><span class="line"> <span class="keyword">let</span> base64Image = <span class="string">&#x27;data:image/jpeg;base64,&#x27;</span> + imageData;</span><br><span class="line">&#125;, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line"> <span class="comment">// Handle error</span></span><br><span class="line">&#125;);	</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://beta.ionicframework.com/docs/native/camera">範例API</a></li>
+</ul>
+<h2 id="Capacitor-Plugin"><a class="header-anchor" href="#Capacitor-Plugin"> </a>Capacitor Plugin</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Plugins</span>, <span class="title class_">CameraResultType</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@capacitor/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">Camera</span> &#125; = <span class="title class_">Plugins</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="title function_">takePicture</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> image = <span class="keyword">await</span> <span class="title class_">Camera</span>.<span class="title function_">getPhoto</span>(&#123;</span><br><span class="line">    <span class="attr">quality</span>: <span class="number">90</span>,</span><br><span class="line">    <span class="attr">allowEditing</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">resultType</span>: <span class="title class_">CameraResultType</span>.<span class="property">Uri</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// image.webPath will contain a path that can be set as an image src. You can access</span></span><br><span class="line">  <span class="comment">// the original file using image.path, which can be passed to the Filesystem API to</span></span><br><span class="line">  <span class="comment">// read the raw data of the image, if desired (or pass resultType: CameraResultType.Base64 to getPhoto)</span></span><br><span class="line">  <span class="keyword">var</span> imageUrl = image.<span class="property">webPath</span>;</span><br><span class="line">  <span class="comment">// can be set to the src of an image now</span></span><br><span class="line">  imageElement.<span class="property">src</span> = imageUrl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://capacitor.ionicframework.com/docs/plugins/">範例 API</a></li>
+</ul>
+<p>因為 Capacitor 是新的工具，所以在於手機服務存取的 API 數量並沒有 Cordova 來的多，但是就程式碼風格來比較，個人是比較偏愛 Capacitor 的寫法</p>
+<h1 id="建置發布"><a class="header-anchor" href="#建置發布"> </a>建置發布</h1>
+<p>建置與發佈的方式，有分兩種，一是使用 Cordova ，另外一種是使用 Capacitor。再根據分別的建置與發佈的方式處理 iOS 或 Android 平台即可。這邊的做法基本上是一樣的</p>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>Ionic 4 的程式碼架構，我個人是比較喜歡，至少我可以用熟悉的 Angular 開發方式就可以寫了。不太會出現看起來很像又不一樣的 Angular 程式風格，但這也是我個人的偏好而已。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://beta.ionicframework.com/docs/native">Ionic Native</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ionic-team/stencil">stencil</a></li>
+<li><a target="_blank" rel="noopener" href="https://capacitor.ionicframework.com/">Capacitor</a></li>
+<li><a target="_blank" rel="noopener" href="https://beta.ionicframework.com/docs">Ionic 4 Doc</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+              <a href="/tags/Ionic/" rel="tag"># Ionic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/19/angular-app-shell/" rel="prev" title="[Angular] App-Shell">
+                  <i class="fa fa-angle-left"></i> [Angular] App-Shell
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/08/01/ef-oracle-code-first/" rel="next" title="[EF6] Oracle with Code First 設定">
+                  [EF6] Oracle with Code First 設定 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

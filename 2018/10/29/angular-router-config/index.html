@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Angular 的路由功能很強大，內建也提供很多路由上會用到的功能，但是你知道 RouterModule 有哪些選項可以設定嗎?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] RouterModule Options 篇">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/10/29/angular-router-config/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Angular 的路由功能很強大，內建也提供很多路由上會用到的功能，但是你知道 RouterModule 有哪些選項可以設定嗎?">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-10-29T06:42:06.000Z">
+<meta property="article:modified_time" content="2018-10-31T14:06:29.031Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/10/29/angular-router-config/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/10/29/angular-router-config/","path":"2018/10/29/angular-router-config/","title":"[Angular] RouterModule Options 篇"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] RouterModule Options 篇 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RouterModule-%E9%81%B8%E9%A0%85"><span class="nav-number">1.</span> <span class="nav-text">RouterModule 選項</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#enableTracing"><span class="nav-number">1.1.</span> <span class="nav-text">enableTracing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useHash"><span class="nav-number">1.2.</span> <span class="nav-text">useHash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#initialNavigation"><span class="nav-number">1.3.</span> <span class="nav-text">initialNavigation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#errorHandler"><span class="nav-number">1.4.</span> <span class="nav-text">errorHandler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#preloadingStrategy"><span class="nav-number">1.5.</span> <span class="nav-text">preloadingStrategy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onSameUrlNavigation"><span class="nav-number">1.6.</span> <span class="nav-text">onSameUrlNavigation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scrollPositionRestoration"><span class="nav-number">1.7.</span> <span class="nav-text">scrollPositionRestoration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#anchorScrolling"><span class="nav-number">1.8.</span> <span class="nav-text">anchorScrolling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scrollOffset"><span class="nav-number">1.9.</span> <span class="nav-text">scrollOffset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#paramsInheritanceStrategy"><span class="nav-number">1.10.</span> <span class="nav-text">paramsInheritanceStrategy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#urlUpdateStrategy"><span class="nav-number">1.11.</span> <span class="nav-text">urlUpdateStrategy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#malformedUriErrorHandler"><span class="nav-number">1.12.</span> <span class="nav-text">malformedUriErrorHandler</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%AE%E9%BB%9E%E8%A8%AD%E5%AE%9A"><span class="nav-number">2.</span> <span class="nav-text">亮點設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/10/29/angular-router-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] RouterModule Options 篇 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] RouterModule Options 篇
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-10-29 14:42:06" itemprop="dateCreated datePublished" datetime="2018-10-29T14:42:06+08:00">2018-10-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2018-10-31 22:06:29" itemprop="dateModified" datetime="2018-10-31T22:06:29+08:00">2018-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/10/29/angular-router-config/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/29/angular-router-config/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Angular 的路由功能很強大，內建也提供很多路由上會用到的功能，但是你知道 <code>RouterModule</code> 有哪些選項可以設定嗎?</p>
+<span id="more"></span>
+<h1 id="RouterModule-選項"><a class="header-anchor" href="#RouterModule-選項"> </a>RouterModule 選項</h1>
+<h2 id="enableTracing"><a class="header-anchor" href="#enableTracing"> </a>enableTracing</h2>
+<p><code>enabledTracing</code> 可以開啟路由變更時的所有事件，並 console.log 出來，設定方式是</p>
+<p><code>enabledTracking: true</code></p>
+<h2 id="useHash"><a class="header-anchor" href="#useHash"> </a>useHash</h2>
+<p>有時候主機環境不允許我們設定 rewrite URL 規則時，就必須使用 hash 的方式來呈現網址的變化，設定方式是</p>
+<p><code>useHash: true</code></p>
+<h2 id="initialNavigation"><a class="header-anchor" href="#initialNavigation"> </a>initialNavigation</h2>
+<p>設定初始路由瀏覽是否要開啟，設定方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">initialNavigation:  true | false | &#x27;enabled&#x27; | &#x27;disabled&#x27; | &#x27;legacy_enabled&#x27; | &#x27;legacy_disabled&#x27;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>true</code>、<code>false</code> 、<code>legacy_enabled</code> 、<code>legacy_disabled</code> 在 Angular v4 時就被標示為 <code>deprecated</code></li>
+<li><code>enabled</code>: 在 root component 建立前，會先開始初始瀏覽事件，在初始瀏覽事件未完成前，整個啟動流程會被 block 住</li>
+<li><code>disabled</code>: initial navigation 不會被執行，但是監聽 location 會在 root component 建立前設定好</li>
+</ul>
+<h2 id="errorHandler"><a class="header-anchor" href="#errorHandler"> </a>errorHandler</h2>
+<p>可以指定路由發生錯誤時，應該要如何處理的，設定自己的錯誤處理程序</p>
+<p><code>errorHandler: ErrorHandler</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">treatCertainErrorsAsCancelations</span>(<span class="params">error</span>) &#123; </span><br><span class="line">    <span class="keyword">if</span> (error isntanceof <span class="title class_">CancelException</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">//cancelation </span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">throw</span> error; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(<span class="variable constant_">ROUTES</span>, &#123;</span><br><span class="line">      <span class="attr">errorHandler</span>: treatCertainErrorsAsCancelations</span><br><span class="line">  &#125;)]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MailModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="preloadingStrategy"><a class="header-anchor" href="#preloadingStrategy"> </a>preloadingStrategy</h2>
+<p>設定 preloading 策略，針對延遲載入模組的相關處理動做，詳細細節可以參閱 <a target="_blank" rel="noopener" href="https://angular.io/api/router/PreloadingStrategy">PreloadingStrategy</a></p>
+<h2 id="onSameUrlNavigation"><a class="header-anchor" href="#onSameUrlNavigation"> </a>onSameUrlNavigation</h2>
+<p>當瀏覽到相同網址時的處理行為，設定方式</p>
+<p><code>onSameUrlNavigation: 'reload' | 'ignore'</code></p>
+<p>預設的行為是當遇到相同網址時，並不會重新觸發重整動作，當有需要重整動作時，可以設定為 <code>reload</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Page2Component</span> <span class="keyword">implements</span> <span class="title class_">OnInit</span>, <span class="title class_">OnDestroy</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">router</span>: <span class="title class_">Router</span></span>) &#123;    </span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">router</span>.<span class="property">events</span>.<span class="title function_">subscribe</span>(<span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (event <span class="keyword">instanceof</span> <span class="title class_">NavigationEnd</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(event);</span><br><span class="line">        <span class="comment">// when onSameUrlNavigation: &#x27;reload&#x27;，會重新觸發 router event</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;page2 init&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">ngOnDestroy</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;page2 destroy&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>這部分需要留意的是，只有 router 事件會被重新執行一次，而非整個 Component 被 destroy 掉在重新建立</li>
+</ul>
+<h2 id="scrollPositionRestoration"><a class="header-anchor" href="#scrollPositionRestoration"> </a>scrollPositionRestoration</h2>
+<p><code> scrollPositionRestoration?: 'disabled'|'enabled'|'top';</code></p>
+<p>當開啟時，在操作瀏覽器上下頁時，會保留之前瀏覽畫面的位置</p>
+<h2 id="anchorScrolling"><a class="header-anchor" href="#anchorScrolling"> </a>anchorScrolling</h2>
+<p><code>anchorScrolling: 'disabled': 'enabled'</code></p>
+<p>目前預設值為 <code>disabled</code>，當開啟時，會有 anchor 的效果</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/page2&quot;</span> [<span class="attr">fragment</span>]=<span class="string">&quot;&#x27;a&#x27;&quot;</span>&gt;</span>Page 2 with anchor A<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這樣的連結會跳到 page2 頁 <code>id='2'</code> 的地方</p>
+<h2 id="scrollOffset"><a class="header-anchor" href="#scrollOffset"> </a>scrollOffset</h2>
+<p>設定 scroll offset 的值，可以給予數字，或是 function</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scrollOffset</span>?: [<span class="built_in">number</span>, <span class="built_in">number</span>]|(<span class="function">() =&gt;</span> [<span class="built_in">number</span>, <span class="built_in">number</span>]);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>[number, number] =&gt; [left, top]</li>
+</ul>
+<p>這背後其實是去執行 <a target="_blank" rel="noopener" href="https://angular.io/api/common/ViewportScroller">ViewportScroller</a> 的 <code>setOffset</code> 的方法，當進行 <code>scrollToElement</code> 時，會將設定的 offset 值帶入進算</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title function_">scrollToElement</span>(<span class="attr">el</span>: <span class="built_in">any</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> rect = el.<span class="title function_">getBoundingClientRect</span>();</span><br><span class="line">  <span class="keyword">const</span> left = rect.<span class="property">left</span> + <span class="variable language_">this</span>.<span class="property">window</span>.<span class="property">pageXOffset</span>;</span><br><span class="line">  <span class="keyword">const</span> top = rect.<span class="property">top</span> + <span class="variable language_">this</span>.<span class="property">window</span>.<span class="property">pageYOffset</span>;</span><br><span class="line">  <span class="keyword">const</span> offset = <span class="variable language_">this</span>.<span class="title function_">offset</span>();</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">window</span>.<span class="title function_">scrollTo</span>(left - offset[<span class="number">0</span>], top - offset[<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="paramsInheritanceStrategy"><a class="header-anchor" href="#paramsInheritanceStrategy"> </a>paramsInheritanceStrategy</h2>
+<p><code>paramsInheritanceStrategy?: 'emptyOnly'|'always';</code></p>
+<p>設定路由 params 、data、resolve data 的合併方式</p>
+<ul>
+<li>
+<p><code>emptyOnly</code> 預設值，只會繼承沒有 path 或是 component 設定的路由</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;page3/:id&#x27;</span>, <span class="attr">children</span>: [</span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Page3Component</span> &#125; <span class="comment">// 取得到 id</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;page3/:id&#x27;</span>, </span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">EmptyComponent</span>,</span><br><span class="line">      <span class="attr">children</span>: [</span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Page3Component</span> &#125; <span class="comment">// 取不到 id</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>always</code> 一律繼承</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;page3/:id&#x27;</span>, </span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">EmptyComponent</span>,</span><br><span class="line">      <span class="attr">children</span>: [</span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">&#x27;b&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Page3Component</span> &#125; <span class="comment">// 取得到 id</span></span><br><span class="line">      ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="urlUpdateStrategy"><a class="header-anchor" href="#urlUpdateStrategy"> </a>urlUpdateStrategy</h2>
+<p>何時更新瀏覽器 URL</p>
+<p><code>  urlUpdateStrategy?: 'deferred'|'eager';</code></p>
+<ul>
+<li>deferred 預設值，當路由事件跑完後才會更新瀏覽器網址</li>
+<li><code>eager</code> 在事前開始前更新瀏覽器網址</li>
+</ul>
+<h2 id="malformedUriErrorHandler"><a class="header-anchor" href="#malformedUriErrorHandler"> </a>malformedUriErrorHandler</h2>
+<p>當網址瀏覽發生錯誤時，可以自訂 redirect 網址</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">malformedUriErrorHandler</span>:</span><br><span class="line">     <span class="comment">// redirects the user to `/invalid-uri`</span></span><br><span class="line">     <span class="function">(<span class="params"><span class="attr">error</span>: <span class="title class_">URIError</span>, <span class="attr">urlSerializer</span>: <span class="title class_">UrlSerializer</span>, <span class="attr">url</span>: <span class="built_in">string</span></span>) =&gt;</span> urlSerializer.<span class="title function_">parse</span>(<span class="string">&#x27;/invalid-uri&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="亮點設定"><a class="header-anchor" href="#亮點設定"> </a>亮點設定</h1>
+<ol>
+<li>onSameUrlNavigation</li>
+<li>scrollPositionRestoration</li>
+<li>anchorScrolling</li>
+<li>paramsInheritanceStrategy</li>
+</ol>
+<p>這些選項設定是我認為在開發時，有可能會用的到的選項。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://stackblitz.com/edit/angular-router-option">範例程式碼</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/master/packages/router/src/router_module.ts">Angular Source Code</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://blog.ninja-squad.com/2018/07/26/what-is-new-angular-6.1/">What’s new in Angular 6.1?</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/24/angular-secondary-routes/" rel="prev" title="[Angular] Secondary routes">
+                  <i class="fa fa-angle-left"></i> [Angular] Secondary routes
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/30/excel-dynamic-array-unique/" rel="next" title="[O365] Excel 新功能 - Dynamic Array Functions">
+                  [O365] Excel 新功能 - Dynamic Array Functions <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

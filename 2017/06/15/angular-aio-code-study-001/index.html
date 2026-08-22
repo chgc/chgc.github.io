@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="近期 angular.io 換新版，使用 Angular 4 重新撰寫官方網站，網站開啟速度非常的快 (PWA)，所以就想要從官方出手寫的程式碼學習 Angular 程式碼可以怎麼寫，接下來的一系列學習筆記將圍繞的這個主題，程式碼可以從 github 下載">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular]angular.io官網程式碼學習筆記001">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/06/15/angular-aio-code-study-001/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="近期 angular.io 換新版，使用 Angular 4 重新撰寫官方網站，網站開啟速度非常的快 (PWA)，所以就想要從官方出手寫的程式碼學習 Angular 程式碼可以怎麼寫，接下來的一系列學習筆記將圍繞的這個主題，程式碼可以從 github 下載">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://farm5.staticflickr.com/4214/35189085881_94d86e10ae_o.png">
+<meta property="article:published_time" content="2017-06-15T02:01:35.000Z">
+<meta property="article:modified_time" content="2017-12-30T13:24:37.606Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://farm5.staticflickr.com/4214/35189085881_94d86e10ae_o.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2017/06/15/angular-aio-code-study-001/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2017/06/15/angular-aio-code-study-001/","path":"2017/06/15/angular-aio-code-study-001/","title":"[Angular]angular.io官網程式碼學習筆記001"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular]angular.io官網程式碼學習筆記001 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#main-ts"><span class="nav-number">1.</span> <span class="nav-text">main.ts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#app-component-ts"><span class="nav-number">2.</span> <span class="nav-text">app.component.ts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#template-html"><span class="nav-number">2.1.</span> <span class="nav-text">template html</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gotop-anchor"><span class="nav-number">2.1.1.</span> <span class="nav-text">gotop anchor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loading-bar"><span class="nav-number">2.1.2.</span> <span class="nav-text">loading bar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top-menu"><span class="nav-number">2.1.3.</span> <span class="nav-text">top-menu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#content-display"><span class="nav-number">2.1.4.</span> <span class="nav-text">content display</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toc"><span class="nav-number">2.1.5.</span> <span class="nav-text">toc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#footer"><span class="nav-number">2.1.6.</span> <span class="nav-text">footer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class-AppComponent"><span class="nav-number">2.2.</span> <span class="nav-text">class AppComponent</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor"><span class="nav-number">2.2.1.</span> <span class="nav-text">constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngOnInit"><span class="nav-number">2.2.2.</span> <span class="nav-text">ngOnInit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onClick"><span class="nav-number">2.2.3.</span> <span class="nav-text">onClick</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onDocRendered"><span class="nav-number">2.2.4.</span> <span class="nav-text">onDocRendered</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onDocVersionChange"><span class="nav-number">2.2.5.</span> <span class="nav-text">onDocVersionChange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onScroll"><span class="nav-number">2.2.6.</span> <span class="nav-text">onScroll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#restrainScrolling"><span class="nav-number">2.2.7.</span> <span class="nav-text">restrainScrolling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onKeyUp"><span class="nav-number">2.2.8.</span> <span class="nav-text">onKeyUp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%86%E8%A8%98"><span class="nav-number">2.3.</span> <span class="nav-text">筆記</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/06/15/angular-aio-code-study-001/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular]angular.io官網程式碼學習筆記001 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular]angular.io官網程式碼學習筆記001
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-06-15 10:01:35" itemprop="dateCreated datePublished" datetime="2017-06-15T10:01:35+08:00">2017-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2017-12-30 21:24:37" itemprop="dateModified" datetime="2017-12-30T21:24:37+08:00">2017-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/06/15/angular-aio-code-study-001/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/06/15/angular-aio-code-study-001/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>近期 <a target="_blank" rel="noopener" href="https://angular.io">angular.io</a> 換新版，使用 Angular 4 重新撰寫官方網站，網站開啟速度非常的快 (PWA)，所以就想要從官方出手寫的程式碼學習 Angular 程式碼可以怎麼寫，接下來的一系列學習筆記將圍繞的這個主題，程式碼可以從 <a target="_blank" rel="noopener" href="https://github.com/angular/angular">github</a> 下載</p>
+<span id="more"></span>
+<h1 id="main-ts"><a class="header-anchor" href="#main-ts"> </a>main.ts</h1>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">platformBrowserDynamic</span>().<span class="title function_">bootstrapModule</span>(<span class="title class_">AppModule</span>).<span class="title function_">then</span>(<span class="function"><span class="params">ref</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (environment.<span class="property">production</span> &amp;&amp; <span class="string">&#x27;serviceWorker&#x27;</span> <span class="title function_">in</span> (navigator <span class="keyword">as</span> <span class="built_in">any</span>)) &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="attr">appRef</span>: <span class="title class_">ApplicationRef</span> = ref.<span class="property">injector</span>.<span class="title function_">get</span>(<span class="title class_">ApplicationRef</span>);</span><br><span class="line">    appRef.<span class="property">isStable</span>.<span class="title function_">first</span>().<span class="title function_">subscribe</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      (navigator <span class="keyword">as</span> <span class="built_in">any</span>).<span class="property">serviceWorker</span>.<span class="title function_">register</span>(<span class="string">&#x27;/worker-basic.min.js&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>bootstrapModule</code> 完成後會回傳一個 <code>NgModuleRef</code>，可以透過 <code>ngModuleRef</code> 的  <code>injector</code> 取得 <code>ApplicationRef</code>，利用這樣子的寫法，可以將 <code>service-worker</code> 注入到網頁裡。原本這一段是寫在 index.html 裡，但透過這樣子的方式註冊，更有彈性，例如我們可以設定只有在 <code>production</code>模式下才要註冊 <code>service-worker</code>。</p>
+<h1 id="app-component-ts"><a class="header-anchor" href="#app-component-ts"> </a>app.component.ts</h1>
+<h2 id="template-html"><a class="header-anchor" href="#template-html"> </a>template html</h2>
+<p>使用 Angular Materia 2 當作專案樣式</p>
+<h3 id="gotop-anchor"><a class="header-anchor" href="#gotop-anchor"> </a>gotop anchor</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;top-of-page&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>GoTOP的錨點</li>
+</ul>
+<h3 id="loading-bar"><a class="header-anchor" href="#loading-bar"> </a>loading bar</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">&quot;isFetching&quot;</span> <span class="attr">class</span>=<span class="string">&quot;progress-bar-container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">md-progress-bar</span> <span class="attr">mode</span>=<span class="string">&quot;indeterminate&quot;</span> <span class="attr">color</span>=<span class="string">&quot;warn&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">md-progress-bar</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>顯示條件: <code>isFetching</code>是 <code>true</code>時</li>
+<li><code>&lt;md-progress-bar&gt;</code> 是一個 materia2 橫向進度顯示物件</li>
+<li><code>mode</code> 可以有以下的參數設定， 共 4 種顯示模式
+<ul>
+<li><code>determinate</code>: 標準的進度表，從 0 ~ 100 %</li>
+<li><code>indeterminate</code>: 用來顯示有事情正在進行中</li>
+<li><code>buffer</code>: 可以同時顯示兩種進度，例如撥放影片時，顯示緩衝讀取進度，與影片撥放進度</li>
+<li><code>query</code>: 顯示兩種狀態模式，預設顯示樣式為 <code>indeterminate</code>反過來的樣式，值到另外一種狀態發生時，就會切換至 <code>determinate</code> 模式</li>
+</ul>
+</li>
+<li>顏色 <code>color</code> 參數
+<ul>
+<li>Primary</li>
+<li>Accent</li>
+<li>Warn</li>
+</ul>
+</li>
+<li><code>Value</code> 用來設定進度的百分比</li>
+<li><code>bufferValue</code> 用來設定 <code>buffer</code>模式下的緩衝進度百分比</li>
+</ul>
+<h3 id="top-menu"><a class="header-anchor" href="#top-menu"> </a>top-menu</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">md-toolbar</span> <span class="attr">color</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">class</span>=<span class="string">&quot;app-toolbar&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;hamburger&quot;</span> [<span class="attr">class.starting</span>]=<span class="string">&quot;isStarting&quot;</span> <span class="attr">md-button</span></span></span><br><span class="line"><span class="tag">    (<span class="attr">click</span>)=<span class="string">&quot;sidenav.toggle()&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Docs menu&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">md-icon</span> [<span class="attr">ngClass</span>]=<span class="string">&quot;&#123;&#x27;sidenav-open&#x27;: !isSideBySide &#125;&quot;</span> <span class="attr">svgIcon</span>=<span class="string">&quot;menu&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">md-icon</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;nav-link home&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123; homeImageUrl &#125;&#125;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Home&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Home&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aio-top-menu</span> *<span class="attr">ngIf</span>=<span class="string">&quot;isSideBySide&quot;</span> [<span class="attr">nodes</span>]=<span class="string">&quot;topMenuNodes&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-top-menu</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aio-search-box</span> <span class="attr">class</span>=<span class="string">&quot;search-container&quot;</span> #<span class="attr">searchBox</span> (<span class="attr">onSearch</span>)=<span class="string">&quot;doSearch($event)&quot;</span> (<span class="attr">onFocus</span>)=<span class="string">&quot;doSearch($event)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-search-box</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">md-toolbar</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aio-search-results</span> #<span class="attr">searchResults</span> *<span class="attr">ngIf</span>=<span class="string">&quot;showSearchResults&quot;</span> (<span class="attr">resultSelected</span>)=<span class="string">&quot;hideSearchResults()&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-search-results</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;md-toobar&gt;</code> 可用來當作 <code>headers</code>、<code>titles</code>、 或 <code>actions</code>  的容器</li>
+<li>可透過 <code>color</code> 設定背景顏色: Primary、Accent、Warn</li>
+<li><code>&lt;aio-top-menu&gt;</code> 、<code>&lt;aio-search-box&gt;</code>、<code>&lt;aio-search-results&gt;</code> 皆為自訂的 component</li>
+<li><code>&lt;aio-search-box&gt;</code>  的行為
+<ul>
+<li>onFocus: 會根據目前搜尋視窗內的值，進行搜尋的動作</li>
+<li>onSearch: 每一次 <code>keyUp</code> 都會被觸發一次</li>
+</ul>
+</li>
+</ul>
+<h3 id="content-display"><a class="header-anchor" href="#content-display"> </a>content display</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">md-sidenav-container</span> <span class="attr">class</span>=<span class="string">&quot;sidenav-container&quot;</span> [<span class="attr">class.starting</span>]=<span class="string">&quot;isStarting&quot;</span> [<span class="attr">class.has-floating-toc</span>]=<span class="string">&quot;hasFloatingToc&quot;</span> <span class="attr">role</span>=<span class="string">&quot;main&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">md-sidenav</span> [<span class="attr">ngClass</span>]=<span class="string">&quot;&#123;&#x27;collapsed&#x27;: !isSideBySide &#125;&quot;</span> #<span class="attr">sidenav</span> <span class="attr">class</span>=<span class="string">&quot;sidenav&quot;</span> [<span class="attr">opened</span>]=<span class="string">&quot;isOpened&quot;</span> [<span class="attr">mode</span>]=<span class="string">&quot;mode&quot;</span> (<span class="attr">open</span>)=<span class="string">&quot;updateHostClasses()&quot;</span> (<span class="attr">close</span>)=<span class="string">&quot;updateHostClasses()&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aio-nav-menu</span> *<span class="attr">ngIf</span>=<span class="string">&quot;!isSideBySide&quot;</span> [<span class="attr">nodes</span>]=<span class="string">&quot;topMenuNarrowNodes&quot;</span> [<span class="attr">currentNode</span>]=<span class="string">&quot;currentNodes?.TopBarNarrow&quot;</span> [<span class="attr">isWide</span>]=<span class="string">&quot;false&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-nav-menu</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aio-nav-menu</span> [<span class="attr">nodes</span>]=<span class="string">&quot;sideNavNodes&quot;</span> [<span class="attr">currentNode</span>]=<span class="string">&quot;currentNodes?.SideNav&quot;</span> [<span class="attr">isWide</span>]=<span class="string">&quot;isSideBySide&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-nav-menu</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;doc-version&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Angular docs version &#123;&#123;currentDocVersion?.title&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">aio-select</span> (<span class="attr">change</span>)=<span class="string">&quot;onDocVersionChange($event.index)&quot;</span> [<span class="attr">options</span>]=<span class="string">&quot;docVersions&quot;</span> [<span class="attr">selected</span>]=<span class="string">&quot;docVersions &amp;&amp; docVersions[0]&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-select</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">md-sidenav</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">&quot;sidenav-content&quot;</span> [<span class="attr">id</span>]=<span class="string">&quot;pageId&quot;</span> <span class="attr">role</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aio-doc-viewer</span> [<span class="attr">doc</span>]=<span class="string">&quot;currentDocument&quot;</span> (<span class="attr">docRendered</span>)=<span class="string">&quot;onDocRendered()&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-doc-viewer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aio-dt</span> [<span class="attr">on</span>]=<span class="string">&quot;dtOn&quot;</span> [(<span class="attr">doc</span>)]=<span class="string">&quot;currentDocument&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-dt</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">md-sidenav-container</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;md-sidenav-container&gt;</code> 是用來包 <code>&lt;md-sidenav&gt;</code> 及主要顯示內容的容器</li>
+<li><a target="_blank" rel="noopener" href="https://material.angular.io/components/component/sidenav"><md-sidenav></a>是顯示側邊選單物件</li>
+<li><code>&lt;aio-nav-menu&gt;</code>、<code>&lt;aio-select&gt;</code>、<code>&lt;aio-doc-viewer&gt;</code> 及 <code>&lt;aio-dt&gt;</code> 皆為自訂 component</li>
+</ul>
+<h3 id="toc"><a class="header-anchor" href="#toc"> </a>toc</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">&quot;hasFloatingToc&quot;</span> <span class="attr">class</span>=<span class="string">&quot;toc-container&quot;</span> [<span class="attr">style.max-height.px</span>]=<span class="string">&quot;tocMaxHeight&quot;</span> (<span class="attr">mousewheel</span>)=<span class="string">&quot;restrainScrolling($event)&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aio-toc</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-toc</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>針對 <code>mousewheel</code> 事件進行判斷，限制頁面滾動的行為</li>
+<li><code>&lt;aio-toc&gt;</code> 為自訂 component</li>
+</ul>
+<h3 id="footer"><a class="header-anchor" href="#footer"> </a>footer</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aio-footer</span> [<span class="attr">nodes</span>]=<span class="string">&quot;footerNodes&quot;</span> [<span class="attr">versionInfo</span>]=<span class="string">&quot;versionInfo&quot;</span> &gt;</span><span class="tag">&lt;/<span class="name">aio-footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;aio-footer&gt;</code> 為自訂 component</li>
+</ul>
+<h2 id="class-AppComponent"><a class="header-anchor" href="#class-AppComponent"> </a>class AppComponent</h2>
+<h3 id="constructor"><a class="header-anchor" href="#constructor"> </a>constructor</h3>
+<p>注入所需的 <code>service</code></p>
+<ul>
+<li>DocumentService</li>
+<li>ElementRef</li>
+<li>LocationService</li>
+<li>NavigationService</li>
+<li>ScrollService</li>
+<li>SearchService</li>
+<li>SwUpdateNotificationsService</li>
+<li>TocService</li>
+</ul>
+<h3 id="ngOnInit"><a class="header-anchor" href="#ngOnInit"> </a>ngOnInit</h3>
+<ul>
+<li>判斷是否有支援 serviceWorker，如果有，則初始化 『search-worker』</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// Do not initialize the search on browsers that lack web worker support</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">&#x27;Worker&#x27;</span> <span class="keyword">in</span> <span class="variable language_">window</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">searchService</span>.<span class="title function_">initWorker</span>(<span class="string">&#x27;app/search/search-worker.js&#x27;</span>);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">searchService</span>.<span class="title function_">loadIndex</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>調整顯示大小，並設定 <code>&lt;md-sidenav-container&gt;</code> 的 <code>class.has-floating-toc</code> 屬性</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">private</span> showFloatingToc = <span class="keyword">new</span> <span class="title class_">BehaviorSubject</span>(<span class="literal">false</span>);</span><br><span class="line">...</span><br><span class="line"><span class="title function_">ngOnInit</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">onResize</span>(<span class="variable language_">window</span>.<span class="property">innerWidth</span>);</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">const</span> hasNonEmptyToc = <span class="variable language_">this</span>.<span class="property">tocService</span>.<span class="property">tocList</span>.<span class="title function_">map</span>(<span class="function"><span class="params">tocList</span> =&gt;</span> tocList.<span class="property">length</span> &gt; <span class="number">0</span>);</span><br><span class="line">  <span class="title function_">combineLatest</span>(hasNonEmptyToc, <span class="variable language_">this</span>.<span class="property">showFloatingToc</span>)</span><br><span class="line">        .<span class="title function_">subscribe</span>(<span class="function">(<span class="params">[hasToc, showFloatingToc]</span>) =&gt;</span> <span class="variable language_">this</span>.<span class="property">hasFloatingToc</span> = hasToc &amp;&amp; showFloatingToc);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@HostListener</span>(<span class="string">&#x27;window:resize&#x27;</span>, [<span class="string">&#x27;$event.target.innerWidth&#x27;</span>])</span><br><span class="line"><span class="title function_">onResize</span>(<span class="params">width</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">isSideBySide</span> = width &gt; <span class="variable language_">this</span>.<span class="property">sideBySideWidth</span>;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">showFloatingToc</span>.<span class="title function_">next</span>(width &gt; <span class="variable language_">this</span>.<span class="property">showFloatingTocWidth</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>監控並註冊目前所在的 document</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">DocumentContents</span> &#123;</span><br><span class="line">  <span class="comment">/** The unique identifier for this document */</span></span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="comment">/** The HTML to display in the doc viewer */</span></span><br><span class="line">  <span class="attr">contents</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//==========================================</span></span><br><span class="line"><span class="attr">currentDocument</span>: <span class="title class_">DocumentContents</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">ngOnInit</span>(<span class="params"></span>)&#123;</span><br><span class="line">  ...</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">documentService</span>.<span class="property">currentDocument</span>.<span class="title function_">subscribe</span>(<span class="function"><span class="params">doc</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentDocument</span> = doc;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setPageId</span>(doc.<span class="property">id</span>);</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setFolderId</span>(doc.<span class="property">id</span>);</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">updateHostClasses</span>();</span><br><span class="line">    &#125;);</span><br><span class="line">  ...</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="title function_">setPageId</span>(<span class="params"><span class="attr">id</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="comment">// Special case the home page</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">pageId</span> = (id === <span class="string">&#x27;index&#x27;</span>) ? <span class="string">&#x27;home&#x27;</span> : id.<span class="title function_">replace</span>(<span class="string">&#x27;/&#x27;</span>, <span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setFolderId</span>(<span class="params"><span class="attr">id</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="comment">// Special case the home page</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">folderId</span> = (id === <span class="string">&#x27;index&#x27;</span>) ? <span class="string">&#x27;home&#x27;</span> : id.<span class="title function_">split</span>(<span class="string">&#x27;/&#x27;</span>, <span class="number">1</span>)[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新本身component的class</span></span><br><span class="line"> <span class="meta">@HostBinding</span>(<span class="string">&#x27;class&#x27;</span>)</span><br><span class="line">  hostClasses = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">updateHostClasses</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> sideNavOpen = <span class="string">`sidenav-<span class="subst">$&#123;<span class="variable language_">this</span>.sidenav.opened ? <span class="string">&#x27;open&#x27;</span> : <span class="string">&#x27;closed&#x27;</span>&#125;</span>`</span>;</span><br><span class="line">    <span class="keyword">const</span> pageClass = <span class="string">`page-<span class="subst">$&#123;<span class="variable language_">this</span>.pageId&#125;</span>`</span>;</span><br><span class="line">    <span class="keyword">const</span> folderClass = <span class="string">`folder-<span class="subst">$&#123;<span class="variable language_">this</span>.folderId&#125;</span>`</span>;</span><br><span class="line">    <span class="keyword">const</span> viewClasses = <span class="title class_">Object</span>.<span class="title function_">keys</span>(<span class="variable language_">this</span>.<span class="property">currentNodes</span> || &#123;&#125;).<span class="title function_">map</span>(<span class="function"><span class="params">view</span> =&gt;</span> <span class="string">`view-<span class="subst">$&#123;view&#125;</span>`</span>).<span class="title function_">join</span>(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">hostClasses</span> = <span class="string">`<span class="subst">$&#123;sideNavOpen&#125;</span> <span class="subst">$&#123;pageClass&#125;</span> <span class="subst">$&#123;folderClass&#125;</span> <span class="subst">$&#123;viewClasses&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>documentService.currentDocument</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="variable language_">this</span>.<span class="property">currentDocument</span> = location.<span class="property">currentPath</span>.<span class="title function_">switchMap</span>(<span class="function"><span class="params">path</span> =&gt;</span> <span class="variable language_">this</span>.<span class="title function_">getDocument</span>(path));</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="title function_">getDocument</span>(<span class="params"><span class="attr">url</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> id = url || <span class="string">&#x27;index&#x27;</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">logger</span>.<span class="title function_">log</span>(<span class="string">&#x27;getting document&#x27;</span>, id);</span><br><span class="line">    <span class="keyword">if</span> ( !<span class="variable language_">this</span>.<span class="property">cache</span>.<span class="title function_">has</span>(id)) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">cache</span>.<span class="title function_">set</span>(id, <span class="variable language_">this</span>.<span class="title function_">fetchDocument</span>(id));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">cache</span>.<span class="title function_">get</span>(id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>監控網址變化，並執行相對應的動作</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">ngOnInit</span>(<span class="params"></span>)&#123;</span><br><span class="line">  ...   </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">locationService</span>.<span class="property">currentPath</span>.<span class="title function_">subscribe</span>(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (path === <span class="variable language_">this</span>.<span class="property">currentPath</span>) &#123;</span><br><span class="line">      <span class="comment">// scroll only if on same page (most likely a change to the hash)</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">autoScroll</span>();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// don&#x27;t scroll; leave that to `onDocRendered`</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentPath</span> = path;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Start progress bar if doc not rendered within brief time</span></span><br><span class="line">      <span class="built_in">clearTimeout</span>(<span class="variable language_">this</span>.<span class="property">isFetchingTimeout</span>);</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">isFetchingTimeout</span> = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">this</span>.<span class="property">isFetching</span> = <span class="literal">true</span>, <span class="number">200</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  ...</span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="title function_">autoScroll</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">scrollService</span>.<span class="title function_">scroll</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>監控瀏覽的狀態，細部的功能檢視會在看 <code>navigationService</code> 時研究</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A map of current nodes by view.</span></span><br><span class="line"><span class="comment"> * This is needed because some urls map to nodes in more than one view.</span></span><br><span class="line"><span class="comment"> * If a view does not contain a node that matches the current url then the value will be undefined.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">CurrentNodes</span> &#123;</span><br><span class="line">  [<span class="attr">view</span>: <span class="built_in">string</span>]: <span class="title class_">CurrentNode</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &lt;&lt;md-sidenav&gt; 物件</span></span><br><span class="line"><span class="meta">@ViewChild</span>(<span class="title class_">MdSidenav</span>)</span><br><span class="line">  <span class="attr">sidenav</span>: <span class="title class_">MdSidenav</span>;</span><br><span class="line"></span><br><span class="line"><span class="attr">currentNodes</span>: <span class="title class_">CurrentNodes</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">ngOnInit</span>(<span class="params"></span>)&#123;</span><br><span class="line">  ...   </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">navigationService</span>.<span class="property">currentNodes</span>.<span class="title function_">subscribe</span>(<span class="function"><span class="params">currentNodes</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentNodes</span> = currentNodes;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Preserve current sidenav open state by default</span></span><br><span class="line">      <span class="keyword">let</span> openSideNav = <span class="variable language_">this</span>.<span class="property">sidenav</span>.<span class="property">opened</span>;</span><br><span class="line">      <span class="comment">// const sideNavView = &#x27;SideNav&#x27;;</span></span><br><span class="line">      <span class="keyword">const</span> isSideNavDoc = !!currentNodes[sideNavView];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">isSideNavDoc</span> !== isSideNavDoc) &#123;</span><br><span class="line">        <span class="comment">// View type changed. Is it now a sidenav view (e.g, guide or tutorial)?</span></span><br><span class="line">        <span class="comment">// Open if changed to a sidenav doc; close if changed to a marketing doc.</span></span><br><span class="line">        openSideNav = <span class="variable language_">this</span>.<span class="property">isSideNavDoc</span> = isSideNavDoc;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// May be open or closed when wide; always closed when narrow</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">sideNavToggle</span>(<span class="variable language_">this</span>.<span class="property">isSideBySide</span> ? openSideNav : <span class="literal">false</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Compute the version picker list from the current version and the versions in the navigation map</span></span><br><span class="line">    <span class="title function_">combineLatest</span>(</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">navigationService</span>.<span class="property">versionInfo</span>.<span class="title function_">map</span>(<span class="function"><span class="params">versionInfo</span> =&gt;</span> (&#123; <span class="attr">title</span>: versionInfo.<span class="property">raw</span>, <span class="attr">url</span>: <span class="literal">null</span> &#125;)),</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">navigationService</span>.<span class="property">navigationViews</span>.<span class="title function_">map</span>(<span class="function"><span class="params">views</span> =&gt;</span> views[<span class="string">&#x27;docVersions&#x27;</span>]),</span><br><span class="line">      <span class="function">(<span class="params">currentVersion, otherVersions</span>) =&gt;</span> [currentVersion, ...otherVersions])</span><br><span class="line">      .<span class="title function_">subscribe</span>(<span class="function"><span class="params">versions</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">docVersions</span> = versions;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">currentDocVersion</span> = <span class="variable language_">this</span>.<span class="property">docVersions</span>[<span class="number">0</span>];</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">navigationService</span>.<span class="property">navigationViews</span>.<span class="title function_">subscribe</span>(<span class="function"><span class="params">views</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">footerNodes</span>  = views[<span class="string">&#x27;Footer&#x27;</span>]  || [];</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">sideNavNodes</span> = views[<span class="string">&#x27;SideNav&#x27;</span>] || [];</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">topMenuNodes</span> = views[<span class="string">&#x27;TopBar&#x27;</span>]  || [];</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">topMenuNarrowNodes</span> = views[<span class="string">&#x27;TopBarNarrow&#x27;</span>] || <span class="variable language_">this</span>.<span class="property">topMenuNodes</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">navigationService</span>.<span class="property">versionInfo</span>.<span class="title function_">subscribe</span>( <span class="function"><span class="params">vi</span> =&gt;</span> <span class="variable language_">this</span>.<span class="property">versionInfo</span> = vi );</span><br><span class="line">  ...</span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="title function_">sideNavToggle</span>(<span class="params"><span class="attr">value</span>?: <span class="built_in">boolean</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sidenav</span>.<span class="title function_">toggle</span>(value);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>啟動 <code>swUpdateNotification</code></li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">ngOnInit</span>(<span class="params"></span>)&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">swUpdateNotifications</span>.<span class="title function_">enable</span>();</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="onClick"><a class="header-anchor" href="#onClick"> </a>onClick</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HostListener</span>(<span class="string">&#x27;click&#x27;</span>, [<span class="string">&#x27;$event.target&#x27;</span>, <span class="string">&#x27;$event.button&#x27;</span>, <span class="string">&#x27;$event.ctrlKey&#x27;</span>, <span class="string">&#x27;$event.metaKey&#x27;</span>, <span class="string">&#x27;$event.altKey&#x27;</span>])</span><br><span class="line"><span class="title function_">onClick</span>(<span class="attr">eventTarget</span>: <span class="title class_">HTMLElement</span>, <span class="attr">button</span>: <span class="built_in">number</span>, <span class="attr">ctrlKey</span>: <span class="built_in">boolean</span>, <span class="attr">metaKey</span>: <span class="built_in">boolean</span>, <span class="attr">altKey</span>: <span class="built_in">boolean</span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Hide the search results if we clicked outside both the &quot;search box&quot; and the &quot;search results&quot;</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">searchElements</span>.<span class="title function_">some</span>(<span class="function"><span class="params">element</span> =&gt;</span> element.<span class="property">nativeElement</span>.<span class="title function_">contains</span>(eventTarget))) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">hideSearchResults</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Show developer source view if the footer is clicked while holding the meta and alt keys</span></span><br><span class="line">  <span class="keyword">if</span> (eventTarget.<span class="property">tagName</span> === <span class="string">&#x27;FOOTER&#x27;</span> &amp;&amp; metaKey &amp;&amp; altKey) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dtOn</span> = !<span class="variable language_">this</span>.<span class="property">dtOn</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Deal with anchor clicks; climb DOM tree until anchor found (or null)</span></span><br><span class="line">  <span class="keyword">let</span> target = eventTarget;</span><br><span class="line">  <span class="keyword">while</span> (target &amp;&amp; !(target <span class="keyword">instanceof</span> <span class="title class_">HTMLAnchorElement</span>)) &#123;</span><br><span class="line">    target = target.<span class="property">parentElement</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (target <span class="keyword">instanceof</span> <span class="title class_">HTMLAnchorElement</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">locationService</span>.<span class="title function_">handleAnchorClick</span>(target, button, ctrlKey, metaKey);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Allow the click to pass through</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>監聽頁面上所有的 <code>click</code>事件</p>
+<ul>
+<li>
+<p>如果在 <code>search box</code> 外的地方點擊，會把搜尋結果的區塊隱藏起來。</p>
+</li>
+<li>
+<p>win+alt+click on <code>footer</code> (1)的地方，會切換顯示/隱藏頁面內容的原始碼(2)</p>
+<p><img src="https://farm5.staticflickr.com/4214/35189085881_94d86e10ae_o.png" alt=""></p>
+</li>
+<li>
+<p>處理連結錨點</p>
+</li>
+</ul>
+<h3 id="onDocRendered"><a class="header-anchor" href="#onDocRendered"> </a>onDocRendered</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">onDocRendered</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// Stop fetching timeout (which, when render is fast, means progress bar never shown)</span></span><br><span class="line">  <span class="built_in">clearTimeout</span>(<span class="variable language_">this</span>.<span class="property">isFetchingTimeout</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Put page in a clean visual state</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">scrollService</span>.<span class="title function_">scrollToTop</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Scroll 500ms after the doc-viewer has finished rendering the new doc</span></span><br><span class="line">  <span class="comment">// The delay is to allow time for async layout to complete</span></span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">autoScroll</span>();</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">isStarting</span> = <span class="literal">false</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">isFetching</span> = <span class="literal">false</span>;</span><br><span class="line">  &#125;, <span class="number">500</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>觸發時機點是在<code>&lt;aio-doc-viewer&gt;</code>的 <code>docRendered</code> output 事件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aio-doc-viewer</span> [<span class="attr">doc</span>]=<span class="string">&quot;currentDocument&quot;</span> (<span class="attr">docRendered</span>)=<span class="string">&quot;onDocRendered()&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-doc-viewer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="onDocVersionChange"><a class="header-anchor" href="#onDocVersionChange"> </a>onDocVersionChange</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">onDocVersionChange</span>(<span class="params"><span class="attr">versionIndex</span>: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> version = <span class="variable language_">this</span>.<span class="property">docVersions</span>[versionIndex];</span><br><span class="line">  <span class="keyword">if</span> (version.<span class="property">url</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">locationService</span>.<span class="title function_">go</span>(version.<span class="property">url</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>觸發時機點是在<code>&lt;aio-select&gt;</code>下拉選單選擇完後</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;aio-<span class="title function_">select</span> (change)=<span class="string">&quot;onDocVersionChange($event.index)&quot;</span> [options]=<span class="string">&quot;docVersions&quot;</span> [selected]=<span class="string">&quot;docVersions &amp;&amp; docVersions[0]&quot;</span>&gt;&lt;/aio-select&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="onScroll"><a class="header-anchor" href="#onScroll"> </a>onScroll</h3>
+<p>根據滾動的狀態，決定 ToC 的高度</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Dynamically change height of table of contents container</span></span><br><span class="line"><span class="meta">@HostListener</span>(<span class="string">&#x27;window:scroll&#x27;</span>)</span><br><span class="line"><span class="title function_">onScroll</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">tocMaxHeightOffset</span>) &#123;</span><br><span class="line">    <span class="comment">// Must wait until now for md-toolbar to be measurable.</span></span><br><span class="line">    <span class="keyword">const</span> el = <span class="variable language_">this</span>.<span class="property">hostElement</span>.<span class="property">nativeElement</span> <span class="keyword">as</span> <span class="title class_">Element</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">tocMaxHeightOffset</span> =</span><br><span class="line">      el.<span class="title function_">querySelector</span>(<span class="string">&#x27;footer&#x27;</span>).<span class="property">clientHeight</span> +</span><br><span class="line">      el.<span class="title function_">querySelector</span>(<span class="string">&#x27;md-toolbar.app-toolbar&#x27;</span>).<span class="property">clientHeight</span> +</span><br><span class="line">      <span class="number">44</span>; <span class="comment">//  margin</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">tocMaxHeight</span> = (<span class="variable language_">document</span>.<span class="property">body</span>.<span class="property">scrollHeight</span> - <span class="variable language_">window</span>.<span class="property">pageYOffset</span> - <span class="variable language_">this</span>.<span class="property">tocMaxHeightOffset</span>).<span class="title function_">toFixed</span>(<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">&quot;hasFloatingToc&quot;</span> <span class="attr">class</span>=<span class="string">&quot;toc-container&quot;</span> [<span class="attr">style.max-height.px</span>]=<span class="string">&quot;tocMaxHeight&quot;</span><span class="attr">...</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aio-toc</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-toc</span>&gt;</span></span><br><span class="line">&lt;/div</span><br></pre></td></tr></table></figure>
+<h3 id="restrainScrolling"><a class="header-anchor" href="#restrainScrolling"> </a>restrainScrolling</h3>
+<p>限制滑鼠滾輪在 ToC 範圍內的滾動頁面的功能</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Restrain scrolling inside an element, when the cursor is over it</span></span><br><span class="line">  <span class="title function_">restrainScrolling</span>(<span class="params"><span class="attr">evt</span>: <span class="title class_">WheelEvent</span></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> elem = evt.<span class="property">currentTarget</span> <span class="keyword">as</span> <span class="title class_">Element</span>;</span><br><span class="line">    <span class="keyword">const</span> scrollTop = elem.<span class="property">scrollTop</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (evt.<span class="property">deltaY</span> &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// Trying to scroll up: Prevent scrolling if already at the top.</span></span><br><span class="line">      <span class="keyword">if</span> (scrollTop &lt; <span class="number">1</span>) &#123;</span><br><span class="line">        evt.<span class="title function_">preventDefault</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// Trying to scroll down: Prevent scrolling if already at the bottom.</span></span><br><span class="line">      <span class="keyword">const</span> maxScrollTop = elem.<span class="property">scrollHeight</span> - elem.<span class="property">clientHeight</span>;</span><br><span class="line">      <span class="keyword">if</span> (maxScrollTop - scrollTop &lt; <span class="number">1</span>) &#123;</span><br><span class="line">        evt.<span class="title function_">preventDefault</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">&quot;hasFloatingToc&quot;</span> <span class="attr">class</span>=<span class="string">&quot;toc-container&quot;</span> <span class="attr">...</span> (<span class="attr">mousewheel</span>)=<span class="string">&quot;restrainScrolling($event)&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aio-toc</span>&gt;</span><span class="tag">&lt;/<span class="name">aio-toc</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="onKeyUp"><a class="header-anchor" href="#onKeyUp"> </a>onKeyUp</h3>
+<p>使用鍵盤控制頁面功能</p>
+<ul>
+<li>使用 <code>/</code> 進入 <code>searchbox</code></li>
+<li>使用 <code>ESC</code> 取消搜尋結果，並重新將焦點設定於 <code>searchbox</code>上</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HostListener</span>(<span class="string">&#x27;document:keyup&#x27;</span>, [<span class="string">&#x27;$event.key&#x27;</span>, <span class="string">&#x27;$event.which&#x27;</span>])</span><br><span class="line"><span class="title function_">onKeyUp</span>(<span class="params"><span class="attr">key</span>: <span class="built_in">string</span>, <span class="attr">keyCode</span>: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">  <span class="comment">// forward slash &quot;/&quot;</span></span><br><span class="line">  <span class="keyword">if</span> (key === <span class="string">&#x27;/&#x27;</span> || keyCode === <span class="number">191</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">focusSearchBox</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (key === <span class="string">&#x27;Escape&#x27;</span> || keyCode === <span class="number">27</span> ) &#123;</span><br><span class="line">    <span class="comment">// escape key</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">showSearchResults</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">hideSearchResults</span>();</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">focusSearchBox</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="筆記"><a class="header-anchor" href="#筆記"> </a>筆記</h2>
+<ul>
+<li>
+<p>有很多事件都被註冊於 app.component 內，主要的原因是 <code>app.component</code> 為 <code>root component</code> ，除非把網頁關掉，否哲永遠不會被摧毀掉。</p>
+</li>
+<li>
+<p><code>services</code> 與 <code>component</code> 之間的溝通，大多數都使用 RxJS 的 Subject 作為溝通的橋樑，這樣子 component 或是其他 child component 都可以被通知有資料異動</p>
+</li>
+<li>
+<p><code>HostListener</code> 善用第二個參數，只取出需要的屬性即可，即可將程式碼的可讀性大幅的提升</p>
+</li>
+<li>
+<p>適當的使用 <code>get</code> 寫法，簡化變數的長度或將判斷邏輯封裝</p>
+</li>
+<li>
+<p>商業邏輯的部分盡量封裝到 <code>service</code> 內</p>
+</li>
+<li>
+<p>顯示區塊拆成子 <code>component</code> ，透過 <code>@Input</code>、<code>@Output</code>、<code>services</code> 的方式做溝通</p>
+</li>
+<li>
+<p><code>ViewChildren</code>的 selector 可以同時撈取多格範本變數(Template Reference Variable)</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ViewChildren</span>(<span class="string">&#x27;searchBox, searchResults&#x27;</span>, &#123;<span class="attr">read</span>: <span class="title class_">ElementRef</span>&#125;)</span><br><span class="line"><span class="attr">searchElements</span>: <span class="title class_">QueryList</span>&lt;<span class="title class_">ElementRef</span>&gt;;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/core/NgModuleRef">NgModuleRef</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/core/ApplicationRef">ApplicationRef</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/angular/material2">material2</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/06/13/dotnetcore-dependency-injection/" rel="prev" title="[.NET Core] Dependency Injection">
+                  <i class="fa fa-angle-left"></i> [.NET Core] Dependency Injection
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/06/15/angular-aio-code-study-002/" rel="next" title="[Angular]angular.io官網程式碼學習筆記002">
+                  [Angular]angular.io官網程式碼學習筆記002 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Typescript 2.0 新增了一個功能 strictNullChecks ，這一功能的主要目的是將 null 與 undefined 視為不同的型別。在這個選項啟動時， Typescript 會去檢查所有有可能發生 null 的程式碼，在下面會看到當開啟時，需要調整的項目有哪些。這樣的嚴謹模式，可以大大的降低一些例外的發生 而 Angular 所使用的 Typescript 版本也是 2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 啟用 strictNullChecks">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/04/13/angular-strictNullChecks/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Typescript 2.0 新增了一個功能 strictNullChecks ，這一功能的主要目的是將 null 與 undefined 視為不同的型別。在這個選項啟動時， Typescript 會去檢查所有有可能發生 null 的程式碼，在下面會看到當開啟時，需要調整的項目有哪些。這樣的嚴謹模式，可以大大的降低一些例外的發生 而 Angular 所使用的 Typescript 版本也是 2.0">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://farm4.staticflickr.com/3839/33966106616_47d4595064_o.png">
+<meta property="og:image" content="https://farm3.staticflickr.com/2870/33878082021_5228371f40_o.png">
+<meta property="og:image" content="https://farm4.staticflickr.com/3942/33966175946_d3fb790e8a_o.png">
+<meta property="og:image" content="https://farm3.staticflickr.com/2825/33966186516_b0bca33e9c_o.png">
+<meta property="og:image" content="https://farm3.staticflickr.com/2819/33966196546_d41c75867c_o.png">
+<meta property="og:image" content="https://farm3.staticflickr.com/2848/33878182561_27142d36fe_o.png">
+<meta property="og:image" content="https://farm3.staticflickr.com/2937/34007884075_3ffb7190eb_o.png">
+<meta property="article:published_time" content="2017-04-13T05:58:03.000Z">
+<meta property="article:modified_time" content="2018-07-07T09:07:16.145Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="Typescript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://farm4.staticflickr.com/3839/33966106616_47d4595064_o.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2017/04/13/angular-strictNullChecks/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2017/04/13/angular-strictNullChecks/","path":"2017/04/13/angular-strictNullChecks/","title":"[Angular] 啟用 strictNullChecks"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] 啟用 strictNullChecks | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Null-and-undefined-aware-types"><span class="nav-number">2.</span> <span class="nav-text">Null- and undefined-aware types</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Angular-%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">Angular 環境設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AA%A2%E6%9F%A5%E9%96%8B%E5%A7%8B"><span class="nav-number">4.</span> <span class="nav-text">檢查開始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%8C%AF%E8%AA%A4-1-Type-any-is-not-assignable-to-type-never"><span class="nav-number">4.1.</span> <span class="nav-text">錯誤 1: Type any[] is not assignable to type never[]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%8C%AF%E8%AA%A4-2-Argument-of-Type-%E2%80%A6-is-not-assignable-to-type-%E3%80%8E%E2%80%A6%E3%80%8F"><span class="nav-number">4.2.</span> <span class="nav-text">錯誤 2: Argument of Type … is not assignable to type 『…』</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%8C%AF%E8%AA%A4-3-Object-is-possibly-null"><span class="nav-number">4.3.</span> <span class="nav-text">錯誤 3: Object is possibly null</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%8C%AF%E8%AA%A44-Type-%E3%80%8Enull%E3%80%8F-is-not-assignable-to-type-%E3%80%8Efile-undefined%E3%80%8F"><span class="nav-number">4.4.</span> <span class="nav-text">錯誤4: Type 『null』 is not assignable to type 『file | undefined』</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">5.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/04/13/angular-strictNullChecks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] 啟用 strictNullChecks | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] 啟用 strictNullChecks
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-04-13 13:58:03" itemprop="dateCreated datePublished" datetime="2017-04-13T13:58:03+08:00">2017-04-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2018-07-07 17:07:16" itemprop="dateModified" datetime="2018-07-07T17:07:16+08:00">2018-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/04/13/angular-strictNullChecks/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/13/angular-strictNullChecks/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Typescript 2.0 新增了一個功能 <code>strictNullChecks</code> ，這一功能的主要目的是將 <code>null</code> 與 <code>undefined</code> 視為不同的型別。在這個選項啟動時， Typescript 會去檢查所有有可能發生 <code>null</code> 的程式碼，在下面會看到當開啟時，需要調整的項目有哪些。這樣的嚴謹模式，可以大大的降低一些例外的發生</p>
+<p>而 Angular 所使用的 Typescript 版本也是 2.0 以後的版本，爾當然支援這樣的功能，以下我就拿一個手上練習的專案將該功能該起後，所遇到的一些狀況跟解決方式。</p>
+<span id="more"></span>
+<h1 id="前言"><a class="header-anchor" href="#前言"> </a>前言</h1>
+<blockquote>
+<h1 id="Null-and-undefined-aware-types"><a class="header-anchor" href="#Null-and-undefined-aware-types"> </a>Null- and undefined-aware types</h1>
+<p>TypeScript has two special types, Null and Undefined, that have the values <code>null</code> and <code>undefined</code> respectively. Previously it was not possible to explicitly name these types, but <code>null</code> and <code>undefined</code> may now be used as type names regardless of type checking mode.</p>
+<p>The type checker previously considered <code>null</code> and <code>undefined</code> assignable to anything. Effectively, <code>null</code> and <code>undefined</code> were valid values of <em>every</em> type and it wasn’t possible to specifically exclude them (and therefore not possible to detect erroneous use of them).</p>
+</blockquote>
+<h1 id="Angular-環境設定"><a class="header-anchor" href="#Angular-環境設定"> </a>Angular 環境設定</h1>
+<p>在 <code>tsconfig.json</code> 內開啟 strictNullChecks 功能，由於 Angular 主程式內還有部分的程式碼還沒有辦法通過 <code>strictNullChecks</code> 的檢查，所以必須再多開啟 <code>skipLibCheck</code> 的選項</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;compileOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="attr">&quot;strictNullChecks&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;skipLibCheck&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="檢查開始"><a class="header-anchor" href="#檢查開始"> </a>檢查開始</h1>
+<p>當執行 <code>npm start</code> 時，Typescript 就會開始做檢查的動作了，在最近更新的 Visual Studio Code 支援從 Terminal 直接開啟該檔案的功能，<code>Ctrl + Click</code>  就可以開啟了。</p>
+<p>第一次的檢查，會跳出很多紅色的錯誤。就一個一個看吧</p>
+<h2 id="錯誤-1-Type-any-is-not-assignable-to-type-never"><a class="header-anchor" href="#錯誤-1-Type-any-is-not-assignable-to-type-never"> </a>錯誤 1: Type any[] is not assignable to type never[]</h2>
+<p><img src="https://farm4.staticflickr.com/3839/33966106616_47d4595064_o.png" alt=""></p>
+<p>圖片中的 errMessage 是發生錯誤的地方。造成這個錯誤的原因是 errMessage 在定義時，並沒有宣告型別，而是直接給予一個空陣列。</p>
+<p><img src="https://farm3.staticflickr.com/2870/33878082021_5228371f40_o.png" alt=""></p>
+<p><strong>修正方式 :</strong>  明確的給予型別，即可修正此類型的錯誤</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="attr">errMessage</span>: <span class="built_in">string</span>[] = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">  <span class="keyword">if</span> (obj.<span class="title function_">hasOwnProperty</span>(prop)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(obj[prop])) &#123;</span><br><span class="line">      errMessage = [...errMessage, ...obj[prop]];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="錯誤-2-Argument-of-Type-…-is-not-assignable-to-type-『…』"><a class="header-anchor" href="#錯誤-2-Argument-of-Type-…-is-not-assignable-to-type-『…』"> </a>錯誤 2: Argument of Type … is not assignable to type 『…』</h2>
+<p><img src="https://farm4.staticflickr.com/3942/33966175946_d3fb790e8a_o.png" alt=""></p>
+<p><img src="https://farm3.staticflickr.com/2825/33966186516_b0bca33e9c_o.png" alt=""></p>
+<p>這裡的 AuthConfig 接受的參數型別是 <code>IAuthConfigOptional</code>，而程式碼裡所傳入的 Object 並未指定型別。</p>
+<p><img src="https://farm3.staticflickr.com/2819/33966196546_d41c75867c_o.png" alt=""></p>
+<p><strong>修正方式 :</strong> 給予正確的型別</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AuthHttp</span>(<span class="keyword">new</span> <span class="title class_">AuthConfig</span>(&lt;<span class="title class_">IAuthConfigOptional</span>&gt;&#123;</span><br><span class="line">        <span class="attr">tokenName</span>: <span class="string">&#x27;token&#x27;</span>,</span><br><span class="line">        <span class="attr">noJwtError</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">tokenGetter</span>: (<span class="function">() =&gt;</span> <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)),</span><br><span class="line">    &#125;), http, options);</span><br></pre></td></tr></table></figure>
+<h2 id="錯誤-3-Object-is-possibly-null"><a class="header-anchor" href="#錯誤-3-Object-is-possibly-null"> </a>錯誤 3: Object is possibly null</h2>
+<p><img src="https://farm3.staticflickr.com/2848/33878182561_27142d36fe_o.png" alt=""></p>
+<p>在這裡的錯誤訊息是指，這段程式碼有可能因為某一個Object是 null 時，後續的程式碼就無法繼續下去，所以必須先排除 null 的狀態，才能確保後續的動作是正常的。而這個行為，在 Typescript 2.0 稱為 <code>Control flow based type analysis</code> <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></p>
+<p>這裡有幾種修正方式</p>
+<ol>
+<li>告訴 Typescript, 這裡有可能發生 null 的 Object 是不會有 null 值的情形，需使用 <code>!</code>  <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">number</span> = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="property">body</span>.<span class="property">scrollTop</span>;</span><br><span class="line">       <span class="keyword">if</span> (<span class="built_in">number</span> &gt; <span class="number">130</span>) &#123;</span><br><span class="line">           <span class="variable language_">this</span>.<span class="property">document</span>!.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>)!.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="variable language_">this</span>.<span class="property">document</span>!.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>)!.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">       &#125;           </span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>根據 Type 來控制流程</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">document</span> === <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="built_in">number</span> = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="property">body</span>.<span class="property">scrollTop</span>;</span><br><span class="line"><span class="keyword">const</span> panel = <span class="variable language_">this</span>.<span class="property">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;control-panel&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (panel === <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">number</span> &gt; <span class="number">130</span>) &#123;</span><br><span class="line">  panel.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  panel.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;panel-fixed&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="錯誤4-Type-『null』-is-not-assignable-to-type-『file-undefined』"><a class="header-anchor" href="#錯誤4-Type-『null』-is-not-assignable-to-type-『file-undefined』"> </a>錯誤4: Type 『null』 is not assignable to type 『file | undefined』</h2>
+<p><img src="https://farm3.staticflickr.com/2937/34007884075_3ffb7190eb_o.png" alt=""></p>
+<p><strong>修正方式 :</strong> 這個錯誤其實很簡單，就是不要指定 null 到變數上即可</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">photo.<span class="property">file</span> = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>透過這一系列的型別設定檢查，雖然在開發時期，因為型別的指定會降低開發的速度，可是當系統越來越龐大時，可以在開發時期確保程式不會壞掉。就投報率的角度來說，是非常值得投資的。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<p><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html">TypeScript 2.0</a></p>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">A new <code>!</code> post-fix expression operator may be used to assert that its operand is non-null and non-undefined in contexts where the type checker is unable to conclude that fact. Specifically, the operation <code>x!</code> produces a value of the type of <code>x</code>with <code>null</code> and <code>undefined</code> excluded. Similar to type assertions of the forms <code>&lt;T&gt;x</code> and <code>x as T</code>, the <code>!</code> non-null assertion operator is simply removed in the emitted JavaScript code.</span><a href="#fnref:1" rev="footnote"> ↩</a></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">2.</span><span style="display: inline-block; vertical-align: top;">TypeScript 2.0 implements a control flow-based type analysis for local variables and parameters. Previously, the type analysis performed for type guards was limited to <code>if</code> statements and <code>?:</code> conditional expressions and didn't include effects of assignments and control flow constructs such as <code>return</code> and <code>break</code> statements. With TypeScript 2.0, the type checker analyses all possible flows of control in statements and expressions to produce the most specific type possible (the <em>narrowed type</em>) at any given location for a local variable or parameter that is declared to have a union type.</span><a href="#fnref:2" rev="footnote"> ↩</a></li></ol></div></div>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+              <a href="/tags/Typescript/" rel="tag"># Typescript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/26/angular4-universal-aspnetcore/" rel="prev" title="[Angular] Angular 4 - Universal with ASP.NET Core">
+                  <i class="fa fa-angle-left"></i> [Angular] Angular 4 - Universal with ASP.NET Core
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/04/19/angular-ngIf-else/" rel="next" title="[Angular] ngIf 跟他的新朋友 else 和 then">
+                  [Angular] ngIf 跟他的新朋友 else 和 then <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

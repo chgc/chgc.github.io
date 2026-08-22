@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="C# 的集合種類有很多種，每一種集合都有不同的特性，趁著在看 ImmutableList 將這個區塊的資訊整理一下。C# 跟及何有關的命名空間，都會放在 System.Collections 下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C#] Collection">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/10/04/csharp-collection/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="C# 的集合種類有很多種，每一種集合都有不同的特性，趁著在看 ImmutableList 將這個區塊的資訊整理一下。C# 跟及何有關的命名空間，都會放在 System.Collections 下">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-10-04T00:40:56.000Z">
+<meta property="article:modified_time" content="2018-12-22T13:10:40.862Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="CSharp">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/10/04/csharp-collection/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/10/04/csharp-collection/","path":"2018/10/04/csharp-collection/","title":"[C#] Collection"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[C#] Collection | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E7%A8%AE%E9%A1%9E"><span class="nav-number">1.</span> <span class="nav-text">集合的種類</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Collections"><span class="nav-number">1.1.</span> <span class="nav-text">System.Collections</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Collections-Generic"><span class="nav-number">1.2.</span> <span class="nav-text">System.Collections.Generic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Collections-Concurrent"><span class="nav-number">1.3.</span> <span class="nav-text">System.Collections.Concurrent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Collections-Immutable"><span class="nav-number">1.4.</span> <span class="nav-text">System.Collections.Immutable</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%84%E9%9B%86%E5%90%88%E7%9A%84%E8%A9%B3%E7%B4%B0%E8%AA%AA%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">各集合的詳細說明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ArrayList"><span class="nav-number">2.1.</span> <span class="nav-text">ArrayList</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hashtable"><span class="nav-number">2.2.</span> <span class="nav-text">Hashtable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Queue"><span class="nav-number">2.3.</span> <span class="nav-text">Queue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stack"><span class="nav-number">2.4.</span> <span class="nav-text">Stack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#List-T-%E7%9A%84%E5%BB%B6%E4%BC%B8"><span class="nav-number">3.</span> <span class="nav-text">List&lt;T&gt;的延伸</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">4.</span> <span class="nav-text">結論</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/10/04/csharp-collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[C#] Collection | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [C#] Collection
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-10-04 08:40:56" itemprop="dateCreated datePublished" datetime="2018-10-04T08:40:56+08:00">2018-10-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2018-12-22 21:10:40" itemprop="dateModified" datetime="2018-12-22T21:10:40+08:00">2018-12-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/10/04/csharp-collection/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/04/csharp-collection/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>C# 的集合種類有很多種，每一種集合都有不同的特性，趁著在看 <code>ImmutableList</code> 將這個區塊的資訊整理一下。C# 跟及何有關的命名空間，都會放在 <code>System.Collections</code> 下</p>
+<span id="more"></span>
+<h1 id="集合的種類"><a class="header-anchor" href="#集合的種類"> </a>集合的種類</h1>
+<h2 id="System-Collections"><a class="header-anchor" href="#System-Collections"> </a>System.Collections</h2>
+<p>因為不指定型別，所以都會以 <code>Object</code> 的類型儲存，常用的類別有</p>
+<table>
+<thead>
+<tr>
+<th>類別</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ArrayList</td>
+<td>會視需要動態增加大小的物件陣列。(對應 List)</td>
+</tr>
+<tr>
+<td>Hashtable</td>
+<td>根據索引鍵的雜湊程式碼，所整理的索引鍵/值組集合 (對應 Dictionary)</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>具有先進先出(FIFO)特性的清單</td>
+</tr>
+<tr>
+<td>Stack</td>
+<td>具有先進後出(LIFO)特性的清單</td>
+</tr>
+</tbody>
+</table>
+<h2 id="System-Collections-Generic"><a class="header-anchor" href="#System-Collections-Generic"> </a>System.Collections.Generic</h2>
+<p>在這一個命名空間下的集合都屬泛型集合，常見的有</p>
+<table>
+<thead>
+<tr>
+<th>類別</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Dictionary&lt;TKey, TValue&gt;</code></td>
+<td>KeyValue Pair 集合</td>
+</tr>
+<tr>
+<td><code>List&lt;T&gt;</code></td>
+<td>依照索引存取的物件清單，可搜尋、排序、修改</td>
+</tr>
+<tr>
+<td><code>Queue&lt;T&gt;</code></td>
+<td>具有先進先出(FIFO)特性的清單</td>
+</tr>
+<tr>
+<td><code>SortedList&lt;TKey, TValue&gt;</code></td>
+<td>根據 Key 值排序的 KeyValue 集合</td>
+</tr>
+<tr>
+<td><code>Stack&lt;T&gt;</code></td>
+<td>具有先進後出(LIFO)特性的清單</td>
+</tr>
+</tbody>
+</table>
+<h2 id="System-Collections-Concurrent"><a class="header-anchor" href="#System-Collections-Concurrent"> </a>System.Collections.Concurrent</h2>
+<p>針對多執行緒情境所設計的集合，包含 <code>BlockingCollection&lt;T&gt;</code> 、<code>ConcurrentDictionary&lt;TKey, TValue&gt;</code> 、<code>ConcurrentQueue&lt;T&gt;</code> 和 <code>ConcurrentStack&lt;T&gt;</code></p>
+<h2 id="System-Collections-Immutable"><a class="header-anchor" href="#System-Collections-Immutable"> </a>System.Collections.Immutable</h2>
+<blockquote>
+<p>涉及多個執行緒時，要控制好可變狀態會是個挑戰。 一般作法是利用可在不同執行緒之間自由傳遞的不可變狀態。 不可變的集合不同於唯讀集合，因為集合的提供者或消費者無法變更不可變的集合，這點和唯讀集合並不相同。 例如，如果您要列舉唯讀集合，該集合有可能會在其他執行緒上變更，而導致資料損毀。 如果您是使用不可變的集合，就不會發生這種情形。</p>
+</blockquote>
+<p>根據 MSDN 的說明，使用不可變的集合有以下的優點</p>
+<ul>
+<li>安心共用集合，消費者可以確保集合永遠不會變更。</li>
+<li>在多執行緒應用程式中提供隱含的執行緒安全性 (不需要鎖定，即可存取集合)。</li>
+<li>依照函式程式設計作法進行。</li>
+<li>在列舉期間修改集合，並可確保原始集合不會變更。</li>
+</ul>
+<p>一樣有上述的 <code>List</code>、<code>Dictionary</code>、<code>HashSet</code> 等集合，只是變成 <code>ImmutableList&lt;T&gt;</code>、<code>ImmutableDictionary&lt;TKey, TValue&gt;</code>、<code>ImmutableHashSet&lt;T&gt;</code>。</p>
+<h1 id="各集合的詳細說明"><a class="header-anchor" href="#各集合的詳細說明"> </a>各集合的詳細說明</h1>
+<h2 id="ArrayList"><a class="header-anchor" href="#ArrayList"> </a>ArrayList</h2>
+<p>透過新增、移除，可以動態改變陣列大小。實作 <code>IList</code> 界面</p>
+<p>範例程式碼</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// Creates and initializes a new ArrayList.</span></span><br><span class="line">ArrayList myAL = <span class="keyword">new</span> ArrayList();</span><br><span class="line">myAL.Add(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">myAL.Add(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">myAL.Add(<span class="string">&quot;!&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>關於 <code>ArrayList</code>，有些事情是需要知道的</p>
+<ul>
+<li>
+<p>設計用來保存物件的異質集合，不保證最佳效能，官方建議使用 <code>List&lt;Object&gt;</code></p>
+<ul>
+<li>效能討論，可參閱 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/dotnet/api/system.collections.generic.list-1?view=netframework-4.7.2">List<T></a> 主題</li>
+</ul>
+</li>
+<li>
+<p>不保證排序，需透過 <code>Sort</code> 的方式來進行排序，如果要確保順序，使用 <code>SortedSet&lt;T&gt;</code> 類別</p>
+</li>
+<li>
+<p>由於是動態產生，所以每一次增加 <code>ArrayList</code> 數量都會重新配置(指增不減)，為了減少使用空間，使用 <code>TrimToSize</code> 或是明確指定陣列大小，可以解決空間浪費的問題</p>
+</li>
+<li>
+<p>可透過整數索引取值，從 <code>0</code> 開始</p>
+</li>
+<li>
+<p>接受 <code>null</code> 並可以重複</p>
+</li>
+<li>
+<p>不支援多維</p>
+</li>
+<li>
+<p>需透過 <code>Cast&lt;T&gt;</code> 才可以使用 Linq</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myAL.Cast&lt;string&gt;().FirstOrDefault(x =&gt; x == &quot;!&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Hashtable"><a class="header-anchor" href="#Hashtable"> </a>Hashtable</h2>
+<p>根據索引鍵的雜湊程式碼，所整理的索引鍵/值組集合</p>
+<p>範例程式</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Hashtable openWith = <span class="keyword">new</span> Hashtable();</span><br><span class="line">openWith.Add(<span class="string">&quot;txt&quot;</span>, <span class="string">&quot;notepad.exe&quot;</span>);</span><br><span class="line">openWith.Add(<span class="string">&quot;bmp&quot;</span>, <span class="string">&quot;paint.exe&quot;</span>);</span><br><span class="line">openWith.Add(<span class="string">&quot;dib&quot;</span>, <span class="string">&quot;paint.exe&quot;</span>);</span><br><span class="line">openWith.Add(<span class="string">&quot;rtf&quot;</span>, <span class="string">&quot;wordpad.exe&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>關於 <code>Hashtbale</code>，有些事情是需要知道的</p>
+<ul>
+<li>
+<p>Key 不能是 <code>null</code></p>
+</li>
+<li>
+<p>Key 值物件必須是不可變的</p>
+</li>
+<li>
+<p><code>foreach</code> 取的值是 <code>DictionaryEntry</code> 型別，只允許讀取 (read only)</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(DictionaryEntry de <span class="keyword">in</span> myHashtable)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Queue"><a class="header-anchor" href="#Queue"> </a>Queue</h2>
+<p>先進先出 (FIFO) 集合</p>
+<p>範例程式</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Queue myQ = <span class="keyword">new</span> Queue();</span><br><span class="line">myQ.Enqueue(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">myQ.Enqueue(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">myQ.Enqueue(<span class="string">&quot;!&quot;</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// Hello</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// 移除 Hello</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// World</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// 移除 World</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// !</span></span><br><span class="line">myQ.Dequeue(); <span class="comment">// 移除 !</span></span><br><span class="line">WriteLine(myQ.Peek()); <span class="comment">// 出現錯誤，因為 Queue 已經是 Empty 了</span></span><br></pre></td></tr></table></figure>
+<p>關於 <code>Queue</code>，有些事情是需要知道的</p>
+<ul>
+<li>三個主要作業
+<ul>
+<li><code>Enqueue</code> : 新增至結尾</li>
+<li><code>Dequeue</code>: 移除最舊的項目</li>
+<li><code>Peek</code>: 傳回最舊的項目</li>
+</ul>
+</li>
+<li>可透過 <code>TrimToSize</code> 來節省沒在使用的配置空間</li>
+<li>允許 <code>null</code> 並允許重複項目</li>
+</ul>
+<h2 id="Stack"><a class="header-anchor" href="#Stack"> </a>Stack</h2>
+<p>後進先出 (LIFO) 非泛型集合</p>
+<p>範例程式</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Creates and initializes a new Stack.</span></span><br><span class="line">Stack myStack = <span class="keyword">new</span> Stack();</span><br><span class="line">myStack.Push(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">myStack.Push(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">myStack.Push(<span class="string">&quot;!&quot;</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(myStack.Pop()); <span class="comment">// !</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(myStack.Peek());<span class="comment">// World</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(myStack.Pop()); <span class="comment">// World</span></span><br><span class="line">WriteLine(myStack.Count); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>關於 <code>Stack</code>，有些事情是需要知道的</p>
+<ul>
+<li>三個主要作業
+<ul>
+<li><code>Push</code> : 將物件插入 <code>Stack</code> 的頂端。</li>
+<li><code>Pop</code>: 移除並傳回在  <code>Stack</code>  頂端的物件</li>
+<li><code>Peek</code>: 傳回  <code>Stack</code>  頂端的物件而不需移除它</li>
+</ul>
+</li>
+</ul>
+<h1 id="List-T-的延伸"><a class="header-anchor" href="#List-T-的延伸"> </a>List&lt;<code>T</code>&gt;的延伸</h1>
+<p>List<T> 可以透過方法來轉換成不同的集合類型，而其中的 <code>ReadOnlyCollection</code> 與 <code>ImmutableList</code> 我比較想拿出來比較</p>
+<p>這兩著在本質上還是有差異的，範例程式</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;() &#123; <span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> readonlyList = list.AsReadOnly();</span><br><span class="line"><span class="keyword">var</span> immutableList = list.ToImmutableList();</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">&quot;List Count: &quot;</span> + list.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(<span class="string">&quot;ReadonlyList Count: &quot;</span> + readonlyList.Count); <span class="comment">// 2</span></span><br><span class="line">WriteLine(<span class="string">&quot;ImmutableList Count: &quot;</span> + immutableList.Count); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">list.Add(<span class="string">&quot;c&quot;</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">&quot;List Count: &quot;</span> + list.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">&quot;ReadonlyList Count: &quot;</span> + readonlyList.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">&quot;ImmutableList Count: &quot;</span> + immutableList.Count); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">immutableList = immutableList.Add(<span class="string">&quot;3&quot;</span>);</span><br><span class="line"></span><br><span class="line">WriteLine(<span class="string">&quot;List Count: &quot;</span> + list.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">&quot;ReadonlyList Count: &quot;</span> + readonlyList.Count); <span class="comment">// 3</span></span><br><span class="line">WriteLine(<span class="string">&quot;ImmutableList Count: &quot;</span> + immutableList.Count); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p>根據上面的執行結果，我們可以得知，一但轉換成 <code>ImmutableList</code> 時，就與原本的 List 是脫離關係的，不論原本的集合做怎樣的變更，<code>ImmutableList</code> 都不會改變。但 <code>ReadonlyCollection</code> 卻不是這樣，<code>ReadonlyCollection</code> 會跟 <code>List</code> 一起連動。只是他不能被修改而已。</p>
+<p>那什麼時候要用 <code>ReadonlyCollection</code> 什麼時候要用 <code>ImmutableList</code> ? 其實可以看 <code>ImmutableList</code> 的是用情境，就大概知道哪些狀況下要使用 <code>ImmutableList</code>了</p>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>C# 內的集合類別很多種，也有針對不同的情境設計實作集合類別，有空的時候，是可以花點時間讀一下官方文件，並熟悉 LINQ 的操作，LINQ 對於集合的操作能力可是很厲害的，可以用少少的程式碼完成很多工作，而且閱讀性也不會太差。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CSharp/" rel="tag"># CSharp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/09/19/angular-material-table-hidden-api/" rel="prev" title="[Angular] Angular Material Table API 筆記">
+                  <i class="fa fa-angle-left"></i> [Angular] Angular Material Table API 筆記
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/14/angular-host-style/" rel="next" title="[Angular] Angular Component Host Style">
+                  [Angular] Angular Component Host Style <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

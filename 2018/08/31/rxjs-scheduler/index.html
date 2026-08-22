@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="來探討 RxJS 的 Scheduler 吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[RxJS] Scheduler">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/08/31/rxjs-scheduler/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="來探討 RxJS 的 Scheduler 吧">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/ydKKr52.png">
+<meta property="og:image" content="https://i.imgur.com/MF9RTd7.png">
+<meta property="og:image" content="https://i.imgur.com/mPk6oXs.png">
+<meta property="article:published_time" content="2018-08-31T00:37:59.000Z">
+<meta property="article:modified_time" content="2026-08-22T11:44:32.030Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/ydKKr52.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/08/31/rxjs-scheduler/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/08/31/rxjs-scheduler/","path":"2018/08/31/rxjs-scheduler/","title":"[RxJS] Scheduler"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[RxJS] Scheduler | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RxJS-Scheduler"><span class="nav-number">2.</span> <span class="nav-text">RxJS Scheduler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dive-In"><span class="nav-number">3.</span> <span class="nav-text">Dive In</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Work"><span class="nav-number">3.1.</span> <span class="nav-text">Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Action"><span class="nav-number">3.2.</span> <span class="nav-text">Action</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Subscription"><span class="nav-number">3.3.</span> <span class="nav-text">Subscription</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reacp"><span class="nav-number">4.</span> <span class="nav-text">Reacp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/08/31/rxjs-scheduler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[RxJS] Scheduler | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [RxJS] Scheduler
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-08-31 08:37:59" itemprop="dateCreated datePublished" datetime="2018-08-31T08:37:59+08:00">2018-08-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2026-08-22 19:44:32" itemprop="dateModified" datetime="2026-08-22T19:44:32+08:00">2026-08-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/08/31/rxjs-scheduler/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/31/rxjs-scheduler/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>來探討 RxJS 的 Scheduler 吧</p>
+<span id="more"></span>
+<h1 id="前言"><a class="header-anchor" href="#前言"> </a>前言</h1>
+<p>在開始探討 RxJS 的 scheduler 機制之前，要先談談 JavaScript 本身的三個機制 <code>Event Loop</code> 、<code>Micro Task</code> 和 <code>Macro Task</code>。</p>
+<p>我們知道 JavaScript 處理 <code>function </code> 的方式是將要執行的 <code>function </code> 放到 stack 中，如果遇到非同步動作時，JavaScript 會將其非同步執行結束後的 <code>callback function</code> 放到 <code>Queue</code> 中，等待 stack 的動作全部完成後(即清空)，再來執行 queue 裡的工作，而將 queue 裡的工作轉到 stack 的人就是 <code>event loop</code>。所以我們可以說 <code>event loop</code> 的工作是監控 <code>stack</code> 與 <code>queue</code> ，並決定什麼時候要將 queue 的工作拉到 stack 內處理。</p>
+<p>更多關於 Event loop 運行方式，可以看這個影片</p>
+<iframe src="https://www.youtube.com/embed/8aGhZQkoFbQ" width="100%" height="300" frameborder="0" loading="lazy" allowfullscreen></iframe>
+<p>實際上 <code>Event loop</code> 內在分細一點，針對不同的非同步行為，有著執行的優先順序。這裡要介紹 <code>Micro Task</code> 與 <code>Macro Task</code> ，簡單的說，就是將上述的 Queue 在分成兩種 Queue，一個是記載著 <code>Micro Task</code> 的 (這裡我們先稱為 <code>Micro Task Queue</code>)，另外一個是記載著 <code>Macro Task</code> (這裡我們先稱為 <code>Macro Task Queue</code>)。 在每一個事件循環，會先處理記載 <code>Micro Task</code> 的 Queue，然後當 <code>Micro Task Queue</code> 清空後，才會處理 <code>Macro Task Queue</code> 。</p>
+<p>那些動作是 <code>Micro Task</code>，哪些又是 <code>Macro Task</code> 呢?</p>
+<ul>
+<li><code>Micro Task</code>
+<ul>
+<li><code>process.nextTick()</code></li>
+<li><code>promise</code></li>
+<li><code>Object.observe</code></li>
+<li><code>MutaionObserver</code></li>
+</ul>
+</li>
+<li><code>Macro Task</code>
+<ul>
+<li><code>setImmediate</code></li>
+<li><code>setTimeout</code></li>
+<li><code>setInterval</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;setTimeout&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;promise1&#x27;</span>);</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;promise2&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;script end&#x27;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://i.imgur.com/ydKKr52.png" alt=""></p>
+<h1 id="RxJS-Scheduler"><a class="header-anchor" href="#RxJS-Scheduler"> </a>RxJS Scheduler</h1>
+<p>RxJS 裡面的 Scheduler 有幾種，而我們可以透過改變 scheduler 來改變執行順序。RxJS Scheduler 有以下幾種，還記得我們上面提到的 Micro 和 Macro Task 嗎? 每一個 Scheduler 也有相對應的類別</p>
+<ul>
+<li><code>queueScheduler</code>：<code>Sync queue</code>，將任務放到 <code>queue</code> 中，如果有設定 delay，行為跟 <code>async</code> 一樣</li>
+<li><code>asapScheduler</code>： <code>Micro Task</code></li>
+<li><code>asyncScheduler</code>：<code>Macro Task</code>，與 <code>setTimeout</code> 的相同。</li>
+<li><code>animationFrameScheduler</code>：<code>paint event</code> ，根據每一個 frame 做觸發</li>
+</ul>
+<p>讓我們直接來看 code</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">of</span>, range, interval, asapScheduler, asyncScheduler, animationFrameScheduler, queueScheduler &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; observeOn, subscribeOn &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/operators&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// observeOn 可以被使用多次，控制 emission</span></span><br><span class="line"><span class="title function_">range</span>(<span class="number">0</span>, <span class="number">42</span>).<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(queueScheduler));</span><br><span class="line"></span><br><span class="line"><span class="comment">// subscribeOn 只會被使用一次，控制 subscription</span></span><br><span class="line"><span class="title function_">of</span>(<span class="number">42</span>).<span class="title function_">pipe</span>(<span class="title function_">subscribeOn</span>(asapScheduler));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可用引數的方式設定 scheduler，很容易改變</span></span><br><span class="line"><span class="title function_">interval</span>(<span class="number">1000</span>, asyncScheduler)</span><br><span class="line"><span class="title function_">interval</span>(<span class="number">0</span>, animationFrameScheduler)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>scheduler 的執行順序</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">of</span>, merge, asapScheduler, asyncScheduler, queueScheduler, animationFrameScheduler &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; filter, startWith, observeOn &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/operators&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> delay = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> async$ = <span class="title function_">of</span>(<span class="string">&#x27;async&#x27;</span>)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(asyncScheduler, delay));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> asap$ = <span class="title function_">of</span>(<span class="string">&#x27;asap&#x27;</span>)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(asapScheduler, delay));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queue$ = <span class="title function_">of</span>(<span class="string">&#x27;queue&#x27;</span>)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(queueScheduler, delay));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> animate$ = <span class="title function_">of</span>(<span class="string">&#x27;animate&#x27;</span>)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(animationFrameScheduler, delay));</span><br><span class="line"></span><br><span class="line"><span class="title function_">merge</span>(async$, asap$, queue$, animate$)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">filter</span>(<span class="function"><span class="params">x</span> =&gt;</span> !!x))</span><br><span class="line">  .<span class="title function_">subscribe</span>(<span class="variable language_">console</span>.<span class="property">log</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;after subscription&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://i.imgur.com/MF9RTd7.png" alt=""></p>
+<p>這次，我們將 scheduler 加上 delay 的設定，在看一次跑出來的結果</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">of</span>, merge, asapScheduler, asyncScheduler, queueScheduler, animationFrameScheduler &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; filter, startWith, observeOn &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/operators&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> delay = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> async$ = <span class="title function_">of</span>(<span class="string">&#x27;async&#x27;</span>)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(asyncScheduler, delay));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> asap$ = <span class="title function_">of</span>(<span class="string">&#x27;asap&#x27;</span>)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(asapScheduler, delay));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queue$ = <span class="title function_">of</span>(<span class="string">&#x27;queue&#x27;</span>)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(queueScheduler, delay));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> animate$ = <span class="title function_">of</span>(<span class="string">&#x27;animate&#x27;</span>)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">observeOn</span>(animationFrameScheduler, delay));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">merge</span>(async$, asap$, queue$, animate$)</span><br><span class="line">  .<span class="title function_">pipe</span>(<span class="title function_">filter</span>(<span class="function"><span class="params">x</span> =&gt;</span> !!x))</span><br><span class="line">  .<span class="title function_">subscribe</span>(<span class="variable language_">console</span>.<span class="property">log</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;after subscription&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://i.imgur.com/mPk6oXs.png" alt=""></p>
+<p>整個執行順序大改變，十分有趣的結果。根據結果可以推測，當加上 delay 時，全部的 scheduler 都會轉變成 <code>asyncScheduler</code>的行為模式。</p>
+<p>其實從原始碼的地方可以看到，<code>AsapScheduler</code> 與 <code>QueueScheduler</code> 都是繼承 <code>AsyncScheduler</code> 來的，<code>AsapScheduler</code> 與 <code>AsyncScheduler</code> 的差異點在於 <code>flush</code> 的實作內容而已</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AsapScheduler</span> <span class="keyword">extends</span> <span class="title class_ inherited__">AsyncScheduler</span> &#123;...&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">QueueScheduler</span> <span class="keyword">extends</span> <span class="title class_ inherited__">AsyncScheduler</span> &#123;&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AsyncScheduler</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Scheduler</span> &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>而真正觸發的動作都是一樣，在下面的小結會更進一步的探討 scheduler 的執行步驟。</p>
+<h1 id="Dive-In"><a class="header-anchor" href="#Dive-In"> </a>Dive In</h1>
+<p>底層 scheduler 到底是怎麼運作的，scheduler 會包含 4 個元素</p>
+<ul>
+<li>scheduler：建立並執行 <code>action</code></li>
+<li>work：一段可以被執行的程式</li>
+<li>action：執行 <code>work</code>，回傳  <code>subscription</code></li>
+<li>subscription：用來取消 observable</li>
+</ul>
+<h2 id="Work"><a class="header-anchor" href="#Work"> </a>Work</h2>
+<p>一段可以被執行的程式碼</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(state)=&gt; &#123; </span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;state:&#x27;</span>, state);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Action"><a class="header-anchor" href="#Action"> </a>Action</h2>
+<p>建立 Action 可透過 <code>scheduler.schedule(work, delay, state)</code> 的方式，且會根據 delay 決定執行時間，並回傳 <code>subscription</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asyncScheduler.<span class="title function_">schedule</span>(<span class="function">(<span class="params">state</span>)=&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(state), <span class="number">0</span>, <span class="number">42</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="Subscription"><a class="header-anchor" href="#Subscription"> </a>Subscription</h2>
+<p>Subscription 是用來取消 Observable 的物件，本身也可以加入其他的 subscription，當本身執行 <code>unsubscription</code> 時，加到本體的其他 subscription 也會執行 <code>unsubscription</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sub = <span class="keyword">new</span> <span class="title class_">Subscription</span>();</span><br><span class="line"><span class="keyword">const</span> sub1 = queueScheduler.<span class="title function_">schedule</span>(<span class="function">(<span class="params">state</span>)=&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(state), <span class="number">0</span>, <span class="number">42</span>);</span><br><span class="line"><span class="keyword">const</span> sub2 = queueScheduler.<span class="title function_">schedule</span>(<span class="function">(<span class="params">state</span>)=&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(state), <span class="number">0</span>, <span class="string">&#x27;123&#x27;</span>);</span><br><span class="line"></span><br><span class="line">sub.<span class="title function_">add</span>(sub1);</span><br><span class="line">sub.<span class="title function_">add</span>(sub2);</span><br><span class="line">sub.<span class="title function_">unsubscribe</span>();</span><br></pre></td></tr></table></figure>
+<h1 id="Reacp"><a class="header-anchor" href="#Reacp"> </a>Reacp</h1>
+<p>為什麼要了解 scheduler，透過 scheduler 我們可以寫出很多有趣的東西。使用 work 搭配 scheduler，可以更有彈性的非同步與同步的工作整合在一起，表示並一定要使用 operators，也可以享受 RxJS 的好處</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://rxjs-dev.firebaseapp.com/api/operators/observeOn">observeOn</a></li>
+<li><a target="_blank" rel="noopener" href="https://rxjs-dev.firebaseapp.com/api/operators/subscribeOn">subscribeOn</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ReactiveX/rxjs/blob/6.2.2/src/internal/scheduler/AsyncScheduler.ts">AsyncScheduler.ts</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ReactiveX/rxjs/blob/6.2.2/src/internal/scheduler/AsapScheduler.ts">AsapScheduler.ts</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/08/28/rxjs-custom-operator/" rel="prev" title="[Angular] 自訂 RxJS Operator">
+                  <i class="fa fa-angle-left"></i> [Angular] 自訂 RxJS Operator
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/09/07/angular-sw-update/" rel="next" title="[Angular] Service Worker Update">
+                  [Angular] Service Worker Update <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

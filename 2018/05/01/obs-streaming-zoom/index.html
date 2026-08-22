@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="ZOOM 是一套很好用的線上開會工具，透過月租的服務，可享用一場 100 人可以同時間線上開會，這也是我每周三主持 Angular 線上讀書會的主要工具 有人問我說，能不能將 OBS 的直播畫面輸出給 ZOOM 使用，因為他想要利用 OBS 的畫面編排功能及背景去背，讓自己的視訊畫面能和桌面融為一體，所以才有這篇文章的產生">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何將 OBS 的畫面送到 ZOOM.US 軟體中?">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/05/01/obs-streaming-zoom/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="ZOOM 是一套很好用的線上開會工具，透過月租的服務，可享用一場 100 人可以同時間線上開會，這也是我每周三主持 Angular 線上讀書會的主要工具 有人問我說，能不能將 OBS 的直播畫面輸出給 ZOOM 使用，因為他想要利用 OBS 的畫面編排功能及背景去背，讓自己的視訊畫面能和桌面融為一體，所以才有這篇文章的產生">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2018/05/01/obs-streaming-zoom/image-20200309125227847.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2018/05/01/obs-streaming-zoom/image-20200309125243350.png">
+<meta property="og:image" content="https://i.imgur.com/cjOOe7P.png">
+<meta property="og:image" content="https://i.imgur.com/07VTll2.png">
+<meta property="og:image" content="https://i.imgur.com/EocvMNA.png">
+<meta property="og:image" content="https://i.imgur.com/QLTueoJ.png">
+<meta property="og:image" content="https://i.imgur.com/PvcqWiC.png">
+<meta property="og:image" content="https://i.imgur.com/uZsxSas.png">
+<meta property="og:image" content="https://i.imgur.com/8PASrQp.png">
+<meta property="article:published_time" content="2018-05-01T12:52:58.000Z">
+<meta property="article:modified_time" content="2020-03-22T03:39:54.347Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2018/05/01/obs-streaming-zoom/image-20200309125227847.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/05/01/obs-streaming-zoom/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/05/01/obs-streaming-zoom/","path":"2018/05/01/obs-streaming-zoom/","title":"如何將 OBS 的畫面送到 ZOOM.US 軟體中?"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>如何將 OBS 的畫面送到 ZOOM.US 軟體中? | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%9C%E6%B3%95%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">作法更新</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">環境設定</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/05/01/obs-streaming-zoom/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="如何將 OBS 的畫面送到 ZOOM.US 軟體中? | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何將 OBS 的畫面送到 ZOOM.US 軟體中?
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-05-01 20:52:58" itemprop="dateCreated datePublished" datetime="2018-05-01T20:52:58+08:00">2018-05-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2020-03-22 11:39:54" itemprop="dateModified" datetime="2020-03-22T11:39:54+08:00">2020-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/05/01/obs-streaming-zoom/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/01/obs-streaming-zoom/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>ZOOM 是一套很好用的線上開會工具，透過月租的服務，可享用一場 100 人可以同時間線上開會，這也是我每周三主持 Angular 線上讀書會的主要工具</p>
+<p>有人問我說，能不能將 OBS 的直播畫面輸出給 ZOOM 使用，因為他想要利用 OBS 的畫面編排功能及背景去背，讓自己的視訊畫面能和桌面融為一體，所以才有這篇文章的產生</p>
+<span id="more"></span>
+<h1 id="作法更新"><a class="header-anchor" href="#作法更新"> </a>作法更新</h1>
+<p>(2020/03/09 更新) 跟下面的概念是一樣的，OBS  本身有提供 <code>Fullscreen Projector(preview)</code> 的功能，當然這做法需要多顆螢幕，但延遲會相對的少很多，僅供參考。怎麼使用 <code>Fullscreen Projector</code> 呢，在預覽視窗上按滑鼠右鍵叫出選單，即可看到此選項，這時候就選擇要投影的螢幕是哪一個。而 Zoom 的部分就分享桌面即可</p>
+<p><img src="image-20200309125227847.png" alt="image-20200309125227847"></p>
+<p><img src="image-20200309125243350.png" alt="image-20200309125243350"></p>
+<h1 id="前言"><a class="header-anchor" href="#前言"> </a>前言</h1>
+<p>在這之前，要先介紹 NewTek 這間公司所提出的新技術 NDI，這一門黑科技讓直播能做的事情到達另外一個不可思議的境界，以往在攝影機與主控台間需要透過拉 SDI 的線來傳遞訊號，而 SDI 的線材又很貴。這還不含器材的部分，總之做一場直播是很貴的</p>
+<ul>
+<li>不使用 HDMI 的原因是 HDMI 的線材在一定長度後，訊後會衰減，並不適合大場地使用</li>
+</ul>
+<p>NDI 這技術可以讓我們使用網路線來做到 SDI 的效果，且延遲是非常低的。NewTek 也好心地將這個技術免費釋出，讓其他硬體/軟體廠商可以將這個協定實作在自家的產品上，這裡有幾個比較有名的</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.vmix.com/">vMix</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.xsplit.com/zh_tw/">xSplit</a></li>
+<li><a target="_blank" rel="noopener" href="https://obsproject.com/">OBS</a> (需安裝套件 <a target="_blank" rel="noopener" href="https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/">obs-ndi</a>)</li>
+<li><a target="_blank" rel="noopener" href="https://ptzoptics.com/">PTZOptics</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.newtek.com/connect/spark/">NewTek Connect Spark</a></li>
+</ol>
+<p>這裡我們就用免費的 OBS 來做示範</p>
+<h1 id="環境設定"><a class="header-anchor" href="#環境設定"> </a>環境設定</h1>
+<ol>
+<li>安裝 OBS</li>
+<li>安裝 OBS-NDI
+<ol>
+<li>會要求安裝 <a target="_blank" rel="noopener" href="http://new.tk/NDIRedistV3"> NDI 3.0 Runtime</a></li>
+</ol>
+</li>
+<li>安裝 <a target="_blank" rel="noopener" href="https://www.newtek.com/ndi/tools/">NewTek Tools</a> ，只需要安裝 portable 版本即可，我們只需要 NDI Studio Monitor</li>
+</ol>
+<p>當安裝完以上的東西後，應該會被要求重啟電腦。電腦重新啟動後，就可以打開 OBS 的程式</p>
+<ol>
+<li>在 Tools 的地方，點選 NDI Output settings</li>
+</ol>
+<p><img src="https://i.imgur.com/cjOOe7P.png" alt=""></p>
+<ol start="2">
+<li>勾選 【Enable NDI Output】</li>
+</ol>
+<p><img src="https://i.imgur.com/07VTll2.png" alt=""></p>
+<ol start="3">
+<li>
+<p>這樣 OBS 就會將你的訊號，用 NDI 的模式發送出去，只要在你的<strong>區域網域</strong>內，支援 NDI Input 的軟體或導播機，都可以搜尋的到</p>
+</li>
+<li>
+<p>開啟【NewTek NDI Studio Montiro】</p>
+<p><img src="https://i.imgur.com/EocvMNA.png" alt=""></p>
+</li>
+<li>
+<p>選擇訊號來源</p>
+</li>
+</ol>
+<p><img src="https://i.imgur.com/QLTueoJ.png" alt=""></p>
+<ol start="6">
+<li>
+<p>檢視 OBS NDI 訊號輸出結果</p>
+<p><img src="https://i.imgur.com/PvcqWiC.png" alt=""></p>
+</li>
+<li>
+<p>由於我們要將這一個視窗透過 ZOOM 分享的方式，顯示給其他與會者看。所以還有兩個地方要做調整</p>
+<ol>
+<li>
+<p>視窗的 border 要隱藏</p>
+<p><img src="https://i.imgur.com/uZsxSas.png" alt=""></p>
+</li>
+<li>
+<p>聲音音量的顯示，要將 VU Meter 關掉</p>
+<p><img src="https://i.imgur.com/8PASrQp.png" alt=""></p>
+</li>
+</ol>
+</li>
+<li>
+<p>完成設定，剩下的就是用 Zoom 分享這一個視窗應用程式</p>
+</li>
+</ol>
+<p>這裡要注意一點，當你點選 Hide Window 時，該視窗就無法再移動了，所以如果有第二顆螢幕或是第二台電腦時，這一個分享的動作，可以在另外一個地方進行。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%B6%E4%BB%96/" rel="tag"># 其他</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/30/angular-firebase/" rel="prev" title="[Angular] 與 Firebase 共舞">
+                  <i class="fa fa-angle-left"></i> [Angular] 與 Firebase 共舞
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/05/03/angular-testbed/" rel="next" title="[Angular] TestBed 之 override 系列">
+                  [Angular] TestBed 之 override 系列 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

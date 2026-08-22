@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+
+Disallow: /vendors/
+Disallow: /fonts/
+Disallow: /fancybox/
+
+Sitemap: http://blog.kevinyang.net/sitemap.xml

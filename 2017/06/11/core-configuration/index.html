@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content=".NET Core 提供多種參數設定資料的來源，例如: Json 檔案、ini 檔案或使用 Azure 的 KeyValue 設定檔。雖然預設啟動的 web 環境，已經有載入  appsetting.json 及 appsettings.[environment].json 設定檔，但是如果要自行設定，或是其他 Controller 要使用參數設定，又該怎麼處理呢?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[.NET Core] 加入設定參數">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/06/11/core-configuration/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content=".NET Core 提供多種參數設定資料的來源，例如: Json 檔案、ini 檔案或使用 Azure 的 KeyValue 設定檔。雖然預設啟動的 web 環境，已經有載入  appsetting.json 及 appsettings.[environment].json 設定檔，但是如果要自行設定，或是其他 Controller 要使用參數設定，又該怎麼處理呢?">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2017-06-11T12:20:05.000Z">
+<meta property="article:modified_time" content="2017-12-30T13:24:37.604Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content=".NET Core">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2017/06/11/core-configuration/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2017/06/11/core-configuration/","path":"2017/06/11/core-configuration/","title":"[.NET Core] 加入設定參數"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[.NET Core] 加入設定參數 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Startup-cs"><span class="nav-number">1.</span> <span class="nav-text">Startup.cs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Add"><span class="nav-number">1.1.</span> <span class="nav-text">Add</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddAzureKeyValue"><span class="nav-number">1.2.</span> <span class="nav-text">AddAzureKeyValue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddCommandLine"><span class="nav-number">1.3.</span> <span class="nav-text">AddCommandLine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddDockerSecrets"><span class="nav-number">1.4.</span> <span class="nav-text">AddDockerSecrets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddEnvironmentVariables"><span class="nav-number">1.5.</span> <span class="nav-text">AddEnvironmentVariables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddIniFile"><span class="nav-number">1.6.</span> <span class="nav-text">AddIniFile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddInMemoryCollection"><span class="nav-number">1.7.</span> <span class="nav-text">AddInMemoryCollection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddJsonFile"><span class="nav-number">1.8.</span> <span class="nav-text">AddJsonFile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddUserSecrets"><span class="nav-number">1.9.</span> <span class="nav-text">AddUserSecrets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddXmlFile"><span class="nav-number">1.10.</span> <span class="nav-text">AddXmlFile</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%BB%E5%86%8A%E8%87%B3Service%E5%85%A7"><span class="nav-number">2.</span> <span class="nav-text">註冊至Service內</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Recap"><span class="nav-number">3.</span> <span class="nav-text">Recap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/06/11/core-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[.NET Core] 加入設定參數 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [.NET Core] 加入設定參數
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-06-11 20:20:05" itemprop="dateCreated datePublished" datetime="2017-06-11T20:20:05+08:00">2017-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2017-12-30 21:24:37" itemprop="dateModified" datetime="2017-12-30T21:24:37+08:00">2017-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NET-Core/" itemprop="url" rel="index"><span itemprop="name">.NET Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/06/11/core-configuration/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/06/11/core-configuration/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>.NET Core 提供多種參數設定資料的來源，例如: Json 檔案、ini 檔案或使用 Azure 的 KeyValue 設定檔。雖然預設啟動的 web 環境，已經有載入  <code>appsetting.json</code> 及 <code>appsettings.[environment].json</code> 設定檔，但是如果要自行設定，或是其他 Controller 要使用參數設定，又該怎麼處理呢?</p>
+<span id="more"></span>
+<h1 id="Startup-cs"><a class="header-anchor" href="#Startup-cs"> </a>Startup.cs</h1>
+<p>設定檔可以透過 <code>ConfigurationBuilder</code>建立，以下為簡單的基本架構</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> IConfigurationRoot Configuration &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Startup</span>(<span class="params">IHostingEnvironment env</span>)</span></span><br><span class="line">  &#123;            </span><br><span class="line">    <span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">      .SetBasePath(env.ContentRootPath)                        </span><br><span class="line">      .AddJsonFile(<span class="string">&quot;appsettings.json&quot;</span>, optional: <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    Configuration = builder.Build();    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如 <a href="http://blog.kevinyang.net/2017/05/15/core-web-mvc-001/">這篇筆記</a>，在 <code>constructor</code> 可以取得 <code>IHostingEnvironment</code> 的服務，這個 <code>env</code> 提供了目前程式系統的基本環境，例如根目錄的資訊</p>
+<p>ConfigurationBuilder 提供多種設定檔來源的選擇</p>
+<h2 id="Add"><a class="header-anchor" href="#Add"> </a>Add</h2>
+<p>新增符合 <code>IConfigurationSource</code> 格式的自訂設定檔</p>
+<h2 id="AddAzureKeyValue"><a class="header-anchor" href="#AddAzureKeyValue"> </a>AddAzureKeyValue</h2>
+<p>使用 <a target="_blank" rel="noopener" href="https://azure.microsoft.com/zh-tw/services/key-vault/">Azure KeyValue</a> 服務，作為參數設定檔的資料來源，基本程式架構如下</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">builder.AddAzureKeyVault(</span><br><span class="line">          <span class="string">$&quot;https://<span class="subst">&#123;Vault&#125;</span>.vault.azure.net/&quot;</span>,</span><br><span class="line">          <span class="string">&quot;ClientId&quot;</span>,</span><br><span class="line">          <span class="string">&quot;ClientSecret&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><code>AddAzurekeyValue</code> 也提供  <code>IKeyVaultSecretManager</code> ，實作方式範本如下</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EnvironmentSecretManager</span> : <span class="title">IKeyVaultSecretManager</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="built_in">string</span> _appNamePrefix;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EnvironmentSecretManager</span>(<span class="params"><span class="built_in">string</span> appName</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        _appNamePrefix = appName + <span class="string">&quot;-&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Load</span>(<span class="params">SecretItem secret</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> secret.Identifier.Name.StartsWith(_appNamePrefix);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">GetKey</span>(<span class="params">SecretBundle secret</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> secret.SecretIdentifier.Name.Substring(_appNamePrefix.Length);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">builder.AddAzureKeyVault(</span><br><span class="line">    <span class="string">$&quot;https://<span class="subst">&#123;config[<span class="string">&quot;Vault&quot;</span>]&#125;</span>.vault.azure.net/&quot;</span>,</span><br><span class="line">    config[<span class="string">&quot;ClientId&quot;</span>],</span><br><span class="line">    config[<span class="string">&quot;ClientSecret&quot;</span>],</span><br><span class="line">    <span class="keyword">new</span> EnvironmentSecretManager(env.ApplicationName));</span><br></pre></td></tr></table></figure>
+<h2 id="AddCommandLine"><a class="header-anchor" href="#AddCommandLine"> </a>AddCommandLine</h2>
+<p>利用 command line 的方式，將參數設定值，傳入至系統內</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IConfigurationBuilder <span class="title">AddCommandLine</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  <span class="keyword">this</span> IConfigurationBuilder configurationBuilder, </span></span></span><br><span class="line"><span class="params"><span class="function">  <span class="built_in">string</span>[] <span class="keyword">args</span>, IDictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; switchMappings</span>)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; <span class="title">GetSwitchMappings</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    IReadOnlyDictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; configurationStrings</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> configurationStrings.Select(item =&gt;</span><br><span class="line">            <span class="keyword">new</span> KeyValuePair&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;(</span><br><span class="line">                <span class="string">&quot;-&quot;</span> + item.Key.Substring(item.Key.LastIndexOf(<span class="string">&#x27;:&#x27;</span>) + <span class="number">1</span>),</span><br><span class="line">                item.Key))</span><br><span class="line">                .ToDictionary(</span><br><span class="line">                    item =&gt; item.Key, item =&gt; item.Value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span> = <span class="literal">null</span></span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> dict = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                &#123;<span class="string">&quot;Profile:MachineName&quot;</span>, <span class="string">&quot;Rick&quot;</span>&#125;,</span><br><span class="line">                &#123;<span class="string">&quot;App:MainWindow:Left&quot;</span>, <span class="string">&quot;11&quot;</span>&#125;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder();</span><br><span class="line">        builder.AddInMemoryCollection(dict)</span><br><span class="line">              .AddCommandLine(<span class="keyword">args</span>, GetSwitchMappings(dict));</span><br><span class="line">        Configuration = builder.Build();</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet run /Profile:MachineName=Bob /App:MainWindow:Left=<span class="number">1234</span></span><br></pre></td></tr></table></figure>
+<p><code>AddCommandLine</code> 也可以搭配 <code>AddInMemoryCollection</code> 一起使用，如上述的程式碼</p>
+<h2 id="AddDockerSecrets"><a class="header-anchor" href="#AddDockerSecrets"> </a>AddDockerSecrets</h2>
+<p>使用 Docker Secrets 作為參數設定檔的資料來源</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">            .AddDockerSecrets()</span><br></pre></td></tr></table></figure>
+<h2 id="AddEnvironmentVariables"><a class="header-anchor" href="#AddEnvironmentVariables"> </a>AddEnvironmentVariables</h2>
+<p>使用系統環境變數作為參數設定檔的資料來源</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">                  .AddEnvironmentVariables();</span><br></pre></td></tr></table></figure>
+<h2 id="AddIniFile"><a class="header-anchor" href="#AddIniFile"> </a>AddIniFile</h2>
+<p>使用 ini 檔案作為參數設定檔的資料來源</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">          .SetBasePath(env.ContentRootPath)            </span><br><span class="line">          .AddJsonFile(<span class="string">&quot;appsettings.ini&quot;</span>, optional: <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="AddInMemoryCollection"><a class="header-anchor" href="#AddInMemoryCollection"> </a>AddInMemoryCollection</h2>
+<p>使用自訂的 Dictionary 作為參數設定檔的資料來源</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dict = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                &#123;<span class="string">&quot;Profile:MachineName&quot;</span>, <span class="string">&quot;Rick&quot;</span>&#125;,</span><br><span class="line">                &#123;<span class="string">&quot;App:MainWindow:Left&quot;</span>, <span class="string">&quot;11&quot;</span>&#125;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">                 .AddInMemoryCollection(dict)</span><br></pre></td></tr></table></figure>
+<h2 id="AddJsonFile"><a class="header-anchor" href="#AddJsonFile"> </a>AddJsonFile</h2>
+<p>使用 Json 檔案作為參數設定檔的資料來源</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">          .SetBasePath(env.ContentRootPath)            </span><br><span class="line">          .AddJsonFile(<span class="string">&quot;appsettings.json&quot;</span>, optional: <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="AddUserSecrets"><a class="header-anchor" href="#AddUserSecrets"> </a>AddUserSecrets</h2>
+<p>使用UserSecrets作為參數設定檔的資料來源，這一個檔案並不會存在於專案資訊裡，實際的檔案會存放在於開發者的電腦內，故這個功能在預設模式下，只有處於開發模式下才會被開啟。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()            </span><br><span class="line">           .AddUserSecrets&lt;Startup&gt;();</span><br></pre></td></tr></table></figure>
+<p>至於他的實際的存放位置是在哪裡，在 <code>專案.csproj</code> 裡會存放一組 <code>UserSecretsId</code> ，這組 ID 會是資料夾的名稱</p>
+<h2 id="AddXmlFile"><a class="header-anchor" href="#AddXmlFile"> </a>AddXmlFile</h2>
+<p>使用 xml 檔案作為參數設定檔的資料來源</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = <span class="keyword">new</span> ConfigurationBuilder()</span><br><span class="line">          .SetBasePath(env.ContentRootPath)            </span><br><span class="line">          .AddJsonFile(<span class="string">&quot;appsettings.xml&quot;</span>, optional: <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="註冊至Service內"><a class="header-anchor" href="#註冊至Service內"> </a>註冊至Service內</h1>
+<p>將 <code>Configuration</code> 加入到 service 內</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  services.Configure&lt;MyOptions&gt;(Configuration);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>MyOptions</code> 是 Configuration 的格式定義</li>
+</ul>
+<p>使用方式如下，在 Controller 的地方，利用 IOptions 的方式取得在 <code>Startup.cs</code> 內加入至 services 內的設定檔</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> MyOptions _myOptions = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HomeController</span>(<span class="params">IOptions&lt;MyOptions&gt; options</span>)</span></span><br><span class="line">&#123;        </span><br><span class="line">  <span class="keyword">this</span>._myOptions = options.Value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> IActionResult <span class="title">Index</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">string</span> option1 = <span class="keyword">this</span>._myOptions.Option1;</span><br><span class="line">  <span class="built_in">int</span> Option2 = <span class="keyword">this</span>._myOptions.Option2;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Recap"><a class="header-anchor" href="#Recap"> </a>Recap</h1>
+<p>.NET Core 提供很多種方式可以取得或是設定設定檔，其他地方如果要使用，是透過注入的方式取得，這樣子的模式，在管理設定檔上，就變得非常有彈性了。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/security/key-vault-configuration">Azure Key Vault configuration provider</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration">Configuration</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jamessturtevant.com/posts/Acessing-Docker-Swarm-Secrets-From-ASPNET-Core/">Accessing Docker Swarm Secrets from ASP.NET Core</a></li>
+<li><a target="_blank" rel="noopener" href="https://andrewlock.net/creating-a-custom-iconfigurationprovider-in-asp-net-core-to-parse-yaml/">Creating a custom ConfigurationProvider in ASP.NET Core to parse YAML</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/06/11/ng-animation-4-2/" rel="prev" title="[Angular] Animation 4.2版 &#x3D; wow">
+                  <i class="fa fa-angle-left"></i> [Angular] Animation 4.2版 = wow
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/06/13/dotnetcore-dependency-injection/" rel="next" title="[.NET Core] Dependency Injection">
+                  [.NET Core] Dependency Injection <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

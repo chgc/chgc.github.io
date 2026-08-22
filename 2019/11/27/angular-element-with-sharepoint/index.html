@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Angular Element 的使用情境是什麼? 關於這個問題的答案有很多，在去年年初(2018&#x2F;2) Angular 團隊的 Rob 在 歐洲一場 SharePoint 的活動內介紹了這一段， 影片，SharePoint 這產品在台灣除了一些大公司或是老公司中還可以看到外，基本上很難在聽到他的名字，可是在國外，SharePoint 還是有很多使用者的。而 WebPart 允許我們使用不同的技術">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Angular Element as SharePoint WebPart">
+<meta property="og:url" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Angular Element 的使用情境是什麼? 關於這個問題的答案有很多，在去年年初(2018&#x2F;2) Angular 團隊的 Rob 在 歐洲一場 SharePoint 的活動內介紹了這一段， 影片，SharePoint 這產品在台灣除了一些大公司或是老公司中還可以看到外，基本上很難在聽到他的名字，可是在國外，SharePoint 還是有很多使用者的。而 WebPart 允許我們使用不同的技術">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127145057422.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127145153250.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127145248584.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127150220003.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127150329720.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127150407163.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127150435725.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127150524771.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127150631222.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/SNAGHTML474593cc.PNG">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127151023184.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127151153037.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127152652831.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127153041838.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127153736116.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127153750416.png">
+<meta property="article:published_time" content="2019-11-27T06:33:26.000Z">
+<meta property="article:modified_time" content="2019-11-27T16:07:48.182Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="O365">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/image-20191127145057422.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/","path":"2019/11/27/angular-element-with-sharepoint/","title":"[Angular] Angular Element as SharePoint WebPart"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] Angular Element as SharePoint WebPart | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E8%A6%81%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text">環境要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%9D"><span class="nav-number">2.</span> <span class="nav-text">工具安裝</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">建立專案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC%E6%9E%B6%E6%A7%8B"><span class="nav-number">4.</span> <span class="nav-text">程式碼架構</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Angular-%E5%B0%88%E6%A1%88"><span class="nav-number">4.1.</span> <span class="nav-text">Angular 專案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPFx-%E5%B0%88%E6%A1%88"><span class="nav-number">4.2.</span> <span class="nav-text">SPFx 專案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpart"><span class="nav-number">4.2.1.</span> <span class="nav-text">webpart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#manifest-json"><span class="nav-number">4.2.2.</span> <span class="nav-text">manifest.json</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/11/27/angular-element-with-sharepoint/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] Angular Element as SharePoint WebPart | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] Angular Element as SharePoint WebPart
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-11-27 14:33:26" itemprop="dateCreated datePublished" datetime="2019-11-27T14:33:26+08:00">2019-11-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2019-11-28 00:07:48" itemprop="dateModified" datetime="2019-11-28T00:07:48+08:00">2019-11-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/11/27/angular-element-with-sharepoint/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/27/angular-element-with-sharepoint/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Angular Element 的使用情境是什麼? 關於這個問題的答案有很多，在去年年初(2018/2) Angular 團隊的 Rob 在 歐洲一場 SharePoint 的活動內介紹了這一段， <a target="_blank" rel="noopener" href="https://youtu.be/qdC1SVdLM3c">影片</a>，SharePoint 這產品在台灣除了一些大公司或是老公司中還可以看到外，基本上很難在聽到他的名字，可是在國外，SharePoint 還是有很多使用者的。而 WebPart 允許我們使用不同的技術 + sharepoint 提供的 sdk 來做畫面顯示及資料串接。</p>
+<span id="more"></span>
+<p>當然我們也可以使用 HTML + CSS + JavaScript 才做到這件事情，而有一群使用 SharePoint 的社群推出一套基於 <code>@microsoft/generator-sharepoint</code> 的 yeoman ，擴充出來的另外一個 SharePoint 套件，<code>@pnp/generator-spfx</code>，這一個產生器內支援了 Angular / Vue / React 等前端框架，裡用這些框架來開發 SharePoint 的 WebPart / extendsion / library 等，這一篇筆記就是來記錄如何使用 <code>@pnp/generator-spfx</code> 來建立第一個 Angular Element as WebPart in SharePoint</p>
+<h1 id="環境要求"><a class="header-anchor" href="#環境要求"> </a>環境要求</h1>
+<ul>
+<li>node 版本: 10.x 版 。很重要， 目前  <code>@microsoft/generator-sharepoint</code> 還不支援 Node 12.x 版，會在 <code>node-sass</code> 的地方壞掉</li>
+<li><code>yeoman</code> 套件</li>
+<li><code>gulp</code> 工具</li>
+<li><code>Angular CLI</code> 版本: 6、7、8，但這邊我們可以手動修改讓他支援 9 版</li>
+</ul>
+<h1 id="工具安裝"><a class="header-anchor" href="#工具安裝"> </a>工具安裝</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g yo gulp @pnp/generator-spfx</span><br></pre></td></tr></table></figure>
+<p>這邊假設以經安裝過 <code>@angular/cli</code> 了</p>
+<h1 id="建立專案"><a class="header-anchor" href="#建立專案"> </a>建立專案</h1>
+<ol>
+<li>
+<p>建立一個空的資料夾並進入到該資料夾</p>
+</li>
+<li>
+<p>執行 <code>yo</code> 指令</p>
+<p><img src="image-20191127145057422.png" alt="image-20191127145057422"></p>
+</li>
+<li>
+<p>選擇 <code>@pnp/spfx</code> 產生器</p>
+</li>
+<li>
+<p>選擇要建立的範本，這邊先選取 <code>SharePoint Online only</code></p>
+<p><img src="image-20191127145153250.png" alt="image-20191127145153250"></p>
+</li>
+<li>
+<p>選擇要使用的前端框架</p>
+<p><img src="image-20191127145248584.png" alt="image-20191127145248584"></p>
+<ul>
+<li>
+<p>假設看到 Angular Elements 是 Disabled 狀態時，這是因為安裝的 <code>@angular/cli</code> 版本沒有落在 <code>@pnp/generator-spfx</code> 內所設定的 <code>@angular/cli</code> 版本，這裡需要手動去改一下程式，修改步驟如下</p>
+</li>
+<li>
+<p>windows 版可以到 <code>  %UserProfile%\AppData\Roaming\npm\node_modules\@pnp\generator-spfx</code> 資料夾下，修改以下檔案</p>
+<ul>
+<li>
+<p><code>app/promptConfig.js</code> ，約 第19 行的地方，新增 <code>||  ngVersion.version.startsWith('9')</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// support for Angular 6/7/8</span></span><br><span class="line">        <span class="keyword">if</span> (ngVersion.<span class="property">version</span>.<span class="title function_">startsWith</span>(<span class="string">&#x27;6&#x27;</span>) ||</span><br><span class="line">            ngVersion.<span class="property">version</span>.<span class="title function_">startsWith</span>(<span class="string">&#x27;7&#x27;</span>) ||</span><br><span class="line">            ngVersion.<span class="property">version</span>.<span class="title function_">startsWith</span>(<span class="string">&#x27;8&#x27;</span>) || </span><br><span class="line">            ngVersion.<span class="property">version</span>.<span class="title function_">startsWith</span>(<span class="string">&#x27;9&#x27;</span>)) &#123; </span><br><span class="line"></span><br><span class="line">            angularVersion = <span class="string">` (uses @angular/cli <span class="subst">$&#123; ngVersion.version&#125;</span>)`</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>generators/angularelements/index.js</code> 約第 83 行的地方，新增 <code>||  ngVersion.version.startsWith('9')</code>，記得要將第二段的條件用小括弧包起來</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ngVersion.<span class="property">version</span> !== <span class="literal">undefined</span> &amp;&amp;</span><br><span class="line">            (ngVersion.<span class="property">version</span>.<span class="title function_">startsWith</span>(<span class="string">&quot;8&quot;</span>)|| </span><br><span class="line">            ngVersion.<span class="property">version</span>.<span class="title function_">startsWith</span>(<span class="string">&#x27;9&#x27;</span>))) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>完成後，重新執行步驟二，執行 <code>yo</code>，就可以看到 Angular Elements 被開啟了</p>
+<p><img src="image-20191127150220003.png" alt="image-20191127150220003"></p>
+</li>
+</ul>
+</li>
+<li>
+<p>選擇是否安裝其他 Library，預設 Enter 下一步</p>
+<p><img src="image-20191127150329720.png" alt="image-20191127150329720"></p>
+</li>
+<li>
+<p>選擇 TypeScript 版本，我本身是喜歡越新版的 TypeScirpt 越好</p>
+<p><img src="image-20191127150407163.png" alt="image-20191127150407163"></p>
+</li>
+<li>
+<p>其他檢查套件安裝，直接 Enter 下一步</p>
+<p><img src="image-20191127150435725.png" alt="image-20191127150435725"></p>
+</li>
+<li>
+<p>是否安裝 pipeline 設定，Enter 下一步</p>
+<p><img src="image-20191127150524771.png" alt="image-20191127150524771"></p>
+</li>
+<li>
+<p>開始設定專案相關資訊，就依畫面上提示的輸入即可</p>
+<p><img src="image-20191127150631222.png" alt="image-20191127150631222"></p>
+</li>
+<li>
+<p>進入 SharePoint 專案的設定階段，基本上都是依文字說明選擇自己要的設定，但當第二個問題 Enter 下一步後，會停住</p>
+<p><img src="SNAGHTML474593cc.PNG" alt="img"></p>
+<p>這邊理論上會問專案要建立在<strong>目前的資料夾</strong>呢，還是<strong>建立新的資料夾</strong>，不確定為什麼會空白，在多按一次 Enter 就會繼續往下走，而專案會建立在目前所在的資料夾內</p>
+</li>
+<li>
+<p>選擇要建立的 component 類型，選擇 <code>WebPart</code> 後 Enter 下一步</p>
+<p><img src="image-20191127151023184.png" alt="image-20191127151023184"></p>
+</li>
+<li>
+<p>輸入 <code>WebPart</code> 的名稱等相關資訊</p>
+<p><img src="image-20191127151153037.png" alt="image-20191127151153037"></p>
+</li>
+<li>
+<p>接下來就是漫長的安裝過程</p>
+<p><img src="image-20191127152652831.png" alt="image-20191127152652831"></p>
+</li>
+<li>
+<p>完成後，可以檢視目前的資料夾，會有兩個資料夾，一個是 Angular 專案，一個是 SPFx 專案。</p>
+</li>
+<li>
+<p>最後，如果從沒有安裝過開發憑證，可先進入 SPFx 專案資料夾內，執行 <code>gulp trust-dev-cert</code></p>
+<p><img src="image-20191127153041838.png" alt="image-20191127153041838"></p>
+</li>
+<li>
+<p>測試是否有安裝成功，需要執行以下兩個步驟</p>
+<ol>
+<li>
+<p>進入 Angular  專案資料夾，執行 <code>npm run bundle</code> 指令</p>
+</li>
+<li>
+<p>進入 SPFx  專案資料夾，執行 <code>gulp serve</code> ，看看是否能正常地啟動起測試用的網頁</p>
+<p><img src="image-20191127153736116.png" alt="image-20191127153736116"></p>
+<p><img src="image-20191127153750416.png" alt="image-20191127153750416"></p>
+<p>能看到這些畫面，就代表環境及專案都建立成功了，就可以往下一階段進行了</p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="程式碼架構"><a class="header-anchor" href="#程式碼架構"> </a>程式碼架構</h1>
+<h2 id="Angular-專案"><a class="header-anchor" href="#Angular-專案"> </a>Angular 專案</h2>
+<p>採用 Angular Element 的方式來完成，所以在 <code>app.module.ts</code> 的地方可以看到註冊 custom Element  的程式碼</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">BrowserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/platform-browser&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NgModule</span>, <span class="title class_">Injector</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createCustomElement &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/elements&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">HelloWorldWebPartComponent</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./hello-world-web-part/hello-world-web-part.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">declarations</span>: [</span><br><span class="line">    <span class="title class_">HelloWorldWebPartComponent</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">imports</span>: [</span><br><span class="line">    <span class="title class_">BrowserModule</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">providers</span>: [],</span><br><span class="line">  <span class="attr">entryComponents</span>: [<span class="title class_">HelloWorldWebPartComponent</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">injector</span>: <span class="title class_">Injector</span></span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">ngDoBootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> el = <span class="title function_">createCustomElement</span>(<span class="title class_">HelloWorldWebPartComponent</span>, &#123; <span class="attr">injector</span>: <span class="variable language_">this</span>.<span class="property">injector</span> &#125;);</span><br><span class="line">    customElements.<span class="title function_">define</span>(<span class="string">&#x27;app-hello-world-web-part&#x27;</span>, el);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Component 本身的 Selector 只會在 Angular 內部環境生效，對外是吃 customElements 這邊定義的名稱</li>
+<li>如果是 Angular CLI 的版本，第 15 行的 <code>entryComponents</code> 可以不用在寫了 (可移除)</li>
+</ul>
+<h2 id="SPFx-專案"><a class="header-anchor" href="#SPFx-專案"> </a>SPFx 專案</h2>
+<p><code>src/webparts/helloWorld</code> 資料夾內是我們要看的部分</p>
+<h3 id="webpart"><a class="header-anchor" href="#webpart"> </a>webpart</h3>
+<ul>
+<li><code>HelloWorldWebPart.ts</code></li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;ng-element-webpart/dist/ngElementWebpart/bundle&quot;</span>; <span class="comment">// 引用 Angular 建置 bundle 出來的檔案</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">HelloWorldWebPart</span> <span class="keyword">extends</span> <span class="title class_ inherited__">BaseClientSideWebPart</span>&lt;</span><br><span class="line">  <span class="title class_">IHelloWorldWebPartProps</span></span><br><span class="line">&gt; &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">render</span>(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">domElement</span>.<span class="property">innerHTML</span> = <span class="string">`&lt;app-hello-world-web-part description=&quot;<span class="subst">$&#123;<span class="variable language_">this</span>.properties.description&#125;</span>&quot;&gt;&lt;/app-hello-world-web-part&gt;`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>render</code> 是用來顯示 WebParts 畫面的方法</li>
+</ul>
+<p>另外一種寫法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">HelloWorldWebPart</span> <span class="keyword">extends</span> <span class="title class_ inherited__">BaseClientSideWebPart</span>&lt;</span><br><span class="line">  <span class="title class_">IHelloWorldWebPartProps</span></span><br><span class="line">&gt; &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">render</span>(): <span class="built_in">void</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> ngElement = <span class="variable language_">this</span>.<span class="property">domElement</span>.<span class="title function_">getElementsByTagName</span>(</span><br><span class="line">      <span class="string">&#x27;app-hello-world-web-part&#x27;</span></span><br><span class="line">    )[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ngElement) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">domElement</span>.<span class="title function_">removeChild</span>(ngElement);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> baseEl = customElements.<span class="title function_">get</span>(<span class="string">&quot;app-hello-world-web-part&quot;</span>);</span><br><span class="line">    <span class="keyword">const</span> element = <span class="keyword">new</span> <span class="title function_">baseEl</span>();</span><br><span class="line">    element.<span class="property">description</span> = <span class="variable language_">this</span>.<span class="property">properties</span>.<span class="property">description</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">domElement</span>.<span class="title function_">appendChild</span>(element);</span><br><span class="line">  &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>WebParts 屬性的設定</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">HelloWorldWebPart</span> <span class="keyword">extends</span> <span class="title class_ inherited__">BaseClientSideWebPart</span>&lt;</span><br><span class="line">  <span class="title class_">IHelloWorldWebPartProps</span></span><br><span class="line">&gt; &#123;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  <span class="keyword">protected</span> <span class="title function_">getPropertyPaneConfiguration</span>(): <span class="title class_">IPropertyPaneConfiguration</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">pages</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">header</span>: &#123;</span><br><span class="line">            <span class="attr">description</span>: strings.<span class="property">PropertyPaneDescription</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">groups</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">groupName</span>: strings.<span class="property">BasicGroupName</span>,</span><br><span class="line">              <span class="attr">groupFields</span>: [</span><br><span class="line">                <span class="title class_">PropertyPaneTextField</span>(<span class="string">&quot;description&quot;</span>, &#123;</span><br><span class="line">                  <span class="attr">label</span>: strings.<span class="property">DescriptionFieldLabel</span></span><br><span class="line">                &#125;)</span><br><span class="line">              ]</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>這邊程式碼的寫法有支援 i18n 多國語系，要搭配 loc 資料夾內的檔案一起看，有興趣的可以去對應一下</li>
+</ul>
+<h3 id="manifest-json"><a class="header-anchor" href="#manifest-json"> </a>manifest.json</h3>
+<ul>
+<li>
+<p><code>HelloWorldWebPart.manifest.json</code> WebPart 在 SharePoint  內要顯示的資訊設定檔</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">  <span class="attr">&quot;preconfiguredEntries&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;groupId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5c03119e-3074-46fd-976b-c60198311f70&quot;</span><span class="punctuation">,</span> <span class="comment">// Other</span></span><br><span class="line">      <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;default&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Other&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;default&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HelloWorld-2&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// 顯示在 WebParts 清單內的名稱</span></span><br><span class="line">      <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;default&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HelloWorld description&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;officeFabricIconFontName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Page&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;properties&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HelloWorld-2&quot;</span> <span class="comment">// 屬性預設值</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pnp.github.io/generator-spfx/howtos/angularelements/">PnP/generator-SPFx - Angular Elements</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+              <a href="/tags/O365/" rel="tag"># O365</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/11/25/golang-note-2/" rel="prev" title="[Go] Go 語言學習筆記 - 語言 part 2">
+                  <i class="fa fa-angle-left"></i> [Go] Go 語言學習筆記 - 語言 part 2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/11/28/angular-element-with-sharepoint-part2/" rel="next" title="[Angular] Angular Element as SharePoint WebPart - Connect Data">
+                  [Angular] Angular Element as SharePoint WebPart - Connect Data <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

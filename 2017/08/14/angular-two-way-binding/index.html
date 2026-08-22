@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同的，目前看起來是沒有 AngularJS 會遇到效能問題。那 Angular 的雙向繫結到底是怎麼運作的呢?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Two-way Binding 的運作方式">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/08/14/angular-two-way-binding/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同的，目前看起來是沒有 AngularJS 會遇到效能問題。那 Angular 的雙向繫結到底是怎麼運作的呢?">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://i.imgur.com/Qsb228V.png">
+<meta property="article:published_time" content="2017-08-14T00:36:38.000Z">
+<meta property="article:modified_time" content="2018-01-01T11:08:00.921Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://i.imgur.com/Qsb228V.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2017/08/14/angular-two-way-binding/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2017/08/14/angular-two-way-binding/","path":"2017/08/14/angular-two-way-binding/","title":"[Angular] Two-way Binding 的運作方式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] Two-way Binding 的運作方式 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-%E9%9B%99%E5%90%91%E7%B9%AB%E7%B5%90-Two-way-Binding"><span class="nav-number">1.</span> <span class="nav-text">如何使用 雙向繫結 (Two-way Binding)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%951"><span class="nav-number">1.1.</span> <span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%952"><span class="nav-number">1.2.</span> <span class="nav-text">方法2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%953"><span class="nav-number">1.3.</span> <span class="nav-text">方法3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9A%84%E7%A7%98%E5%AF%86"><span class="nav-number">2.</span> <span class="nav-text">[()] 的秘密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ngModel"><span class="nav-number">3.</span> <span class="nav-text">ngModel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC%E8%AA%AA%E6%98%8E"><span class="nav-number">3.1.</span> <span class="nav-text">程式碼說明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ngOnChanges"><span class="nav-number">3.1.1.</span> <span class="nav-text">ngOnChanges</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NG-VALUE-ACCESSOR"><span class="nav-number">4.</span> <span class="nav-text">NG_VALUE_ACCESSOR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Recap"><span class="nav-number">5.</span> <span class="nav-text">Recap</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/08/14/angular-two-way-binding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] Two-way Binding 的運作方式 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] Two-way Binding 的運作方式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-08-14 08:36:38" itemprop="dateCreated datePublished" datetime="2017-08-14T08:36:38+08:00">2017-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2018-01-01 19:08:00" itemprop="dateModified" datetime="2018-01-01T19:08:00+08:00">2018-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/08/14/angular-two-way-binding/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/14/angular-two-way-binding/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Angular 的雙向繫結與 AngularJS 的雙向繫結運作原理是完全不同的，目前看起來是沒有 AngularJS 會遇到效能問題。那 Angular 的雙向繫結到底是怎麼運作的呢?</p>
+<span id="more"></span>
+<h1 id="如何使用-雙向繫結-Two-way-Binding"><a class="header-anchor" href="#如何使用-雙向繫結-Two-way-Binding"> </a>如何使用 雙向繫結 (Two-way Binding)</h1>
+<p>以下的三種寫法都可以達到雙向繫結的效果</p>
+<h2 id="方法1"><a class="header-anchor" href="#方法1"> </a>方法1</h2>
+<p>使用 <code>[()]</code> 的寫法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input [(ngModel)]=<span class="string">&quot;username&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello &#123;&#123;username&#125;&#125;!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="方法2"><a class="header-anchor" href="#方法2"> </a>方法2</h2>
+<p>將 <code>[]</code> <code>()</code> 分開寫</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input [ngModel]=<span class="string">&quot;username&quot;</span> (ngModelChange)=<span class="string">&quot;username = $event&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello &#123;&#123;username&#125;&#125;!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="方法3"><a class="header-anchor" href="#方法3"> </a>方法3</h2>
+<p>不使用 <code>ngModel</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input [value]=<span class="string">&quot;username&quot;</span> (input)=<span class="string">&quot;username = $event.target.value&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello &#123;&#123;username&#125;&#125;!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="的秘密"><a class="header-anchor" href="#的秘密"> </a>[()] 的秘密</h1>
+<p>我們知道 <code>[()]</code> 是 Angular 所提供給雙向繫結的語法糖，但是底層到底是怎麼運作的，為什麼會可以轉換成 <code>[&lt;name&gt;]</code> +<code> (&lt;name&gt;Change)</code> 呢? 以下簡單說明</p>
+<ol>
+<li><code>compiler/src/template_parser/template_parser.ts</code> 裡面會去分析 Element 的 attribute 是否有符合各種格式的內容</li>
+</ol>
+   <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重點在此</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">BIND_NAME_REGEXP</span> =</span><br><span class="line">    <span class="regexp">/^(?:(?:(?:(bind-)|(let-)|(ref-|#)|(on-)|(bindon-)|(@))(.+))|\[\(([^\)]+)\)\]|\[([^\]]+)\]|\(([^\)]+)\))$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Group 1 = &quot;bind-&quot;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">KW_BIND_IDX</span> = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// Group 2 = &quot;let-&quot;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">KW_LET_IDX</span> = <span class="number">2</span>;</span><br><span class="line"><span class="comment">// Group 3 = &quot;ref-/#&quot;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">KW_REF_IDX</span> = <span class="number">3</span>;</span><br><span class="line"><span class="comment">// Group 4 = &quot;on-&quot;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">KW_ON_IDX</span> = <span class="number">4</span>;</span><br><span class="line"><span class="comment">// Group 5 = &quot;bindon-&quot;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">KW_BINDON_IDX</span> = <span class="number">5</span>;</span><br><span class="line"><span class="comment">// Group 6 = &quot;@&quot;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">KW_AT_IDX</span> = <span class="number">6</span>;</span><br><span class="line"><span class="comment">// Group 7 = the identifier after &quot;bind-&quot;, &quot;let-&quot;, &quot;ref-/#&quot;, &quot;on-&quot;, &quot;bindon-&quot; or &quot;@&quot;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">IDENT_KW_IDX</span> = <span class="number">7</span>;</span><br><span class="line"><span class="comment">// Group 8 = identifier inside [()]</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">IDENT_BANANA_BOX_IDX</span> = <span class="number">8</span>;</span><br><span class="line"><span class="comment">// Group 9 = identifier inside []</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">IDENT_PROPERTY_IDX</span> = <span class="number">9</span>;</span><br><span class="line"><span class="comment">// Group 10 = identifier inside ()</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">IDENT_EVENT_IDX</span> = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+   <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title function_">_parseAttr</span>(</span><br><span class="line">      <span class="attr">isTemplateElement</span>: <span class="built_in">boolean</span>, <span class="attr">attr</span>: html.<span class="property">Attribute</span>, <span class="attr">targetMatchableAttrs</span>: <span class="built_in">string</span>[][],</span><br><span class="line">      <span class="attr">targetProps</span>: <span class="title class_">BoundProperty</span>[], <span class="attr">targetEvents</span>: <span class="title class_">BoundEventAst</span>[],</span><br><span class="line">      <span class="attr">targetRefs</span>: <span class="title class_">ElementOrDirectiveRef</span>[], <span class="attr">targetVars</span>: <span class="title class_">VariableAst</span>[]): <span class="built_in">boolean</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> name = <span class="variable language_">this</span>.<span class="title function_">_normalizeAttributeName</span>(attr.<span class="property">name</span>);</span><br><span class="line">    <span class="keyword">const</span> value = attr.<span class="property">value</span>;</span><br><span class="line">    <span class="keyword">const</span> srcSpan = attr.<span class="property">sourceSpan</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> bindParts = name.<span class="title function_">match</span>(<span class="variable constant_">BIND_NAME_REGEXP</span>);</span><br><span class="line">    <span class="keyword">let</span> hasBinding = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bindParts !== <span class="literal">null</span>) &#123;</span><br><span class="line">      hasBinding = <span class="literal">true</span>;</span><br><span class="line">      ...</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (bindParts[<span class="variable constant_">IDENT_BANANA_BOX_IDX</span>]) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_bindingParser</span>.<span class="title function_">parsePropertyBinding</span>(</span><br><span class="line">            bindParts[<span class="variable constant_">IDENT_BANANA_BOX_IDX</span>], value, <span class="literal">false</span>, srcSpan, targetMatchableAttrs,</span><br><span class="line">            targetProps);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">_parseAssignmentEvent</span>(</span><br><span class="line">            bindParts[<span class="variable constant_">IDENT_BANANA_BOX_IDX</span>], value, srcSpan, targetMatchableAttrs, targetEvents);</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">      ...</span><br><span class="line">    <span class="keyword">return</span> hasBinding;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>
+<p>根據 <code>_parseAssigmentEvent</code> 就會將部分<code>[(ngModel)]=&quot;username&quot;</code> 轉換成  <code> (ngModelChange)=&quot;username = $event&quot;</code> 傳入 <code>bindingParser.parseEvent</code> 的方法內</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title function_">_parseAssignmentEvent</span>(<span class="params"></span></span><br><span class="line"><span class="params">      <span class="attr">name</span>: <span class="built_in">string</span>, <span class="attr">expression</span>: <span class="built_in">string</span>, <span class="attr">sourceSpan</span>: <span class="title class_">ParseSourceSpan</span>,</span></span><br><span class="line"><span class="params">      <span class="attr">targetMatchableAttrs</span>: <span class="built_in">string</span>[][], <span class="attr">targetEvents</span>: <span class="title class_">BoundEventAst</span>[]</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_bindingParser</span>.<span class="title function_">parseEvent</span>(</span><br><span class="line">        <span class="string">`<span class="subst">$&#123;name&#125;</span>Change`</span>, <span class="string">`<span class="subst">$&#123;expression&#125;</span>=$event`</span>, sourceSpan, targetMatchableAttrs, targetEvents);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>this._bindingParse.parseEvent</code>，會更新 Element 的屬性值</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title function_">_parseEvent</span>(<span class="params"></span></span><br><span class="line"><span class="params">     <span class="attr">name</span>: <span class="built_in">string</span>, <span class="attr">expression</span>: <span class="built_in">string</span>, <span class="attr">sourceSpan</span>: <span class="title class_">ParseSourceSpan</span>,</span></span><br><span class="line"><span class="params">     <span class="attr">targetMatchableAttrs</span>: <span class="built_in">string</span>[][], <span class="attr">targetEvents</span>: <span class="title class_">BoundEventAst</span>[]</span>) &#123;</span><br><span class="line">   <span class="comment">// long format: &#x27;target: eventName&#x27;</span></span><br><span class="line">   <span class="keyword">const</span> [target, eventName] = <span class="title function_">splitAtColon</span>(name, [<span class="literal">null</span> !, name]);</span><br><span class="line">   <span class="keyword">const</span> ast = <span class="variable language_">this</span>.<span class="title function_">_parseAction</span>(expression, sourceSpan);</span><br><span class="line">   targetMatchableAttrs.<span class="title function_">push</span>([name !, ast.<span class="property">source</span> !]);</span><br><span class="line">   targetEvents.<span class="title function_">push</span>(<span class="keyword">new</span> <span class="title class_">BoundEventAst</span>(eventName, target, <span class="literal">null</span>, ast, sourceSpan));</span><br><span class="line">   <span class="comment">// Don&#x27;t detect directives for event names for now,</span></span><br><span class="line">   <span class="comment">// so don&#x27;t add the event name to the matchableAttrs</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>這就是 <code>[()]</code> 語法糖的運作方式</p>
+<p>​</p>
+<p>​</p>
+</li>
+</ol>
+<h1 id="ngModel"><a class="header-anchor" href="#ngModel"> </a>ngModel</h1>
+<p><code>ngModel</code> 是 Angular 所提供的 Directive，主要用途是用來簡化雙向繫結的寫法，程式碼可以參閱<a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/master/packages/forms/src/directives/ng_model.ts">這裡</a></p>
+<h2 id="程式碼說明"><a class="header-anchor" href="#程式碼說明"> </a>程式碼說明</h2>
+<h3 id="ngOnChanges"><a class="header-anchor" href="#ngOnChanges"> </a>ngOnChanges</h3>
+<p>第一次 Input Change 時，註冊 Control 等相關事件，註冊流程如下</p>
+<ol>
+<li>檢查是否有註冊過，如果沒有，執行 <code>_setUpControl</code> 的方法，<code>setUpControl</code>是在 <code>./shared.ts</code> 內實作的，主要功能是 <code>Control</code> 的事件註冊。</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">ngOnChanges</span>(<span class="params"><span class="attr">changes</span>: <span class="title class_">SimpleChanges</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_checkForErrors</span>();</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_registered</span>) <span class="variable language_">this</span>.<span class="title function_">_setUpControl</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&#x27;isDisabled&#x27;</span> <span class="keyword">in</span> changes) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">_updateDisabled</span>(changes);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">isPropertyUpdated</span>(changes, <span class="variable language_">this</span>.<span class="property">viewModel</span>)) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">_updateValue</span>(<span class="variable language_">this</span>.<span class="property">model</span>);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">viewModel</span> = <span class="variable language_">this</span>.<span class="property">model</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">private</span> <span class="title function_">_setUpControl</span>(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_isStandalone</span>() ? <span class="variable language_">this</span>.<span class="title function_">_setUpStandalone</span>() :</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">formDirective</span>.<span class="title function_">addControl</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_registered</span> = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="title function_">_isStandalone</span>(): <span class="built_in">boolean</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="variable language_">this</span>.<span class="property">_parent</span> || !!(<span class="variable language_">this</span>.<span class="property">options</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">options</span>.<span class="property">standalone</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="title function_">_setUpStandalone</span>(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="title function_">setUpControl</span>(<span class="variable language_">this</span>.<span class="property">_control</span>, <span class="variable language_">this</span>); </span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_control</span>.<span class="title function_">updateValueAndValidity</span>(&#123;<span class="attr">emitEvent</span>: <span class="literal">false</span>&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><code>setUpControl</code> 內有許多事件註冊行為，而跟 two-way binding 有關的事件是 <code> dir.valueAccessor!.registerOnChange</code>，這裡會傳入一個 callback function</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">setUpControl</span>(<span class="params"><span class="attr">control</span>: <span class="title class_">FormControl</span>, <span class="attr">dir</span>: <span class="title class_">NgControl</span></span>): <span class="built_in">void</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="title function_">setUpViewChangePipeline</span>(control, dir);</span><br><span class="line">  ...</span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">function</span> <span class="title function_">setUpViewChangePipeline</span>(<span class="params"><span class="attr">control</span>: <span class="title class_">FormControl</span>, <span class="attr">dir</span>: <span class="title class_">NgControl</span></span>): <span class="built_in">void</span> &#123;</span><br><span class="line">  dir.<span class="property">valueAccessor</span> !.<span class="title function_">registerOnChange</span>(<span class="function">(<span class="params"><span class="attr">newValue</span>: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">    control.<span class="property">_pendingValue</span> = newValue;</span><br><span class="line">    control.<span class="property">_pendingDirty</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (control.<span class="property">updateOn</span> === <span class="string">&#x27;change&#x27;</span>) <span class="title function_">updateControl</span>(control, dir); <span class="comment">// 觸發更新</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">function</span> <span class="title function_">updateControl</span>(<span class="params"><span class="attr">control</span>: <span class="title class_">FormControl</span>, <span class="attr">dir</span>: <span class="title class_">NgControl</span></span>): <span class="built_in">void</span> &#123;</span><br><span class="line">  dir.<span class="title function_">viewToModelUpdate</span>(control.<span class="property">_pendingValue</span>);</span><br><span class="line">  <span class="keyword">if</span> (control.<span class="property">_pendingDirty</span>) control.<span class="title function_">markAsDirty</span>();</span><br><span class="line">  control.<span class="title function_">setValue</span>(control.<span class="property">_pendingValue</span>, &#123;<span class="attr">emitModelToViewChange</span>: <span class="literal">false</span>&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>而當 Input 欄位有資料輸入時，就會觸發事件並將回傳值發送到到頁面上</li>
+</ol>
+<p><code>ng_model.ts</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">viewToModelUpdate</span>(<span class="attr">newValue</span>: <span class="built_in">any</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">viewModel</span> = newValue;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">update</span>.<span class="title function_">emit</span>(newValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="NG-VALUE-ACCESSOR"><a class="header-anchor" href="#NG-VALUE-ACCESSOR"> </a>NG_VALUE_ACCESSOR</h1>
+<p>這個 provider 是讓 <code>ngModleChange</code> 接受 <code>$event</code> 而不是 <code>$event.target.value</code> 的魔法使，內部細節如下</p>
+<p><img src="http://i.imgur.com/Qsb228V.png" alt=""></p>
+<p>在各類型的 <code>Control</code> 都會有一份 <code>NG_VALUE_ACCESSOR</code> ，而針對 <code>ngModel</code> 我們需留意的是 <code>DEFAULT_VALUE_ACCESSOR</code> ，檔案是 <code>default_value_accessor.ts</code></p>
+<p>(使用 multi 的 DI 設定方式並不是這篇文章的重點，只要知道這樣子設定，可以讓 Provider 使用同一個名稱但又可同時存在不互相影響)</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">DEFAULT_VALUE_ACCESSOR</span>: <span class="built_in">any</span> = &#123;</span><br><span class="line">  <span class="attr">provide</span>: <span class="variable constant_">NG_VALUE_ACCESSOR</span>,</span><br><span class="line">  <span class="attr">useExisting</span>: <span class="title function_">forwardRef</span>(<span class="function">() =&gt;</span> <span class="title class_">DefaultValueAccessor</span>),</span><br><span class="line">  <span class="attr">multi</span>: <span class="literal">true</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Directive</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>:</span><br><span class="line">      <span class="string">&#x27;input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]&#x27;</span>,</span><br><span class="line">  <span class="attr">host</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;(input)&#x27;</span>: <span class="string">&#x27;_handleInput($event.target.value)&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;(blur)&#x27;</span>: <span class="string">&#x27;onTouched()&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;(compositionstart)&#x27;</span>: <span class="string">&#x27;_compositionStart()&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;(compositionend)&#x27;</span>: <span class="string">&#x27;_compositionEnd($event.target.value)&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">providers</span>: [<span class="variable constant_">DEFAULT_VALUE_ACCESSOR</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">DefaultValueAccessor</span> <span class="keyword">implements</span> <span class="title class_">ControlValueAccessor</span> &#123;  </span><br><span class="line">  onChange = <span class="function">(<span class="params"><span class="attr">_</span>: <span class="built_in">any</span></span>) =&gt;</span> &#123;&#125;;</span><br><span class="line">  onTouched = <span class="function">() =&gt;</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** Whether the user is creating a composition string (IME events). */</span></span><br><span class="line">  <span class="keyword">private</span> _composing = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">      <span class="keyword">private</span> <span class="attr">_renderer</span>: <span class="title class_">Renderer</span>, <span class="keyword">private</span> <span class="attr">_elementRef</span>: <span class="title class_">ElementRef</span>,</span></span><br><span class="line"><span class="params">      <span class="meta">@Optional</span>() <span class="meta">@Inject</span>(COMPOSITION_BUFFER_MODE) <span class="keyword">private</span> <span class="attr">_compositionMode</span>: <span class="built_in">boolean</span></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">_compositionMode</span> == <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_compositionMode</span> = !<span class="title function_">_isAndroid</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">writeValue</span>(<span class="attr">value</span>: <span class="built_in">any</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> normalizedValue = value == <span class="literal">null</span> ? <span class="string">&#x27;&#x27;</span> : value;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_renderer</span>.<span class="title function_">setElementProperty</span>(<span class="variable language_">this</span>.<span class="property">_elementRef</span>.<span class="property">nativeElement</span>, <span class="string">&#x27;value&#x27;</span>, normalizedValue);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">registerOnChange</span>(<span class="attr">fn</span>: <span class="function">(<span class="params"><span class="attr">_</span>: <span class="built_in">any</span></span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span> &#123; <span class="variable language_">this</span>.<span class="property">onChange</span> = fn; &#125;</span><br><span class="line">  <span class="title function_">registerOnTouched</span>(<span class="attr">fn</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span> &#123; <span class="variable language_">this</span>.<span class="property">onTouched</span> = fn; &#125;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  <span class="title function_">_handleInput</span>(<span class="attr">value</span>: <span class="built_in">any</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_compositionMode</span> || (<span class="variable language_">this</span>.<span class="property">_compositionMode</span> &amp;&amp; !<span class="variable language_">this</span>.<span class="property">_composing</span>)) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">onChange</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>DefaultValueAccessor</code> 裡 <code>registerOnChange</code> 與 <code>onChange</code> 的關係是，<code>ngModel</code> 會經 <code>setUpControl</code> 的方法將自訂方法透過 <code>registerOnChange</code> 註冊到 <code>onChange</code> 上，</p>
+<p><code>DefaultValueAccessor</code> 的 <code>@Directive</code> 的宣告的地方，有註冊 <code>(input)</code> 事件發生時會觸發的方法， <code>_handleInput($event.target.value)</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">_handleInput</span>(<span class="attr">value</span>: <span class="built_in">any</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_compositionMode</span> || (<span class="variable language_">this</span>.<span class="property">_compositionMode</span> &amp;&amp; !<span class="variable language_">this</span>.<span class="property">_composing</span>)) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">onChange</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>經過這一串的折騰，魔法就出現了，<code>ngModle</code> 的 <code>@Output('ngModelChange')</code> 會收到並發送資料到頁面上，這也就是為什麼 <code>(ngModelChange)</code> 的 <code>$event</code> 不需要加上 target.value，又可以取得異動的資料</p>
+<h1 id="Recap"><a class="header-anchor" href="#Recap"> </a>Recap</h1>
+<p>以下是雙向繫結相關的流程順序</p>
+<ol>
+<li><code>[ngModel]</code>時會觸發 <code>ngOnChanges</code> 事件</li>
+<li>在 <code>ngOnChanges</code> 時，會執行 <code>setUpControl()</code> 方法</li>
+<li>在 <code>setupControl()</code> 內會註冊 <code>DefaultValueAccess</code> 執行 <code>registerOnChange</code>，並將 callback function 傳入</li>
+<li>透過 <code>registerOnChanges</code> 傳入的 callback function 會被綁定到 <code>onChanges</code> 上</li>
+<li>當 <code>(input)</code> 事件被觸發時，會執行 <code>_handleInput($event.target.value)</code> 的方法</li>
+<li>將傳入 <code>_handleInput(value)</code> 的值傳給註冊在 <code>onChange</code> 的 callback function</li>
+<li>callback function 會執行 <code>ngModel</code> 裡的 <code>viewToModelUpdate(newValue)</code> 方法</li>
+<li>最後將 <code>viewToModelUpdate</code> 所接受到的值，透過 <code>ngModelChange</code> 的 EventEmiiter emit 值到頁面上</li>
+<li>完成整個雙向繫結的動作</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/08/09/angular-changedetector-markforcheck/" rel="prev" title="[Angular] ChangeDetector 之 markForCheck 篇">
+                  <i class="fa fa-angle-left"></i> [Angular] ChangeDetector 之 markForCheck 篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/08/15/angular-custom-two-way-binding/" rel="next" title="[Angular] 自訂雙向繫結 - 簡易版">
+                  [Angular] 自訂雙向繫結 - 簡易版 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

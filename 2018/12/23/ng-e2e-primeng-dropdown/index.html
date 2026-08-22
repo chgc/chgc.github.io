@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="PrimeNG 元件很豐富沒錯，但是他所提供的原件在寫 E2E 測試時卻是一個讓人無法忍受的痛苦，主要原因是他為了畫面的呈現，使用各種非正統的方式呈現畫面，而 Dropdown 元件就是一個很標準的案例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 如何 E2E 測試 PrimeNG Dropdown 元件">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/12/23/ng-e2e-primeng-dropdown/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="PrimeNG 元件很豐富沒錯，但是他所提供的原件在寫 E2E 測試時卻是一個讓人無法忍受的痛苦，主要原因是他為了畫面的呈現，使用各種非正統的方式呈現畫面，而 Dropdown 元件就是一個很標準的案例">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2018/12/23/ng-e2e-primeng-dropdown/1545533633379.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2018/12/23/ng-e2e-primeng-dropdown/SNAGHTML241a0c0c.PNG">
+<meta property="article:published_time" content="2018-12-23T02:24:26.000Z">
+<meta property="article:modified_time" content="2018-12-23T03:03:49.074Z">
+<meta property="article:author" content="KevinYang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2018/12/23/ng-e2e-primeng-dropdown/1545533633379.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/12/23/ng-e2e-primeng-dropdown/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/12/23/ng-e2e-primeng-dropdown/","path":"2018/12/23/ng-e2e-primeng-dropdown/","title":"[Angular] 如何 E2E 測試 PrimeNG Dropdown 元件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] 如何 E2E 測試 PrimeNG Dropdown 元件 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">基本型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%E8%AE%8A%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">延伸變化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">小結</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%E8%AD%B0%E9%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">延伸議題</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Directive"><span class="nav-number">4.1.</span> <span class="nav-text">Directive</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/12/23/ng-e2e-primeng-dropdown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] 如何 E2E 測試 PrimeNG Dropdown 元件 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] 如何 E2E 測試 PrimeNG Dropdown 元件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2018-12-23 10:24:26 / 修改時間：11:03:49" itemprop="dateCreated datePublished" datetime="2018-12-23T10:24:26+08:00">2018-12-23</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/12/23/ng-e2e-primeng-dropdown/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/23/ng-e2e-primeng-dropdown/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>PrimeNG 元件很豐富沒錯，但是他所提供的原件在寫 E2E 測試時卻是一個讓人無法忍受的痛苦，主要原因是他為了畫面的呈現，使用各種非正統的方式呈現畫面，而 Dropdown 元件就是一個很標準的案例</p>
+<span id="more"></span>
+<h1 id="基本型"><a class="header-anchor" href="#基本型"> </a>基本型</h1>
+<p>我們先來準備一下基本的測試環境</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p-dropdown</span>  </span></span><br><span class="line"><span class="tag">  [<span class="attr">options</span>]=<span class="string">&quot;cities1&quot;</span></span></span><br><span class="line"><span class="tag">  [(<span class="attr">ngModel</span>)]=<span class="string">&quot;selectedCity1&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span><span class="tag">&lt;/<span class="name">p-dropdown</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">City</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">code</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">    <span class="attr">selectedCity1</span>: <span class="title class_">City</span>;</span><br><span class="line">    <span class="attr">cities1</span>: <span class="title class_">SelectItem</span>[] = [</span><br><span class="line">    &#123; <span class="attr">label</span>: <span class="string">&#x27;Select City&#x27;</span>, <span class="attr">value</span>: <span class="literal">null</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">label</span>: <span class="string">&#x27;New York&#x27;</span>, <span class="attr">value</span>: &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&#x27;New York&#x27;</span>, <span class="attr">code</span>: <span class="string">&#x27;NY&#x27;</span> &#125; &#125;,</span><br><span class="line">    &#123; <span class="attr">label</span>: <span class="string">&#x27;Rome&#x27;</span>, <span class="attr">value</span>: &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">&#x27;Rome&#x27;</span>, <span class="attr">code</span>: <span class="string">&#x27;RM&#x27;</span> &#125; &#125;,</span><br><span class="line">    &#123; <span class="attr">label</span>: <span class="string">&#x27;London&#x27;</span>, <span class="attr">value</span>: &#123; <span class="attr">id</span>: <span class="number">3</span>, <span class="attr">name</span>: <span class="string">&#x27;London&#x27;</span>, <span class="attr">code</span>: <span class="string">&#x27;LDN&#x27;</span> &#125; &#125;,</span><br><span class="line">    &#123; <span class="attr">label</span>: <span class="string">&#x27;Istanbul&#x27;</span>, <span class="attr">value</span>: &#123; <span class="attr">id</span>: <span class="number">4</span>, <span class="attr">name</span>: <span class="string">&#x27;Istanbul&#x27;</span>, <span class="attr">code</span>: <span class="string">&#x27;IST&#x27;</span> &#125; &#125;,</span><br><span class="line">    &#123; <span class="attr">label</span>: <span class="string">&#x27;Paris&#x27;</span>, <span class="attr">value</span>: &#123; <span class="attr">id</span>: <span class="number">5</span>, <span class="attr">name</span>: <span class="string">&#x27;Paris&#x27;</span>, <span class="attr">code</span>: <span class="string">&#x27;PRS&#x27;</span> &#125; &#125;</span><br><span class="line">  ];</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上就是最基本 PrimeNG dropdown list 的用法，這時候如果要取得這一個 dropdown list 的方法，不外乎透過 id、name、CSS 的方式取得，其實我這裡介紹另外一種作法，<code>data-attribute</code> 的方式，寫法可以變成這樣</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p-dropdown</span></span></span><br><span class="line"><span class="tag">  <span class="attr">data-pp</span>=<span class="string">&quot;cities1&quot;</span></span></span><br><span class="line"><span class="tag">  [<span class="attr">options</span>]=<span class="string">&quot;cities1&quot;</span></span></span><br><span class="line"><span class="tag">  [(<span class="attr">ngModel</span>)]=<span class="string">&quot;selectedCity1&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span><span class="tag">&lt;/<span class="name">p-dropdown</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>透過設定 <code>data-pp</code> (這裡可以自己取名字)，就可以賦予元件一個唯一值，但又不會占用 id/name 的情形，之後還可以透過 <code>directive</code> 的方式將這一個屬性取消掉</p>
+<p>當設定完 data-attribute 後，E2E 要取得這元件就變得比較簡單了</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;dropdown without editable&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">   page.<span class="title function_">navigateTo</span>();</span><br><span class="line">   <span class="keyword">const</span> dropdown = <span class="title function_">element</span>(by.<span class="title function_">css</span>(<span class="string">&#x27;[data-pp=cities1]&#x27;</span>));</span><br><span class="line">   dropdown.<span class="title function_">click</span>();</span><br><span class="line">   dropdown.<span class="title function_">all</span>(by.<span class="title function_">tagName</span>(<span class="string">&#x27;li&#x27;</span>)).<span class="title function_">then</span>(<span class="function">(<span class="params"><span class="attr">options</span>: <span class="title class_">ElementFinder</span>[]</span>) =&gt;</span> &#123;</span><br><span class="line">     options[<span class="number">1</span>].<span class="title function_">click</span>();</span><br><span class="line">   &#125;);</span><br><span class="line">   <span class="keyword">const</span> dropdownSelected = dropdown.<span class="title function_">element</span>(by.<span class="title function_">css</span>(<span class="string">&#x27;.ui-dropdown-label&#x27;</span>));</span><br><span class="line">   <span class="title function_">expect</span>(dropdownSelected.<span class="title function_">getText</span>()).<span class="title function_">toEqual</span>(<span class="string">&#x27;New York&#x27;</span>);</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<p>程式碼說明</p>
+<ul>
+<li><code>const dropdown = element(by.css('[data-pp=cities1]'));</code> : 取得 dropdown 元件</li>
+<li><code>dropdown.click();</code> 點擊選單</li>
+<li><code>dropdown.all(by.tagName('li'))</code> : 找到顯示出來的選項，(沒錯，PrimeNG  是用 ul &gt; li 的方式呈現)</li>
+<li><code>.then((options: ElementFinder[]) =&gt; {  options[1].click(); });</code> 由於 <code>dropdown.all()</code>回傳是 promise 物件，所以需要接 then 才能做下一步的動作
+<ul>
+<li><code>options</code> 會取回所有的選項，因為是陣列，可以使用 index 的方式選擇想要點選的項目</li>
+</ul>
+</li>
+<li><code>const dropdownSelected = dropdown.element(by.css('.ui-dropdown-label'));</code> 取得 dropdown 元件顯示結果的 DOM，這裡是顯示在一個 <code>label</code> 上，而這一個 label 會有 <code>.ui-dropdown-label'</code>的 CSS Class</li>
+<li><code> expect(dropdownSelected.getText()).toEqual('New York');</code> 既然可以取得顯示用的 <code>Label</code> ，當然可以透過 <code>getText()</code> 的方式做結果比對</li>
+</ul>
+<p>這就是標準 <code>不可編輯</code>  dropdown 的 E2E 基本的測試寫法</p>
+<h1 id="延伸變化"><a class="header-anchor" href="#延伸變化"> </a>延伸變化</h1>
+<p>由於 PrimeNG 的 dropdown 元件另外提供輸入的功能，可以透過 <code>[editable]=true</code> 的方式開啟</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p-dropdown</span></span></span><br><span class="line"><span class="tag">  <span class="attr">data-pp</span>=<span class="string">&quot;cities1&quot;</span></span></span><br><span class="line"><span class="tag">  [<span class="attr">options</span>]=<span class="string">&quot;cities1&quot;</span></span></span><br><span class="line"><span class="tag">  [(<span class="attr">ngModel</span>)]=<span class="string">&quot;selectedCity1&quot;</span></span></span><br><span class="line"><span class="tag">  [<span class="attr">editable</span>]=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span><span class="tag">&lt;/<span class="name">p-dropdown</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但這一個設定開啟時，上面所寫的 E2E 測試程式碼就會死掉，主要原因是呈現跟互動方式整個都不一樣了，要點出下拉選單，就無法直接點選 <code>&lt;p-dropdown&gt;</code> 本身，而需要點選旁邊的小圖示</p>
+<p><img src="1545533633379.png" alt="1545533633379"></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;dropdown with editable&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  page.<span class="title function_">navigateTo</span>();</span><br><span class="line">  <span class="keyword">const</span> dropdown = <span class="title function_">element</span>(by.<span class="title function_">css</span>(<span class="string">&#x27;[data-pp=cities1]&#x27;</span>));</span><br><span class="line">  <span class="keyword">const</span> dropdownClicked = dropdown.<span class="title function_">element</span>(by.<span class="title function_">css</span>(<span class="string">&#x27;.ui-dropdown-trigger&#x27;</span>));</span><br><span class="line">  dropdownClicked.<span class="title function_">click</span>();</span><br><span class="line">  dropdown.<span class="title function_">all</span>(by.<span class="title function_">tagName</span>(<span class="string">&#x27;li&#x27;</span>)).<span class="title function_">then</span>(<span class="function">(<span class="params"><span class="attr">options</span>: <span class="title class_">ElementFinder</span>[]</span>) =&gt;</span> &#123;</span><br><span class="line">    options[<span class="number">1</span>].<span class="title function_">click</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">const</span> dropdownSelected = dropdown.<span class="title function_">element</span>(by.<span class="title function_">css</span>(<span class="string">&#x27;.ui-dropdown-label&#x27;</span>));</span><br><span class="line">  <span class="title function_">expect</span>(dropdownSelected.<span class="title function_">getAttribute</span>(<span class="string">&#x27;aria-label&#x27;</span>)).<span class="title function_">toEqual</span>(<span class="string">&#x27;New York&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>程式碼說明</p>
+<ul>
+<li>
+<p>取得 dropdown 元件本體的作法是一樣的</p>
+</li>
+<li>
+<p><code>const dropdownClicked = dropdown.element(by.css('.ui-dropdown-trigger'));</code> 取得可以點選的部分 (參閱上圖)</p>
+</li>
+<li>
+<p><code>dropdownClicked.click();</code> 點擊打開選單</p>
+</li>
+<li>
+<p>透過 index 設定要選取的選項</p>
+</li>
+<li>
+<p><code>const dropdownSelected = dropdown.element(by.css('.ui-dropdown-label'));</code> 取得顯示結果的元件</p>
+<ul>
+<li>
+<p>這裡要留意的是，因為是 <code>[editable]=true</code> 的關係，顯示結果的 Element 就在是 <code>Label</code> 了，而是 <code>Input</code></p>
+<p><img src="SNAGHTML241a0c0c.PNG" alt="img"></p>
+</li>
+</ul>
+</li>
+<li>
+<p><code> expect(dropdownSelected.getAttribute('aria-label')).toEqual('New York');</code> 比較結果</p>
+</li>
+</ul>
+<h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
+<p>以上就是 PrimeNG dropdown 元件兩種模式在 E2E 的基本寫法，當然這些動作應該要寫成一個 Page Object 模式的檔案，區隔出來好讓整個測試檔案看起來更乾淨。</p>
+<h1 id="延伸議題"><a class="header-anchor" href="#延伸議題"> </a>延伸議題</h1>
+<p>為了讓輸出到 production 時，HTML 畫面上能減少一些不必要的東西，例如 <code>data-pp</code>，那可以怎麼處理，這裡就介紹一種方式，寫自訂 directive 來自我移除</p>
+<h2 id="Directive"><a class="header-anchor" href="#Directive"> </a>Directive</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; environment &#125; <span class="keyword">from</span> <span class="string">&#x27;./../environments/environment&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Directive</span>, <span class="title class_">ElementRef</span>, <span class="title class_">Renderer2</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="meta">@Directive</span>(&#123;</span><br><span class="line">  <span class="comment">// tslint:disable-next-line:directive-selector</span></span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;[data-pp]&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">DataPpDirective</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">el</span>: <span class="title class_">ElementRef</span>, <span class="keyword">private</span> <span class="attr">renderer</span>: <span class="title class_">Renderer2</span></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (environment.<span class="property">production</span>) &#123;</span><br><span class="line">      renderer.<span class="title function_">removeAttribute</span>(el.<span class="property">nativeElement</span>, <span class="string">&#x27;data-pp&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://medium.com/agilix/angular-and-cypress-data-cy-attributes-d698c01df062">Angular and Cypress: data-cy attributes</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/22/ng-playground/" rel="prev" title="[Angular] Angular Playground">
+                  <i class="fa fa-angle-left"></i> [Angular] Angular Playground
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/24/ng-router-new-feature/" rel="next" title="[Angular] Router in 7: 一些新功能">
+                  [Angular] Router in 7: 一些新功能 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

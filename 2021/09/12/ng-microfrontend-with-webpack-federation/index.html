@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="其實這觀念在去年由 Manfred Steyer (Angular GDE) 提出來，並花很多心力在研究這一塊的作法，一年過去後因為公司上有可能會使用到這樣的情境，所以就先來研究一下，但也因為晚了一年，現在很多工具和環境上已經好很多，而且該採的雷很多前輩都踩過了，這一篇筆記就是稍微整理一下如何從無到有的將 Angular 環境給設定起來">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Microfrontend with Module Federation 筆記">
+<meta property="og:url" content="http://blog.kevinyang.net/2021/09/12/ng-microfrontend-with-webpack-federation/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="其實這觀念在去年由 Manfred Steyer (Angular GDE) 提出來，並花很多心力在研究這一塊的作法，一年過去後因為公司上有可能會使用到這樣的情境，所以就先來研究一下，但也因為晚了一年，現在很多工具和環境上已經好很多，而且該採的雷很多前輩都踩過了，這一篇筆記就是稍微整理一下如何從無到有的將 Angular 環境給設定起來">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/09/12/ng-microfrontend-with-webpack-federation/image-20210912145552814.png">
+<meta property="article:published_time" content="2021-09-12T05:37:26.000Z">
+<meta property="article:modified_time" content="2021-09-12T07:38:04.234Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2021/09/12/ng-microfrontend-with-webpack-federation/image-20210912145552814.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2021/09/12/ng-microfrontend-with-webpack-federation/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2021/09/12/ng-microfrontend-with-webpack-federation/","path":"2021/09/12/ng-microfrontend-with-webpack-federation/","title":"[Angular] Microfrontend with Module Federation 筆記"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] Microfrontend with Module Federation 筆記 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Requirement"><span class="nav-number">1.</span> <span class="nav-text">Requirement</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A"><span class="nav-number">2.</span> <span class="nav-text">設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%95%8F%E9%A1%8C%E6%8E%A2%E8%A8%8E"><span class="nav-number">3.</span> <span class="nav-text">問題探討</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2021/09/12/ng-microfrontend-with-webpack-federation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] Microfrontend with Module Federation 筆記 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] Microfrontend with Module Federation 筆記
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-09-12 13:37:26 / 修改時間：15:38:04" itemprop="dateCreated datePublished" datetime="2021-09-12T13:37:26+08:00">2021-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/09/12/ng-microfrontend-with-webpack-federation/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/12/ng-microfrontend-with-webpack-federation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>其實這觀念在去年由 Manfred Steyer (Angular GDE) 提出來，並花很多心力在研究這一塊的作法，一年過去後因為公司上有可能會使用到這樣的情境，所以就先來研究一下，但也因為晚了一年，現在很多工具和環境上已經好很多，而且該採的雷很多前輩都踩過了，這一篇筆記就是稍微整理一下如何從無到有的將 Angular 環境給設定起來</p>
+<span id="more"></span>
+<h1 id="Requirement"><a class="header-anchor" href="#Requirement"> </a>Requirement</h1>
+<ul>
+<li>Angular 12</li>
+</ul>
+<h1 id="設定"><a class="header-anchor" href="#設定"> </a>設定</h1>
+<ol>
+<li>
+<p>建立一個空的 ng application。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new ng-mfe --create-application=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>建立一個 host (shell) application</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g application shell --routing</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>建立一個 remote application</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g application mfe1 --routing</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>為這兩個 application 加入 <code>@angular-architects/module-federation</code> 套件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ng add @angular-architects/module-federation --project shell --port 5000</span><br><span class="line">ng add @angular-architects/module-federation --project mfe1 --port 3000</span><br></pre></td></tr></table></figure>
+<ol>
+<li>這時候會產生 webpack.config.js 檔案: 用來設定 remote module 使用</li>
+</ol>
+</li>
+</ol>
+<p>到這邊算是基本完成套件的安裝，接下來就是一些 module/component 的設定</p>
+<ol>
+<li>
+<p>在 <code>mfe1</code> application 中新增一個 <code>FlightsModule</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g m flights --project=mfe --routing</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>設定 <code>webpack.config.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">ModuleFederationPlugin</span> = <span class="built_in">require</span>(<span class="string">&quot;webpack/lib/container/ModuleFederationPlugin&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> mf = <span class="built_in">require</span>(<span class="string">&quot;@angular-architects/module-federation/webpack&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> share = mf.<span class="property">share</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sharedMappings = <span class="keyword">new</span> mf.<span class="title class_">SharedMappings</span>();</span><br><span class="line">sharedMappings.<span class="title function_">register</span>(</span><br><span class="line">  path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;../../tsconfig.json&#x27;</span>),</span><br><span class="line">  [<span class="comment">/* mapped paths to share */</span>]);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">uniqueName</span>: <span class="string">&quot;mfe1&quot;</span>,</span><br><span class="line">    <span class="attr">publicPath</span>: <span class="string">&quot;auto&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">optimization</span>: &#123;</span><br><span class="line">    <span class="attr">runtimeChunk</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,   </span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">      ...sharedMappings.<span class="title function_">getAliases</span>(),</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">ModuleFederationPlugin</span>(&#123;</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// For remotes (please adjust)</span></span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;mfe1&quot;</span>,</span><br><span class="line">        <span class="attr">filename</span>: <span class="string">&quot;remoteEntry.js&quot;</span>,</span><br><span class="line">        <span class="attr">exposes</span>: &#123;</span><br><span class="line">          <span class="string">&quot;./flightModules&quot;</span>: <span class="string">&quot;./projects/mfe1/src/app/flights/flights.module.ts&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        </span><br><span class="line">        <span class="attr">shared</span>: <span class="title function_">share</span>(&#123;</span><br><span class="line">          <span class="string">&quot;@angular/core&quot;</span>: &#123; <span class="attr">singleton</span>: <span class="literal">true</span>, <span class="attr">strictVersion</span>: <span class="literal">true</span>, <span class="attr">requiredVersion</span>: <span class="string">&#x27;auto&#x27;</span> &#125;, </span><br><span class="line">          <span class="string">&quot;@angular/common&quot;</span>: &#123; <span class="attr">singleton</span>: <span class="literal">true</span>, <span class="attr">strictVersion</span>: <span class="literal">true</span>, <span class="attr">requiredVersion</span>: <span class="string">&#x27;auto&#x27;</span> &#125;, </span><br><span class="line">          <span class="string">&quot;@angular/common/http&quot;</span>: &#123; <span class="attr">singleton</span>: <span class="literal">true</span>, <span class="attr">strictVersion</span>: <span class="literal">true</span>, <span class="attr">requiredVersion</span>: <span class="string">&#x27;auto&#x27;</span> &#125;, </span><br><span class="line">          <span class="string">&quot;@angular/router&quot;</span>: &#123; <span class="attr">singleton</span>: <span class="literal">true</span>, <span class="attr">strictVersion</span>: <span class="literal">true</span>, <span class="attr">requiredVersion</span>: <span class="string">&#x27;auto&#x27;</span> &#125;,</span><br><span class="line"></span><br><span class="line">          ...sharedMappings.<span class="title function_">getDescriptors</span>()</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">    &#125;),</span><br><span class="line">    sharedMappings.<span class="title function_">getPlugin</span>()</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 28: host 載入時的 <code>remoteName</code></li>
+<li>line 29: webpack 要產生的 file name</li>
+<li>line 31: expose 的 <code>module</code> 名稱及對應的 module 檔案</li>
+</ul>
+</li>
+<li>
+<p>在 host (shell) 的路由檔設定要 <code>lazyloading</code> 路徑</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; loadRemoteModule &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular-architects/module-federation&#x27;</span>;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">URL</span> = <span class="string">&#x27;http://localhost:3000/remoteEntry.js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">component</span>: <span class="title class_">HomeComponent</span>, <span class="attr">pathMatch</span>: <span class="string">&#x27;full&#x27;</span> &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;flights&#x27;</span>,</span><br><span class="line">    <span class="attr">loadChildren</span>: <span class="function">() =&gt;</span></span><br><span class="line">      <span class="title function_">loadRemoteModule</span>(&#123;</span><br><span class="line">        <span class="attr">remoteEntry</span>: <span class="variable constant_">URL</span>,</span><br><span class="line">        <span class="attr">remoteName</span>: <span class="string">&#x27;mfe1&#x27;</span>,</span><br><span class="line">        <span class="attr">exposedModule</span>: <span class="string">&#x27;./flightModule&#x27;</span>,</span><br><span class="line">      &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">m</span>) =&gt;</span> m.<span class="property">FlightsModule</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes)],</span><br><span class="line">  <span class="attr">exports</span>: [<span class="title class_">RouterModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppRoutingModule</span> &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 7 ~ 15 是標準 Lazy loading 的寫法，而 line 10 從原本的 <code>import</code> 改寫成 <code>loadRemoteModule</code> 即可載入遠端的 module 檔案</li>
+<li><code>remoteEmtry</code> 設定遠端主機位置及參考檔案，檔名為上一個步驟中所設定的檔名</li>
+<li><code>remoteName</code> 為上一步驟所設定的 <code>name</code></li>
+<li><code>exposedModule</code> 為上一步驟所設定的 exposes 內的某一個 <code>key</code></li>
+</ul>
+</li>
+</ol>
+<p>最後在調整一下 host 的 <code>AppComponent</code> 的 HTML 內容，例如加上連結到 flights module 等，到這邊算完成一個最小完成單位，可以將兩個 applications 跑起來後看一下執行結果</p>
+<p><img src="image-20210912145552814.png" alt="image-20210912145552814"></p>
+<h1 id="問題探討"><a class="header-anchor" href="#問題探討"> </a>問題探討</h1>
+<p>看起來一起都很簡單，但仔細思考後，其實還有很多東西要考慮，例如各 module 間的版本如何控制、如何共用狀態、部屬的相依性等，這些都是很實際的問題，等著下一篇筆記再來研究吧</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/"><strong>The Microfrontend Revolution: Module Federation with Angular</strong></a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/15/dhall-note-001/" rel="prev" title="[Dhall] 學習筆記 001 - 基本知識建立">
+                  <i class="fa fa-angle-left"></i> [Dhall] 學習筆記 001 - 基本知識建立
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/11/win11-keboard-shortcuts/" rel="next" title="[Others] Windows 11 快速鍵">
+                  [Others] Windows 11 快速鍵 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="最近在練習 F# 時，發現自己對於 F# Collection 操作不熟悉，尤其是 Seq 的部分，特地拉出單章刻意練習">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[FSharp] Seq Study">
+<meta property="og:url" content="http://blog.kevinyang.net/2022/02/20/fsharp-seq-study/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="最近在練習 F# 時，發現自己對於 F# Collection 操作不熟悉，尤其是 Seq 的部分，特地拉出單章刻意練習">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-02-20T03:23:23.000Z">
+<meta property="article:modified_time" content="2022-02-20T11:49:19.648Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="FSharp">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2022/02/20/fsharp-seq-study/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2022/02/20/fsharp-seq-study/","path":"2022/02/20/fsharp-seq-study/","title":"[FSharp] Seq Study"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[FSharp] Seq Study | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Notes"><span class="nav-number">1.</span> <span class="nav-text">Notes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-Seq"><span class="nav-number">1.1.</span> <span class="nav-text">建立 Seq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%89%E6%8F%9B"><span class="nav-number">1.2.</span> <span class="nav-text">轉換</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E5%B0%8B"><span class="nav-number">1.3.</span> <span class="nav-text">搜尋</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Obtaining-Subsequences"><span class="nav-number">1.4.</span> <span class="nav-text">Obtaining Subsequences</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transforming-Sequences"><span class="nav-number">1.5.</span> <span class="nav-text">Transforming Sequences</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API-Study"><span class="nav-number">2.</span> <span class="nav-text">API Study</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Seq-collect"><span class="nav-number">2.1.</span> <span class="nav-text">Seq.collect</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2022/02/20/fsharp-seq-study/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[FSharp] Seq Study | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [FSharp] Seq Study
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2022-02-20 11:23:23 / 修改時間：19:49:19" itemprop="dateCreated datePublished" datetime="2022-02-20T11:23:23+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/FSharp/" itemprop="url" rel="index"><span itemprop="name">FSharp</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2022/02/20/fsharp-seq-study/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/20/fsharp-seq-study/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近在練習 F# 時，發現自己對於 F# Collection 操作不熟悉，尤其是 Seq 的部分，特地拉出單章刻意練習</p>
+<span id="more"></span>
+<p>來自官網的介紹</p>
+<blockquote>
+<p>「 <em>序列</em> 」（sequence）是一種元素的邏輯系列，全都是一種類型。 當您有大量的資料收集，但不一定會預期使用所有元素時，序列特別有用。 個別順序元素只會在必要時計算，因此在不使用所有元素的情況下，序列可以提供比清單更佳的效能。 順序是以類型表示 <code>seq&lt;'T&gt;</code> ，這是的別名 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a> 。 因此，任何實介面的 .NET 型別都 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a> 可以用來做為序列。 <a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html">Seq 模組</a>可支援涉及序列的操作。</p>
+</blockquote>
+<h1 id="Notes"><a class="header-anchor" href="#Notes"> </a>Notes</h1>
+<h2 id="建立-Seq"><a class="header-anchor" href="#建立-Seq"> </a>建立 Seq</h2>
+<p>F# 建立 range 數列的方式可以透過 <code>..</code> 的方式來完成，例如 <code>[ 1 .. 3 ]</code> 就能產生 <code>[ 1;2;3 ]</code> 的 List，要表示 step n 時，可以這樣子表示 <code>[ 1..2..5]</code> 就會得到 <code>[1;3;5]</code>，同樣的表示法套用在 seq 上會是這樣子寫</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">seq</span> &#123; <span class="number">1.</span><span class="number">.2</span><span class="operator">..</span><span class="number">5</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>更進一步可以透過程式的方式產生 seq 的內容</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">seq</span> &#123; <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span> <span class="operator">..</span> <span class="number">10</span> <span class="operator">-&gt;</span> i <span class="operator">*</span> i &#125;</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="keyword">seq</span> &#123; <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1.</span>. <span class="number">10</span> <span class="keyword">do</span> i <span class="operator">*</span> i&#125;</span><br></pre></td></tr></table></figure>
+<p>另外一種會遇到的情況是想將一個 seq 展開並放入到另外一個 seq 時，可以使用 <code>yield!</code> 的關鍵字 ，其效果跟 JavaScript 的 flatMap 是一樣的</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">seq</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="number">1.</span><span class="number">.10</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">yield!</span> <span class="keyword">seq</span> &#123; <span class="number">1</span>; <span class="number">2</span>; <span class="number">3</span>; <span class="number">4</span>; <span class="number">5</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>文件中提到一點就是如果運算是中有使用到 <code>yield!</code> 時，其他回傳值就必須使用 <code>yield</code></p>
+<h2 id="轉換"><a class="header-anchor" href="#轉換"> </a>轉換</h2>
+<p>可以透過兩種方式來將 <code>List</code> or <code>Array</code> 轉換成 <code>seq</code></p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Convert an array to a sequence by using a cast.</span></span><br><span class="line"><span class="keyword">let</span> seqFromArray1 <span class="operator">=</span> [<span class="operator">|</span> <span class="number">1</span> <span class="operator">..</span> <span class="number">10</span> <span class="operator">|</span>] <span class="operator">:&gt;</span> seq<span class="operator">&lt;</span>int<span class="operator">&gt;</span></span><br><span class="line"><span class="comment">// let seqFromArray1 = Seq.cast [| 1 .. 10 |]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Convert an array to a sequence by using Seq.ofArray.</span></span><br><span class="line"><span class="keyword">let</span> seqFromArray2 <span class="operator">=</span> [<span class="operator">|</span> <span class="number">1</span> <span class="operator">..</span> <span class="number">10</span> <span class="operator">|</span>] <span class="operator">|&gt;</span> Seq.ofArray</span><br></pre></td></tr></table></figure>
+<h2 id="搜尋"><a class="header-anchor" href="#搜尋"> </a>搜尋</h2>
+<p>常用的方法有  <a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#exists">Seq. exists</a>、 <a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#exists">array.exists2</a>、 <a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#find">seq. find</a>、 <a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#findIndex">findIndex</a>、 <a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#pick">Seq. pick</a>、 <a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#tryFind">tryFind</a> 和 <a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#tryFindIndex">array.tryfindindex</a></p>
+<h2 id="Obtaining-Subsequences"><a class="header-anchor" href="#Obtaining-Subsequences"> </a>Obtaining Subsequences</h2>
+<ul>
+<li>
+<p>常看到的有 <code>Seq.filter</code> 、<code>Seq.choose</code>，跟 List 的版本功能一樣但運作方式不同，filtering 和 choosing 的行為只會針對當下的 seq element</p>
+</li>
+<li>
+<p>取 n 筆記錄的方法有 <code>Seq.take</code> 或是 <code>Seq.truncate</code> 兩者的差異是要處理的 seq 內是否有足夠得資料比數，如果資料比數不夠時，<code>Seq.take</code> 會傳回 <code>System.InvalidOperationException</code> 的例外狀況，而 <code>Seq.truncate</code> 不會發生</p>
+</li>
+<li>
+<p><code>Seq.takeWhile</code> 取值直到第一個不吻合條件發生</p>
+</li>
+<li>
+<p><code>Seq.skip</code> 跳過 n  筆記錄</p>
+</li>
+<li>
+<p><code>Seq.skipWhil</code> skip until first element tor which the predicate return false</p>
+</li>
+</ul>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// takeWhile</span></span><br><span class="line"><span class="keyword">let</span> mySeqLessThan10 <span class="operator">=</span> Seq.takeWhile (<span class="keyword">fun</span> elem <span class="operator">-&gt;</span> elem <span class="operator">&lt;</span> <span class="number">10</span>) mySeq</span><br><span class="line">mySeqLessThan10 <span class="operator">|&gt;</span> printSeq</span><br><span class="line"></span><br><span class="line"><span class="comment">// skip</span></span><br><span class="line"><span class="keyword">let</span> mySeqSkipFirst5 <span class="operator">=</span> Seq.skip <span class="number">5</span> mySeq</span><br><span class="line">mySeqSkipFirst5 <span class="operator">|&gt;</span> printSeq</span><br><span class="line"></span><br><span class="line"><span class="comment">// skipWhile</span></span><br><span class="line"><span class="keyword">let</span> mySeqSkipWhileLessThan10 <span class="operator">=</span> Seq.skipWhile (<span class="keyword">fun</span> elem <span class="operator">-&gt;</span> elem <span class="operator">&lt;</span> <span class="number">10</span>) mySeq</span><br><span class="line">mySeqSkipWhileLessThan10 <span class="operator">|&gt;</span> printSeq</span><br></pre></td></tr></table></figure>
+<h2 id="Transforming-Sequences"><a class="header-anchor" href="#Transforming-Sequences"> </a>Transforming Sequences</h2>
+<p>發現很多用法跟 RxJS 好像</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> printSeq seq1 <span class="operator">=</span> Seq.iter (<span class="built_in">printf</span> <span class="string">&quot;%A &quot;</span>) seq1; <span class="built_in">printfn</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">let</span> seqPairwise <span class="operator">=</span> Seq.pairwise (<span class="keyword">seq</span> &#123; <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span> <span class="operator">..</span> <span class="number">10</span> <span class="operator">-&gt;</span> i<span class="operator">*</span>i &#125;)</span><br><span class="line">printSeq seqPairwise</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">(<span class="number">1</span>, <span class="number">4</span>) (<span class="number">4</span>, <span class="number">9</span>) (<span class="number">9</span>, <span class="number">16</span>) (<span class="number">16</span>, <span class="number">25</span>) (<span class="number">25</span>, <span class="number">36</span>) (<span class="number">36</span>, <span class="number">49</span>) (<span class="number">49</span>, <span class="number">64</span>) (<span class="number">64</span>, <span class="number">81</span>) (<span class="number">81</span>, <span class="number">100</span>) </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#windowed">Seq.windowed</a> 用法跟 <code>Seq.pairwise</code> 很像，只是他可以指定每組的數量</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> seqNumbers <span class="operator">=</span> [ <span class="number">1.0</span>; <span class="number">1.5</span>; <span class="number">2.0</span>; <span class="number">1.5</span>; <span class="number">1.0</span>; <span class="number">1.5</span> ] <span class="operator">:&gt;</span> seq<span class="operator">&lt;</span>float<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">let</span> seqWindows <span class="operator">=</span> Seq.windowed <span class="number">3</span> seqNumbers</span><br><span class="line"><span class="keyword">let</span> seqMovingAverage <span class="operator">=</span> Seq.map Array.average seqWindows</span><br><span class="line"><span class="built_in">printfn</span> <span class="string">&quot;Initial sequence: &quot;</span></span><br><span class="line">printSeq seqNumbers <span class="comment">// 1.0 1.5 2.0 1.5 1.0 1.5</span></span><br><span class="line"><span class="built_in">printfn</span> <span class="string">&quot;\nWindows of length 3: &quot;</span></span><br><span class="line">printSeq seqWindows <span class="comment">// [|1.0; 1.5; 2.0|] [|1.5; 2.0; 1.5|] [|2.0; 1.5; 1.0|] [|1.5; 1.0; 1.5|]</span></span><br><span class="line"><span class="built_in">printfn</span> <span class="string">&quot;\nMoving average: &quot;</span></span><br><span class="line">printSeq seqMovingAverage <span class="comment">// 1.5 1.666666667 1.5 1.333333333</span></span><br></pre></td></tr></table></figure>
+<h1 id="API-Study"><a class="header-anchor" href="#API-Study"> </a>API Study</h1>
+<h2 id="Seq-collect"><a class="header-anchor" href="#Seq-collect"> </a>Seq.collect</h2>
+<p><a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html#collect">API</a></p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> d <span class="operator">=</span> <span class="string">&quot;AB\nDE&quot;</span></span><br><span class="line"></span><br><span class="line">d.Split [<span class="operator">|</span> <span class="string">&#x27;\n&#x27;</span> <span class="operator">|</span>]</span><br><span class="line"><span class="operator">|&gt;</span> Seq.collect (Seq.skip <span class="number">1</span> <span class="operator">&gt;&gt;</span> Seq.take <span class="number">1</span>)</span><br><span class="line"><span class="operator">|&gt;</span> <span class="built_in">printfn</span> <span class="string">&quot;%A&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// output:</span></span><br><span class="line"><span class="comment">// seq [&#x27;B&#x27;; &#x27;E&#x27;]</span></span><br></pre></td></tr></table></figure>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/dotnet/fsharp/language-reference/sequences">sequences</a></li>
+<li><a target="_blank" rel="noopener" href="https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html">fsharp collections seqmodule</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FSharp/" rel="tag"># FSharp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/30/fsharp-minimalAPI-mongodb/" rel="prev" title="FSharp + Minimal API + MongoDB">
+                  <i class="fa fa-angle-left"></i> FSharp + Minimal API + MongoDB
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/19/static-website-docker-with-nginx/" rel="next" title="[筆記] Dockerfile for 建置靜態網站與使用 nginx 來跑">
+                  [筆記] Dockerfile for 建置靜態網站與使用 nginx 來跑 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

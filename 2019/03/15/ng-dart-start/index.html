@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Angular 除了常見的 TypeScript 版本，其實還又另外一個 Dart 語言的版本，雖然是不同的團隊維護，但是基本概念是一樣的，因為最近開始在碰 Flutter，當然也要來玩一下 Angular Dart 了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[AngularDart] Angular Dart 版本起手式">
+<meta property="og:url" content="http://blog.kevinyang.net/2019/03/15/ng-dart-start/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Angular 除了常見的 TypeScript 版本，其實還又另外一個 Dart 語言的版本，雖然是不同的團隊維護，但是基本概念是一樣的，因為最近開始在碰 Flutter，當然也要來玩一下 Angular Dart 了。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/03/15/ng-dart-start/1552621088853.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/03/15/ng-dart-start/1552622388583.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/03/15/ng-dart-start/1552623225062.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/03/15/ng-dart-start/SNAGHTML8bcf2ef.PNG">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/03/15/ng-dart-start/1552623460275.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/03/15/ng-dart-start/SNAGHTML8bf574d.PNG">
+<meta property="article:published_time" content="2019-03-15T02:43:57.000Z">
+<meta property="article:modified_time" content="2019-03-25T10:19:51.100Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2019/03/15/ng-dart-start/1552621088853.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2019/03/15/ng-dart-start/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2019/03/15/ng-dart-start/","path":"2019/03/15/ng-dart-start/","title":"[AngularDart] Angular Dart 版本起手式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[AngularDart] Angular Dart 版本起手式 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">環境設定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-Dart-SDK"><span class="nav-number">1.1.</span> <span class="nav-text">安裝 Dart SDK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dart-SDK-%E5%85%A7%E5%AE%B9"><span class="nav-number">1.1.1.</span> <span class="nav-text">Dart SDK 內容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-CLI-Tools"><span class="nav-number">1.2.</span> <span class="nav-text">安裝 CLI Tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode-%E5%AE%89%E8%A3%9D%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">VSCode 安裝擴充套件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%80%8B-Hello-World"><span class="nav-number">2.</span> <span class="nav-text">第一個 Hello World</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%80%8B-Angular-Dart-%E7%B6%B2%E9%A0%81"><span class="nav-number">3.</span> <span class="nav-text">第一個 Angular Dart 網頁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-Angular-%E5%A5%97%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">安裝 Angular 套件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%B0%E5%AF%AB-AngularDart"><span class="nav-number">3.2.</span> <span class="nav-text">撰寫 AngularDart</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">4.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BC%83%E8%BC%B8%E5%87%BA%E7%B5%90%E6%9E%9C"><span class="nav-number">4.1.</span> <span class="nav-text">比較輸出結果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-number">5.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/03/15/ng-dart-start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[AngularDart] Angular Dart 版本起手式 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [AngularDart] Angular Dart 版本起手式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-03-15 10:43:57" itemprop="dateCreated datePublished" datetime="2019-03-15T10:43:57+08:00">2019-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2019-03-25 18:19:51" itemprop="dateModified" datetime="2019-03-25T18:19:51+08:00">2019-03-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/03/15/ng-dart-start/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/15/ng-dart-start/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Angular 除了常見的 TypeScript 版本，其實還又另外一個 Dart 語言的版本，雖然是不同的團隊維護，但是基本概念是一樣的，因為最近開始在碰 Flutter，當然也要來玩一下 Angular Dart 了。</p>
+<span id="more"></span>
+<h1 id="環境設定"><a class="header-anchor" href="#環境設定"> </a>環境設定</h1>
+<p>首先，要先將 Dart 語言的環境設定起來，雖然編輯器沒有限定，官方推薦使用 webstorm，而我本身是使用 VSCode 做開發。Anyway，先來安裝 Dart SDK</p>
+<h2 id="安裝-Dart-SDK"><a class="header-anchor" href="#安裝-Dart-SDK"> </a>安裝 Dart SDK</h2>
+<p>支援的作業系統有 Windows、Linux、Mac，因為我目前的環境是 Windows，所以我就先以 Windows 的環境為文章的設定環境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco install dart-sdk</span><br></pre></td></tr></table></figure>
+<ul>
+<li>choco 是一套 windows 上的套件管理工具，詳細資訊可以參閱<a target="_blank" rel="noopener" href="https://chocolatey.org/">官網</a></li>
+</ul>
+<p>如果原本已經有安裝 Dart ，想要升級的話</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco upgrade dart-sdk </span><br></pre></td></tr></table></figure>
+<h3 id="Dart-SDK-內容"><a class="header-anchor" href="#Dart-SDK-內容"> </a>Dart SDK 內容</h3>
+<p>安裝完 Dart SDK 後，在開發環境會擁有以下的工具</p>
+<ul>
+<li><strong>dart</strong>: The standalone VM</li>
+<li><strong>dart2js</strong>: The Dart-to-JavaScript compiler (used only for web development)</li>
+<li><strong>dartanalyzer</strong>: The static analyzer</li>
+<li><strong>dartdevc</strong>: The Dart development compiler (used only for web development)</li>
+<li><strong>dartdoc</strong>: The API documentation generator</li>
+<li><strong>dartfmt</strong>: The Dart code formatter</li>
+<li><strong>pub</strong>: The Dart package manager</li>
+</ul>
+<h2 id="安裝-CLI-Tools"><a class="header-anchor" href="#安裝-CLI-Tools"> </a>安裝 CLI Tools</h2>
+<p>打開命令視窗，分別執行下列的指令，會將 <a target="_blank" rel="noopener" href="https://webdev.dartlang.org/tools/webdev">webdev</a> 和 <a target="_blank" rel="noopener" href="https://pub.dartlang.org/packages/stagehand">stagehand</a> 這兩套工具安裝起來</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pub global activate webdev</span><br><span class="line">pub global activate stagehand</span><br></pre></td></tr></table></figure>
+<h2 id="VSCode-安裝擴充套件"><a class="header-anchor" href="#VSCode-安裝擴充套件"> </a>VSCode 安裝擴充套件</h2>
+<ul>
+<li>可安裝 <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code">Dart</a> 套件，讓 VS Code 支援 Dart 語言的開發</li>
+</ul>
+<h1 id="第一個-Hello-World"><a class="header-anchor" href="#第一個-Hello-World"> </a>第一個 Hello World</h1>
+<p>在還沒有正式進入 Angular Dart 之前，先簡單來一個 Web Dart 版本的  Hello World，首先，我們先將開發專案的環境建構出來</p>
+<ol>
+<li>建立專案資料夾:
+<ul>
+<li><code>mkdir helloNgDart</code></li>
+</ul>
+</li>
+<li>進入資料夾
+<ul>
+<li><code>cd helloNgDart</code></li>
+</ul>
+</li>
+<li>使用剛剛安裝的 CLI 工具來初始化環境
+<ul>
+<li><code>stagehand web-simple</code></li>
+</ul>
+</li>
+<li>安裝相依套件
+<ul>
+<li><code>pub get</code></li>
+</ul>
+</li>
+<li>啟動 webdev server，開啟網頁 <code>http://localhost:8080</code>，即可看到第一個 Dart 網頁
+<ul>
+<li><code>webdev serve</code></li>
+<li><img src="1552621088853.png" alt=""></li>
+</ul>
+</li>
+<li>當看到上圖時，就表示使用 Dart 開發 Web 的環境已經準備好了</li>
+</ol>
+<h1 id="第一個-Angular-Dart-網頁"><a class="header-anchor" href="#第一個-Angular-Dart-網頁"> </a>第一個 Angular Dart 網頁</h1>
+<h2 id="安裝-Angular-套件"><a class="header-anchor" href="#安裝-Angular-套件"> </a>安裝 Angular 套件</h2>
+<p>Angular Dart 要如何安裝呢? 很簡單，只需要在 <code>pubspec.yaml</code> 內，將 <code>angular: ^5.0.0</code> 放在 <code>dependencies</code> 下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">helloNgDart</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">An</span> <span class="string">absolute</span> <span class="string">bare-bones</span> <span class="string">web</span> <span class="string">app.</span></span><br><span class="line"><span class="comment"># version: 1.0.0</span></span><br><span class="line"><span class="comment">#homepage: https://www.example.com</span></span><br><span class="line"><span class="comment">#author: Kevin Yang &lt;email@example.com&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment:</span></span><br><span class="line">  <span class="attr">sdk:</span> <span class="string">&#x27;&gt;=2.1.0 &lt;3.0.0&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dependencies:</span></span><br><span class="line">  <span class="attr">angular:</span> <span class="string">^5.0.0</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dev_dependencies:</span></span><br><span class="line">  <span class="attr">build_runner:</span> <span class="string">^1.1.2</span></span><br><span class="line">  <span class="attr">build_web_compilers:</span> <span class="string">^1.0.0</span></span><br><span class="line">  <span class="attr">pedantic:</span> <span class="string">^1.0.0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>當將 <code>angular: ^5.0.0</code> 加入到 <code>pubspec.yaml</code>  時，編輯器工具會在背景安裝此套件</p>
+<h2 id="撰寫-AngularDart"><a class="header-anchor" href="#撰寫-AngularDart"> </a>撰寫 AngularDart</h2>
+<ol>
+<li>
+<p>將 <code>web</code> 資料夾下的  index.html 檔案修改一下，</p>
+<ol>
+<li>將 <code>&lt;app-root&gt;&lt;/app-root&gt;</code> 放到 <code>&lt;body&gt;</code> 區塊中</li>
+<li>新增 <code>&lt;base href...&gt;</code> 標籤</li>
+</ol>
+</li>
+<li>
+<p>修改 <code>main.dart</code> 檔案，先移除既有的程式碼，改寫成下列程式碼</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:angular/angular.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:helloNgDart/app_component.template.dart&#x27;</span> <span class="keyword">as</span> ng;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="title function_">runApp</span>(ng.<span class="title class_">AppComponentNgFactory</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>目前這階段，編輯器會提示第二行的 import  找不到，這問題之後會被修正掉</p>
+<ul>
+<li><code>import 'package:&lt;pubspec 內設定的 name 值&gt;/&lt;檔案名稱&gt;'</code></li>
+<li>預設會指到 <code>lib</code> 資料夾</li>
+</ul>
+</li>
+<li>
+<p>新增 <code>lib</code> 資料夾並建立 <code>app_component.dart</code> 檔案</p>
+</li>
+<li>
+<p><code>app_component.dart</code> 檔案內容</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:angular/angular.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(</span><br><span class="line">  selector: <span class="string">&#x27;my-app&#x27;</span>,</span><br><span class="line">  template: <span class="string">&#x27;&lt;h1&gt;Hello &#123;&#123;name&#125;&#125;&lt;/h1&gt;&#x27;</span>,</span><br><span class="line">)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppComponent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">&#x27;Angular&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>重新執行 <code>webdev serve</code>  後開啟網頁 <code>http://localhost:8080</code> ，應可以看到以下的畫面</p>
+<p><img src="1552622388583.png" alt="1552622388583"></p>
+</li>
+<li>
+<p>如果能看到畫面，恭喜，Angular Dart 的開發環境也設定完成了</p>
+</li>
+</ol>
+<h1 id="部署"><a class="header-anchor" href="#部署"> </a>部署</h1>
+<p>如果想要將 Angular Dart 輸出成可以部署的狀態時，又該如何處理，這部分也可以透過指令來完成</p>
+<blockquote>
+<p>webdev build --no-release --output web:build</p>
+</blockquote>
+<ul>
+<li>–no-release : 會輸出成開發狀態的檔案， 檔案數量會很多且檔案很大。</li>
+</ul>
+<p>要輸出成 production mode ，將 <code>--no-release</code> 的參數拿掉即可，當拿掉參數時， webdev build 將使用 dart2js  的方式建置專案。如果想要額外設定 <code>dart2js</code> (dart2js 有自己的參數可以設定)，需要額外新增 <code>build.yaml</code> 檔案，並將相關設定檔案設定在裡面</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">targets:</span></span><br><span class="line">  <span class="string">$default:</span></span><br><span class="line">    <span class="attr">builders:</span></span><br><span class="line">      <span class="string">build_web_compilers|entrypoint:</span></span><br><span class="line">        <span class="comment"># These are globs for the entrypoints you want to compile.</span></span><br><span class="line">        <span class="attr">generate_for:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">test/**.browser_test.dart</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">web/**.dart</span></span><br><span class="line">        <span class="attr">options:</span></span><br><span class="line">          <span class="attr">compiler:</span> <span class="string">dart2js</span></span><br><span class="line">          <span class="comment"># List any dart2js specific args here, or omit it.</span></span><br><span class="line">          <span class="attr">dart2js_args:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--fast-startup</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--minify</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--trust-primitives</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">--trust-type-annotations</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="比較輸出結果"><a class="header-anchor" href="#比較輸出結果"> </a>比較輸出結果</h2>
+<ul>
+<li>
+<p>with <code>--no-release</code></p>
+<p><img src="1552623225062.png" alt="1552623225062"></p>
+<p><img src="SNAGHTML8bcf2ef.PNG" alt="img"></p>
+</li>
+<li>
+<p>without  <code>--no-release</code></p>
+<p><img src="1552623460275.png" alt="1552623460275"></p>
+<p><img src="SNAGHTML8bf574d.PNG" alt="img"></p>
+</li>
+</ul>
+<h1 id="Conclusion"><a class="header-anchor" href="#Conclusion"> </a>Conclusion</h1>
+<p>Angular Dart 因為所使用語言的關係，可以享受到一些 TypeScript 所沒有提供的，但也由於是不同語言開發的，即使有 90% 的觀念相同，仍需要針對差異的部份去做了解，但那部份就留在以後分享了</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://webdev.dartlang.org/guides/get-started">Start Guide</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/12/ng-ngclass/" rel="prev" title="[Angular] ngClass with JavaScript Set">
+                  <i class="fa fa-angle-left"></i> [Angular] ngClass with JavaScript Set
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/25/ngdart-component/" rel="next" title="[AngularDart] Component">
+                  [AngularDart] Component <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

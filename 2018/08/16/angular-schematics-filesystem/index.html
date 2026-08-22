@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Schematics 跟檔案操作的元素有三種，分別是 Tree、Rule、Source ，但這三個元素到底是什麼? 又各自有哪些方法可以使用呢?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] Schematics 內檔案系統基本操作 ">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Schematics 跟檔案操作的元素有三種，分別是 Tree、Rule、Source ，但這三個元素到底是什麼? 又各自有哪些方法可以使用呢?">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/RJOiBYL.png">
+<meta property="og:image" content="https://i.imgur.com/dYhIUIM.png">
+<meta property="article:published_time" content="2018-08-16T01:02:11.000Z">
+<meta property="article:modified_time" content="2018-08-18T02:17:15.331Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/RJOiBYL.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/","path":"2018/08/16/angular-schematics-filesystem/","title":"[Angular] Schematics 內檔案系統基本操作 "}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] Schematics 內檔案系統基本操作  | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B0%A1%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">基本簡介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">檔案系統操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%8B%E5%88%A5"><span class="nav-number">2.1.</span> <span class="nav-text">型別</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tree"><span class="nav-number">2.2.1.</span> <span class="nav-text">Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Source"><span class="nav-number">2.2.2.</span> <span class="nav-text">Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rule"><span class="nav-number">2.2.3.</span> <span class="nav-text">Rule</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/08/16/angular-schematics-filesystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] Schematics 內檔案系統基本操作  | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] Schematics 內檔案系統基本操作 
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-08-16 09:02:11" itemprop="dateCreated datePublished" datetime="2018-08-16T09:02:11+08:00">2018-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2018-08-18 10:17:15" itemprop="dateModified" datetime="2018-08-18T10:17:15+08:00">2018-08-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/08/16/angular-schematics-filesystem/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/16/angular-schematics-filesystem/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Schematics 跟檔案操作的元素有三種，分別是 <code>Tree</code>、<code>Rule</code>、<code>Source</code> ，但這三個元素到底是什麼? 又各自有哪些方法可以使用呢?</p>
+<span id="more"></span>
+<h1 id="基本簡介"><a class="header-anchor" href="#基本簡介"> </a>基本簡介</h1>
+<p>檔案系統的操作可以算是 Schematics 內核心的功能之一，也是大部分我們希望 schematics 幫我們處理的事情。所以熟悉 schematics 的檔案操作方式，在寫自己的 schematics 會輕鬆很多。</p>
+<h1 id="檔案系統操作"><a class="header-anchor" href="#檔案系統操作"> </a>檔案系統操作</h1>
+<h2 id="型別"><a class="header-anchor" href="#型別"> </a>型別</h2>
+<ul>
+<li>Tree： 是檔案系統的結構描述，包含檔案的狀態與改變檔案的規則 (<code>Rule</code>)</li>
+<li>Source： 是一個建立空的新 <code>Tree</code>，常見的方法有 <code>Url(path)</code></li>
+<li>Rule： 是描述要如何改變 <code>Tree</code>，所以 <code>Rule</code> 會回傳一個包含改變規則的 <code>Tree</code></li>
+</ul>
+<h2 id="方法"><a class="header-anchor" href="#方法"> </a>方法</h2>
+<h3 id="Tree"><a class="header-anchor" href="#Tree"> </a>Tree</h3>
+<p>當第一次建立空的 schematics 時，會看到這一段程式碼</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">blogdemo</span>(<span class="params"><span class="attr">options</span>: <span class="built_in">any</span></span>): <span class="title class_">Rule</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params"><span class="attr">tree</span>: <span class="title class_">Tree</span>, <span class="attr">_context</span>: <span class="title class_">SchematicContext</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡取得的 <code>Tree</code> 會是當下的檔案系統，所以會包含目前目錄下的所有檔案與資料夾，當然也可以針對那些檔案去做操作，可使用的方法有</p>
+<ul>
+<li><code>branch(): Tree</code> ：複製一份目前 <code>Tree</code> 狀態的 Tree 物件</li>
+<li><code>merge(other: Tree, strategy?: MergeStrategy): void</code> ：合併兩個 <code>Tree</code> 物件，可決定合併衝突時的解決方式
+<ul>
+<li><code>MergeStrategy</code> 有以下選項
+<ul>
+<li><code>AllowOverwriteConflict</code></li>
+<li><code>AllowCreationConflict </code></li>
+<li><code>AllowDeleteConflict</code></li>
+<li><code>Default</code></li>
+<li><code>Error</code>：如果2個檔案存在於相同的位置就會丟出錯誤訊息</li>
+<li><code>ContentOnly</code>：只有內容衝突時才可以被覆寫</li>
+<li><code>Overwrite</code>：包含 <code>AllowOverwriteConflict</code>、<code>AllowCreationConflict</code>、<code>AllowDeleteConflict</code>，根據最後的異動做覆蓋</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>root: DirEntry</code> (唯讀)：取得目前的資料夾資訊 (<code>FileSystemDirEntry</code> 型別)</li>
+<li><code>read(path: string): Buffer | null</code>：讀取檔案並用 binary  的方式呈現</li>
+<li><code>exists(path: string): boolean</code>：檢查檔案是否存在</li>
+<li><code>get(path: string): FileEntry | null</code>：取得檔案 ( <code>FileEntry</code> 型別)</li>
+<li><code>getDir(path: string): DirEntry</code> ：取得某資料夾的資訊 (<code>FileSystemDirEntry</code> 型別)</li>
+<li><code>visit(visitor: FileVisitor): void</code>：拜訪目前 Tree 下的所有檔案 (list through folders)</li>
+<li><code>overwrite(path: string, content: Buffer | string): void</code>：複寫特定位置的檔案內容</li>
+<li><code>beginUpdate(path: string): UpdateRecorder</code>：開始修改某個檔案</li>
+<li><code>commitUpdate(record: UpdateRecorder): void</code>：確認修改內容，需與 <code>beginUpate</code> 配合使用</li>
+<li><code>create(path: string, content: Buffer | string): void</code>：建立檔案並給予檔案內容</li>
+<li><code>delete(path: string): void</code>：刪除檔案</li>
+<li><code>rename(from: string, to: string): void</code>：重新命名檔案</li>
+<li><code>apply(action: Action, strategy?: MergeStrategy): void</code>：套用規則，但無法在 <code>HostTree</code> 使用</li>
+<li><code>actions: Action[] (readonly)</code>：列出該 <code>Tree</code> 目前所有的 actions，每一個 action 會有以下資訊
+<ul>
+<li><code>kind</code>：動作種類
+<ul>
+<li><code>c</code>：建立</li>
+<li><code>d</code>：刪除</li>
+<li><code>o</code>：複寫</li>
+<li><code>r</code>：重新命名</li>
+</ul>
+</li>
+<li><code>path</code> ：路徑(from)</li>
+<li><code>to</code>：路徑 (to)</li>
+<li><code>content</code>：異動內容</li>
+</ul>
+</li>
+</ul>
+<p>基本上，屬於 <code>Tree</code> 型別的資料，都有上述的方法可以使用。在操作檔案系統時，<code>Tree</code> 是一個很重要的觀念，可以想像程他跟 Git 的 commit history 有雷同的運作方式。而所有的異動與規則，最終都得回到 Tree 上</p>
+<h3 id="Source"><a class="header-anchor" href="#Source"> </a>Source</h3>
+<p>Source 如上頭所介紹的，是用來建立一個全新空的檔案系統，有以下的方法可以產生 Source</p>
+<ul>
+<li>
+<p><code>url(path: String)</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/blogdemo/index.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">blogdemo</span>(<span class="params"><span class="attr">_options</span>: <span class="built_in">any</span></span>): <span class="title class_">Rule</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params"><span class="attr">tree</span>: <span class="title class_">Tree</span>, <span class="attr">context</span>: <span class="title class_">SchematicContext</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 根據 index.ts 的位置為出發點</span></span><br><span class="line">    <span class="keyword">const</span> files = <span class="title function_">url</span>(<span class="string">&#x27;./&#x27;</span>)(context) <span class="keyword">as</span> <span class="title class_">Tree</span>;</span><br><span class="line">    <span class="comment">// 列出該 Tree 下的所有檔案    </span></span><br><span class="line">    files.<span class="title function_">visit</span>(<span class="function"><span class="params">v</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(v));</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>執行結果</p>
+<p><img src="https://i.imgur.com/RJOiBYL.png" alt=""></p>
+</li>
+<li>
+<p><code>apply(source: Source, rules: Rule[])</code>：套用規則到 <code>Source</code> 上，並回傳經處理後的 <code>Source</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">blogdemo</span>(<span class="params"><span class="attr">_options</span>: <span class="built_in">any</span></span>): <span class="title class_">Rule</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params"><span class="attr">tree</span>: <span class="title class_">Tree</span>, <span class="attr">context</span>: <span class="title class_">SchematicContext</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> filterRule = <span class="title function_">filter</span>(<span class="function"><span class="params">x</span> =&gt;</span> x.<span class="title function_">endsWith</span>(<span class="string">&#x27;ts&#x27;</span>));</span><br><span class="line">    <span class="keyword">const</span> files = <span class="title function_">apply</span>(<span class="title function_">url</span>(<span class="string">&#x27;./&#x27;</span>), [filterRule])(context) <span class="keyword">as</span> <span class="title class_">Observable</span>&lt;<span class="title class_">Tree</span>&gt;;</span><br><span class="line">    files.<span class="title function_">subscribe</span>(<span class="function"><span class="params">tree</span> =&gt;</span> &#123;</span><br><span class="line">      tree.<span class="title function_">visit</span>(<span class="function"><span class="params">f</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(f));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/dYhIUIM.png" alt=""></p>
+</li>
+<li>
+<p><code>source(tree: Tree)</code>：將 <code>Tree</code> 轉換成 <code>Source</code> 型別</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">blogdemo</span>(<span class="params"><span class="attr">_options</span>: <span class="built_in">any</span></span>): <span class="title class_">Rule</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params"><span class="attr">tree</span>: <span class="title class_">Tree</span>, <span class="attr">context</span>: <span class="title class_">SchematicContext</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> filterRule = <span class="title function_">filter</span>(<span class="function"><span class="params">x</span> =&gt;</span> x.<span class="title function_">endsWith</span>(<span class="string">&#x27;ts&#x27;</span>));</span><br><span class="line">    <span class="keyword">const</span> files = <span class="title function_">apply</span>(<span class="title function_">source</span>(tree), [filterRule])(context) <span class="keyword">as</span> <span class="title class_">Observable</span>&lt;</span><br><span class="line">      <span class="title class_">Tree</span></span><br><span class="line">    &gt;;</span><br><span class="line">    files.<span class="title function_">subscribe</span>(<span class="function"><span class="params">tree</span> =&gt;</span> &#123;</span><br><span class="line">      tree.<span class="title function_">visit</span>(<span class="function"><span class="params">f</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(f));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> tree;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>empty()</code>： 回傳一個空的 <code>Tree</code></p>
+</li>
+<li>
+<p><code>asSource (rule: Rule)</code> 將規則轉換成 <code>source</code></p>
+</li>
+</ul>
+<p>這邊會發現我在 <code>source</code> 物件後面加上 <code>(context)</code> ，這個動作是將 <code>source</code> 型別進行處理並會回傳 <code>Tree | Observable&lt;Tree&gt;</code> 型別的資料，之後的操作就跟操作 <code>Tree</code> 是一模一樣的</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Source</span> = <span class="function">(<span class="params"><span class="attr">context</span>: <span class="title class_">SchematicContext</span></span>) =&gt;</span> <span class="title class_">Tree</span> | <span class="title class_">Observable</span>&lt;<span class="title class_">Tree</span>&gt;;</span><br></pre></td></tr></table></figure>
+<h3 id="Rule"><a class="header-anchor" href="#Rule"> </a>Rule</h3>
+<ul>
+<li><code>chain(rules: Rule[]): Rule</code> ： 將 Rule 串接在一起</li>
+<li><code>mergeWith(source: Source, strategy: MergeStrategy = MergeStrategy.Default): Rule </code> 將 <code>source</code> 與 <code>Tree</code> 做合併 (直接修改)</li>
+<li><code>noop() : Rule</code>：回傳沒有任何動作的 <code>Rule</code></li>
+<li><code>filter(predicate: FilePredicate&lt;boolean&gt;): Rule </code>：過濾規則</li>
+<li><code>branchAndMerge(rule: Rule, strategy = MergeStrategy.Default): Rule </code>：與目前的 Tree (複製) 合併並回傳一份新的 Tree</li>
+<li><code>partitionApplyMerge(predicate: FilePredicate&lt;boolean&gt;, ruleYes: Rule , ruleNo?: Rule): Rule</code>：根據條件執行對應的 <code>Rule</code></li>
+<li><code>forEach(operator: FileOperator): Rule </code>：批次直型傳進的 <code>FileOperator </code></li>
+<li><code>move(from: string, to?: string): Rule </code>：移動檔案至資料夾</li>
+<li><code>rename(match: FilePredicate&lt;boolean&gt;, to: FilePredicate&lt;string&gt;): Rule </code>：將符合條件的檔案更換名稱</li>
+<li><code>externalSchematic&lt;OptionT extends object&gt;(collectionName: string, schematicName: string, options: OptionT): Rule </code>：執行第三方 schematics 的命令</li>
+<li><code>schematic&lt;OptionT extends object&gt;(schematicName: string, options: OptionT): Rule </code>：執行其他的 schematics 命令</li>
+<li><code>template&lt;T&gt;(options: T): Rule </code>：樣板套用，包含檔案內容與檔名路徑的部分轉換</li>
+<li><code>pathTemplate&lt;T extends PathTemplateData&gt;(options: T): Rule </code>：轉換檔名路徑至對應的內容</li>
+<li><code>contentTemplate&lt;T&gt;(options: T): Rule </code>：轉換檔名內容的變數至對應的內容</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Rule</span> = <span class="function">(<span class="params"><span class="attr">tree</span>: <span class="title class_">Tree</span>, <span class="attr">context</span>: <span class="title class_">SchematicContext</span></span>) =&gt;</span> <span class="title class_">Tree</span> | <span class="title class_">Observable</span>&lt;<span class="title class_">Tree</span>&gt; | <span class="title class_">Rule</span> | <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="總結"><a class="header-anchor" href="#總結"> </a>總結</h1>
+<p><code>Tree</code>、<code>source</code> 與 <code>Rule</code> 間的關係其實很密切，將這三者的控制弄熟之後，就可以寫出功能很強大的 schematics，而不是單純的從別人的 schematics 複製貼上，卻不懂每一個動作的意義。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/blob/master/packages/angular_devkit/schematics/README.md">Schematics</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/08/01/ef-oracle-code-first/" rel="prev" title="[EF6] Oracle with Code First 設定">
+                  <i class="fa fa-angle-left"></i> [EF6] Oracle with Code First 設定
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/08/17/typescript-compiler/" rel="next" title="[TypeScript] Compiler API 第一次接觸">
+                  [TypeScript] Compiler API 第一次接觸 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

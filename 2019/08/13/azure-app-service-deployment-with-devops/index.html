@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="上一篇提到使用 Deployment with GitHub，Azure 當然要整合自家的 DevOps 才能將效益最大化，這一篇就來看看整合 DevOps 後能做到那些事情">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Azure] App Service Deployment with Azure DevOps">
+<meta property="og:url" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="上一篇提到使用 Deployment with GitHub，Azure 當然要整合自家的 DevOps 才能將效益最大化，這一篇就來看看整合 DevOps 後能做到那些事情">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565660910292.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565660962720.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565660990160.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565661238520.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565661290482.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565662278833.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565662349092.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565662399975.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565662445276.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565662562904.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565662994053.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565663087327.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/SNAGHTML19df8ca9.PNG">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565663386683.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565663434551.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565663612034.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565663661713.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565663707173.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565663765749.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565663831850.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565664281182.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565664378225.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565664526914.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565664649872.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/SNAGHTML19f6c676.PNG">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565664841103.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565664908995.png">
+<meta property="article:published_time" content="2019-08-13T01:40:46.000Z">
+<meta property="article:modified_time" content="2019-08-13T09:37:42.869Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Azure">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/1565660910292.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/","path":"2019/08/13/azure-app-service-deployment-with-devops/","title":"[Azure] App Service Deployment with Azure DevOps"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Azure] App Service Deployment with Azure DevOps | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%B2%E6%8E%A5-DevOps"><span class="nav-number">1.</span> <span class="nav-text">串接 DevOps</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%80%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text">退版</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%86%E8%BE%A8%E7%9B%AE%E5%89%8D%E6%89%80%E5%9C%A8%E7%89%88%E6%9C%AC"><span class="nav-number">2.1.</span> <span class="nav-text">如何分辨目前所在版本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A-Stage-%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">多 Stage 設定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#App-Service-%E9%83%A8%E5%88%86"><span class="nav-number">3.1.</span> <span class="nav-text">App Service 部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DevOps-%E9%83%A8%E5%88%86"><span class="nav-number">3.2.</span> <span class="nav-text">DevOps 部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6"><span class="nav-number">3.3.</span> <span class="nav-text">測試</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8F%9B"><span class="nav-number">3.4.</span> <span class="nav-text">交換</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">4.</span> <span class="nav-text">小結</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/08/13/azure-app-service-deployment-with-devops/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Azure] App Service Deployment with Azure DevOps | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Azure] App Service Deployment with Azure DevOps
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2019-08-13 09:40:46 / 修改時間：17:37:42" itemprop="dateCreated datePublished" datetime="2019-08-13T09:40:46+08:00">2019-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Azure/" itemprop="url" rel="index"><span itemprop="name">Azure</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/08/13/azure-app-service-deployment-with-devops/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/13/azure-app-service-deployment-with-devops/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>上一篇提到使用 Deployment with GitHub，Azure 當然要整合自家的 DevOps 才能將效益最大化，這一篇就來看看整合 DevOps 後能做到那些事情</p>
+<span id="more"></span>
+<h1 id="串接-DevOps"><a class="header-anchor" href="#串接-DevOps"> </a>串接 DevOps</h1>
+<p>假設大家都知道如何在 Azure DevOps 上面開專案跟將程式 Push 到上面，這時 App Service 要串接步驟就很簡單</p>
+<ol>
+<li>
+<p>【部屬中心】選擇 Azure Repos</p>
+<p><img src="1565660910292.png" alt="1565660910292"></p>
+</li>
+<li>
+<p>步驟二、不選擇 Azure Pipelines 就說不過去了</p>
+<p><img src="1565660962720.png" alt="1565660962720"></p>
+</li>
+<li>
+<p>選擇專案放置的位置</p>
+<p><img src="1565660990160.png" alt="1565660990160"></p>
+</li>
+<li>
+<p>步驟四，確認無誤後即可完成整個動作</p>
+</li>
+</ol>
+<p>當上述動作完成後，我們回到 Azure Devops 的畫面，可以看到在 PipleLines 的 Build 頁面，看到一個自動產生的 Build Pipeline，更好的是，連 Release Piple 也一併完成了。</p>
+<p><img src="1565661238520.png" alt="1565661238520"></p>
+<p>部屬中心顯示的歷史紀錄</p>
+<p><img src="1565661290482.png" alt="1565661290482"></p>
+<h1 id="退版"><a class="header-anchor" href="#退版"> </a>退版</h1>
+<p>當 App Service 部署中心連結到 DevOps 又選擇 pipelines 時，退版的動作就不一樣了，將會是透過 release pipeline 的 redeploy 來完成</p>
+<ol>
+<li>
+<p>選擇要退版的紀錄，並點選 <code>release x</code></p>
+<p><img src="1565662278833.png" alt="1565662278833"></p>
+</li>
+<li>
+<p>這時候會開啟該 Release pipeline 的操作畫面</p>
+<p><img src="1565662349092.png" alt="1565662349092"></p>
+</li>
+<li>
+<p>將滑鼠移到 stages production 的文字方框上，底下會出現 <code>Redeploy</code> 的按鈕</p>
+<p><img src="1565662399975.png" alt="1565662399975"></p>
+</li>
+<li>
+<p>當按下 <code>Redeploy</code> 的按鈕時，會跳出一個視窗做最後的確認，如果確定，就按下 Deploy</p>
+<p><img src="1565662445276.png" alt="1565662445276"></p>
+</li>
+</ol>
+<h2 id="如何分辨目前所在版本"><a class="header-anchor" href="#如何分辨目前所在版本"> </a>如何分辨目前所在版本</h2>
+<p>在 Pipelines -&gt; Releases 的第一個畫面，可以透過 <code>Stages</code> 的顯示方式來得知目前的版本</p>
+<p><img src="1565662562904.png" alt="1565662562904"></p>
+<p>目前所在版本會用有背景色做標示</p>
+<h1 id="多-Stage-設定"><a class="header-anchor" href="#多-Stage-設定"> </a>多 Stage 設定</h1>
+<p>如果我們想要做多 Stage 的 release 設定又要搭配 App Services 時，基本要求方案是基本以上(Standard)，先來將 App Service 使用的方案升級一下</p>
+<h2 id="App-Service-部分"><a class="header-anchor" href="#App-Service-部分"> </a>App Service 部分</h2>
+<ol>
+<li>升級方案 (如果原本方案不支援部署位置功能)</li>
+</ol>
+<p><img src="1565662994053.png" alt="1565662994053"></p>
+<ul>
+<li>可以使用部署位置的最低方案為 S1</li>
+</ul>
+<p>升級完成後，即可看到這一畫面</p>
+<p><img src="1565663087327.png" alt="1565663087327"></p>
+<ol start="2">
+<li>接下來是多加入一個位置 (Slot)</li>
+</ol>
+<p><img src="SNAGHTML19df8ca9.PNG" alt="img"></p>
+<ul>
+<li>
+<p>名稱: 位置名稱，可自己設定</p>
+</li>
+<li>
+<p>複製設定: 假設原本已有設定一堆參數設定，這時候為了將設定一致性或是因為程式某些設定是吃環境參數設定時，就可以選擇要複製的站台</p>
+</li>
+<li>
+<p>確認後即可按下【新增】按鈕</p>
+</li>
+<li>
+<p>在部署位置頁面節可看到兩個部署位置，分別為獨立的站台 (各自擁有瀏覽網址)</p>
+<p><img src="1565663386683.png" alt="1565663386683"></p>
+<p><img src="1565663434551.png" alt="1565663434551"></p>
+</li>
+</ul>
+<h2 id="DevOps-部分"><a class="header-anchor" href="#DevOps-部分"> </a>DevOps 部分</h2>
+<p>當 App Service 環節設定完成後，即可到 Azure DevOps 編輯 release pipeline</p>
+<ol>
+<li>
+<p>選擇 release pipeline 並進行編輯動作\</p>
+<p><img src="1565663612034.png" alt="1565663612034"></p>
+</li>
+<li>
+<p>按下在 Stages 的 Add ，並選擇 <code>New Stage</code></p>
+<p><img src="1565663661713.png" alt="1565663661713"></p>
+</li>
+<li>
+<p>範本選擇: Azure App Service deployment with Slot</p>
+<p><img src="1565663707173.png" alt="1565663707173"></p>
+</li>
+<li>
+<p>設定完 Stage 名稱後即可關掉該畫面</p>
+<p><img src="1565663765749.png" alt="1565663765749"></p>
+</li>
+<li>
+<p>設定剛新增的 Stage</p>
+<p><img src="1565663831850.png" alt="1565663831850"></p>
+<ul>
+<li>Slot: 選擇剛剛在 App Service 所新增的新位置</li>
+</ul>
+</li>
+<li>
+<p>如果不想要自動進行 Swap 動作時，則可以 <code>Manage Azure App Service - Slow Swap</code> 給拿掉</p>
+</li>
+<li>
+<p>設定完成後，可以先將預設的 <code>Production</code> 切換成手動</p>
+</li>
+<li>
+<p>記得儲存設定</p>
+</li>
+</ol>
+<h2 id="測試"><a class="header-anchor" href="#測試"> </a>測試</h2>
+<p>當新開的部署位置，該位置是不會有任何程式碼的，所以開啟該網址應該會看到這個畫面</p>
+<p><img src="1565664281182.png" alt="1565664281182"></p>
+<p>先 push 一個新的 commit 到 devOps Repo，重新觸發整個部署流程</p>
+<p><img src="1565664378225.png" alt="1565664378225"></p>
+<p>當一切完成後，剛新增的位置，就可以看到修改後的結果，而原本正式的網站還是保留原本舊版的畫面</p>
+<p><img src="1565664526914.png" alt="1565664526914"></p>
+<p>如果能正確地看到這個畫面，表示剛剛設定的 release pipeline 是正確的</p>
+<h2 id="交換"><a class="header-anchor" href="#交換"> </a>交換</h2>
+<p>當我們確認一切的修改都是正確的，想要將 QA Stage  的內容更新到正式環境時，只需要透過【交換】的方式即可完成</p>
+<p><img src="1565664649872.png" alt="1565664649872"></p>
+<p><img src="SNAGHTML19f6c676.PNG" alt="img"></p>
+<p>資訊確認後即可進行交換的動作，成功會出現的訊息</p>
+<p><img src="1565664841103.png" alt="1565664841103"></p>
+<p>重新檢視兩個網站的內容，會發現顯示的內容的確有被交換</p>
+<p><img src="1565664908995.png" alt="1565664908995"></p>
+<h1 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h1>
+<p>Multi-stage 的設定當然沒有那麼簡單，而 App Service 的部署位置也可以玩一些不同的東西，但這一切就留在後面在玩吧。</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/devops/pipelines/release/define-multistage-release-process?view=azure-devops">Define your multi-stage continuous deployment (CD) pipeline</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Azure/" rel="tag"># Azure</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/08/12/azure-app-service-deployment/" rel="prev" title="[Azure] Deployment Center in App Service">
+                  <i class="fa fa-angle-left"></i> [Azure] Deployment Center in App Service
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/08/19/angular-rxjs-practice-2/" rel="next" title="[RxJS] Pipe 的延伸應用">
+                  [RxJS] Pipe 的延伸應用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

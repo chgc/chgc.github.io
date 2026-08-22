@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="ASP.NET Core 有提供身分認證 管理的功能，叫做 Identity，此外也有提供多種的驗證方式，但許多時候因為建立專案時就已經有包含進去了，通常很容易忽略如何從無到有的新增步驟，此篇文章特意整理相關的資訊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ASP.NET Core] Identity - Part 1 使用 Google 登入">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/05/31/aspnet-core-identity/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="ASP.NET Core 有提供身分認證 管理的功能，叫做 Identity，此外也有提供多種的驗證方式，但許多時候因為建立專案時就已經有包含進去了，通常很容易忽略如何從無到有的新增步驟，此篇文章特意整理相關的資訊">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/J5m4r9Y.png">
+<meta property="og:image" content="https://i.imgur.com/3d6hj5L.png">
+<meta property="og:image" content="https://i.imgur.com/iMtIhKO.png">
+<meta property="og:image" content="https://i.imgur.com/QbelfRd.png">
+<meta property="og:image" content="https://i.imgur.com/TopW4ty.png">
+<meta property="og:image" content="https://i.imgur.com/JEuLonQ.png">
+<meta property="og:image" content="https://i.imgur.com/yhPJD5V.png">
+<meta property="article:published_time" content="2018-05-31T03:03:19.000Z">
+<meta property="article:modified_time" content="2018-06-03T14:49:15.977Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content=".NET Core">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/J5m4r9Y.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/05/31/aspnet-core-identity/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/05/31/aspnet-core-identity/","path":"2018/05/31/aspnet-core-identity/","title":"[ASP.NET Core] Identity - Part 1 使用 Google 登入"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[ASP.NET Core] Identity - Part 1 使用 Google 登入 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">前置環境設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-Google-API"><span class="nav-number">2.</span> <span class="nav-text">設定 Google API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-Google-%E7%99%BB%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">設定 Google 登入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Controller-View"><span class="nav-number">4.</span> <span class="nav-text">Controller - View</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">4.1.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller-%E9%87%8D%E9%BB%9E"><span class="nav-number">4.2.</span> <span class="nav-text">Controller (重點)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A"><span class="nav-number">5.</span> <span class="nav-text">參數設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">6.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/05/31/aspnet-core-identity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[ASP.NET Core] Identity - Part 1 使用 Google 登入 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ASP.NET Core] Identity - Part 1 使用 Google 登入
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-05-31 11:03:19" itemprop="dateCreated datePublished" datetime="2018-05-31T11:03:19+08:00">2018-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2018-06-03 22:49:15" itemprop="dateModified" datetime="2018-06-03T22:49:15+08:00">2018-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NET-Core/" itemprop="url" rel="index"><span itemprop="name">.NET Core</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/05/31/aspnet-core-identity/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/31/aspnet-core-identity/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> Core 有提供身分<s>認證</s> 管理的功能，叫做 <code>Identity</code>，此外也有提供多種的驗證方式，但許多時候因為建立專案時就已經有包含進去了，通常很容易忽略如何從無到有的新增步驟，此篇文章特意整理相關的資訊</p>
+<span id="more"></span>
+<p>這篇會分兩部分，一是建立 Identity 的環境，二是如何使用 Google OAuth 的方式登入</p>
+<h1 id="前置環境設定"><a class="header-anchor" href="#前置環境設定"> </a>前置環境設定</h1>
+<p>要新增 <code>Identity</code> 的功能到 <a target="_blank" rel="noopener" href="http://asp.net">asp.net</a> core 的程式裡，需要在 <code>Startup.cs</code> 先做以下的設定</p>
+<ol>
+<li>
+<p>預設前置條件，設定 Entity Framework，因為 Identity 預設需要  EF 的支援</p>
+<p>a. EF Core 預設已經包含在 <code>Microsoft.AspNetCore.All </code> 的套件包內，所以不需要另外安裝</p>
+<p>b. 設定連線字串，儲存參數的方式有很多種，這裡先用最簡單(但不推薦)的方式處理，細節請參閱。建立一個 <code>appsettings.json</code> 檔案，並將資料庫連線字串存放在此</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;ConnectionStrings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;DefaultConnection&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Data Source=&lt;DB_IPAddress&gt;;DataBase=&lt;DBName&gt;;Persist Security Info=True;User ID=&lt;UserName&gt;;Password=&lt;UserPassword&gt;&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>c. service 加入 EF 服務</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">      <span class="comment">// Add framework services.</span></span><br><span class="line">      services.AddDbContext&lt;StreamDbContext&gt;(options =&gt;</span><br><span class="line">          options.UseSqlServer(Configuration.GetConnectionString(<span class="string">&quot;DefaultConnection&quot;</span>)));</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>d. 建立 <code>StreamDbContext</code> ，並繼承 <code>IdentityDbContext&lt;TUser&gt;</code></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Identity.EntityFrameworkCore;</span><br><span class="line"><span class="keyword">using</span> Microsoft.EntityFrameworkCore;</span><br><span class="line"><span class="keyword">using</span> stream_tools.Models;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">stream_tools</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">StreamDbContext</span> : <span class="title">IdentityDbContext</span>&lt;<span class="title">ApplicationUser</span>&gt;</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StreamDbContext</span>(<span class="params">DbContextOptions&lt;StreamDbContext&gt; options</span>) : <span class="title">base</span>(<span class="params">options</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>e. 使用 EF migration 更新資料表結構</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 建立 Identity Store 所需要的資料表</span><br><span class="line">dotnet ef migrations add &lt;migration-name&gt;</span><br><span class="line">// 更新至資料庫</span><br><span class="line">dotnet ef database update</span><br></pre></td></tr></table></figure>
+<p>f. 更新完成後，會多出以下的資料表</p>
+<p><img src="https://i.imgur.com/J5m4r9Y.png" alt=""></p>
+</li>
+<li>
+<p>在 <code>ConfigureServices</code> 的地方加入 <code>Identity</code> 的服務</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Identity;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 可取得設定檔內容</span></span><br><span class="line">    <span class="keyword">public</span> IConfiguration Configuration &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Startup</span>(<span class="params">IConfiguration configuration</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Configuration = configuration;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">     &#123;</span><br><span class="line">         ...</span><br><span class="line">         services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;()</span><br><span class="line">            .AddEntityFrameworkStores&lt;StreamDbContext&gt;()</span><br><span class="line">            .AddDefaultTokenProviders();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>建立 <code>ApplicationUser</code> Class</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Identity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">stream_tools.Models</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ApplicationUser</span> : <span class="title">IdentityUser</span></span><br><span class="line">  &#123;</span><br><span class="line">	<span class="comment">// 資訊擴充使用</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在 Configure 的地方啟動服務</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">      ...</span><br><span class="line">      app.UseAuthentication();</span><br><span class="line">	  ...</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>因為需要 MVC 來提供頁面，所以也順便加入 MVC 的功能</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line"> &#123;</span><br><span class="line">     ...</span><br><span class="line">     services.AddMvc();</span><br><span class="line">&#125;    </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">      ...</span><br><span class="line">      app.UseMvc();</span><br><span class="line">	  ...</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="設定-Google-API"><a class="header-anchor" href="#設定-Google-API"> </a>設定 Google API</h1>
+<ol>
+<li>
+<p>首先前往 <a target="_blank" rel="noopener" href="https://console.developers.google.com/projectselector/apis/library">https://console.developers.google.com/projectselector/apis/library</a> ，開立新專案或選取舊專案</p>
+<p><img src="https://i.imgur.com/3d6hj5L.png" alt=""></p>
+</li>
+<li>
+<p>開啟 <code>Google+ API</code> 供登入使用</p>
+<p><img src="https://i.imgur.com/iMtIhKO.png" alt=""></p>
+</li>
+<li>
+<p>點選憑證，並新增 OAuth</p>
+<p><img src="https://i.imgur.com/QbelfRd.png" alt=""></p>
+</li>
+<li>
+<p>選擇 <strong>網路應用程式</strong>，並填入以下資訊</p>
+<p><img src="https://i.imgur.com/TopW4ty.png" alt=""></p>
+</li>
+<li>
+<p>這裡須留意的是 已授權的重新導向 URI，Identity 預設的路由是 <code>signin-google</code> ，所以只需要替換前面的 port 號碼即可</p>
+</li>
+<li>
+<p>確定後會取得一份 client_id 和 secret 的資訊，我們需要將這資訊儲存到上面所建立的 <code>appsetting.json</code> 檔案內</p>
+<p><img src="https://i.imgur.com/JEuLonQ.png" alt=""></p>
+</li>
+</ol>
+<h1 id="設定-Google-登入"><a class="header-anchor" href="#設定-Google-登入"> </a>設定 Google 登入</h1>
+<ol>
+<li>
+<p>在官網的文件中，文件將 <strong>用戶端 ID</strong> 與 <strong>用戶端密碼</strong>，分別使用 <code>Authentication:Google:ClientId</code> 與 <code>Authentication:Google:ClientSecret</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attr">&quot;Authentication:Google:ClientId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;用戶端 ID&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Authentication:Google:ClientSecret&quot;</span><span class="punctuation">:</span> <span class="string">&quot;用戶端密碼&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>加入新的 Authentication 方式</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">&#123;      </span><br><span class="line">    services.AddAuthentication().AddGoogle(googleOptions =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        googleOptions.ClientId = Configuration[<span class="string">&quot;Authentication:Google:ClientId&quot;</span>];</span><br><span class="line">        googleOptions.ClientSecret = Configuration[<span class="string">&quot;Authentication:Google:ClientSecret&quot;</span>];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;      </span><br></pre></td></tr></table></figure>
+<p>當然除了 google 之外，還有其他的服務可以使用，其他資訊補充在下面的參考資料內</p>
+</li>
+</ol>
+<p>到這邊為止，基礎設定已經完成了。現在是在頁面上要怎麼使用，Controller 的動作又是如何呢?</p>
+<h1 id="Controller-View"><a class="header-anchor" href="#Controller-View"> </a>Controller - View</h1>
+<h2 id="View"><a class="header-anchor" href="#View"> </a>View</h2>
+<p>如果是使用 Razor 的方式要產生第三方登入選項的方式，其實很簡單，只要透過 <code>SignInManager.GetExternalAuthenticationSchemesAsync()</code> 的方式就可以取得有開啟的選項</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@using stream_tools.Models</span><br><span class="line">@inject SignInManager&lt;ApplicationUser&gt; SignInManager</span><br><span class="line">&lt;form asp-action=<span class="string">&quot;ExternalLogin&quot;</span> asp-route-returnurl=<span class="string">&quot;@ViewData[&quot;</span>ReturnUrl<span class="string">&quot;]&quot;</span> method=<span class="string">&quot;post&quot;</span> <span class="keyword">class</span>=<span class="string">&quot;form-horizontal&quot;</span>&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">      @&#123;</span><br><span class="line">        <span class="keyword">var</span> loginProviders = (<span class="keyword">await</span> SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      @foreach (<span class="keyword">var</span> provider <span class="keyword">in</span> loginProviders)</span><br><span class="line">      &#123;</span><br><span class="line">        &lt;button type=<span class="string">&quot;submit&quot;</span> <span class="keyword">class</span>=<span class="string">&quot;btn btn-default&quot;</span> name=<span class="string">&quot;provider&quot;</span> <span class="keyword">value</span>=<span class="string">&quot;@provider.Name&quot;</span> title=<span class="string">&quot;Log in using your @provider.DisplayName account&quot;</span>&gt;@provider.Name&lt;/button&gt;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>loginProviders</code> 清單內的 provider ，內容如下</p>
+<p><img src="https://i.imgur.com/yhPJD5V.png" alt=""></p>
+</li>
+<li>
+<p>所以當按下按鈕時，就會做 Form Post 的動作到 <code>Account/ExternalLogin</code> 的 Action</p>
+</li>
+</ul>
+<h2 id="Controller-重點"><a class="header-anchor" href="#Controller-重點"> </a>Controller (重點)</h2>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">HttpPost</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> IActionResult <span class="title">ExternalLogin</span>(<span class="params"><span class="built_in">string</span> provider, <span class="built_in">string</span> returnUrl = <span class="literal">null</span></span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// Request a redirect to the external login provider.</span></span><br><span class="line">  <span class="keyword">var</span> redirectUrl = Url.Action(<span class="keyword">nameof</span>(ExternalLoginCallback), <span class="string">&quot;Account&quot;</span>, <span class="keyword">new</span> &#123; returnUrl &#125;);</span><br><span class="line">  <span class="keyword">var</span> properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);</span><br><span class="line">  <span class="keyword">return</span> Challenge(properties, provider);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>當此 Action 接受到前面頁面 Post 動作時，就會先將登入成功後要轉址的位址轉成 Url 的方式，這裡就會回到 <code>Account/ExternalLoginCallback</code> 的地方</li>
+<li><code>signInManager.ConfigureExternalAuthenticationProperties</code> 再將額外的資訊包成一個 property 後再送給 <code>Challenge method</code> 最後續的行為</li>
+<li><code>signInManager</code> 是一個用來控制使用者登入的 API，文件連結已列在下面的參考文件中</li>
+<li><code>Challenge</code> 是 ControllerBase 裡的方法之一，會建立出一個 <code>ChallengeResult</code> ，ChellengerResult is an <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.actionresult?view=aspnetcore-2.1">ActionResult</a> that on execution invokes AuthenticationManager.ChallengeAsync.</li>
+<li><code>provider</code> 的值，就如上圖所顯示的，只是將 name 的值傳進來，而這裡是帶入 <code>Google</code></li>
+<li>當執行後就會跑到Google 登入帳號的畫面，當完成 Google 帳號登入後，就會回到 <code>Account/ExternalLoginCallback</code> 的地方</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">async</span> Task&lt;IActionResult&gt; <span class="title">ExternalLoginCallback</span>(<span class="params"><span class="built_in">string</span> returnUrl = <span class="literal">null</span>, <span class="built_in">string</span> remoteError = <span class="literal">null</span></span>)</span></span><br><span class="line">   &#123;      </span><br><span class="line">     <span class="keyword">if</span> (remoteError != <span class="literal">null</span>)</span><br><span class="line">     &#123;</span><br><span class="line">       ErrorMessage = <span class="string">$&quot;Error from external provider: <span class="subst">&#123;remoteError&#125;</span>&quot;</span>;</span><br><span class="line">       <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(Login));</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">var</span> info = <span class="keyword">await</span> _signInManager.GetExternalLoginInfoAsync();</span><br><span class="line">     <span class="keyword">if</span> (info == <span class="literal">null</span>)</span><br><span class="line">     &#123;</span><br><span class="line">       <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(Login));</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Sign in the user with this external login provider if the user already has a login.</span></span><br><span class="line">     <span class="keyword">var</span> result = <span class="keyword">await</span> _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: <span class="literal">false</span>, bypassTwoFactor: <span class="literal">true</span>);</span><br><span class="line">     <span class="keyword">if</span> (result.Succeeded)</span><br><span class="line">     &#123;</span><br><span class="line">       <span class="comment">// 使用者帳號已存在，可以直接前往目的地</span></span><br><span class="line">       <span class="keyword">return</span> RedirectToLocal(returnUrl);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span> (result.IsLockedOut)</span><br><span class="line">     &#123;</span><br><span class="line">       <span class="comment">// 使用者帳號被鎖定</span></span><br><span class="line">       <span class="keyword">return</span> RedirectToAction(<span class="keyword">nameof</span>(Lockout));</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">     &#123;</span><br><span class="line">       <span class="comment">// If the user does not have an account, then ask the user to create an account.</span></span><br><span class="line">       ViewData[<span class="string">&quot;ReturnUrl&quot;</span>] = returnUrl;</span><br><span class="line">       ViewData[<span class="string">&quot;LoginProvider&quot;</span>] = info.LoginProvider;</span><br><span class="line">       <span class="keyword">var</span> email = info.Principal.FindFirstValue(ClaimTypes.Email);</span><br><span class="line">       <span class="keyword">return</span> View(<span class="string">&quot;ExternalLogin&quot;</span>, <span class="keyword">new</span> ExternalLoginViewModel &#123; Email = email &#125;);</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>當登入動作完成後回到 <code>ExternalLoginCallback</code> Action 時會收到兩個資訊，一個是遠端授權的錯誤訊息，一個是登入成功後要轉址的位置</li>
+<li>取得第三方授權請求的附加資訊，可透過 <code> var info = await _signInManager.GetExternalLoginInfoAsync();</code> 的方式取得更多的資訊
+<ul>
+<li>舉例，如果要取得 email，取得方法是 <code>info.Principal.FindFirstValue(ClaimTypes.Email);</code></li>
+<li><code>ClaimTypes</code> 的 Enum 還有更多其他的項目可以使用</li>
+</ul>
+</li>
+<li><code>var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);</code>
+<ul>
+<li><code>ExternalLoginSignInAsync</code> 的方法是當透過外部驗證方式成功後，回到系統內時，執行內部的登入動作，而回傳的結果，可用來判斷該使用者的狀況是否能繼續往下走</li>
+</ul>
+</li>
+</ul>
+<h1 id="參數設定"><a class="header-anchor" href="#參數設定"> </a>參數設定</h1>
+<ul>
+<li>
+<p>CallbackPath: 這個參數的值是設定 Google API 在 <strong>重新導向 URI</strong> 的內容，預設是 <code>/signin-google</code>，如果想要改變時，可以修改這個設定</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services.AddAuthentication().AddGoogle(googleOptions =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">            	googleOptions.CallbackPath = <span class="keyword">new</span> PathString(<span class="string">&quot;/someurl-you-want&quot;</span>);</span><br><span class="line">                ...</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Scope: 在登入 Google 帳號時，我們可以透過 Scope 設定要向登入者取得額外的資訊，設定方式是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services.AddAuthentication().AddGoogle(googleOptions =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">            	googleOptions.Scope.Add(&#x27;..&#x27;);</span><br><span class="line">                ...</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>到這邊可以算是一個完整的第三方驗證的流程，我認為這裡的流程即使改成使用 web api 的方式，應該也是可以做到一樣的效果，這部分等我實作出來後，在分享出來</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="https://blog.kevinyang.net/2017/05/15/core-web-mvc-001/">[.NET Core] Web MVC 001 - program.cs</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-2.1&amp;tabs=windows">安全存放裝置的開發工作中 ASP.NET Core 應用程式密碼</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/ef/core/miscellaneous/cli/dotnet">EF Core .NET Command-line Tools</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&amp;tabs=visual-studio%2Caspnetcore2x">Introduction to Identity on ASP.NET Core</a></li>
+<li><a target="_blank" rel="noopener" href="https://markjohnson.io/articles/asp-net-core-identity-without-entity-framework/">identity-without-entity-framework</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/social/?view=aspnetcore-2.1">ASP.NET Core 中的 Facebook、Google 及外部提供者驗證</a></li>
+<li>API DOC
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNetCore.Authentication.Google">Source Code</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.signinmanager-1?view=aspnetcore-2.1">SignInManager API Doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.challengeresult?view=aspnetcore-2.1">ChallengeResult</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NET-Core/" rel="tag"># .NET Core</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/18/angualr-testing-delay/" rel="prev" title="[Angular] 如何測試含有 delay 的 observable?">
+                  <i class="fa fa-angle-left"></i> [Angular] 如何測試含有 delay 的 observable?
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/03/aspnet-core-authentication-with-firebaesToken/" rel="next" title="[ASP.NET Core] Identity - Part 2 整合 firebase 的登入驗證服務">
+                  [ASP.NET Core] Identity - Part 2 整合 firebase 的登入驗證服務 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

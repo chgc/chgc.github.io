@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="在 RxJS  裡在建立 Observable 時，都會回傳一個 subscription 物件，而這一個物件允許我們手動取消 Observable 的動作，其實 Subscription 裡還有其他細節的。這一篇文章就來探討 Subscription。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[RxJS] Subscription">
+<meta property="og:url" content="http://blog.kevinyang.net/2018/11/05/rxjs-subscription/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="在 RxJS  裡在建立 Observable 時，都會回傳一個 subscription 物件，而這一個物件允許我們手動取消 Observable 的動作，其實 Subscription 裡還有其他細節的。這一篇文章就來探討 Subscription。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-11-05T00:27:07.000Z">
+<meta property="article:modified_time" content="2018-11-05T10:22:44.589Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2018/11/05/rxjs-subscription/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2018/11/05/rxjs-subscription/","path":"2018/11/05/rxjs-subscription/","title":"[RxJS] Subscription"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[RxJS] Subscription | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">介面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">基本功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#unsubscribe"><span class="nav-number">2.1.</span> <span class="nav-text">unsubscribe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#closed"><span class="nav-number">2.2.</span> <span class="nav-text">closed</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%B2%E9%9A%8E%E5%8A%9F%E8%83%BD"><span class="nav-number">3.</span> <span class="nav-text">進階功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#add"><span class="nav-number">3.1.</span> <span class="nav-text">add</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#remove"><span class="nav-number">3.2.</span> <span class="nav-text">remove</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unsubscribe-v2"><span class="nav-number">3.3.</span> <span class="nav-text">unsubscribe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%98%E5%AF%86%E7%AF%87"><span class="nav-number">4.</span> <span class="nav-text">秘密篇</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FYI"><span class="nav-number">5.</span> <span class="nav-text">FYI</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2018/11/05/rxjs-subscription/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[RxJS] Subscription | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [RxJS] Subscription
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2018-11-05 08:27:07 / 修改時間：18:22:44" itemprop="dateCreated datePublished" datetime="2018-11-05T08:27:07+08:00">2018-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/11/05/rxjs-subscription/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/05/rxjs-subscription/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在 RxJS  裡在建立 Observable 時，都會回傳一個 subscription 物件，而這一個物件允許我們手動取消 Observable 的動作，其實 Subscription 裡還有其他細節的。這一篇文章就來探討 Subscription。</p>
+<span id="more"></span>
+<h1 id="介面"><a class="header-anchor" href="#介面"> </a>介面</h1>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">SubscriptionLike</span> <span class="keyword">extends</span> <span class="title class_">Unsubscribable</span> &#123;</span><br><span class="line">  <span class="title function_">unsubscribe</span>(): <span class="built_in">void</span>;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">closed</span>: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這一個介面定義是 RxJS 6.x 版，也是我們常見的使用方法，但事實上在 Subscription 內還有兩個 method 是沒有定義，而這一個問題在 RxJS 7 版有被修正</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RxJS 7 版的 Subscription 介面</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">Subscription</span> &#123;</span><br><span class="line">  <span class="title function_">unsubscribe</span>(): <span class="built_in">void</span>;</span><br><span class="line">  <span class="title function_">add</span>(...<span class="attr">teardowns</span>: <span class="title class_">TeardownLogic</span>[]): <span class="built_in">void</span>;</span><br><span class="line">  <span class="title function_">remove</span>(...<span class="attr">teardowns</span>: <span class="title class_">TeardownLogic</span>[]): <span class="built_in">void</span>;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">closed</span>: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="基本功能"><a class="header-anchor" href="#基本功能"> </a>基本功能</h1>
+<h2 id="unsubscribe"><a class="header-anchor" href="#unsubscribe"> </a>unsubscribe</h2>
+<p><code>unsubscribe</code> 應該不需要多解釋了，就是將 Observable 給取消訂閱，當 Observable 被取消訂閱時就會停止運作了。這裡有一個觀念要知道，一個 Observable 被 unsubscribe 時，是不會進到 <code>complete</code> 階段的，如果有什麼動作是希望在 Observable 完成時或是被取消時執行的話，就必須使用 <code>finalize</code> 這一個 operator，<code>finalize</code> 會在 complete 之後執行</p>
+<h2 id="closed"><a class="header-anchor" href="#closed"> </a>closed</h2>
+<p>當 subscription 被 unsubscribe 時，closed 這一個屬性就會被標示成 <code>true</code>，可以利用這個來判斷 subscription 的狀態</p>
+<h1 id="進階功能"><a class="header-anchor" href="#進階功能"> </a>進階功能</h1>
+<p>管理 Observable 的 subscription 是一件大工程，常見的管理方式，就是利用 <code>takeUntil</code> 來做管理</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">someMethod</span>(<span class="params"></span>)&#123;</span><br><span class="line">    obs.<span class="title function_">pipe</span>(<span class="title function_">takeUntil</span>(<span class="variable language_">this</span>.<span class="property">destroy$</span>)).<span class="title function_">subscribe</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">ngOnDestroy</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">destroy$</span>.<span class="title function_">next</span>();    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡介紹另外一種管理方式，我們也可以透過 Subscription 來做管理，使用方式是先建立一個空的 Subscription，然後透過 <code>add</code> 和 <code>remove</code> 的方式來管理</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Subscription</span>, interval &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br><span class="line"><span class="comment">// 建立空的 Subscription 物件</span></span><br><span class="line"><span class="keyword">const</span> sub = <span class="keyword">new</span> <span class="title class_">Subscription</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="add"><a class="header-anchor" href="#add"> </a>add</h2>
+<p>將 Observable 的 subscription 加入至 Subscription 物件裡，使用方法如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obsSub = <span class="title function_">interval</span>(<span class="number">1000</span>).<span class="title function_">subscribe</span>();</span><br><span class="line">sub.<span class="title function_">add</span>(obsSub);</span><br></pre></td></tr></table></figure>
+<h2 id="remove"><a class="header-anchor" href="#remove"> </a>remove</h2>
+<p>將 Observable 的 subscription 從 Subscription 物件裡移除，使用方法如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sub.<span class="title function_">remove</span>(obsSub);</span><br></pre></td></tr></table></figure>
+<h2 id="unsubscribe-v2"><a class="header-anchor" href="#unsubscribe-v2"> </a>unsubscribe</h2>
+<p>當要取消所有 Observable 的動作時，這時候只需要將 Subscription 物件做 unsubscribe，任何註冊在此 Subscription 物件裡的 subscription 也同時會執行 unsubscribe 的動作</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sub = <span class="keyword">new</span> <span class="title class_">Subscription</span>();</span><br><span class="line"></span><br><span class="line"><span class="title function_">someMethod</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sub</span>.<span class="title function_">add</span>(obs.<span class="title function_">subscribe</span>());</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">ngOnDestroy</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sub</span>.<span class="title function_">unsubscribe</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="秘密篇"><a class="header-anchor" href="#秘密篇"> </a>秘密篇</h1>
+<p>在深入研究 RxJS Subscription 的程式碼，發現 <code>add</code> 這一個方法是接受 <code>TeardownLogic</code> 型別的物件，而 <code>TeardownLogic</code> 的介面是</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">TeardownLogic</span> = <span class="title class_">Unsubscribable</span> | <span class="title class_">Function</span> | <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+<p>沒錯，我們也可以 add <code>Function</code>  至 Subscription 內，而這執行的時機點就是在 Subscription  unsubscribe 時，執行順序會依 <code>add</code> 的順序，這一個祕密將為我們打開另外一道門，將 RxJS 的寫法提供更彈性的寫法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sub = <span class="keyword">new</span> <span class="title class_">Subscription</span>();</span><br><span class="line"></span><br><span class="line"><span class="title function_">someMethod</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sub</span>.<span class="title function_">add</span>(obs.<span class="title function_">subscribe</span>());</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sub</span>.<span class="title function_">add</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;do something after unsubscribe&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">ngOnDestroy</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">sub</span>.<span class="title function_">unsubscribe</span>();</span><br><span class="line">    <span class="comment">// 會將 observable unsubscribe </span></span><br><span class="line">    <span class="comment">// 並 console.log &#x27;do something after unsubscribe&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="FYI"><a class="header-anchor" href="#FYI"> </a>FYI</h1>
+<p>目前 RxJS 6 的 Subscription 種類只有一種，但在 RxJS 7 有推出另外一種 Subscription，可以說是原本 Subscription 的延伸版本，但在 RxJS 7 定版前，先不介紹這一個 Subscription ，等有進一步消息時，在另外寫文章介紹</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/30/excel-dynamic-array-unique/" rel="prev" title="[O365] Excel 新功能 - Dynamic Array Functions">
+                  <i class="fa fa-angle-left"></i> [O365] Excel 新功能 - Dynamic Array Functions
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/06/ng-RouteReuseStrategy/" rel="next" title="[Angular] 該如何使用設定 RouteReuseStrategy">
+                  [Angular] 該如何使用設定 RouteReuseStrategy <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

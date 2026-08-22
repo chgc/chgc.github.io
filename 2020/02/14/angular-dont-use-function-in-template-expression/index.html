@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Angular 原本的顯示效能，在沒有刻意調教的情況下，已經有不錯的表現，但如果有不當的寫法出現，依然可造成如 AngularJS 一樣顯示效能低落的問題，這是可以避免的狀況，只要稍微多留意一些 這一篇文章將會針對 HTML Template 的部分，一個小地方沒留意，就可以大大的拖累整個顯示效能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 不要在 Angular template expression 中使用 function，這是不好的">
+<meta property="og:url" content="http://blog.kevinyang.net/2020/02/14/angular-dont-use-function-in-template-expression/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Angular 原本的顯示效能，在沒有刻意調教的情況下，已經有不錯的表現，但如果有不當的寫法出現，依然可造成如 AngularJS 一樣顯示效能低落的問題，這是可以避免的狀況，只要稍微多留意一些 這一篇文章將會針對 HTML Template 的部分，一個小地方沒留意，就可以大大的拖累整個顯示效能">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2020/02/14/angular-dont-use-function-in-template-expression/image-20200214113647591.png">
+<meta property="article:published_time" content="2020-02-14T01:56:54.000Z">
+<meta property="article:modified_time" content="2020-03-22T03:39:54.368Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2020/02/14/angular-dont-use-function-in-template-expression/image-20200214113647591.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2020/02/14/angular-dont-use-function-in-template-expression/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2020/02/14/angular-dont-use-function-in-template-expression/","path":"2020/02/14/angular-dont-use-function-in-template-expression/","title":"[Angular] 不要在 Angular template expression 中使用 function，這是不好的"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] 不要在 Angular template expression 中使用 function，這是不好的 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">解決方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8B%95"><span class="nav-number">1.1.</span> <span class="nav-text">手動</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pipe"><span class="nav-number">1.2.</span> <span class="nav-text">Pipe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">2.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2020/02/14/angular-dont-use-function-in-template-expression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] 不要在 Angular template expression 中使用 function，這是不好的 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] 不要在 Angular template expression 中使用 function，這是不好的
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-02-14 09:56:54" itemprop="dateCreated datePublished" datetime="2020-02-14T09:56:54+08:00">2020-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2020-03-22 11:39:54" itemprop="dateModified" datetime="2020-03-22T11:39:54+08:00">2020-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/02/14/angular-dont-use-function-in-template-expression/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/14/angular-dont-use-function-in-template-expression/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Angular 原本的顯示效能，在沒有刻意調教的情況下，已經有不錯的表現，但如果有不當的寫法出現，依然可造成如 AngularJS 一樣顯示效能低落的問題，這是可以避免的狀況，只要稍微多留意一些</p>
+<p>這一篇文章將會針對 HTML Template 的部分，一個小地方沒留意，就可以大大的拖累整個顯示效能</p>
+<span id="more"></span>
+<p>Angular 顯示變數到畫面上的方式，基本語法如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; some-variable &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>當資料稍微複雜一點或是想要顯示組合文字時，有能會使用 function 來代替變數，而這一個動作將會造成很大的效能問題，這裡有一個簡單的範例程式來展示使用 function 會造成 Angular Change Detector 過勞</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, <span class="title class_">OnInit</span>, <span class="title class_">Input</span>, <span class="title class_">SimpleChanges</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">User</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../data&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-user&#x27;</span>,</span><br><span class="line">  <span class="attr">templateUrl</span>: <span class="string">&#x27;./user.component.html&#x27;</span>,</span><br><span class="line">  <span class="attr">styleUrls</span>: [<span class="string">&#x27;./user.component.css&#x27;</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserComponent</span> &#123;</span><br><span class="line">  <span class="meta">@Input</span>() <span class="attr">user</span>: <span class="title class_">User</span>;</span><br><span class="line"></span><br><span class="line">  calculateFullNameCounter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">fullName</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">calculateFullNameCounter</span>++;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.user.name&#125;</span>(<span class="subst">$&#123;<span class="variable language_">this</span>.user.username&#125;</span>)`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>使用者: <span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;&#123; fullName() &#125;&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;amount&quot;</span>&gt;</span>計次: <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; calculateFullNameCounter &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>AppComponent</code></li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; users &#125; <span class="keyword">from</span> <span class="string">&#x27;./data&#x27;</span>;</span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;button (click)=&quot;next()&quot;&gt;下一位&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;button (click)=&quot;justclick()&quot;&gt;只是一個觸發 CD 的按鈕&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;app-user [user]=&quot;currentUser&quot;&gt;&lt;/app-user&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="attr">styles</span>: []</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  title = <span class="string">&#x27;nofninexpression&#x27;</span>;</span><br><span class="line">  users = users;</span><br><span class="line">  currentUser;</span><br><span class="line">  currentIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">currentUser</span> = <span class="variable language_">this</span>.<span class="property">users</span>[<span class="variable language_">this</span>.<span class="property">currentIndex</span>];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">next</span>(<span class="params"></span>) &#123;</span><br><span class="line">    ++<span class="variable language_">this</span>.<span class="property">currentIndex</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">currentIndex</span> &gt;= <span class="variable language_">this</span>.<span class="property">users</span>.<span class="property">length</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentIndex</span> = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">currentUser</span> = <span class="variable language_">this</span>.<span class="property">users</span>[<span class="variable language_">this</span>.<span class="property">currentIndex</span>];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">justclick</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>執行結果 (<a target="_blank" rel="noopener" href="https://stackblitz.com/edit/angular-fcetcv">範例程式碼</a>)</li>
+</ul>
+<p><img src="image-20200214113647591.png" alt="image-20200214113647591"></p>
+<p>當按下上方的【只是一個觸發 CD 的按鈕】，會發現計次的數字又多跳了好幾個 (請忽略這個錯誤，這個錯誤是為了要顯示數字而造成的)，但到底為什麼?</p>
+<p>Angular 的 Change Detection 會決定畫面上那一部分的內容需要被重新產生，所以他會比較這次的值與上一次的值是否相同，如果有不同時，就會重新顯示該區塊的畫面，但是 Change Detection 卻沒有辦法確認 function 回傳值是否與上次相同，故每一次都會被重新顯示畫面，整個 App 或是該 Component 被觸發了 100 次 CD (Change Detection)，那 function 就會被執行 100 次</p>
+<p>或許你會想使用 <code>onPush</code> 是否會有幫助 (<a target="_blank" rel="noopener" href="https://stackblitz.com/edit/angular-vmeija?file=src%2Fapp%2Fuser%2Fuser.component.ts">範例程式碼</a>)? 而答案是確實會有幫助，在 Component 的 <code>ChangeDetection 策略</code> 設定為 <code>onPush</code> 時，確實只會讓 Component  本身與外界做隔離，但是，如果是 Component 本身的 CD 觸發時，例如按鈕的 click 等事件，所以還不是一個最佳的解法</p>
+<p>以下提供兩種思考方向，來解決上述的問題</p>
+<h1 id="解決方案"><a class="header-anchor" href="#解決方案"> </a>解決方案</h1>
+<h2 id="手動"><a class="header-anchor" href="#手動"> </a>手動</h2>
+<p>所謂的手動，是指事先將資料加工並儲存到另外一個變數上，不論是原本的 data model  或是額外的變數都可以，在畫面顯示該變數即可</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&quot;app-user&quot;</span>,</span><br><span class="line">  <span class="attr">templateUrl</span>: <span class="string">&quot;./user.component.html&quot;</span>,</span><br><span class="line">  <span class="attr">styleUrls</span>: [<span class="string">&quot;./user.component.css&quot;</span>],</span><br><span class="line">  <span class="attr">changeDetection</span>: <span class="title class_">ChangeDetectionStrategy</span>.<span class="property">OnPush</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserComponent</span> &#123;</span><br><span class="line">  <span class="meta">@Input</span>() <span class="attr">user</span>: <span class="title class_">User</span>;</span><br><span class="line"></span><br><span class="line">  calculateFullNameCounter = <span class="number">0</span>;</span><br><span class="line">  calculateDisplayFullNameCounter = <span class="number">0</span>;</span><br><span class="line">  fullName;</span><br><span class="line">  <span class="title function_">ngOnChanges</span>(<span class="params"><span class="attr">change</span>: <span class="title class_">SimpleChanges</span></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (change.<span class="property">user</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">fullName</span> = <span class="variable language_">this</span>.<span class="title function_">transformData</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">displayfullName</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">calculateDisplayFullNameCounter</span>++;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.user.name&#125;</span>(<span class="subst">$&#123;<span class="variable language_">this</span>.user.username&#125;</span>)`</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">transformData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">calculateFullNameCounter</span>++;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.user.name&#125;</span>(<span class="subst">$&#123;<span class="variable language_">this</span>.user.username&#125;</span>)`</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">onMouseMove</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>使用 function 顯示欄位<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>使用者: <span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;&#123; displayfullName() &#125;&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;amount&quot;</span>&gt;</span>計次: <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; calculateDisplayFullNameCounter &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>手動整理顯示欄位<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>使用者: <span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;&#123; fullName &#125;&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;amount&quot;</span>&gt;</span>計次: <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; calculateFullNameCounter &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Trigger change detection<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> (<span class="attr">mousemove</span>)=<span class="string">&quot;onMouseMove()&quot;</span> <span class="attr">class</span>=<span class="string">&quot;hover-area&quot;</span>&gt;</span>移動滑鼠觸發 CD <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可到<a target="_blank" rel="noopener" href="https://stackblitz.com/edit/angular-5wa324?file=src%2Fapp%2Fuser%2Fuser.component.html">這裡</a>看執行結果，會發現當手動先處理顯示欄位時，不論 CD 被觸發多少次，計次都不會增加，除了切換至下一位使用者</p>
+<h2 id="Pipe"><a class="header-anchor" href="#Pipe"> </a>Pipe</h2>
+<p>另外一種方式是透過 <code>Pipe</code> 的方式顯示，因為 <code>Pipe</code> 預設的行為是 pure 的，等同於 <code>onPush</code>，所以只有在串接的值有異動時才會被觸發執行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Pipe</span>, <span class="title class_">PipeTransform</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@angular/core&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">User</span> &#125; <span class="keyword">from</span> <span class="string">&quot;../data&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;displayFull&quot;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">DisplayFullPipe</span> <span class="keyword">implements</span> <span class="title class_">PipeTransform</span> &#123;</span><br><span class="line">  <span class="title function_">transform</span>(<span class="attr">user</span>: <span class="title class_">User</span>): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;pipe been trigger&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;user.name&#125;</span>(<span class="subst">$&#123;user.username&#125;</span>)`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>使用 Pipe 顯示欄位<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>使用者: <span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;&#123; user | displayFull &#125;&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;amount&quot;</span>&gt;</span>計次: <span class="tag">&lt;<span class="name">span</span>&gt;</span>請看 console <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>當開啟 F12 看 Console 紀錄時，也只會看到 pipe 被觸發的時間點是 Input 的 User 資料改變時</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackblitz.com/edit/angular-8qsqdr">範例程式碼</a></li>
+</ul>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>雖然在 Template 上寫 Function 顯示很快速，但這就是一種技術債，當要還的時候還是得還，一開始就乖乖地寫不就好了，但如果要我選預設的處理方式，大概會是手動先將資料處理完成後，在來顯示，而 Pipe 的使用時機點是通用方法可以共用時，例如換行符號的更換等</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a href="">完整範例程式碼</a>(<a target="_blank" rel="noopener" href="https://stackblitz.com/edit/angular-8qsqdr">https://stackblitz.com/edit/angular-8qsqdr</a>)</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/02/13/angular-keyvaluepipe/" rel="prev" title="[Angular] 使用 KeyValuePipe 的小地雷">
+                  <i class="fa fa-angle-left"></i> [Angular] 使用 KeyValuePipe 的小地雷
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/03/03/zoom-create-event/" rel="next" title="[實用] 如何使用 Zoom 來開線上活動">
+                  [實用] 如何使用 Zoom 來開線上活動 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

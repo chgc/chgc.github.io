@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="通常我們會希望限制某些網址只有某特定規則者才可以進入或離開，Angular的Router提供了一系列的個方法來幫助我們">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular]Router Guards">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/01/14/angular-router-canactivate/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="通常我們會希望限制某些網址只有某特定規則者才可以進入或離開，Angular的Router提供了一系列的個方法來幫助我們">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2017-01-14T02:23:04.000Z">
+<meta property="article:modified_time" content="2017-12-30T13:24:37.591Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2017/01/14/angular-router-canactivate/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2017/01/14/angular-router-canactivate/","path":"2017/01/14/angular-router-canactivate/","title":"[Angular]Router Guards"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular]Router Guards | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CanActivate"><span class="nav-number">1.</span> <span class="nav-text">CanActivate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%B2%E9%9A%8E%E6%87%89%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">進階應用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CanActivateChild"><span class="nav-number">2.</span> <span class="nav-text">CanActivateChild</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CanDeactivate"><span class="nav-number">3.</span> <span class="nav-text">CanDeactivate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Resolve"><span class="nav-number">4.</span> <span class="nav-text">Resolve</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CanLoad"><span class="nav-number">5.</span> <span class="nav-text">CanLoad</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/01/14/angular-router-canactivate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular]Router Guards | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular]Router Guards
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-01-14 10:23:04" itemprop="dateCreated datePublished" datetime="2017-01-14T10:23:04+08:00">2017-01-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2017-12-30 21:24:37" itemprop="dateModified" datetime="2017-12-30T21:24:37+08:00">2017-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/01/14/angular-router-canactivate/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/14/angular-router-canactivate/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>通常我們會希望限制某些網址只有某特定規則者才可以進入或離開，Angular的Router提供了一系列的個方法來幫助我們</p>
+<span id="more"></span>
+<p>Angular的Router提供了一系列的方法，可以讓我們來決定是否允許使用者進入或是離開頁面</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/guide/router.html#can-activate-guard">CanActivate</a> : 避免瀏覽到該網址</li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/guide/router.html#can-activate-child-guard">CanActivateChild</a> : 讓子路由套用<code>CanActivate</code>規則，避免瀏覽到該網址</li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/guide/router.html#can-deactivate-guard">CanDeactivate</a> : 避免離開目前的網址</li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/guide/router.html#resolve-guard">Resolve</a> : 在前往瀏覽網頁前先預載資料</li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/guide/router.html#can-load-guard">CanLoad</a> : 避免載入非同步的路由設定</li>
+</ul>
+<h1 id="CanActivate"><a class="header-anchor" href="#CanActivate"> </a>CanActivate</h1>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span> &#125;     <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CanActivate</span> &#125;    <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AuthGuard</span> <span class="keyword">implements</span> <span class="title class_">CanActivate</span> &#123;</span><br><span class="line">  <span class="title function_">canActivate</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;AuthGuard#canActivate called&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這是基本的CanActivate的程式架構，而在Route的地方，設定的方式如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">adminRoutes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;admin&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">AdminComponent</span>,</span><br><span class="line">    <span class="attr">canActivate</span>: [<span class="title class_">AuthGuard</span>]</span><br><span class="line">  &#125;];  </span><br></pre></td></tr></table></figure>
+<ul>
+<li>canActivate回傳true時，可以進入，回傳false時，無法進入</li>
+</ul>
+<h2 id="進階應用"><a class="header-anchor" href="#進階應用"> </a>進階應用</h2>
+<p><code>canActivate</code>接受Observable型態的function，範例如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AuthGuard</span> <span class="keyword">implements</span> <span class="title class_">CanActivate</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">authService</span>: <span class="title class_">AuthService</span>, <span class="keyword">private</span> <span class="attr">router</span>: <span class="title class_">Router</span></span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">canActivate</span>(<span class="attr">route</span>: <span class="title class_">ActivatedRouteSnapshot</span>, <span class="attr">state</span>: <span class="title class_">RouterStateSnapshot</span>): <span class="title class_">Observable</span>&lt;<span class="built_in">boolean</span>&gt; &#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="title class_">Observable</span>.<span class="title function_">of</span>(<span class="literal">true</span>).<span class="title function_">delay</span>(<span class="number">1000</span>)</span><br><span class="line">        .<span class="title function_">do</span>(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(val == <span class="literal">false</span>)&#123;</span><br><span class="line">                 <span class="variable language_">this</span>.<span class="property">router</span>.<span class="title function_">navigate</span>([<span class="string">&#x27;/login&#x27;</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="CanActivateChild"><a class="header-anchor" href="#CanActivateChild"> </a>CanActivateChild</h1>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AuthGuardService</span> <span class="keyword">implements</span> <span class="title class_">CanActivate</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">canActivate</span>(<span class="params"><span class="attr">route</span>: <span class="title class_">ActivatedRouteSnapshot</span>, <span class="attr">state</span>: <span class="title class_">RouterStateSnapshot</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;AuthGuard#canActivate called&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">canActivateChild</span>(<span class="attr">route</span>: <span class="title class_">ActivatedRouteSnapshot</span>, <span class="attr">state</span>: <span class="title class_">RouterStateSnapshot</span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;AuthGuard#canActivateChild called&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">canActivate</span>(route, state);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Route Config的地方</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;page1&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Page1Component</span>,   </span><br><span class="line">    <span class="attr">canActivateChild</span>: [</span><br><span class="line">      <span class="title class_">AuthGuardService</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Page1DetailComponent</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>這樣的設定方式，會讓每一個child Route都會跑canActivate的方法，就不需要一個一個的設定了，非常方便</p>
+<h1 id="CanDeactivate"><a class="header-anchor" href="#CanDeactivate"> </a>CanDeactivate</h1>
+<p><code>canDeactivate</code>比較特殊，可以搭配Component一起使用</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span> &#125;    <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CanDeactivate</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Observable</span> &#125;    <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">CanComponentDeactivate</span> &#123;</span><br><span class="line"> <span class="attr">canDeactivate</span>: <span class="function">() =&gt;</span> <span class="title class_">Observable</span>&lt;<span class="built_in">boolean</span>&gt; | <span class="title class_">Promise</span>&lt;<span class="built_in">boolean</span>&gt; | <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CanDeactivateGuard</span> <span class="keyword">implements</span> <span class="title class_">CanDeactivate</span>&lt;<span class="title class_">CanComponentDeactivate</span>&gt; &#123;</span><br><span class="line">  <span class="title function_">canDeactivate</span>(<span class="params"><span class="attr">component</span>: <span class="title class_">Page2Component</span>, </span></span><br><span class="line"><span class="params">                 <span class="attr">route</span>: <span class="title class_">ActivatedRouteSnapshot</span>, </span></span><br><span class="line"><span class="params">                 <span class="attr">state</span>: <span class="title class_">RouterStateSnapshot</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> component.<span class="property">canDeactivate</span> ? component.<span class="title function_">canDeactivate</span>() : <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Component需Implements上述的<code>CanComponentDeactivate</code> Interface, 才可以讓CanDeactivateGuard作用</li>
+<li>當canDeactivate() 回傳 false時，則無法離開該頁面，回傳 true時，才可以離開</li>
+</ul>
+<h1 id="Resolve"><a class="header-anchor" href="#Resolve"> </a>Resolve</h1>
+<p>請參考<a href="http://blog.kevinyang.net/2016/12/11/ng2-router-resolve/">[Angular] Router Resolve</a></p>
+<h1 id="CanLoad"><a class="header-anchor" href="#CanLoad"> </a>CanLoad</h1>
+<ul>
+<li>
+<p><code>CanLoad</code>會封住<code>PRELOAD</code>的功能，我們需要使用<code>PRELOAD</code>來增加效能，所以這裡建議使用CanActivate來控制</p>
+</li>
+<li>
+<p>至於Preloading Strategy就待下回分曉</p>
+<p>​</p>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://angular.io/docs/ts/latest/guide/router.html#!#can-activate-guard">ROUTING &amp; NAVIGATION</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/01/08/rxjs-context-demo-1/" rel="prev" title="[RxJS]使用情境(1)-FB爬文">
+                  <i class="fa fa-angle-left"></i> [RxJS]使用情境(1)-FB爬文
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/01/15/angular2-laravel/" rel="next" title="[Angular]Laravel 5.3邂逅">
+                  [Angular]Laravel 5.3邂逅 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

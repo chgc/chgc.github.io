@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="前幾天我分享了一個 YouTube  的影片，該影片大致上的內容是如何使用 VSCode Extension 使用 Webview API，既然可以用 webview 的方式來呈現網頁，那顯示一個 Angular App 也是很正常的事情，但環境設定上要怎麼調整呢? 這篇筆記就來整理一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 把 Angular 網站放到 VSCode Extension 內">
+<meta property="og:url" content="http://blog.kevinyang.net/2021/02/05/ng-vscode-extension-webview/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="前幾天我分享了一個 YouTube  的影片，該影片大致上的內容是如何使用 VSCode Extension 使用 Webview API，既然可以用 webview 的方式來呈現網頁，那顯示一個 Angular App 也是很正常的事情，但環境設定上要怎麼調整呢? 這篇筆記就來整理一下">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/02/05/ng-vscode-extension-webview/image-20210205215343080.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/02/05/ng-vscode-extension-webview/image-20210205215408533.png">
+<meta property="article:published_time" content="2021-02-05T13:33:51.000Z">
+<meta property="article:modified_time" content="2021-02-05T16:16:33.796Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2021/02/05/ng-vscode-extension-webview/image-20210205215343080.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2021/02/05/ng-vscode-extension-webview/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2021/02/05/ng-vscode-extension-webview/","path":"2021/02/05/ng-vscode-extension-webview/","title":"[Angular] 把 Angular 網站放到 VSCode Extension 內"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] 把 Angular 網站放到 VSCode Extension 內 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">環境設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%A5%97%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">打包套件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2021/02/05/ng-vscode-extension-webview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] 把 Angular 網站放到 VSCode Extension 內 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] 把 Angular 網站放到 VSCode Extension 內
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-02-05 21:33:51" itemprop="dateCreated datePublished" datetime="2021-02-05T21:33:51+08:00">2021-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2021-02-06 00:16:33" itemprop="dateModified" datetime="2021-02-06T00:16:33+08:00">2021-02-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/02/05/ng-vscode-extension-webview/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/05/ng-vscode-extension-webview/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>前幾天我分享了一個 YouTube  的影片，該影片大致上的內容是如何使用 VSCode Extension 使用 Webview API，既然可以用 webview 的方式來呈現網頁，那顯示一個 Angular App 也是很正常的事情，但環境設定上要怎麼調整呢? 這篇筆記就來整理一下</p>
+<span id="more"></span>
+<h1 id="環境設定"><a class="header-anchor" href="#環境設定"> </a>環境設定</h1>
+<ol>
+<li>
+<p>首先先建立一個 Angular 的專案 (這應該不用講要用什麼指令了吧)</p>
+</li>
+<li>
+<p>打開 <code>package.json</code>，新增以下內容</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;publisher&quot;</span><span class="punctuation">:</span> <span class="string">&quot;publisher-name&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;engines&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;vscode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.53.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;categories&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;Other&quot;</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;activationEvents&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;onCommand:angular-webview.start&quot;</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist/ext-src/extension.js&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;contributes&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;commands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;angular-webview.start&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Open Webview&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;CK&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;repository&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;git&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>categories</code> 、<code>activationEvents</code>、<code>contributes</code> 的區塊內容請配合 VS Code Extension 開發規範做調整</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    ...</span><br><span class="line">   <span class="attr">&quot;@types/vscode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.53.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;vscode-test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.5.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;vsce&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.83.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改完後記得要執行 <code>npm install</code></li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">...</span><br><span class="line">   <span class="comment">// 修改</span></span><br><span class="line">   <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ng build --prod --output-hashing none &amp;&amp; tsc -p tsconfig.extension.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="comment">// 新增指令</span></span><br><span class="line">   <span class="attr">&quot;package&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vsce package&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;vscode:prepublish&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm run build &amp;&amp; tsc -p tsconfig.extension.json&quot;</span></span><br><span class="line"> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>新增 <code>.vscodeignore</code> 檔案 (可根據狀況調整)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*</span><br><span class="line">!dist</span><br><span class="line">.vscode</span><br><span class="line">e2e</span><br><span class="line">ext-src</span><br><span class="line">node_modules</span><br><span class="line">src</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>新增 <code>.vscode</code> 資料夾並新增 <code>launch.json</code> 檔案</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">		<span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Run Extension&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;extensionHost&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">				<span class="string">&quot;--extensionDevelopmentPath=$&#123;workspaceFolder&#125;&quot;</span></span><br><span class="line">			<span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;outFiles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">				<span class="string">&quot;$&#123;workspaceFolder&#125;/out/**/*.js&quot;</span></span><br><span class="line">			<span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">		<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>新增 <code>ext-src</code> 資料夾，並在該資料夾下新增 <code>extension.ts</code> 檔案</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> vscode <span class="keyword">from</span> <span class="string">&#x27;vscode&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Manages webview panels</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WebPanel</span> &#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Track the currently panel. Only allow a single panel to exist at a time.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="attr">currentPanel</span>: <span class="title class_">WebPanel</span> | <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> viewType = <span class="string">&#x27;angular&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">panel</span>: vscode.<span class="property">WebviewPanel</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">extensionPath</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">builtAppFolder</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">disposables</span>: vscode.<span class="property">Disposable</span>[] = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="title function_">createOrShow</span>(<span class="params"></span></span><br><span class="line"><span class="params">    <span class="attr">extensionPath</span>: <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">    <span class="attr">context</span>: vscode.<span class="title class_">ExtensionContext</span></span></span><br><span class="line"><span class="params">  </span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> column = vscode.<span class="property">window</span>.<span class="property">activeTextEditor</span></span><br><span class="line">      ? vscode.<span class="property">window</span>.<span class="property">activeTextEditor</span>.<span class="property">viewColumn</span></span><br><span class="line">      : <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If we already have a panel, show it.</span></span><br><span class="line">    <span class="comment">// Otherwise, create angular panel.</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">WebPanel</span>.<span class="property">currentPanel</span>) &#123;</span><br><span class="line">      <span class="title class_">WebPanel</span>.<span class="property">currentPanel</span>.<span class="property">panel</span>.<span class="title function_">reveal</span>(column);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title class_">WebPanel</span>.<span class="property">currentPanel</span> = <span class="keyword">new</span> <span class="title class_">WebPanel</span>(</span><br><span class="line">        extensionPath,</span><br><span class="line">        column || vscode.<span class="property">ViewColumn</span>.<span class="property">One</span>,</span><br><span class="line">        context</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">WebPanel</span>.<span class="property">currentPanel</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">    <span class="attr">extensionPath</span>: <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">    <span class="attr">column</span>: vscode.<span class="title class_">ViewColumn</span>,</span></span><br><span class="line"><span class="params">    <span class="attr">context</span>: vscode.<span class="title class_">ExtensionContext</span></span></span><br><span class="line"><span class="params">  </span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">extensionPath</span> = extensionPath;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">builtAppFolder</span> = <span class="string">&#x27;dist/cklab&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create and show a new webview panel</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">panel</span> = vscode.<span class="property">window</span>.<span class="title function_">createWebviewPanel</span>(</span><br><span class="line">      <span class="title class_">WebPanel</span>.<span class="property">viewType</span>,</span><br><span class="line">      <span class="string">&#x27;My Angular Webview&#x27;</span>,</span><br><span class="line">      column,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// Enable javascript in the webview</span></span><br><span class="line">        <span class="attr">enableScripts</span>: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">        <span class="comment">// And restrict the webview to only loading content from our extension&#x27;s `media` directory.</span></span><br><span class="line">        <span class="attr">localResourceRoots</span>: [</span><br><span class="line">          vscode.<span class="property">Uri</span>.<span class="title function_">file</span>(path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">extensionPath</span>, <span class="variable language_">this</span>.<span class="property">builtAppFolder</span>)),</span><br><span class="line">        ],</span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set the webview&#x27;s initial html content</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">panel</span>.<span class="property">webview</span>.<span class="property">html</span> = <span class="variable language_">this</span>.<span class="title function_">_getHtmlForWebview</span>(context);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Listen for when the panel is disposed</span></span><br><span class="line">    <span class="comment">// This happens when the user closes the panel or when the panel is closed programatically</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">panel</span>.<span class="title function_">onDidDispose</span>(<span class="function">() =&gt;</span> <span class="variable language_">this</span>.<span class="title function_">dispose</span>(), <span class="literal">null</span>, <span class="variable language_">this</span>.<span class="property">disposables</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle messages from the webview</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">panel</span>.<span class="property">webview</span>.<span class="title function_">onDidReceiveMessage</span>(</span><br><span class="line">      <span class="function">(<span class="params"><span class="attr">message</span>: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">switch</span> (message.<span class="property">command</span>) &#123;</span><br><span class="line">          <span class="keyword">case</span> <span class="string">&#x27;alert&#x27;</span>:</span><br><span class="line">            vscode.<span class="property">window</span>.<span class="title function_">showErrorMessage</span>(message.<span class="property">text</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">disposables</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">dispose</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">WebPanel</span>.<span class="property">currentPanel</span> = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Clean up our resources</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">panel</span>.<span class="title function_">dispose</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="variable language_">this</span>.<span class="property">disposables</span>.<span class="property">length</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> x = <span class="variable language_">this</span>.<span class="property">disposables</span>.<span class="title function_">pop</span>();</span><br><span class="line">      <span class="keyword">if</span> (x) &#123;</span><br><span class="line">        x.<span class="title function_">dispose</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Returns html of the start page (index.html)</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">_getHtmlForWebview</span>(<span class="params"><span class="attr">context</span>: vscode.<span class="title class_">ExtensionContext</span></span>) &#123;</span><br><span class="line">    <span class="comment">// path to dist folder</span></span><br><span class="line">    <span class="keyword">const</span> appDistPath = path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">extensionPath</span>, <span class="variable language_">this</span>.<span class="property">builtAppFolder</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get path to index.html file from dist folder</span></span><br><span class="line">    <span class="keyword">const</span> indexPath = path.<span class="title function_">join</span>(appDistPath, <span class="string">&#x27;index.html&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read index file from file system</span></span><br><span class="line">    <span class="keyword">let</span> indexHtml = fs.<span class="title function_">readFileSync</span>(indexPath, &#123; <span class="attr">encoding</span>: <span class="string">&#x27;utf8&#x27;</span> &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. Get all link prefixed by href or src</span></span><br><span class="line">    <span class="keyword">const</span> matchLinks = <span class="regexp">/(href|src)=&quot;([^&quot;]*)&quot;/g</span>;</span><br><span class="line">    <span class="comment">// 2. Transform the result of the regex into a vscode&#x27;s URI format</span></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">toUri</span> = (<span class="params"><span class="attr">_</span>: <span class="built_in">string</span>, <span class="attr">prefix</span>: <span class="string">&#x27;href&#x27;</span> | <span class="string">&#x27;src&#x27;</span>, <span class="attr">link</span>: <span class="built_in">string</span></span>) =&gt; &#123;</span><br><span class="line">      <span class="comment">// For &lt;base href=&quot;#&quot; /&gt;</span></span><br><span class="line">      <span class="keyword">if</span> (link === <span class="string">&#x27;#&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;prefix&#125;</span>=&quot;<span class="subst">$&#123;link&#125;</span>&quot;`</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// For scripts &amp; links</span></span><br><span class="line">      <span class="keyword">const</span> _path = path.<span class="title function_">join</span>(appDistPath, link);</span><br><span class="line">      <span class="keyword">const</span> uri = vscode.<span class="property">Uri</span>.<span class="title function_">file</span>(_path);</span><br><span class="line">      <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;prefix&#125;</span>=&quot;<span class="subst">$&#123;<span class="variable language_">this</span>.panel.webview[<span class="string">&#x27;asWebviewUri&#x27;</span>](uri)&#125;</span>&quot;`</span>;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// update the base URI tag</span></span><br><span class="line">    indexHtml = indexHtml.<span class="title function_">replace</span>(matchLinks, toUri);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> indexHtml;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">activate</span>(<span class="params"><span class="attr">context</span>: vscode.<span class="title class_">ExtensionContext</span></span>) &#123;</span><br><span class="line">  context.<span class="property">subscriptions</span>.<span class="title function_">push</span>(</span><br><span class="line">    vscode.<span class="property">commands</span>.<span class="title function_">registerCommand</span>(<span class="string">&#x27;angular-webview.start&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title class_">WebPanel</span>.<span class="title function_">createOrShow</span>(context.<span class="property">extensionPath</span>, context);</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// this method is called when your extension is deactivated</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">deactivate</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>line 49: 請根據自己 Angular 專案輸出資料夾路徑做調整</li>
+<li>line 138: 跟著 <code>package.json</code> 的指令註冊一起調整命令名稱</li>
+</ul>
+</li>
+<li>
+<p>新增 <code>tsconfig.extension.json</code> 檔案</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;commonjs&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;es6&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;outDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;dist&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lib&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="string">&quot;es6&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;dom&quot;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;sourceMap&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;rootDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;include&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;ext-src&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;exclude&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;node_modules/*&quot;</span><span class="punctuation">,</span> </span><br><span class="line">    <span class="string">&quot;.vscode/*&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>到這邊應算是完成最基本的 VS Code Extension 環境的設定，如何看是否有設定成功，可以執行以下步驟</p>
+<ol>
+<li>
+<p>開 Terminal 執行 <code>npm run build</code></p>
+</li>
+<li>
+<p>按 F5 進入 Debug 模式，這時候會開啟一個新的 VS Code 視窗</p>
+</li>
+<li>
+<p>執行所設定的啟動指令，以這個範例來說就是 <code>CK: Open Webview</code></p>
+<p><img src="image-20210205215343080.png" alt="image-20210205215343080"></p>
+</li>
+<li>
+<p>成功後的顯示畫面</p>
+<p><img src="image-20210205215408533.png" alt="image-20210205215408533"></p>
+</li>
+</ol>
+<p>至於在 VS Code Webview 的環境下，Angular 開發上有什麼需要注意的事項，這部分就留到下一篇筆記了</p>
+<h1 id="打包套件"><a class="header-anchor" href="#打包套件"> </a>打包套件</h1>
+<p>如果都寫完要發布成可以安裝的擴充套件時，可以執行 <code>npm run package</code> 就會產生一個 <code>VSIX</code> 的安裝檔案</p>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=a5DX5pQ9p5M">How to Code a VSCode Extension</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/api/get-started/your-first-extension">VSCode Extension Get Started</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/api/extension-guides/webview">VSCode Webview API</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/13/flutter-firebase-message-setup/" rel="prev" title="[Flutter] 設定 Firebase Messaging 功能">
+                  <i class="fa fa-angle-left"></i> [Flutter] 設定 Firebase Messaging 功能
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/06/angular-vscode-extension-page-navigate/" rel="next" title="[Angular] Angular 在 VSCode Extension (Webview) 內做頁面切換">
+                  [Angular] Angular 在 VSCode Extension (Webview) 內做頁面切換 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

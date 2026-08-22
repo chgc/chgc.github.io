@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Dhall is a programmable configuration language that you can think of as: JSON + functions + types + imports，這樣應該就解釋了什麼是 Dhall 了吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Dhall] 學習筆記 001 - 基本知識建立">
+<meta property="og:url" content="http://blog.kevinyang.net/2021/08/15/dhall-note-001/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Dhall is a programmable configuration language that you can think of as: JSON + functions + types + imports，這樣應該就解釋了什麼是 Dhall 了吧">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/08/15/dhall-note-001/image-20210815104539412.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/08/15/dhall-note-001/image-20210815135615904.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/08/15/dhall-note-001/image-20210815105527602.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2021/08/15/dhall-note-001/image-20210815105609372.png">
+<meta property="article:published_time" content="2021-08-15T02:38:34.000Z">
+<meta property="article:modified_time" content="2021-08-15T05:57:20.361Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2021/08/15/dhall-note-001/image-20210815104539412.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2021/08/15/dhall-note-001/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2021/08/15/dhall-note-001/","path":"2021/08/15/dhall-note-001/","title":"[Dhall] 學習筆記 001 - 基本知識建立"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Dhall] 學習筆記 001 - 基本知識建立 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98"><span class="nav-number">1.</span> <span class="nav-text">學習筆記</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2021/08/15/dhall-note-001/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Dhall] 學習筆記 001 - 基本知識建立 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Dhall] 學習筆記 001 - 基本知識建立
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-08-15 10:38:34 / 修改時間：13:57:20" itemprop="dateCreated datePublished" datetime="2021-08-15T10:38:34+08:00">2021-08-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2021/08/15/dhall-note-001/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/08/15/dhall-note-001/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Dhall is a <a target="_blank" rel="noopener" href="https://docs.dhall-lang.org/discussions/Programmable-configuration-files.html#">programmable configuration language</a> that you can think of as: JSON + functions + types + imports，這樣應該就解釋了什麼是 Dhall 了吧</p>
+<span id="more"></span>
+<p>貼個範例聞香一下</p>
+<p><img src="image-20210815104539412.png" alt="image-20210815104539412"></p>
+<p>左邊是 dhall 的語法，右邊是輸出結果，看起來還簡單明瞭的，接下來就是基本語言的筆記了，至於如何安裝就請按照這<a target="_blank" rel="noopener" href="https://docs.dhall-lang.org/tutorials/Getting-started_Generate-JSON-or-YAML.html#installation">文件</a>安裝</p>
+<h1 id="學習筆記"><a class="header-anchor" href="#學習筆記"> </a>學習筆記</h1>
+<ul>
+<li>
+<p>Dhall 要轉換成不同格式，會透過不同的執行程式完成，例如 Dhall -&gt; JSON 就要用 dhall-to-json，要轉換成 YAML 就會用 dhall-to-yaml，這篇筆記看到 dhall-to-json 輸出結果就會是 JSON 格式</p>
+<p><img src="image-20210815135615904.png" alt="image-20210815135615904"></p>
+</li>
+<li>
+<p>Dhall 是一個強型別語言，compiler 會檢查型別是否正確，會將失敗的理由吐回給你，也可以使用 <code>--explain</code> 的 flag 來取得更多的訊息</p>
+<p><img src="image-20210815105527602.png" alt="image-20210815105527602"></p>
+<p><img src="image-20210815105609372.png" alt="image-20210815105609372"></p>
+</li>
+<li>
+<p>支援 type annotations，類似 TypeScript 指定型別的方式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhall-to-json &lt;&lt;&lt; &#x27;&#123; foo = 1, bar = True &#125; : &#123; foo : Natural, bar : Bool &#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>Type annotations 也可以用指定檔案的方式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhall-to-json &lt;&lt;&lt; &#x27;&#123; foo = 1, bar = True &#125; : ./schema.dhall&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>變數宣告: 使用 <code>let</code> 來進行變數宣告，如上面範例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let home = &#x27;/home/$&#123;user&#125;&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>dhall 是 whitespace-insensitive，不像 yaml 一個 space 錯位就壞掉了，因為這樣的特性會有這樣的寫法出現</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">1</span> <span class="keyword">let</span> y = <span class="number">2</span> <span class="keyword">in</span> [x, y]</span><br><span class="line"><span class="comment">// 等同於</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> y = <span class="number">2</span></span><br><span class="line"><span class="keyword">in</span>  [x, y]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>一個比較完整的使用範例 (檔案: <code>employee.dhall</code>)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> job = &#123; department = <span class="string">&quot;Data Platform&quot;</span>, title = <span class="string">&quot;Software Engineer&quot;</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> john = &#123; age = <span class="number">23</span>, name = <span class="string">&quot;John Doe&quot;</span>, position = job &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> alice = &#123; age = <span class="number">24</span>, name = <span class="string">&quot;Alice Smith&quot;</span>, position = job &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span>  [ john, alice ]</span><br></pre></td></tr></table></figure>
+<p>輸出結果 (執行命令: <code>dhall-to-json --file ./employee.dhall</code>)</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">23</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;John Doe&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;position&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;department&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Data Platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Software Engineer&quot;</span>  </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">24</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alice Smith&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;position&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;department&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Data Platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Software Engineer&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>可以寫 function，宣告方式: <code>\(inputName : inputType) -&gt; output</code>，範例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let twice = \(x : Natural) -&gt; [x, x] </span><br><span class="line">in twice 2</span><br><span class="line"></span><br><span class="line">// 輸出結果</span><br><span class="line">[2, 2]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>record 可以透過 <code>/\</code> 來合併</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dhall-to-json &lt;&lt;&lt; &#x27;&#123; foo = 1 &#125; /\ &#123; bar = 2&#125;&#x27;</span><br><span class="line"></span><br><span class="line">// 輸出結果</span><br><span class="line">&#123;</span><br><span class="line">   &quot;bar&quot;: 2,</span><br><span class="line">   &quot;foo&quot;: 1, </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比較接近現實生活的範例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> smallServer = &#123; cpus = <span class="number">1</span>, gigabytesOfRAM = <span class="number">1</span>, terabytesOfDisk = <span class="number">1</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mediumServer = &#123; cpus = <span class="number">8</span>, gigabytesOfRAM = <span class="number">16</span>, terabytesOfDisk = <span class="number">4</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> largeServer = &#123; cpus = <span class="number">64</span>, gigabytesOfRAM = <span class="number">256</span>, terabytesOfDisk = <span class="number">16</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span>  [ smallServer /\ &#123; hostName = <span class="string">&quot;eu-west.example.com&quot;</span> &#125;</span><br><span class="line">    , largeServer /\ &#123; hostName = <span class="string">&quot;us-east.example.com&quot;</span> &#125;</span><br><span class="line">    , largeServer /\ &#123; hostName = <span class="string">&quot;ap-northeast.example.com&quot;</span> &#125;</span><br><span class="line">    , mediumServer /\ &#123; hostName = <span class="string">&quot;us-west.example.com&quot;</span> &#125;</span><br><span class="line">    , smallServer /\ &#123; hostName = <span class="string">&quot;sa-east.example.com&quot;</span> &#125;</span><br><span class="line">    , largeServer /\ &#123; hostName = <span class="string">&quot;ca-central.example.com&quot;</span> &#125;</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Operators</p>
+<ul>
+<li><code>++</code> 連接兩個字串</li>
+<li><code>#</code> 連接兩個 List</li>
+</ul>
+</li>
+<li>
+<p><code>Optional</code> ，有時候會遇到缺欄位的資料，這時候就要使用 <code>Optional</code> 的表示法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ </span><br><span class="line">  &#123; x = 1, y = None Natural &#125; ,</span><br><span class="line">  &#123; x = 2, y = Some 3 &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Some -&gt; 表示這個欄位有可能有 Null 值出現</li>
+<li>None <type> -&gt; 視為 Null 空值</li>
+<li>指令多下 <code>--preserve-null</code> 參數，會將空值輸出 (null)</li>
+</ul>
+</li>
+<li>
+<p>使用 <code>Unions</code> 的方式可以讓清單內有不同型別得資料存在</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">-- ./package.dhall</span><br><span class="line"></span><br><span class="line">let Package =</span><br><span class="line">      &lt; Local : &#123; relativePath : Text &#125;</span><br><span class="line">      | GitHub : &#123; repository : Text, revision : Text &#125;</span><br><span class="line">      | Hackage : &#123; package : Text, version : Text &#125;</span><br><span class="line">      &gt;</span><br><span class="line"></span><br><span class="line">in  [ Package.GitHub</span><br><span class="line">        &#123; repository =</span><br><span class="line">            &quot;https://github.com/Gabriel439/Haskell-Turtle-Library.git&quot;</span><br><span class="line">        , revision = &quot;ae5edf227b515b34c1cb6c89d9c58ea0eece12d5&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    , Package.Local &#123; relativePath = &quot;~/proj/optparse-applicative&quot; &#125;</span><br><span class="line">    , Package.Local &#123; relativePath = &quot;~/proj/discrimination&quot; &#125;</span><br><span class="line">    , Package.Hackage &#123; package = &quot;lens&quot;, version = &quot;4.15.4&quot; &#125;</span><br><span class="line">    , Package.GitHub</span><br><span class="line">        &#123; repository = &quot;https://github.com/haskell/text.git&quot;</span><br><span class="line">        , revision = &quot;ccbfabedea1cf5b38ff19f37549feaf01225e537&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    , Package.Local &#123; relativePath = &quot;~/proj/servant-swagger&quot; &#125;</span><br><span class="line">    , Package.Hackage &#123; package = &quot;aeson&quot;, version = &quot;1.2.3.0&quot; &#125;</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用 <code>mapKey</code> 和 <code>mapValue</code> 就可以做出動態資料，而指令參數 <code>--noMaps</code> 就會單純輸出結果不轉換</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ &#123; mapKey = &quot;daniel&quot;, mapValue = &#123; age = 17 &#125; &#125;</span><br><span class="line">, &#123; mapKey = &quot;rebecca&quot;, mapValue = &#123; age = 17 &#125; &#125;</span><br><span class="line">, &#123; mapKey = &quot;aiden&quot;, mapValue = &#123; age = 16 &#125; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>如果要輸出 yaml ，就使用 <code>dhall-to-yaml</code> 來跑 <code>dhall</code> 檔案</p>
+</li>
+</ul>
+<h1 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.dhall-lang.org/index.html">Dhall 官方文件</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%B6%E4%BB%96/" rel="tag"># 其他</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/28/helm-tips/" rel="prev" title="[K8s 相關] 寫 Helm 技巧筆記">
+                  <i class="fa fa-angle-left"></i> [K8s 相關] 寫 Helm 技巧筆記
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/12/ng-microfrontend-with-webpack-federation/" rel="next" title="[Angular] Microfrontend with Module Federation 筆記">
+                  [Angular] Microfrontend with Module Federation 筆記 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

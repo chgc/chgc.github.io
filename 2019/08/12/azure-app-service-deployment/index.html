@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="部署網站到 Azure App Service 的方式有很多種，而為了讓部署的動作能連貫且步驟是最少的，就必須整合到 DevOps 之類的服務。App service 針對部署也有提供幾個不錯的功能，這一篇文章會先從 Deployment Center (部署中心) 開始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Azure] Deployment Center in App Service">
+<meta property="og:url" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="部署網站到 Azure App Service 的方式有很多種，而為了讓部署的動作能連貫且步驟是最少的，就必須整合到 DevOps 之類的服務。App service 針對部署也有提供幾個不錯的功能，這一篇文章會先從 Deployment Center (部署中心) 開始">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565588656492.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/SNAGHTML1572a0a5.PNG">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565589007381.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565589189698.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565589252725.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565589356437.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565589970877.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565590071114.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565590741348.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565590787555.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565590831627.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565590951080.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565591008327.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565591206262.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565591388557.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565591414880.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565591661549.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565591693288.png">
+<meta property="og:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565591759740.png">
+<meta property="article:published_time" content="2019-08-12T02:30:36.000Z">
+<meta property="article:modified_time" content="2019-08-13T09:37:42.869Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="App Service">
+<meta property="article:tag" content="Azure">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/1565588656492.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/","path":"2019/08/12/azure-app-service-deployment/","title":"[Azure] Deployment Center in App Service"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Azure] Deployment Center in App Service | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%A8%AD%E5%AE%9A%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">基本設定操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1-Commit"><span class="nav-number">1.1.</span> <span class="nav-text">第二次  Commit</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%80%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text">退版</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">3.</span> <span class="nav-text">結論</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/08/12/azure-app-service-deployment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Azure] Deployment Center in App Service | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Azure] Deployment Center in App Service
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-08-12 10:30:36" itemprop="dateCreated datePublished" datetime="2019-08-12T10:30:36+08:00">2019-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2019-08-13 17:37:42" itemprop="dateModified" datetime="2019-08-13T17:37:42+08:00">2019-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Azure/" itemprop="url" rel="index"><span itemprop="name">Azure</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/08/12/azure-app-service-deployment/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/12/azure-app-service-deployment/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>部署網站到 Azure App Service 的方式有很多種，而為了讓部署的動作能連貫且步驟是最少的，就必須整合到 DevOps 之類的服務。App service 針對部署也有提供幾個不錯的功能，這一篇文章會先從 <code>Deployment Center</code> (部署中心) 開始</p>
+<span id="more"></span>
+<p>Azure App Service 的部署中心，支援多種版控服務，像是 Azure Repos、GitHub、Bitbucket、Local Git 還有一些檔案服務等，這篇文章，我們使用 GitHub 來作為持續部署的程式來源</p>
+<h1 id="基本設定操作"><a class="header-anchor" href="#基本設定操作"> </a>基本設定操作</h1>
+<ol>
+<li>
+<p>建立 GitHub Repo</p>
+</li>
+<li>
+<p>建立一個簡單的 Razor Page 網站，並將其推送到  GitHub Repo 上</p>
+</li>
+<li>
+<p>建立 Azure App Service</p>
+</li>
+<li>
+<p>點選 部署中心 (Deployment Center)</p>
+<p><img src="1565588656492.png" alt="1565588656492"></p>
+</li>
+<li>
+<p>選擇原始檔控制，我這裡選擇 GitHub，由於第一次尚未授權，所以要先進行授權</p>
+<p><img src="SNAGHTML1572a0a5.PNG" alt="img"></p>
+<p><img src="1565589007381.png" alt="1565589007381"></p>
+<p>完成授權，點選【繼續】</p>
+<p><img src="1565589189698.png" alt="1565589189698"></p>
+</li>
+<li>
+<p>選擇【組件提供者】，這邊選擇 <strong>App Service 組件服務</strong> 後，繼續下一步</p>
+<p><img src="1565589252725.png" alt="1565589252725"></p>
+</li>
+<li>
+<p>進入設定頁面，如果選擇不到 Repo 的話，那表示在 GitHub 這邊還需要在設定一些東西</p>
+<p><img src="1565589356437.png" alt="1565589356437"></p>
+<ol>
+<li>
+<p>前往 GitHub ，進入 【Setting】頁面</p>
+<p><img src="1565589970877.png" alt="1565589970877"></p>
+</li>
+<li>
+<p>進入 【Application】 並選擇 【Authorized OAuth Apps】，找到 Azure App Service</p>
+<p><img src="1565590071114.png" alt="1565590071114"></p>
+</li>
+<li>
+<p>將尚未授權的 Orgranization ，開放權限 (Grant)</p>
+</li>
+<li>
+<p>如果還沒有看到，重新整理畫面，並重新做一次 Deployment Center 的設定畫面，應可以看到相關資訊了</p>
+</li>
+</ol>
+</li>
+<li>
+<p>選擇要部署的 Repo 來源</p>
+<p><img src="1565590741348.png" alt="1565590741348"></p>
+</li>
+<li>
+<p>繼續進入最終步驟，確認完成。</p>
+<p><img src="1565590787555.png" alt="1565590787555"></p>
+</li>
+<li>
+<p>完成設定</p>
+<p><img src="1565590831627.png" alt="1565590831627"></p>
+</li>
+<li>
+<p>第一次部署成功</p>
+<p><img src="1565590951080.png" alt="1565590951080"></p>
+</li>
+<li>
+<p>執行結果。太棒了，看到畫面</p>
+<p><img src="1565591008327.png" alt="1565591008327"></p>
+</li>
+</ol>
+<h2 id="第二次-Commit"><a class="header-anchor" href="#第二次-Commit"> </a>第二次  Commit</h2>
+<p>嘗試修改一些文字並 commit 到 GitHub 上後，觀察看看部署中心是否有做到自動建置部署的動作</p>
+<p>當 commit push 到 GitHub 上，在部署中心的頁面上，會發現第二次 Commit 的訊息</p>
+<p><img src="1565591206262.png" alt="1565591206262"></p>
+<p><img src="1565591388557.png" alt="1565591388557"></p>
+<p>修改後的畫面</p>
+<p><img src="1565591414880.png" alt="1565591414880"></p>
+<p>可以看到順利修改後的結果，這代表整個流程已可以正常運作了</p>
+<h1 id="退版"><a class="header-anchor" href="#退版"> </a>退版</h1>
+<p>有時候在 commit 時，發現上的版本有重大問題需要退版時，透過部署中心可以快速做到退版，以下是操作步驟</p>
+<ol>
+<li>
+<p>選擇想要退版的 commit 紀錄</p>
+<p><img src="1565591661549.png" alt="1565591661549"></p>
+</li>
+<li>
+<p>點選【重新佈署】</p>
+<p><img src="1565591693288.png" alt="1565591693288"></p>
+</li>
+<li>
+<p>退版成功</p>
+<p><img src="1565591759740.png" alt="1565591759740"></p>
+</li>
+</ol>
+<p>就是這麼簡單</p>
+<h1 id="結論"><a class="header-anchor" href="#結論"> </a>結論</h1>
+<p>雖然 GitHub 是很常見好用的程式碼寄放的位置，但如果要跟 Azure App Service 整個的部署整合更流暢，我相信使用 Azure DevOps 的服務會是最佳選擇</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Azure/" rel="tag"># Azure</a>
+              <a href="/tags/App-Service/" rel="tag"># App Service</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/08/08/core-mvc-nodeservice-puppeteer/" rel="prev" title="[.NET Core] 使用 nodeservice 來串接 puppeteer 服務">
+                  <i class="fa fa-angle-left"></i> [.NET Core] 使用 nodeservice 來串接 puppeteer 服務
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/08/13/azure-app-service-deployment-with-devops/" rel="next" title="[Azure] App Service Deployment with Azure DevOps">
+                  [Azure] App Service Deployment with Azure DevOps <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

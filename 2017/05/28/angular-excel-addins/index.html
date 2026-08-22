@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Office 2016 的增益集，讓我們可以使用 javascript + html 來開發。既然可以使用 Jquery，那 Angular 應該是沒有問題的，這是使用 Angular 實作 Excel 增益集的筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Angular] 開發 Excel 增益集">
+<meta property="og:url" content="http://blog.kevinyang.net/2017/05/28/angular-excel-addins/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="Office 2016 的增益集，讓我們可以使用 javascript + html 來開發。既然可以使用 Jquery，那 Angular 應該是沒有問題的，這是使用 Angular 實作 Excel 增益集的筆記">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://farm5.staticflickr.com/4220/34905439666_74bcded75e_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4222/34782185172_5d669b534e_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4222/34782226082_c62009d9e7_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4272/34905548796_0b4b678254_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4271/34813937441_7e6b889bf5_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4222/34905598216_6213f0269e_o.png">
+<meta property="og:image" content="https://farm5.staticflickr.com/4268/34135385293_2969d33e26_o.png">
+<meta property="article:published_time" content="2017-05-28T12:52:12.000Z">
+<meta property="article:modified_time" content="2017-12-30T13:24:37.604Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="Office">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://farm5.staticflickr.com/4220/34905439666_74bcded75e_o.png">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2017/05/28/angular-excel-addins/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2017/05/28/angular-excel-addins/","path":"2017/05/28/angular-excel-addins/","title":"[Angular] 開發 Excel 增益集"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[Angular] 開發 Excel 增益集 | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-Angular-%E5%B0%88%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">建立 Angular 專案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-types"><span class="nav-number">1.1.</span> <span class="nav-text">安裝 @types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tsconfig-app-json"><span class="nav-number">1.2.</span> <span class="nav-text">tsconfig.app.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main-ts"><span class="nav-number">1.3.</span> <span class="nav-text">main.ts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#index-html"><span class="nav-number">1.4.</span> <span class="nav-text">index.html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-component-ts"><span class="nav-number">1.5.</span> <span class="nav-text">app.component.ts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC%E8%A7%A3%E9%87%8B"><span class="nav-number">1.5.1.</span> <span class="nav-text">程式碼解釋</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#loadData"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">loadData()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Excel-run"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">Excel.run</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ctx-sync"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">ctx.sync()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#polyfills-ts"><span class="nav-number">1.6.</span> <span class="nav-text">polyfills.ts</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E-Manifest-xml"><span class="nav-number">2.</span> <span class="nav-text">新增 Manifest.xml</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Excel-%E7%9A%84%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">Excel 的環境設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Debug"><span class="nav-number">4.</span> <span class="nav-text">Debug</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E9%96%B1%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參閱資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2017/05/28/angular-excel-addins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[Angular] 開發 Excel 增益集 | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Angular] 開發 Excel 增益集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-05-28 20:52:12" itemprop="dateCreated datePublished" datetime="2017-05-28T20:52:12+08:00">2017-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2017-12-30 21:24:37" itemprop="dateModified" datetime="2017-12-30T21:24:37+08:00">2017-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/05/28/angular-excel-addins/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/28/angular-excel-addins/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Office 2016 的增益集，讓我們可以使用 javascript + html 來開發。既然可以使用 Jquery，那 Angular 應該是沒有問題的，這是使用 Angular 實作 Excel 增益集的筆記</p>
+<span id="more"></span>
+<h1 id="建立-Angular-專案"><a class="header-anchor" href="#建立-Angular-專案"> </a>建立 Angular 專案</h1>
+<p>使用 Angular CLI 建立新專案，如果有需要使用路由的，記得要將 <code>LocationStrategy</code> 設定為 <code>HashLocationStrategy</code></p>
+<h2 id="安裝-types"><a class="header-anchor" href="#安裝-types"> </a>安裝 @types</h2>
+<blockquote>
+<p>npm install --save-dev @types/office-js</p>
+</blockquote>
+<h2 id="tsconfig-app-json"><a class="header-anchor" href="#tsconfig-app-json"> </a>tsconfig.app.json</h2>
+<p>在 <code>types</code> 的的區塊加上 <code>office-js</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;types&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="string">&quot;office-js&quot;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+<h2 id="main-ts"><a class="header-anchor" href="#main-ts"> </a>main.ts</h2>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;enableProdMode&#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;platformBrowserDynamic&#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/platform-browser-dynamic&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">AppModule</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;./app/app.module&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;environment&#125; <span class="keyword">from</span> <span class="string">&#x27;./environments/environment&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">const</span> <span class="title class_">Office</span>: <span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Office</span>.<span class="property">initialize</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">platformBrowserDynamic</span>().<span class="title function_">bootstrapModule</span>(<span class="title class_">AppModule</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>platformBrowser</code> 這段一定要包在 function() {…} 裡面。</p>
+<h2 id="index-html"><a class="header-anchor" href="#index-html"> </a>index.html</h2>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">... </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://appsforoffice.microsoft.com/lib/1/hosted/office.js&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css&quot;</span>&gt;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>新增這四行到 <code>&lt;head&gt;</code> 內</p>
+<h2 id="app-component-ts"><a class="header-anchor" href="#app-component-ts"> </a>app.component.ts</h2>
+<p>這裡的程式，我是先用官方提供的範例翻寫的。詳細的 API 部分，請參閱官方文件</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;rxjs/add/observable/from&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;rxjs/add/operator/map&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;rxjs/add/operator/mergeMap&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">ApplicationRef</span>, <span class="title class_">Component</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Http</span>, <span class="title class_">Response</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/http&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Observable</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/Observable&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  <span class="attr">templateUrl</span>: <span class="string">&#x27;./app.component.html&#x27;</span>,</span><br><span class="line">  <span class="attr">styleUrls</span>: [<span class="string">&#x27;./app.component.css&#x27;</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  title = <span class="string">&#x27;用Angular寫Excel Addin!!&#x27;</span>;</span><br><span class="line">  data = [];</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">appRef</span>: <span class="title class_">ApplicationRef</span>, <span class="keyword">private</span> <span class="attr">http</span>: <span class="title class_">Http</span></span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">loadData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">&#x27;https://jsonplaceholder.typicode.com/posts&#x27;</span>)</span><br><span class="line">        .<span class="title function_">map</span>(<span class="function">(<span class="params"><span class="attr">res</span>: <span class="title class_">Response</span></span>) =&gt;</span> res.<span class="title function_">json</span>());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">clickMe</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// Run a batch operation against the Excel object model</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">loadData</span>()</span><br><span class="line">        .<span class="title function_">mergeMap</span>(</span><br><span class="line">            <span class="function">(<span class="params"><span class="attr">data</span>: <span class="built_in">any</span>[]</span>) =&gt;</span> &#123;<span class="keyword">return</span> <span class="title class_">Observable</span>.<span class="title function_">from</span>(<span class="title class_">Excel</span>.<span class="title function_">run</span>(<span class="function">(<span class="params">ctx</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="comment">// Create a proxy object for the active worksheet</span></span><br><span class="line">              <span class="keyword">const</span> <span class="attr">sheet</span>: <span class="title class_">Excel</span>.<span class="property">Worksheet</span> =</span><br><span class="line">                  ctx.<span class="property">workbook</span>.<span class="property">worksheets</span>.<span class="title function_">getActiveWorksheet</span>();</span><br><span class="line">              sheet.<span class="title function_">getRange</span>().<span class="title function_">clear</span>();</span><br><span class="line">              <span class="comment">// sheet.charts.items.forEach(c =&gt; c.delete());</span></span><br><span class="line"></span><br><span class="line">              <span class="keyword">if</span> (sheet) &#123;</span><br><span class="line">                <span class="comment">// Queue commands to set the report title in the worksheet</span></span><br><span class="line">                sheet.<span class="title function_">getRange</span>(<span class="string">&#x27;A1&#x27;</span>).<span class="property">values</span> = [[<span class="string">&#x27;Quarterly Sales Report&#x27;</span>]];</span><br><span class="line">                sheet.<span class="title function_">getRange</span>(<span class="string">&#x27;A1&#x27;</span>).<span class="property">format</span>.<span class="property">font</span>.<span class="property">name</span> = <span class="string">&#x27;Century&#x27;</span>;</span><br><span class="line">                sheet.<span class="title function_">getRange</span>(<span class="string">&#x27;A1&#x27;</span>).<span class="property">format</span>.<span class="property">font</span>.<span class="property">size</span> = <span class="number">26</span>;</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">              <span class="comment">// Create an array containing sample data</span></span><br><span class="line">              <span class="keyword">let</span> values = [</span><br><span class="line">                [<span class="string">&#x27;Product&#x27;</span>, <span class="string">&#x27;Qtr1&#x27;</span>, <span class="string">&#x27;Qtr2&#x27;</span>, <span class="string">&#x27;Qtr3&#x27;</span>, <span class="string">&#x27;Qtr4&#x27;</span>],</span><br><span class="line">                [<span class="string">&#x27;Frames&#x27;</span>, <span class="number">5000</span>, <span class="number">7000</span>, <span class="number">6544</span>, <span class="number">4377</span>],</span><br><span class="line">                [<span class="string">&#x27;Saddles&#x27;</span>, <span class="number">400</span>, <span class="number">323</span>, <span class="number">276</span>, <span class="number">651</span>],</span><br><span class="line">                [<span class="string">&#x27;Brake levers&#x27;</span>, <span class="number">12000</span>, <span class="number">8766</span>, <span class="number">8456</span>, <span class="number">9812</span>],</span><br><span class="line">                [<span class="string">&#x27;Chains&#x27;</span>, <span class="number">1550</span>, <span class="number">1088</span>, <span class="number">692</span>, <span class="number">853</span>],</span><br><span class="line">                [<span class="string">&#x27;Mirrors&#x27;</span>, <span class="number">225</span>, <span class="number">600</span>, <span class="number">923</span>, <span class="number">544</span>],</span><br><span class="line">                [<span class="string">&#x27;Spokes&#x27;</span>, <span class="number">6005</span>, <span class="number">7634</span>, <span class="number">4589</span>, <span class="number">8765</span>]</span><br><span class="line">              ];</span><br><span class="line"></span><br><span class="line">              <span class="comment">// Queue a command to write the sample data to the specified</span></span><br><span class="line">              <span class="comment">// range in the worksheet and bold the header row</span></span><br><span class="line">              <span class="keyword">const</span> range = sheet.<span class="title function_">getRange</span>(<span class="string">&#x27;A2:E8&#x27;</span>);</span><br><span class="line">              range.<span class="property">values</span> = values;</span><br><span class="line">              sheet.<span class="title function_">getRange</span>(<span class="string">&#x27;A2:E2&#x27;</span>).<span class="property">format</span>.<span class="property">font</span>.<span class="property">bold</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">              <span class="comment">// Queue a command to add a new chart</span></span><br><span class="line">              <span class="keyword">const</span> chart = sheet.<span class="property">charts</span>.<span class="title function_">add</span>(<span class="string">&#x27;ColumnClustered&#x27;</span>, range, <span class="string">&#x27;auto&#x27;</span>);</span><br><span class="line">              <span class="comment">// Queue commands to set the properties and format the chart</span></span><br><span class="line">              chart.<span class="title function_">setPosition</span>(<span class="string">&#x27;G1&#x27;</span>, <span class="string">&#x27;L10&#x27;</span>);</span><br><span class="line">              chart.<span class="property">title</span>.<span class="property">text</span> = <span class="string">&#x27;Quarterly sales chart&#x27;</span>;</span><br><span class="line">              chart.<span class="property">legend</span>.<span class="property">position</span> = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">              chart.<span class="property">legend</span>.<span class="property">format</span>.<span class="property">fill</span>.<span class="title function_">setSolidColor</span>(<span class="string">&#x27;white&#x27;</span>);</span><br><span class="line">              chart.<span class="property">dataLabels</span>.<span class="property">format</span>.<span class="property">font</span>.<span class="property">size</span> = <span class="number">15</span>;</span><br><span class="line">              chart.<span class="property">dataLabels</span>.<span class="property">format</span>.<span class="property">font</span>.<span class="property">color</span> = <span class="string">&#x27;black&#x27;</span>;</span><br><span class="line">              <span class="keyword">const</span> points = chart.<span class="property">series</span>.<span class="title function_">getItemAt</span>(<span class="number">0</span>).<span class="property">points</span>;</span><br><span class="line">              points.<span class="title function_">getItemAt</span>(<span class="number">0</span>).<span class="property">format</span>.<span class="property">fill</span>.<span class="title function_">setSolidColor</span>(<span class="string">&#x27;pink&#x27;</span>);</span><br><span class="line">              points.<span class="title function_">getItemAt</span>(<span class="number">1</span>).<span class="property">format</span>.<span class="property">fill</span>.<span class="title function_">setSolidColor</span>(<span class="string">&#x27;indigo&#x27;</span>);</span><br><span class="line"></span><br><span class="line">              <span class="keyword">const</span> i = <span class="number">12</span>;</span><br><span class="line">              <span class="variable language_">this</span>.<span class="property">data</span> = data;</span><br><span class="line">              values = data.<span class="title function_">reduce</span>(<span class="function">(<span class="params">preValue, d</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> [...preValue, [d.<span class="property">userId</span>, d.<span class="property">id</span>, d.<span class="property">title</span>, d.<span class="property">body</span>]];</span><br><span class="line">              &#125;, []);</span><br><span class="line"></span><br><span class="line">              sheet.<span class="title function_">getRange</span>(<span class="string">`A<span class="subst">$&#123;i + <span class="number">1</span>&#125;</span>:D<span class="subst">$&#123;i + data.length&#125;</span>`</span>).<span class="property">values</span> = values;</span><br><span class="line">              <span class="comment">// Run the queued commands, and return a promise to indicate</span></span><br><span class="line">              <span class="comment">// task completion</span></span><br><span class="line">              <span class="keyword">return</span> ctx.<span class="title function_">sync</span>();</span><br><span class="line">            &#125;))&#125;)</span><br><span class="line">        .<span class="title function_">subscribe</span>(</span><br><span class="line">            <span class="function">() =&gt;</span> &#123;</span><br><span class="line">              <span class="variable language_">this</span>.<span class="property">appRef</span>.<span class="title function_">tick</span>();</span><br><span class="line">              <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Success!&#x27;</span>);</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">            &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="程式碼解釋"><a class="header-anchor" href="#程式碼解釋"> </a>程式碼解釋</h3>
+<h4 id="loadData"><a class="header-anchor" href="#loadData"> </a>loadData()</h4>
+<p>這個 method 主要是用來驗證 CORS 的情況下， 是否還可以在 Excel 裡正常的運作。</p>
+<h4 id="Excel-run"><a class="header-anchor" href="#Excel-run"> </a>Excel.run</h4>
+<blockquote>
+<p>Ｅxcel.run((ctx) =&gt; {　… })</p>
+</blockquote>
+<p>這段是準備要在Excel上顯示的資料</p>
+<h4 id="ctx-sync"><a class="header-anchor" href="#ctx-sync"> </a>ctx.sync()</h4>
+<p>準備好的內容，更新同步到 Excel 的 activateSheet 上</p>
+<h2 id="polyfills-ts"><a class="header-anchor" href="#polyfills-ts"> </a>polyfills.ts</h2>
+<p>需要打開以下的檔案</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** IE9, IE10 and IE11 requires all of the following polyfills. **/</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/symbol&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/object&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/function&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/parse-int&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/parse-float&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/number&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/math&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/string&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/date&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/array&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/regexp&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/map&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/weak-map&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;core-js/es6/set&#x27;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<p>到這邊為止，已經完成了 Angular 端最基本的環境設定</p>
+<h1 id="新增-Manifest-xml"><a class="header-anchor" href="#新增-Manifest-xml"> </a>新增 Manifest.xml</h1>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--Created:cb85b80c-f585-40ff-8bfc-12ff4d0e34a9--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">OfficeApp</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://schemas.microsoft.com/office/appforoffice/1.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xsi:type</span>=<span class="string">&quot;TaskPaneApp&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Id</span>&gt;</span>534a9c82-e492-4b03-a0df-7e6e97815039<span class="tag">&lt;/<span class="name">Id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Version</span>&gt;</span>1.0.0.0<span class="tag">&lt;/<span class="name">Version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ProviderName</span>&gt;</span>Microsoft<span class="tag">&lt;/<span class="name">ProviderName</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DefaultLocale</span>&gt;</span>en-US<span class="tag">&lt;/<span class="name">DefaultLocale</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DisplayName</span> <span class="attr">DefaultValue</span>=<span class="string">&quot;Angular App Sample&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Description</span> <span class="attr">DefaultValue</span>=<span class="string">&quot;Angular App Sample&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Capabilities</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Capability</span> <span class="attr">Name</span>=<span class="string">&quot;Workbook&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">Capabilities</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">DefaultSettings</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">SourceLocation</span> <span class="attr">DefaultValue</span>=<span class="string">&quot;https://localhost:4200&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">DefaultSettings</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Permissions</span>&gt;</span>ReadWriteDocument<span class="tag">&lt;/<span class="name">Permissions</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">OfficeApp</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Manifest 的進階說明，請參閱這篇<a target="_blank" rel="noopener" href="https://dev.office.com/docs/add-ins/overview/add-in-manifests">文件</a></p>
+<h1 id="Excel-的環境設定"><a class="header-anchor" href="#Excel-的環境設定"> </a>Excel 的環境設定</h1>
+<p>要在 Excel 內新增我們自己開發的增益集，首先</p>
+<ol>
+<li>
+<p>建立一個分享資料夾</p>
+</li>
+<li>
+<p>將設定好的 Manifest.xml 搬進去，記得每一個增益集的 manifest 檔名都要不一樣</p>
+</li>
+<li>
+<p>將分享資料夾的位置新增到 Excel 裡面去</p>
+<ol>
+<li>
+<p>檔案 --&gt; 選項</p>
+<p><img src="https://farm5.staticflickr.com/4220/34905439666_74bcded75e_o.png" alt=""></p>
+</li>
+<li>
+<p>信任中心</p>
+<p><img src="https://farm5.staticflickr.com/4222/34782185172_5d669b534e_o.png" alt=""></p>
+</li>
+<li>
+<p>受信任的增益集目錄</p>
+<p><img src="https://farm5.staticflickr.com/4222/34782226082_c62009d9e7_o.png" alt=""></p>
+</li>
+<li>
+<p>確定完成</p>
+</li>
+</ol>
+</li>
+<li>
+<p>插入 -&gt; 我的增益集 -&gt; 共享資料夾</p>
+</li>
+<li>
+<p>可以看到自己寫的增益集了</p>
+<p><img src="https://farm5.staticflickr.com/4272/34905548796_0b4b678254_o.png" alt=""></p>
+</li>
+<li>
+<p>選擇要安裝的增益集</p>
+<p><img src="https://farm5.staticflickr.com/4271/34813937441_7e6b889bf5_o.png" alt=""></p>
+</li>
+<li>
+<p>安裝完成後，即可看到所建立的增益集畫面在螢幕的右側出現</p>
+<p><img src="https://farm5.staticflickr.com/4222/34905598216_6213f0269e_o.png" alt=""></p>
+<p>這時右側的操作，就可以直接反應在左側 Excel 工作表內了。</p>
+<p><img src="https://farm5.staticflickr.com/4268/34135385293_2969d33e26_o.png" alt=""></p>
+</li>
+</ol>
+<h1 id="Debug"><a class="header-anchor" href="#Debug"> </a>Debug</h1>
+<p>請參閱這篇<a target="_blank" rel="noopener" href="https://dev.office.com/docs/add-ins/testing/debug-add-ins-using-f12-developer-tools-on-windows-10">文章</a>，在 windows 內提供 F12 開發者工具可以做 Add In 的網頁除錯，但目前看起來是 Windows 10 限定</p>
+<h1 id="參閱資料"><a class="header-anchor" href="#參閱資料"> </a>參閱資料</h1>
+<ul>
+<li><a href="">Manifest</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.office.com/docs/add-ins/develop/add-ins-with-angular2">Tips for creating Office Add-ins with Angular 2</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.office.com/docs/add-ins/excel/excel-add-ins-javascript-programming-overview">Excel JavaScript API programming overview</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.office.com/docs/add-ins/excel/build-your-first-excel-add-in">Build your first Excel add-in</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.office.com/docs/add-ins/overview/add-in-manifests">Office Add-ins XML manifest</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.office.com/docs/add-ins/testing/debug-add-ins-using-f12-developer-tools-on-windows-10">Debug add-ins using F12 developer tools on Windows 10</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"># Angular</a>
+              <a href="/tags/Office/" rel="tag"># Office</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/15/core-web-mvc-001/" rel="prev" title="[.NET Core] Web MVC 001 - program.cs">
+                  <i class="fa fa-angle-left"></i> [.NET Core] Web MVC 001 - program.cs
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/06/11/ng-animation-4-2/" rel="next" title="[Angular] Animation 4.2版 &#x3D; wow">
+                  [Angular] Animation 4.2版 = wow <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>
