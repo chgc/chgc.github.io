@@ -58,7 +58,7 @@ MCP（Model Context Protocol）是 Anthropic 在 2024/11 開源的協定，簡�
   2. 版本不符就回 `UnsupportedProtocolVersionError`，錯誤碼 `-32022`
   3. 官方的錯誤碼政策：`-32000`~`-32019` 留給實作自訂，`-32020`~`-32099` 是 MCP spec 保留區
 
-我的理解是：這對我們這種「要扛多租戶、要水平擴展」的服務其實是好事——沒有 session 就沒有黏著性（stickiness），load balancer 可以隨便打，每一台 instance 都是無狀態的。真的需要跨 request 的狀態時，官方建議自己發 token 當 tool 參數傳，不要依賴連線狀態。
+我的理解是：這對我們這種「要扛多租戶、要水平擴展」的服務其實是好事——沒有 session 就沒有黏著性（stickiness），load balancer 可以隨便打，每一台 instance 都是無狀態的。真的需要跨 request 的狀態時，官方建議由 server 發出 handle（識別碼）當 tool 參數帶回傳（SEP-2567），不要依賴連線狀態。
 
 ### 2. 新增 `server/discover`，server 必須實作
 
@@ -223,7 +223,7 @@ func isAllowedOrigin(origin string) bool {
 
 規格要求的東西不少，我只列服務擁有者一定要知道的：
 
-1. MCP server 用 `WWW-Authenticate` header 告知保護資源 metadata 位置，client 由此 discover authorization server
+1. MCP server 必須實作 RFC9728：在 401 回應的 `WWW-Authenticate` header 帶 `resource_metadata` 參數告知 metadata 位置（或提供 well-known URI），client 由此 discover authorization server
 2. authorization server 至少要提供 RFC8414（OAuth AS metadata）或 OIDC discovery 之一
 3. 動態 client registration（RFC7591）在新版已棄用，改推 Client ID Metadata Documents——對我們來說，意思是「先跟開發者註冊、給一組 client id」的流程會更常態化
 4. 也可以用 resource indicators（RFC8707）讓同一個 token 綁定特定 MCP server
