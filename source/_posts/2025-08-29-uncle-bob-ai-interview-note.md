@@ -2,7 +2,7 @@
 layout: post
 title: '看完 Uncle Bob 談 AI 時代的軟體基本功，我整理了五個還在用的觀點'
 comments: true
-date: '2025-08-29 11:00:00'
+date: '2026-08-29 11:00:00'
 categories: 'AI'
 tags: ['uncle-bob', 'ai-agents', 'coding-agent', 'mutation-testing', 'deep-modules']
 ---
