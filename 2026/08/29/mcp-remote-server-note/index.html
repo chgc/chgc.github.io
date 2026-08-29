@@ -28,7 +28,7 @@
 <meta property="og:description" content="MCP 2026-07-28 規格學習筆記，以把自家 API 開放給 AI 工具為例。">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2026-08-29T01:00:00.000Z">
-<meta property="article:modified_time" content="2026-08-29T07:58:53.645Z">
+<meta property="article:modified_time" content="2026-08-29T08:01:27.842Z">
 <meta property="article:author" content="KevinYang">
 <meta property="article:tag" content="ai-integration">
 <meta property="article:tag" content="api">
@@ -247,7 +247,7 @@
       <span class="post-meta-item-text">發表於</span>
       
 
-      <time title="創建時間：2026-08-29 09:00:00 / 修改時間：15:58:53" itemprop="dateCreated datePublished" datetime="2026-08-29T09:00:00+08:00">2026-08-29</time>
+      <time title="創建時間：2026-08-29 09:00:00 / 修改時間：16:01:27" itemprop="dateCreated datePublished" datetime="2026-08-29T09:00:00+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -336,7 +336,7 @@
 </ol>
 </li>
 </ul>
-<p>我的理解是：這對我們這種「要扛多租戶、要水平擴展」的服務其實是好事——沒有 session 就沒有黏著性（stickiness），load balancer 可以隨便打，每一台 instance 都是無狀態的。真的需要跨 request 的狀態時，官方建議自己發 token 當 tool 參數傳，不要依賴連線狀態。</p>
+<p>我的理解是：這對我們這種「要扛多租戶、要水平擴展」的服務其實是好事——沒有 session 就沒有黏著性（stickiness），load balancer 可以隨便打，每一台 instance 都是無狀態的。真的需要跨 request 的狀態時，官方建議由 server 發出 handle（識別碼）當 tool 參數帶回傳（SEP-2567），不要依賴連線狀態。</p>
 <h3 id="2-新增-server-discover，server-必須實作"><a class="header-anchor" href="#2-新增-server-discover，server-必須實作"> </a>2. 新增 <code>server/discover</code>，server 必須實作</h3>
 <p>stateless 化之後，「宣告能力與身分」這件原本由 <code>initialize</code> 握手做的事，改由一個唯讀 RPC 承接：client 可以在發任何其他 request 之前，先問 server「你支援哪些版本、有什麼能力、你是誰」。</p>
 <p>Request 除了標準的 <code>_meta</code> 之外沒有任何參數（client 身分與能力就放在 <code>_meta</code>）：</p>
@@ -399,7 +399,7 @@
 </ul>
 <p>規格要求的東西不少，我只列服務擁有者一定要知道的：</p>
 <ol>
-<li>MCP server 用 <code>WWW-Authenticate</code> header 告知保護資源 metadata 位置，client 由此 discover authorization server</li>
+<li>MCP server 必須實作 RFC9728：在 401 回應的 <code>WWW-Authenticate</code> header 帶 <code>resource_metadata</code> 參數告知 metadata 位置（或提供 well-known URI），client 由此 discover authorization server</li>
 <li>authorization server 至少要提供 RFC8414（OAuth AS metadata）或 OIDC discovery 之一</li>
 <li>動態 client registration（RFC7591）在新版已棄用，改推 Client ID Metadata Documents——對我們來說，意思是「先跟開發者註冊、給一組 client id」的流程會更常態化</li>
 <li>也可以用 resource indicators（RFC8707）讓同一個 token 綁定特定 MCP server</li>
