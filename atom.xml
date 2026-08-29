@@ -9,7 +9,30 @@
   <link href="http://blog.kevinyang.net/atom.xml" rel="self"/>
   <rights>All rights reserved 2026, KevinYang</rights>
   <title>CK's Notepad</title>
-  <updated>2026-08-29T09:45:55.045Z</updated>
+  <updated>2026-08-29T09:51:13.634Z</updated>
+  <entry>
+    <author>
+      <name>KevinYang</name>
+    </author>
+    <category term="AI" scheme="http://blog.kevinyang.net/categories/AI/"/>
+    <category term="uncle-bob" scheme="http://blog.kevinyang.net/tags/uncle-bob/"/>
+    <category term="ai-agents" scheme="http://blog.kevinyang.net/tags/ai-agents/"/>
+    <category term="coding-agent" scheme="http://blog.kevinyang.net/tags/coding-agent/"/>
+    <category term="mutation-testing" scheme="http://blog.kevinyang.net/tags/mutation-testing/"/>
+    <category term="deep-modules" scheme="http://blog.kevinyang.net/tags/deep-modules/"/>
+    <content>
+      <![CDATA[<h1 id="看完-Uncle-Bob-談-AI-時代的軟體基本功，我整理了五個還在用的觀點"><a class="header-anchor" href="#看完-Uncle-Bob-談-AI-時代的軟體基本功，我整理了五個還在用的觀點"> </a>看完 Uncle Bob 談 AI 時代的軟體基本功，我整理了五個還在用的觀點</h1><p>前陣子把 Matt Pocock 訪談 Uncle Bob（Robert C. Martin）的影片完整看完，大概一個小時的內容，主題是「AI 時代軟體基本功還重不重要」。老實說，裡面有幾個觀點跟我自己用 coding agent 的體感完全一致，也有一些是我正在動手衡量、驗證的主題，所以趁記憶清楚整理成這篇筆記。影片是 LIVE: Uncle Bob on Software Fundamentals in the Age of AI（Matt Pocock 主持，約 57 分鐘）。</p><span id="more"></span><p>一句話先講結論：<strong>軟體基本功在 AI 時代沒有過時，反而是駕馭 agent 的唯一方法</strong>——只是做法換了：與其用提示詞「引導」agent，不如用自動化檢查「約束」agent。</p><h2 id="為什麼壞程式碼對-agent-也是災難"><a class="header-anchor" href="#為什麼壞程式碼對-agent-也是災難"> </a>為什麼壞程式碼對 agent 也是災難</h2><p>訪談中 Matt 問了一個很關鍵的問題：agent 又快又能動，為什麼要在意壞 code？不能直接 push through 讓 bug 消失嗎？（影片 10:30）</p><p>Uncle Bob 的回答是他在去年 12 月開始認真用 coding agent 時的第一手觀察（10:52–12:10）：</p><blockquote><p>「我讓小 Grock agent 做事，它會留下一堆殘局；我沒清理就讓它做下一件事，它留下更多殘局……然後我注意到它變慢了、卡住了——它會進入一種模式：改 A 無意中弄壞 B，修 B 又弄壞 C，開始繞圈子。」</p></blockquote><blockquote><p>「它們跟人類一樣受 messy code 影響。也許承受度的門檻不同，但門檻是存在的。程式可以亂到某個程度，agent 就再也不行了——我真的遇過 agent 直接放棄，有一個說：『我再也處理不了了。』」（意譯）</p></blockquote><p>這個觀察跟我自己的體感一致，我把它整理成三層機制：</p><ul><li><strong>Context 成本層</strong>：壞 code 代表更多重複、死碼、過長的函式。agent 是生成式模型，讀進去的每一行都是成本，而且它騙不過自己——要改對，就得真的讀懂。context 消耗越快，越早掉進所謂的「dumb zone」（context window 前段約 150k tokens 比較聰明，越往後 attention 越稀釋，這是訪談中 Matt 引用 Dex Hardy 的說法，15:16）。</li><li><strong>錯誤複合層</strong>：壞 code 的隱藏耦合（重複程式碼、繞經全域狀態）讓副作用不可見，於是 agent 修 A 弄壞 B、修 B 弄壞 C，迭代次數呈複合成長。人類可以靠意志和經驗臨時克服髒 code；agent 沒有意志，只有硬上限。</li><li><strong>回饋訊號層</strong>：壞 code 的測試通常也壞——少、脆弱、耦合實作細節，覆蓋率與突變分數低。測試是 agent 的「確定性羅盤」，羅盤失靈，它就不知道自己做對了沒有、何時該停。</li></ul><p>一句話：<strong>壞 code 對人類是慢性疲勞，對 agent 是急性中毒。</strong></p><h2 id="與其寫規則進-prompt，不如把規則變成檢查"><a class="header-anchor" href="#與其寫規則進-prompt，不如把規則變成檢查"> </a>與其寫規則進 prompt，不如把規則變成檢查</h2><p>訪談後半段我最喜歡的部分。Matt 指出現在主流做法是把規則一股腦灌進 <a href="http://CLAUDE.md">CLAUDE.md</a> / <a href="http://AGENTS.md">AGENTS.md</a>（他叫 steering，12:24），Uncle Bob 則是改用自動化檢查（deterministic tools）。</p><p>為什麼要這樣？Uncle Bob 說他自己早期也是 steering 派：「我的早期 prompt 寫著要 TDD、要 clean code、程式碼該長這樣，最後變成一份 5–10 頁的文件，我甚至可以把整本 Clean Code 餵進去」（12:55）。然後他發現（13:18）：</p><blockquote><p>「模型把那些規則當成《神鬼奇航》裡的海盜法典——比較像是 guideline，may follow。」</p></blockquote><p>背後有技術原因：<strong>lost in the middle</strong> 現象（Liu et al., arXiv:2307.03172）——context 變長時，開頭與結尾的內容最有能見度，中段的會被忽略；而且規則清單一旦夠長，連開頭那幾條也會被擠進中段「消失」。確定性工具不會這樣消失——checker 的輸出是「事實」（通過／失敗），不是「建議」，模型沒有選擇性忽略的空間。</p><p>結論是兩句話（14:56）：<strong>把初始 prompt 砍到絕對最小值，保住前段的優先權；其餘全部交給事後的確定性工具。</strong></p><p>我自己對這個觀點很有共鳴，也在這樣做。實務上我會用這個轉換公式：每次想加一條規則進 <a href="http://CLAUDE.md">CLAUDE.md</a>，先問「這條能不能變成 checker？」能 → 做成工具＋CI 閘門；不能（純品味、專案脈絡）→ 才進 prompt，而且保持極短。</p><table><thead><tr><th>想立的規則</th><th>steering 寫法（會被軟化）</th><th>deterministic 寫法（不可消失）</th></tr></thead><tbody><tr><td>函式要小、別太複雜</td><td>「請保持函式短小」</td><td>CRAP 工具門檻 + CI fail-on</td></tr><tr><td>依賴只能單向流動</td><td>「遵循乾淨的分層架構」</td><td>ArchUnit / dependency-cruiser + fail-on-cycles</td></tr><tr><td>不要註解掉的程式碼</td><td>「不要留 commented-out code」</td><td>linter 規則 + CI</td></tr><tr><td>測試要真的有用</td><td>「寫有意義的測試」</td><td>突變測試 + mutation score 閘門</td></tr><tr><td>別把密鑰提交</td><td>「不要把 secret 放進 repo」</td><td>gitleaks + CI</td></tr></tbody></table><p>連 Anthropic 自己也是同方向：《Effective context engineering for AI agents》（2025-09-29）主張 context 是有限資源、記憶檔要精簡、聲明式、普遍適用。</p><h2 id="兩個「人類做不動、agent-做剛好」的舊工具：CRAP-與突變測試"><a class="header-anchor" href="#兩個「人類做不動、agent-做剛好」的舊工具：CRAP-與突變測試"> </a>兩個「人類做不動、agent 做剛好」的舊工具：CRAP 與突變測試</h2><p>訪談中 Uncle Bob 講到他把兩個過去因為「太慢」而被擱置的舊技術重新搬出來用，因為 agent 快、又不覺得工作無聊。這兩個工具我之前的筆記有深入整理過，這裡快速帶過。</p><p><strong>CRAP 分數</strong>（Change Risk Analysis and Prediction，Alberto Savoia 2007 提出）：把迴圈複雜度與測試覆蓋率混成一個數字：</p><blockquote><p>CRAP(m) = CC² × (1 − cov/100)³ + CC</p></blockquote><p>沒測試的高複雜度函式，分數會以複雜度的平方級別爆炸。原始的「crappy」門檻是 30；而 Uncle Bob 用 agent 後，把門檻當成「品質契約」在調：人類 &lt; 4、agent &lt; 6、現在他的 crap4java repo 已經推到 8.0（超過就 exit code 2，CI 會擋）。訪談原文：「人類我壓在 4 以下，agent 我設 6，正在考慮推到 8」（32:34）。</p><p><strong>突變測試（Mutation Testing）</strong>：1971 年由 Richard Lipton 提出，1978 年 DeMillo/Lipton/Sayward 發表經典論文，1980 年 Timothy Budd 才做出第一個工具。概念很簡單：把程式碼自動「種」進一些小蟲（例如把 <code>&lt;</code> 翻成 <code>&gt;</code>），再跑測試——測試掛掉代表突變體被殺（killed），測試照過代表突變體存活（survived），存活越多代表測試越虛。<strong>100% 行覆蓋率不等於測試有效</strong>，突變測試打的就是這個盲點。</p><p>過去為什麼沒人用？成本。Uncle Bob 說他 2000 年左右跑過一次：測試套件跑 4 分鐘 × 數百次突變 = 跑一整夜（07:31）。現在 agent 跑同樣的工作大概 30 分鐘（08:20），而且他把這關交給流水線裡的「hardener」agent，要求「絕對無情地」補到 100% 覆蓋率並消滅所有存活突變體。</p><p>順帶一提，Uncle Bob 把這兩個工具都開源了，而且都有 Go 版：<code>unclebob/crap4go</code>（自動跑 go test + coverprofile 再分析）、<code>unclebob/mutate4go</code>（支援 differential mutation——把「上次測試日期＋函式 hash」寫進檔案尾端，下次只測變更過的函式，正好對應訪談中「agent 只改 5 分鐘內小事」的哲學）。另外還有 <code>unclebob/dependency-checker</code>（宣告誰能依賴誰，違反就 exit 1）與 <code>unclebob/arch-view</code>（互動式 UML 架構檢視器，可以一路點到原始碼）。他的 <code>negative-test-experiment</code>（8 個獨立 Hunt the Wumpus 實作 × CRAP）也很適合當「對照實驗」的原型。</p><h2 id="Deep-Modules：小介面讓-agent-讀得少、懂得多"><a class="header-anchor" href="#Deep-Modules：小介面讓-agent-讀得少、懂得多"> </a>Deep Modules：小介面讓 agent 讀得少、懂得多</h2><p>訪談中 Matt 提到 John Ousterhout 的「深模組」概念（29:47），Uncle Bob 完全買單（30:32）。深模組 = 小介面、大實作：外面的人只要理解那個小介面，複雜度全部藏在裡面。經典例子是 Unix file I/O——open/read/write/close 共幾個 call，藏住磁碟配置、buffer、權限。</p><p>為什麼對 agent 特別有用？因為模型<strong>可以只讀介面＋測試就理解一個模組</strong>，不必把整個實作載進 context。深模組＝契約少＝agent 的思考成本低、出錯面小；淺模組（寬介面、沒藏東西）＝一堆契約要讀，agent 在裡面打轉的機率大增。Uncle Bob 的回應很有意思：「那是危險也是優勢——模型靠介面的名稱與結構猜行為，只要程式一致就沒問題」（30:40）。換句話說，<strong>介面誠實（名稱與行為一致）是 agent 時代的硬需求</strong>。</p><p>順帶一提，Ousterhout《A Philosophy of Software Design》第二版（2021）新增了與《Clean Code》的比較章節，附錄還有與 Uncle Bob 的辯論——訪談 31:04 講的就是這篇。兩邊對「函式長度」與「註解」的意見真的差很多，有興趣可以找來看。</p><h2 id="給-junior-的學習路徑：先寫一年程式，再把自己當-agent"><a class="header-anchor" href="#給-junior-的學習路徑：先寫一年程式，再把自己當-agent"> </a>給 junior 的學習路徑：先寫一年程式，再把自己當 agent</h2><p>訪談最後 Matt 問：AI 吃掉所有戰術性工作後，新手要怎麼學策略性程式設計？Uncle Bob 的回答跟我帶 junior 的想法幾乎一致（46:12 起）：</p><ol><li><strong>先寫一年真正的程式碼</strong>（46:58）：讓你知道 agent 到底在處理什麼。「你無法徹底失去程式碼」（48:09）。</li><li><strong>進公司後「把自己當成 agent」</strong>（47:16）：接受跟 agent 一樣的任務、過一樣的確定性工具閘門。用幾個月處於「極度沒生產力但學超多」的狀態，走完這個 gauntlet，才有資格自己帶一個 agent。</li><li><strong>學會認出「打轉」（thrash）</strong>（50:59）：他怎麼發現 agent 在犯錯？不是看到髒程式碼，是看到 agent 打轉——「我認得那種挣扎，因為我親身經歷過。而新手進來根本認不出挣扎。」這是我覺得整段訪談最精華的一句話。</li><li><strong>讀舊書</strong>（51:33）：Tom DeMarco、Ed Yourdon、《The Pragmatic Programmer》。70、80 年代寫的書要過濾掉過時部分，但「那些教訓就是在那時候學到的」。</li></ol><p>Matt 補了一個很棒的觀察：傳統上策略性程式設計的<strong>回饋迴路極長</strong>——換公司的人永遠看不到自己的錯誤，因為錯誤在九個月後才顯現。AI 把迴路壓縮到分鐘級，新手第一次有機會親眼目睹自己的策略錯誤（50:20）。</p><h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2><p>這次訪談的收穫，老實說不是我學到了多驚人的新東西——反而比較像「我憑感覺在做的事，有一個 50 年經驗的人幫我講出了道理」：用確定性檢查約束 agent、保持介面小且誠實、讓 junior 用最短的回饋迴路去養策略直覺。</p><p>如果你的團隊已經開始用 coding agent，我個人覺得可以立刻動手的三件事：把 <a href="http://CLAUDE.md">CLAUDE.md</a> 砍到極短、把規則改寫成 CI 閘門、然後量一下「同一個任務在乾淨與髒亂 codebase 上的 agent 成功率差多少」。最後這件事我還在實驗中，等有數據再來分享。</p><h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2><ul><li>訪談影片：<a href="https://www.youtube.com/watch?v=zcLPGC-tvgk">LIVE: Uncle Bob on Software Fundamentals in the Age of AI</a>（Matt Pocock 主持，時間戳見內文）</li><li><a href="https://arxiv.org/abs/2307.03172">Lost in the Middle: How Language Models Use Long Contexts（Liu et al., arXiv:2307.03172）</a></li><li>Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>（2025-09-29）</li><li>Alberto Savoia, <a href="https://web.archive.org/web/20200929233315/https://www.artima.com/weblogs/viewpost.jsp?thread=215899">The Code C.R.A.P. Metric Hits the Fan</a>（2007）</li><li><a href="https://en.wikipedia.org/wiki/Mutation_testing">Mutation testing（Wikipedia）</a>、<a href="https://pitest.org/">PIT</a>、<a href="https://stryker-mutator.io/">Stryker</a></li><li>Uncle Bob 工具：<a href="http://github.com/unclebob/">github.com/unclebob/</a>{crap4java, crap4go, mutate4go, dependency-checker, arch-view, negative-test-experiment, swarm-forge}</li><li>John Ousterhout, <a href="https://web.stanford.edu/~ouster/cgi-bin/book.php">A Philosophy of Software Design</a>（2nd ed. 2021）</li></ul>]]>
+    </content>
+    <id>http://blog.kevinyang.net/2026/08/29/uncle-bob-ai-interview-note/</id>
+    <link href="http://blog.kevinyang.net/2026/08/29/uncle-bob-ai-interview-note/"/>
+    <published>2026-08-29T03:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="看完-Uncle-Bob-談-AI-時代的軟體基本功，我整理了五個還在用的觀點"><a class="header-anchor" href="#看完-Uncle-Bob-談-AI-時代的軟體基本功，我整理了五個還在用的觀點"> </a>看完 Uncle Bob 談 AI 時代的軟體基本功，我整理了五個還在用的觀點</h1>
+<p>前陣子把 Matt Pocock 訪談 Uncle Bob（Robert C. Martin）的影片完整看完，大概一個小時的內容，主題是「AI 時代軟體基本功還重不重要」。老實說，裡面有幾個觀點跟我自己用 coding agent 的體感完全一致，也有一些是我正在動手衡量、驗證的主題，所以趁記憶清楚整理成這篇筆記。影片是 LIVE: Uncle Bob on Software Fundamentals in the Age of AI（Matt Pocock 主持，約 57 分鐘）。</p>]]>
+    </summary>
+    <title>看完 Uncle Bob 談 AI 時代的軟體基本功，我整理了五個還在用的觀點</title>
+    <updated>2026-08-29T09:51:13.634Z</updated>
+  </entry>
   <entry>
     <author>
       <name>KevinYang</name>
@@ -28,7 +51,7 @@
     <published>2026-08-29T02:00:00.000Z</published>
     <summary>MCP 學習筆記：Agent Skills 與 MCP 的關係、prompts + resources 實作與本地 skills 生成。</summary>
     <title>[MCP] MCP 與 Agent Skills：prompts、resources 與本地 skills</title>
-    <updated>2026-08-29T09:45:55.045Z</updated>
+    <updated>2026-08-29T09:51:13.634Z</updated>
   </entry>
   <entry>
     <author>
@@ -48,7 +71,7 @@
     <published>2026-08-29T01:00:00.000Z</published>
     <summary>MCP 2026-07-28 規格學習筆記，以把自家 API 開放給 AI 工具為例。</summary>
     <title>[MCP] Remote MCP Server 新規格筆記（2026-07-28）</title>
-    <updated>2026-08-29T09:45:55.045Z</updated>
+    <updated>2026-08-29T09:51:13.634Z</updated>
   </entry>
   <entry>
     <author>
@@ -72,30 +95,7 @@
 <p>把 API 分成「BFF 層」與「Domain Service 層」兩個維度來看，答案會清楚很多，這篇就是把整理的過程筆記下來。</p>]]>
     </summary>
     <title>[API Design] 這支 API 到底在服務誰？BFF 與 Domain Service 的分層思考</title>
-    <updated>2026-08-29T09:45:55.044Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>KevinYang</name>
-    </author>
-    <category term="AI" scheme="http://blog.kevinyang.net/categories/AI/"/>
-    <category term="uncle-bob" scheme="http://blog.kevinyang.net/tags/uncle-bob/"/>
-    <category term="ai-agents" scheme="http://blog.kevinyang.net/tags/ai-agents/"/>
-    <category term="coding-agent" scheme="http://blog.kevinyang.net/tags/coding-agent/"/>
-    <category term="mutation-testing" scheme="http://blog.kevinyang.net/tags/mutation-testing/"/>
-    <category term="deep-modules" scheme="http://blog.kevinyang.net/tags/deep-modules/"/>
-    <content>
-      <![CDATA[<h1 id="看完-Uncle-Bob-談-AI-時代的軟體基本功，我整理了五個還在用的觀點"><a class="header-anchor" href="#看完-Uncle-Bob-談-AI-時代的軟體基本功，我整理了五個還在用的觀點"> </a>看完 Uncle Bob 談 AI 時代的軟體基本功，我整理了五個還在用的觀點</h1><p>前陣子把 Matt Pocock 訪談 Uncle Bob（Robert C. Martin）的影片完整看完，大概一個小時的內容，主題是「AI 時代軟體基本功還重不重要」。老實說，裡面有幾個觀點跟我自己用 coding agent 的體感完全一致，也有一些是我正在動手衡量、驗證的主題，所以趁記憶清楚整理成這篇筆記。影片是 LIVE: Uncle Bob on Software Fundamentals in the Age of AI（Matt Pocock 主持，約 57 分鐘）。</p><span id="more"></span><p>一句話先講結論：<strong>軟體基本功在 AI 時代沒有過時，反而是駕馭 agent 的唯一方法</strong>——只是做法換了：與其用提示詞「引導」agent，不如用自動化檢查「約束」agent。</p><h2 id="為什麼壞程式碼對-agent-也是災難"><a class="header-anchor" href="#為什麼壞程式碼對-agent-也是災難"> </a>為什麼壞程式碼對 agent 也是災難</h2><p>訪談中 Matt 問了一個很關鍵的問題：agent 又快又能動，為什麼要在意壞 code？不能直接 push through 讓 bug 消失嗎？（影片 10:30）</p><p>Uncle Bob 的回答是他在去年 12 月開始認真用 coding agent 時的第一手觀察（10:52–12:10）：</p><blockquote><p>「我讓小 Grock agent 做事，它會留下一堆殘局；我沒清理就讓它做下一件事，它留下更多殘局……然後我注意到它變慢了、卡住了——它會進入一種模式：改 A 無意中弄壞 B，修 B 又弄壞 C，開始繞圈子。」</p></blockquote><blockquote><p>「它們跟人類一樣受 messy code 影響。也許承受度的門檻不同，但門檻是存在的。程式可以亂到某個程度，agent 就再也不行了——我真的遇過 agent 直接放棄，有一個說：『我再也處理不了了。』」（意譯）</p></blockquote><p>這個觀察跟我自己的體感一致，我把它整理成三層機制：</p><ul><li><strong>Context 成本層</strong>：壞 code 代表更多重複、死碼、過長的函式。agent 是生成式模型，讀進去的每一行都是成本，而且它騙不過自己——要改對，就得真的讀懂。context 消耗越快，越早掉進所謂的「dumb zone」（context window 前段約 150k tokens 比較聰明，越往後 attention 越稀釋，這是訪談中 Matt 引用 Dex Hardy 的說法，15:16）。</li><li><strong>錯誤複合層</strong>：壞 code 的隱藏耦合（重複程式碼、繞經全域狀態）讓副作用不可見，於是 agent 修 A 弄壞 B、修 B 弄壞 C，迭代次數呈複合成長。人類可以靠意志和經驗臨時克服髒 code；agent 沒有意志，只有硬上限。</li><li><strong>回饋訊號層</strong>：壞 code 的測試通常也壞——少、脆弱、耦合實作細節，覆蓋率與突變分數低。測試是 agent 的「確定性羅盤」，羅盤失靈，它就不知道自己做對了沒有、何時該停。</li></ul><p>一句話：<strong>壞 code 對人類是慢性疲勞，對 agent 是急性中毒。</strong></p><h2 id="與其寫規則進-prompt，不如把規則變成檢查"><a class="header-anchor" href="#與其寫規則進-prompt，不如把規則變成檢查"> </a>與其寫規則進 prompt，不如把規則變成檢查</h2><p>訪談後半段我最喜歡的部分。Matt 指出現在主流做法是把規則一股腦灌進 <a href="http://CLAUDE.md">CLAUDE.md</a> / <a href="http://AGENTS.md">AGENTS.md</a>（他叫 steering，12:24），Uncle Bob 則是改用自動化檢查（deterministic tools）。</p><p>為什麼要這樣？Uncle Bob 說他自己早期也是 steering 派：「我的早期 prompt 寫著要 TDD、要 clean code、程式碼該長這樣，最後變成一份 5–10 頁的文件，我甚至可以把整本 Clean Code 餵進去」（12:55）。然後他發現（13:18）：</p><blockquote><p>「模型把那些規則當成《神鬼奇航》裡的海盜法典——比較像是 guideline，may follow。」</p></blockquote><p>背後有技術原因：<strong>lost in the middle</strong> 現象（Liu et al., arXiv:2307.03172）——context 變長時，開頭與結尾的內容最有能見度，中段的會被忽略；而且規則清單一旦夠長，連開頭那幾條也會被擠進中段「消失」。確定性工具不會這樣消失——checker 的輸出是「事實」（通過／失敗），不是「建議」，模型沒有選擇性忽略的空間。</p><p>結論是兩句話（14:56）：<strong>把初始 prompt 砍到絕對最小值，保住前段的優先權；其餘全部交給事後的確定性工具。</strong></p><p>我自己對這個觀點很有共鳴，也在這樣做。實務上我會用這個轉換公式：每次想加一條規則進 <a href="http://CLAUDE.md">CLAUDE.md</a>，先問「這條能不能變成 checker？」能 → 做成工具＋CI 閘門；不能（純品味、專案脈絡）→ 才進 prompt，而且保持極短。</p><table><thead><tr><th>想立的規則</th><th>steering 寫法（會被軟化）</th><th>deterministic 寫法（不可消失）</th></tr></thead><tbody><tr><td>函式要小、別太複雜</td><td>「請保持函式短小」</td><td>CRAP 工具門檻 + CI fail-on</td></tr><tr><td>依賴只能單向流動</td><td>「遵循乾淨的分層架構」</td><td>ArchUnit / dependency-cruiser + fail-on-cycles</td></tr><tr><td>不要註解掉的程式碼</td><td>「不要留 commented-out code」</td><td>linter 規則 + CI</td></tr><tr><td>測試要真的有用</td><td>「寫有意義的測試」</td><td>突變測試 + mutation score 閘門</td></tr><tr><td>別把密鑰提交</td><td>「不要把 secret 放進 repo」</td><td>gitleaks + CI</td></tr></tbody></table><p>連 Anthropic 自己也是同方向：《Effective context engineering for AI agents》（2025-09-29）主張 context 是有限資源、記憶檔要精簡、聲明式、普遍適用。</p><h2 id="兩個「人類做不動、agent-做剛好」的舊工具：CRAP-與突變測試"><a class="header-anchor" href="#兩個「人類做不動、agent-做剛好」的舊工具：CRAP-與突變測試"> </a>兩個「人類做不動、agent 做剛好」的舊工具：CRAP 與突變測試</h2><p>訪談中 Uncle Bob 講到他把兩個過去因為「太慢」而被擱置的舊技術重新搬出來用，因為 agent 快、又不覺得工作無聊。這兩個工具我之前的筆記有深入整理過，這裡快速帶過。</p><p><strong>CRAP 分數</strong>（Change Risk Analysis and Prediction，Alberto Savoia 2007 提出）：把迴圈複雜度與測試覆蓋率混成一個數字：</p><blockquote><p>CRAP(m) = CC² × (1 − cov/100)³ + CC</p></blockquote><p>沒測試的高複雜度函式，分數會以複雜度的平方級別爆炸。原始的「crappy」門檻是 30；而 Uncle Bob 用 agent 後，把門檻當成「品質契約」在調：人類 &lt; 4、agent &lt; 6、現在他的 crap4java repo 已經推到 8.0（超過就 exit code 2，CI 會擋）。訪談原文：「人類我壓在 4 以下，agent 我設 6，正在考慮推到 8」（32:34）。</p><p><strong>突變測試（Mutation Testing）</strong>：1971 年由 Richard Lipton 提出，1978 年 DeMillo/Lipton/Sayward 發表經典論文，1980 年 Timothy Budd 才做出第一個工具。概念很簡單：把程式碼自動「種」進一些小蟲（例如把 <code>&lt;</code> 翻成 <code>&gt;</code>），再跑測試——測試掛掉代表突變體被殺（killed），測試照過代表突變體存活（survived），存活越多代表測試越虛。<strong>100% 行覆蓋率不等於測試有效</strong>，突變測試打的就是這個盲點。</p><p>過去為什麼沒人用？成本。Uncle Bob 說他 2000 年左右跑過一次：測試套件跑 4 分鐘 × 數百次突變 = 跑一整夜（07:31）。現在 agent 跑同樣的工作大概 30 分鐘（08:20），而且他把這關交給流水線裡的「hardener」agent，要求「絕對無情地」補到 100% 覆蓋率並消滅所有存活突變體。</p><p>順帶一提，Uncle Bob 把這兩個工具都開源了，而且都有 Go 版：<code>unclebob/crap4go</code>（自動跑 go test + coverprofile 再分析）、<code>unclebob/mutate4go</code>（支援 differential mutation——把「上次測試日期＋函式 hash」寫進檔案尾端，下次只測變更過的函式，正好對應訪談中「agent 只改 5 分鐘內小事」的哲學）。另外還有 <code>unclebob/dependency-checker</code>（宣告誰能依賴誰，違反就 exit 1）與 <code>unclebob/arch-view</code>（互動式 UML 架構檢視器，可以一路點到原始碼）。他的 <code>negative-test-experiment</code>（8 個獨立 Hunt the Wumpus 實作 × CRAP）也很適合當「對照實驗」的原型。</p><h2 id="Deep-Modules：小介面讓-agent-讀得少、懂得多"><a class="header-anchor" href="#Deep-Modules：小介面讓-agent-讀得少、懂得多"> </a>Deep Modules：小介面讓 agent 讀得少、懂得多</h2><p>訪談中 Matt 提到 John Ousterhout 的「深模組」概念（29:47），Uncle Bob 完全買單（30:32）。深模組 = 小介面、大實作：外面的人只要理解那個小介面，複雜度全部藏在裡面。經典例子是 Unix file I/O——open/read/write/close 共幾個 call，藏住磁碟配置、buffer、權限。</p><p>為什麼對 agent 特別有用？因為模型<strong>可以只讀介面＋測試就理解一個模組</strong>，不必把整個實作載進 context。深模組＝契約少＝agent 的思考成本低、出錯面小；淺模組（寬介面、沒藏東西）＝一堆契約要讀，agent 在裡面打轉的機率大增。Uncle Bob 的回應很有意思：「那是危險也是優勢——模型靠介面的名稱與結構猜行為，只要程式一致就沒問題」（30:40）。換句話說，<strong>介面誠實（名稱與行為一致）是 agent 時代的硬需求</strong>。</p><p>順帶一提，Ousterhout《A Philosophy of Software Design》第二版（2021）新增了與《Clean Code》的比較章節，附錄還有與 Uncle Bob 的辯論——訪談 31:04 講的就是這篇。兩邊對「函式長度」與「註解」的意見真的差很多，有興趣可以找來看。</p><h2 id="給-junior-的學習路徑：先寫一年程式，再把自己當-agent"><a class="header-anchor" href="#給-junior-的學習路徑：先寫一年程式，再把自己當-agent"> </a>給 junior 的學習路徑：先寫一年程式，再把自己當 agent</h2><p>訪談最後 Matt 問：AI 吃掉所有戰術性工作後，新手要怎麼學策略性程式設計？Uncle Bob 的回答跟我帶 junior 的想法幾乎一致（46:12 起）：</p><ol><li><strong>先寫一年真正的程式碼</strong>（46:58）：讓你知道 agent 到底在處理什麼。「你無法徹底失去程式碼」（48:09）。</li><li><strong>進公司後「把自己當成 agent」</strong>（47:16）：接受跟 agent 一樣的任務、過一樣的確定性工具閘門。用幾個月處於「極度沒生產力但學超多」的狀態，走完這個 gauntlet，才有資格自己帶一個 agent。</li><li><strong>學會認出「打轉」（thrash）</strong>（50:59）：他怎麼發現 agent 在犯錯？不是看到髒程式碼，是看到 agent 打轉——「我認得那種挣扎，因為我親身經歷過。而新手進來根本認不出挣扎。」這是我覺得整段訪談最精華的一句話。</li><li><strong>讀舊書</strong>（51:33）：Tom DeMarco、Ed Yourdon、《The Pragmatic Programmer》。70、80 年代寫的書要過濾掉過時部分，但「那些教訓就是在那時候學到的」。</li></ol><p>Matt 補了一個很棒的觀察：傳統上策略性程式設計的<strong>回饋迴路極長</strong>——換公司的人永遠看不到自己的錯誤，因為錯誤在九個月後才顯現。AI 把迴路壓縮到分鐘級，新手第一次有機會親眼目睹自己的策略錯誤（50:20）。</p><h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2><p>這次訪談的收穫，老實說不是我學到了多驚人的新東西——反而比較像「我憑感覺在做的事，有一個 50 年經驗的人幫我講出了道理」：用確定性檢查約束 agent、保持介面小且誠實、讓 junior 用最短的回饋迴路去養策略直覺。</p><p>如果你的團隊已經開始用 coding agent，我個人覺得可以立刻動手的三件事：把 <a href="http://CLAUDE.md">CLAUDE.md</a> 砍到極短、把規則改寫成 CI 閘門、然後量一下「同一個任務在乾淨與髒亂 codebase 上的 agent 成功率差多少」。最後這件事我還在實驗中，等有數據再來分享。</p><h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2><ul><li>訪談影片：<a href="https://www.youtube.com/watch?v=zcLPGC-tvgk">LIVE: Uncle Bob on Software Fundamentals in the Age of AI</a>（Matt Pocock 主持，時間戳見內文）</li><li><a href="https://arxiv.org/abs/2307.03172">Lost in the Middle: How Language Models Use Long Contexts（Liu et al., arXiv:2307.03172）</a></li><li>Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>（2025-09-29）</li><li>Alberto Savoia, <a href="https://web.archive.org/web/20200929233315/https://www.artima.com/weblogs/viewpost.jsp?thread=215899">The Code C.R.A.P. Metric Hits the Fan</a>（2007）</li><li><a href="https://en.wikipedia.org/wiki/Mutation_testing">Mutation testing（Wikipedia）</a>、<a href="https://pitest.org/">PIT</a>、<a href="https://stryker-mutator.io/">Stryker</a></li><li>Uncle Bob 工具：<a href="http://github.com/unclebob/">github.com/unclebob/</a>{crap4java, crap4go, mutate4go, dependency-checker, arch-view, negative-test-experiment, swarm-forge}</li><li>John Ousterhout, <a href="https://web.stanford.edu/~ouster/cgi-bin/book.php">A Philosophy of Software Design</a>（2nd ed. 2021）</li></ul>]]>
-    </content>
-    <id>http://blog.kevinyang.net/2025/08/29/uncle-bob-ai-interview-note/</id>
-    <link href="http://blog.kevinyang.net/2025/08/29/uncle-bob-ai-interview-note/"/>
-    <published>2025-08-29T03:00:00.000Z</published>
-    <summary>
-      <![CDATA[<h1 id="看完-Uncle-Bob-談-AI-時代的軟體基本功，我整理了五個還在用的觀點"><a class="header-anchor" href="#看完-Uncle-Bob-談-AI-時代的軟體基本功，我整理了五個還在用的觀點"> </a>看完 Uncle Bob 談 AI 時代的軟體基本功，我整理了五個還在用的觀點</h1>
-<p>前陣子把 Matt Pocock 訪談 Uncle Bob（Robert C. Martin）的影片完整看完，大概一個小時的內容，主題是「AI 時代軟體基本功還重不重要」。老實說，裡面有幾個觀點跟我自己用 coding agent 的體感完全一致，也有一些是我正在動手衡量、驗證的主題，所以趁記憶清楚整理成這篇筆記。影片是 LIVE: Uncle Bob on Software Fundamentals in the Age of AI（Matt Pocock 主持，約 57 分鐘）。</p>]]>
-    </summary>
-    <title>看完 Uncle Bob 談 AI 時代的軟體基本功，我整理了五個還在用的觀點</title>
-    <updated>2026-08-29T09:45:55.044Z</updated>
+    <updated>2026-08-29T09:51:13.634Z</updated>
   </entry>
   <entry>
     <author>
@@ -113,7 +113,7 @@
       <![CDATA[<p>NgRx Signals v20 前陣子釋出了，這一版從別人的文章中，似乎有不少有趣的新東西，其中推出尚在時現階段的 event system, 看文章似乎蠻有趣的，趁著周末有空自己動手玩看看</p>]]>
     </summary>
     <title>[Angular] 看一下 NgRx Signals 20 有什麼好玩的東西</title>
-    <updated>2026-08-29T09:45:55.044Z</updated>
+    <updated>2026-08-29T09:51:13.634Z</updated>
   </entry>
   <entry>
     <author>
@@ -131,7 +131,7 @@
       <![CDATA[<p>Web API 提供的服務涵蓋很廣，File System API 已經推出一段時間，主要功能是讓瀏覽器能經過使用者授權後，與使用者本機的檔案系統做互動，這篇筆記就是將一些如何使用 File system API 記錄下來</p>]]>
     </summary>
     <title>[Angular] work with File System API</title>
-    <updated>2026-08-29T09:45:55.043Z</updated>
+    <updated>2026-08-29T09:51:13.633Z</updated>
   </entry>
   <entry>
     <author>
@@ -150,7 +150,7 @@
 <p><img src="image-20240831103322975.png" alt="image-20240831103322975"></p>]]>
     </summary>
     <title>[GO] 用做一個 CLI 工具</title>
-    <updated>2026-08-29T09:45:55.042Z</updated>
+    <updated>2026-08-29T09:51:13.631Z</updated>
   </entry>
   <entry>
     <author>
@@ -169,7 +169,7 @@
       <![CDATA[<p>Open Policy Agent (OPA) 的文件上有提到 OPA API，但遇上文件有看沒有懂的情況，就得自己動手做做看才有感覺，這邊記錄實作後的理解</p>]]>
     </summary>
     <title>[OPA] OPA API in Go</title>
-    <updated>2026-08-29T09:45:55.042Z</updated>
+    <updated>2026-08-29T09:51:13.631Z</updated>
   </entry>
   <entry>
     <author>
@@ -187,7 +187,7 @@
       <![CDATA[<p>了解 <code>proto</code> 的基本語法後，就可以來用一個程式語言實作 gRPC 服務了，本篇就用 Golang 來作範例吧，練習內容是根據官方文件所提供的教學內容，細節可以到<a href="https://grpc.io/docs/languages/go/quickstart/">這邊</a>閱讀。</p>]]>
     </summary>
     <title>[gRPC] 重新學習 gRPC 系列 - 2</title>
-    <updated>2026-08-29T09:45:55.042Z</updated>
+    <updated>2026-08-29T09:51:13.631Z</updated>
   </entry>
   <entry>
     <author>
@@ -214,7 +214,7 @@
 <p>這表示 gRPC 是一個可以在各種語言/環境中，做到高效且擴充性佳的框架，十分有趣。繼續研讀下去</p>]]>
     </summary>
     <title>[gRPC] 重新學習 gRPC 系列 - 1</title>
-    <updated>2026-08-29T09:45:55.041Z</updated>
+    <updated>2026-08-29T09:51:13.631Z</updated>
   </entry>
   <entry>
     <author>
@@ -232,7 +232,7 @@
       <![CDATA[<p>Angular 17 快上線了，已經看到 RC 版釋出，當然要先玩看看，這一版讓人興奮的一定是新的 flow syntax，除此之外還有什麼有趣的東西嗎? 這篇會快速筆記一下</p>]]>
     </summary>
     <title>[Angular] Angular 17 RC 搶先試用</title>
-    <updated>2026-08-29T09:45:55.041Z</updated>
+    <updated>2026-08-29T09:51:13.631Z</updated>
   </entry>
   <entry>
     <author>
@@ -250,7 +250,7 @@
       <![CDATA[<p>VSCode 應該是很多人的主開發工具，尤其在這個一個人要身兼多語言開發時，VSCode 真的是個不錯的選擇，而 Go 在 VSCode 上的開發體驗，搭配 <a href="https://marketplace.visualstudio.com/items?itemName=golang.Go">Go Exntesion</a> 後，真的沒什麼好挑剔的，但還是有些設定需要做調整，這篇會筆記一些近期針對測試部分所做的設定調整。</p>]]>
     </summary>
     <title>[Go] VSCode 內的 Test Coverage 設定小技巧</title>
-    <updated>2026-08-29T09:45:55.041Z</updated>
+    <updated>2026-08-29T09:51:13.631Z</updated>
   </entry>
   <entry>
     <author>
@@ -268,7 +268,7 @@
       <![CDATA[<p>Go 的 time package，主要提供 time 相關的功能，這篇筆記整理一些常用的 function</p>]]>
     </summary>
     <title>[Go] time package</title>
-    <updated>2026-08-29T09:45:55.040Z</updated>
+    <updated>2026-08-29T09:51:13.630Z</updated>
   </entry>
   <entry>
     <author>
@@ -287,7 +287,7 @@
 <p>這篇 <a href="https://angular.io/guide/http-test-requests">HTTP client - Test requests</a> 內說明如何使用 <code>HttpTestingController</code> 進行 http request 的測試，而因為後期的專案我都是使用 Nx 來建立，Nx 建立的專案是使用  Jest 來跑 Unit Test. 不知道是幸運還是怎樣，竟然遇到超乎預期的結果</p>]]>
     </summary>
     <title>[Angular] 官方文件的 HttpTestingController 範例遇到 jest 時，結果不是想像的那樣，小心</title>
-    <updated>2026-08-29T09:45:55.039Z</updated>
+    <updated>2026-08-29T09:51:13.629Z</updated>
   </entry>
   <entry>
     <author>
@@ -305,7 +305,7 @@
       <![CDATA[<p>除了 Postman，在 VS Code 內還有其他類似的套件可以選擇，例如本篇筆記的主角 <code>Rest Client</code></p>]]>
     </summary>
     <title>[VSCode] Rest Client Extension</title>
-    <updated>2026-08-29T09:45:55.038Z</updated>
+    <updated>2026-08-29T09:51:13.628Z</updated>
   </entry>
   <entry>
     <author>
@@ -327,7 +327,7 @@
 <p>前端開發可以透過提供的 SDK 將相關資訊傳到後面的 Agent/Collect ，就完成了。只是 SDK 雖然簡單套用，裡面有很多細節設定是需要深入研究的，這篇就是這些設定的學習筆記</p>]]>
     </summary>
     <title>[Grafana] Faro Web SDK 學習筆記</title>
-    <updated>2026-08-29T09:45:55.038Z</updated>
+    <updated>2026-08-29T09:51:13.628Z</updated>
   </entry>
   <entry>
     <author>
@@ -351,7 +351,7 @@
 <p>讀書筆記跟實務上遇到的經驗都會整理一起</p>]]>
     </summary>
     <title>[讀書筆記][閱讀中] 網站可靠性工程工作手冊｜導入SRE的實用方法</title>
-    <updated>2026-08-29T09:45:55.038Z</updated>
+    <updated>2026-08-29T09:51:13.628Z</updated>
   </entry>
   <entry>
     <author>
@@ -370,7 +370,7 @@
 <p>這一篇來學習如何寫 Ansible playbook</p>]]>
     </summary>
     <title>[Ansible] 學習 Ansible 之路 - Ansible playbook</title>
-    <updated>2026-08-29T09:45:55.037Z</updated>
+    <updated>2026-08-29T09:51:13.627Z</updated>
   </entry>
   <entry>
     <author>
@@ -388,7 +388,7 @@
       <![CDATA[<p>基於種種原因，必須學習 Ansible，這已經脫離之前習慣的領域，所以就用一個新手的心學習這一個工具，聽說是很厲害的工具</p>]]>
     </summary>
     <title>[Ansible] 學習 Ansible 之路 - 環境準備篇</title>
-    <updated>2026-08-29T09:45:55.036Z</updated>
+    <updated>2026-08-29T09:51:13.626Z</updated>
   </entry>
   <entry>
     <author>
@@ -406,6 +406,6 @@
       <![CDATA[<p>Angular 嘗試在下一世代中加入新的 reactive 機制，試圖找到取代 zone.js 的方式，因此引進了 <code>signals</code> 來試試看是否能成為下一代 change detection 的選擇。想要嘗試的朋友可以安裝 <code>angular cli v16</code> 的版本</p>]]>
     </summary>
     <title>[Angular] Signals 嘗鮮</title>
-    <updated>2026-08-29T09:45:55.035Z</updated>
+    <updated>2026-08-29T09:51:13.625Z</updated>
   </entry>
 </feed>
