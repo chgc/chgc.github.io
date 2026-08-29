@@ -143,18 +143,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-count">363</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -206,6 +206,218 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/10/04/flutter-code-structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/04/flutter-code-structure/" class="post-title-link" itemprop="url">[Flutter] 專案程式基本架構</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-10-04 12:01:37" itemprop="dateCreated datePublished" datetime="2019-10-04T12:01:37+08:00">2019-10-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Flutter/" itemprop="url" rel="index"><span itemprop="name">Flutter</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/10/04/flutter-code-structure/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/04/flutter-code-structure/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>上一篇建立了第一個 Flutter 專案，這回從零開始，認識 Flutter 的基本程式架構</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/04/flutter-code-structure/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/10/04/flutter-basic-start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/04/flutter-basic-start/" class="post-title-link" itemprop="url">[Flutter] 環境設定</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-10-04 09:03:03" itemprop="dateCreated datePublished" datetime="2019-10-04T09:03:03+08:00">2019-10-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Flutter/" itemprop="url" rel="index"><span itemprop="name">Flutter</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/10/04/flutter-basic-start/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/04/flutter-basic-start/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Flutter 從去年年底發佈到現在，也接近一年的時間，目前在寫這篇筆記時，Flutter SDK 版本是 1.9，而也是因為看過不少實際將 Flutter 用在專案產品上的案例，所以才決定要開始探索 Flutter。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/04/flutter-basic-start/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/09/04/rxjs-generate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -242,7 +454,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -348,7 +560,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -456,7 +668,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -562,7 +774,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -669,7 +881,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -775,7 +987,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -881,7 +1093,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -987,7 +1199,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1028,223 +1240,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/08/08/core-mvc-nodeservice-puppeteer/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/07/26/angular-with-o365-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/26/angular-with-o365-3/" class="post-title-link" itemprop="url">[Angular] 與 O365 跳舞系列 - OneDrive</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2019-07-26 11:06:20" itemprop="dateCreated datePublished" datetime="2019-07-26T11:06:20+08:00">2019-07-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/O365/" itemprop="url" rel="index"><span itemprop="name">O365</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2019/07/26/angular-with-o365-3/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/26/angular-with-o365-3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>自從去年寫了兩篇跟 O365 Graph 有關的文章後，就停了好長的一段時間，長到連登入的方法都改變了，(<a href="https://blog.kevinyang.net/2018/10/20/angular-with-o365-1/">登入篇</a> 也做了相對應的更新)</p>
-<p>存取檔案可以算是很常見的需求，所以這次要來研究如何讀寫在  OneDrive 上的檔案</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/26/angular-with-o365-3/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2019/07/15/angular-firebase-link-provide-to-same-account/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/15/angular-firebase-link-provide-to-same-account/" class="post-title-link" itemprop="url">[Angular] Firebase 該如何連結多登入方式到同一個驗證帳號上</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2019-07-15 09:05:23" itemprop="dateCreated datePublished" datetime="2019-07-15T09:05:23+08:00">2019-07-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:08" itemprop="dateModified" datetime="2026-08-22T22:09:08+08:00">2026-08-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Angular/" itemprop="url" rel="index"><span itemprop="name">Angular</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2019/07/15/angular-firebase-link-provide-to-same-account/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/15/angular-firebase-link-provide-to-same-account/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>AngularFire</code> 讓我們在處理 firebase 相關功能時，變得十分簡單，可以說是無痛結合。周末有朋友提出一個問題，當我們利用 Firebase 當作系統的登入驗證功能時，由於 Firebase本身有提供多種登入驗證的方式，我們該如何讓使用者可以用不同的登入方式登入，但我們仍將其視為同一使用者呢?</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/15/angular-firebase-link-provide-to-same-account/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>

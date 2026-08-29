@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hljKlMsU2SXcxNs19upKC7c-yN09EjgKqMi2zR2Ojgg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.kevinyang.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="MCP 學習筆記：Agent Skills 與 MCP 的關係、prompts + resources 實作與本地 skills 生成。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MCP] MCP 與 Agent Skills：prompts、resources 與本地 skills">
+<meta property="og:url" content="http://blog.kevinyang.net/2026/08/29/mcp-agent-skills-note/index.html">
+<meta property="og:site_name" content="CK&#39;s Notepad">
+<meta property="og:description" content="MCP 學習筆記：Agent Skills 與 MCP 的關係、prompts + resources 實作與本地 skills 生成。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2026-08-29T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-29T07:58:53.645Z">
+<meta property="article:author" content="KevinYang">
+<meta property="article:tag" content="agent-skills">
+<meta property="article:tag" content="claude-code">
+<meta property="article:tag" content="mcp">
+<meta property="article:tag" content="mcp-prompts">
+<meta property="article:tag" content="mcp-resources">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.kevinyang.net/2026/08/29/mcp-agent-skills-note/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.kevinyang.net/2026/08/29/mcp-agent-skills-note/","path":"2026/08/29/mcp-agent-skills-note/","title":"[MCP] MCP 與 Agent Skills：prompts、resources 與本地 skills"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[MCP] MCP 與 Agent Skills：prompts、resources 與本地 skills | CK's Notepad</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2X3KJFBLM"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-Q2X3KJFBLM","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Google AdSense (auto ads) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7997572949867824"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="CK's Notepad" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CK's Notepad</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-house fa-fw"></i>首頁</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-box-archive fa-fw"></i>歸檔</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MCP-%E8%88%87-Agent-Skills-%E7%AD%86%E8%A8%98%EF%BC%9Aprompts%E3%80%81resources-%E8%88%87%E6%9C%AC%E5%9C%B0-skills-%E7%94%9F%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">MCP 與 Agent Skills 筆記：prompts、resources 與本地 skills 生成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E9%87%90%E6%B8%85%EF%BC%9AAgent-Skills-%E8%88%87-MCP-%E6%98%AF%E5%85%A9%E5%80%8B%E6%A8%99%E6%BA%96"><span class="nav-number">1.1.</span> <span class="nav-text">先釐清：Agent Skills 與 MCP 是兩個標準</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%90%91%E4%B8%80%EF%BC%9A%E6%8A%8A-API-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%E5%81%9A%E6%88%90-prompts-resources%EF%BC%88Go-%E5%AF%A6%E4%BD%9C%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">方向一：把 API 使用指南做成 prompts + resources（Go 實作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%90%91%E4%BA%8C%EF%BC%9A%E6%8A%8A-resources-%E8%AE%8A%E6%88%90%E9%96%8B%E7%99%BC%E8%80%85%E6%9C%AC%E5%9C%B0%E7%9A%84-skills%EF%BC%88%E5%8F%8D%E5%90%91%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">方向二：把 resources 變成開發者本地的 skills（反向模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">1.4.</span> <span class="nav-text">小結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">1.5.</span> <span class="nav-text">參考資料</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KevinYang"
+      src="/images/4550568.jpg">
+  <p class="site-author-name" itemprop="name">KevinYang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">363</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/CKNotepad" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;CKNotepad" rel="noopener me" target="_blank"><i class="fa fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/chgc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chgc" rel="noopener me" target="_blank"><i class="fa fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          連結
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.miniasp.com/" title="https:&#x2F;&#x2F;blog.miniasp.com&#x2F;" rel="noopener" target="_blank">The Will Will Web | Will 保哥</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wellwind.idv.tw/blog/" title="https:&#x2F;&#x2F;wellwind.idv.tw&#x2F;blog&#x2F;" rel="noopener" target="_blank">全端開發人員天梯</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://poychang.github.io/" title="https:&#x2F;&#x2F;poychang.github.io&#x2F;" rel="noopener" target="_blank">POY CHANG | Trial and Error</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2026/08/29/mcp-agent-skills-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[MCP] MCP 與 Agent Skills：prompts、resources 與本地 skills | CK's Notepad">
+      <meta itemprop="description" content="MCP 學習筆記：Agent Skills 與 MCP 的關係、prompts + resources 實作與本地 skills 生成。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [MCP] MCP 與 Agent Skills：prompts、resources 與本地 skills
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2026-08-29 10:00:00 / 修改時間：15:58:53" itemprop="dateCreated datePublished" datetime="2026-08-29T10:00:00+08:00">2026-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MCP/" itemprop="url" rel="index"><span itemprop="name">MCP</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2026/08/29/mcp-agent-skills-note/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/08/29/mcp-agent-skills-note/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">MCP 學習筆記：Agent Skills 與 MCP 的關係、prompts + resources 實作與本地 skills 生成。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="MCP-與-Agent-Skills-筆記：prompts、resources-與本地-skills-生成"><a class="header-anchor" href="#MCP-與-Agent-Skills-筆記：prompts、resources-與本地-skills-生成"> </a>MCP 與 Agent Skills 筆記：prompts、resources 與本地 skills 生成</h1>
+<p>這篇是從 <a href="/2026/08/29/mcp-remote-server-note/">MCP Remote Server 新規格筆記</a> 拆出來的內容面：當服務不只是暴露 tools，還想提供「給 AI 看的指令與知識」時，skills、prompts、resources 這三者的關係，以及怎麼實作。核心問題只有一個——<strong>skills 這種東西，能不能透過 MCP 提供？</strong></p>
+<span id="more"></span>
+<h2 id="先釐清：Agent-Skills-與-MCP-是兩個標準"><a class="header-anchor" href="#先釐清：Agent-Skills-與-MCP-是兩個標準"> </a>先釐清：Agent Skills 與 MCP 是兩個標準</h2>
+<p>常被問到但其實是兩個標準：<strong>Agent Skills（<code>SKILL.md</code>）是 client 端的機制</strong>（<a target="_blank" rel="noopener" href="http://agentskills.io">agentskills.io</a> 的開放標準），不是 MCP protocol 的一部分。MCP server 能提供的是協議原生的三種 primitive，其中 <strong>prompts 最接近 skills</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>想要的效果</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>給 AI 的操作指引 / 指令模板</td>
+<td><strong>prompts</strong>（<code>prompts/list</code>、<code>prompts/get</code>）——server 定義結構化 instructions，使用者端常以 slash command 取用，2026-07-28 規格仍保留</td>
+</tr>
+<tr>
+<td>給 AI 的知識文件 / 參考資料</td>
+<td><strong>resources</strong>——把說明文件當 resource 暴露</td>
+</tr>
+<tr>
+<td>讓 AI 執行事情</td>
+<td><strong>tools</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>一個 skill 概念上 ≈ <code>prompts</code>（指令）+ <code>resources</code>（知識）+ <code>tools</code>（執行）的組合，這是通用方案，所有 MCP client 都懂</li>
+<li>MCP 官方文件的 <code>build-with-agent-skills</code> 是<strong>反向</strong>：用 Agent Skills 引導 agent 幫我們建 server（<code>mcp-server-dev</code> plugin），是開發工具不是 server 內容</li>
+<li>想給 Claude Code 使用者「<a target="_blank" rel="noopener" href="http://SKILL.md">SKILL.md</a> 一起交付」的體驗，走 <strong>plugin</strong> 打包（plugin 可以同時含 skills + MCP server 註冊），但那只服務特定 client</li>
+</ul>
+<h2 id="方向一：把-API-使用指南做成-prompts-resources（Go-實作）"><a class="header-anchor" href="#方向一：把-API-使用指南做成-prompts-resources（Go-實作）"> </a>方向一：把 API 使用指南做成 prompts + resources（Go 實作）</h2>
+<p>對想開放給「任何 AI 工具」的服務擁有者來說：先用 <strong>prompts + resources</strong> 把 API 使用指南做成 server 內容，通用性最高；特定工具的進階體驗之後再加。</p>
+<p>兩者的分工是：<strong>prompts 放「固定的操作流程模板」</strong>（例如「用我們的報表工具分析某張報表」這種引導），<strong>resources 放「知識文件」</strong>（API 使用指南、認證方式、錯誤碼對照、rate limit 規則）。以官方 go-sdk 為例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// --- prompts：引導 AI 完成固定流程，使用者端常以 slash command 觸發 ---</span></span><br><span class="line">server.AddPrompt(&amp;mcp.Prompt&#123;</span><br><span class="line">	Name:        <span class="string">&quot;analyze-report&quot;</span>,</span><br><span class="line">	Title:       <span class="string">&quot;分析報表&quot;</span>,</span><br><span class="line">	Description: <span class="string">&quot;引導 AI 用報表工具分析指定報表&quot;</span>,</span><br><span class="line">	Arguments: []*mcp.PromptArgument&#123;</span><br><span class="line">		&#123;Name: <span class="string">&quot;report_id&quot;</span>, Description: <span class="string">&quot;要分析的報表 ID&quot;</span>, Required: <span class="literal">true</span>&#125;,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;, <span class="function"><span class="keyword">func</span><span class="params">(ctx context.Context, req *mcp.GetPromptRequest)</span></span> (*mcp.GetPromptResult, <span class="type">error</span>) &#123;</span><br><span class="line">	id := req.Params.Arguments[<span class="string">&quot;report_id&quot;</span>] <span class="comment">// 使用者填入的參數</span></span><br><span class="line">	<span class="keyword">return</span> &amp;mcp.GetPromptResult&#123;</span><br><span class="line">		Description: <span class="string">&quot;報表分析引導&quot;</span>,</span><br><span class="line">		Messages: []*mcp.PromptMessage&#123;</span><br><span class="line">			&#123;Role: <span class="string">&quot;user&quot;</span>, Content: &amp;mcp.TextContent&#123;</span><br><span class="line">				Text: fmt.Sprintf(<span class="string">&quot;請用 list_reports / get_report 工具分析報表 %s，重點看趨勢與異常。&quot;</span>, id),</span><br><span class="line">			&#125;&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;, <span class="literal">nil</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// --- resources：把知識文件當內容提供，client 可以當附件加進對話 ---</span></span><br><span class="line">server.AddResource(&amp;mcp.Resource&#123;</span><br><span class="line">	Name:        <span class="string">&quot;api-guide&quot;</span>,</span><br><span class="line">	Title:       <span class="string">&quot;API 使用指南&quot;</span>,</span><br><span class="line">	Description: <span class="string">&quot;ACME Analytics API 的完整使用指南（認證、錯誤碼、rate limit 與範例）&quot;</span>,</span><br><span class="line">	MIMEType:    <span class="string">&quot;text/markdown&quot;</span>,</span><br><span class="line">	URI:         <span class="string">&quot;embedded:guide/api&quot;</span>, <span class="comment">// URI scheme 自己設計，官方範例慣用 embedded:</span></span><br><span class="line">&#125;, <span class="function"><span class="keyword">func</span><span class="params">(ctx context.Context, req *mcp.ReadResourceRequest)</span></span> (*mcp.ReadResourceResult, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> req.Params.URI != <span class="string">&quot;embedded:guide/api&quot;</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, mcp.ResourceNotFoundError(req.Params.URI) <span class="comment">// 官方建議的回法</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &amp;mcp.ReadResourceResult&#123;Contents: []*mcp.ResourceContents&#123;</span><br><span class="line">		&#123;URI: req.Params.URI, MIMEType: <span class="string">&quot;text/markdown&quot;</span>, Text: apiGuideMD&#125;, <span class="comment">// apiGuideMD 可用 //go:embed 包成二進位</span></span><br><span class="line">	&#125;&#125;, <span class="literal">nil</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// --- resource template：依參數展開的動態文件（RFC 6570） ---</span></span><br><span class="line">server.AddResourceTemplate(&amp;mcp.ResourceTemplate&#123;</span><br><span class="line">	Name:        <span class="string">&quot;guide-section&quot;</span>,</span><br><span class="line">	MIMEType:    <span class="string">&quot;text/markdown&quot;</span>,</span><br><span class="line">	URITemplate: <span class="string">&quot;embedded:guide/&#123;section&#125;&quot;</span>,</span><br><span class="line">&#125;, guideSectionHandler)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>對應注意的點：
+<ol>
+<li><code>AddPrompt</code> 的 handler 回 <code>GetPromptResult</code>，內容是 <code>Messages</code>（role + content）；<code>Arguments</code> 讓使用者觸發時填參數，在 handler 裡用 <code>req.Params.Arguments</code> 取值</li>
+<li><code>AddResource</code> 的 handler 回 <code>ReadResourceResult.Contents</code>，找不到資源就回 <code>mcp.ResourceNotFoundError(uri)</code>（官方特別註記這個寫法）</li>
+<li><code>MIMEType: &quot;text/markdown&quot;</code> 是重點——文件用 markdown 寫，AI 讀起來最順</li>
+<li>2026-07-28 規格中 prompts 是 <strong>user-controlled</strong>：由使用者主動觸發（常呈現為 slash command），不是 AI 自己決定要用的；所以別期待 AI 會自動跑去讀指南，指南類知識要放 resources 才容易被帶進對話</li>
+<li>resource template 用 RFC 6570 的 URI 樣板，適合「文件很多、不想逐筆註冊」的情境</li>
+<li>完整可抄的範例在官方 <a target="_blank" rel="noopener" href="https://github.com/modelcontextprotocol/go-sdk/blob/main/examples/server/everything/main.go">examples/server/everything/main.go</a>（prompt、embedded resource、resource template 三個都有）</li>
+</ol>
+</li>
+</ul>
+<h2 id="方向二：把-resources-變成開發者本地的-skills（反向模式）"><a class="header-anchor" href="#方向二：把-resources-變成開發者本地的-skills（反向模式）"> </a>方向二：把 resources 變成開發者本地的 skills（反向模式）</h2>
+<p>另一個方向也很值得知道：<strong>不是把 <a target="_blank" rel="noopener" href="http://SKILL.md">SKILL.md</a> 放進 server，而是讓 coding agent 讀取 server 的 resources，在開發者本地生成 <a target="_blank" rel="noopener" href="http://SKILL.md">SKILL.md</a></strong>。技術上成立，因為 resources 內容就是 markdown、agent 有寫檔能力、而且 Claude Code 對 skills 目錄有 hot-reload（新增 <code>SKILL.md</code> 當下 session 就生效）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. agent 讀 resource    →  @acme:embedded:guide/api（API 整合指南）</span><br><span class="line">2. 開發者指示            →  「把 ACME 的整合方式做成一個 skill」</span><br><span class="line">3. agent 生成            →  .claude/skills/acme-api/SKILL.md（+ references/ 範例檔）</span><br><span class="line">4. 之後任何 session      →  skill 描述觸發 → 載入 SKILL.md → 依指示呼叫 MCP server 的工具</span><br></pre></td></tr></table></figure>
+<p>本地 skills 三層路徑（Claude Code 慣例）：<code>~/.claude/skills/&lt;name&gt;/SKILL.md</code>（個人）、<code>.claude/skills/&lt;name&gt;/SKILL.md</code>（專案，可 commit 共享給團隊）、<code>&lt;plugin&gt;/skills/&lt;name&gt;/SKILL.md</code>（隨 plugin 分發）。分工是：<strong>skill 負責知識與觸發條件，MCP tools 負責執行</strong>；skill 資料夾加了 <code>.claude-plugin/plugin.json</code> 還能跟 MCP server 設定一起打包成 plugin。</p>
+<p>提醒三點：這是 <strong>agent 驅動的模式，不是協定標準化的機制</strong>（沒有標準會把 skill 推送給 client）；resources 來自第三方、skill 又是會自動觸發的持久化指令，生成前要開發者核准、事後 review（防 prompt injection）；資料會變的內容別寫死進 skill，放 resources 維持動態，skill 只留穩定知識（認證慣例、觸發規則）。</p>
+<h2 id="小結"><a class="header-anchor" href="#小結"> </a>小結</h2>
+<p>對服務擁有者來說，務實的順序是：先把 API 使用指南做成 <strong>resources + prompts</strong>（所有 MCP client 通用），再視開發者需求，讓 agent 把資源內容轉成本地 <strong>skills</strong>（Claude Code 生態的進階體驗）。server 不必親自「發送」skill——把內容做好，agents 自然會把它變成 skill。</p>
+<h2 id="參考資料"><a class="header-anchor" href="#參考資料"> </a>參考資料</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://agentskills.io/">Agent Skills 標準（agentskills.io）</a></li>
+<li><a target="_blank" rel="noopener" href="https://modelcontextprotocol.io/specification/2026-07-28/server/prompts">Model Context Protocol — Prompts</a></li>
+<li><a target="_blank" rel="noopener" href="https://modelcontextprotocol.io/specification/2026-07-28/server/resources">Model Context Protocol — Resources</a></li>
+<li><a target="_blank" rel="noopener" href="https://modelcontextprotocol.io/docs/2026-07-28/develop/build-with-agent-skills.md">Model Context Protocol — Build with Agent Skills</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/skills">Claude Code — Skills</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/modelcontextprotocol/go-sdk/blob/main/examples/server/everything/main.go">MCP Go SDK — examples/server/everything（prompt / resource / resource template 範例）</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mcp/" rel="tag"># mcp</a>
+              <a href="/tags/agent-skills/" rel="tag"># agent-skills</a>
+              <a href="/tags/mcp-resources/" rel="tag"># mcp-resources</a>
+              <a href="/tags/mcp-prompts/" rel="tag"># mcp-prompts</a>
+              <a href="/tags/claude-code/" rel="tag"># claude-code</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/08/29/mcp-remote-server-note/" rel="prev" title="[MCP] Remote MCP Server 新規格筆記（2026-07-28）">
+                  <i class="fa fa-angle-left"></i> [MCP] Remote MCP Server 新規格筆記（2026-07-28）
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KevinYang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"cksnotepad","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

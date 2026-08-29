@@ -143,18 +143,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">361</span>
+          <span class="site-state-item-count">363</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -206,6 +206,229 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/03/31/bot-to-write-a-bot-makes-me-think-of-msn-bot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/03/31/bot-to-write-a-bot-makes-me-think-of-msn-bot/" class="post-title-link" itemprop="url">[Bot] 來寫Bot吧...讓我想起 MSN Bot了</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2016-04-01 01:53:00" itemprop="dateCreated datePublished" datetime="2016-04-01T01:53:00+08:00">2016-04-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/BOT/" itemprop="url" rel="index"><span itemprop="name">BOT</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/03/31/bot-to-write-a-bot-makes-me-think-of-msn-bot/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/31/bot-to-write-a-bot-makes-me-think-of-msn-bot/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>先從基本的開始，跟著下面的文章做，就可以完成基本的Bot功能了
+<a target="_blank" rel="noopener" href="http://docs.botframework.com/connector/getstarted/#navtitle">http://docs.botframework.com/connector/getstarted/#navtitle</a></p>
+<p><strong>注意事項</strong></p>
+<ol>
+<li>
+<p>當在新增【My Bot】時，Endpoint的網址一定要用<strong>https</strong>, 不然之後在測試Bot Connector時會出現403, 無法授權等奇怪的狀況.</p>
+</li>
+<li>
+<p>如果使用web chat embed code時，要把他們所提供網址裡的s=[secret] 改成 t=[secret]</p>
+</li>
+</ol>
+<p>###程式基本的運作方式</p>
+<p>Bot在與Bot Connector之間的溝通是透過傳遞Message.
+這個Message裡面會包含很多資訊，也可以保留狀態(所以可以建立一連串的問題，就像在執行npm init時會問一堆問題一樣)
+<a target="_blank" rel="noopener" href="http://docs.botframework.com/connector/message-types/#navtitle">網站參考</a></p>
+<p>總結: 一切都是在玩弄Message這個物件阿.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/03/27/mvc-core-run-with-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/03/27/mvc-core-run-with-docker/" class="post-title-link" itemprop="url">[MVC Core] Run with Docker</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2016-03-27 14:43:00" itemprop="dateCreated datePublished" datetime="2016-03-27T14:43:00+08:00">2016-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/03/27/mvc-core-run-with-docker/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/27/mvc-core-run-with-docker/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>基於Docker安裝步驟變簡單了，所以是時候來玩Docker了.
+在MVC Core的目錄下，新增一個檔案Dockfile, 內容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM microsoft/aspnet:1.0.0-rc1-update1</span><br><span class="line"></span><br><span class="line">COPY . /app</span><br><span class="line">WORKDIR /app</span><br><span class="line">RUN [&quot;dnu&quot;, &quot;restore&quot;]</span><br><span class="line"></span><br><span class="line">EXPOSE 5000/tcp</span><br><span class="line">ENTRYPOINT [&quot;dnx&quot;, &quot;-p&quot;, &quot;project.json&quot;, &quot;web&quot;,&quot;--server.urls&quot;, &quot;http://0.0.0.0:5000&quot;]</span><br></pre></td></tr></table></figure>
+<p>**server.urls 需要指定到0.0.0.0:port, 不然在docker run起來的時候，網頁會說Refused to Connect
+server.urls的設定方式可以參考<a target="_blank" rel="noopener" href="http://docs.asp.net/en/latest/fundamentals/servers.html">這裡</a></p>
+<p>開啟命令視窗，到有Dockerfile檔案的資料夾並執行下列指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t &lt;imageName&gt; .</span><br></pre></td></tr></table></figure>
+<p>上列指令這會建立一個docker image file
+接下來就要讓所建立出來的Image執行起來, 執行下列指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -t -d -p 5000:5000 &lt;imageName&gt;</span><br></pre></td></tr></table></figure>
+<p>詳細的Docker指令用法，請參閱官方網站</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2016/03/27/685100/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -242,7 +465,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -367,7 +590,7 @@ REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default�
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -474,7 +697,7 @@ REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default�
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -576,7 +799,7 @@ REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default�
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -679,7 +902,7 @@ REM     FOR /f 「tokens=*」 %i IN (『docker-machine env --shell cmd default�
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -800,7 +1023,7 @@ AuthenticationScheme: The AuthenticationScheme in the options corresponds to the
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -918,7 +1141,7 @@ AuthenticationScheme: The AuthenticationScheme in the options corresponds to the
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1037,7 +1260,7 @@ AuthenticationScheme: The AuthenticationScheme in the options corresponds to the
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
+      <time title="修改時間：2026-08-29 15:58:53" itemprop="dateModified" datetime="2026-08-29T15:58:53+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1083,235 +1306,6 @@ AuthenticationScheme: The AuthenticationScheme in the options corresponds to the
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var parts = [&#x27;shoulders&#x27;, &#x27;knees&#x27;];</span><br><span class="line">var lyrics = [&#x27;head&#x27;, ...parts, &#x27;and&#x27;, &#x27;toes&#x27;]; // [&quot;head&quot;, &quot;shoulders&quot;, &quot;knees&quot;, &quot;and&quot;, &quot;toes&quot;]</span><br></pre></td></tr></table></figure>
 <p>A better push</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr1 = [0, 1, 2];</span><br><span class="line">var arr2 = [3, 4, 5];</span><br><span class="line">arr1.push(...arr2);</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/" class="post-title-link" itemprop="url">[ASP.NET] 透過ajax的方式向webapi下載檔案</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2015-10-20 10:53:00" itemprop="dateCreated datePublished" datetime="2015-10-20T10:53:00+08:00">2015-10-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/ASP-NET-MVC/" itemprop="url" rel="index"><span itemprop="name">ASP.NET MVC</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/20/aspnet-download-files-use-ajax-to-the-webapi/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>現在SPA的網站越來越盛行，下載檔案的功能在ajax下是有點麻煩，但是感謝HTML5下的Blob功能。網路上就有相對應的js功能出來
-所以，引用這位大大的程式 (<a target="_blank" rel="noopener" href="https://github.com/eligrey/FileSaver.js">https://github.com/eligrey/FileSaver.js</a>)，其相關限制都有在該專案上描述</p>
-<p>所以使用方法如下
-(Client端)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$http.post(&#x27;api url&#x27;, query, &#123; responseType: &#x27;arraybuffer&#x27; &#125;).then(function (response) &#123;        </span><br><span class="line">            var filename = (filename);</span><br><span class="line">            var expectedMediaType = (file-Content-Type);</span><br><span class="line">            openSaveAsDialog(filename, response.data, expectedMediaType);</span><br><span class="line">&#125;);      </span><br><span class="line">                </span><br><span class="line">function openSaveAsDialog(filename, content, mediaType) &#123;</span><br><span class="line">        var blob = new Blob([content], &#123; type: mediaType &#125;);</span><br><span class="line">        saveAs(blob, filename);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>重點</strong> : responseType 要設定為 arraybuffer</p>
-<p>(Server端)
-Webapi要回傳的httpresponseMessage內容如下, 不好意思程式碼是VB, 因為這個專案是用VB開發的，但是基本觀念的一樣的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Dim response As HttpResponseMessage = New HttpResponseMessage()</span><br><span class="line">       &#x27; _ms 是 MemoryStream, 這裡是因為要將NPOI所產生的excel檔做下載, 然而我將NPOI所產生出來的東西</span><br><span class="line">       &#x27; 存入到 MemoryStream裡, 重點是ByteArrayContent</span><br><span class="line">       Dim _filename as string = (filename)</span><br><span class="line">       If _ms IsNot Nothing Then</span><br><span class="line">           response.Content = New ByteArrayContent(_ms.ToArray())</span><br><span class="line">       End If</span><br><span class="line">       response.Content.Headers.ContentType = New Headers.MediaTypeHeaderValue(&quot;application/octet-stream&quot;)</span><br><span class="line">       response.Content.Headers.ContentDisposition = New Headers.ContentDispositionHeaderValue(&quot;attachment&quot;) With &#123;.FileName = HttpUtility.UrlPathEncode(_filename)&#125;</span><br><span class="line">       Return Task.FromResult(response)</span><br></pre></td></tr></table></figure>
-<p>以上的動作就可以讓ajax的call直接做下載檔案的動作，就不用另外產生一個form然後做post到新視窗後再下載了 ^^</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2015/10/18/javascript-es2015-let/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/10/18/javascript-es2015-let/" class="post-title-link" itemprop="url">[Javascript] ES2015 - Destructuring</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2015-10-18 13:08:00" itemprop="dateCreated datePublished" datetime="2015-10-18T13:08:00+08:00">2015-10-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-22 22:09:07" itemprop="dateModified" datetime="2026-08-22T22:09:07+08:00">2026-08-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2015/10/18/javascript-es2015-let/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/18/javascript-es2015-let/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Destructuring"><a class="header-anchor" href="#Destructuring"> </a>Destructuring</h1>
-<p>可以將值從陣列或是物件裡取出並設定到變數上</p>
-<h2 id="syntax"><a class="header-anchor" href="#syntax"> </a>syntax</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[a, b] = [1, 2]</span><br><span class="line">[a, b, ...rest] = [1, 2, 3, 4, 5]</span><br><span class="line">&#123;a, b&#125; = &#123;a:1, b:2&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Destructuring-arrays"><a class="header-anchor" href="#Destructuring-arrays"> </a>Destructuring arrays</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var foo = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;];</span><br><span class="line"></span><br><span class="line">// without destructuring</span><br><span class="line">var one   = foo[0];</span><br><span class="line">var two   = foo[1];</span><br><span class="line">var three = foo[2];</span><br><span class="line"></span><br><span class="line">// with destructuring</span><br><span class="line">var [one, two, three] = foo;</span><br></pre></td></tr></table></figure>
-<p>其他用法
-1.Multiple-value returns</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function f() &#123;</span><br><span class="line">    return [1, 2];</span><br><span class="line">&#125;</span><br><span class="line">var a, b;</span><br><span class="line">[a, b] = f();</span><br><span class="line">console.log(&quot;A is &quot; + a + &quot; B is &quot; + b);</span><br></pre></td></tr></table></figure>
-<p>2.Ignoring some returned values</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function f() &#123;</span><br><span class="line">    return [1, 2, 3];</span><br><span class="line">&#125;</span><br><span class="line">var a, b;</span><br><span class="line">[a, ,b] = f();</span><br><span class="line">console.log(&quot;A is &quot; + a + &quot; B is &quot; + b);</span><br><span class="line">// A is 1 B is 3</span><br></pre></td></tr></table></figure>
-<p>3.衍伸用法: Pulling values from a regular expression match</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var url = &quot;https://developer.mozilla.org/en-US/Web/JavaScript&quot;;</span><br><span class="line"></span><br><span class="line">var parsedURL = /^(\w+)\:\/\/([^\/]+)\/(.*)$/.exec(url);</span><br><span class="line">var [, protocol, fullhost, fullpath] = parsedURL;</span><br><span class="line"></span><br><span class="line">console.log(protocol); // logs &quot;https&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="Destructuring-objects"><a class="header-anchor" href="#Destructuring-objects"> </a>Destructuring objects</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var o = &#123;p: 42, q: true&#125;;</span><br><span class="line">var &#123;p, q&#125; = o;</span><br><span class="line"></span><br><span class="line">console.log(p); // 42</span><br><span class="line">console.log(q); // true </span><br></pre></td></tr></table></figure>
-<p>另外一種用法, 將物件裡的值設定到新的變數名稱上</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// syntax</span><br><span class="line">// &#123;object.propertyName: VariableName&#125; = object</span><br><span class="line"></span><br><span class="line">// Assign new variable names</span><br><span class="line">var o = &#123;p: 42, q: true&#125;;</span><br><span class="line">var &#123;p: foo, q: bar&#125; = o;</span><br><span class="line"></span><br><span class="line">console.log(foo); // 42</span><br><span class="line">console.log(bar); // true  </span><br></pre></td></tr></table></figure>
-<p>衍生用法: Function argument defaults</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var [missing = true] = [];</span><br><span class="line">console.log(missing);</span><br><span class="line">// true</span><br><span class="line"></span><br><span class="line">var &#123; message: msg = &quot;Something went wrong&quot; &#125; = &#123;&#125;;</span><br><span class="line">console.log(msg);</span><br><span class="line">// &quot;Something went wrong&quot;</span><br><span class="line"></span><br><span class="line">var &#123; x = 3 &#125; = &#123;&#125;;</span><br><span class="line">console.log(x);</span><br><span class="line">// 3</span><br><span class="line"></span><br><span class="line">function removeBreakpoint(&#123; url, line, column &#125;=&#123;&#125;) &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function drawES6Chart(&#123;size = &#x27;big&#x27;, cords = &#123; x: 0, y: 0 &#125;, radius = 25&#125; = &#123;&#125;) </span><br><span class="line">&#123;</span><br><span class="line">  console.log(size, cords, radius);</span><br><span class="line">  // do some chart drawing</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">drawES6Chart(&#123;</span><br><span class="line">  cords: &#123; x: 18, y: 30 &#125;,</span><br><span class="line">  radius: 30</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>另外一種情境 Module (non-ES6) loading</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const &#123; Loader, main &#125; = require(&#x27;toolkit/loader&#x27;);</span><br></pre></td></tr></table></figure>
-<p>REF: <a target="_blank" rel="noopener" href="https://gist.github.com/mikaelbr/9900818">Several demos and usages for ES6 destructuring.</a></p>
 
       
     </div>
