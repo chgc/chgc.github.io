@@ -143,18 +143,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">363</span>
+          <span class="site-state-item-count">364</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -206,6 +206,134 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/13/python20131113/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/4550568.jpg">
+      <meta itemprop="name" content="KevinYang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | CK's Notepad">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/11/13/python20131113/" class="post-title-link" itemprop="url">[python]20131113</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2013-11-13 13:44:00" itemprop="dateCreated datePublished" datetime="2013-11-13T13:44:00+08:00">2013-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2013/11/13/python20131113/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/13/python20131113/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>#Data Structures
+List的控制</p>
+<p>x=value
+i=index position
+L=list</p>
+<ul>
+<li>list.append(x) : 在結尾的地方新增一筆資料</li>
+<li>list.extend(L) : 新增資料by list</li>
+<li>list.insert(i,x) : 插入資料</li>
+<li>list.remove(x) : 移除所輸入的x值</li>
+<li>list.pop([i]) : 移除所指定index position的值;如果沒有指定[i]時，則傳回並移除最後一筆紀錄(後進先出)</li>
+<li>list.clear() : 清除list</li>
+<li>list.index(x) : x值的位置, 如果沒有找到則傳回錯誤</li>
+<li>list.count(x) : x值的數量</li>
+<li>list.sort() : 排序</li>
+<li>list.reverse() : 反轉</li>
+<li>list.copy() : 複製list</li>
+</ul>
+<p>後進先出 : list.pop()
+先進先出 : deque
+deque([list])後，在操作pop或append時，多出了popleft(), appendleft(), extendleft()的方法
+用法如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;from collections import deque</span><br><span class="line">&gt;&gt;&gt; queue = deque([&quot;Eric&quot;, &quot;John&quot;, &quot;Michael&quot;])</span><br><span class="line">&gt;&gt;&gt; queue</span><br><span class="line">deque([&#x27;Eric&#x27;, &#x27;John&#x27;, &#x27;Michael&#x27;])</span><br><span class="line">&gt;&gt;&gt; queue.append(&quot;Kevin&quot;)</span><br><span class="line">deque([&#x27;Eric&#x27;, &#x27;John&#x27;, &#x27;Michael&#x27;, &#x27;Kevin&#x27;])</span><br><span class="line">&gt;&gt;&gt; queue.appendleft(&quot;Steve&quot;)</span><br><span class="line">deque([&#x27;Steve&#x27;, &#x27;Eric&#x27;, &#x27;John&#x27;, &#x27;Michael&#x27;, &#x27;Kevin&#x27;])</span><br><span class="line">&gt;&gt;&gt; queue.popleft()</span><br><span class="line">&#x27;Steve&#x27;</span><br><span class="line">&gt;&gt;&gt; queue</span><br><span class="line">deque([&#x27;Eric&#x27;, &#x27;John&#x27;, &#x27;Michael&#x27;, &#x27;Kevin&#x27;])</span><br></pre></td></tr></table></figure>
+<p>#List Comprehensions
+##(計算x) for x in list if condition</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; [x**2 for x in range(10)]</span><br><span class="line">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [x**2 for x in range(10) if x%2==0]</span><br><span class="line">[0, 4, 16, 36, 64]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]</span><br><span class="line">[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; matrix = [</span><br><span class="line">...     [1, 2, 3, 4],</span><br><span class="line">...     [5, 6, 7, 8],</span><br><span class="line">...     [9, 10, 11, 12],</span><br><span class="line">... ]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; [[row[i] for row in matrix] for i in range(4)]</span><br><span class="line">[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; list(zip(*matrix))</span><br><span class="line">[(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]</span><br></pre></td></tr></table></figure>
+<p>#del
+移除list中的值by Index</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [-1, 1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[0]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[2:4]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1, 66.25, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a[:]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+<p>del can also be used to delete entire variables: 變數消滅</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [-1, 1, 66.25, 333, 333, 1234.5]</span><br><span class="line">&gt;&gt;&gt; del a</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">NameError: name &#x27;a&#x27; is not defined</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/11/12/python-20131112/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -242,7 +370,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -389,7 +517,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -521,7 +649,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -620,7 +748,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -723,7 +851,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -827,7 +955,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -943,7 +1071,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1074,7 +1202,7 @@ The Visual FoxPro OLE DB Provider ignores this setting since it uses dynamic mem
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1185,7 +1313,7 @@ route::get(『something』,『someController@someaction』)</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
+      <time title="修改時間：2026-08-29 17:45:54" itemprop="dateModified" datetime="2026-08-29T17:45:54+08:00">2026-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1240,153 +1368,6 @@ route::get(『something』,『someController@someaction』)</p>
 <figure class="highlight php"><figcaption><span>升級動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">up</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">// create new table</span></span><br><span class="line"><span class="title class_">Schema</span>::<span class="title function_ invoke__">table</span>(<span class="string">&#x27;users&#x27;</span>, function(<span class="variable">$table</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">create</span>();</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">increments</span>(<span class="string">&#x27;id&#x27;</span>);<span class="comment">//id fields with AUTO_INCREMENT</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;email&#x27;</span>);<span class="comment">//email field with varchar(255)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;real_name&#x27;</span>,<span class="number">100</span>);<span class="comment">//real_field with varchar(100)</span></span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="keyword">string</span>(<span class="string">&#x27;password&#x27;</span>);</span><br><span class="line"> <span class="variable">$table</span>-&gt;<span class="title function_ invoke__">timestamps</span>();<span class="comment">// created_at,updated_at timestamps(2 fields)</span></span><br><span class="line"> &#125;);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 <figure class="highlight php"><figcaption><span>降級動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">down</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//Drop Table</span></span><br><span class="line">	<span class="title class_">Schema</span>::<span class="title function_ invoke__">drop</span>(<span class="string">&#x27;users&#x27;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 <hr>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.kevinyang.net/2013/10/10/phalcon-work-with-router/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/4550568.jpg">
-      <meta itemprop="name" content="KevinYang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | CK's Notepad">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2013/10/10/phalcon-work-with-router/" class="post-title-link" itemprop="url">[Phalcon] Work with Router</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2013-10-10 15:03:00" itemprop="dateCreated datePublished" datetime="2013-10-10T15:03:00+08:00">2013-10-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新於</span>
-      <time title="修改時間：2026-08-29 16:01:27" itemprop="dateModified" datetime="2026-08-29T16:01:27+08:00">2026-08-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Phalcon/" itemprop="url" rel="index"><span itemprop="name">Phalcon</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2013/10/10/phalcon-work-with-router/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/10/phalcon-work-with-router/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="啟動方式"><a class="header-anchor" href="#啟動方式"> </a>啟動方式</h1>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$di-&gt;set(&#x27;router&#x27;, function () &#123;</span><br><span class="line">    $router = new \Phalcon\Mvc\Router();</span><br><span class="line">    $router-&gt;add(&quot;/:controller/:action/:params&quot;, array(</span><br><span class="line">        &#x27;controller&#x27; =&gt; 1,</span><br><span class="line">        &#x27;action&#x27; =&gt; 2,</span><br><span class="line">        &#x27;params&#x27; =&gt; 3</span><br><span class="line">    ));</span><br><span class="line"></span><br><span class="line">    return $router;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h1 id="Defining-Route"><a class="header-anchor" href="#Defining-Route"> </a>Defining  Route</h1>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Placeholder</th>
-<th style="text-align:left">Regular Expression</th>
-<th style="text-align:left">Usage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">/:module</td>
-<td style="text-align:left">/([a-zA-Z0-9_-]+)</td>
-<td style="text-align:left">Matches a valid module name with alpha-numeric characters only</td>
-</tr>
-<tr>
-<td style="text-align:left">/:controller</td>
-<td style="text-align:left">/([a-zA-Z0-9_-]+)</td>
-<td style="text-align:left">Matches a valid controller name with alpha-numeric characters only</td>
-</tr>
-<tr>
-<td style="text-align:left">/:action</td>
-<td style="text-align:left">/([a-zA-Z0-9_]+)</td>
-<td style="text-align:left">Matches a valid action name with alpha-numeric characters only</td>
-</tr>
-<tr>
-<td style="text-align:left">/:params</td>
-<td style="text-align:left">(/.<em>)</em></td>
-<td style="text-align:left">Matches a list of optional words separated by slashes. Use only this placeholder at the end of a route</td>
-</tr>
-<tr>
-<td style="text-align:left">/:namespace</td>
-<td style="text-align:left">/([a-zA-Z0-9_-]+)</td>
-<td style="text-align:left">Matches a single level namespace name</td>
-</tr>
-<tr>
-<td style="text-align:left">/:int</td>
-<td style="text-align:left">/([0-9]+)</td>
-<td style="text-align:left">Matches an integer parameter</td>
-</tr>
-</tbody>
-</table>
-<p>/:params : 只能放在router的最後面</p>
-<p>#controller內取得route裡面參數的方式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$this-&gt;dispatcher-&gt;getParam(0);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParam(&#x27;paraName&#x27;);</span><br><span class="line">$this-&gt;dispatcher-&gt;getParams(); &lt;=array</span><br></pre></td></tr></table></figure>
-<p>#如果是/?var=value</p>
-<p>就用原本$_GET[『』]的方式取值就可以了</p>
 
       
     </div>
